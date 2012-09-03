@@ -1,0 +1,171 @@
+@def darkColor #8BB381  ;/**Dark Sea Green */
+@def ligherColor 	#C3FDB8;/**  Dark Sea Green1	 */ 
+@def treeColor #B5EAAA  ;
+	/**  Dark Sea Green2	 */ 
+@def borderRadius   7px  ;
+@def foregroundColor #595454; /** Grey40 */
+
+@def darkColor #66BDFF;
+@def ligherColor 	#98EFFF; 
+@def treeColor #98EFFF; 
+@def borderRadius   14px  ;
+@def foregroundColor white;
+@def ligherColor #B38481;
+@def ligherColor  #DEFFF1;
+@def treeColor #B38481;
+@def treeColor #FFF1DE;
+@def thirdColor #F1DEFF;
+
+/** Dark theme */
+@def ligherColor  #495674;
+@def treeColor #9B8C8C;
+@def thirdColor #8C9C8C;
+
+@def ligherColor  #080808;
+@def treeColor #000000;
+@def thirdColor #000000;
+
+@def borderColor #303030;
+
+
+
+.importedTag {
+	color: green;
+	font-size: 130%;
+	background: aqua;
+}
+
+ .tagView {
+	border-style: solid;
+	border-width: thick;
+	background-color: treeColor;
+	border-color: borderColor;
+  border-collapse: collapse;
+  border-width: 1px;
+    color: #F0F0F0;
+}
+
+.button {
+	padding: 3px;
+	margin: auto;
+}
+	
+.slideshow {
+	background-color: black;
+}
+
+.image {
+	padding: 4px;
+	margin: auto;
+}
+
+.selectedImage {
+	padding: 4px;
+	margin: auto;
+	border-style: solid;
+	border-color: borderColor;
+  border-width: 1px;
+}
+	
+.slideshowControls {
+	background-color: grey;
+	border-radius: borderRadius;
+}
+
+.imagePanelBlock {
+	padding: 2px;
+	background-color: ligherColor;
+	margin: auto;
+  border-style: solid;
+  border-color: borderColor;
+  border-collapse: collapse;
+  border-width: 1px;
+}
+
+.buttonPanelBlock {
+	background-color: thirdColor;
+	margin: auto;
+	padding-top: 2px;
+	padding-bottom: 2px;
+  border-style: solid;
+  border-color: borderColor;
+  border-collapse: collapse;
+  border-width: 1px;
+
+}
+
+.photoInfoLabel {
+	text-align: center;
+	color: foregroundColor;
+	font-size: 12px;
+}
+
+.pagerLabel {
+	text-align: center;
+	color: foregroundColor;
+	font-size: 12px;
+}
+
+.treeBlock {
+	background-color: treeColor;
+	color: foregroundColor;
+  border-style: solid;
+  border-color: borderColor;
+  border-collapse: collapse;
+  border-width: 1px;
+}
+
+.userInfoLabel {
+	background-color: treeColor;
+	color: foregroundColor;
+  border-style: solid;
+  border-color: borderColor;
+  border-collapse: collapse;
+  border-width: 1px;
+
+}
+
+.footerBlock {
+	background-color: darkColor;
+	color: foregroundColor;
+	-moz-border-radius: borderRadius;
+	border-radius: borderRadius;
+	text-align: center;
+}
+
+.helpPopup {
+	padding: 20px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: white;
+}
+
+.helpCategory {
+	font-size: 110%;
+	border-bottom: solid;
+	border-top: solid;
+	text-align: center;
+}
+
+.helpDescription {
+	font-size: 110%;
+}
+
+.helpTitle {
+	font-size: large;
+	text-align: center;
+	font-style: bold;
+}
+
+.helpSeparator {
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.helpKey {
+	color: yellow;
+	font-weight: bold;
+	font-size: 110%;
+}
+

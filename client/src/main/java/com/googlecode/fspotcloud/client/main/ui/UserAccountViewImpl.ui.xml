@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
+    <g:LayoutPanel styleName="{res.style.tagView}">
+        <g:layer top="0%" height="10%" right="0%" width="100%">
+            <g:HTML>
+                <center>
+                    <h1>User information</h1>
+                </center>
+            </g:HTML>
+        </g:layer>
+        <g:layer top="15%" height="5%" left="10%" width="30%">
+            <g:Label>Email</g:Label>
+        </g:layer>
+        <g:layer top="15%" height="5%" left="40%" width="40%">
+            <g:Label ui:field="emailValueLabel"></g:Label>
+        </g:layer>
+        <g:layer top="25%" height="5%" left="10%" width="30%">
+            <g:Label>Nickname</g:Label>
+        </g:layer>
+        <g:layer top="25%" height="5%" left="40%" width="40%">
+            <g:Label ui:field="nicknameValueLabel"></g:Label>
+        </g:layer>
+        <g:layer top="35%" height="5%" left="10%" width="30%">
+            <g:Label>Last login</g:Label>
+        </g:layer>
+        <g:layer top="35%" height="5%" left="40%" width="40%">
+            <g:Label ui:field="lastLoginValueLabel"></g:Label>
+        </g:layer>
+
+    </g:LayoutPanel>
+</ui:UiBinder> 

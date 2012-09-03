@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0.3//EN"
+        "http://google-web-toolkit.googlecode.com/svn/tags/2.0.3/distro-source/core/src/gwt-module.dtd">
+<module>
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.resources.Resources"/>
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+    <inherits name='com.googlecode.fspotcloud.rpc'/>
+    <inherits name='com.google.gwt.user.theme.chrome.Chrome'/>
+    <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
+    <!-- Other module inherits -->
+    <inherits name="com.google.gwt.user.Debug"/>
+
+    <inherits name="com.google.gwt.logging.Logging"/>
+    <inherits name="com.google.gwt.activity.Activity"/>
+    <inherits name="com.google.gwt.place.Place"/>
+    <inherits name="com.google.gwt.inject.Inject"/>
+    <!-- Other module inherits -->
+    <inherits name="com.google.gwt.activity.Activity"/>
+    <inherits name="com.reveregroup.gwt.imagepreloader.ImagePreloader"/>
+    <entry-point class='com.googlecode.fspotcloud.client.admin.DashboardEntryPoint'/>
+    <!-- GWT dispatch -->
+    <inherits name='net.customware.gwt.dispatch.Dispatch'/>
+    <!-- Specify the paths for translatable code -->
+    <!-- <source path='shared'/> <source path="client/admin"/> <source path="client/"/> -->
+    <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
+</module>
+
