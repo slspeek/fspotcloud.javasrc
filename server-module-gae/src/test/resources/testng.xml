@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="none">
+    <test name="Test" preserve-order="true">
+        <classes>
+            <class name="fspotcloud.server.admin.integration.MyTaskModule"/>
+            <class name="fspotcloud.server.control.task.actions.intern.DeletePhotosTest"/>
+            <class name="fspotcloud.server.control.task.photodelete.DeletePhotosHandlerTest"/>
+            <class name="fspotcloud.server.control.task.tagimport.TagImportHandlerTest"/>
+            <class name="fspotcloud.server.admin.integration.MyModelModule"/>
+            <class name="fspotcloud.server.control.task.tagdelete.DeleteTagsHandlerTest"/>
+            <class name="fspotcloud.server.admin.integration.MyFSpotCloudModule"/>
+            <class name="fspotcloud.server.admin.actions.ImportTagHandlerTest"/>
+            <class name="fspotcloud.server.admin.integration.MyAdminActionsModule"/>
+            <class name="fspotcloud.server.control.callback.PeerMetaDataCallbackTest"/>
+            <class name="fspotcloud.server.inject.InjectorTest"/>
+            <class name="fspotcloud.server.admin.integration.PeerServerIntegrationBase"/>
+            <class name="fspotcloud.server.control.callback.TagDataCallbackTest"/>
+            <class name="fspotcloud.server.admin.integration.PeerServerIntegrationTest"/>
+            <class name="fspotcloud.server.control.task.actions.intern.TagImportActionTest"/>
+            <class name="fspotcloud.server.control.callback.PhotoDataCallbackTest"/>
+            <class name="fspotcloud.server.control.task.photoupdate.PhotoUpdateHandlerTest"/>
+            <class name="fspotcloud.server.control.task.actions.intern.PhotoUpdateActionTest"/>
+        </classes>
+    </test>
+</suite>

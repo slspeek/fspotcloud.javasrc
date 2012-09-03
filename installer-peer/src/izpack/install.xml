@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+
+    <info>
+        <appname>FSpotCloud-Peer</appname>
+        <appversion>@{project.version}</appversion>
+        <authors>
+            <author name="Steven L. Speek" email="slspeek@gmail.com"/>
+        </authors>
+        <url>http://code.google.com/p/fspotcloud/</url>
+    </info>
+
+    <guiprefs width="600" height="480" resizable="yes">
+        <modifier key="useHeadingPanel" value="yes"/>
+        <modifier key="useHeadingForSummary" value="yes"/>
+        <modifier key="headingLineCount" value="2"/>
+        <modifier key="headingFontSize" value="1.5"/>
+        <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+        <modifier key="headingPanelCounter" value="text"/>
+        <modifier key="headingPanelCounterPos" value="inHeading"/>
+    </guiprefs>
+
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+
+    <resources>
+        <res id="LicencePanel.licence" src="Licence.txt"/>
+        <res id="userInputSpec.xml" src="userInputSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="UnixShortcutSpec.xml"/>
+        <res id="HTMLInfoPanel.readme" src="Readme.html"/>
+    </resources>
+
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="HTMLInfoPanel" id="readme"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="UserInputPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+
+    <packs>
+        <pack name="Base" required="yes">
+            <description>The base files</description>
+            <fileset dir="icons" targetdir="$INSTALL_PATH/icons"/>
+            <file src="Readme.html" targetdir="$INSTALL_PATH"/>
+            <file src="Licence.txt" targetdir="$INSTALL_PATH"/>
+            <file src="peer-jar-with-dependencies.jar" targetdir="$INSTALL_PATH"/>
+            <file src="logging.properties" targetdir="$INSTALL_PATH"/>
+            <file src="peer.sh" targetdir="$INSTALL_PATH"/>
+            <parsable targetfile="$INSTALL_PATH/peer.sh"/>
+            <executable type="bin" stage="never" targetfile="$INSTALL_PATH/peer.sh"
+                        os="unix"/>
+        </pack>
+    </packs>
+
+</installation>
+

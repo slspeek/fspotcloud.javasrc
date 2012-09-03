@@ -1,0 +1,52 @@
+description = 'Peer installer'
+buildscript {
+    repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = 'GitHub'
+            addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+        }
+    }
+
+    dependencies {
+        classpath 'bmuschko:gradle-izpack-plugin:0.2.1'
+    }
+}
+
+apply plugin: 'izpack'
+
+dependencies {
+    izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.1'
+}
+
+task initDirs << {
+    mkdir "${buildDir}/assemble/izpack/dependency"
+}
+
+task copyFiles(type: Copy, dependsOn: initDirs) {
+    from "src/izpack"
+    into "${buildDir}/assemble/izpack"
+}
+
+task copyPeer(type: Copy, dependsOn: ':peer:jar') {
+    from "../peer/build/libs/peer-${version}.jar"
+    into "${buildDir}/assemble/izpack/"
+    rename "peer-${version}.jar", "peer-jar-with-dependencies.jar"
+}
+
+task copyLoggingProperties(type: Copy) {
+    from "../peer/src/main/resources/logging.properties"
+    into "${buildDir}/assemble/izpack/"
+}
+
+izPackCreateInstaller.dependsOn copyFiles, copyPeer, copyLoggingProperties
+
+izpack {
+    baseDir = file("$buildDir/assemble/izpack")
+    installFile = file('src/izpack/install.xml')
+    outputFile = file("$buildDir/distributions/fspotcloud-peer-${version}-installer.jar")
+    compression = 'deflate'
+    compressionLevel = 9
+    appProperties = ['project.version': version]
+}
+
+build.dependsOn izPackCreateInstaller

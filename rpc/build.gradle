@@ -1,0 +1,25 @@
+description = 'Client Server API'
+
+configurations {
+    sources
+}
+dependencies {
+    compile ext.libs.gwt_servlet
+    compile ext.libs.gwt_dispatch
+    compile ext.libs.guava
+    compile ext.libs.guava_gwt
+
+    testCompile project(':test-util')
+    testCompile ext.libs.junit
+    testCompile ext.libs.commons_lang
+    testCompile ext.libs.openpojo
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    sources sourcesJar
+}

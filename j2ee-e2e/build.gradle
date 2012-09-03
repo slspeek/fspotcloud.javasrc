@@ -1,0 +1,92 @@
+import org.apache.tools.ant.filters.ExpandProperties
+
+description = 'Selenium testing for prod-j2ee-war'
+
+apply plugin: 'tomcat'
+
+if ("${analysis}" == "true") {
+    findbugsTest.enabled = false
+}
+
+dependencies {
+    tomcat ext.libs.tomcat
+
+    testCompile project(path: ':e2e-test', configuration: 'testCompile')
+    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
+    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
+    testCompile ext.libs.guiceberry
+    testCompile ext.libs.guava_testlib
+    testCompile ext.libs.junit
+    testCompile ext.libs.guice
+}
+
+task unpackWar(dependsOn: ':prod-j2ee-war:assemble') << {
+    mkdir "$buildDir/exploded-war-raw"
+    mkdir "$buildDir/exploded"
+    def myTests = file("../prod-j2ee-war/build/libs/prod-j2ee-war-${version}.war")
+    ant.unjar(dest: "$buildDir/exploded-war-raw/", src: myTests)
+}
+
+task copyWar(dependsOn: unpackWar, type: Copy) {
+    ant.properties['bot.secret.userinput'] = "${bot_secret}".toString()
+    ant.properties['admin.email'] = "rms@example.com"
+    from('build/exploded-war-raw') {
+        include "**/properties.properties"
+        filter(ExpandProperties, project: ant.project)
+    }
+    from('build/exploded-war-raw') {
+        exclude "**/properties.properties"
+    }
+    into 'build/exploded'
+}
+
+task unpackTest(dependsOn: ':e2e-test:packageTests') << {
+    def myTests = file("../e2e-test/build/libs/e2e-test-${version}-tests.jar")
+    ant.unjar(dest: "$buildDir/classes/test", src: myTests)
+}
+
+task peerStop(type: Exec) {
+    commandLine "telnet", "localhost", "5555"
+    ignoreExitValue = true
+}
+
+tomcatRun.dependsOn copyWar
+
+
+[tomcatRun, tomcatStop]*.stopPort = 8060
+[tomcatRun, tomcatStop]*.stopKey = 'STOP'
+[tomcatRun, tomcatStop]*.daemon = Boolean.parseBoolean(server_daemon)
+[tomcatRun, tomcatStop]*.httpPort = 8050
+
+tomcatRun {
+    webAppSourceDirectory = file("build/exploded")
+}
+
+test {
+    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
+        'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
+    systemProperties['bot.secret'] = bot_secret
+    systemProperties['endpoint'] = "localhost:8050/j2ee-e2e"
+    systemProperties['stop.port'] = "5555"
+    systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
+    if ("${all_tests}" == "true") {
+        include "com/googlecode/fspotcloud/test/LocalSuite.class"
+    } else {
+        include "com/googlecode/fspotcloud/test/ShortSuite.class"
+    }
+    testLogging.showStandardStreams = true
+}
+
+test.dependsOn tomcatRun, unpackTest, ":peer:assemble"
+
+test << {
+    println "Stopping server"
+    tomcatStop.execute()
+    println "Stopping peer"
+    peerStop.execute()
+}
+
+task deleteDB(type: Delete) {
+    delete '../MODELJPA', 'runtime', 'derby.log', "MODELJPA"
+}
+clean.dependsOn deleteDB, tomcatStop, peerStop

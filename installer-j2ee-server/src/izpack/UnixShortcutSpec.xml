@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+
+    <programGroup defaultName="F-Spot Cloud J2EE Server"
+                  location="applications" iconFile="$INSTALL_PATH/icons/FSpot.png"/>
+
+
+    <shortcut
+            name="Run server in terminal"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="yes"
+            startup="no"
+            target="$INSTALL_PATH/apache-tomcat-${tomcat.version}/bin/catalina.sh"
+            commandLine="run"
+            workingDirectory="$INSTALL_PATH"
+            description="Start tomcat and deploy the F-Spot Cloud server"
+            iconFile="$INSTALL_PATH/icons/Tomcat.png"
+            iconIndex="0"
+            type="Application"
+            encoding="UTF-8"
+            terminal="true"
+            KdeSubstUID="false"
+            initialState="normal">
+    </shortcut>
+
+    <shortcut
+            name="Stop server"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="yes"
+            startup="no"
+            target="$INSTALL_PATH/apache-tomcat-${tomcat.version}/bin/shutdown.sh"
+            commandLine=""
+            workingDirectory="$INSTALL_PATH"
+            description="Stop tomcat"
+            iconFile="$INSTALL_PATH/icons/TomcatStop.png"
+            iconIndex="0"
+            type="Application"
+            encoding="UTF-8"
+            terminal="true"
+            KdeSubstUID="false"
+            initialState="normal">
+    </shortcut>
+
+    <shortcut
+            name="F-Spot Cloud  Documentation"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="yes"
+            startup="no"
+            target="x-www-browser"
+            commandLine="http://code.google.com/p/fspotcloud"
+            workingDirectory="$INSTALL_PATH"
+            initialState="normal"
+            iconFile="$INSTALL_PATH/icons/Docs.png"
+            iconIndex="0"
+            type="Application"
+            encoding="UTF-8"
+            description="The project site"
+            terminal="false">
+    </shortcut>
+
+    <shortcut
+            name="Your server instance"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="yes"
+            startup="no"
+            target="x-www-browser"
+            commandLine="http://localhost:8080"
+            workingDirectory="$INSTALL_PATH"
+            initialState="normal"
+            iconFile="$INSTALL_PATH/icons/Instance.png"
+            iconIndex="0"
+            type="Application"
+            encoding="UTF-8"
+            description="View your photo's at your server"
+            terminal="false">
+    </shortcut>
+
+    <shortcut
+            name="Uninstaller"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="no"
+            startup="no"
+            target="java"
+            commandLine="-jar
+     &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
+            initialState="noShow"
+            iconFile="trashcan_full"
+            iconIndex="0"
+            workingDirectory="$INSTALL_PATH"
+            type="Application"
+            encoding="UTF-8"
+            description="F-Spot Cloud J2EE Server uninstaller">
+    </shortcut>
+
+</shortcuts>

@@ -1,0 +1,67 @@
+description = 'Installer for GAE setup'
+buildscript {
+    repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = 'GitHub'
+            addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+        }
+    }
+
+    dependencies {
+        classpath 'bmuschko:gradle-izpack-plugin:0.2.1'
+    }
+}
+
+configurations {
+    appengine_sdk
+}
+apply plugin: 'izpack'
+
+dependencies {
+    izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.1'
+    appengine_sdk "com.google.appengine:appengine-java-sdk:${gae_version}@zip"
+}
+
+task initDirs << {
+    println "Maven repo: ${maven_repo}"
+    mkdir "${buildDir}/assemble/izpack/dependency"
+}
+
+task copyFiles(type: Copy, dependsOn: initDirs) {
+    from "src/izpack"
+    into "${buildDir}/assemble/izpack"
+}
+
+task copyPeer(type: Copy, dependsOn: ':peer:jar') {
+    from "../peer/build/libs/peer-${version}.jar"
+    into "${buildDir}/assemble/izpack/dependency"
+    rename "peer-${version}.jar", "peer-jar-with-dependencies.jar"
+}
+
+task copyLoggingProperties(type: Copy) {
+    from "../peer/src/main/resources/logging.properties"
+    into "${buildDir}/assemble/izpack/"
+}
+
+task unpackWar(dependsOn: ':prod-gae-war:war') << {
+    def myWar = file("../prod-gae-war/build/libs/prod-gae-war-${version}.war")
+    ant.unjar(dest: "${buildDir}/assemble/izpack/war", src: myWar)
+}
+
+task unpackGAESDK << {
+    def sdk = configurations.appengine_sdk.files.iterator().next()
+    ant.unjar(dest: "${buildDir}/assemble/izpack", src: sdk)
+}
+
+izPackCreateInstaller.dependsOn copyFiles, copyPeer, copyLoggingProperties, unpackWar, unpackGAESDK
+
+izpack {
+    baseDir = file("$buildDir/assemble/izpack")
+    installFile = file('src/izpack/install.xml')
+    outputFile = file("$buildDir/distributions/fspotcloud-appengine-${version}-installer.jar")
+    compression = 'deflate'
+    compressionLevel = 9
+    appProperties = ['gae.version': gae_version, 'project.version': version]
+}
+
+build.dependsOn izPackCreateInstaller

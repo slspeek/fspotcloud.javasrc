@@ -1,0 +1,61 @@
+description = 'F-SpotCloud Server J2EE Configuration'
+
+configurations {
+    integrationTest
+    testCompile.extendsFrom(integrationTest)
+    provided
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+}
+if ("${analysis}" == "true") {
+    findbugsTest.enabled = false
+}
+
+dependencies {
+    compile project(':server')
+    compile project(':user-service-api')
+    compile project(':user-service-openid')
+    compile project(':model-jpa-j2ee')
+    compile project(path: ':user-service-api', configuration: 'testFixtures')   //FIXME
+    compile("com.googlecode.bot-dispatch:command-jpa-j2ee:${bot_dispatch_version}")
+    compile("com.googlecode.taskqueue-dispatch:direct:${taskqueue_dispatch_version}")
+    compile ext.libs.simple_blobstore_j2ee
+    compile("com.googlecode.bot-dispatch:command-jpa:${bot_dispatch_version}") {
+        exclude(module: 'gwt-user')
+    }
+    compile ext.libs.bot_dispatch_command_api
+    provided ext.libs.servlet_spec
+    testCompile project(':peer')
+    testCompile project(':test-util')
+    testCompile project(path: ':peer-server-integration', configuration: 'testCompile')
+    testCompile ext.libs.mockito
+    testCompile ext.libs.guava_testlib
+    testCompile ext.libs.junit
+    testCompile ext.libs.test_ng
+
+    integrationTest files("../peer-server-integration/build/libs/peer-server-integration-${version}-tests.jar")
+}
+
+task deleteDB(type: Delete) {
+    delete 'MODELJPA', 'runtime', 'derby.log'
+}
+
+task unpackTest << {
+    def myTests = configurations.integrationTest.files.iterator().next()
+    ant.unjar(dest: "$buildDir/classes/test", src: myTests)
+}
+
+test {
+    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule'] =
+        'com.googlecode.fspotcloud.server.admin.integration.J2eeNoAuthIntegrationIntegrationModule'
+    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule'] =
+        'com.googlecode.fspotcloud.server.admin.integration.J2eeIntegrationIntegrationModule'
+    testLogging.showStandardStreams = true
+    //include 'com/googlecode/fspotcloud/server/admin/integration/PeerServerIntegrationHardCasesTest.class'
+}
+
+test.dependsOn unpackTest, deleteDB
+test.useTestNG()
+clean.dependsOn deleteDB

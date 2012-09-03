@@ -1,0 +1,32 @@
+<userInput>
+    <!-- Install -->
+    <panel order="0">
+        <field type="title" txt="Google AppEngine Configuration" bold="true"
+               size="1"/>
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="AppEngine application id"/>
+        <field type="text" align="left" variable="application.id">
+            <spec txt="" size="25" set="jfspotcloud"/>
+        </field>
+        <field type="space"/>
+        <field type="staticText" align="left" txt="Your Google loginname"/>
+        <field type="text" align="left" variable="email">
+            <spec txt="" size="25" set="slspeek"/>
+        </field>
+        <field type="space"/>
+    </panel>
+    <panel order="1">
+        <field type="title" txt="Peer Configuration" bold="true" size="1"/>
+        <field type="staticText" align="left"
+               txt="Secret for the peer to server communication"/>
+        <field type="text" align="left" variable="bot.secret.userinput">
+            <spec txt="" size="25" set="SECRET"/>
+        </field>
+        <field type="space"/>
+        <field type="staticText" align="left" txt="F-Spot database to use:"/>
+        <field type="file" align="left" variable="photos.db.userinput">
+            <spec txt="" size="25" set="$USER_HOME/.config/f-spot/photos.db"/>
+        </field>
+        <field type="divider" align="bottom"/>
+    </panel>
+</userInput>

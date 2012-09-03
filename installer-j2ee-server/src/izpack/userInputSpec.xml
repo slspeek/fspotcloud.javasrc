@@ -1,0 +1,18 @@
+<userInput>
+    <!-- Install -->
+    <panel order="0">
+        <field type="title" txt="Server Configuration" bold="true"
+               size="1"/>
+        <field type="staticText" align="left" txt="Email of the administrator"/>
+        <field type="text" align="left" variable="admin.email">
+            <spec txt="" size="25" set="slspeek@gmail.com"/>
+        </field>
+        <field type="space"/>
+        <field type="staticText" align="left"
+               txt="Secret for the peer to server communication"/>
+        <field type="text" align="left" variable="bot.secret.userinput">
+            <spec txt="" size="25" set="SECRET"/>
+        </field>
+        <field type="space"/>
+    </panel>
+</userInput>
