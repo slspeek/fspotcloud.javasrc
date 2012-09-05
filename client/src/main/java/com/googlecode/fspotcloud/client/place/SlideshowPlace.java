@@ -51,6 +51,11 @@ public class SlideshowPlace extends BasePlace {
         }
     }
 
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
     public class Tokeninzer {
     }
 

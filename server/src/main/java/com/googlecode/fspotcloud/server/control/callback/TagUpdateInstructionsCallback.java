@@ -43,7 +43,7 @@ public class TagUpdateInstructionsCallback implements SerializableAsyncCallback<
     private static final long serialVersionUID = -6213572441944313878L;
     @Inject
     @VisibleForTesting
-    Logger log;
+    transient Logger log;
     @Inject
     private transient TaskQueueDispatch dispatchAsync;
     private String tagId;
