@@ -1,0 +1,140 @@
+/** All css rules defined for FSpotcloud are below. */
+.fsc-tag-title-label {
+	font-size: 17px;
+	border: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	padding: 10px;
+	background-color: #7E354D; /** Pale Violet Red4	*/
+	text-align: center;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.spacer {
+	width: 10px;
+}
+
+
+
+.gwt-Label-title {
+	background-color: #D16587; /**Pale Violet Red*/
+	text-align: center;
+	font-weight: bold;
+	font-size: 200%;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.gwt-Label {
+	background-color: #7E354D; /** Pale Violet Red4	*/
+	color: white;
+}
+
+.gwt-Image {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fsc-image-panel-spacer-top {
+	height: 14px;
+}
+
+.fsc-help-popup {
+	padding: 20px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: white;
+	font-size: 180%;
+}
+
+.fsc-help-category {
+	font-size: 90%;
+	border-bottom: solid;
+	border-top: solid;
+}
+
+.fsc-help-description {
+	font-size: 130%;
+	text-align: left;
+}
+
+.fsc-help-separator {
+	font-weight: bold;
+	font-size: 130%;
+}
+
+.fsc-help-key {
+	color: yellow;
+	font-weight: bold;
+	font-size: 130%;
+}
+
+.fsc-tag-tree-container {
+	color: black;
+	background-color: #C6AEC7; /** Thistle3 */
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+}
+
+.fsc-tag-image-view-container-focused {
+	border: solid;
+}
+
+.fsc-tag-status-label {
+	text-align: center;
+	background-color: #7E354D; /** Pale Violet Red4	*/
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-size: 130%;
+}
+
+.fsc-image-view {
+	padding-top: 10px;
+}
+
+.fsc-image-view-image {
+	margin: 10px;
+	padding-top: 10px;
+}
+
+.fsc-image-button-panel {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fsc-image-view-pager-container {
+	
+}
+
+.fsc-image-view-slideshow-container {
+	
+}
+
+.fsc-pager {
+	padding: 5px;
+}
+
+.fsc-pager-first {
+	
+}
+
+.fsc-slideshow {
+	padding: 5px;
+}
+
+.fsc-slideshow-running {
+	padding: 5px;
+	background: red;
+}
+
+.fsc-slideshow-interval {
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #7E354D; /** Pale Violet Red4	*/
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}

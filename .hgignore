@@ -38,4 +38,7 @@ peer/peer*.log*
 */META-INF/MANIFEST.MF
 */.externalToolBuilders
 client/src/main/gwt-unitCache/*
-client/src/main/webapp
+client/src/main/webapp/fspotcloud
+client/src/main/webapp/WEB-INF/
+client/src/main/webapp/com.googlecode.fspotcloud.dashboard
+
