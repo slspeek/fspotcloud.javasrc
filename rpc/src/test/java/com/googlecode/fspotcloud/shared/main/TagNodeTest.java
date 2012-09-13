@@ -47,8 +47,6 @@ public class TagNodeTest {
         node.setId("1");
 
         PhotoInfo man = new PhotoInfo("2", "Human", new Date());
-        ;
-
         PhotoInfoStore store = new PhotoInfoStore(ImmutableSortedSet.of(man));
         node.setCachedPhotoList(store);
         root = new TagNode("TopNode");

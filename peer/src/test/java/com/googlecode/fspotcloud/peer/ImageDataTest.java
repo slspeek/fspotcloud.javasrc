@@ -31,14 +31,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 
 public class ImageDataTest extends TestCase {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(ImageDataTest.class.getName());
     private ImageData target;
-    String cwd;
+    private String cwd;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -46,14 +43,10 @@ public class ImageDataTest extends TestCase {
         cwd = System.getProperty("user.dir");
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 
     public final void testGetScaledImageData() throws Exception {
         String imgPath = "/src/test/resources/images/img_0659 (Gewijzigd).jpg";
         String path = cwd + imgPath;
-        System.out.println(path);
 
         Dimension size = new Dimension(200, 100);
         byte[] data = target.getScaledImageData(path, size);

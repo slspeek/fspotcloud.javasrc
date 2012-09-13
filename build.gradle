@@ -126,8 +126,11 @@ subprojects {
 //            }
 //        }
 //    }
+    apply plugin: 'pmd'
+    //[pmdTest]*.ignoreFailures = false
+
     if ("${analysis}" == "true") {
-        apply plugin: 'pmd'
+
         apply plugin: 'jdepend'
         apply plugin: 'findbugs'
         apply plugin: 'checkstyle'
@@ -146,7 +149,7 @@ subprojects {
             ignoreFailures = true
         }
 
-        [pmdMain, pmdTest]*.ignoreFailures = true
+
     }
 
     if ("${cobertura}" == "true") {

@@ -34,4 +34,9 @@ public class VoidResult implements Result {
     public boolean equals(Object obj) {
         return obj instanceof VoidResult;
     }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
