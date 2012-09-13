@@ -34,6 +34,7 @@ import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
 import com.googlecode.fspotcloud.client.admin.view.AdminActivityMapper;
 import com.googlecode.fspotcloud.client.admin.view.DashboardPresenterImpl;
@@ -75,9 +76,11 @@ public class MVPSetup {
         ActivityManager activityManager = new ActivityManager(mapper, eventBus);
         activityManager.setDisplay(new HasOneWidgetAdapter(appWidget));
 
-        AdminPlaceHistoryMapper historyMapper = GWT.create(AdminPlaceHistoryMapper.class);
-        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
-        historyHandler.register(placeController, eventBus, defaultPlace);
+        AdminPlaceHistoryMapper historyMapper;
+        historyMapper = GWT.create(AdminPlaceHistoryMapper.class);
+        PlaceHistoryHandler historyHandler;
+        historyHandler = new PlaceHistoryHandler(historyMapper);
+        HandlerRegistration r = historyHandler.register(placeController, eventBus, defaultPlace);
 
         log.info("Just before handleCurrentHistory()");
         historyHandler.handleCurrentHistory();
