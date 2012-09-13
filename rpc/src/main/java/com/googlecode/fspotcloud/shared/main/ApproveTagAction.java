@@ -61,22 +61,16 @@ public class ApproveTagAction implements Action<VoidResult> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ApproveTagAction that = (ApproveTagAction) o;
-
-        if (tagId != null ? !tagId.equals(that.tagId) : that.tagId != null) return false;
-        if (userGroupId != null ? !userGroupId.equals(that.userGroupId) : that.userGroupId != null) return false;
-
-        return true;
+    public int hashCode() {
+        return Objects.hashCode(tagId, userGroupId);
     }
 
     @Override
-    public int hashCode() {
-        int result = tagId != null ? tagId.hashCode() : 0;
-        result = 31 * result + (userGroupId != null ? userGroupId.hashCode() : 0);
-        return result;
+    public boolean equals(Object obj) {
+        if (obj instanceof ApproveTagAction) {
+            ApproveTagAction other = (ApproveTagAction) obj;
+            return Objects.equal(tagId, other.getTagId()) && Objects.equal(userGroupId, other.getUsergroupId());
+        }
+        return false;
     }
 }
