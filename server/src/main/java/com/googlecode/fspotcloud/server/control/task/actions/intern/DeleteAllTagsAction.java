@@ -46,4 +46,9 @@ public class DeleteAllTagsAction implements Action<VoidResult>,
             return false;
         }
     }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

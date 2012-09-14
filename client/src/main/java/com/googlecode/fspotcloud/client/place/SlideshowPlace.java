@@ -39,6 +39,7 @@ public class SlideshowPlace extends BasePlace {
         return interval;
     }
 
+    @Override
     public boolean equals(Object otherObject) {
         if (otherObject instanceof SlideshowPlace) {
             BasePlace basePlace = (BasePlace) otherObject;

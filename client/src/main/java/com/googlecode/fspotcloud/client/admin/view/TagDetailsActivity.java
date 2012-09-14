@@ -77,9 +77,7 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
     @Override
     public void importTag() {
-        log.info("TagNode: " + tagNode + tagNode.isImportIssued());
-
-        if ((tagNode != null) && tagNode.isImportIssued()) {
+        if (tagNode.isImportIssued()) {
             dispatch.execute(new UserUnImportsTagAction(tagPlace.getTagId()),
                     new AsyncCallback<VoidResult>() {
                         @Override
