@@ -5,4 +5,4 @@ include ':rpc', ':peer-rpc', ':user-service-api',
         ':server', ':peer', ':peer-server-integration', ':server-module-gae', ':server-module-j2ee',
         ':client', ':e2e-test', ':prod-gae-war', ':installer-gae', ':prod-j2ee-war:war',
         ':installer-j2ee-server',
-        ':installer-peer', 'gae-e2e', 'j2ee-e2e', 'gae-session-test', 'j2ee-server-test'
+        ':installer-peer', 'gae-e2e', 'j2ee-e2e', 'gae-session-test', 'j2ee-server-test', ':keyboard-action'

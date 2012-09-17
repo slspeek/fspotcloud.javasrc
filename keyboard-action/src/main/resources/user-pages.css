@@ -1,0 +1,56 @@
+@def foregroundColor Silver;
+
+
+@def ligherColor  Black;
+@def treeColor Silver;
+@def thirdColor #504A4B; /**#342826;*/
+/**@def thirdColor #0C0000; /**#342826;*/
+
+
+ .textBox {
+     background:ligherColor;
+     color: foregroundColor;
+     font-size: 190%;
+     border-color: treeColor;
+ }
+
+ .anchor {
+     color: grey;
+     background: thirdColor;
+     font-size: 150%;
+     text-align:center;
+ }
+
+ .label {
+    background: thirdColor;
+    font-size: 180%;
+    vertical-alignment: text-top;
+
+ }
+ .statusLabel {
+     color: foregroundColor;
+     background: thirdColor;
+
+ }
+
+ .userPage {
+     font-size: 200%;
+     background: ligherColor;
+     color: foregroundColor;
+ }
+
+ .button {
+    font-size: 200%;
+    text-align:center;
+    color: #504A4B;
+
+
+ }
+
+ .titleLabel {
+    background: thirdColor;
+    font-type: bold;
+    font-size: 250%;
+    color: foregroundColor;
+
+ }
