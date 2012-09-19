@@ -29,11 +29,11 @@ import junit.framework.TestCase;
 
 
 public class ShortcutTest extends TestCase {
-    String id = "debug-id";
-    KeyStroke key1 = new KeyStroke('h');
-    KeyStroke key2 = new KeyStroke(KeyCodes.KEY_BACKSPACE);
-    String caption = "Help";
-    String description = "Press h to see help";
+    final String id = "debug-id";
+    final KeyStroke key1 = new KeyStroke('h');
+    final KeyStroke key2 = new KeyStroke(KeyCodes.KEY_BACKSPACE);
+    final String caption = "Help";
+    final String description = "Press h to see help";
     UserActionImpl userActionImpl;
 
     public void testShortcut() {

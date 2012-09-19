@@ -50,7 +50,7 @@ public class PojoTest {
     private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
     private List<PojoClass> pojoClasses;
     private PojoValidator pojoValidator;
-    private Class<?>[] POJO_CLASSES = new Class<?>[]{
+    private final Class<?>[] POJO_CLASSES = new Class<?>[]{
             GetPeerUpdateInstructionsAction.class, GetPeerMetaDataAction.class,
             TagData.class, ImageSpecs.class, GetPhotoDataAction.class,
             GetTagDataAction.class, PeerUpdateInstructionsResult.class,

@@ -41,21 +41,21 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class NavigatorImplTest extends TestCase {
-    DataManager dataManager = new DataManagerImpl(new DispatchAsyncTestImpl());
-    PlaceCalculator placeCalculator = new PlaceCalculator();
+    final DataManager dataManager = new DataManagerImpl(new DispatchAsyncTestImpl());
+    final PlaceCalculator placeCalculator = new PlaceCalculator();
     Navigator navigator;
     Mockery context;
     BasePlace aute = new BasePlace("1", "2");
-    BasePlace daniel = new BasePlace("1", "1");
+    final BasePlace daniel = new BasePlace("1", "1");
     BasePlace danielRaster = new BasePlace("1", "1", 1, 2);
-    BasePlace jan = new BasePlace("1", "3");
+    final BasePlace jan = new BasePlace("1", "3");
     BasePlace janRaster = new BasePlace("1", "3", 1, 2);
-    BasePlace snowie = new BasePlace("4", "11");
-    BasePlace siepie = new BasePlace("4", "12");
-    BasePlace woefje = new BasePlace("5", "21",
+    final BasePlace snowie = new BasePlace("4", "11");
+    final BasePlace siepie = new BasePlace("4", "12");
+    final BasePlace woefje = new BasePlace("5", "21",
             placeCalculator.getRasterWidth(), placeCalculator.getRasterHeight());
-    BasePlace r1_3 = new BasePlace("6", "101", 1, 3);
-    BasePlace r1_3_zoomed_in = new BasePlace("6", "101", 1, 1);
+    final BasePlace r1_3 = new BasePlace("6", "101", 1, 3);
+    final BasePlace r1_3_zoomed_in = new BasePlace("6", "101", 1, 1);
     BasePlace r1_3next = new BasePlace("6", "103", 1, 3);
 
     @Override

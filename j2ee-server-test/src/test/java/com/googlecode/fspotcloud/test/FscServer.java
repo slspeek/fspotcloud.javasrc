@@ -40,7 +40,7 @@ import java.net.URL;
 
 
 public class FscServer {
-    private Server server;
+    private final Server server;
 
     public FscServer(int port) throws IOException, URISyntaxException {
         server = new Server(port);

@@ -36,7 +36,7 @@ public class GetTagDataAction extends BusinessBase implements Action<TagDataResu
         Serializable {
     private static final long serialVersionUID = -2428269504170714946L;
     @BusinessKey
-    private List<String> tagIdList;
+    private final List<String> tagIdList;
 
     public GetTagDataAction(List<String> tagIdList) {
         this.tagIdList = tagIdList;

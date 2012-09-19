@@ -24,12 +24,13 @@
 
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-
+@GwtCompatible
 public class ButtonPanelViewImpl extends LayoutPanel {
     private int widgetCount;
     private int currentWidget = 0;

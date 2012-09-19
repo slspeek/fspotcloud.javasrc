@@ -29,7 +29,7 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class ManageUsersPlace extends Place {
-    private Long userGroupId;
+    private final Long userGroupId;
 
     public ManageUsersPlace(Long userGroupId) {
         this.userGroupId = userGroupId;

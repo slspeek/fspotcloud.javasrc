@@ -48,12 +48,12 @@ import java.util.logging.Logger;
 
 public class TagApprovalViewImpl extends Composite implements TagApprovalView {
     private final Logger log = Logger.getLogger(TagApprovalViewImpl.class.getName());
-    private static TagApprovalViewImplUiBinder uiBinder = GWT.create(TagApprovalViewImplUiBinder.class);
+    private static final TagApprovalViewImplUiBinder uiBinder = GWT.create(TagApprovalViewImplUiBinder.class);
     private TagApprovalPresenter presenter;
-    private ListDataProvider<UserGroupInfo> approvedDataProvider;
-    private ListDataProvider<UserGroupInfo> otherDataProvider;
-    private SingleSelectionModel<UserGroupInfo> approvedSelectionModel = new SingleSelectionModel<UserGroupInfo>();
-    private SingleSelectionModel<UserGroupInfo> otherSelectionModel = new SingleSelectionModel<UserGroupInfo>();
+    private final ListDataProvider<UserGroupInfo> approvedDataProvider;
+    private final ListDataProvider<UserGroupInfo> otherDataProvider;
+    private final SingleSelectionModel<UserGroupInfo> approvedSelectionModel = new SingleSelectionModel<UserGroupInfo>();
+    private final SingleSelectionModel<UserGroupInfo> otherSelectionModel = new SingleSelectionModel<UserGroupInfo>();
     @UiField
     CellTable<UserGroupInfo> approved;
     @UiField

@@ -34,7 +34,7 @@ public class TagDataTest {
     private static final String PARENT = "2";
     private static final String NAME = "Tag";
     private static final String TAG_ID = "1";
-    TagData tag = new TagData(TAG_ID, NAME, PARENT, COUNT);
+    final TagData tag = new TagData(TAG_ID, NAME, PARENT, COUNT);
 
     @Test
     public void testSerialize() throws Exception {

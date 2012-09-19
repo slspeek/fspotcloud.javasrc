@@ -33,13 +33,13 @@ import java.io.Serializable;
 public class TagData extends BusinessBase implements Serializable {
     private static final long serialVersionUID = -7990602627338507900L;
     @BusinessKey
-    private String tagId;
+    private final String tagId;
     @BusinessKey
-    private String parentId;
+    private final String parentId;
     @BusinessKey
-    private String name;
+    private final String name;
     @BusinessKey
-    private int count;
+    private final int count;
 
     public TagData(String tagId, String name, String parentId, int count) {
         super();

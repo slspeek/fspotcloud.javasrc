@@ -29,7 +29,7 @@ import com.googlecode.fspotcloud.client.main.view.HelpPresenter;
 
 
 public class HelpAction implements Runnable {
-    private HelpPresenter helpPresenter;
+    private final HelpPresenter helpPresenter;
 
     @Inject
     public HelpAction(HelpPresenter helpPresenter) {

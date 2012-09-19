@@ -29,7 +29,7 @@ import com.googlecode.fspotcloud.client.main.view.AboutPresenter;
 
 
 public class AboutAction implements Runnable {
-    private AboutPresenter aboutPresenter;
+    private final AboutPresenter aboutPresenter;
     private boolean isShowing = false;
 
     @Inject

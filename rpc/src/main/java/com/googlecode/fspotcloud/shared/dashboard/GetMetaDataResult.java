@@ -33,7 +33,7 @@ import java.util.Date;
 
 @GwtCompatible
 public class GetMetaDataResult implements IsSerializable, Result {
-    private Date created;
+    private final Date created;
     private int peerPhotoCount;
     private int tagCount;
     private int pendingCommandCount;

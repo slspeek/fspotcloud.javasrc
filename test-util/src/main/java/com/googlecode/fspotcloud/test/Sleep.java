@@ -25,7 +25,7 @@
 package com.googlecode.fspotcloud.test;
 
 public class Sleep {
-    private static int pauseTime = Integer.valueOf(System.getProperty(
+    private static final int pauseTime = Integer.valueOf(System.getProperty(
             "pause.time",
             "900"));
 

@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 
 public class UserAccountViewImpl extends Composite implements UserAccountView {
     private final Logger log = Logger.getLogger(UserAccountViewImpl.class.getName());
-    private static UserAccountViewImplUiBinder uiBinder = GWT.create(UserAccountViewImplUiBinder.class);
+    private static final UserAccountViewImplUiBinder uiBinder = GWT.create(UserAccountViewImplUiBinder.class);
     private UserAccountView.UserAccountPresenter presenter;
     @UiField
     Label emailValueLabel;

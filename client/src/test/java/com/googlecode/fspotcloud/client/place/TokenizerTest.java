@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 
 
 public class TokenizerTest extends TestCase {
-    BasePlace.Tokenizer tokenizer = new BasePlace.Tokenizer();
+    final BasePlace.Tokenizer tokenizer = new BasePlace.Tokenizer();
 
     public void testGetPlace() {
         BasePlace expected = new BasePlace("1", "2", 1, 1);

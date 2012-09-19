@@ -24,10 +24,11 @@
 
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import com.google.gwt.event.dom.client.KeyCodes;
 
-
+@GwtCompatible
 public class KeyStroke {
 
 
@@ -151,7 +152,7 @@ public class KeyStroke {
     public boolean equals(Object obj) {
         if (obj instanceof KeyStroke) {
             KeyStroke keyStroke = (KeyStroke) obj;
-            return Objects.equal(keyStroke.keyCode, keyStroke) && keyStroke.shiftDown == shiftDown;
+            return Objects.equal(keyStroke.keyCode, keyCode) && keyStroke.shiftDown == shiftDown;
         }
         return false;
     }

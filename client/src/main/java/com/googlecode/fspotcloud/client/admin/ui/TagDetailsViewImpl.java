@@ -34,7 +34,7 @@ import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
 
 
 public class TagDetailsViewImpl extends Composite implements TagDetailsView {
-    private static TagDetailsViewImplUiBinder uiBinder = GWT.create(TagDetailsViewImplUiBinder.class);
+    private static final TagDetailsViewImplUiBinder uiBinder = GWT.create(TagDetailsViewImplUiBinder.class);
     @UiField
     Label tagNameValueLabel;
     @UiField

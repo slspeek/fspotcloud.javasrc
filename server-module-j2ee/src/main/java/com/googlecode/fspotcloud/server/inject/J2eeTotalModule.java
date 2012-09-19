@@ -44,7 +44,7 @@ public class J2eeTotalModule extends AbstractModule {
     private final int maxTicks;
     private final String botSecret;
     private final String adminEmail;
-    private String smtpServer;
+    private final String smtpServer;
 
     public J2eeTotalModule(int maxTicks, String botSecret, String adminEmail,
                            String smtpServer) {

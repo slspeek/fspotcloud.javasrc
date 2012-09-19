@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 
 public class SignUpViewImpl extends Composite implements SignUpView {
     private final Logger log = Logger.getLogger(SignUpViewImpl.class.getName());
-    private static SignUpViewImplUiBinder uiBinder = GWT.create(SignUpViewImplUiBinder.class);
+    private static final SignUpViewImplUiBinder uiBinder = GWT.create(SignUpViewImplUiBinder.class);
     private SignUpPresenter presenter;
     @UiField
     TextBox emailTextBox;

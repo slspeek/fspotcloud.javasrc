@@ -35,19 +35,19 @@ import java.util.List;
 public class PhotoData extends BusinessBase implements Serializable {
     private static final long serialVersionUID = -4172714943981557358L;
     @BusinessKey
-    private String photoId;
+    private final String photoId;
     @BusinessKey
-    private String description;
+    private final String description;
     @BusinessKey
-    private Date date;
+    private final Date date;
     @BusinessKey
-    private byte[] imageData;
+    private final byte[] imageData;
     @BusinessKey
-    private byte[] thumbData;
+    private final byte[] thumbData;
     @BusinessKey
-    private List<String> tagList;
+    private final List<String> tagList;
     @BusinessKey
-    private int version;
+    private final int version;
 
     public PhotoData(String photoId, String description, Date date,
                      byte[] imageData, byte[] thumbData, List<String> tagList, int version) {

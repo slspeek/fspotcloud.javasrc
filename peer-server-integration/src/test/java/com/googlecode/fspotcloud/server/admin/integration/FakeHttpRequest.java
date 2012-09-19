@@ -41,9 +41,9 @@ import java.util.*;
  * @version $Id: FakeHttpRequest.java,v 1.5 2007/08/01 22:30:04 rafaelsteil Exp $
  */
 public class FakeHttpRequest implements HttpServletRequest {
-    private HttpSession session = new FakeHttpServletSession();
-    private Hashtable params = new Hashtable();
-    private Map attributes = new HashMap();
+    private final HttpSession session = new FakeHttpServletSession();
+    private final Hashtable params = new Hashtable();
+    private final Map attributes = new HashMap();
 
     public String getAuthType() {
         return null;

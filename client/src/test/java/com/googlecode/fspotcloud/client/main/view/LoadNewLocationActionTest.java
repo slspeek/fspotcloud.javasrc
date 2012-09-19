@@ -31,7 +31,7 @@ import org.jmock.Mockery;
 
 
 public class LoadNewLocationActionTest extends TestCase {
-    Mockery context = new Mockery();
+    final Mockery context = new Mockery();
     LoadNewLocation loader;
     LoadNewLocationAction action;
 

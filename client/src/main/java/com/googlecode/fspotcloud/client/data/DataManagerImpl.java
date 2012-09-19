@@ -43,8 +43,8 @@ public class DataManagerImpl implements DataManager {
     private final Logger log = Logger.getLogger(DataManagerImpl.class.getName());
     private final IndexingUtil indexingUtil;
     private boolean isCalled = false;
-    private List<Runnable> queue = newArrayList();
-    private Runnable callbackHook = new Runnable() {
+    private final List<Runnable> queue = newArrayList();
+    private final Runnable callbackHook = new Runnable() {
         @Override
         public void run() {
             for (Runnable task : queue) {

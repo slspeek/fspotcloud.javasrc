@@ -36,14 +36,14 @@ import java.util.TreeSet;
 import static org.junit.Assert.*;
 
 public class PhotoInfoTest {
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+    final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
     Date longAgo;
     Date ago;
     PhotoInfo ape;
     PhotoInfo man;
-    String photoApe = "1";
-    String photoMan = "2";
-    String exif = "EXIF:";
+    final String photoApe = "1";
+    final String photoMan = "2";
+    final String exif = "EXIF:";
 
     @Before
     public void setUp() throws Exception {

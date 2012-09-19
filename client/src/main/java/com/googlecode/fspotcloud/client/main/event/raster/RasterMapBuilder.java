@@ -33,7 +33,7 @@ import com.googlecode.fspotcloud.client.view.action.api.UserActionFactory;
 
 
 public class RasterMapBuilder extends AbstractActionMap {
-    private Resources resources;
+    private final Resources resources;
 
     @Inject
     public RasterMapBuilder(UserActionFactory userActionFactory,

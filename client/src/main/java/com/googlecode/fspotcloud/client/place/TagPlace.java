@@ -29,7 +29,7 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class TagPlace extends Place {
-    private String tagId;
+    private final String tagId;
 
     public TagPlace(String tagId) {
         this.tagId = tagId;

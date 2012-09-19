@@ -24,11 +24,13 @@
 
 package com.googlecode.fspotcloud.testharness;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.EntryPoint;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@GwtCompatible
 
 public class Main implements EntryPoint {
     private final Logger log = Logger.getLogger(Main.class.getName());

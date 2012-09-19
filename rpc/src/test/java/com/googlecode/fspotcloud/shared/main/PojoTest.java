@@ -47,7 +47,7 @@ public class PojoTest {
     private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
     private List<PojoClass> pojoClasses;
     private PojoValidator pojoValidator;
-    private Class<?>[] POJO_CLASSES = new Class<?>[]{
+    private final Class<?>[] POJO_CLASSES = new Class<?>[]{
             AuthenticationAction.class, AuthenticationResult.class, DeleteUserGroupAction.class,
             GetMyUserGroupsAction.class,GetMyUserGroupsResult.class,  GetUserGroupAction.class, GetUserGroupResult.class,
             GrantUserAction.class, LogoutAction.class,

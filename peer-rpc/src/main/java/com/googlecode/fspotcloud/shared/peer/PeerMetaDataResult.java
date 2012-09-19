@@ -35,9 +35,9 @@ public class PeerMetaDataResult extends BusinessBase implements Result,
         Serializable {
     private static final long serialVersionUID = 5786908411967248429L;
     @BusinessKey
-    private int tagCount;
+    private final int tagCount;
     @BusinessKey
-    private int photoCount;
+    private final int photoCount;
 
     public PeerMetaDataResult(int tagCount, int photoCount) {
         super();

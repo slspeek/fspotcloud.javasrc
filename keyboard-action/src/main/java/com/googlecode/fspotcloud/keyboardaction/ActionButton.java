@@ -24,55 +24,55 @@
 
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+import com.google.web.bindery.event.shared.EventBus;
 
+import java.util.logging.Logger;
 
-public class UserButtonViewImpl extends PushButton implements UserButtonView {
-    private UserButtonPresenter presenter;
+@GwtCompatible
+public class ActionButton extends PushButton  {
+
+    private final Logger log = Logger.getLogger(ActionButton.class.getName());
+    private final ActionDef actionDef;
+    private final EventBus eventBus;
 
     @Inject
-    public UserButtonViewImpl(ImageResource icon) {
-        super(new Image(icon));
+    public ActionButton(@Assisted ActionDef actionDef,  EventBus eventBus) {
+        //super(new Image(icon));
+        this.actionDef = actionDef;
+        this.eventBus = eventBus;
+        initialize();
     }
 
-    @Inject
-    public UserButtonViewImpl() {
-    }
 
-    @Override
-    public void setPresenter(UserButtonPresenter presenter) {
-        this.presenter = presenter;
-        registerClickEvents();
-    }
-
-    private void registerClickEvents() {
-        // Maybe unregister old one first?
+    private void initialize() {
         // For now setPresenter must be called only once.
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                if (presenter != null) {
-                    presenter.buttonClicked();
-                }
+                log.info(" Button: " + actionDef.getId() + " pressed.");
+                  eventBus.fireEvent(new KeyboardActionEvent(actionDef.getId()));
             }
         });
+        setCaption(actionDef.getName());
+        setTooltip(actionDef.getDescription());
+        setDebugId(actionDef.getId());
     }
 
-    @Override
     public void setCaption(String caption) {
         setText(caption);
     }
 
-    @Override
     public void setTooltip(String tooltip) {
         asWidget().setTitle(tooltip);
     }
 
-    @Override
     public void setDebugId(String id) {
         ensureDebugId(id);
     }

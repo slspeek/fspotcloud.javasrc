@@ -33,8 +33,8 @@ import java.util.Map;
 
 
 public class ImageViewFactoryImpl implements ImageViewFactory {
-    private Map<String, ImageView> imageViewCache = new HashMap<String, ImageView>();
-    ImageViewFactory factory;
+    private final Map<String, ImageView> imageViewCache = new HashMap<String, ImageView>();
+    final ImageViewFactory factory;
 
     @Inject
     public ImageViewFactoryImpl(ImageViewFactory factory) {

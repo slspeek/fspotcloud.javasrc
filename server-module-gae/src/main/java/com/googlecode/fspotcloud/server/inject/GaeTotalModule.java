@@ -46,7 +46,7 @@ import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchServletModule;
  */
 public class GaeTotalModule extends AbstractModule {
     public static final Integer MAX_COMMAND_DELETE = new Integer(300);
-    private String botSecret;
+    private final String botSecret;
     private final int maxTicks;
     private final String fromAddress;
     private String smtpServer;

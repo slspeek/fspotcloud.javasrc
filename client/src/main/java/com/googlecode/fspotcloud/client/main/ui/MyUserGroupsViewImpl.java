@@ -47,10 +47,10 @@ import java.util.logging.Logger;
 
 public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView {
     private final Logger log = Logger.getLogger(MyUserGroupsViewImpl.class.getName());
-    private static MyUserGroupsViewImplUiBinder uiBinder = GWT.create(MyUserGroupsViewImplUiBinder.class);
+    private static final MyUserGroupsViewImplUiBinder uiBinder = GWT.create(MyUserGroupsViewImplUiBinder.class);
     private MyUserGroupsPresenter presenter;
-    private ListDataProvider<UserGroupInfo> dataProvider;
-    private SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
+    private final ListDataProvider<UserGroupInfo> dataProvider;
+    private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
     @UiField
     CellTable<UserGroupInfo> table;
     @UiField

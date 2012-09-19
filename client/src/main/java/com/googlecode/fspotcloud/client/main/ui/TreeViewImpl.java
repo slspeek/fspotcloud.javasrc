@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 
 public class TreeViewImpl extends ResizeComposite implements TreeView {
     private final Logger log = Logger.getLogger(TreeViewImpl.class.getName());
-    private static TreeViewImplUiBinder uiBinder = GWT.create(TreeViewImplUiBinder.class);
+    private static final TreeViewImplUiBinder uiBinder = GWT.create(TreeViewImplUiBinder.class);
     CellTree cellTree;
     @UiField
     ScrollPanel tagTreeViewPanel;

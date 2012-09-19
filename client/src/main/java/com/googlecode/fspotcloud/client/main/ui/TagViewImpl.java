@@ -54,7 +54,7 @@ public class TagViewImpl extends Composite implements TagView,
     private static final int IMAGEPANEL_HEIGHT_PCT = 100 -
             BUTTON_PANEL_HEIGHT_PCT;
     private final Logger log = Logger.getLogger(TagViewImpl.class.getName());
-    private static TagViewImplUiBinder uiBinder = GWT.create(TagViewImplUiBinder.class);
+    private static final TagViewImplUiBinder uiBinder = GWT.create(TagViewImplUiBinder.class);
     static int ID;
     @UiField
     HTML horizontalFocusPanel;
@@ -62,13 +62,13 @@ public class TagViewImpl extends Composite implements TagView,
     HTML verticalFocusPanel;
     @UiField
     LayoutPanel mainPanel;
-    TreeView treeView;
-    ButtonPanelView buttonPanelView;
-    ImageRasterView imageRasterView;
+    final TreeView treeView;
+    final ButtonPanelView buttonPanelView;
+    final ImageRasterView imageRasterView;
     private final TimerInterface timer;
     @SuppressWarnings("unused")
     private TagPresenter presenter;
-    int id = ID++;
+    final int id = ID++;
 
     @Inject
     public TagViewImpl(TreeView treeView,

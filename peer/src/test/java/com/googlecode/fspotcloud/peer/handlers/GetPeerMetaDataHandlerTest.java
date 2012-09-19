@@ -34,7 +34,7 @@ import java.net.URL;
 
 
 public class GetPeerMetaDataHandlerTest extends TestCase {
-    GetPeerMetaDataAction action = new GetPeerMetaDataAction();
+    final GetPeerMetaDataAction action = new GetPeerMetaDataAction();
     Data data;
     GetPeerMetaDataHandler handler;
 

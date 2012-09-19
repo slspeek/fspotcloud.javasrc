@@ -33,7 +33,7 @@ import java.util.Properties;
 
 
 public class J2eeGuiceServletConfig extends GuiceServletContextListener {
-    Properties p = (new PropertiesLoader("properties.properties")).loadProperties();
+    final Properties p = (new PropertiesLoader("properties.properties")).loadProperties();
 
     @Override
     protected Injector getInjector() {

@@ -1,16 +1,21 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
+
 import java.util.Iterator;
 import java.util.Map;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 
+@GwtCompatible
 public class KeyboardBinding {
 
     private final KeyStroke[] defaultKeys;
     private final Map<String, KeyStroke[]> binding = newHashMap();
+    private String[] modes;
 
-    public KeyboardBinding(KeyStroke[] defaultKeys) {
+    KeyboardBinding(KeyStroke[] defaultKeys) {
         this.defaultKeys = defaultKeys;
     }
 
@@ -24,8 +29,16 @@ public class KeyboardBinding {
         return this;
     }
 
+    public KeyboardBinding withModes(String... modes) {
+        this.modes = modes;
+        return this;
+    }
+
     public KeyStroke[] getKeys(String mode) {
-        KeyStroke[] result = defaultKeys;
+        KeyStroke[] result = {};
+        if (newArrayList(modes).contains(mode)) {
+            result = defaultKeys;
+        }
         KeyStroke[] override = binding.get(mode);
         if (override != null) {
             result = override;
@@ -33,4 +46,7 @@ public class KeyboardBinding {
         return result;
     }
 
+    public String[] getModes() {
+        return modes;
+    }
 }

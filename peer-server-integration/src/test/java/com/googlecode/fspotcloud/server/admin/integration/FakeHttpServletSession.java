@@ -63,12 +63,12 @@ public class FakeHttpServletSession implements HttpSession {
     /**
      * The list of attributes
      */
-    private Map<String, Object> attributes = new HashMap<String, Object>();
+    private final Map<String, Object> attributes = new HashMap<String, Object>();
 
     /**
      * When were we created
      */
-    private long creationTime;
+    private final long creationTime;
 
     /**
      * How long before we timeout?

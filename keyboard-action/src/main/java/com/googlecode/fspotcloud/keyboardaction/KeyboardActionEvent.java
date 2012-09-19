@@ -24,19 +24,25 @@
 
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import com.google.web.bindery.event.shared.Event;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
     private final Logger log = Logger.getLogger(KeyboardActionEvent.class.getName());
-    public final Type<IKeyboardActionHandler> TYPE = new Type<IKeyboardActionHandler>();
-    private String actionId;
+    public static final  Type<IKeyboardActionHandler> TYPE = new Type<IKeyboardActionHandler>();
+    private final String actionId;
 
     public KeyboardActionEvent(String actionId) {
         this.actionId = actionId;
+    }
+
+    public String getActionId() {
+        return actionId;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
 
     @Override
     protected void dispatch(IKeyboardActionHandler handlerI) {
-        log.info("in dispatch");
+        log.log(Level.FINEST, "in dispatch");
         handlerI.onEvent(this);
     }
 

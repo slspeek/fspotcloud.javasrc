@@ -1,18 +1,31 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
+
+@GwtCompatible
 public class KeyboardActionFactory {
 
-    private final String[] modes;
+
     private final ActionImplementationRegister actionImplementationRegister = new ActionImplementationRegister();
     private final KeyboardPreferences keyboardPreferences;
-    private ActionManager actionManager;
-    private ConfigBuilder configBuilder;
+    private final ActionManager actionManager;
+    private final ConfigBuilder configBuilder;
+    private final ButtonDefinitions buttonDefinitions;
+    private final IModeController modeController;
+    private final NativePreviewHandler nativePreviewHandler;
+    private final EventBus eventBus = new SimpleEventBus();
 
     public KeyboardActionFactory(String[] modes) {
-        this.modes = modes;
+        modeController = new ModeController(modes[0]);
         keyboardPreferences = new KeyboardPreferences(modes);
-        actionManager = new ActionManager(actionImplementationRegister, keyboardPreferences);
-        configBuilder = new ConfigBuilder(actionImplementationRegister, keyboardPreferences);
+        buttonDefinitions = new ButtonDefinitions();
+        actionManager = new ActionManager(actionImplementationRegister);
+        eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
+        configBuilder = new ConfigBuilder(actionImplementationRegister, keyboardPreferences, buttonDefinitions);
+        nativePreviewHandler = new NativePreviewHandler(eventBus,keyboardPreferences,modeController);
+        nativePreviewHandler.init();
     }
 
 
@@ -21,7 +34,12 @@ public class KeyboardActionFactory {
     }
 
     public IModeController getModeController() {
-        return actionManager;
+        return modeController;
+    }
+
+    public ActionButton getButton(String actionId) {
+        ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        return new ActionButton(actionDef, eventBus);
     }
 
 }

@@ -41,7 +41,7 @@ public class GetPeerUpdateInstructionsAction extends BusinessBase
         implements Action<PeerUpdateInstructionsResult>,
         Serializable {
     @BusinessKey
-    private List<TagData> tagsOnServer;
+    private final List<TagData> tagsOnServer;
 
     public GetPeerUpdateInstructionsAction(List<TagData> tagsOnServer) {
         this.tagsOnServer = tagsOnServer;

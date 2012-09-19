@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 public class EditUserGroupViewImpl extends Composite
         implements EditUserGroupView {
     private final Logger log = Logger.getLogger(EditUserGroupViewImpl.class.getName());
-    private static EditUserGroupBinder uiBinder = GWT.create(EditUserGroupBinder.class);
+    private static final EditUserGroupBinder uiBinder = GWT.create(EditUserGroupBinder.class);
     private EditUserGroupPresenter presenter;
     @UiField
     TextBox nameTextBox;

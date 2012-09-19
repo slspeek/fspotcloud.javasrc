@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 
 public class HelpPopup extends PopupPanel implements PopupView {
     private final Logger log = Logger.getLogger(HelpPopup.class.getName());
-    private static HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
+    private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
     @UiField
     FocusPanel focusPanel;
     @UiField

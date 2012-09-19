@@ -35,9 +35,9 @@ public class FullsizePhotoResult extends BusinessBase implements Result,
         Serializable {
     private static final long serialVersionUID = -4172714943981557358L;
     @BusinessKey
-    private String photoId;
+    private final String photoId;
     @BusinessKey
-    private byte[] fullsizeImageData;
+    private final byte[] fullsizeImageData;
 
     public FullsizePhotoResult(String photoId, byte[] fullsizeImageData) {
         this.photoId = photoId;

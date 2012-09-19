@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 public class UserEvent<H extends UserEventHandler> extends GwtEvent<H> {
     private final Logger log = Logger.getLogger(UserEvent.class.getName());
     public final Type<H> TYPE = new Type<H>();
-    private ActionDef actionDef;
+    private final ActionDef actionDef;
 
     @Inject
     public UserEvent(@Assisted

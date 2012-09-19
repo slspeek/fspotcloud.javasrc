@@ -34,7 +34,7 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 public class GetPhotoDataActionTest {
     private static final ImageSpecs SPECS = new ImageSpecs(1024, 768, 512, 378);
     private static final List<String> keys = ImmutableList.of("1", "2");
-    GetPhotoDataAction action = new GetPhotoDataAction(SPECS, keys);
+    final GetPhotoDataAction action = new GetPhotoDataAction(SPECS, keys);
 
     @Test
     public void testSerialize2() throws Exception {

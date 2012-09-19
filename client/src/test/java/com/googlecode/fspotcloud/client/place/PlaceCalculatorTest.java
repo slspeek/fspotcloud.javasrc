@@ -31,7 +31,7 @@ import junit.framework.TestCase;
 public class PlaceCalculatorTest extends TestCase {
     public static final String TAG_ID1 = "1";
     public static final String PHOTO_ID = "10";
-    PlaceCalculator placeCalculator = new PlaceCalculator();
+    final PlaceCalculator placeCalculator = new PlaceCalculator();
 
     public void testUnslideshow() {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1);

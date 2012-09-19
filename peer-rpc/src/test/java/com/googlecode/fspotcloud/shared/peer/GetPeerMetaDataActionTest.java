@@ -30,7 +30,7 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
 
 public class GetPeerMetaDataActionTest {
-    GetPeerMetaDataAction action = new GetPeerMetaDataAction();
+    final GetPeerMetaDataAction action = new GetPeerMetaDataAction();
 
     @Test
     public void testSerialize() throws Exception {

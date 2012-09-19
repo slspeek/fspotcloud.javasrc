@@ -38,7 +38,7 @@ import java.util.TreeMap;
 
 public abstract class AbstractActionMap implements ActionMap {
     protected final UserActionFactory userActionFactory;
-    SortedMap<ActionDef, UserAction> actionMap = new TreeMap<ActionDef, UserAction>();
+    final SortedMap<ActionDef, UserAction> actionMap = new TreeMap<ActionDef, UserAction>();
     private final String description;
 
     public AbstractActionMap(UserActionFactory userActionFactory,

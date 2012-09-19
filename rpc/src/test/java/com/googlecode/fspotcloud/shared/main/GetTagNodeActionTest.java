@@ -9,7 +9,7 @@ public class GetTagNodeActionTest {
 
     public static final String ID = "ID";
 
-    private GetTagNodeAction action = new GetTagNodeAction(ID);
+    private final GetTagNodeAction action = new GetTagNodeAction(ID);
 
     @Test
     public void testGetTagId() throws Exception {

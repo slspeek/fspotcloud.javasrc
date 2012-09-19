@@ -49,7 +49,7 @@ public class DataManagerImplTest extends TestCase {
     AsyncCallback<List<TagNode>> thirdCall;
     ArgumentCaptor<AsyncCallback<List<TagNode>>> remoteCallCaptor;
     ArgumentCaptor<AsyncCallback<TagTreeResult>> newRemoteCallCaptor;
-    TagNode tagNode = new TagNode(ID);
+    final TagNode tagNode = new TagNode(ID);
     DispatchAsync dispatchAsync;
     ArgumentCaptor<GetTagTreeAction> actionCapture;
 

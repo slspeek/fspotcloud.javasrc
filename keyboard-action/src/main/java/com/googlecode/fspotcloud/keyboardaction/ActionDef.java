@@ -1,9 +1,10 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.ui.Image;
 
 import java.util.List;
-
+@GwtCompatible
 public class ActionDef {
 
     private final String id, name, description;

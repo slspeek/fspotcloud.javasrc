@@ -31,7 +31,7 @@ import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
 
 public class LoadNewLocationAction implements Runnable {
     private final LoadNewLocation loader;
-    private String newLocation;
+    private final String newLocation;
 
     @Inject
     public LoadNewLocationAction(LoadNewLocation loader,

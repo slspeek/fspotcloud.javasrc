@@ -36,7 +36,7 @@ public class TagDataResult extends BusinessBase implements Result,
         Serializable {
     private static final long serialVersionUID = 4359780265493816575L;
     @BusinessKey
-    private List<TagData> tagDataList;
+    private final List<TagData> tagDataList;
 
     public TagDataResult(List<TagData> tagDataList) {
         super();

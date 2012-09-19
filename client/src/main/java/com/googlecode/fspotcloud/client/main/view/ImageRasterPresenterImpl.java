@@ -56,7 +56,7 @@ public class ImageRasterPresenterImpl extends AbstractActivity implements ImageR
     private final Navigator navigator;
     private final ImagePresenterFactory imagePresenterFactory;
     List<ImageView> imageViewList;
-    List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
+    final List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
 
     @Inject
     public ImageRasterPresenterImpl(@Assisted

@@ -36,7 +36,7 @@ import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
 
 public class GlobalActionsViewImpl extends Composite
         implements GlobalActionsView {
-    private static GlobalActionsViewImplUiBinder uiBinder = GWT.create(GlobalActionsViewImplUiBinder.class);
+    private static final GlobalActionsViewImplUiBinder uiBinder = GWT.create(GlobalActionsViewImplUiBinder.class);
     private GlobalActionsPresenter presenter;
     @UiField
     Label peerPhotoCountValueLabel;

@@ -41,7 +41,7 @@ public abstract class EqualsTest<T> {
     T one;
     T theOther;
     T differs;
-    Object obj = new Object();
+    final Object obj = new Object();
 
     @Before
     public final void setup() {

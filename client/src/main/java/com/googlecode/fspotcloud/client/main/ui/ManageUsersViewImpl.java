@@ -44,10 +44,10 @@ import java.util.logging.Logger;
 
 public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     private final Logger log = Logger.getLogger(ManageUsersViewImpl.class.getName());
-    private static ManageUsersViewImplUiBinder uiBinder = GWT.create(ManageUsersViewImplUiBinder.class);
+    private static final ManageUsersViewImplUiBinder uiBinder = GWT.create(ManageUsersViewImplUiBinder.class);
     private ManageUsersView.ManageUsersPresenter presenter;
-    private ListDataProvider<String> dataProvider;
-    private SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
+    private final ListDataProvider<String> dataProvider;
+    private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
     @UiField
     CellTable<String> table;
     @UiField

@@ -24,9 +24,10 @@
 
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.shared.EventHandler;
 
-
-public interface IKeyboardActionHandler extends EventHandler {
+@GwtCompatible
+interface IKeyboardActionHandler extends EventHandler {
     void onEvent(KeyboardActionEvent event);
 }

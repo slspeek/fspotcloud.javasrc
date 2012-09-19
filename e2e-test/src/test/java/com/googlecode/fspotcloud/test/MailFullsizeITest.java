@@ -33,7 +33,7 @@ import javax.inject.Inject;
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class MailFullsizeITest {
-    private static String SLS = "slspeek@gmail.com";
+    private static final String SLS = "slspeek@gmail.com";
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject

@@ -31,7 +31,7 @@ import java.util.Map;
 
 
 public abstract class AbstractActionFamily implements ActionFamily {
-    Map<String, ActionMap> familyMap = new HashMap<String, ActionMap>();
+    final Map<String, ActionMap> familyMap = new HashMap<String, ActionMap>();
     private final String description;
 
     public AbstractActionFamily(String description) {

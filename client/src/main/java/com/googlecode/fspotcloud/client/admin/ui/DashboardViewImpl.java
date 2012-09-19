@@ -40,11 +40,11 @@ import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 
 
 public class DashboardViewImpl extends Composite implements DashboardView {
-    private static DashboardViewImplUiBinder uiBinder = GWT.create(DashboardViewImplUiBinder.class);
+    private static final DashboardViewImplUiBinder uiBinder = GWT.create(DashboardViewImplUiBinder.class);
     @UiField
     SimplePanel tagDetailsViewContainer;
-    GlobalActionsView globalActionsView;
-    TreeView treeView;
+    final GlobalActionsView globalActionsView;
+    final TreeView treeView;
     @UiField
     PushButton toPhotos;
     @UiField

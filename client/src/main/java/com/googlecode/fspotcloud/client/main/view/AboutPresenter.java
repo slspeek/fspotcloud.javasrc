@@ -42,7 +42,7 @@ public class AboutPresenter implements PopupView.PopupPresenter {
     private final HelpContentGenerator generator;
     private String helptext;
     private final ActionMap actions;
-    private Resources resources;
+    private final Resources resources;
     private final IGlobalShortcutController globalShortcutController;
 
     @Inject
