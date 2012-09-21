@@ -18,12 +18,12 @@ public class KeyboardActionFactory {
     private final EventBus eventBus = new SimpleEventBus();
 
     public KeyboardActionFactory(String[] modes) {
-        modeController = new ModeController(modes[0]);
         keyboardPreferences = new KeyboardPreferences(modes);
         buttonDefinitions = new ButtonDefinitions();
         actionManager = new ActionManager(actionImplementationRegister);
         eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
         configBuilder = new ConfigBuilder(actionImplementationRegister, keyboardPreferences, buttonDefinitions);
+        modeController = new ModeController(modes[0], keyboardPreferences, eventBus);
         nativePreviewHandler = new NativePreviewHandler(eventBus,keyboardPreferences,modeController);
         nativePreviewHandler.init();
     }

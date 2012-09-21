@@ -78,3 +78,8 @@ jettyRun {
 artifacts {
     javascript javascriptJar
 }
+
+task cleanUp(type: Delete) {
+    delete 'src/main/webapp/testharness', 'src/main/webapp/WEB-INF', 'src/main/gwt-unitCache'
+}
+clean.dependsOn cleanUp

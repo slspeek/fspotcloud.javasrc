@@ -32,13 +32,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
-    private final Logger log = Logger.getLogger(KeyboardActionEvent.class.getName());
-    public static final  Type<IKeyboardActionHandler> TYPE = new Type<IKeyboardActionHandler>();
+class ActionEnableEvent extends Event<IActionEnableHandler> {
+    private final Logger log = Logger.getLogger(ActionEnableEvent.class.getName());
+    public static final  Type<IActionEnableHandler> TYPE = new Type<IActionEnableHandler>();
     private final String actionId;
+    private final boolean state;
 
-    public KeyboardActionEvent(String actionId) {
+    public ActionEnableEvent(String actionId, boolean state) {
         this.actionId = actionId;
+        this.state = state;
     }
 
     public String getActionId() {
@@ -46,31 +48,35 @@ public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
     }
 
     @Override
-    public Type<IKeyboardActionHandler> getAssociatedType() {
+    public Type<IActionEnableHandler> getAssociatedType() {
         return TYPE;
     }
 
     @Override
-    protected void dispatch(IKeyboardActionHandler handlerI) {
-        log.log(Level.FINEST, "in dispatch for " + this);
+    protected void dispatch(IActionEnableHandler handlerI) {
+        log.log(Level.OFF, "in dispatch for " + this);
         handlerI.onEvent(this);
     }
 
     public boolean equals(Object o) {
-        if (o instanceof KeyboardActionEvent) {
-            KeyboardActionEvent other = (KeyboardActionEvent) o;
-            return Objects.equal(other.actionId, actionId);
+        if (o instanceof ActionEnableEvent) {
+            ActionEnableEvent other = (ActionEnableEvent) o;
+            return Objects.equal(other.actionId, actionId) && state == other.state;
         } else {
             return false;
         }
     }
 
     public int hashCode() {
-        return Objects.hashCode(actionId);
+        return Objects.hashCode(actionId, state);
+    }
+
+    public boolean getState() {
+        return state;
     }
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("action", actionId).toString();
+        return Objects.toStringHelper(this).add("action", actionId).add("state", state).toString();
     }
 }

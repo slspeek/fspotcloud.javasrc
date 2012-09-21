@@ -8,4 +8,6 @@ public interface IModeController {
     String getMode();
 
     void setMode(String mode);
+
+    void initButtonEnableStates();
 }

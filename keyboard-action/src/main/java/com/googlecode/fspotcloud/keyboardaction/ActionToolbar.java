@@ -30,27 +30,35 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.google.common.collect.Lists.newArrayList;
+
 @GwtCompatible
-public class ButtonPanelViewImpl extends LayoutPanel {
-    private int widgetCount;
-    private int currentWidget = 0;
+public class ActionToolbar extends LayoutPanel {
+    private List<Widget> widgetList = newArrayList();
 
     @Inject
-    public ButtonPanelViewImpl() {
-
+    public ActionToolbar() {
+        setHeight("50px");
     }
 
     @Override
     public void add(Widget w) {
-        float step = 100f / widgetCount;
+        widgetList.add(w);
         super.add(w);
-        setWidgetLeftWidth(w, currentWidget * step, Unit.PCT, step, Unit.PCT);
-        //forceLayout();
-        //last
-        currentWidget++;
+        doLayout();
     }
 
-    public void setWidgetCount(int count) {
-        this.widgetCount = count;
+    private void doLayout() {
+        final int widgetCount = widgetList.size();
+
+        final float step = 100f / widgetCount;
+        for (int i = 0; i < widgetCount; i++) {
+            Widget widget = widgetList.get(i);
+            setWidgetLeftWidth(widget, i * step, Unit.PCT, step, Unit.PCT);
+        }
     }
 }

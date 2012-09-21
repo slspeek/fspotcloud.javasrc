@@ -27,24 +27,23 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ActionButton extends PushButton  {
+public class ActionButton extends PushButton implements IActionEnableHandler {
 
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionDef actionDef;
     private final EventBus eventBus;
 
     @Inject
-    public ActionButton(@Assisted ActionDef actionDef,  EventBus eventBus) {
+    public ActionButton(@Assisted ActionDef actionDef, EventBus eventBus) {
         //super(new Image(icon));
         this.actionDef = actionDef;
         this.eventBus = eventBus;
@@ -53,11 +52,11 @@ public class ActionButton extends PushButton  {
 
 
     private void initialize() {
-        // For now setPresenter must be called only once.
+        eventBus.addHandler(ActionEnableEvent.TYPE, this);
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                log.info(" Button: " + actionDef.getId() + " pressed.");
-                  eventBus.fireEvent(new KeyboardActionEvent(actionDef.getId()));
+                log.log(Level.FINEST, "Button: " + actionDef.getId() + " pressed.");
+                eventBus.fireEvent(new KeyboardActionEvent(actionDef.getId()));
             }
         });
         setCaption(actionDef.getName());
@@ -75,5 +74,13 @@ public class ActionButton extends PushButton  {
 
     public void setDebugId(String id) {
         ensureDebugId(id);
+    }
+
+    @Override
+    public void onEvent(ActionEnableEvent event) {
+        if (event.getActionId().equals(actionDef.getId())) {
+            setEnabled(event.getState());
+            //setVisible(event.getState());
+        }
     }
 }
