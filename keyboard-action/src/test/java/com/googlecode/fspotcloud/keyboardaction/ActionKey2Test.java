@@ -15,6 +15,6 @@ public class ActionKey2Test extends EqualsTest<ActionKey> {
 
     @Override
     protected ActionKey getDifferentOne() {
-        return new ActionKey(KeyboardPreferencesTest.MODE, new KeyStroke(false, 'a'));
+        return new ActionKey(KeyboardPreferencesTest.MODE, new KeyStroke(Modifiers.NONE, 'a'));
     }
 }

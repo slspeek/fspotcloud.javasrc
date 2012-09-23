@@ -22,7 +22,7 @@ dependencies {
     compile "com.google.gwt:gwt-dev:${gwt_version}"
 
     testCompile project(':test-util')
-    testCompile "junit:junit:3.8.1"
+    compile "junit:junit:3.8.1"
     testCompile ext.libs.junit
     testCompile ext.libs.jukito
     testCompile ext.libs.mockito
@@ -80,6 +80,6 @@ artifacts {
 }
 
 task cleanUp(type: Delete) {
-    delete 'src/main/webapp/testharness', 'src/main/webapp/WEB-INF', 'src/main/gwt-unitCache'
+    delete 'src/main/webapp/testharness', 'src/main/webapp/WEB-INF', 'gwt-unitCache', 'war', '../war'
 }
 clean.dependsOn cleanUp

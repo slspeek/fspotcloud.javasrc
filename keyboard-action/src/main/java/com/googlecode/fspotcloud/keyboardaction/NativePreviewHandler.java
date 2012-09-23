@@ -31,23 +31,29 @@ class NativePreviewHandler implements Event.NativePreviewHandler {
         NativeEvent event = preview.getNativeEvent();
         int keycode = event.getKeyCode();
 
-        if (!event.getType().equalsIgnoreCase("keydown") ||
-                event.getAltKey() ||
-                event.getCtrlKey() ||
-                event.getMetaKey()
+        if (!event.getType().equalsIgnoreCase("keydown")
+
                 ) {
             return;
         }
 
-        log.log(Level.FINEST, "Event preview in keypress code: " + keycode);
+        final Modifiers modifiers = getModifiers(event);
+        log.log(Level.FINEST, "Event preview in keypress code: " + keycode + " mods: " + modifiers);
         final String mode = modeController.getMode();
-        final boolean shiftKey = event.getShiftKey();
-        String actionId = keyboardPreferences.get(mode, new KeyStroke(shiftKey, keycode));
+        String actionId = keyboardPreferences.get(mode, new KeyStroke(modifiers, keycode));
 
         if (actionId != null) {
             log.log(Level.FINEST, "ActionId found proceeding for: " + actionId);
             eventBus.fireEvent(new KeyboardActionEvent(actionId));
         }
 
+    }
+
+    private Modifiers getModifiers(NativeEvent event) {
+        final boolean shiftKey = event.getShiftKey();
+        final boolean ctrlKey = event.getCtrlKey();
+        final boolean altKey = event.getAltKey();
+        Modifiers modifiers = new Modifiers(shiftKey, ctrlKey,  altKey);
+        return modifiers;
     }
 }

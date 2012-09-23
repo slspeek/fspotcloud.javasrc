@@ -32,18 +32,19 @@ import com.google.gwt.event.dom.client.KeyCodes;
 public class KeyStroke {
 
 
-    private final boolean shiftDown;
+    private final Modifiers modifiers;
+            ;
 
     private final int keyCode;
 
-    public KeyStroke(boolean shiftDown, int keyCode) {
-        this.shiftDown = shiftDown;
+    public KeyStroke(Modifiers modifiers, int keyCode) {
+        this.modifiers = modifiers;
         this.keyCode = keyCode;
     }
 
     public KeyStroke(int keyCode) {
         this.keyCode = keyCode;
-        this.shiftDown = false;
+        this.modifiers = Modifiers.NONE;
     }
 
     public int getKeyCode() {
@@ -145,20 +146,20 @@ public class KeyStroke {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(shiftDown, keyCode);
+        return Objects.hashCode(modifiers, keyCode);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof KeyStroke) {
             KeyStroke keyStroke = (KeyStroke) obj;
-            return Objects.equal(keyStroke.keyCode, keyCode) && keyStroke.shiftDown == shiftDown;
+            return Objects.equal(keyStroke.keyCode, keyCode) && Objects.equal(keyStroke.modifiers, modifiers);
         }
         return false;
     }
 
     public String toString() {
         return Objects.toStringHelper(this).add("key", getKeyString() + "(" + getKeyCode() + ")").
-                add("shift", shiftDown).toString();
+                add("mods", modifiers).toString();
     }
 }

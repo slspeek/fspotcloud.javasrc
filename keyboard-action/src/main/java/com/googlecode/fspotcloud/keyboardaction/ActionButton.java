@@ -62,6 +62,7 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
         setCaption(actionDef.getName());
         setTooltip(actionDef.getDescription());
         setDebugId(actionDef.getId());
+
     }
 
     public void setCaption(String caption) {

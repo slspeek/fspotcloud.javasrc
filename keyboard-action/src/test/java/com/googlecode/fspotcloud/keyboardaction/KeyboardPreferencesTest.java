@@ -16,7 +16,7 @@ public class KeyboardPreferencesTest {
     public static final String ACTION_2 = "ACTION2";
     private KeyboardPreferences keyboardPreferences;
     public static final char KEY_CODE = 'A';
-    public static final KeyStroke SHIFT_A = new KeyStroke(true, KEY_CODE);
+    public static final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, KEY_CODE);
     final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withModes(MODE_ONE);
 
     @Before
@@ -31,7 +31,7 @@ public class KeyboardPreferencesTest {
         keyboardPreferences.bind(ACTION_2, C_BINDING);
 
         assertEquals(ACTION_ID, keyboardPreferences.get(MODE, SHIFT_A));
-        assertEquals(ACTION_ID, keyboardPreferences.get(MODE, new KeyStroke(true, KEY_CODE)));
+        assertEquals(ACTION_ID, keyboardPreferences.get(MODE, new KeyStroke(Modifiers.SHIFT, KEY_CODE)));
         assertEquals(ACTION_2, keyboardPreferences.get(MODE_ONE, KEY_C));
         assertEquals(ACTION_2, keyboardPreferences.get(MODE_TWO, KEY_B));
 

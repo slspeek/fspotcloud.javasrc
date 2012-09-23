@@ -32,18 +32,20 @@ public class MainFactory {
     final IModeController modeController = keyboardActionFactory.getModeController();
 
 
-    final KeyStroke SHIFT_A = new KeyStroke(true, 'A');
+    final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
     final KeyStroke KEY_B = new KeyStroke('B');
     final KeyStroke KEY_D = new KeyStroke('D');
     final KeyStroke KEY_G = new KeyStroke('G');
     final KeyStroke KEY_3 = new KeyStroke('3');
+    final KeyStroke ALT_M = new KeyStroke(Modifiers.ALT, 'M');
+    final KeyStroke CTRL_M = new KeyStroke(Modifiers.CTRL, 'M');
 
 
     final KeyboardBinding ALLWAYS_SHIFT_A = KeyboardBinding.bind(SHIFT_A, KEY_D).withModes(MODES).override(MODE_TWO);
     final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withModes(MODE_ONE);
-    final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G).withModes(MODES);
-    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3).withModes(MODES).override(MODE_THREE).override(MODE_ONE);
+    final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withModes(MODES);
+    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withModes(MODES).override(MODE_THREE).override(MODE_ONE);
     TextArea messageBoard = new TextArea();
 
     void outputMesg(String msg) {
