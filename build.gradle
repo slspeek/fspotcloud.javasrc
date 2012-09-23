@@ -191,7 +191,8 @@ task unittests(dependsOn: [
         ':model-jpa-gae:test',
         ':user-service-api:test',
         ':user-service-gae:test',
-        ':user-service-openid:test'
+        ':user-service-openid:test'.
+        'keyboard-action:test'
 ]) << {
     println "Done unit testing."
 }
@@ -207,7 +208,8 @@ if ("${cobertura}" == "true") {
             ':model-jpa-gae:cobertura',
             ':user-service-api:cobertura',
             ':user-service-gae:cobertura',
-            ':user-service-openid:cobertura'
+            ':user-service-openid:cobertura',
+            'keyboard-action:cobertura'
     ]) << {
         println "Done unit test coverage."
     }
