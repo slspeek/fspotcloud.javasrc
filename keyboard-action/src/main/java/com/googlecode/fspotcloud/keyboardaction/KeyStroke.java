@@ -159,7 +159,9 @@ public class KeyStroke {
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("key", getKeyString() + "(" + getKeyCode() + ")").
-                add("mods", modifiers).toString();
+        return "" + (modifiers.isShift() ? "SHIFT-" : "")
+                + (modifiers.isAlt() ?"ALT-":"")
+                + (modifiers.isCtrl() ?"CTRL-": "")
+                + getKeyString();
     }
 }

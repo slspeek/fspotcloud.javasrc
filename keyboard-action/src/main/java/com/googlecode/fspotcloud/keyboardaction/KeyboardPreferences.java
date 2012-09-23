@@ -18,7 +18,7 @@ class KeyboardPreferences {
     private final Map<ActionKey, String> keyStringMap = newHashMap();
     private final Map<String, KeyboardBinding> bindingsMap = newHashMap();
 
-    public KeyboardPreferences(String[] allModes) {
+    KeyboardPreferences(String[] allModes) {
         this.allModes = allModes;
     }
 
@@ -27,7 +27,7 @@ class KeyboardPreferences {
         return result;
     }
 
-    public void bind(String id, KeyboardBinding binding) {
+    void bind(String id, KeyboardBinding binding) {
         bindingsMap.put(id, binding);
         for (String mode : allModes) {
             KeyStroke[] keys = binding.getKeys(mode);
@@ -41,6 +41,10 @@ class KeyboardPreferences {
 
     boolean isRelevant(String actionId, String mode) {
         return ! (bindingsMap.get(actionId).getKeys(mode).length == 0);
+    }
+
+    KeyStroke[] getKeysForAction(String mode, String actionId) {
+        return bindingsMap.get(actionId).getKeys(mode);
     }
 
     Set<String> allActions() {

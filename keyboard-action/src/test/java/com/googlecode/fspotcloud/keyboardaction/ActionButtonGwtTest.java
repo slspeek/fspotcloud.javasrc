@@ -5,7 +5,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.googlecode.fspotcloud.testharness.MainFactory;
 
-public class ActionButtonTest extends GWTTestCase {
+public class ActionButtonGwtTest extends GWTTestCase {
 
     private ActionButton button;
     private EventBus eventBus;

@@ -54,10 +54,11 @@ public class MainFactory {
     }
 
     public MainFactory() {
-
+        ActionCategory modeTwoSetters = configBuilder.createActionCategory("Mode 2 setters");
+        ActionCategory otherModeSetters = configBuilder.createActionCategory("Other mode setters");
         messageBoard.setVisibleLines(20);
         messageBoard.setCharacterWidth(100);
-        configBuilder.addBinding(OK_DEF, new IActionHandler() {
+        configBuilder.addBinding(modeTwoSetters,OK_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_TWO);
@@ -66,7 +67,7 @@ public class MainFactory {
 
             }
         }, ALLWAYS_SHIFT_A);
-        configBuilder.addBinding(CANCEL_DEF, new IActionHandler() {
+        configBuilder.addBinding(otherModeSetters,CANCEL_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_ONE);
@@ -74,7 +75,7 @@ public class MainFactory {
                 outputMesg(msg);
             }
         }, C_BINDING);
-        configBuilder.addBinding(TRY_DEF, new IActionHandler() {
+        configBuilder.addBinding(modeTwoSetters, TRY_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_TWO);
@@ -82,7 +83,7 @@ public class MainFactory {
                 outputMesg(msg);
             }
         }, G_BINDING);
-        configBuilder.addBinding(THREE_DEF, new IActionHandler() {
+        configBuilder.addBinding(otherModeSetters, THREE_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_THREE);
