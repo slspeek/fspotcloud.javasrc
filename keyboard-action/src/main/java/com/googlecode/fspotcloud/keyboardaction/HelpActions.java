@@ -61,17 +61,21 @@ public class HelpActions {
         StringBuffer result = new StringBuffer();
         Map<String,ActionCategory> categoryMap = configBuilder.getActionCategoryMap();
         for(ActionCategory actionCategory: categoryMap.values()) {
-            result.append(actionCategory.getName());
             result.append("<br>");
+            result.append("<b>");
+            result.append(actionCategory.getName());
+            result.append("</b>");
             result.append("<br>");
             for (ActionDef actionDef: actionCategory.getActions()) {
-                result.append("<br><b>");
+                KeyStroke[] keysForAction = keyboardPreferences.getKeysForAction(modeController.getMode(), actionDef.getId());
+                if (keysForAction.length == 0) {
+                    break;
+                }
                 result.append(actionDef.getName());
-                result.append("</b>");
                 result.append(" - ");
                 result.append(actionDef.getDescription());
                 result.append(" : ");
-                result.append(newArrayList(keyboardPreferences.getKeysForAction(modeController.getMode(), actionDef.getId())));
+                result.append(newArrayList(keysForAction));
                 result.append("<br>");
             }
         }

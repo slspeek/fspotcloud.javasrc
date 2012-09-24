@@ -40,12 +40,13 @@ public class MainFactory {
     final KeyStroke KEY_3 = new KeyStroke('3');
     final KeyStroke ALT_M = new KeyStroke(Modifiers.ALT, 'M');
     final KeyStroke CTRL_M = new KeyStroke(Modifiers.CTRL, 'M');
+    final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
 
 
     final KeyboardBinding ALLWAYS_SHIFT_A = KeyboardBinding.bind(SHIFT_A, KEY_D).withModes(MODES).override(MODE_TWO);
     final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withModes(MODE_ONE);
     final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withModes(MODES);
-    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withModes(MODES).override(MODE_THREE).override(MODE_ONE);
+    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
     TextArea messageBoard = new TextArea();
 
     void outputMesg(String msg) {
