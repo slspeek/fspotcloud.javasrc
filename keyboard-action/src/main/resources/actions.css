@@ -1,21 +1,3 @@
-@def darkColor #8BB381  ;/**Dark Sea Green */
-@def ligherColor 	#C3FDB8;/**  Dark Sea Green1	 */ 
-@def treeColor #B5EAAA  ;
-	/**  Dark Sea Green2	 */ 
-@def borderRadius   7px  ;
-@def foregroundColor #595454; /** Grey40 */
-
-@def darkColor #66BDFF;
-@def ligherColor 	#98EFFF; 
-@def treeColor #98EFFF; 
-@def borderRadius   14px  ;
-@def foregroundColor white;
-@def ligherColor #B38481;
-@def ligherColor  #DEFFF1;
-@def treeColor #B38481;
-@def treeColor #FFF1DE;
-@def thirdColor #F1DEFF;
-
 /** Dark theme */
 @def ligherColor  #495674;
 @def treeColor #9B8C8C;
@@ -32,13 +14,21 @@
 
 
 .button {
-	padding: 5px;
-	margin: auto;
-}
+	margin-top: 8px;
+	margin-bottom: 2px;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 130%;
+	text-align: center;
+	-webkit-transform: scale(0.8);
+
+	}
+
 .button:hover {
-    -moz-transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
+    -moz-transform:  translate(0, -7px) scale(1);
+    transform: translate(0, -7px) scale(1);
+    -webkit-transform: translate(0, -7px) scale(1);
+
    /** -moz-box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
     -webkit-box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
     box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);**/
@@ -47,19 +37,29 @@
 
 }
 
+.button:focus {
+    border-color: red;
+    border-style: solid;
+    -moz-transform:  scale(1);
+    transform: scale(1);
+    -webkit-transform: scale(1);
+}
+
 .buttonPanelBlock {
+    height: 50px;
 	background-color: thirdColor;
 	margin: auto;
 	padding-top: 2px;
 	padding-bottom: 2px;
-  border-style: solid;
-  border-color: borderColor;
-  border-collapse: collapse;
-  border-width: 1px;
+    border-style: solid;
+    border-color: borderColor;
+    border-collapse: collapse;
+    border-width: 1px;
 
 }
 
 .helpPopup {
+    height: auto;
 	padding: 20px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -67,20 +67,43 @@
 	color: white;
 }
 
+.helpBody {
+      -webkit-columns: 400px 3;
+
+}
+.helpRow {
+    //background: purple;
+    -webkit-column-break-after: avoid;
+}
 .helpTitle {
 	font-size: large;
 	text-align: center;
 	font-style: bold;
+	-webkit-column-break-after: avoid;
+}
+
+.helpDescription {
+     -webkit-column-break-after: avoid;
+}
+
+.helpCategory {
+       -webkit-column-break-after: auto;
+}
+
+.helpCategoryTitle {
+    font-size: large;
+    -webkit-column-break-after: avoid;
 }
 
 .helpSeparator {
 	font-weight: bold;
-	font-size: 110%;
+	-webkit-column-break-after: avoid;
 }
 
 .helpKey {
 	color: yellow;
 	font-weight: bold;
-	font-size: 110%;
+	-webkit-column-break-after: avoid;
+
 }
 

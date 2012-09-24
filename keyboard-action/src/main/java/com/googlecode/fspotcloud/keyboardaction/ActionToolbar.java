@@ -39,10 +39,11 @@ import static com.google.common.collect.Lists.newArrayList;
 @GwtCompatible
 public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
+    private final Resources resources;
 
-    @Inject
-    public ActionToolbar() {
-        setHeight("50px");
+    public ActionToolbar(Resources resources) {
+        this.resources = resources;
+        addStyleName(resources.style().buttonPanelBlock());
     }
 
     @Override

@@ -2,8 +2,9 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import java.util.Map;
+import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -20,22 +21,32 @@ public class HelpActions {
 
     private final String[] allModes;
     private final ConfigBuilder configBuilder;
-    private final HelpPopup helpPopup = new HelpPopup();
+    private final HelpPopup helpPopup;
     private final KeyboardPreferences keyboardPreferences;
     private final IModeController modeController;
+    private final HelpContentGenerator helpContentGenerator;
+    private final Resources resources;
 
-    public HelpActions(String[] allModes, ConfigBuilder configBuilder, KeyboardPreferences keyboardPreferences, IModeController modeController) {
+    public HelpActions(String[] allModes,
+                       ConfigBuilder configBuilder,
+                       KeyboardPreferences keyboardPreferences,
+                       IModeController modeController,
+                       HelpContentGenerator helpContentGenerator,
+                       Resources resources) {
         this.allModes = allModes;
         this.configBuilder = configBuilder;
         this.keyboardPreferences = keyboardPreferences;
         this.modeController = modeController;
+        this.helpContentGenerator = helpContentGenerator;
+        this.resources = resources;
         helpActionCategory = configBuilder.createActionCategory(HELP_CATEGORY);
+        helpPopup = new HelpPopup(resources);
     }
 
      void initHelpActions() {
-        showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, '?'), new KeyStroke(Modifiers.NONE, 'H')).withModes(allModes);
-        hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withModes(allModes);
-        showHelpDef = new ActionDef(SHOW_HELP_ACTION, "Help", "Show a help popup.");
+        showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(allModes);
+        hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(allModes);
+        showHelpDef = new ActionDef(SHOW_HELP_ACTION, "Help", "Show a help popup.", resources.helpIcon());
         hideHelpDef = new ActionDef(HIDE_HELP_ACTION, "Hide help popup", "Hide the help popup.");
         configBuilder.addBinding(helpActionCategory, showHelpDef, new IActionHandler() {
             @Override
@@ -57,29 +68,13 @@ public class HelpActions {
 
     }
 
-    String getHelpText() {
-        StringBuffer result = new StringBuffer();
-        Map<String,ActionCategory> categoryMap = configBuilder.getActionCategoryMap();
-        for(ActionCategory actionCategory: categoryMap.values()) {
-            result.append("<br>");
-            result.append("<b>");
-            result.append(actionCategory.getName());
-            result.append("</b>");
-            result.append("<br>");
-            for (ActionDef actionDef: actionCategory.getActions()) {
-                KeyStroke[] keysForAction = keyboardPreferences.getKeysForAction(modeController.getMode(), actionDef.getId());
-                if (keysForAction.length == 0) {
-                    break;
-                }
-                result.append(actionDef.getName());
-                result.append(" - ");
-                result.append(actionDef.getDescription());
-                result.append(" : ");
-                result.append(newArrayList(keysForAction));
-                result.append("<br>");
-            }
+    SafeHtml getHelpText() {
+        List<ActionCategory> categoryList = configBuilder.getActionCategoryList();
+        SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
+        for(ActionCategory actionCategory: categoryList) {
+            safeHtmlBuilder.append(helpContentGenerator.getHelp(actionCategory));
         }
-        return result.toString();
+         return safeHtmlBuilder.toSafeHtml();
     }
 
 }

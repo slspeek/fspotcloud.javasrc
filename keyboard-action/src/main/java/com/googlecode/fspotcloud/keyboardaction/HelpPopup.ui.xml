@@ -6,7 +6,7 @@
     <g:FocusPanel ui:field="focusPanel">
         <g:HTMLPanel>
             <div ui:field="titleSpan" class="{res.style.helpTitle}"></div>
-            <div ui:field="helpBodyDiv"></div>
+            <div ui:field="helpBodyDiv" class="{res.style.helpBody}"></div>
         </g:HTMLPanel>
     </g:FocusPanel>
 </ui:UiBinder>

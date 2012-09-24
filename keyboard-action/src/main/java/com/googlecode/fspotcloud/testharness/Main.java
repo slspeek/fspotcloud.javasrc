@@ -38,13 +38,8 @@ public class Main implements EntryPoint {
     @Override
     public void onModuleLoad() {
         log.info("Test harness  loading");
-
         try {
-
-
-            log.info("done");
             new MainFactory();
-
         } catch (Throwable e) {
             log.log(Level.SEVERE, "Uncaught exception in main setup", e);
         }

@@ -32,19 +32,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-class ActionEnableEvent extends Event<IActionEnableHandler> {
-    private final Logger log = Logger.getLogger(ActionEnableEvent.class.getName());
-    public static final  Type<IActionEnableHandler> TYPE = new Type<IActionEnableHandler>();
+class ActionStateEvent extends Event<IActionEnableHandler> {
+    private final Logger log = Logger.getLogger(ActionStateEvent.class.getName());
+    public static final Type<IActionEnableHandler> TYPE = new Type<IActionEnableHandler>();
     private final String actionId;
     private final boolean state;
+    private String acceleratorString = null;
 
-    public ActionEnableEvent(String actionId, boolean state) {
+    public ActionStateEvent(String actionId, boolean state, String acceleratorString) {
         this.actionId = actionId;
         this.state = state;
+        this.acceleratorString = acceleratorString;
+    }
+
+    public ActionStateEvent(String actionId, boolean state) {
+        this(actionId, state, null);
     }
 
     public String getActionId() {
         return actionId;
+    }
+
+    public String getAcceleratorString() {
+        return acceleratorString;
     }
 
     @Override
@@ -59,8 +69,8 @@ class ActionEnableEvent extends Event<IActionEnableHandler> {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof ActionEnableEvent) {
-            ActionEnableEvent other = (ActionEnableEvent) o;
+        if (o instanceof ActionStateEvent) {
+            ActionStateEvent other = (ActionStateEvent) o;
             return Objects.equal(other.actionId, actionId) && state == other.state;
         } else {
             return false;
@@ -77,6 +87,10 @@ class ActionEnableEvent extends Event<IActionEnableHandler> {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("action", actionId).add("state", state).toString();
+        return Objects.toStringHelper(this)
+                .add("action", actionId)
+                .add("state", state)
+                .add("accelerators", acceleratorString)
+                .omitNullValues().toString();
     }
 }

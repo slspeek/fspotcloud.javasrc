@@ -27,6 +27,8 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -41,18 +43,20 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionDef actionDef;
     private final EventBus eventBus;
+    private final Resources resources;
 
     @Inject
-    public ActionButton(@Assisted ActionDef actionDef, EventBus eventBus) {
-        //super(new Image(icon));
+    public ActionButton(@Assisted ActionDef actionDef, EventBus eventBus, Resources resources) {
         this.actionDef = actionDef;
         this.eventBus = eventBus;
+        this.resources = resources;
         initialize();
     }
 
 
     private void initialize() {
-        eventBus.addHandler(ActionEnableEvent.TYPE, this);
+        addStyleName(resources.style().button());
+        eventBus.addHandler(ActionStateEvent.TYPE, this);
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 log.log(Level.FINEST, "Button: " + actionDef.getId() + " pressed.");
@@ -62,7 +66,10 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
         setCaption(actionDef.getName());
         setTooltip(actionDef.getDescription());
         setDebugId(actionDef.getId());
-
+        final ImageResource imageResource = actionDef.getIcon();
+        if (imageResource != null) {
+            getUpFace().setImage(new Image(imageResource));
+        }
     }
 
     public void setCaption(String caption) {
@@ -78,9 +85,13 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
     }
 
     @Override
-    public void onEvent(ActionEnableEvent event) {
+    public void onEvent(ActionStateEvent event) {
         if (event.getActionId().equals(actionDef.getId())) {
             setEnabled(event.getState());
+            if (event.getState()) {
+                String keys = event.getAcceleratorString();
+                setTooltip(actionDef.getName() + " (" + keys + ")");
+            }
             //setVisible(event.getState());
         }
     }

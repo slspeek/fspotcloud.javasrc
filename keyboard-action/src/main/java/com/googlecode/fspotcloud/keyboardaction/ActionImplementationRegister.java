@@ -12,7 +12,10 @@ class ActionImplementationRegister {
     private final Map<String, IActionHandler> registry = newHashMap();
 
     void putAction(String actionId, IActionHandler handlerI) {
-        registry.put(actionId, handlerI);
+        IActionHandler previous = registry.put(actionId, handlerI);
+        if (previous != null) {
+            throw new IllegalStateException("Action " + actionId + " was already bound.");
+        }
     }
 
     IActionHandler getAction(String actionKey) {

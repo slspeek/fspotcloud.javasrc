@@ -28,6 +28,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -46,10 +47,12 @@ public class HelpPopup extends PopupPanel {
     DivElement helpBodyDiv;
     @UiField
     DivElement titleSpan;
+    private final Resources resources;
 
     @Inject
-    public HelpPopup() {
+    public HelpPopup(Resources resources) {
         super(true);
+        this.resources = resources;
         setWidget(uiBinder.createAndBindUi(this));
         focusPanel.addKeyDownHandler(new KeyDownHandler() {
             @Override
@@ -57,10 +60,11 @@ public class HelpPopup extends PopupPanel {
                 log.info("Keydown in help-popup " + event);
             }
         });
+        addStyleName(resources.style().helpPopup());
     }
 
-    public void setText(String text) {
-        helpBodyDiv.setInnerHTML(text);
+    public void setText(SafeHtml text) {
+        helpBodyDiv.setInnerSafeHtml(text);
     }
 
     public void setTitle(String text) {

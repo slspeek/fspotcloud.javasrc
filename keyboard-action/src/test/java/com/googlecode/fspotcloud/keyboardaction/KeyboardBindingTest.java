@@ -18,7 +18,7 @@ public class KeyboardBindingTest {
     final KeyStroke KEY_3 = new KeyStroke('3');
 
 
-    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withModes(MODE_ONE);
+    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withDefaultModes(MODE_ONE);
 
     @Test
     public void testGetKeys() throws Exception {
@@ -33,7 +33,7 @@ public class KeyboardBindingTest {
 
     @Test
     public void testName() throws Exception {
-        final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3).withModes(MODES).override(MODE_THREE);
+        final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3).withDefaultModes(MODES).override(MODE_THREE);
         KeyStroke[] keys = THREE_BINDING.getKeys(MODE_THREE);
         assertEquals(0, keys.length);
 

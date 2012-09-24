@@ -27,8 +27,8 @@ class NativePreviewHandler implements Event.NativePreviewHandler {
     }
 
 
-    public void onPreviewNativeEvent(Event.NativePreviewEvent preview) {
-        NativeEvent event = preview.getNativeEvent();
+    public void onPreviewNativeEvent(final Event.NativePreviewEvent preview) {
+        final NativeEvent event = preview.getNativeEvent();
         int keycode = event.getKeyCode();
 
         if (!event.getType().equalsIgnoreCase("keydown")
@@ -45,15 +45,15 @@ class NativePreviewHandler implements Event.NativePreviewHandler {
         if (actionId != null) {
             log.log(Level.FINEST, "ActionId found proceeding for: " + actionId);
             eventBus.fireEvent(new KeyboardActionEvent(actionId));
+            preview.cancel();
         }
-
     }
 
     private Modifiers getModifiers(NativeEvent event) {
         final boolean shiftKey = event.getShiftKey();
         final boolean ctrlKey = event.getCtrlKey();
         final boolean altKey = event.getAltKey();
-        Modifiers modifiers = new Modifiers(shiftKey, ctrlKey,  altKey);
+        Modifiers modifiers = new Modifiers(shiftKey, ctrlKey, altKey);
         return modifiers;
     }
 }

@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 
 import java.util.List;
@@ -8,11 +9,20 @@ import java.util.List;
 public class ActionDef {
 
     private final String id, name, description;
+    private final ImageResource icon;
 
     public ActionDef(String id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.icon = null;
+    }
+
+    public ActionDef(String id, String name, String description, ImageResource icon) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
     }
 
     public String getId() {
@@ -25,5 +35,9 @@ public class ActionDef {
 
     public String getDescription() {
         return description;
+    }
+
+    public ImageResource getIcon() {
+        return icon;
     }
 }

@@ -30,11 +30,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 
 @GwtCompatible
 public class KeyStroke {
-
-
     private final Modifiers modifiers;
-            ;
-
     private final int keyCode;
 
     public KeyStroke(Modifiers modifiers, int keyCode) {
@@ -55,6 +51,9 @@ public class KeyStroke {
         String result;
 
         switch (keyCode) {
+            case 191:
+                result = "?";
+                break;
             case KeyCodes.KEY_LEFT:
                 result = "Left arrow";
 

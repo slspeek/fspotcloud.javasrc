@@ -34,7 +34,11 @@ class KeyboardPreferences {
             for (KeyStroke keyStroke : keys) {
                 ActionKey key = new ActionKey(mode, keyStroke);
                 logger.log(Level.FINEST, "In mode: " + mode + " mapping keystroke: " +key + " to action: " + id);
-                keyStringMap.put(key, id);
+
+                String action = keyStringMap.put(key, id);
+                if (action != null) {
+                      throw new IllegalStateException("Key " + key  + " was already bound to " +action);
+                }
             }
         }
     }
@@ -49,5 +53,10 @@ class KeyboardPreferences {
 
     Set<String> allActions() {
         return bindingsMap.keySet();
+    }
+
+    public KeyStroke[] getDefaultKeysForAction(String id) {
+        return bindingsMap.get(id).getDefaultKeys();
+
     }
 }

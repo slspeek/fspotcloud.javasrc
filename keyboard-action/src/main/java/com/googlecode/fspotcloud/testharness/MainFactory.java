@@ -31,7 +31,6 @@ public class MainFactory {
     final ConfigBuilder configBuilder = keyboardActionFactory.getConfigBuilder();
     final IModeController modeController = keyboardActionFactory.getModeController();
 
-
     final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
     final KeyStroke KEY_B = new KeyStroke('B');
@@ -43,10 +42,10 @@ public class MainFactory {
     final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
 
 
-    final KeyboardBinding ALLWAYS_SHIFT_A = KeyboardBinding.bind(SHIFT_A, KEY_D).withModes(MODES).override(MODE_TWO);
-    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withModes(MODE_ONE);
-    final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withModes(MODES);
-    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
+    final KeyboardBinding ALLWAYS_SHIFT_A = KeyboardBinding.bind(SHIFT_A, KEY_D).withDefaultModes(MODES).override(MODE_TWO);
+    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withDefaultModes(MODE_ONE);
+    final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withDefaultModes(MODES);
+    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withDefaultModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
     TextArea messageBoard = new TextArea();
 
     void outputMesg(String msg) {
@@ -55,6 +54,8 @@ public class MainFactory {
     }
 
     public MainFactory() {
+
+
         ActionCategory modeTwoSetters = configBuilder.createActionCategory("Mode 2 setters");
         ActionCategory otherModeSetters = configBuilder.createActionCategory("Other mode setters");
         messageBoard.setVisibleLines(20);
@@ -91,7 +92,7 @@ public class MainFactory {
                 outputMesg("Running 3 action " + actionId);
             }
         }, THREE_BINDING);
-        ActionToolbar toolbar = new ActionToolbar();
+        ActionToolbar toolbar = keyboardActionFactory.getToolBar();
         ActionButton okButton = keyboardActionFactory.getButton(OK);
         toolbar.add(okButton);
         ActionButton tryButton = keyboardActionFactory.getButton(TRY);
@@ -100,6 +101,7 @@ public class MainFactory {
         toolbar.add(cancelButton);
         ActionButton _3Button = keyboardActionFactory.getButton(THREE);
         toolbar.add(_3Button);
+        toolbar.add(keyboardActionFactory.getButton(HelpActions.SHOW_HELP_ACTION));
         RootPanel.get().add(messageBoard);
         RootPanel.get().add(toolbar);
         modeController.initButtonEnableStates();

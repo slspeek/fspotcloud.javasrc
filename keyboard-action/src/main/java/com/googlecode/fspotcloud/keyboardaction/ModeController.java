@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.web.bindery.event.shared.EventBus;
 
@@ -43,7 +44,16 @@ class ModeController implements IModeController {
     private void fireEnabledStateEvens() {
         for (String actionId : keyboardPreferences.allActions()) {
             boolean relevant = keyboardPreferences.isRelevant(actionId, mode);
-            ActionEnableEvent event = new ActionEnableEvent(actionId, relevant);
+            ActionStateEvent event;
+            if (relevant) {
+                String acceleratorString;
+                StringBuffer sb = new StringBuffer();
+                KeyStroke[] keys = keyboardPreferences.getKeysForAction(mode, actionId);
+                acceleratorString = Joiner.on(" or ").join(keys);
+                event = new ActionStateEvent(actionId, relevant, acceleratorString);
+            } else {
+                event = new ActionStateEvent(actionId, relevant);
+            }
             log.log(Level.FINEST, "Firing: " + event);
             eventBus.fireEvent(event);
         }

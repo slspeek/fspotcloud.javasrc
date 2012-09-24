@@ -17,7 +17,7 @@ public class KeyboardPreferencesTest {
     private KeyboardPreferences keyboardPreferences;
     public static final char KEY_CODE = 'A';
     public static final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, KEY_CODE);
-    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withModes(MODE_ONE);
+    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withDefaultModes(MODE_ONE);
 
     @Before
     public void setUp() throws Exception {
@@ -26,7 +26,7 @@ public class KeyboardPreferencesTest {
 
     @Test
     public void testBind() throws Exception {
-        KeyboardBinding binding = KeyboardBinding.bind(SHIFT_A).withModes(MODE);
+        KeyboardBinding binding = KeyboardBinding.bind(SHIFT_A).withDefaultModes(MODE);
         keyboardPreferences.bind(ACTION_ID, binding);
         keyboardPreferences.bind(ACTION_2, C_BINDING);
 

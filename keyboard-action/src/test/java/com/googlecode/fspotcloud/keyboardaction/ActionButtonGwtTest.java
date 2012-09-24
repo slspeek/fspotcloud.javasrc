@@ -1,5 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -15,7 +16,8 @@ public class ActionButtonGwtTest extends GWTTestCase {
     protected void gwtSetUp() throws Exception {
         eventBus = new SimpleEventBus();
         okDef = MainFactory.OK_DEF;
-        button = new ActionButton(okDef, eventBus);
+        final Resources resources = GWT.create(Resources.class);
+        button = new ActionButton(okDef, eventBus, resources);
         super.gwtSetUp();
     }
 
@@ -30,13 +32,13 @@ public class ActionButtonGwtTest extends GWTTestCase {
 
 
     public void testOnEventNotForUs() throws Exception {
-        ActionEnableEvent event = new ActionEnableEvent("", false);
+        ActionStateEvent event = new ActionStateEvent("", false);
         eventBus.fireEvent(event);
         assertTrue(button.isEnabled());
     }
 
     public void testOnEventForUs() throws Exception {
-        ActionEnableEvent event = new ActionEnableEvent(okDef.getId(), false);
+        ActionStateEvent event = new ActionStateEvent(okDef.getId(), false);
         eventBus.fireEvent(event);
         assertFalse(button.isEnabled());
     }

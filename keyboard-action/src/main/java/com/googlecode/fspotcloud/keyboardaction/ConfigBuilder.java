@@ -2,6 +2,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 
+import java.util.List;
 import java.util.Map;
 
 @GwtCompatible
@@ -12,9 +13,11 @@ public class ConfigBuilder {
     private final ButtonDefinitions buttonDefinitions;
 
 
-    private final Map<String, ActionCategory> actionCategoryMap;
+    private final List<ActionCategory> actionCategoryMap;
 
-    public ConfigBuilder(ActionImplementationRegister actionImplementationRegister, KeyboardPreferences keyboardPreferences, ButtonDefinitions buttonDefinitions, Map<String, ActionCategory> actionCategoryMap) {
+    public ConfigBuilder(ActionImplementationRegister actionImplementationRegister, KeyboardPreferences keyboardPreferences,
+                         ButtonDefinitions buttonDefinitions,
+                         List<ActionCategory> actionCategoryMap) {
         this.actionImplementationRegister = actionImplementationRegister;
         this.keyboardPreferences = keyboardPreferences;
         this.buttonDefinitions = buttonDefinitions;
@@ -32,13 +35,13 @@ public class ConfigBuilder {
         return this;
     }
 
-    public Map<String, ActionCategory> getActionCategoryMap() {
+    public List<ActionCategory> getActionCategoryList() {
         return actionCategoryMap;
     }
 
     public ActionCategory createActionCategory(String name) {
         ActionCategory actionCategory = new ActionCategory(name);
-        actionCategoryMap.put(name, actionCategory);
+        actionCategoryMap.add(actionCategory);
         return actionCategory;
     }
 
