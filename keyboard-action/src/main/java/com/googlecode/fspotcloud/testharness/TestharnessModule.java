@@ -2,8 +2,8 @@ package com.googlecode.fspotcloud.testharness;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.SimpleEventBus;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
 import com.googlecode.fspotcloud.keyboardaction.ModesProvider;
 import com.googlecode.fspotcloud.keyboardaction.SimpleModesProvider;

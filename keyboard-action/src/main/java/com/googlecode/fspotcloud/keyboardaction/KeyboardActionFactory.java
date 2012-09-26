@@ -3,8 +3,8 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.shared.GWT;
 import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.SimpleEventBus;
 
 import java.util.List;
 

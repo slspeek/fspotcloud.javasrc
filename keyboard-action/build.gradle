@@ -8,6 +8,7 @@ if ("${analysis}" == "true") {
 }
 
 configurations {
+    sources
     javascript
 }
 
@@ -75,7 +76,13 @@ jettyRun {
     webAppSourceDirectory = file "build/exploded"
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
 artifacts {
+    sources sourcesJar
     javascript javascriptJar
 }
 

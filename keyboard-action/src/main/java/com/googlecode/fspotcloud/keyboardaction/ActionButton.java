@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.google.web.bindery.event.shared.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

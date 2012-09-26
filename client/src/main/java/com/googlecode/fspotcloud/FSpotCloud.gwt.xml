@@ -5,6 +5,7 @@
     <inherits name="com.google.gwt.resources.Resources"/>
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name='com.googlecode.fspotcloud.rpc'/>
+    <inherits name='com.googlecode.fspotcloud.KeyboardAction'/>
     <inherits name="com.google.gwt.user.Debug"/>
     <inherits name="com.google.gwt.logging.Logging"/>
     <inherits name='com.google.gwt.user.theme.chrome.Chrome'/>

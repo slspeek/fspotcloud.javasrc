@@ -44,6 +44,7 @@ import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
 import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
 import java.util.logging.Logger;
 
@@ -56,6 +57,7 @@ public class MVPSetup {
     private final MainWindowActivityMapper activityMapper;
     private final PlaceController placeController;
     private final Initializable keyboardHandler;
+    private final KeyboardActionFactory keyboardActionFactory;
     private final EventHandlersSetup eventSetup;
     private final ClientLoginManager clientLoginManager;
 
@@ -65,13 +67,14 @@ public class MVPSetup {
                     IGlobalShortcutController keyboardHandler,
                     EventHandlersSetup eventSetup, Resources resources,
                     AdminResources adminResources, ClientLoginManager clientLoginManager,
-                    UserPagesResources userPagesResources) {
+                    UserPagesResources userPagesResources, KeyboardActionFactory keyboardActionFactory) {
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
         this.placeController = placeController;
         this.keyboardHandler = keyboardHandler;
         this.eventSetup = eventSetup;
         this.clientLoginManager = clientLoginManager;
+        this.keyboardActionFactory = keyboardActionFactory;
         resources.style().ensureInjected();
         adminResources.style().ensureInjected();
         userPagesResources.style().ensureInjected();

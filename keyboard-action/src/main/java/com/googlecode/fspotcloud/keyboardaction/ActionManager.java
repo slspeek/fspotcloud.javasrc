@@ -25,9 +25,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

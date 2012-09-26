@@ -3,7 +3,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
-import com.google.web.bindery.event.shared.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
