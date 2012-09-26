@@ -19,7 +19,7 @@ build/*
 derby.log
 */derby.log
 */hibernate.log
-grapher/src/site/resources/*.png
+grapher/src/site/keyboardActionResources/*.png
 extras/*
 */MODELJPA/*
 MODELJPA/*

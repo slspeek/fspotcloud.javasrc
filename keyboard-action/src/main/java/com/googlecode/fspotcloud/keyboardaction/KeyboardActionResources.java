@@ -30,7 +30,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
 
 
-public interface Resources extends ClientBundle {
+public interface KeyboardActionResources extends ClientBundle {
 
     @Source("actions.css")
     Style style();
@@ -61,5 +61,11 @@ public interface Resources extends ClientBundle {
         String helpCategory();
 
         String helpCategoryTitle();
+
+        String helpName();
+
+        String helpActionIcon();
+
+        String helpKeys();
     }
 }

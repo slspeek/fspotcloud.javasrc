@@ -42,7 +42,7 @@ public class Main implements EntryPoint {
 
         try {
             MVPSetup setup = injector.getMVPSetup();
-            log.info("gin fininshed the constuction of the application graph");
+            log.info("gin finished the construction of the application graph");
             setup.setup();
         } catch (Throwable e) {
             log.log(Level.SEVERE, "Uncaught exception in MVP setup", e);

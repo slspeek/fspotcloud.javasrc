@@ -24,26 +24,11 @@
 
 package com.googlecode.fspotcloud.testharness;
 
-import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.inject.client.GinModules;
+import com.google.gwt.inject.client.Ginjector;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@GwtCompatible
-
-public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
-
-    @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-            MainFactory factory = injector.getFactory();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
-        }
-    }
+@GinModules(value = {TestharnessModule.class})
+public interface TestharnessGInjector extends Ginjector {
+    MainFactory getFactory();
 }

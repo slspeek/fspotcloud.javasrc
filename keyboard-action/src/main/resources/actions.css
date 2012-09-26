@@ -1,109 +1,130 @@
-/** Dark theme */
-@def ligherColor  #495674;
-@def treeColor #9B8C8C;
-@def thirdColor #8C9C8C;
-
-@def ligherColor  #080808;
-@def treeColor #000000;
+@def ligherColor #080808;
 @def thirdColor #000000;
-
 @def borderColor #303030;
+@def hoverTransform translate(0,-7px) scale(1);
+@def focusTransform scale(1);
+@def upTransform scale(0.8);
+@def helpIconTransform scale(1);
+@def hoverTransition all 0.5s;
 
-@def buttonScale 1.3;
+.button
+{
+  font-size:160%;
+  text-align:center;
+  -webkit-transform:upTransform;
+  -moz-transform:upTransform;
+  transform:upTransform;
+  margin:8px 5px 2px;
+}
 
+.button:hover
+{
+  -moz-transform:hoverTransform;
+  transform:hoverTransform;
+  -webkit-transform:hoverTransform;
+  -moz-transition:hoverTransition;
+  transition:hoverTransition;
+  -webkit-transition:hoverTransition;
+  border-color:borderColor;
+  border-style:solid;
+}
 
+.button:focus
+{
+  -moz-transform:focusTransform;
+  transform:focusTransform;
+  -webkit-transform:focusTransform;
+}
 
-.button {
-	margin-top: 8px;
-	margin-bottom: 2px;
-	margin-left: 5px;
-	margin-right: 5px;
-	font-size: 130%;
-	text-align: center;
-	-webkit-transform: scale(0.8);
+.buttonPanelBlock
+{
+  height:60px;
+  background-color:thirdColor;
+  padding-top:2px;
+  padding-bottom:2px;
+  border-collapse:collapse;
+  border-color:borderColor;
+  border-style:solid;
+  border-width:1px;
+  margin:auto;
+}
 
-	}
+.helpPopup
+{
+  width: 800px;
+  height:auto;
+  -moz-border-radius:15px;
+  border-radius:15px;
+  background-color:rgba(0,0,0,0.7);
+  color:#FFF;
+  padding:20px;
+}
 
-.button:hover {
-    -moz-transform:  translate(0, -7px) scale(1);
-    transform: translate(0, -7px) scale(1);
-    -webkit-transform: translate(0, -7px) scale(1);
-
-   /** -moz-box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
-    -webkit-box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
-    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);**/
-    border-color: red;
-    border-style: solid;
+.helpBody
+{
+  -webkit-column-count: 2;
 
 }
 
-.button:focus {
-    border-color: red;
-    border-style: solid;
-    -moz-transform:  scale(1);
-    transform: scale(1);
-    -webkit-transform: scale(1);
+.helpTitle
+{
+  font-size:large;
+  text-align:center;
+  font-style:bold;
 }
 
-.buttonPanelBlock {
-    height: 50px;
-	background-color: thirdColor;
-	margin: auto;
-	padding-top: 2px;
-	padding-bottom: 2px;
-    border-style: solid;
-    border-color: borderColor;
-    border-collapse: collapse;
-    border-width: 1px;
+.helpActionIcon
+{
+  display: inline;
+  -moz-transform:helpIconTransform;
+  transform:helpIconTransform;
+  -webkit-transform:helpIconTransform;
+  height: 30px;
 
 }
+.helpName
+{
 
-.helpPopup {
-    height: auto;
-	padding: 20px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.7);
-	color: white;
+  text-align:left;
+  font-weight:700;
+  -webkit-column-break-after:avoid;
 }
 
-.helpBody {
-      -webkit-columns: 400px 3;
-
-}
-.helpRow {
-    //background: purple;
-    -webkit-column-break-after: avoid;
-}
-.helpTitle {
-	font-size: large;
-	text-align: center;
-	font-style: bold;
-	-webkit-column-break-after: avoid;
+.helpCategory
+{
+  -webkit-column-break-after:auto;
 }
 
-.helpDescription {
-     -webkit-column-break-after: avoid;
+.helpCategoryTitle
+{
+  font-size:large;
+  -webkit-column-break-after:avoid;
 }
 
-.helpCategory {
-       -webkit-column-break-after: auto;
+.helpSeparator
+{
+  font-weight:700;
+  -webkit-column-break-after:avoid;
 }
 
-.helpCategoryTitle {
-    font-size: large;
-    -webkit-column-break-after: avoid;
+.helpKey
+{
+  color:#FF0;
+  font-weight:700;
+  -webkit-column-break-after:avoid;
 }
 
-.helpSeparator {
-	font-weight: bold;
-	-webkit-column-break-after: avoid;
-}
-
-.helpKey {
-	color: yellow;
-	font-weight: bold;
-	-webkit-column-break-after: avoid;
+.helpKeys
+{
 
 }
 
+.helpRow
+{
+  -webkit-column-break-after:avoid;
+}
+
+.helpDescription
+{
+  text-align:left;
+}

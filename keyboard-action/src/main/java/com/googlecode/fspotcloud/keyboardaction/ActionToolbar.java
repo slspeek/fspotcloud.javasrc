@@ -28,22 +28,19 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 @GwtCompatible
 public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
-    private final Resources resources;
+    private final KeyboardActionResources keyboardActionResources;
 
-    public ActionToolbar(Resources resources) {
-        this.resources = resources;
-        addStyleName(resources.style().buttonPanelBlock());
+    public ActionToolbar(KeyboardActionResources keyboardActionResources) {
+        this.keyboardActionResources = keyboardActionResources;
+        addStyleName(keyboardActionResources.style().buttonPanelBlock());
     }
 
     @Override

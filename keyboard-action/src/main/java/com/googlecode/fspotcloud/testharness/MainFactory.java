@@ -3,6 +3,7 @@ package com.googlecode.fspotcloud.testharness;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
 import java.util.logging.Level;
@@ -27,9 +28,9 @@ public class MainFactory {
     public static final ActionDef TRY_DEF = new ActionDef(TRY, "Try it", "Please try this");
     public static final ActionDef THREE_DEF = new ActionDef(THREE, "3", "3 this");
 
-    final KeyboardActionFactory keyboardActionFactory = new KeyboardActionFactory(MODES);
-    final ConfigBuilder configBuilder = keyboardActionFactory.getConfigBuilder();
-    final IModeController modeController = keyboardActionFactory.getModeController();
+    final KeyboardActionFactory keyboardActionFactory;
+    final ConfigBuilder configBuilder;
+    final IModeController modeController;
 
     final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
@@ -53,7 +54,11 @@ public class MainFactory {
         messageBoard.setText(msg);
     }
 
-    public MainFactory() {
+    @Inject
+    public MainFactory(KeyboardActionFactory keyboardActionFactory) {
+        this.keyboardActionFactory = keyboardActionFactory;
+        this.configBuilder = keyboardActionFactory.getConfigBuilder();
+        this.modeController = keyboardActionFactory.getModeController();
 
 
         ActionCategory modeTwoSetters = configBuilder.createActionCategory("Mode 2 setters");

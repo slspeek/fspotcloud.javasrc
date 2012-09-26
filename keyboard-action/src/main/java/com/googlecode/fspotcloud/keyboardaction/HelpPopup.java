@@ -47,12 +47,12 @@ public class HelpPopup extends PopupPanel {
     DivElement helpBodyDiv;
     @UiField
     DivElement titleSpan;
-    private final Resources resources;
+    private final KeyboardActionResources keyboardActionResources;
 
     @Inject
-    public HelpPopup(Resources resources) {
+    public HelpPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
-        this.resources = resources;
+        this.keyboardActionResources = keyboardActionResources;
         setWidget(uiBinder.createAndBindUi(this));
         focusPanel.addKeyDownHandler(new KeyDownHandler() {
             @Override
@@ -60,7 +60,7 @@ public class HelpPopup extends PopupPanel {
                 log.info("Keydown in help-popup " + event);
             }
         });
-        addStyleName(resources.style().helpPopup());
+        addStyleName(keyboardActionResources.style().helpPopup());
     }
 
     public void setText(SafeHtml text) {

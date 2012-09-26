@@ -43,19 +43,18 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionDef actionDef;
     private final EventBus eventBus;
-    private final Resources resources;
+    private final KeyboardActionResources keyboardActionResources;
 
     @Inject
-    public ActionButton(@Assisted ActionDef actionDef, EventBus eventBus, Resources resources) {
+    public ActionButton(@Assisted ActionDef actionDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
         this.actionDef = actionDef;
         this.eventBus = eventBus;
-        this.resources = resources;
+        this.keyboardActionResources = keyboardActionResources;
         initialize();
     }
 
 
     private void initialize() {
-        addStyleName(resources.style().button());
         eventBus.addHandler(ActionStateEvent.TYPE, this);
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
@@ -63,12 +62,16 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
                 eventBus.fireEvent(new KeyboardActionEvent(actionDef.getId()));
             }
         });
-        setCaption(actionDef.getName());
         setTooltip(actionDef.getDescription());
         setDebugId(actionDef.getId());
         final ImageResource imageResource = actionDef.getIcon();
         if (imageResource != null) {
             getUpFace().setImage(new Image(imageResource));
+            setStyleName(keyboardActionResources.style().button());
+        }  else {
+            addStyleName(keyboardActionResources.style().button());
+
+            setCaption(actionDef.getName());
         }
     }
 

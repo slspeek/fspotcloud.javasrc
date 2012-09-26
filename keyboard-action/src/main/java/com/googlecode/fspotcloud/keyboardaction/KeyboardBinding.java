@@ -31,6 +31,11 @@ public class KeyboardBinding {
         return this;
     }
 
+    public KeyboardBinding disable(String mode) {
+        overridesMap.put(mode, new KeyStroke[0]);
+        return this;
+    }
+
     public KeyboardBinding withDefaultModes(String... modes) {
         this.modes = modes;
         modeList = newArrayList(modes);

@@ -2,6 +2,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.shared.GWT;
+import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
@@ -21,30 +22,30 @@ public class KeyboardActionFactory {
     private final ButtonDefinitions buttonDefinitions;
     private final IModeController modeController;
     private final NativePreviewHandler nativePreviewHandler;
-    private final EventBus eventBus = new SimpleEventBus();
+    private final EventBus eventBus;
     private final HelpActions helpActions;
     private final HelpContentGenerator helpContentGenerator;
-    private final Resources resources = GWT.create(Resources.class);
+    private final KeyboardActionResources keyboardActionResources = GWT.create(KeyboardActionResources.class);
 
     private final String[] allModes;
 
-
-    public KeyboardActionFactory(String[] modes) {
-        resources.style().ensureInjected();
-        this.allModes = modes;
-        keyboardPreferences = new KeyboardPreferences(modes);
-        this.helpContentGenerator = new HelpContentGenerator(resources, keyboardPreferences);
+    @Inject
+    public KeyboardActionFactory(ModesProvider modesProvider, EventBus eventBus) {
+        this.eventBus = eventBus;
+        keyboardActionResources.style().ensureInjected();
+        this.allModes = modesProvider.getModes();
+        keyboardPreferences = new KeyboardPreferences(allModes);
+        this.helpContentGenerator = new HelpContentGenerator(keyboardActionResources, keyboardPreferences);
         buttonDefinitions = new ButtonDefinitions();
         actionManager = new ActionManager(actionImplementationRegister);
-        eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
+        this.eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
         configBuilder = new ConfigBuilder(actionImplementationRegister, keyboardPreferences, buttonDefinitions, actionCategoryMap);
-        modeController = new ModeController(modes[0], keyboardPreferences, eventBus);
-        nativePreviewHandler = new NativePreviewHandler(eventBus, keyboardPreferences, modeController);
+        modeController = new ModeController(allModes[0], keyboardPreferences, this.eventBus);
+        nativePreviewHandler = new NativePreviewHandler(this.eventBus, keyboardPreferences, modeController);
         nativePreviewHandler.init();
-        helpActions = new HelpActions(allModes, configBuilder, keyboardPreferences, modeController, helpContentGenerator, resources);
+        helpActions = new HelpActions(allModes, configBuilder, keyboardPreferences, modeController, helpContentGenerator, keyboardActionResources);
         helpActions.initHelpActions();
     }
-
 
     public ConfigBuilder getConfigBuilder() {
         return configBuilder;
@@ -56,10 +57,10 @@ public class KeyboardActionFactory {
 
     public ActionButton getButton(String actionId) {
         ActionDef actionDef = buttonDefinitions.getAction(actionId);
-        return new ActionButton(actionDef, eventBus, resources);
+        return new ActionButton(actionDef, eventBus, keyboardActionResources);
     }
 
     public ActionToolbar getToolBar() {
-        return new ActionToolbar(resources);
+        return new ActionToolbar(keyboardActionResources);
     }
 }
