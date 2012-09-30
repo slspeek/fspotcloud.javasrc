@@ -21,7 +21,7 @@ public class KeyboardPreferencesTest {
 
     @Before
     public void setUp() throws Exception {
-        keyboardPreferences = new KeyboardPreferences(MODES);
+        keyboardPreferences = new KeyboardPreferences(new SimpleModesProvider(MODES));
     }
 
     @Test
