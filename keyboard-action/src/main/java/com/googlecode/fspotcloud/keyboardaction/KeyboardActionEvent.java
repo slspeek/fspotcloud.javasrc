@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 @GwtCompatible
 public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
     private final Logger log = Logger.getLogger(KeyboardActionEvent.class.getName());
-    public static final  Type<IKeyboardActionHandler> TYPE = new Type<IKeyboardActionHandler>();
+    public static final Type<IKeyboardActionHandler> TYPE = new Type<IKeyboardActionHandler>();
     private final String actionId;
 
     public KeyboardActionEvent(String actionId) {

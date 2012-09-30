@@ -20,7 +20,7 @@
 
     <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
     <set-property name="gwt.logging.logLevel" value="ALL"/>
-    <source path="keyboardaction" />
-    <source path="testharness" />
-    <source path="../../../../../test/java" />
+    <source path="keyboardaction"/>
+    <source path="testharness"/>
+    <source path="../../../../../test/java"/>
 </module>

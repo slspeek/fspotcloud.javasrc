@@ -83,7 +83,6 @@ public class HelpContentGenerator {
     }
 
 
-
     private SafeHtml getDescription(String description) {
         return TEMPLATES.td(description, style.helpDescription());
     }
@@ -95,13 +94,14 @@ public class HelpContentGenerator {
     private SafeHtml getIcon(SafeUri url) {
         return TEMPLATES.img(url, style.helpActionIcon());
     }
+
     private SafeHtml getHelpRow(String[] keys, ActionDef actionDef) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         ImageResource icon = actionDef.getIcon();
         if (icon != null) {
-               safeHtmlBuilder.append(getIcon(actionDef.getIcon().getSafeUri()));
-        }  else {
-              safeHtmlBuilder.append(getName(actionDef.getName()));
+            safeHtmlBuilder.append(getIcon(actionDef.getIcon().getSafeUri()));
+        } else {
+            safeHtmlBuilder.append(getName(actionDef.getName()));
         }
 
 
@@ -143,7 +143,7 @@ public class HelpContentGenerator {
             list.add(k.toString());
         }
         String[] keyStrings = new String[list.size()];
-        keyStrings =  list.toArray(keyStrings);
+        keyStrings = list.toArray(keyStrings);
         return getHelpRow(keyStrings, shortcut);
     }
 
@@ -151,7 +151,7 @@ public class HelpContentGenerator {
         List<ActionCategory> mCategoryList = newArrayList(categoryList);
         ActionCategory first = mCategoryList.get(0);
         final int lastIndex = mCategoryList.size() - 1;
-        ActionCategory last  = mCategoryList.get(lastIndex);
+        ActionCategory last = mCategoryList.get(lastIndex);
         mCategoryList.set(0, last);
         mCategoryList.set(lastIndex, first);
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();

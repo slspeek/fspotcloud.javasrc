@@ -2,9 +2,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.Image;
 
-import java.util.List;
 @GwtCompatible
 public class ActionDef {
 

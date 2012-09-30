@@ -1,5 +1,8 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
+
+@GwtCompatible
 public class SimpleModesProvider implements ModesProvider {
 
     private final String[] modes;

@@ -65,7 +65,7 @@ public class MainFactory {
         ActionCategory otherModeSetters = configBuilder.createActionCategory("Other mode setters");
         messageBoard.setVisibleLines(20);
         messageBoard.setCharacterWidth(100);
-        configBuilder.addBinding(modeTwoSetters,OK_DEF, new IActionHandler() {
+        configBuilder.addBinding(modeTwoSetters, OK_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_TWO);
@@ -74,7 +74,7 @@ public class MainFactory {
 
             }
         }, ALLWAYS_SHIFT_A);
-        configBuilder.addBinding(otherModeSetters,CANCEL_DEF, new IActionHandler() {
+        configBuilder.addBinding(otherModeSetters, CANCEL_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_ONE);

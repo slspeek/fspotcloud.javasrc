@@ -27,12 +27,10 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import com.google.gwt.event.shared.EventBus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,14 +43,12 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
     private final EventBus eventBus;
     private final KeyboardActionResources keyboardActionResources;
 
-    @Inject
-    public ActionButton(@Assisted ActionDef actionDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
+    public ActionButton(ActionDef actionDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
         this.actionDef = actionDef;
         this.eventBus = eventBus;
         this.keyboardActionResources = keyboardActionResources;
         initialize();
     }
-
 
     private void initialize() {
         eventBus.addHandler(ActionStateEvent.TYPE, this);
@@ -68,9 +64,8 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
         if (imageResource != null) {
             getUpFace().setImage(new Image(imageResource));
             setStyleName(keyboardActionResources.style().button());
-        }  else {
+        } else {
             addStyleName(keyboardActionResources.style().button());
-
             setCaption(actionDef.getName());
         }
     }

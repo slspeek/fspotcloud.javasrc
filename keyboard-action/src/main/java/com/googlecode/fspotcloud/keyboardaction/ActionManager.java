@@ -25,16 +25,17 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.inject.Inject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-class ActionManager implements IKeyboardActionHandler {
-    @SuppressWarnings("unused")
+public class ActionManager implements IKeyboardActionHandler {
     private final Logger log = Logger.getLogger(ActionManager.class.getName());
     private final ActionImplementationRegister actionImplementationRegister;
 
+    @Inject
     public ActionManager(ActionImplementationRegister actionImplementationRegister
     ) {
         this.actionImplementationRegister = actionImplementationRegister;

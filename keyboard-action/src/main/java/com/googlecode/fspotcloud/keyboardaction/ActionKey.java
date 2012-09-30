@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.base.Objects;
+
 class ActionKey {
     private final String mode;
     private final KeyStroke keyStroke;

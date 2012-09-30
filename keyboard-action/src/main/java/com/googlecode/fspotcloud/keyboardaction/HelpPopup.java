@@ -26,8 +26,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -54,16 +52,10 @@ public class HelpPopup extends PopupPanel {
         super(true);
         this.keyboardActionResources = keyboardActionResources;
         setWidget(uiBinder.createAndBindUi(this));
-        focusPanel.addKeyDownHandler(new KeyDownHandler() {
-            @Override
-            public void onKeyDown(KeyDownEvent event) {
-                log.info("Keydown in help-popup " + event);
-            }
-        });
         addStyleName(keyboardActionResources.style().helpPopup());
     }
 
-    public void setText(SafeHtml text) {
+    public void setSafeHtml(SafeHtml text) {
         helpBodyDiv.setInnerSafeHtml(text);
     }
 

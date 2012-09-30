@@ -36,10 +36,8 @@ import static com.google.common.collect.Lists.newArrayList;
 @GwtCompatible
 public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
-    private final KeyboardActionResources keyboardActionResources;
 
     public ActionToolbar(KeyboardActionResources keyboardActionResources) {
-        this.keyboardActionResources = keyboardActionResources;
         addStyleName(keyboardActionResources.style().buttonPanelBlock());
     }
 

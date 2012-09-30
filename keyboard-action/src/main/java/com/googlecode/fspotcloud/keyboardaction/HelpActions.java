@@ -1,8 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.event.dom.client.KeyCodes;
-
-import static com.google.common.collect.Lists.newArrayList;
+import com.google.inject.Inject;
 
 public class HelpActions {
 
@@ -18,28 +17,24 @@ public class HelpActions {
     private final String[] allModes;
     private final ConfigBuilder configBuilder;
     private final HelpPopup helpPopup;
-    private final KeyboardPreferences keyboardPreferences;
-    private final IModeController modeController;
     private final HelpContentGenerator helpContentGenerator;
     private final KeyboardActionResources keyboardActionResources;
 
-    public HelpActions(String[] allModes,
+    @Inject
+    public HelpActions(ModesProvider allModes,
                        ConfigBuilder configBuilder,
-                       KeyboardPreferences keyboardPreferences,
-                       IModeController modeController,
                        HelpContentGenerator helpContentGenerator,
                        KeyboardActionResources keyboardActionResources) {
-        this.allModes = allModes;
+        this.allModes = allModes.getModes();
         this.configBuilder = configBuilder;
-        this.keyboardPreferences = keyboardPreferences;
-        this.modeController = modeController;
         this.helpContentGenerator = helpContentGenerator;
         this.keyboardActionResources = keyboardActionResources;
         helpActionCategory = configBuilder.createActionCategory(HELP_CATEGORY);
         helpPopup = new HelpPopup(keyboardActionResources);
+        initHelpActions();
     }
 
-     void initHelpActions() {
+    private void initHelpActions() {
         showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(allModes);
         hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(allModes);
         showHelpDef = new ActionDef(SHOW_HELP_ACTION, "Help", "Show a help popup.", keyboardActionResources.helpIcon());
@@ -48,22 +43,19 @@ public class HelpActions {
             @Override
             public void performAction(String actionId) {
                 helpPopup.setTitle("Keyboard help");
-                helpPopup.setText(helpContentGenerator.getHelpText(configBuilder.getActionCategoryList()));
+                helpPopup.setSafeHtml(helpContentGenerator.getHelpText(configBuilder.getActionCategoryList()));
                 helpPopup.setGlassEnabled(true);
                 helpPopup.center();
                 helpPopup.show();
+                helpPopup.focus();
             }
         }, showHelpBinding);
-         configBuilder.addBinding(helpActionCategory, hideHelpDef, new IActionHandler() {
-             @Override
-             public void performAction(String actionId) {
-
-                 helpPopup.hide();
-             }
-         }, hideHelpBinding);
+        configBuilder.addBinding(helpActionCategory, hideHelpDef, new IActionHandler() {
+            @Override
+            public void performAction(String actionId) {
+                helpPopup.hide();
+            }
+        }, hideHelpBinding);
 
     }
-
-
-
 }

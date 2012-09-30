@@ -4,14 +4,14 @@ import com.google.common.base.Objects;
 
 public class Modifiers {
     private final boolean shift, ctrl, alt;
-    public static final Modifiers NONE = new Modifiers(false, false,  false);
-    public static final Modifiers SHIFT = new Modifiers(true, false,  false);
-    public static final Modifiers SHIFT_CTRL = new Modifiers(true, true,  false);
-    public static final Modifiers CTRL = new Modifiers(false, true,  false);
-    public static final Modifiers ALT = new Modifiers(false, false,  true);
+    public static final Modifiers NONE = new Modifiers(false, false, false);
+    public static final Modifiers SHIFT = new Modifiers(true, false, false);
+    public static final Modifiers SHIFT_CTRL = new Modifiers(true, true, false);
+    public static final Modifiers CTRL = new Modifiers(false, true, false);
+    public static final Modifiers ALT = new Modifiers(false, false, true);
 
 
-    public Modifiers(boolean shift, boolean ctrl,  boolean alt) {
+    public Modifiers(boolean shift, boolean ctrl, boolean alt) {
         this.shift = shift;
         this.ctrl = ctrl;
         this.alt = alt;

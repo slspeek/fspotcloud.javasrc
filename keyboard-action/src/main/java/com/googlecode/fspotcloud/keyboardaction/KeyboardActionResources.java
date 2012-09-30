@@ -27,7 +27,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.TextResource;
 
 
 public interface KeyboardActionResources extends ClientBundle {

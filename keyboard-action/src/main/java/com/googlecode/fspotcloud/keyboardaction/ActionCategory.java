@@ -1,12 +1,15 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
+
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+@GwtCompatible
 public class ActionCategory {
     private final String name;
-    private final List<ActionDef> actions= newArrayList();
+    private final List<ActionDef> actions = newArrayList();
 
     public String getName() {
         return name;

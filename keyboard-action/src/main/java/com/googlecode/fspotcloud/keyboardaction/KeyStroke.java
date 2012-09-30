@@ -152,15 +152,16 @@ public class KeyStroke {
     public boolean equals(Object obj) {
         if (obj instanceof KeyStroke) {
             KeyStroke keyStroke = (KeyStroke) obj;
-            return Objects.equal(keyStroke.keyCode, keyCode) && Objects.equal(keyStroke.modifiers, modifiers);
+            return Objects.equal(keyStroke.keyCode, keyCode)
+                    && Objects.equal(keyStroke.modifiers, modifiers);
         }
         return false;
     }
 
     public String toString() {
         return "" + (modifiers.isShift() ? "SHIFT-" : "")
-                + (modifiers.isAlt() ?"ALT-":"")
-                + (modifiers.isCtrl() ?"CTRL-": "")
+                + (modifiers.isAlt() ? "ALT-" : "")
+                + (modifiers.isCtrl() ? "CTRL-" : "")
                 + getKeyString();
     }
 }

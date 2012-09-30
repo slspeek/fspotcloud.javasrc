@@ -1,14 +1,16 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Event;
 import com.google.inject.Inject;
-import com.google.gwt.event.shared.EventBus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class NativePreviewHandler implements Event.NativePreviewHandler {
+@GwtCompatible
+public class NativePreviewHandler implements Event.NativePreviewHandler {
 
     private final Logger log = Logger.getLogger(NativePreviewHandler.class.getName());
     private final EventBus eventBus;
@@ -16,13 +18,16 @@ class NativePreviewHandler implements Event.NativePreviewHandler {
     private final IModeController modeController;
 
     @Inject
-    public NativePreviewHandler(EventBus eventBus, KeyboardPreferences keyboardPreferences, IModeController modeController) {
+    public NativePreviewHandler(EventBus eventBus,
+                                KeyboardPreferences keyboardPreferences,
+                                IModeController modeController) {
         this.eventBus = eventBus;
         this.keyboardPreferences = keyboardPreferences;
         this.modeController = modeController;
+        init();
     }
 
-    public void init() {
+    private void init() {
         Event.addNativePreviewHandler(this);
     }
 

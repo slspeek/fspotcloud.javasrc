@@ -4,11 +4,12 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class ModeController implements IModeController {
+public class ModeController implements IModeController {
 
     private final Logger log = Logger.getLogger(ModeController.class.getName());
     private final String defaultMode;
@@ -16,10 +17,11 @@ class ModeController implements IModeController {
     private final KeyboardPreferences keyboardPreferences;
     private final EventBus eventBus;
 
-    public ModeController(String defaultMode, KeyboardPreferences keyboardPreferences, EventBus eventBus) {
+    @Inject
+    public ModeController(ModesProvider modesProvider, KeyboardPreferences keyboardPreferences, EventBus eventBus) {
         this.eventBus = eventBus;
         this.keyboardPreferences = keyboardPreferences;
-        this.defaultMode = defaultMode;
+        this.defaultMode = modesProvider.getModes()[0];
     }
 
     @Override

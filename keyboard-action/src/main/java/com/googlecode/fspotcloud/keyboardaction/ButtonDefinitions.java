@@ -7,7 +7,7 @@ import java.util.Map;
 import static com.google.common.collect.Maps.newHashMap;
 
 @GwtCompatible
-class ButtonDefinitions {
+public class ButtonDefinitions {
 
     private final Map<String, ActionDef> registry = newHashMap();
 
