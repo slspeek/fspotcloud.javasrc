@@ -62,6 +62,7 @@ public class DemoAction implements Runnable {
     }
 
     private void initDemo() {
+
         demo = new ArrayList<DemoStep>();
 
         ActionMap raster = actions.get("Raster");

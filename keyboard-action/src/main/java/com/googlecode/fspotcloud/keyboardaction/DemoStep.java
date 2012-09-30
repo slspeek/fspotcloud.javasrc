@@ -22,13 +22,14 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.demo;
+package com.googlecode.fspotcloud.keyboardaction;
 
-import com.googlecode.fspotcloud.client.view.action.api.UserAction;
+import com.google.gwt.safehtml.shared.SafeHtml;
 
+public interface DemoStep {
+    Runnable getAction();
 
-public interface DemoStepFactory {
-    DemoStep getDemoStep(UserAction shortcut, int pause);
+    int pauseTime();
 
-
+    SafeHtml getSafeText();
 }
