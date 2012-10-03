@@ -19,7 +19,10 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(NativePreviewHandler.class).in(Singleton.class);
         bind(KeyboardPreferences.class).in(Singleton.class);
         bind(ActionImplementationRegister.class).in(Singleton.class);
-        bind(DemoBuilder.class).in(Singleton.class);
+        bind(DemoBuilder.class);
+        bind(DemoBuilderFactory.class);
+        bind(HelpPopup.class);
+        bind(HelpActions.class).in(Singleton.class);
     }
 
     @Provides

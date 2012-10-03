@@ -45,5 +45,4 @@ public class ConfigBuilder {
         return actionCategory;
     }
 
-
 }

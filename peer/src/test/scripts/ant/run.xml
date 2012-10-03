@@ -1,7 +1,7 @@
 <project name="Peer Test" default="run-local" basedir="../../../..">
-    <description>
+    <content>
         Peer test run details encapsulator
-    </description>
+    </content>
 
     <target name="run-local">
         <java jar="${basedir}/target/peer-${project.version}-jar-with-dependencies.jar" fork="yes">

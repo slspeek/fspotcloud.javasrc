@@ -12,7 +12,7 @@ public class HelpActions {
     private ActionDef showHelpDef, hideHelpDef;
     private KeyboardBinding showHelpBinding;
     private KeyboardBinding hideHelpBinding;
-    private final ActionCategory helpActionCategory;
+    public final ActionCategory helpActionCategory;
 
     private final String[] allModes;
     private final ConfigBuilder configBuilder;
@@ -24,13 +24,13 @@ public class HelpActions {
     public HelpActions(ModesProvider allModes,
                        ConfigBuilder configBuilder,
                        HelpContentGenerator helpContentGenerator,
-                       KeyboardActionResources keyboardActionResources) {
+                       HelpPopup helpPopup, KeyboardActionResources keyboardActionResources) {
+        this.keyboardActionResources = keyboardActionResources;
         this.allModes = allModes.getModes();
         this.configBuilder = configBuilder;
         this.helpContentGenerator = helpContentGenerator;
-        this.keyboardActionResources = keyboardActionResources;
         helpActionCategory = configBuilder.createActionCategory(HELP_CATEGORY);
-        helpPopup = new HelpPopup(keyboardActionResources);
+        this.helpPopup = helpPopup;
         initHelpActions();
     }
 
@@ -38,7 +38,7 @@ public class HelpActions {
         showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(allModes);
         hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(allModes);
         showHelpDef = new ActionDef(SHOW_HELP_ACTION, "Help", "Show a help popup.", keyboardActionResources.helpIcon());
-        hideHelpDef = new ActionDef(HIDE_HELP_ACTION, "Hide help popup", "Hide the help popup.");
+        hideHelpDef = new ActionDef(HIDE_HELP_ACTION, "Hide help", "Hide the help popup.");
         configBuilder.addBinding(helpActionCategory, showHelpDef, new IActionHandler() {
             @Override
             public void performAction(String actionId) {

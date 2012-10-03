@@ -95,7 +95,17 @@ public class HelpContentGenerator {
         return TEMPLATES.img(url, style.helpActionIcon());
     }
 
-    private SafeHtml getHelpRow(String[] keys, ActionDef actionDef) {
+    public SafeHtml getDemoContent(ActionDef actionDef, KeyStroke[] keys) {
+        SafeHtml helpRow = getHelpText(actionDef, keys);
+        return TEMPLATES.table(helpRow);
+    }
+
+    public SafeHtml getDemoContent(ActionDef actionDef, KeyStroke[] keys, String description) {
+        SafeHtml helpRow = getHelpText(actionDef, keys, description);
+        return TEMPLATES.table(helpRow);
+    }
+
+    public SafeHtml getHelpRow(String[] keys, ActionDef actionDef, String description) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         ImageResource icon = actionDef.getIcon();
         if (icon != null) {
@@ -116,7 +126,7 @@ public class HelpContentGenerator {
         }
         safeHtmlBuilder.append(TEMPLATES.td(keysBuilder.toSafeHtml(), style.helpKeys()));
         safeHtmlBuilder.append(TEMPLATES.td(" : ", style.helpSeparator()));
-        safeHtmlBuilder.append(getDescription(actionDef.getDescription()));
+        safeHtmlBuilder.append(getDescription(description));
 
         SafeHtml row = TEMPLATES.tr(safeHtmlBuilder.toSafeHtml(), style.helpRow());
 
@@ -126,7 +136,6 @@ public class HelpContentGenerator {
     public SafeHtml getHelp(ActionCategory category) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         safeHtmlBuilder.append(TEMPLATES.trspan5(category.getName(), style.helpCategoryTitle()));
-
         for (ActionDef actionDef : category.getActions()) {
             KeyStroke[] keysForAction = keyboardPreferences.getDefaultKeysForAction(actionDef.getId());
             safeHtmlBuilder.append(getHelpText(actionDef, keysForAction));
@@ -136,7 +145,7 @@ public class HelpContentGenerator {
     }
 
 
-    public SafeHtml getHelpText(ActionDef shortcut, KeyStroke[] keys) {
+    public SafeHtml getHelpText(ActionDef shortcut, KeyStroke[] keys, String description) {
 
         List<String> list = newArrayList();
         for (KeyStroke k : keys) {
@@ -144,7 +153,11 @@ public class HelpContentGenerator {
         }
         String[] keyStrings = new String[list.size()];
         keyStrings = list.toArray(keyStrings);
-        return getHelpRow(keyStrings, shortcut);
+        return getHelpRow(keyStrings, shortcut, description);
+    }
+
+    public SafeHtml getHelpText(ActionDef shortcut, KeyStroke[] keys) {
+        return getHelpText(shortcut, keys, shortcut.getDescription());
     }
 
     SafeHtml getHelpText(List<ActionCategory> categoryList) {

@@ -10,10 +10,7 @@ public class ActionDef {
     private final ImageResource icon;
 
     public ActionDef(String id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.icon = null;
+        this(id, name, description, null);
     }
 
     public ActionDef(String id, String name, String description, ImageResource icon) {

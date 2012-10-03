@@ -14,7 +14,7 @@ public class ActionImplementationRegister {
     void putAction(String actionId, IActionHandler handlerI) {
         IActionHandler previous = registry.put(actionId, handlerI);
         if (previous != null) {
-            throw new IllegalStateException("Action " + actionId + " was already bound.");
+           // throw new IllegalStateException("Action " + previous + " was already bound. (" + actionId +")");
         }
     }
 

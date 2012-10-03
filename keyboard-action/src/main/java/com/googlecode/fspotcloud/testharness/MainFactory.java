@@ -22,15 +22,19 @@ public class MainFactory {
     public static final String CANCEL = "CANCEL";
     public static final String TRY = "TRY";
     public static final String THREE = "THREE";
+    public static final String DEMO = "DEMO";
 
     public static final ActionDef OK_DEF = new ActionDef(OK, "Ok", "Okey");
     public static final ActionDef CANCEL_DEF = new ActionDef(CANCEL, "Cancel", "Cancel this");
     public static final ActionDef TRY_DEF = new ActionDef(TRY, "Try it", "Please try this");
     public static final ActionDef THREE_DEF = new ActionDef(THREE, "3", "3 this");
+    public static final ActionDef DEMO_DEF = new ActionDef(DEMO, "Demo", "Play a demo");
 
     final KeyboardActionFactory keyboardActionFactory;
     final ConfigBuilder configBuilder;
     final IModeController modeController;
+    final DemoBuilderFactory demoBuilderFactory;
+    final HelpActions helpActions;
 
     final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
@@ -38,6 +42,7 @@ public class MainFactory {
     final KeyStroke KEY_D = new KeyStroke('D');
     final KeyStroke KEY_G = new KeyStroke('G');
     final KeyStroke KEY_3 = new KeyStroke('3');
+    final KeyStroke KEY_7 = new KeyStroke('7');
     final KeyStroke ALT_M = new KeyStroke(Modifiers.ALT, 'M');
     final KeyStroke CTRL_M = new KeyStroke(Modifiers.CTRL, 'M');
     final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
@@ -47,6 +52,7 @@ public class MainFactory {
     final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withDefaultModes(MODE_ONE);
     final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withDefaultModes(MODES);
     final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withDefaultModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
+    final KeyboardBinding DEMO_BINDING = KeyboardBinding.bind(KEY_7).withDefaultModes(MODES);
     TextArea messageBoard = new TextArea();
 
     void outputMesg(String msg) {
@@ -55,8 +61,10 @@ public class MainFactory {
     }
 
     @Inject
-    public MainFactory(KeyboardActionFactory keyboardActionFactory) {
+    public MainFactory(KeyboardActionFactory keyboardActionFactory, DemoBuilderFactory demoBuilderFactory, HelpActions helpActions) {
         this.keyboardActionFactory = keyboardActionFactory;
+        this.demoBuilderFactory = demoBuilderFactory;
+        this.helpActions = helpActions;
         this.configBuilder = keyboardActionFactory.getConfigBuilder();
         this.modeController = keyboardActionFactory.getModeController();
 
@@ -97,6 +105,14 @@ public class MainFactory {
                 outputMesg("Running 3 action " + actionId);
             }
         }, THREE_BINDING);
+
+        DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);
+        demoBuilder.addStep(OK, 3000).addStep(CANCEL, 2000).addStep(HelpActions.SHOW_HELP_ACTION, 2000).addStep(HelpActions.HIDE_HELP_ACTION, 1000);
+
+        configBuilder.addBinding(helpActions.helpActionCategory, DEMO_DEF, demoBuilder.getDemo(), DEMO_BINDING);
+
+
+
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
         ActionButton okButton = keyboardActionFactory.getButton(OK);
         toolbar.add(okButton);

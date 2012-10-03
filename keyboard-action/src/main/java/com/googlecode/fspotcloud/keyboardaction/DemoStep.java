@@ -31,5 +31,5 @@ public interface DemoStep {
 
     int pauseTime();
 
-    SafeHtml getSafeText();
+    SafeHtml getContent();
 }
