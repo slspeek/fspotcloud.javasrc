@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 
 import java.util.List;
@@ -10,15 +11,21 @@ import static com.google.common.collect.Lists.newArrayList;
 @GwtCompatible
 public class Demo implements IActionHandler {
 
-    private final HelpPopup helpPopup;
+    private final DemoPopup demoPopup;
     private final ActionDef actionDef;
     private List<DemoStep> stepList = newArrayList();
     private int currentDemoStep = 0;
     private Timer timer;
+    private final EventBus eventBus;
+    private boolean stopped = false;
 
-    public Demo(HelpPopup helpPopup, ActionDef actionDef) {
-        this.helpPopup = helpPopup;
+
+    public Demo(DemoPopup demoPopup, ActionDef actionDef, EventBus eventBus) {
+        this.demoPopup = demoPopup;
         this.actionDef = actionDef;
+        this.eventBus = eventBus;
+        demoPopup.setTitle("Demo");
+        demoPopup.setDemo(this);
     }
 
     public List<DemoStep> getStepList() {
@@ -28,21 +35,23 @@ public class Demo implements IActionHandler {
     @Override
     public void performAction(final String actionId) {
         //check for the end
-        if (currentDemoStep < stepList.size()) {
+        if (!stopped && currentDemoStep < stepList.size()) {
             final DemoStep step = stepList.get(currentDemoStep);
-            helpPopup.setSafeHtml(step.getContent());
-            helpPopup.setPopupPosition(10,10);
-            helpPopup.show();
+            eventBus.fireEvent(new ActionDemoEvent(step.getActionId(), true));
+            demoPopup.setSafeHtml(step.getContent());
+            demoPopup.setPopupPosition(10, 10);
+            demoPopup.show();
             timer = new Timer() {
                 @Override
                 public void run() {
                     step.getAction().run();
                 }
             };
-            timer.schedule(500);
+            timer.schedule(1000);
             timer = new Timer() {
                 @Override
                 public void run() {
+                    eventBus.fireEvent(new ActionDemoEvent(step.getActionId(), false));
                     performAction(actionId);
                 }
             };
@@ -50,10 +59,14 @@ public class Demo implements IActionHandler {
             timer.schedule(step.pauseTime());
 
         }   else {
-            helpPopup.hide();
-            currentDemoStep = 0;
+                demoPopup.hide();
+                stopped = false;
+                currentDemoStep = 0;
         }
     }
 
 
+    public void stop() {
+        stopped = true;
+    }
 }

@@ -123,6 +123,7 @@ public class MainFactory {
         ActionButton _3Button = keyboardActionFactory.getButton(THREE);
         toolbar.add(_3Button);
         toolbar.add(keyboardActionFactory.getButton(HelpActions.SHOW_HELP_ACTION));
+        toolbar.add(keyboardActionFactory.getButton(DEMO));
         RootPanel.get().add(messageBoard);
         RootPanel.get().add(toolbar);
         modeController.initButtonEnableStates();

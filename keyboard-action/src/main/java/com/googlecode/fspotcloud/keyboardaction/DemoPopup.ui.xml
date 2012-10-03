@@ -5,11 +5,9 @@
 
     <g:FocusPanel ui:field="focusPanel">
         <g:HTMLPanel>
-            <div class="{res.style.helpTitleRow">
-            <span ui:field="titleSpan" class="{res.style.helpTitle}"></span>
-            <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose">Close</g:Anchor>
-            </div>
+            <div ui:field="titleDiv" class="{res.style.helpTitle}"></div>
             <div ui:field="helpBodyDiv" class="{res.style.helpBody}"></div>
+            <g:Anchor ui:field="stopAnchor" styleName="{res.style.helpClose">Stop demo</g:Anchor>
         </g:HTMLPanel>
     </g:FocusPanel>
 </ui:UiBinder>

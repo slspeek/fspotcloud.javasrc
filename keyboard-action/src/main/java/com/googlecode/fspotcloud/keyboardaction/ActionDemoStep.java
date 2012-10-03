@@ -19,6 +19,11 @@ public class ActionDemoStep implements DemoStep {
     }
 
     @Override
+    public String getActionId() {
+        return actionDef.getId();
+    }
+
+    @Override
     public Runnable getAction() {
         return new Runnable() {
             @Override

@@ -19,6 +19,29 @@
    border-radius:15px;
 }
 
+.demo
+{
+    background: yellow;
+    color: purple;
+}
+
+.demoPopup
+{
+   -moz-border-radius:15px;
+   border-radius:15px;
+   background-color:rgba(0,0,0,0.3);
+   color:#FFF;
+   padding:5px;
+}
+
+.helpTitleRow
+{
+
+}
+.helpClose
+{
+    align-right:auto;
+}
 .button:hover
 {
   -moz-transform:hoverTransform;

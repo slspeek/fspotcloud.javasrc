@@ -24,14 +24,10 @@
 
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.common.annotations.GwtCompatible;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface DemoStep {
-
-    String getActionId();
-    Runnable getAction();
-
-    int pauseTime();
-
-    SafeHtml getContent();
+@GwtCompatible
+interface IActionDemoHandler extends EventHandler {
+    void onEvent(ActionDemoEvent event);
 }

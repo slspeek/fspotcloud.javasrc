@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ActionButton extends PushButton implements IActionEnableHandler {
+public class ActionButton extends PushButton implements IActionEnableHandler, IActionDemoHandler {
 
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionDef actionDef;
@@ -52,6 +52,7 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
 
     private void initialize() {
         eventBus.addHandler(ActionStateEvent.TYPE, this);
+        eventBus.addHandler(ActionDemoEvent.TYPE, this);
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 log.log(Level.FINEST, "Button: " + actionDef.getId() + " pressed.");
@@ -92,5 +93,18 @@ public class ActionButton extends PushButton implements IActionEnableHandler {
             }
             //setVisible(event.getState());
         }
+    }
+
+    @Override
+    public void onEvent(ActionDemoEvent event) {
+        if (event.getActionId().equals(actionDef.getId())) {
+
+            if (event.getState()) {
+                addStyleName(keyboardActionResources.style().demo());
+            } else {
+                removeStyleName(keyboardActionResources.style().demo());
+            }
+        }
+
     }
 }

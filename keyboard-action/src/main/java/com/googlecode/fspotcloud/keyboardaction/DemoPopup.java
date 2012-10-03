@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -40,25 +39,31 @@ import com.google.inject.Inject;
 import java.util.logging.Logger;
 
 
-public class HelpPopup extends PopupPanel {
-    private final Logger log = Logger.getLogger(HelpPopup.class.getName());
+public class DemoPopup extends PopupPanel {
+    private final Logger log = Logger.getLogger(DemoPopup.class.getName());
     private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
     @UiField
-    Anchor closeAnchor;
+    Anchor stopAnchor;
     @UiField
     FocusPanel focusPanel;
     @UiField
     DivElement helpBodyDiv;
     @UiField
-    SpanElement titleSpan;
+    DivElement titleDiv;
     private final KeyboardActionResources keyboardActionResources;
 
+    private Demo demo;
+
     @Inject
-    public HelpPopup(KeyboardActionResources keyboardActionResources) {
+    public DemoPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
         this.keyboardActionResources = keyboardActionResources;
         setWidget(uiBinder.createAndBindUi(this));
-        addStyleName(keyboardActionResources.style().helpPopup());
+        addStyleName(keyboardActionResources.style().demoPopup());
+    }
+
+    public void setDemo(Demo demo) {
+        this.demo = demo;
     }
 
     public void setSafeHtml(SafeHtml text) {
@@ -66,18 +71,19 @@ public class HelpPopup extends PopupPanel {
     }
 
     public void setTitle(String text) {
-        titleSpan.setInnerHTML(text);
+        titleDiv.setInnerHTML(text);
     }
 
     public void focus() {
         focusPanel.setFocus(true);
     }
 
-    interface HelpPopupUiBinder extends UiBinder<FocusPanel, HelpPopup> {
+    interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopup> {
     }
 
-    @UiHandler("closeAnchor")
+    @UiHandler("stopAnchor")
     public void handleClose(ClickEvent clickEvent) {
+        demo.stop();
         hide();
     }
 

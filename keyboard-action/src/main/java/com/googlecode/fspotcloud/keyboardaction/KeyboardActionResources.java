@@ -41,9 +41,16 @@ public interface KeyboardActionResources extends ClientBundle {
 
         String button();
 
+        String demo();
+
+        String demoPopup();
+
+        String helpTitleRow();
+
         String helpKey();
 
         String helpBody();
+        String helpClose();
 
         String helpPopup();
 
