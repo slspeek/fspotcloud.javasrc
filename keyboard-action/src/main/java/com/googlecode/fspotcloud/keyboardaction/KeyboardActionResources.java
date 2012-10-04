@@ -50,6 +50,7 @@ public interface KeyboardActionResources extends ClientBundle {
         String helpKey();
 
         String helpBody();
+
         String helpClose();
 
         String helpPopup();

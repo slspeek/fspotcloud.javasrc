@@ -29,6 +29,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 public interface DemoStep {
 
     String getActionId();
+
     Runnable getAction();
 
     int pauseTime();

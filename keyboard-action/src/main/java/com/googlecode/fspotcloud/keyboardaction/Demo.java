@@ -5,17 +5,22 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 @GwtCompatible
 public class Demo implements IActionHandler {
 
+    private final Logger log = Logger.getLogger(Demo.class.getName());
     private final DemoPopup demoPopup;
     private final ActionDef actionDef;
     private List<DemoStep> stepList = newArrayList();
     private int currentDemoStep = 0;
-    private Timer timer;
+    private DemoStep currentStep;
+    private Timer actionTimer;
+    private Timer nextCalltimer;
     private final EventBus eventBus;
     private boolean stopped = false;
 
@@ -36,37 +41,44 @@ public class Demo implements IActionHandler {
     public void performAction(final String actionId) {
         //check for the end
         if (!stopped && currentDemoStep < stepList.size()) {
-            final DemoStep step = stepList.get(currentDemoStep);
-            eventBus.fireEvent(new ActionDemoEvent(step.getActionId(), true));
-            demoPopup.setSafeHtml(step.getContent());
+            currentStep = stepList.get(currentDemoStep);
+            eventBus.fireEvent(new ActionDemoEvent(currentStep.getActionId(), true));
+            demoPopup.setSafeHtml(currentStep.getContent());
             demoPopup.setPopupPosition(10, 10);
             demoPopup.show();
-            timer = new Timer() {
+            actionTimer = new Timer() {
                 @Override
                 public void run() {
-                    step.getAction().run();
+                    currentStep.getAction().run();
                 }
             };
-            timer.schedule(1000);
-            timer = new Timer() {
+            actionTimer.schedule(1000);
+            nextCalltimer = new Timer() {
                 @Override
                 public void run() {
-                    eventBus.fireEvent(new ActionDemoEvent(step.getActionId(), false));
+                    eventBus.fireEvent(new ActionDemoEvent(currentStep.getActionId(), false));
                     performAction(actionId);
                 }
             };
             currentDemoStep++;
-            timer.schedule(step.pauseTime());
+            nextCalltimer.schedule(currentStep.pauseTime());
 
-        }   else {
-                demoPopup.hide();
-                stopped = false;
-                currentDemoStep = 0;
+        } else {
+            demoPopup.hide();
+            stopped = false;
+            currentDemoStep = 0;
         }
     }
 
 
     public void stop() {
         stopped = true;
+        try {
+            eventBus.fireEvent(new ActionDemoEvent(currentStep.getActionId(), false));
+            actionTimer.cancel();
+            nextCalltimer.cancel();
+        } catch (NullPointerException npe) {
+            log.log(Level.FINEST, "stop called on not running demo", npe);
+        }
     }
 }

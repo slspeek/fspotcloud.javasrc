@@ -6,8 +6,8 @@
     <g:FocusPanel ui:field="focusPanel">
         <g:HTMLPanel>
             <div class="{res.style.helpTitleRow">
-            <span ui:field="titleSpan" class="{res.style.helpTitle}"></span>
-            <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose">Close</g:Anchor>
+                <span ui:field="titleSpan" class="{res.style.helpTitle}"></span>
+                <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose">Close</g:Anchor>
             </div>
             <div ui:field="helpBodyDiv" class="{res.style.helpBody}"></div>
         </g:HTMLPanel>
