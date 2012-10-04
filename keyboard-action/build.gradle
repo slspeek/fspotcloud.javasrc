@@ -1,7 +1,7 @@
 description = 'Keyboard Action Framework'
 
 apply plugin: 'gwt2'
-apply plugin:  'jetty'
+apply plugin: 'jetty'
 
 if ("${analysis}" == "true") {
     [findbugsMain, findbugsTest]*.enabled = false

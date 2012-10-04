@@ -25,12 +25,12 @@
 package com.googlecode.fspotcloud.client.main;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
+import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
+import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
 
 import java.util.logging.Logger;
 

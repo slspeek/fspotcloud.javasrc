@@ -49,7 +49,7 @@ public class PojoTest {
     private PojoValidator pojoValidator;
     private final Class<?>[] POJO_CLASSES = new Class<?>[]{
             AuthenticationAction.class, AuthenticationResult.class, DeleteUserGroupAction.class,
-            GetMyUserGroupsAction.class,GetMyUserGroupsResult.class,  GetUserGroupAction.class, GetUserGroupResult.class,
+            GetMyUserGroupsAction.class, GetMyUserGroupsResult.class, GetUserGroupAction.class, GetUserGroupResult.class,
             GrantUserAction.class, LogoutAction.class,
             GetTagTreeAction.class, GetUserInfo.class, PhotoInfo.class,
             PhotoInfoStore.class, TagNode.class, TagTreeResult.class,

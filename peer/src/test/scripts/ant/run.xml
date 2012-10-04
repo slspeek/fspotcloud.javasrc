@@ -9,7 +9,8 @@
             <sysproperty key="endpoint" value="localhost:8080"/>
             <sysproperty key="bot.secret" value="SECRET"/>
             <sysproperty key="photo.dir.original" value="file:///home/fspotcloud/Pictures/Foto's"/>
-            <sysproperty key="photo.dir.override" value="file://${basedir}/../peer/src/test/keyboardActionResources/Photos"/>
+            <sysproperty key="photo.dir.override"
+                         value="file://${basedir}/../peer/src/test/keyboardActionResources/Photos"/>
         </java>
     </target>
     <target name="run-remote">
@@ -17,7 +18,8 @@
             <sysproperty key="db" value="${basedir}/src/test/keyboardActionResources/photos.db"/>
             <sysproperty key="endpoint" value="jfspotcloud.appspot.com"/>
             <sysproperty key="photo.dir.original" value="file:///home/fspotcloud/Pictures/Foto's"/>
-            <sysproperty key="photo.dir.override" value="file://${basedir}/../peer/src/test/keyboardActionResources/Photos"/>
+            <sysproperty key="photo.dir.override"
+                         value="file://${basedir}/../peer/src/test/keyboardActionResources/Photos"/>
         </java>
     </target>
 

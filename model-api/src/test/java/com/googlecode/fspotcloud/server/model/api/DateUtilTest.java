@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
-import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.*;
 
 public class DateUtilTest {
     @Test

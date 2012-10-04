@@ -67,8 +67,8 @@ public class RemovePhotosFromTagHandler extends AbstractBatchActionHandler<Remov
                     Tag tagRelated = tagManager.find(tagId);
 
                     if (tagRelated != null && tagRelated.isImportIssued()) {
-                            moreImports = true;
-                            break;
+                        moreImports = true;
+                        break;
                     }
                 }
             }

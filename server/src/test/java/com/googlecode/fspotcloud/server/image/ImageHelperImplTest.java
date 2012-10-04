@@ -13,9 +13,7 @@ import javax.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class ImageHelperImplTest {
@@ -24,7 +22,8 @@ public class ImageHelperImplTest {
     public static final String FULLSIZE_IMAGE_BLOB_KEY = "fullsize";
     public static final String THUMB_BLOB_KEY = "thumb";
     public static final String KEY_STRING = "FOO";
-    @Inject ImageHelperImpl helper;
+    @Inject
+    ImageHelperImpl helper;
     @Inject
     BlobService blobService;
 

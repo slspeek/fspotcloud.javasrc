@@ -112,7 +112,6 @@ public class MainFactory {
         configBuilder.addBinding(helpActions.helpActionCategory, DEMO_DEF, demoBuilder.getDemo(), DEMO_BINDING);
 
 
-
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
         ActionButton okButton = keyboardActionFactory.getButton(OK);
         toolbar.add(okButton);

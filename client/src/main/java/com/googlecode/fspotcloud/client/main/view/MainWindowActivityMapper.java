@@ -28,11 +28,11 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
+import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
+import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
 
 import java.util.logging.Logger;
 

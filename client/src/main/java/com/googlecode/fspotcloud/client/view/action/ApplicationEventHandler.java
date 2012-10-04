@@ -92,20 +92,12 @@ public class ApplicationEventHandler implements ApplicationEvent.Handler,
         log.info("On application event of type " + e.getActionDef());
 
         switch ((ApplicationType) e.getActionDef()) {
-            case START_DEMO:
-                demoAction.run();
-
-                break;
 
             case HIDE_CONTROLS:
                 hideControlsAction.run();
 
                 break;
 
-            case TOGGLE_HELP:
-                helpAction.run();
-
-                break;
 
             case TREE_FOCUS:
                 treeFocusAction.run();

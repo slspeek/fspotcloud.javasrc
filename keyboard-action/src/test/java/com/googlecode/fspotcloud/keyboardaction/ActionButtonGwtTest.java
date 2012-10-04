@@ -1,9 +1,9 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.junit.client.GWTTestCase;
 import com.googlecode.fspotcloud.testharness.MainFactory;
 
 public class ActionButtonGwtTest extends GWTTestCase {
