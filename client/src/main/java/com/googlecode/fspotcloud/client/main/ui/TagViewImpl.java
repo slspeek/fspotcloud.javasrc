@@ -41,6 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.googlecode.fspotcloud.client.main.view.api.*;
+import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 import java.util.logging.Logger;
 
@@ -69,15 +70,17 @@ public class TagViewImpl extends Composite implements TagView,
     @SuppressWarnings("unused")
     private TagPresenter presenter;
     final int id = ID++;
+    private final ActionToolbar actionToolbar;
 
     @Inject
     public TagViewImpl(TreeView treeView,
                        @Named("Main")
                        ButtonPanelView buttonPanelView, ImageRasterView imageRasterView,
-                       TimerInterface timer) {
+                       TimerInterface timer, ActionToolbar actionToolbar) {
         this.timer = timer;
         this.treeView = treeView;
         this.buttonPanelView = buttonPanelView;
+        this.actionToolbar = actionToolbar;
         imageRasterView.asWidget().addDomHandler(this, MouseOverEvent.getType());
         imageRasterView.asWidget().addDomHandler(this, MouseOutEvent.getType());
         this.imageRasterView = imageRasterView;
@@ -90,6 +93,11 @@ public class TagViewImpl extends Composite implements TagView,
         log.info("horizontal mouse over");
         cancelHiding();
         animateControlsIn(600);
+    }
+
+    @UiFactory
+    ActionToolbar getActionToolbar() {
+        return actionToolbar;
     }
 
     @UiHandler("verticalFocusPanel")

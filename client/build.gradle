@@ -5,6 +5,9 @@ if ("${analysis}" == "true") {
     [findbugsMain, findbugsTest]*.enabled = false
 }
 
+pmdMain {
+    ignoreFailures = true
+}
 configurations {
     javascript
 }

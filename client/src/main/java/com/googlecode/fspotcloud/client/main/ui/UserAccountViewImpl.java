@@ -53,7 +53,7 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
         emailValueLabel.ensureDebugId("email");
         nicknameValueLabel.ensureDebugId("nickname");
         lastLoginValueLabel.ensureDebugId("last-login");
-        log.info("Created " + this);
+        log.info("Created ");
     }
 
     @Override

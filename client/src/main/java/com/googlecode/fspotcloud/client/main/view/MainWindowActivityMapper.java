@@ -31,8 +31,9 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
+import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Logger;
 
@@ -42,7 +43,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final TagPresenterFactory tagPresenterFactory;
     private final SingleViewActivityFactory singleViewActivityFactory;
     private final Navigator navigator;
-    private final IGlobalShortcutController keyboard;
+    private final IModeController modeController;
     private final LoginView.LoginPresenter loginPresenter;
     private final SignUpView.SignUpPresenter signUpPresenter;
     private final UserAccountView.UserAccountPresenter userAccountActivity;
@@ -53,7 +54,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     @Inject
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
                                     SingleViewActivityFactory singleViewActivityFactory,
-                                    Navigator navigator, IGlobalShortcutController keyboard,
+                                    Navigator navigator, IModeController modeController,
                                     LoginView.LoginPresenter loginPresenter,
                                     SignUpView.SignUpPresenter signUpPresenter,
                                     UserAccountView.UserAccountPresenter userAccountActivity,
@@ -64,7 +65,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.singleViewActivityFactory = singleViewActivityFactory;
         this.tagPresenterFactory = tagPresenterFactory;
         this.navigator = navigator;
-        this.keyboard = keyboard;
+        this.modeController = modeController;
         this.loginPresenter = loginPresenter;
         this.signUpPresenter = signUpPresenter;
         this.userAccountActivity = userAccountActivity;
@@ -82,28 +83,28 @@ public class MainWindowActivityMapper implements ActivityMapper {
 
         if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;
-            keyboard.setMode(Mode.LOGIN);
+            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SignUpPlace) {
             activity = signUpPresenter;
-            keyboard.setMode(Mode.LOGIN);
+            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof ManageUsersPlace) {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
-            keyboard.setMode(Mode.LOGIN);
+            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof MyUserGroupsPlace) {
             activity = myUserGroupsPresenter;
-            keyboard.setMode(Mode.LOGIN);
+            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof EditUserGroupPlace) {
             activity = editUserGroupPresenter;
             editUserGroupPresenter.setId(((EditUserGroupPlace) place).getUserGroupId());
-            keyboard.setMode(Mode.LOGIN);
+            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof LoginPlace) {
             activity = loginPresenter;
-            keyboard.setMode(Mode.LOGIN);
+            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SlideshowPlace) {
             BasePlace basePlace = (BasePlace) place;
             activity = singleViewActivityFactory.get(basePlace);
-            keyboard.setMode(Mode.SLIDESHOW);
+            modeController.setMode(Modes.SLIDESHOW);
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;
 
@@ -112,7 +113,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
             }
 
             activity = tagPresenterFactory.get(basePlace);
-            keyboard.setMode(Mode.TAG_VIEW);
+            modeController.setMode(Modes.TAG_VIEW);
         } else {
             log.warning("getActivity will return null for:" + place);
         }

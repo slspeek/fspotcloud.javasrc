@@ -1,7 +1,8 @@
-package com.googlecode.fspotcloud.client.useraction.handler.application;
+package com.googlecode.fspotcloud.client.useraction.application.handler;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
@@ -17,6 +18,7 @@ public class LogoutHandler implements IActionHandler
     private final Logger log = Logger.getLogger(LogoutHandler.class.getName());
     private final ClientLoginManager clientLoginManager;
 
+    @Inject
     public LogoutHandler(ClientLoginManager clientLoginManager) {
         this.clientLoginManager = clientLoginManager;
     }

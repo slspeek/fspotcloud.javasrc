@@ -43,8 +43,9 @@ import com.googlecode.fspotcloud.client.main.ui.UserPagesResources;
 import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
+import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
 import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Logger;
 
@@ -56,32 +57,26 @@ public class MVPSetup {
     private final EventBus eventBus;
     private final MainWindowActivityMapper activityMapper;
     private final PlaceController placeController;
-    private final Initializable keyboardHandler;
-    private final KeyboardActionFactory keyboardActionFactory;
     private final EventHandlersSetup eventSetup;
     private final ClientLoginManager clientLoginManager;
 
     @Inject
     public MVPSetup(MainWindowActivityMapper activityMapper, EventBus eventBus,
                     PlaceController placeController,
-                    IGlobalShortcutController keyboardHandler,
                     EventHandlersSetup eventSetup, Resources resources,
                     AdminResources adminResources, ClientLoginManager clientLoginManager,
-                    UserPagesResources userPagesResources, KeyboardActionFactory keyboardActionFactory) {
+                    UserPagesResources userPagesResources, UserActionFactory userActionFactory) {
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
         this.placeController = placeController;
-        this.keyboardHandler = keyboardHandler;
         this.eventSetup = eventSetup;
         this.clientLoginManager = clientLoginManager;
-        this.keyboardActionFactory = keyboardActionFactory;
         resources.style().ensureInjected();
         adminResources.style().ensureInjected();
         userPagesResources.style().ensureInjected();
     }
 
     public void setup() {
-        keyboardHandler.init();
         log.info("Starting MVP setup");
         eventSetup.setUp();
 

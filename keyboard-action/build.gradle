@@ -52,7 +52,7 @@ test {
 compileGwt.dependsOn convertIcons
 gwtDevMode.dependsOn convertIcons
 
-gwtModules = ['com.googlecode.fspotcloud.KeyboardAction']
+gwtModules = ['com.googlecode.fspotcloud.KeyboardActionTestModule']
 
 compileGwt {
     style = 'OBF' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)

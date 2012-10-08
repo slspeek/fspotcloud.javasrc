@@ -27,9 +27,10 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
-public class LoadNewLocationAction implements Runnable {
+public class LoadNewLocationAction implements Runnable, IActionHandler {
     private final LoadNewLocation loader;
     private final String newLocation;
 
@@ -45,5 +46,10 @@ public class LoadNewLocationAction implements Runnable {
     @Override
     public void run() {
         loader.setLocation(newLocation);
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        run();
     }
 }

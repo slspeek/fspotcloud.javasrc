@@ -32,6 +32,9 @@ import com.google.gwt.event.dom.client.KeyCodes;
 public class KeyStroke {
     private final Modifiers modifiers;
     private final int keyCode;
+    public static final int KEY_NUM_PAD_PLUS = 107;
+    public static final int KEY_NUM_PAD_MINUS = 109;
+    public static final int KEY_SPACE = 32;
 
     public KeyStroke(Modifiers modifiers, int keyCode) {
         this.modifiers = modifiers;

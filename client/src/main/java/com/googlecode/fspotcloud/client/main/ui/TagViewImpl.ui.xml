@@ -1,17 +1,18 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:my="urn:import:com.googlecode.fspotcloud.client.main.ui">
+             xmlns:my="urn:import:com.googlecode.fspotcloud.client.main.ui"
+             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction">
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
     <g:LayoutPanel ui:field="mainPanel" styleName="{res.style.tagView}">
-        <g:layer top="0%" height="94%" right="0%" width="78%">
+        <g:layer top="0%" height="92%" right="0%" width="78%">
             <my:ImageRasterViewImpl styleName="{res.style.imagePanelBlock}"></my:ImageRasterViewImpl>
         </g:layer>
-        <g:layer top="0%" height="94%" left="0%" width="22%">
+        <g:layer top="0%" height="92%" left="0%" width="22%">
             <my:TreeViewImpl styleName="{res.style.treeBlock}"></my:TreeViewImpl>
         </g:layer>
-        <g:layer bottom="0%" height="6%">
-            <my:ButtonPanelViewImpl></my:ButtonPanelViewImpl>
+        <g:layer bottom="0%" height="8%">
+            <ka:ActionToolbar></ka:ActionToolbar>
         </g:layer>
         <g:layer bottom="0%" height="0%">
             <g:HTML ui:field="horizontalFocusPanel"></g:HTML>

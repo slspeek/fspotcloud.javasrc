@@ -22,20 +22,30 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.gin;
+package com.googlecode.fspotcloud.client.useraction.application.handler;
 
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
-import com.googlecode.fspotcloud.client.main.MVPSetup;
-import com.googlecode.fspotcloud.client.main.event.EventModule;
-import com.googlecode.fspotcloud.client.main.view.factory.ButtonPanelPresenterProvider;
-import com.googlecode.fspotcloud.client.useraction.UserActionModule;
-import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.AboutPresenter;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
-@GinModules({AppModule.class, UserActionModule.class, EventModule.class, StandardDispatchModule.class})
-public interface AppGinjector extends Ginjector {
-    MVPSetup getMVPSetup();
+public class AboutAction implements IActionHandler {
+    private final AboutPresenter aboutPresenter;
+    private boolean isShowing = false;
 
-    ButtonPanelPresenterProvider getButtonPanelPresenterProvider();
+    @Inject
+    public AboutAction(AboutPresenter aboutPresenter) {
+        this.aboutPresenter = aboutPresenter;
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        if (isShowing) {
+            aboutPresenter.hide();
+            isShowing = false;
+        } else {
+            aboutPresenter.show();
+            isShowing = true;
+        }
+    }
 }

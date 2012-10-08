@@ -17,8 +17,8 @@ public class KeyboardActionFactory {
     private final ConfigBuilder configBuilder;
     private final ButtonDefinitions buttonDefinitions;
     private final NativePreviewHandler nativePreviewHandler;
-    private final EventBus eventBus;
     private final HelpActions helpActions;
+    private final ActionButtonFactory actionButtonFactory;
     private final KeyboardActionResources keyboardActionResources = GWT.create(KeyboardActionResources.class);
 
     private IModeController modeController;
@@ -32,11 +32,11 @@ public class KeyboardActionFactory {
                                  ConfigBuilder configBuilder,
                                  IModeController modeController,
                                  ButtonDefinitions buttonDefinitions,
-                                 List<ActionCategory> actionCategoryList
-    ) {
+                                 List<ActionCategory> actionCategoryList,
+                                 ActionButtonFactory actionButtonFactory) {
+        this.actionButtonFactory = actionButtonFactory;
         keyboardActionResources.style().ensureInjected();
         this.actionImplementationRegister = actionImplementationRegister;
-        this.eventBus = eventBus;
         this.actionManager = actionManager;
         this.helpActions = helpActions;
         this.actionCategoryList = actionCategoryList;
@@ -55,11 +55,14 @@ public class KeyboardActionFactory {
     }
 
     public ActionButton getButton(String actionId) {
-        ActionDef actionDef = buttonDefinitions.getAction(actionId);
-        return new ActionButton(actionDef, eventBus, keyboardActionResources);
+        return actionButtonFactory.get(actionId);
+    }
+
+    public ActionButton getButton(ActionDef actionDef) {
+        return actionButtonFactory.get(actionDef);
     }
 
     public ActionToolbar getToolBar() {
-        return new ActionToolbar(keyboardActionResources);
+        return new ActionToolbar(keyboardActionResources, actionButtonFactory);
     }
 }

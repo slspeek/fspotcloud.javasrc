@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.client.useraction.handler.application;
+package com.googlecode.fspotcloud.client.useraction.application;
 
 import com.google.gwt.core.client.GWT;
 import com.googlecode.fspotcloud.client.main.ui.Resources;

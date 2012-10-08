@@ -61,7 +61,7 @@ public class EditUserGroupViewImpl extends Composite
         descriptionTextBox.ensureDebugId("description");
         publicCheckBox.ensureDebugId("public-checkbox");
         save.ensureDebugId("save");
-        log.info("Created " + this);
+        log.info("Created ");
     }
 
     @Override

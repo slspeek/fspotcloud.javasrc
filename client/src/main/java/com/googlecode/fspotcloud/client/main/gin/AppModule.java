@@ -30,7 +30,6 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.googlecode.fspotcloud.client.data.DataManager;
@@ -49,6 +48,7 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
+import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.view.action.KeyDispatcherProvider;
 import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
@@ -56,16 +56,13 @@ import com.googlecode.fspotcloud.client.view.action.api.LoadNewLocationActionFac
 import com.googlecode.fspotcloud.client.view.action.api.ShortcutHandler;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
 import com.googlecode.fspotcloud.keyboardaction.ModesProvider;
-import com.googlecode.fspotcloud.keyboardaction.SimpleModesProvider;
-import com.googlecode.fspotcloud.testharness.MainFactory;
 
 
 public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
-        bind(ModesProvider.class).to(Modes.class);
-        install(new KeyboardActionModule());
+
         bind(MainWindowActivityMapper.class).in(Singleton.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
         bind(MVPSetup.class).in(Singleton.class);

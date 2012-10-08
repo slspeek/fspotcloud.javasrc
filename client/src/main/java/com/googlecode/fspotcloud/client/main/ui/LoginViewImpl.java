@@ -66,7 +66,7 @@ public class LoginViewImpl extends Composite implements LoginView {
         login.ensureDebugId("login");
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
-        log.info("Created " + this);
+        log.info("Created ");
     }
 
     @Override
