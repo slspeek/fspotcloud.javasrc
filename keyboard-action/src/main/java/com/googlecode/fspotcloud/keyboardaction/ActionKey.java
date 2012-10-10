@@ -6,11 +6,10 @@ class ActionKey {
     private final String mode;
     private final KeyStroke keyStroke;
 
-    public ActionKey(String mode, KeyStroke keyStroke) {
+    ActionKey(String mode, KeyStroke keyStroke) {
         this.keyStroke = keyStroke;
         this.mode = mode;
     }
-
 
     public String getMode() {
         return mode;

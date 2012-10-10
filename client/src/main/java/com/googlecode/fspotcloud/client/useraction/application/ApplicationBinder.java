@@ -52,7 +52,7 @@ public class ApplicationBinder extends AbstractBinder {
         bind(ApplicationActions.DASHBOARD, dashboardAction, dashboardBinding);
 
         KeyboardBinding hideControlsBinding = KeyboardBinding.bind(new KeyStroke('F')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        //bind(ApplicationActions.HIDE_CONTROLS, hideControlsAction, hideControlsBinding);
+       configBuilder.register(category, ApplicationActions.HIDE_CONTROLS,  hideControlsBinding);
 
         KeyboardBinding loginBinding = KeyboardBinding.bind(new KeyStroke('N')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
         bind(ApplicationActions.LOGIN, loginHandler, loginBinding);
@@ -61,7 +61,7 @@ public class ApplicationBinder extends AbstractBinder {
         bind(ApplicationActions.LOGOUT, logoutHandler, logoutBinding);
 
         KeyboardBinding treeFocusBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_ENTER)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        //bind(ApplicationActions.TREE_FOCUS, treeFocusAction, treeFocusBinding);
+        configBuilder.register(category, ApplicationActions.TREE_FOCUS, treeFocusBinding);
 
         KeyboardBinding zoomInBinding = KeyboardBinding.bind(new KeyStroke(KeyStroke.KEY_NUM_PAD_PLUS)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
         bind(ApplicationActions.ZOOM_IN, zoomInAction, zoomInBinding);

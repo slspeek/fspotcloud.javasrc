@@ -31,13 +31,13 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
 public class LoadNewLocationAction implements Runnable, IActionHandler {
+
     private final LoadNewLocation loader;
     private final String newLocation;
 
     @Inject
-    public LoadNewLocationAction(LoadNewLocation loader,
-                                 @Assisted
-                                 String newLocation) {
+    protected LoadNewLocationAction(LoadNewLocation loader,
+                                 @Assisted String newLocation) {
         super();
         this.loader = loader;
         this.newLocation = newLocation;

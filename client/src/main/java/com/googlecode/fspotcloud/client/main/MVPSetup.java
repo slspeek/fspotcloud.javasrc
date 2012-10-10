@@ -44,6 +44,7 @@ import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
 import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.useraction.UserActionHandlerBinder;
 import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
@@ -65,7 +66,7 @@ public class MVPSetup {
                     PlaceController placeController,
                     EventHandlersSetup eventSetup, Resources resources,
                     AdminResources adminResources, ClientLoginManager clientLoginManager,
-                    UserPagesResources userPagesResources, UserActionFactory userActionFactory) {
+                    UserPagesResources userPagesResources, UserActionHandlerBinder userActionHandlerBinder) {
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
         this.placeController = placeController;

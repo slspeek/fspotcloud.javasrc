@@ -41,6 +41,8 @@ import com.googlecode.fspotcloud.client.useraction.application.handler.*;
 import com.googlecode.fspotcloud.client.useraction.navigation.NavigationActionHandler;
 import com.googlecode.fspotcloud.client.useraction.navigation.NavigationActions;
 import com.googlecode.fspotcloud.client.useraction.raster.RasterBinder;
+import com.googlecode.fspotcloud.client.useraction.raster.SetRasterActionFactory;
+import com.googlecode.fspotcloud.client.useraction.raster.handler.SetRasterHandlerFactory;
 import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.client.view.action.UserActionImpl;
 import com.googlecode.fspotcloud.client.view.action.api.UserAction;
@@ -76,5 +78,6 @@ public class UserActionModule extends AbstractGinModule {
         bind(com.googlecode.fspotcloud.client.useraction.UserActionFactory.class).in(Singleton.class);
 
         bind(ActionToolbar.class).toProvider(ToolbarProvider.class);
+        install(new GinFactoryModuleBuilder().build(SetRasterHandlerFactory.class));
     }
 }

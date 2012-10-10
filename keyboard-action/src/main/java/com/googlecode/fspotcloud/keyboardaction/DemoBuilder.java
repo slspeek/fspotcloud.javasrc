@@ -16,7 +16,7 @@ public class DemoBuilder {
     private final KeyboardPreferences keyboardPreferences;
 
     @Inject
-    public DemoBuilder(ButtonDefinitions buttonDefinitions, EventBus eventBus, HelpContentGenerator helpContentGenerator, KeyboardPreferences keyboardPreferences) {
+    private DemoBuilder(ButtonDefinitions buttonDefinitions, EventBus eventBus, HelpContentGenerator helpContentGenerator, KeyboardPreferences keyboardPreferences) {
         this.buttonDefinitions = buttonDefinitions;
         this.eventBus = eventBus;
         this.helpContentGenerator = helpContentGenerator;

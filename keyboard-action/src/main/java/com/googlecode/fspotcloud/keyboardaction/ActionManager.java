@@ -35,8 +35,7 @@ public class ActionManager implements IKeyboardActionHandler {
     private final Logger log = Logger.getLogger(ActionManager.class.getName());
     private final ActionImplementationRegister actionImplementationRegister;
 
-    @Inject
-    public ActionManager(ActionImplementationRegister actionImplementationRegister
+    ActionManager(ActionImplementationRegister actionImplementationRegister
     ) {
         this.actionImplementationRegister = actionImplementationRegister;
     }

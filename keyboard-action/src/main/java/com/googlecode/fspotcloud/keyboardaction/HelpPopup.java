@@ -54,7 +54,7 @@ public class HelpPopup extends PopupPanel {
     private final KeyboardActionResources keyboardActionResources;
 
     @Inject
-    public HelpPopup(KeyboardActionResources keyboardActionResources) {
+    private HelpPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
         this.keyboardActionResources = keyboardActionResources;
         setWidget(uiBinder.createAndBindUi(this));

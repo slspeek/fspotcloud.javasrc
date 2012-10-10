@@ -31,6 +31,10 @@ import com.google.web.bindery.event.shared.Event;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Event to inform the registered UI-component (ActionButton) of the fact that is being demoed.
+ */
+
 @GwtCompatible
 class ActionDemoEvent extends Event<IActionDemoHandler> {
     private final Logger log = Logger.getLogger(ActionDemoEvent.class.getName());

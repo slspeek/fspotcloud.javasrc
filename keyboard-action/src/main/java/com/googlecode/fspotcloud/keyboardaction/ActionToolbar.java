@@ -38,7 +38,7 @@ public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
     private final ActionButtonFactory actionButtonFactory;
 
-    public ActionToolbar(KeyboardActionResources keyboardActionResources,
+    ActionToolbar(KeyboardActionResources keyboardActionResources,
                          ActionButtonFactory actionButtonFactory) {
         this.actionButtonFactory = actionButtonFactory;
         addStyleName(keyboardActionResources.style().buttonPanelBlock());

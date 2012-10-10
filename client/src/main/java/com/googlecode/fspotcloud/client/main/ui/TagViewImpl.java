@@ -64,7 +64,6 @@ public class TagViewImpl extends Composite implements TagView,
     @UiField
     LayoutPanel mainPanel;
     final TreeView treeView;
-    final ButtonPanelView buttonPanelView;
     final ImageRasterView imageRasterView;
     private final TimerInterface timer;
     @SuppressWarnings("unused")
@@ -74,12 +73,10 @@ public class TagViewImpl extends Composite implements TagView,
 
     @Inject
     public TagViewImpl(TreeView treeView,
-                       @Named("Main")
-                       ButtonPanelView buttonPanelView, ImageRasterView imageRasterView,
+                       ImageRasterView imageRasterView,
                        TimerInterface timer, ActionToolbar actionToolbar) {
         this.timer = timer;
         this.treeView = treeView;
-        this.buttonPanelView = buttonPanelView;
         this.actionToolbar = actionToolbar;
         imageRasterView.asWidget().addDomHandler(this, MouseOverEvent.getType());
         imageRasterView.asWidget().addDomHandler(this, MouseOutEvent.getType());
@@ -109,7 +106,7 @@ public class TagViewImpl extends Composite implements TagView,
 
     public void animateControlsIn(int duration) {
         cancelHiding();
-        mainPanel.setWidgetBottomHeight(buttonPanelView, 0, Unit.CM,
+        mainPanel.setWidgetBottomHeight(actionToolbar, 0, Unit.CM,
                 BUTTON_PANEL_HEIGHT_PCT, Unit.PCT);
         mainPanel.setWidgetTopHeight(imageRasterView, 0, Unit.CM,
                 IMAGEPANEL_HEIGHT_PCT, Unit.PCT);
@@ -130,7 +127,7 @@ public class TagViewImpl extends Composite implements TagView,
 
     public void animateControlsOut(int duration) {
         cancelHiding();
-        mainPanel.setWidgetBottomHeight(buttonPanelView, 0, Unit.CM, 0, Unit.PX);
+        mainPanel.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 0, Unit.PX);
         mainPanel.setWidgetTopHeight(imageRasterView, 0, Unit.CM, 100, Unit.PCT);
         mainPanel.setWidgetRightWidth(imageRasterView, 0, Unit.CM, 100, Unit.PCT);
         mainPanel.setWidgetLeftWidth(treeView, 0, Unit.PCT, 0, Unit.PCT);
@@ -158,11 +155,6 @@ public class TagViewImpl extends Composite implements TagView,
     @UiFactory
     public TreeViewImpl getView() {
         return (TreeViewImpl) treeView;
-    }
-
-    @UiFactory
-    public ButtonPanelViewImpl getButtonView() {
-        return (ButtonPanelViewImpl) buttonPanelView;
     }
 
     @UiFactory

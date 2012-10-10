@@ -10,7 +10,7 @@ public class ActionManagerFactory implements Provider<ActionManager> {
     private final EventBus eventBus;
 
     @Inject
-    public ActionManagerFactory(ActionImplementationRegister actionImplementationRegister, EventBus eventBus) {
+    private ActionManagerFactory(ActionImplementationRegister actionImplementationRegister, EventBus eventBus) {
         this.actionImplementationRegister = actionImplementationRegister;
         this.eventBus = eventBus;
     }

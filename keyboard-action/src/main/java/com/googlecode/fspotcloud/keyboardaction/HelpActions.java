@@ -21,7 +21,7 @@ public class HelpActions {
     private final KeyboardActionResources keyboardActionResources;
 
     @Inject
-    public HelpActions(ModesProvider allModes,
+    private HelpActions(ModesProvider allModes,
                        ConfigBuilder configBuilder,
                        HelpContentGenerator helpContentGenerator,
                        HelpPopup helpPopup, KeyboardActionResources keyboardActionResources) {

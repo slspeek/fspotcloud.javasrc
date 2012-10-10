@@ -43,7 +43,7 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
     private final EventBus eventBus;
     private final KeyboardActionResources keyboardActionResources;
 
-    public ActionButton(ActionDef actionDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
+    ActionButton(ActionDef actionDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
         this.actionDef = actionDef;
         this.eventBus = eventBus;
         this.keyboardActionResources = keyboardActionResources;
@@ -89,7 +89,7 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
             setEnabled(event.getState());
             if (event.getState()) {
                 String keys = event.getAcceleratorString();
-                setTooltip(actionDef.getName() + " (" + keys + ")");
+                setTooltip(actionDef.getDescription() + " (" + keys + ")");
             }
             //setVisible(event.getState());
         }

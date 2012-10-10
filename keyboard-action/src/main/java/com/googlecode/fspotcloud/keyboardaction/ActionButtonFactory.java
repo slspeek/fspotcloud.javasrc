@@ -10,7 +10,7 @@ public class ActionButtonFactory {
     private final KeyboardActionResources keyboardActionResources;
 
     @Inject
-    public ActionButtonFactory(EventBus eventBus,
+    private ActionButtonFactory(EventBus eventBus,
                                ButtonDefinitions buttonDefinitions,
                                KeyboardActionResources keyboardActionResources) {
         this.eventBus = eventBus;

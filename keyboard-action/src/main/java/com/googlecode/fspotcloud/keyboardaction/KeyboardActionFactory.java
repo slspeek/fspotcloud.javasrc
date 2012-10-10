@@ -25,7 +25,6 @@ public class KeyboardActionFactory {
 
     @Inject
     public KeyboardActionFactory(ActionImplementationRegister actionImplementationRegister,
-                                 EventBus eventBus,
                                  ActionManager actionManager,
                                  NativePreviewHandler nativePreviewHandler,
                                  HelpActions helpActions,

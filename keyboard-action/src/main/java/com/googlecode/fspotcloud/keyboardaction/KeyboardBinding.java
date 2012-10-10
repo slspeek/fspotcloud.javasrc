@@ -17,7 +17,7 @@ public class KeyboardBinding {
     private String[] modes;
     private List<String> modeList;
 
-    KeyboardBinding(KeyStroke[] defaultKeys) {
+    public KeyboardBinding(KeyStroke[] defaultKeys) {
         this.defaultKeys = defaultKeys;
     }
 

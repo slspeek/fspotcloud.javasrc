@@ -55,7 +55,7 @@ public class DemoPopup extends PopupPanel {
     private Demo demo;
 
     @Inject
-    public DemoPopup(KeyboardActionResources keyboardActionResources) {
+    private DemoPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
         this.keyboardActionResources = keyboardActionResources;
         setWidget(uiBinder.createAndBindUi(this));

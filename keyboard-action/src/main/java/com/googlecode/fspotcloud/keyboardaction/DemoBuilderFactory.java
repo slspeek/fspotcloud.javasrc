@@ -11,7 +11,7 @@ public class DemoBuilderFactory {
     private final EventBus eventBus;
 
     @Inject
-    public DemoBuilderFactory(Provider<DemoBuilder> demoBuilderProvider, Provider<DemoPopup> demoPopupProvider, EventBus eventBus) {
+    private DemoBuilderFactory(Provider<DemoBuilder> demoBuilderProvider, Provider<DemoPopup> demoPopupProvider, EventBus eventBus) {
         this.demoBuilderProvider = demoBuilderProvider;
         this.demoPopupProvider = demoPopupProvider;
         this.eventBus = eventBus;

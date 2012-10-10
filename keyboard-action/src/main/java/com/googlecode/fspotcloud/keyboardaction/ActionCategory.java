@@ -11,6 +11,10 @@ public class ActionCategory {
     private final String name;
     private final List<ActionDef> actions = newArrayList();
 
+    ActionCategory(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -23,8 +27,4 @@ public class ActionCategory {
         return actions;
     }
 
-    ActionCategory(String name) {
-        this.name = name;
-
-    }
 }

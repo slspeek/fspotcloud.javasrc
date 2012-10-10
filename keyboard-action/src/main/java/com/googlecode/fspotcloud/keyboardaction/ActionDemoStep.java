@@ -11,7 +11,7 @@ public class ActionDemoStep implements DemoStep {
     private final int pauseMillis;
 
 
-    public ActionDemoStep(ActionDef actionDef, EventBus eventBus, int pauseMillis, SafeHtml content) {
+    ActionDemoStep(ActionDef actionDef, EventBus eventBus, int pauseMillis, SafeHtml content) {
         this.actionDef = actionDef;
         this.eventBus = eventBus;
         this.content = content;

@@ -39,7 +39,7 @@ class ActionStateEvent extends Event<IActionEnableHandler> {
     private final boolean state;
     private String acceleratorString = null;
 
-    public ActionStateEvent(String actionId, boolean state, String acceleratorString) {
+    ActionStateEvent(String actionId, boolean state, String acceleratorString) {
         this.actionId = actionId;
         this.state = state;
         this.acceleratorString = acceleratorString;

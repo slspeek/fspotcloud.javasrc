@@ -25,7 +25,7 @@ public class Demo implements IActionHandler {
     private boolean stopped = false;
 
 
-    public Demo(DemoPopup demoPopup, ActionDef actionDef, EventBus eventBus) {
+    Demo(DemoPopup demoPopup, ActionDef actionDef, EventBus eventBus) {
         this.demoPopup = demoPopup;
         this.actionDef = actionDef;
         this.eventBus = eventBus;

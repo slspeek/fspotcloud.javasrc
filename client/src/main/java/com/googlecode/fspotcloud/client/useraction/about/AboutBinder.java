@@ -10,7 +10,7 @@ public class AboutBinder extends AbstractBinder {
     @Inject
     public AboutBinder(
             CategoryDef categoryDef) {
-        super(categoryDef.NAVIGATION);
+        super(categoryDef.ABOUT);
 
     }
 

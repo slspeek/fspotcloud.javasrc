@@ -44,7 +44,7 @@ public class HelpContentGenerator {
     private final KeyboardPreferences keyboardPreferences;
 
     @Inject
-    public HelpContentGenerator(KeyboardActionResources res, KeyboardPreferences keyboardPreferences) {
+    private HelpContentGenerator(KeyboardActionResources res, KeyboardPreferences keyboardPreferences) {
         super();
         this.keyboardPreferences = keyboardPreferences;
         this.style = res.style();

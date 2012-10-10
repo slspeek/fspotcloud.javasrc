@@ -18,7 +18,7 @@ public class ModeController implements IModeController {
     private final EventBus eventBus;
 
     @Inject
-    public ModeController(ModesProvider modesProvider, KeyboardPreferences keyboardPreferences, EventBus eventBus) {
+    private ModeController(ModesProvider modesProvider, KeyboardPreferences keyboardPreferences, EventBus eventBus) {
         this.eventBus = eventBus;
         this.keyboardPreferences = keyboardPreferences;
         this.defaultMode = modesProvider.getModes()[0];

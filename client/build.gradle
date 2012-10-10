@@ -64,7 +64,7 @@ gwtDevMode.dependsOn convertIcons, writeVersion
 gwtModules = ['com.googlecode.fspotcloud.FSpotCloud', 'com.googlecode.fspotcloud.dashboard']
 
 compileGwt {
-    style = 'OBF' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+    style = 'PRETTY' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
 }
 
 gwtDevMode {
