@@ -55,7 +55,11 @@ public class PhotoPage {
         selenium.click("gwt-debug-mail-fullsize");
     }
 
-    public void help() {
+    public void showHelp() {
+        selenium.click("gwt-debug-help");
+    }
+
+    public void hideHelp() {
         selenium.click("gwt-debug-help");
     }
 

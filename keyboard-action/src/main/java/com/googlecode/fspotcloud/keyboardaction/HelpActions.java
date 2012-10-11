@@ -5,8 +5,8 @@ import com.google.inject.Inject;
 
 public class HelpActions {
 
-    public static final String SHOW_HELP_ACTION = "SHOW_HELP_ACTION";
-    public static final String HIDE_HELP_ACTION = "HIDE_HELP_ACTION";
+    public static final String SHOW_HELP_ACTION = "help";
+    public static final String HIDE_HELP_ACTION = "hide-help";
     public static final String HELP_CATEGORY = "Help";
 
     private ActionDef showHelpDef, hideHelpDef;

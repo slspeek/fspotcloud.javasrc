@@ -44,8 +44,8 @@ public class ApplicationActionsITest {
         photoPage.about();
         sleepShort();
         photoPage.about();
-        photoPage.help();
+        photoPage.showHelp();
         sleepShort();
-        photoPage.help();
+        photoPage.hideHelp();
     }
 }
