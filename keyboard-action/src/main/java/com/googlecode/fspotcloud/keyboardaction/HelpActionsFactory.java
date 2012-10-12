@@ -1,9 +1,10 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.inject.Inject;
 
-public class HelpActions {
+public class HelpActionsFactory {
 
     public static final String SHOW_HELP_ACTION = "help";
     public static final String HIDE_HELP_ACTION = "hide-help";
@@ -21,17 +22,17 @@ public class HelpActions {
     private final KeyboardActionResources keyboardActionResources;
 
     @Inject
-    private HelpActions(ModesProvider allModes,
-                       ConfigBuilder configBuilder,
-                       HelpContentGenerator helpContentGenerator,
-                       HelpPopup helpPopup, KeyboardActionResources keyboardActionResources) {
+    private HelpActionsFactory(ModesProvider allModes,
+                               ConfigBuilder configBuilder,
+                               HelpContentGenerator helpContentGenerator,
+                               HelpPopup helpPopup, KeyboardActionResources keyboardActionResources) {
         this.keyboardActionResources = keyboardActionResources;
         this.allModes = allModes.getModes();
         this.configBuilder = configBuilder;
         this.helpContentGenerator = helpContentGenerator;
         helpActionCategory = configBuilder.createActionCategory(HELP_CATEGORY);
         this.helpPopup = helpPopup;
-        initHelpActions();
+        //initHelpActions();
     }
 
     private void initHelpActions() {
@@ -43,7 +44,7 @@ public class HelpActions {
             @Override
             public void performAction(String actionId) {
                 helpPopup.setTitle("Keyboard help");
-                helpPopup.setSafeHtml(helpContentGenerator.getHelpText(configBuilder.getActionCategoryList()));
+                helpPopup.setLeft(helpContentGenerator.getHelpText(configBuilder.getActionCategoryList()));
                 helpPopup.setGlassEnabled(true);
                 helpPopup.center();
                 helpPopup.show();
@@ -57,5 +58,36 @@ public class HelpActions {
             }
         }, hideHelpBinding);
 
+    }
+
+    public IActionHandler getHelpAction(final HelpConfig helpConfig) {
+
+
+        IActionHandler result = new IActionHandler() {
+            @Override
+            public void performAction(String actionId) {
+                final SafeHtml firstColumn, secondColumn;
+                firstColumn = helpContentGenerator.getHelpText(helpConfig.getFirstColumn());
+                secondColumn = helpContentGenerator.getHelpText(helpConfig.getSecondColumn());
+                helpPopup.setTitle(helpConfig.getTitle());
+                helpPopup.setLeft(firstColumn);
+                helpPopup.setRight(secondColumn);
+                helpPopup.setGlassEnabled(true);
+                helpPopup.center();
+                helpPopup.show();
+                helpPopup.focus();
+
+            }
+        };
+        return result;
+    }
+
+    public IActionHandler getCloseHelp() {
+        return new IActionHandler() {
+            @Override
+            public void performAction(String actionId) {
+                helpPopup.hide();
+            }
+        };
     }
 }
