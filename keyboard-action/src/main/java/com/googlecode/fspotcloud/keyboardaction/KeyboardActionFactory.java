@@ -2,7 +2,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class KeyboardActionFactory {
     private final ConfigBuilder configBuilder;
     private final ButtonDefinitions buttonDefinitions;
     private final NativePreviewHandler nativePreviewHandler;
-    private final HelpActions helpActions;
+    private final HelpActionsFactory helpActionsFactory;
     private final ActionButtonFactory actionButtonFactory;
     private final KeyboardActionResources keyboardActionResources = GWT.create(KeyboardActionResources.class);
 
@@ -27,7 +26,7 @@ public class KeyboardActionFactory {
     public KeyboardActionFactory(ActionImplementationRegister actionImplementationRegister,
                                  ActionManager actionManager,
                                  NativePreviewHandler nativePreviewHandler,
-                                 HelpActions helpActions,
+                                 HelpActionsFactory helpActionsFactory,
                                  ConfigBuilder configBuilder,
                                  IModeController modeController,
                                  ButtonDefinitions buttonDefinitions,
@@ -37,7 +36,7 @@ public class KeyboardActionFactory {
         keyboardActionResources.style().ensureInjected();
         this.actionImplementationRegister = actionImplementationRegister;
         this.actionManager = actionManager;
-        this.helpActions = helpActions;
+        this.helpActionsFactory = helpActionsFactory;
         this.actionCategoryList = actionCategoryList;
         this.buttonDefinitions = buttonDefinitions;
         this.configBuilder = configBuilder;

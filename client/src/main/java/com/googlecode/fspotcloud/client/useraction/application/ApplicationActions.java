@@ -49,4 +49,6 @@ public class ApplicationActions {
             "Logout",
             RESOURCES.logoutIcon());
 
+    public static final ActionDef SHOW_HELP = new ActionDef("help", "Help", "Show the keyboard help", RESOURCES.helpIcon());
+    public static final ActionDef HIDE_HELP = new ActionDef("hide-help", "Hide help", "Hide the help popup.");
 }

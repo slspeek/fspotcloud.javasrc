@@ -3,13 +3,32 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:with type="com.googlecode.fspotcloud.keyboardaction.KeyboardActionResources" field="res"></ui:with>
 
-    <g:FocusPanel ui:field="focusPanel">
-        <g:HTMLPanel>
-            <div class="{res.style.helpTitleRow">
-                <span ui:field="titleSpan" class="{res.style.helpTitle}"></span>
-                <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose">Close</g:Anchor>
-            </div>
-            <div ui:field="helpBodyDiv" class="{res.style.helpBody}"></div>
-        </g:HTMLPanel>
-    </g:FocusPanel>
+        <g:LayoutPanel ui:field="focusPanel">
+            <g:layer top="0%" height="7%" left="0%" width="100%">
+                <g:LayoutPanel styleName="{res.style.helpTitleRow}">
+                    <g:layer right="0%" width="100%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
+                        <g:HTMLPanel>
+                            <div class="{res.style.helpTitleRow">
+                                <span ui:field="titleSpan" class="{res.style.helpTitle}"></span>
+                                <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
+                            </div>
+                        </g:HTMLPanel>
+                    </g:layer>
+                </g:LayoutPanel>
+            </g:layer>
+            <g:layer top="10%" height="93%" left="0%" width="100%">
+                <g:LayoutPanel >
+                    <g:layer left="0%" width="50%" bottom="0%" height="100%" >
+                        <g:HTMLPanel>
+                            <div ui:field="helpBodyLeft" class="{res.style.helpBody}"></div>
+                        </g:HTMLPanel>
+                    </g:layer>
+                    <g:layer right="0%" width="50%" bottom="0%" height="100%">
+                        <g:HTMLPanel>
+                            <div ui:field="helpBodyRight" class="{res.style.helpBody}"></div>
+                        </g:HTMLPanel>
+                    </g:layer>
+                </g:LayoutPanel>
+            </g:layer>
+        </g:LayoutPanel>
 </ui:UiBinder>

@@ -23,7 +23,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(DemoBuilder.class);
         bind(DemoBuilderFactory.class).in(Singleton.class);
         bind(HelpPopup.class);
-        bind(HelpActions.class).in(Singleton.class);
+        bind(HelpActionsFactory.class).in(Singleton.class);
     }
 
     @Provides

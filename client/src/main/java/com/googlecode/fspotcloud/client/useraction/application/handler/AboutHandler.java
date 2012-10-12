@@ -25,34 +25,27 @@
 package com.googlecode.fspotcloud.client.useraction.application.handler;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
-import com.googlecode.fspotcloud.client.main.view.api.TagView;
-import com.googlecode.fspotcloud.client.useraction.Modes;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
+import com.googlecode.fspotcloud.client.main.view.AboutPresenter;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
-import com.googlecode.fspotcloud.keyboardaction.IModeController;
-
-import java.util.logging.Logger;
 
 
-public class HideControlsAction implements IActionHandler {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(HideControlsAction.class.getName());
-    private final TagViewImpl tagView;
-    private final IModeController modeController;
+public class AboutHandler implements IActionHandler {
+    private final AboutPresenter aboutPresenter;
+    private boolean isShowing = false;
 
     @Inject
-    public HideControlsAction(TagView tagView,
-                              IModeController modeController) {
-        super();
-        this.tagView = (TagViewImpl) tagView;
-        this.modeController = modeController;
+    public AboutHandler(AboutPresenter aboutPresenter) {
+        this.aboutPresenter = aboutPresenter;
     }
 
     @Override
     public void performAction(String actionId) {
-        tagView.animateControlsOut(0);
-        modeController.setMode(Modes.TAG_VIEW);
+        if (isShowing) {
+            aboutPresenter.hide();
+            isShowing = false;
+        } else {
+            aboutPresenter.show();
+            isShowing = true;
+        }
     }
 }

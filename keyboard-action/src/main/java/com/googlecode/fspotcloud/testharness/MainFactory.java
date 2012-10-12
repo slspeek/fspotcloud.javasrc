@@ -34,7 +34,7 @@ public class MainFactory {
     final ConfigBuilder configBuilder;
     final IModeController modeController;
     final DemoBuilderFactory demoBuilderFactory;
-    final HelpActions helpActions;
+    final HelpActionsFactory helpActionsFactory;
 
     final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
@@ -61,10 +61,10 @@ public class MainFactory {
     }
 
     @Inject
-    public MainFactory(KeyboardActionFactory keyboardActionFactory, DemoBuilderFactory demoBuilderFactory, HelpActions helpActions) {
+    public MainFactory(KeyboardActionFactory keyboardActionFactory, DemoBuilderFactory demoBuilderFactory, HelpActionsFactory helpActionsFactory) {
         this.keyboardActionFactory = keyboardActionFactory;
         this.demoBuilderFactory = demoBuilderFactory;
-        this.helpActions = helpActions;
+        this.helpActionsFactory = helpActionsFactory;
         this.configBuilder = keyboardActionFactory.getConfigBuilder();
         this.modeController = keyboardActionFactory.getModeController();
 
@@ -107,9 +107,9 @@ public class MainFactory {
         }, THREE_BINDING);
 
         DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);
-        demoBuilder.addStep(OK, 3000).addStep(CANCEL, 2000).addStep(HelpActions.SHOW_HELP_ACTION, 2000).addStep(HelpActions.HIDE_HELP_ACTION, 1000);
+        demoBuilder.addStep(OK, 3000).addStep(CANCEL, 2000).addStep(HelpActionsFactory.SHOW_HELP_ACTION, 2000).addStep(HelpActionsFactory.HIDE_HELP_ACTION, 1000);
 
-        configBuilder.addBinding(helpActions.helpActionCategory, DEMO_DEF, demoBuilder.getDemo(), DEMO_BINDING);
+        configBuilder.addBinding(helpActionsFactory.helpActionCategory, DEMO_DEF, demoBuilder.getDemo(), DEMO_BINDING);
 
 
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
@@ -121,7 +121,7 @@ public class MainFactory {
         toolbar.add(cancelButton);
         ActionButton _3Button = keyboardActionFactory.getButton(THREE);
         toolbar.add(_3Button);
-        toolbar.add(keyboardActionFactory.getButton(HelpActions.SHOW_HELP_ACTION));
+        toolbar.add(keyboardActionFactory.getButton(HelpActionsFactory.SHOW_HELP_ACTION));
         toolbar.add(keyboardActionFactory.getButton(DEMO));
         RootPanel.get().add(messageBoard);
         RootPanel.get().add(toolbar);

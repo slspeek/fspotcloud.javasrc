@@ -73,6 +73,9 @@ public interface Resources extends ClientBundle {
     @Source("images/Author.png")
     ImageResource authorIcon();
 
+    @Source("images/BuildServer.png")
+    ImageResource buildServerIcon();
+
     @Source("images/2x2.png")
     ImageResource icon2x2();
 

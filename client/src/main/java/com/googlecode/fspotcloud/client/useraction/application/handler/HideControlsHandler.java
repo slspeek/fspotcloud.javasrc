@@ -27,8 +27,6 @@ package com.googlecode.fspotcloud.client.useraction.application.handler;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
-import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.place.api.Slideshow;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
@@ -36,30 +34,23 @@ import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import java.util.logging.Logger;
 
 
-public class TreeFocusAction implements IActionHandler {
+public class HideControlsHandler implements IActionHandler {
     @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(TreeFocusAction.class.getName());
-    private final TreeView treeView;
+    private final Logger log = Logger.getLogger(HideControlsHandler.class.getName());
     private final TagViewImpl tagView;
-    private final Slideshow slideshow;
     private final IModeController modeController;
 
     @Inject
-    public TreeFocusAction(TreeView treeView, TagView tagView,
-                           Slideshow slideshow, IModeController modeController) {
+    public HideControlsHandler(TagView tagView,
+                               IModeController modeController) {
         super();
-        this.slideshow = slideshow;
-        this.treeView = treeView;
-        this.modeController = modeController;
         this.tagView = (TagViewImpl) tagView;
+        this.modeController = modeController;
     }
 
     @Override
     public void performAction(String actionId) {
-        slideshow.stop();
-        tagView.cancelHiding();
-        tagView.animateControlsIn(100);
-        treeView.requestFocus();
-        modeController.setMode(Modes.TREE_VIEW);
+        tagView.animateControlsOut(0);
+        modeController.setMode(Modes.TAG_VIEW);
     }
 }

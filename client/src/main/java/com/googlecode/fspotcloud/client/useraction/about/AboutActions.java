@@ -25,12 +25,12 @@ public class AboutActions {
 
     public static final ActionDef PROTON = new ActionDef("proton",
             "Proton radio",
-            "Go to the Proton site",
+            "Go to the Proton Radio site",
             RESOURCES.protonIcon());
 
-    public static final ActionDef STEVEN = new ActionDef("steven",
-            "Authors website",
-            "Go to the authors website",
-            RESOURCES.authorIcon());
+    public static final ActionDef BUILD_SERVER = new ActionDef("build-server",
+            "Build server",
+            "Go to the Jenkins build server",
+            RESOURCES.buildServerIcon());
 
 }

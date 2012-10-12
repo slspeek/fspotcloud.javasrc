@@ -76,8 +76,6 @@
 
 .helpPopup
 {
-  width: 800px;
-  height:auto;
   -moz-border-radius:15px;
   border-radius:15px;
   background-color:rgba(0,0,0,0.7);
@@ -87,7 +85,7 @@
 
 .helpBody
 {
-  -webkit-column-count: 2;
+
 
 }
 
@@ -96,6 +94,8 @@
   font-size:large;
   text-align:center;
   font-style:bold;
+
+
 }
 
 .helpActionIcon

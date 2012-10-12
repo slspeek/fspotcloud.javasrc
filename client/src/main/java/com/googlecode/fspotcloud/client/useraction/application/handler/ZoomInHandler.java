@@ -6,20 +6,20 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.logging.Logger;
 
-public class ZoomOutAction implements IActionHandler
+public class ZoomInHandler implements IActionHandler
 
 {
-    private final Logger log = Logger.getLogger(ZoomOutAction.class.getName());
+    private final Logger log = Logger.getLogger(ZoomInHandler.class.getName());
     private final Navigator navigator;
 
     @Inject
-    public ZoomOutAction(Navigator navigator) {
+    public ZoomInHandler(Navigator navigator) {
         this.navigator = navigator;
     }
 
     @Override
     public void performAction(String actionId) {
-        navigator.zoom(Navigator.Zoom.OUT);
+        navigator.zoom(Navigator.Zoom.IN);
     }
 }
 

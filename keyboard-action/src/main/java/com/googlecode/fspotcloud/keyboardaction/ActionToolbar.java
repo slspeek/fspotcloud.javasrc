@@ -54,7 +54,7 @@ public class ActionToolbar extends LayoutPanel {
 
     public void addCategory(ActionCategory actionCategory) {
         for (ActionDef actionDef: actionCategory.getActions()) {
-              add(actionButtonFactory.get(actionDef));
+            add(actionDef);
         }
     }
 
@@ -66,5 +66,13 @@ public class ActionToolbar extends LayoutPanel {
             Widget widget = widgetList.get(i);
             setWidgetLeftWidth(widget, i * step, Unit.PCT, step, Unit.PCT);
         }
+    }
+
+    public void add(ActionDef actionDef) {
+        add(actionButtonFactory.get(actionDef));
+    }
+
+    public void add(String actionId) {
+        add(actionButtonFactory.get(actionId));
     }
 }

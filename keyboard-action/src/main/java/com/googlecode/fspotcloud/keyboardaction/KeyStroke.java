@@ -34,6 +34,7 @@ public class KeyStroke {
     private final int keyCode;
     public static final int KEY_NUM_PAD_PLUS = 107;
     public static final int KEY_NUM_PAD_MINUS = 109;
+    public static final int KEY_FORWARD_SLASH = 191;
     public static final int KEY_SPACE = 32;
 
     public KeyStroke(Modifiers modifiers, int keyCode) {
@@ -54,9 +55,7 @@ public class KeyStroke {
         String result;
 
         switch (keyCode) {
-            case 191:
-                result = "?";
-                break;
+
             case KeyCodes.KEY_LEFT:
                 result = "Left arrow";
 
@@ -130,6 +129,10 @@ public class KeyStroke {
             case 107:
                 result = "Numpad +";
 
+                break;
+
+            case KEY_FORWARD_SLASH:
+                result = "/";
                 break;
 
             case KeyCodes.KEY_CTRL:
