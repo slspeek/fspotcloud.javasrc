@@ -35,7 +35,7 @@ public class HelpActionsFactory {
         //initHelpActions();
     }
 
-    private void initHelpActions() {
+    public void  initHelpActions() {
         showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(allModes);
         hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(allModes);
         showHelpDef = new ActionDef(SHOW_HELP_ACTION, "Help", "Show a help popup.", keyboardActionResources.helpIcon());

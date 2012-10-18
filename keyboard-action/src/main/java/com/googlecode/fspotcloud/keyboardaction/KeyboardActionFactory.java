@@ -63,4 +63,8 @@ public class KeyboardActionFactory {
     public ActionToolbar getToolBar() {
         return new ActionToolbar(keyboardActionResources, actionButtonFactory);
     }
+
+    public ActionMenu getMenu(String caption) {
+        return actionButtonFactory.getMenu(caption);
+    }
 }

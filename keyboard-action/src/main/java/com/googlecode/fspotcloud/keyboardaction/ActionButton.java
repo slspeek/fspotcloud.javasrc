@@ -69,6 +69,7 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
             addStyleName(keyboardActionResources.style().button());
             setCaption(actionDef.getName());
         }
+
     }
 
     public void setCaption(String caption) {

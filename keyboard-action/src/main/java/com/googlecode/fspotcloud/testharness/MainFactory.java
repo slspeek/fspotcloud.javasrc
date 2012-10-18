@@ -65,6 +65,7 @@ public class MainFactory {
         this.keyboardActionFactory = keyboardActionFactory;
         this.demoBuilderFactory = demoBuilderFactory;
         this.helpActionsFactory = helpActionsFactory;
+        helpActionsFactory.initHelpActions();
         this.configBuilder = keyboardActionFactory.getConfigBuilder();
         this.modeController = keyboardActionFactory.getModeController();
 
@@ -77,7 +78,7 @@ public class MainFactory {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_TWO);
-                String msg = "Running OK action " + actionId;
+                String msg = "Running OK.";
                 outputMesg(msg);
 
             }
@@ -86,7 +87,7 @@ public class MainFactory {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_ONE);
-                String msg = "Running CANCEL action " + actionId;
+                String msg = "Running CANCEL.";
                 outputMesg(msg);
             }
         }, C_BINDING);
@@ -94,7 +95,7 @@ public class MainFactory {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_TWO);
-                String msg = "Running TRY action " + actionId;
+                String msg = "Running TRY action. ";
                 outputMesg(msg);
             }
         }, G_BINDING);
@@ -102,25 +103,33 @@ public class MainFactory {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_THREE);
-                outputMesg("Running 3 action " + actionId);
+                outputMesg("Running 3-action. ");
             }
         }, THREE_BINDING);
 
         DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);
-        demoBuilder.addStep(OK, 3000).addStep(CANCEL, 2000).addStep(HelpActionsFactory.SHOW_HELP_ACTION, 2000).addStep(HelpActionsFactory.HIDE_HELP_ACTION, 1000);
+        demoBuilder.addStep(OK, 3000);
+        demoBuilder.addStep(CANCEL, 2000);
+        demoBuilder.addStep(HelpActionsFactory.SHOW_HELP_ACTION, 2000);
+        demoBuilder.addStep(HelpActionsFactory.HIDE_HELP_ACTION, 1000);
 
-        configBuilder.addBinding(helpActionsFactory.helpActionCategory, DEMO_DEF, demoBuilder.getDemo(), DEMO_BINDING);
+        configBuilder.addBinding(helpActionsFactory.helpActionCategory,
+                DEMO_DEF,
+                demoBuilder.getDemo(),
+                DEMO_BINDING);
 
 
+        ActionMenu menu = keyboardActionFactory.getMenu("First menu!");
+        menu.add(HelpActionsFactory.SHOW_HELP_ACTION);
+        menu.add(OK);
+        menu.add(CANCEL);
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
-        ActionButton okButton = keyboardActionFactory.getButton(OK);
-        toolbar.add(okButton);
-        ActionButton tryButton = keyboardActionFactory.getButton(TRY);
-        toolbar.add(tryButton);
-        ActionButton cancelButton = keyboardActionFactory.getButton(CANCEL);
-        toolbar.add(cancelButton);
-        ActionButton _3Button = keyboardActionFactory.getButton(THREE);
-        toolbar.add(_3Button);
+        toolbar.add(OK);
+        toolbar.add(TRY);
+        toolbar.add(menu);
+
+        toolbar.add(CANCEL);
+        toolbar.add(THREE);
         toolbar.add(keyboardActionFactory.getButton(HelpActionsFactory.SHOW_HELP_ACTION));
         toolbar.add(keyboardActionFactory.getButton(DEMO));
         RootPanel.get().add(messageBoard);

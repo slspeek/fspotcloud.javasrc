@@ -27,4 +27,8 @@ public class ActionButtonFactory {
         return get(actionDef);
     }
 
+    ActionMenu getMenu(String caption) {
+        return new ActionMenu(caption, buttonDefinitions, eventBus, keyboardActionResources);
+    }
+
 }
