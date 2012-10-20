@@ -15,9 +15,9 @@ public class ConfigBuilder {
 
     @Inject
     private ConfigBuilder(ActionImplementationRegister actionImplementationRegister,
-                         KeyboardPreferences keyboardPreferences,
-                         ButtonDefinitions buttonDefinitions,
-                         List<ActionCategory> categoryList) {
+                          KeyboardPreferences keyboardPreferences,
+                          ButtonDefinitions buttonDefinitions,
+                          List<ActionCategory> categoryList) {
         this.actionImplementationRegister = actionImplementationRegister;
         this.keyboardPreferences = keyboardPreferences;
         this.buttonDefinitions = buttonDefinitions;

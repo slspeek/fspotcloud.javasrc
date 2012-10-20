@@ -8,8 +8,6 @@ import com.googlecode.fspotcloud.client.useraction.raster.handler.*;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 
-import java.security.KeyStore;
-
 public class RasterBinder extends AbstractBinder {
 
     private final SetRasterHandlerFactory setRasterHandlerFactory;

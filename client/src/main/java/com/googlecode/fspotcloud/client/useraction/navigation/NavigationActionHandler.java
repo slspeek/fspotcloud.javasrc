@@ -79,7 +79,6 @@ public class NavigationActionHandler implements IActionHandler {
             navigator.goAsync(Direction.BACKWARD, Unit.ROW);
 
 
-        } else {
         }
     }
 

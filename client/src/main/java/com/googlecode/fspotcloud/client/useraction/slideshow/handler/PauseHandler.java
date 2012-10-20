@@ -15,6 +15,6 @@ public class PauseHandler implements IActionHandler {
 
     @Override
     public void performAction(String actionId) {
-       slideshow.pause();
+        slideshow.pause();
     }
 }

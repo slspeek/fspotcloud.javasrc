@@ -36,11 +36,11 @@ public class AboutBinder extends AbstractBinder {
 
     @Override
     public void build() {
-         bind(AboutActions.PROJECT_HOSTING, projectSiteHandler, get('J'));
-         bind(AboutActions.BUILD_SERVER, buildServerHandler, get('B'));
-         bind(AboutActions.LICENSE, licenseHandler, get('L'));
-         bind(AboutActions.F_SPOT, fSpotHandler, get('U'));
-         bind(AboutActions.PROTON, protonHandler, get('P'));
+        bind(AboutActions.PROJECT_HOSTING, projectSiteHandler, get('J'));
+        bind(AboutActions.BUILD_SERVER, buildServerHandler, get('B'));
+        bind(AboutActions.LICENSE, licenseHandler, get('L'));
+        bind(AboutActions.F_SPOT, fSpotHandler, get('U'));
+        bind(AboutActions.PROTON, protonHandler, get('P'));
     }
 
     private KeyboardBinding get(char c) {

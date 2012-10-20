@@ -32,7 +32,6 @@ import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.useraction.Modes;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController.Mode;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Logger;

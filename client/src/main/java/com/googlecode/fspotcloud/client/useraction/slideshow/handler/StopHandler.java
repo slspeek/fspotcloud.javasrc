@@ -15,6 +15,6 @@ public class StopHandler implements IActionHandler {
 
     @Override
     public void performAction(String actionId) {
-       slideshow.stop();
+        slideshow.stop();
     }
 }

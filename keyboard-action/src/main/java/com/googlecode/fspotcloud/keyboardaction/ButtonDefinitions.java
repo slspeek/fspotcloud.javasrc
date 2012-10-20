@@ -13,7 +13,8 @@ public class ButtonDefinitions {
     private final Map<String, ActionDef> registry = newHashMap();
 
     @Inject
-    private ButtonDefinitions() {}
+    private ButtonDefinitions() {
+    }
 
     void putAction(ActionDef actionDef) {
         registry.put(actionDef.getId(), actionDef);

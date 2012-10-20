@@ -8,17 +8,20 @@ public class ActionButtonFactory {
     private final EventBus eventBus;
     private final ButtonDefinitions buttonDefinitions;
     private final KeyboardActionResources keyboardActionResources;
+    private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
 
     @Inject
     private ActionButtonFactory(EventBus eventBus,
-                               ButtonDefinitions buttonDefinitions,
-                               KeyboardActionResources keyboardActionResources) {
+                                ButtonDefinitions buttonDefinitions,
+                                KeyboardActionResources keyboardActionResources,
+                                ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
         this.eventBus = eventBus;
         this.buttonDefinitions = buttonDefinitions;
         this.keyboardActionResources = keyboardActionResources;
+        this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
     }
 
-    ActionButton get(ActionDef actionDef){
+    ActionButton get(ActionDef actionDef) {
         return new ActionButton(actionDef, eventBus, keyboardActionResources);
     }
 
@@ -28,7 +31,7 @@ public class ActionButtonFactory {
     }
 
     ActionMenu getMenu(String caption) {
-        return new ActionMenu(caption, buttonDefinitions, eventBus, keyboardActionResources);
+        return new ActionMenu(caption, buttonDefinitions, eventBus, keyboardActionResources, actionMenuItemSafeHtml);
     }
 
 }

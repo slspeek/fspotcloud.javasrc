@@ -15,6 +15,6 @@ public class StartHandler implements IActionHandler {
 
     @Override
     public void performAction(String actionId) {
-       slideshow.start();
+        slideshow.start();
     }
 }

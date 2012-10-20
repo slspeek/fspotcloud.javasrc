@@ -5,7 +5,7 @@ import com.googlecode.fspotcloud.keyboardaction.ActionDef;
 public class SetRasterActionFactory {
 
     public ActionDef getSetRasterTo(int w, int h) {
-        return new ActionDef(getId(w,h), getName(w,h), getDescription(w,h) );
+        return new ActionDef(getId(w, h), getName(w, h), getDescription(w, h));
     }
 
     private String getDescription(int w, int h) {
@@ -14,7 +14,7 @@ public class SetRasterActionFactory {
     }
 
     private String getName(int w, int h) {
-        return getId(w,h);
+        return getId(w, h);
     }
 
     private String getId(int w, int h) {

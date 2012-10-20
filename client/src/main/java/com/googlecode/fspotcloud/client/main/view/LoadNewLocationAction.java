@@ -37,7 +37,7 @@ public class LoadNewLocationAction implements Runnable, IActionHandler {
 
     @Inject
     protected LoadNewLocationAction(LoadNewLocation loader,
-                                 @Assisted String newLocation) {
+                                    @Assisted String newLocation) {
         super();
         this.loader = loader;
         this.newLocation = newLocation;

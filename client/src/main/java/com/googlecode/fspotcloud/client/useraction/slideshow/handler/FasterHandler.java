@@ -15,6 +15,6 @@ public class FasterHandler implements IActionHandler {
 
     @Override
     public void performAction(String actionId) {
-       slideshow.faster();
+        slideshow.faster();
     }
 }

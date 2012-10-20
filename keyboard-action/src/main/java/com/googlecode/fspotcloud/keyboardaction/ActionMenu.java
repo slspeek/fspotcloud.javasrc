@@ -3,8 +3,10 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
 
@@ -20,6 +22,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
     private final EventBus eventBus;
     private final PopupPanel popupPanel = new PopupPanel(true);
     private final KeyboardActionResources keyboardActionResources;
+    private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
     private Timer hideTimer = new Timer() {
         @Override
         public void run() {
@@ -27,18 +30,20 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
         }
     };
 
-
-    public ActionMenu(String caption, ButtonDefinitions buttonDefinitions, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
+    public ActionMenu(String caption, ButtonDefinitions buttonDefinitions, EventBus eventBus, KeyboardActionResources keyboardActionResources, ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
         this.buttonDefinitions = buttonDefinitions;
         this.eventBus = eventBus;
         this.keyboardActionResources = keyboardActionResources;
-        addStyleName(keyboardActionResources.style().button());
+        this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
+        addStyleName(keyboardActionResources.style().menuButton());
         popupPanel.setWidget(innerBar);
         setText(caption);
         addClickHandler(this);//outerBar.setAutoOpen(true);
         addMouseOverHandler(this);
         addMouseOutHandler(this);
+        popupPanel.addStyleName(keyboardActionResources.style().popUpMenu());
         popupPanel.addAutoHidePartner(this.getElement());
+        innerBar.addStyleName(keyboardActionResources.style().popUpMenu());
         innerBar.addDomHandler(new MouseOutHandler() {
             @Override
             public void onMouseOut(MouseOutEvent event) {
@@ -57,13 +62,15 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
 
     public void add(final String actionId) {
         ActionDef actionDef = buttonDefinitions.getAction(actionId);
-        innerBar.addItem(actionDef.getName(), new Scheduler.ScheduledCommand() {
+        SafeHtml menuItemContent = actionMenuItemSafeHtml.get(actionDef);
+        MenuItem menuItem = innerBar.addItem(menuItemContent, new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
                 hidePopup();
                 eventBus.fireEvent(new KeyboardActionEvent(actionId));
             }
         });
+        menuItem.addStyleName(keyboardActionResources.style().menuItem());
     }
 
     @Override
@@ -85,27 +92,27 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
 
     private void showPopup() {
         popupPanel.showRelativeTo(this);
-        popupPanel.setPopupPosition(popupPanel.getPopupLeft(), popupPanel.getPopupTop() - popupPanel.getOffsetHeight() - this.getOffsetHeight());
+        popupPanel.setPopupPosition(popupPanel.getPopupLeft() + innerBar.getOffsetWidth()/4, popupPanel.getPopupTop() - popupPanel.getOffsetHeight() - this.getOffsetHeight());
         popupPanel.show();
         innerBar.focus();
     }
 
     @Override
     public void onMouseOver(MouseOverEvent event) {
-                log.log(Level.FINEST, "Over of the menu button!");
+        log.log(Level.FINEST, "Over of the menu button!");
         showPopup();
     }
 
     @Override
     public void onMouseOut(MouseOutEvent event) {
-                log.log(Level.FINEST, "Out of the menu button!");
-       hideTimer = new Timer() {
-           @Override
-           public void run() {
-               hidePopup();
-           }
-       };
-       hideTimer.schedule(200);
+        log.log(Level.FINEST, "Out of the menu button!");
+        hideTimer = new Timer() {
+            @Override
+            public void run() {
+                hidePopup();
+            }
+        };
+        hideTimer.schedule(200);
     }
 }
 

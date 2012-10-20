@@ -19,8 +19,8 @@ public class NativePreviewHandler implements Event.NativePreviewHandler {
 
     @Inject
     private NativePreviewHandler(EventBus eventBus,
-                                KeyboardPreferences keyboardPreferences,
-                                IModeController modeController) {
+                                 KeyboardPreferences keyboardPreferences,
+                                 IModeController modeController) {
         this.eventBus = eventBus;
         this.keyboardPreferences = keyboardPreferences;
         this.modeController = modeController;

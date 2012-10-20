@@ -19,7 +19,7 @@ public class ToolbarProvider implements Provider<ActionToolbar> {
     @Inject
     public ToolbarProvider(UserActionFactory actionFactory,
                            KeyboardActionFactory keyboardActionFactory
-                           ) {
+    ) {
         this.keyboardActionFactory = keyboardActionFactory;
     }
 

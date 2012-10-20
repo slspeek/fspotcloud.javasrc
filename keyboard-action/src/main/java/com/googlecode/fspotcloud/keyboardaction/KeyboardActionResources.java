@@ -74,5 +74,15 @@ public interface KeyboardActionResources extends ClientBundle {
         String helpActionIcon();
 
         String helpKeys();
+
+        String popUpMenu();
+
+        String menuItem();
+
+        String menuButton();
+
+        String menuItemText();
+
+        String menuItemShortcut();
     }
 }

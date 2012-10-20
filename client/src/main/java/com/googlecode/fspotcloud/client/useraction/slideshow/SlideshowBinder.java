@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.client.useraction.slideshow;
 
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.useraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
@@ -17,7 +16,6 @@ public class SlideshowBinder extends AbstractBinder {
     private final SlowerHandler slowerHandler;
     private final StartHandler startHandler;
     private final StopHandler stopHandler;
-
 
 
     @Inject

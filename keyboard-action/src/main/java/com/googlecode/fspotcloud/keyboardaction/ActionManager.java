@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.inject.Inject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

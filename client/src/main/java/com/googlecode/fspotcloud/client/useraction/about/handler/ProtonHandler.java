@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.LoadNewLocationAction;
 import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
 
-public class ProtonHandler extends LoadNewLocationAction{
+public class ProtonHandler extends LoadNewLocationAction {
 
     @Inject
     private ProtonHandler(LoadNewLocation loader) {

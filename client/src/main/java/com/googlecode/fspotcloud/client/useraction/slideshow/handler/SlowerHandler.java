@@ -15,6 +15,6 @@ public class SlowerHandler implements IActionHandler {
 
     @Override
     public void performAction(String actionId) {
-       slideshow.slower();
+        slideshow.slower();
     }
 }

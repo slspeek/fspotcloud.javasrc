@@ -36,17 +36,13 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
-import com.googlecode.fspotcloud.client.main.api.Initializable;
 import com.googlecode.fspotcloud.client.main.ui.HasOneWidgetAdapter;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.ui.UserPagesResources;
 import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
-import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
 import com.googlecode.fspotcloud.client.useraction.UserActionHandlerBinder;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
-import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Logger;
 

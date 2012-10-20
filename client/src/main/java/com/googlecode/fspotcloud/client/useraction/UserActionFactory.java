@@ -7,7 +7,6 @@ import com.googlecode.fspotcloud.client.useraction.navigation.NavigationBinder;
 import com.googlecode.fspotcloud.client.useraction.raster.RasterBinder;
 import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,8 +19,8 @@ public class UserActionFactory {
     @Inject
     public UserActionFactory(AboutBinder aboutBinder,
                              ApplicationBinder applicationBinder,
-                            NavigationBinder navigationBinder,
-                            RasterBinder rasterBinder,
+                             NavigationBinder navigationBinder,
+                             RasterBinder rasterBinder,
                              SlideshowBinder slideshowBinder,
                              IModeController modeController) {
         log.log(Level.FINEST, "In constructor before doing anything");

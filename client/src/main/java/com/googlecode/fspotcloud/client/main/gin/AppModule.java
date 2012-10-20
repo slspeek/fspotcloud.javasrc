@@ -48,14 +48,10 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.client.useraction.CategoryDef;
-import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.view.action.KeyDispatcherProvider;
 import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
 import com.googlecode.fspotcloud.client.view.action.api.LoadNewLocationActionFactory;
 import com.googlecode.fspotcloud.client.view.action.api.ShortcutHandler;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
-import com.googlecode.fspotcloud.keyboardaction.ModesProvider;
 
 
 public class AppModule extends AbstractGinModule {

@@ -39,7 +39,7 @@ public class ActionToolbar extends LayoutPanel {
     private final ActionButtonFactory actionButtonFactory;
 
     ActionToolbar(KeyboardActionResources keyboardActionResources,
-                         ActionButtonFactory actionButtonFactory) {
+                  ActionButtonFactory actionButtonFactory) {
         this.actionButtonFactory = actionButtonFactory;
         addStyleName(keyboardActionResources.style().buttonPanelBlock());
     }
@@ -53,7 +53,7 @@ public class ActionToolbar extends LayoutPanel {
     }
 
     public void addCategory(ActionCategory actionCategory) {
-        for (ActionDef actionDef: actionCategory.getActions()) {
+        for (ActionDef actionDef : actionCategory.getActions()) {
             add(actionDef);
         }
     }

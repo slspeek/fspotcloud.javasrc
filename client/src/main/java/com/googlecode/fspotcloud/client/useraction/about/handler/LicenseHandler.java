@@ -1,11 +1,10 @@
 package com.googlecode.fspotcloud.client.useraction.about.handler;
 
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.view.LoadNewLocationAction;
 import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
 
-public class LicenseHandler extends LoadNewLocationAction{
+public class LicenseHandler extends LoadNewLocationAction {
 
     @Inject
     private LicenseHandler(LoadNewLocation loader) {
