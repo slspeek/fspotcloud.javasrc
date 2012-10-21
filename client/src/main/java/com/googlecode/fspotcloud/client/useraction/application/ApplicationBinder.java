@@ -47,7 +47,7 @@ public class ApplicationBinder extends AbstractBinder {
     @Override
     public void build() {
         KeyboardBinding helpBinding = KeyboardBinding.bind(new KeyStroke('H')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
-        final HelpConfig helpConfig = new HelpConfig("Keyboard help");
+        final HelpConfig helpConfig = new HelpConfig("800px", "800px", "Keyboard help");
         helpConfig.addToFirstColumn(categoryDef.NAVIGATION, categoryDef.RASTER);
         helpConfig.addToSecondColumn(categoryDef.APPLICATION, categoryDef.SLIDESHOW);
         bind(ApplicationActions.SHOW_HELP, helpActionsFactory.getHelpAction(helpConfig), helpBinding);

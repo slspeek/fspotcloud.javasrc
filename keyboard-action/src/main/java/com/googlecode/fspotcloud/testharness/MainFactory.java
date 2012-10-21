@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.testharness;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.inject.Inject;
@@ -38,6 +39,7 @@ public class MainFactory {
 
     final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
+    final KeyStroke KEY_Q = new KeyStroke('Q');
     final KeyStroke KEY_B = new KeyStroke('B');
     final KeyStroke KEY_D = new KeyStroke('D');
     final KeyStroke KEY_G = new KeyStroke('G');
@@ -50,28 +52,34 @@ public class MainFactory {
 
     final KeyboardBinding ALLWAYS_SHIFT_A = KeyboardBinding.bind(SHIFT_A, KEY_D).withDefaultModes(MODES).override(MODE_TWO);
     final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withDefaultModes(MODE_ONE);
+    final KeyboardBinding Q_BINDING = KeyboardBinding.bind(KEY_Q).withDefaultModes(MODES);
     final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withDefaultModes(MODES);
     final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withDefaultModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
     final KeyboardBinding DEMO_BINDING = KeyboardBinding.bind(KEY_7).withDefaultModes(MODES);
     TextArea messageBoard = new TextArea();
+    private ActionDef stopDemoDef = new ActionDef("quit-demo", "Quit demo", "Stops all demos");
+            ;
 
     void outputMesg(String msg) {
         log.log(Level.FINEST, msg);
         messageBoard.setText(msg);
     }
 
+
     @Inject
     public MainFactory(KeyboardActionFactory keyboardActionFactory, DemoBuilderFactory demoBuilderFactory, HelpActionsFactory helpActionsFactory) {
         this.keyboardActionFactory = keyboardActionFactory;
         this.demoBuilderFactory = demoBuilderFactory;
         this.helpActionsFactory = helpActionsFactory;
-        helpActionsFactory.initHelpActions();
+        //helpActionsFactory.initHelpActions();
         this.configBuilder = keyboardActionFactory.getConfigBuilder();
         this.modeController = keyboardActionFactory.getModeController();
 
 
+
         ActionCategory modeTwoSetters = configBuilder.createActionCategory("Mode 2 setters");
         ActionCategory otherModeSetters = configBuilder.createActionCategory("Other mode setters");
+        ActionCategory helpCategory = configBuilder.createActionCategory("Help");
         messageBoard.setVisibleLines(20);
         messageBoard.setCharacterWidth(100);
         configBuilder.addBinding(modeTwoSetters, OK_DEF, new IActionHandler() {
@@ -106,6 +114,16 @@ public class MainFactory {
                 outputMesg("Running 3-action. ");
             }
         }, THREE_BINDING);
+        ActionDef showHelpDef = new ActionDef("help", "Help", "Show a help popup.");
+        ActionDef hideHelpDef = new ActionDef("hide-help", "Hide help", "Hide the help popup.");
+        KeyboardBinding showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(MODES);
+        KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(MODES);
+
+        configBuilder.addBinding(helpCategory, hideHelpDef, helpActionsFactory.getCloseHelp(), hideHelpBinding);
+        HelpConfig helpConfig = new HelpConfig("380px", "300px", "Shortcuts");
+        helpConfig.addToFirstColumn(helpCategory, modeTwoSetters, otherModeSetters);
+        configBuilder.addBinding(helpCategory, showHelpDef, helpActionsFactory.getHelpAction(helpConfig), showHelpBinding);
+        configBuilder.addBinding(helpCategory, stopDemoDef, demoBuilderFactory.getStopDemoHandler(), Q_BINDING);
 
         DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);
         demoBuilder.addStep(OK, 3000);
@@ -113,10 +131,14 @@ public class MainFactory {
         demoBuilder.addStep(HelpActionsFactory.SHOW_HELP_ACTION, 2000);
         demoBuilder.addStep(HelpActionsFactory.HIDE_HELP_ACTION, 1000);
 
-        configBuilder.addBinding(helpActionsFactory.helpActionCategory,
+        configBuilder.addBinding(helpCategory
+
+
+                ,
                 DEMO_DEF,
                 demoBuilder.getDemo(),
                 DEMO_BINDING);
+
 
 
         ActionMenu menu = keyboardActionFactory.getMenu("First menu!");

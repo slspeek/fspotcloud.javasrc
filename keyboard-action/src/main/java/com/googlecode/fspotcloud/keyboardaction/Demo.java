@@ -22,7 +22,7 @@ public class Demo implements IActionHandler {
     private Timer actionTimer;
     private Timer nextCalltimer;
     private final EventBus eventBus;
-    private boolean stopped = false;
+
 
 
     Demo(DemoPopup demoPopup, ActionDef actionDef, EventBus eventBus) {
@@ -40,7 +40,7 @@ public class Demo implements IActionHandler {
     @Override
     public void performAction(final String actionId) {
         //check for the end
-        if (!stopped && currentDemoStep < stepList.size()) {
+        if (currentDemoStep < stepList.size()) {
             currentStep = stepList.get(currentDemoStep);
             eventBus.fireEvent(new ActionDemoEvent(currentStep.getActionId(), true));
             demoPopup.setSafeHtml(currentStep.getContent());
@@ -64,21 +64,26 @@ public class Demo implements IActionHandler {
             nextCalltimer.schedule(currentStep.pauseTime());
 
         } else {
-            demoPopup.hide();
-            stopped = false;
-            currentDemoStep = 0;
+            cleanUp();
         }
+    }
+
+    private void cleanUp() {
+        demoPopup.hide();
+        currentDemoStep = 0;
     }
 
 
     public void stop() {
-        stopped = true;
         try {
             eventBus.fireEvent(new ActionDemoEvent(currentStep.getActionId(), false));
             actionTimer.cancel();
             nextCalltimer.cancel();
+            cleanUp();
         } catch (NullPointerException npe) {
             log.log(Level.FINEST, "stop called on not running demo", npe);
         }
     }
+
+
 }

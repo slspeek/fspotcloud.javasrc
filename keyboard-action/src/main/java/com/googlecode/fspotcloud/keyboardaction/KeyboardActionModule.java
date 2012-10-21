@@ -22,7 +22,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(ActionImplementationRegister.class).in(Singleton.class);
         bind(DemoBuilder.class);
         bind(DemoBuilderFactory.class).in(Singleton.class);
-        bind(HelpPopup.class);
+        bind(TwoColumnHelpPopup.class);
         bind(HelpActionsFactory.class).in(Singleton.class);
     }
 
@@ -30,6 +30,13 @@ public class KeyboardActionModule extends AbstractGinModule {
     @Singleton
     public List<ActionCategory> getActionCategoryList() {
         List<ActionCategory> r = newArrayList();
+        return r;
+    }
+
+    @Provides
+    @Singleton
+    public List<Demo> getDemoList() {
+        List<Demo> r = newArrayList();
         return r;
     }
 }

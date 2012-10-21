@@ -4,22 +4,44 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import java.util.List;
+
+import static com.google.common.collect.Lists.newArrayList;
+
 public class DemoBuilderFactory {
 
     private final Provider<DemoBuilder> demoBuilderProvider;
     private final Provider<DemoPopup> demoPopupProvider;
+    private final List<Demo> demoList;
     private final EventBus eventBus;
 
     @Inject
-    private DemoBuilderFactory(Provider<DemoBuilder> demoBuilderProvider, Provider<DemoPopup> demoPopupProvider, EventBus eventBus) {
+    private DemoBuilderFactory(Provider<DemoBuilder> demoBuilderProvider,
+                               Provider<DemoPopup> demoPopupProvider,
+                               List<Demo> demoList, EventBus eventBus) {
         this.demoBuilderProvider = demoBuilderProvider;
         this.demoPopupProvider = demoPopupProvider;
+        this.demoList = demoList;
         this.eventBus = eventBus;
     }
 
     public DemoBuilder get(ActionDef actionDef) {
         DemoBuilder demoBuilder = demoBuilderProvider.get();
-        demoBuilder.setDemo(new Demo(demoPopupProvider.get(), actionDef, eventBus));
+        final Demo demo = new Demo(demoPopupProvider.get(), actionDef, eventBus);
+        demoList.add(demo);
+        demoBuilder.setDemo(demo);
         return demoBuilder;
+    }
+
+    public IActionHandler getStopDemoHandler() {
+        IActionHandler actionHandler = new IActionHandler() {
+            @Override
+            public void performAction(String actionId) {
+                for (Demo demo : demoList) {
+                    demo.stop();
+                }
+            }
+        };
+        return actionHandler;
     }
 }

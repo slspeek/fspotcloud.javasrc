@@ -12,14 +12,26 @@ public class HelpConfig {
     private final List<ActionCategory> firstColumn = newArrayList();
     private final List<ActionCategory> secondColumn = newArrayList();
     private final SafeHtml optionalContent;
+    private final String width;
+    private final String height;
 
-    public HelpConfig(String title, SafeHtml optionalContent) {
+    public HelpConfig(String width, String height,String title, SafeHtml optionalContent) {
         this.title = title;
         this.optionalContent = optionalContent;
+        this.width = width;
+        this.height = height;
     }
 
-    public HelpConfig(String title) {
-        this(title, null);
+    public String getWidth() {
+        return width;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public HelpConfig(String width, String height,String title) {
+        this(width, height, title, null);
 
     }
 

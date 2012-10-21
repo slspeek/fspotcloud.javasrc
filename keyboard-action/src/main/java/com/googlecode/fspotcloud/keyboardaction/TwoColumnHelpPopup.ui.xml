@@ -6,12 +6,12 @@
     <g:LayoutPanel ui:field="focusPanel">
         <g:layer top="0%" height="7%" left="0%" width="100%">
             <g:LayoutPanel styleName="{res.style.helpTitleRow}">
-                <g:layer right="0%" width="100%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
+                <g:layer left="0%" width="96%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
+                  <g:Label ui:field="titleLabel" styleName="{res.style.helpTitle}"></g:Label>
+                </g:layer>
+                <g:layer right="0%" width="4%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
                     <g:HTMLPanel>
-                        <div class="{res.style.helpTitleRow">
-                            <span ui:field="titleSpan" class="{res.style.helpTitle}"></span>
-                            <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
-                        </div>
+                        <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
                     </g:HTMLPanel>
                 </g:layer>
             </g:LayoutPanel>

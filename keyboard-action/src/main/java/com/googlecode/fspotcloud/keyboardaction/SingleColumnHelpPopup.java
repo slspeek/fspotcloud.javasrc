@@ -33,6 +33,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
@@ -40,8 +41,8 @@ import com.google.inject.Inject;
 import java.util.logging.Logger;
 
 
-public class HelpPopup extends PopupPanel {
-    private final Logger log = Logger.getLogger(HelpPopup.class.getName());
+public class SingleColumnHelpPopup extends PopupPanel {
+    private final Logger log = Logger.getLogger(SingleColumnHelpPopup.class.getName());
     private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
     @UiField
     Anchor closeAnchor;
@@ -50,13 +51,12 @@ public class HelpPopup extends PopupPanel {
     @UiField
     DivElement helpBodyLeft;
     @UiField
-    DivElement helpBodyRight;
-    @UiField
-    SpanElement titleSpan;
+    Label titleLabel;
     private final KeyboardActionResources keyboardActionResources;
+    private HelpConfig helpConfig;
 
     @Inject
-    private HelpPopup(KeyboardActionResources keyboardActionResources) {
+    private SingleColumnHelpPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
         this.keyboardActionResources = keyboardActionResources;
 
@@ -65,28 +65,29 @@ public class HelpPopup extends PopupPanel {
         addStyleName(keyboardActionResources.style().helpPopup());
     }
 
+    public void setHelpConfig(HelpConfig helpConfig) {
+        this.helpConfig = helpConfig;
+        setTitle(helpConfig.getTitle());
+    }
+
     public void setLeft(SafeHtml text) {
         helpBodyLeft.setInnerSafeHtml(text);
     }
 
-    public void setRight(SafeHtml text) {
-        helpBodyRight.setInnerSafeHtml(text);
-    }
-
     public void setTitle(String text) {
-        titleSpan.setInnerHTML(text);
+        titleLabel.setText(text);
     }
 
     public void focus() {
         //focusPanel.setFocus(true);
     }
 
-    interface HelpPopupUiBinder extends UiBinder<LayoutPanel, HelpPopup> {
+    interface HelpPopupUiBinder extends UiBinder<LayoutPanel, SingleColumnHelpPopup> {
     }
 
 
     public void show() {
-        getWidget().setSize("800px", "800px");
+        getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
         super.show();
     }
 
