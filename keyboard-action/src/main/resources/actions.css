@@ -98,6 +98,12 @@
 {
     float: right;
 }
+
+.helpOptionalContent
+{
+    text-align: center;
+}
+
 .button:hover
 {
   -moz-transform:hoverTransform;

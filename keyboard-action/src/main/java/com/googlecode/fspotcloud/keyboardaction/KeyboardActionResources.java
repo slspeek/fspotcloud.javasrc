@@ -61,6 +61,8 @@ public interface KeyboardActionResources extends ClientBundle {
 
         String helpPopup();
 
+        String helpOptionalContent();
+
         String helpSeparator();
 
         String helpTitle();

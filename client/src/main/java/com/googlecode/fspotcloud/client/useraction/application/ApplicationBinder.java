@@ -14,7 +14,7 @@ import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 public class ApplicationBinder extends AbstractBinder {
 
 
-    private final AboutHandler aboutHandler;
+    private final AboutHandlerFactory aboutHandlerFactory;
     private final DashboardHandler dashboardHandler;
     private final LoginHandler loginHandler;
     private final LogoutHandler logoutHandler;
@@ -24,7 +24,7 @@ public class ApplicationBinder extends AbstractBinder {
     private final CategoryDef categoryDef;
 
     @Inject
-    public ApplicationBinder(AboutHandler aboutHandler,
+    public ApplicationBinder(AboutHandlerFactory handlerFactory,
                              DashboardHandler dashboardHandler,
                              LoginHandler loginHandler,
                              LogoutHandler logoutHandler,
@@ -33,7 +33,7 @@ public class ApplicationBinder extends AbstractBinder {
                              CategoryDef categoryDef,
                              HelpActionsFactory helpActionsFactory) {
         super(categoryDef.APPLICATION);
-        this.aboutHandler = aboutHandler;
+        this.aboutHandlerFactory = handlerFactory;
         this.dashboardHandler = dashboardHandler;
         this.loginHandler = loginHandler;
         this.logoutHandler = logoutHandler;
@@ -57,13 +57,17 @@ public class ApplicationBinder extends AbstractBinder {
         bind(ApplicationActions.HIDE_HELP, helpActionsFactory.getCloseHelp(), hideHelpBinding);
 
         KeyboardBinding aboutBinding = KeyboardBinding.bind(new KeyStroke('A')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.ABOUT, aboutHandler, aboutBinding);
+        bind(ApplicationActions.ABOUT, aboutHandlerFactory.getAboutHandler(), aboutBinding);
 
         KeyboardBinding dashboardBinding = KeyboardBinding.bind(new KeyStroke('D')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
         bind(ApplicationActions.DASHBOARD, dashboardHandler, dashboardBinding);
 
         KeyboardBinding hideControlsBinding = KeyboardBinding.bind(new KeyStroke('F')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
         configBuilder.register(category, ApplicationActions.HIDE_CONTROLS, hideControlsBinding);
+
+        KeyboardBinding demoBinding = KeyboardBinding.bind(new KeyStroke('7')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
+        configBuilder.register(category, ApplicationActions.DEMO, demoBinding);
+
 
         KeyboardBinding loginBinding = KeyboardBinding.bind(new KeyStroke('N')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
         bind(ApplicationActions.LOGIN, loginHandler, loginBinding);

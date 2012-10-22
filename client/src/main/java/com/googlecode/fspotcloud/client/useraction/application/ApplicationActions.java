@@ -51,4 +51,5 @@ public class ApplicationActions {
 
     public static final ActionDef SHOW_HELP = new ActionDef("help", "Help", "Show the keyboard help", RESOURCES.helpIcon());
     public static final ActionDef HIDE_HELP = new ActionDef("hide-help", "Hide help", "Hide the help popup.");
+    public static final ActionDef DEMO = new ActionDef("demo", "Demo", "Play a demo.", RESOURCES.demoIcon());
 }

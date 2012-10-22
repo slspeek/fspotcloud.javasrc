@@ -43,6 +43,10 @@ public class HelpActionsFactory {
                     singleColumnHelpPopup.setLeft(firstColumn);
                     singleColumnHelpPopup.center();
                     singleColumnHelpPopup.show();
+                    final SafeHtml optionalContent = helpConfig.getOptionalContent();
+                    if (optionalContent != null) {
+                       singleColumnHelpPopup.setOptionalContentDiv(optionalContent);
+                    }
                 } else {
                     secondColumn = helpContentGenerator.getHelpText(helpConfig.getSecondColumn());
                     twoColumnHelpPopup.setHelpConfig(helpConfig);

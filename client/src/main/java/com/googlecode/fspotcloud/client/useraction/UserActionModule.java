@@ -46,7 +46,6 @@ public class UserActionModule extends AbstractGinModule {
         bind(CategoryDef.class).in(Singleton.class);
         bind(ModesProvider.class).to(Modes.class);
 
-        bind(AboutHandler.class);
         bind(DashboardHandler.class);
         bind(HideControlsHandler.class);
         bind(LoginHandler.class);

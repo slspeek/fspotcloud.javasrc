@@ -8,5 +8,6 @@
             <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
         </div>
         <div ui:field="helpBodyLeft" class="{res.style.helpBody}"></div>
+        <div ui:field="optionalContentDiv" class="{res.style.helpOptionalContent}"></div>
     </g:HTMLPanel>
 </ui:UiBinder>

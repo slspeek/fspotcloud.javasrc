@@ -28,7 +28,8 @@ public class ToolbarProvider implements Provider<ActionToolbar> {
     public ActionToolbar get() {
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
 
-        toolbar.add(HelpActionsFactory.SHOW_HELP_ACTION);
+        toolbar.add(ApplicationActions.SHOW_HELP);
+        toolbar.add(ApplicationActions.DEMO);
         toolbar.add(NavigationActions.HOME_DEF);
         toolbar.add(NavigationActions.PAGE_UP_DEF);
         toolbar.add(NavigationActions.BACK_DEF);

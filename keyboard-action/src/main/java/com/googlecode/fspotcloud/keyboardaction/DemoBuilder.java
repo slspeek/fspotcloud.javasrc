@@ -16,7 +16,10 @@ public class DemoBuilder {
     private final KeyboardPreferences keyboardPreferences;
 
     @Inject
-    private DemoBuilder(ButtonDefinitions buttonDefinitions, EventBus eventBus, HelpContentGenerator helpContentGenerator, KeyboardPreferences keyboardPreferences) {
+    private DemoBuilder(ButtonDefinitions buttonDefinitions,
+                        EventBus eventBus,
+                        HelpContentGenerator helpContentGenerator,
+                        KeyboardPreferences keyboardPreferences) {
         this.buttonDefinitions = buttonDefinitions;
         this.eventBus = eventBus;
         this.helpContentGenerator = helpContentGenerator;
@@ -33,6 +36,10 @@ public class DemoBuilder {
 
     public DemoBuilder addStep(String actionId, int pauseMilles) {
         ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        return addStep(actionDef, pauseMilles);
+    }
+
+    public DemoBuilder addStep(ActionDef actionDef, int pauseMilles) {
         ActionDemoStep step = new ActionDemoStep(actionDef, eventBus, pauseMilles, getContent(actionDef));
         demo.getStepList().add(step);
         return this;
@@ -40,6 +47,10 @@ public class DemoBuilder {
 
     public DemoBuilder addStep(String actionId, int pauseMilles, String overridingDescription) {
         ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        return addStep(actionDef, pauseMilles, overridingDescription);
+    }
+
+    public DemoBuilder addStep(ActionDef actionDef, int pauseMilles, String overridingDescription) {
         SafeHtml content = new SafeHtmlBuilder().appendEscaped(overridingDescription).toSafeHtml();
         ActionDemoStep step = new ActionDemoStep(actionDef, eventBus, pauseMilles, content);
         demo.getStepList().add(step);
@@ -56,5 +67,4 @@ public class DemoBuilder {
         SafeHtml result = helpContentGenerator.getHelpText(actionDef, keyStrokes);
         return result;
     }
-
 }
