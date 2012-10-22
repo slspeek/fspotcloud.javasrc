@@ -32,10 +32,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 
 import java.util.logging.Logger;
@@ -47,11 +44,9 @@ public class TwoColumnHelpPopup extends PopupPanel {
     @UiField
     Anchor closeAnchor;
     @UiField
-    LayoutPanel focusPanel;
+   SpanElement helpBodyLeft;
     @UiField
-    DivElement helpBodyLeft;
-    @UiField
-    DivElement helpBodyRight;
+    SpanElement helpBodyRight;
     @UiField
     Label titleLabel;
     private final KeyboardActionResources keyboardActionResources;
@@ -60,9 +55,7 @@ public class TwoColumnHelpPopup extends PopupPanel {
     private TwoColumnHelpPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
         this.keyboardActionResources = keyboardActionResources;
-
         setWidget(uiBinder.createAndBindUi(this));
-
         addStyleName(keyboardActionResources.style().helpPopup());
     }
 
@@ -83,16 +76,12 @@ public class TwoColumnHelpPopup extends PopupPanel {
         titleLabel.setText(text);
     }
 
-    public void focus() {
-        //focusPanel.setFocus(true);
-    }
-
-    interface HelpPopupUiBinder extends UiBinder<LayoutPanel, TwoColumnHelpPopup> {
+    interface HelpPopupUiBinder extends UiBinder<HTMLPanel, TwoColumnHelpPopup> {
     }
 
 
     public void show() {
-        getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
+        //getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
         super.show();
     }
 

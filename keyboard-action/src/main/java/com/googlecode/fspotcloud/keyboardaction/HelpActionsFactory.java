@@ -43,7 +43,6 @@ public class HelpActionsFactory {
                     singleColumnHelpPopup.setLeft(firstColumn);
                     singleColumnHelpPopup.center();
                     singleColumnHelpPopup.show();
-                    singleColumnHelpPopup.focus();
                 } else {
                     secondColumn = helpContentGenerator.getHelpText(helpConfig.getSecondColumn());
                     twoColumnHelpPopup.setHelpConfig(helpConfig);
@@ -52,7 +51,6 @@ public class HelpActionsFactory {
                     twoColumnHelpPopup.setGlassEnabled(true);
                     twoColumnHelpPopup.center();
                     twoColumnHelpPopup.show();
-                    twoColumnHelpPopup.focus();
                 }
             }
         };

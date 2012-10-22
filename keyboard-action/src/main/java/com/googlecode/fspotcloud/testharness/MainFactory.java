@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 @GwtCompatible
 public class MainFactory {
 
+    public static final String SINGLE_COLUMN_HELP = "help";
+    public static final String TWO_COLUMN_HELP = "help-2c";
     public final Logger log = Logger.getLogger(MainFactory.class.getName());
     public static final String MODE_ONE = "MODE_ONE";
     public static final String MODE_TWO = "MODE_TWO";
@@ -114,15 +116,21 @@ public class MainFactory {
                 outputMesg("Running 3-action. ");
             }
         }, THREE_BINDING);
-        ActionDef showHelpDef = new ActionDef("help", "Help", "Show a help popup.");
+        ActionDef showHelpDef = new ActionDef(SINGLE_COLUMN_HELP, "Help", "Show a help popup.");
+        ActionDef show2cHelpDef = new ActionDef(TWO_COLUMN_HELP, "Help 2c", "Show a help 2-column popup.");
         ActionDef hideHelpDef = new ActionDef("hide-help", "Hide help", "Hide the help popup.");
         KeyboardBinding showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(MODES);
+        KeyboardBinding show2cHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 'H')).withDefaultModes(MODES);
         KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(MODES);
 
         configBuilder.addBinding(helpCategory, hideHelpDef, helpActionsFactory.getCloseHelp(), hideHelpBinding);
-        HelpConfig helpConfig = new HelpConfig("380px", "300px", "Shortcuts");
+        HelpConfig helpConfig = new HelpConfig("Shortcuts");
+        HelpConfig help2cConfig = new HelpConfig("Shortcuts in two columns");
         helpConfig.addToFirstColumn(helpCategory, modeTwoSetters, otherModeSetters);
+        help2cConfig.addToFirstColumn(helpCategory, modeTwoSetters);
+        help2cConfig.addToSecondColumn(otherModeSetters);
         configBuilder.addBinding(helpCategory, showHelpDef, helpActionsFactory.getHelpAction(helpConfig), showHelpBinding);
+        configBuilder.addBinding(helpCategory, show2cHelpDef, helpActionsFactory.getHelpAction(help2cConfig), show2cHelpBinding);
         configBuilder.addBinding(helpCategory, stopDemoDef, demoBuilderFactory.getStopDemoHandler(), Q_BINDING);
 
         DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);

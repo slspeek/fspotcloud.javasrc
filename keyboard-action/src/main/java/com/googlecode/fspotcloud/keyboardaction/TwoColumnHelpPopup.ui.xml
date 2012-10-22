@@ -2,33 +2,12 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:with type="com.googlecode.fspotcloud.keyboardaction.KeyboardActionResources" field="res"></ui:with>
-
-    <g:LayoutPanel ui:field="focusPanel">
-        <g:layer top="0%" height="7%" left="0%" width="100%">
-            <g:LayoutPanel styleName="{res.style.helpTitleRow}">
-                <g:layer left="0%" width="96%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
-                  <g:Label ui:field="titleLabel" styleName="{res.style.helpTitle}"></g:Label>
-                </g:layer>
-                <g:layer right="0%" width="4%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
-                    <g:HTMLPanel>
-                        <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
-                    </g:HTMLPanel>
-                </g:layer>
-            </g:LayoutPanel>
-        </g:layer>
-        <g:layer top="10%" height="93%" left="0%" width="100%">
-            <g:LayoutPanel>
-                <g:layer left="0%" width="50%" bottom="0%" height="100%">
-                    <g:HTMLPanel>
-                        <div ui:field="helpBodyLeft" class="{res.style.helpBody}"></div>
-                    </g:HTMLPanel>
-                </g:layer>
-                <g:layer right="0%" width="50%" bottom="0%" height="100%">
-                    <g:HTMLPanel>
-                        <div ui:field="helpBodyRight" class="{res.style.helpBody}"></div>
-                    </g:HTMLPanel>
-                </g:layer>
-            </g:LayoutPanel>
-        </g:layer>
-    </g:LayoutPanel>
+    <g:HTMLPanel>
+        <g:Label ui:field="titleLabel" styleName="{res.style.helpTitle}"></g:Label>
+        <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
+        <div class="{res.style.helpBigBody}">
+            <span ui:field="helpBodyLeft" class="{res.style.helpLeftBody}"></span>
+            <span ui:field="helpBodyRight" class="{res.style.helpRightBody}"></span>
+        </div>
+    </g:HTMLPanel>
 </ui:UiBinder>

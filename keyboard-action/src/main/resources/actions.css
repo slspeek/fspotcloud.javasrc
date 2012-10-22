@@ -96,7 +96,7 @@
 }
 .helpClose
 {
-    align-right:auto;
+    float: right;
 }
 .button:hover
 {
@@ -134,23 +134,37 @@
 {
   -moz-border-radius:15px;
   border-radius:15px;
-  background-color:rgba(0,0,0,0.7);
+  background-color:rgba(0,0,0,0.8);
   color:#FFF;
   padding:10px;
 }
 
 .helpBody
 {
-
-
 }
+
+.helpRightBody
+{
+    float: right;
+    width: 49%;
+}
+.helpLeftBody
+{
+    width: 49%;
+    float: left;
+}
+
+.helpBigBody
+{
+}
+
 
 .helpTitle
 {
   font-size:large;
   text-align:center;
   font-style:bold;
-
+    display: inline;
 
 }
 

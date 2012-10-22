@@ -32,10 +32,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 
 import java.util.logging.Logger;
@@ -46,8 +43,6 @@ public class SingleColumnHelpPopup extends PopupPanel {
     private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
     @UiField
     Anchor closeAnchor;
-    @UiField
-    LayoutPanel focusPanel;
     @UiField
     DivElement helpBodyLeft;
     @UiField
@@ -82,12 +77,12 @@ public class SingleColumnHelpPopup extends PopupPanel {
         //focusPanel.setFocus(true);
     }
 
-    interface HelpPopupUiBinder extends UiBinder<LayoutPanel, SingleColumnHelpPopup> {
+    interface HelpPopupUiBinder extends UiBinder<HTMLPanel, SingleColumnHelpPopup> {
     }
 
 
     public void show() {
-        getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
+        //getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
         super.show();
     }
 
