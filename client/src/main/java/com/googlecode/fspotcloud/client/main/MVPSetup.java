@@ -36,6 +36,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
+import com.googlecode.fspotcloud.client.main.shared.ZoomViewEventHandlerImpl;
 import com.googlecode.fspotcloud.client.main.ui.HasOneWidgetAdapter;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.ui.UserPagesResources;
@@ -55,17 +56,22 @@ public class MVPSetup {
     private final MainWindowActivityMapper activityMapper;
     private final PlaceController placeController;
     private final ClientLoginManager clientLoginManager;
+    private final ZoomViewEventHandlerImpl zoomViewEventHandler;
 
     @Inject
     public MVPSetup(MainWindowActivityMapper activityMapper, EventBus eventBus,
                     PlaceController placeController,
                     Resources resources,
                     AdminResources adminResources, ClientLoginManager clientLoginManager,
-                    UserPagesResources userPagesResources, UserActionHandlerBinder userActionHandlerBinder) {
+                    UserPagesResources userPagesResources,
+                    UserActionHandlerBinder userActionHandlerBinder,
+                    ZoomViewEventHandlerImpl zoomViewEventHandler) {
+        zoomViewEventHandler.init();
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
         this.placeController = placeController;
         this.clientLoginManager = clientLoginManager;
+        this.zoomViewEventHandler = zoomViewEventHandler;
         resources.style().ensureInjected();
         adminResources.style().ensureInjected();
         userPagesResources.style().ensureInjected();
