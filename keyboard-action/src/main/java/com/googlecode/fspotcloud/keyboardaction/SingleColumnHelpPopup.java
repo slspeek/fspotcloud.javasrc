@@ -31,7 +31,10 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 
 import java.util.logging.Logger;
@@ -74,21 +77,11 @@ public class SingleColumnHelpPopup extends PopupPanel {
         titleLabel.setText(text);
     }
 
-    public void focus() {
-        //focusPanel.setFocus(true);
-    }
-
     public void setOptionalContentDiv(SafeHtml optionalContentDiv) {
         this.optionalContentDiv.setInnerSafeHtml(optionalContentDiv);
     }
 
     interface HelpPopupUiBinder extends UiBinder<HTMLPanel, SingleColumnHelpPopup> {
-    }
-
-
-    public void show() {
-        //getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
-        super.show();
     }
 
     @UiHandler("closeAnchor")

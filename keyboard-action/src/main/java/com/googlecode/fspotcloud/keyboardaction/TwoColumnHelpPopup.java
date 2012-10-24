@@ -25,14 +25,16 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 
 import java.util.logging.Logger;
@@ -44,13 +46,14 @@ public class TwoColumnHelpPopup extends PopupPanel {
     @UiField
     Anchor closeAnchor;
     @UiField
-   SpanElement helpBodyLeft;
+    SpanElement helpBodyLeft;
     @UiField
     SpanElement helpBodyRight;
     @UiField
     Label titleLabel;
     private final KeyboardActionResources keyboardActionResources;
     private HelpConfig helpConfig;
+
     @Inject
     private TwoColumnHelpPopup(KeyboardActionResources keyboardActionResources) {
         super(true);
@@ -77,12 +80,6 @@ public class TwoColumnHelpPopup extends PopupPanel {
     }
 
     interface HelpPopupUiBinder extends UiBinder<HTMLPanel, TwoColumnHelpPopup> {
-    }
-
-
-    public void show() {
-        //getWidget().setSize(helpConfig.getWidth(), helpConfig.getHeight());
-        super.show();
     }
 
     @UiHandler("closeAnchor")
