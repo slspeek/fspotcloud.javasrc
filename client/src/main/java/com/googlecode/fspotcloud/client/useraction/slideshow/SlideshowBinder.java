@@ -38,7 +38,7 @@ public class SlideshowBinder extends AbstractBinder {
     @Override
     public void build() {
         KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('Q')).withDefaultModes(Modes.SLIDESHOW);
-        bind(SlideshowActions.SLIDESHOW__END, stopHandler, binding);
+        bind(SlideshowActions.SLIDESHOW_STOP, stopHandler, binding);
 
         binding = KeyboardBinding.bind(new KeyStroke('M')).withDefaultModes(Modes.SLIDESHOW);
         bind(SlideshowActions.SLIDESHOW_FASTER, fasterHandler, binding);

@@ -29,6 +29,10 @@
 
 @def buttonScale 1.3;
 
+.running {
+    font-size: 200%;
+}
+
 .importedTag {
 	color: green;
 	font-size: 130%;
@@ -82,8 +86,12 @@
 }
 	
 .slideshowControls {
-	background-color: grey;
+	background-color: white;
+	color: red;
 	border-radius: borderRadius;
+	width: 100;
+	height: 40;
+
 }
 
 .imagePanelBlock {

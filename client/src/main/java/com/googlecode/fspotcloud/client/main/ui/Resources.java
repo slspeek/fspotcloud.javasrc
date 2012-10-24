@@ -206,5 +206,7 @@ public interface Resources extends ClientBundle {
         String selectedImage();
 
         String importedTag();
+
+        String running();
     }
 }

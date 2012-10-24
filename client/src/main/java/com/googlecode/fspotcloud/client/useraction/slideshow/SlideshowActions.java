@@ -13,7 +13,7 @@ public class SlideshowActions {
             "Start slideshow",
             RESOURCES.playIcon());
 
-    public static final ActionDef SLIDESHOW__END = new ActionDef("stop",
+    public static final ActionDef SLIDESHOW_STOP = new ActionDef("stop",
             "Stop",
             "Stop slideshow",
             RESOURCES.stopIcon());

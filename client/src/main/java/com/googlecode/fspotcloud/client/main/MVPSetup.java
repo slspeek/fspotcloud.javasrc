@@ -54,19 +54,17 @@ public class MVPSetup {
     private final EventBus eventBus;
     private final MainWindowActivityMapper activityMapper;
     private final PlaceController placeController;
-    private final EventHandlersSetup eventSetup;
     private final ClientLoginManager clientLoginManager;
 
     @Inject
     public MVPSetup(MainWindowActivityMapper activityMapper, EventBus eventBus,
                     PlaceController placeController,
-                    EventHandlersSetup eventSetup, Resources resources,
+                    Resources resources,
                     AdminResources adminResources, ClientLoginManager clientLoginManager,
                     UserPagesResources userPagesResources, UserActionHandlerBinder userActionHandlerBinder) {
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
         this.placeController = placeController;
-        this.eventSetup = eventSetup;
         this.clientLoginManager = clientLoginManager;
         resources.style().ensureInjected();
         adminResources.style().ensureInjected();
@@ -75,8 +73,6 @@ public class MVPSetup {
 
     public void setup() {
         log.info("Starting MVP setup");
-        eventSetup.setUp();
-
         ActivityManager activityManager = new ActivityManager(activityMapper,
                 eventBus);
         activityManager.setDisplay(new HasOneWidgetAdapter(appWidget));

@@ -8,17 +8,16 @@ import com.googlecode.fspotcloud.client.useraction.navigation.NavigationActions;
 import com.googlecode.fspotcloud.client.useraction.raster.RasterActions;
 import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
-import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
-public class ToolbarProvider implements Provider<ActionToolbar> {
+public class MainToolbarProvider implements Provider<ActionToolbar> {
 
 
     private final KeyboardActionFactory keyboardActionFactory;
 
     @Inject
-    public ToolbarProvider(UserActionFactory actionFactory,
-                           KeyboardActionFactory keyboardActionFactory
+    public MainToolbarProvider(UserActionFactory actionFactory,
+                               KeyboardActionFactory keyboardActionFactory
     ) {
         this.keyboardActionFactory = keyboardActionFactory;
     }

@@ -31,8 +31,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface SingleImageView extends IsWidget {
     ImageRasterView getImageRasterView();
 
-    ButtonPanelView getButtonPanelView();
-
     void hideControlsLater(int visibleDuration);
 
     void setPresenter(SingleImagePresenter singleImageActivity);

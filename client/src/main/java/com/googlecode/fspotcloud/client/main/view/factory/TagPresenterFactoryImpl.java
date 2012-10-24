@@ -27,7 +27,10 @@ package com.googlecode.fspotcloud.client.main.view.factory;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.TagActivity;
-import com.googlecode.fspotcloud.client.main.view.api.*;
+import com.googlecode.fspotcloud.client.main.view.api.ImageRasterPresenterFactory;
+import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
+import com.googlecode.fspotcloud.client.main.view.api.TagPresenterFactory;
+import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView.TagPresenter;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView.TreePresenter;
 import com.googlecode.fspotcloud.client.place.BasePlace;
@@ -40,17 +43,14 @@ public class TagPresenterFactoryImpl implements TagPresenterFactory {
     private final Logger log = Logger.getLogger(TagPresenterFactoryImpl.class.getName());
     private final TagViewImpl tagView;
     private final TreePresenter treePresenter;
-    private final ButtonPanelView.ButtonPanelPresenter buttonPanelPresenter;
     private final ImageRasterPresenterFactory rasterFactory;
 
     @Inject
     public TagPresenterFactoryImpl(TagView tagView,
                                    TreePresenter treePresenter,
-                                   ButtonPanelView.ButtonPanelPresenter buttonPanelPresenter,
                                    ImageRasterPresenterFactory rasterFactory) {
         super();
         this.tagView = (TagViewImpl) tagView;
-        this.buttonPanelPresenter = buttonPanelPresenter;
         this.treePresenter = treePresenter;
         this.rasterFactory = rasterFactory;
         init();
@@ -66,7 +66,6 @@ public class TagPresenterFactoryImpl implements TagPresenterFactory {
                 tagView.getImageRasterView());
         TagPresenter presenter = new TagActivity(tagView, rasterPresenter);
         treePresenter.setPlace(place);
-
         return presenter;
     }
 }

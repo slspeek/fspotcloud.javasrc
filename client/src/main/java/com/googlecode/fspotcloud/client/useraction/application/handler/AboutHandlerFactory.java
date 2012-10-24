@@ -24,18 +24,16 @@
 
 package com.googlecode.fspotcloud.client.useraction.application.handler;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
-import com.googlecode.fspotcloud.client.main.view.AboutPresenter;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
 import com.googlecode.fspotcloud.keyboardaction.HelpConfig;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
-public class AboutHandlerFactory{
+public class AboutHandlerFactory {
 
     private final HelpActionsFactory helpActionsFactory;
     private final CategoryDef categoryDef;

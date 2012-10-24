@@ -31,28 +31,20 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Singleton;
-import com.google.inject.name.Names;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
-import com.googlecode.fspotcloud.client.demo.DemoStep;
-import com.googlecode.fspotcloud.client.demo.DemoStepFactory;
-import com.googlecode.fspotcloud.client.demo.ShortcutDemoStep;
-import com.googlecode.fspotcloud.client.main.GlobalShortcutControllerFactory;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
 import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.client.main.view.factory.*;
+import com.googlecode.fspotcloud.client.main.view.factory.SingleImageViewActivityFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.SlideshowPresenterFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.TagPresenterFactoryImpl;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.client.view.action.KeyDispatcherProvider;
-import com.googlecode.fspotcloud.client.view.action.api.IGlobalShortcutController;
-import com.googlecode.fspotcloud.client.view.action.api.LoadNewLocationActionFactory;
-import com.googlecode.fspotcloud.client.view.action.api.ShortcutHandler;
-
 
 public class AppModule extends AbstractGinModule {
 
@@ -92,8 +84,6 @@ public class AppModule extends AbstractGinModule {
         bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
         bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
-        bind(KeyDispatcherProvider.class).in(Singleton.class);
-        bind(ShortcutHandler.class).toProvider(KeyDispatcherProvider.class);
         bind(SlideshowView.class).to(SlideshowViewImpl.class).in(Singleton.class);
         bind(TimerInterface.class).to(TimerImpl.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
@@ -102,9 +92,6 @@ public class AppModule extends AbstractGinModule {
         bind(TreeView.TreePresenter.class).to(TreePresenterImpl.class)
                 .in(Singleton.class);
         bind(SelectionChangeEvent.Handler.class).to(TreeSelectionHandler.class)
-                .in(Singleton.class);
-        bind(IGlobalShortcutController.class)
-                .toProvider(GlobalShortcutControllerFactory.class)
                 .in(Singleton.class);
         bind(SlideshowView.SlideshowPresenter.class)
                 .toProvider(SlideshowPresenterFactoryImpl.class);
@@ -118,29 +105,7 @@ public class AppModule extends AbstractGinModule {
         install(new GinFactoryModuleBuilder().implement(ImageView.class,
                 ImageViewImpl.class).build(ImageViewFactory.class));
 
-        install(new GinFactoryModuleBuilder().implement(DemoStep.class,
-                ShortcutDemoStep.class).build(DemoStepFactory.class));
-
-        bind(UserButtonViewFactory.class).to(UserButtonViewFactoryImpl.class);
-        install(new GinFactoryModuleBuilder().implement(
-                UserButtonView.UserButtonPresenter.class,
-                UserButtonPresenterImpl.class)
-                .build(UserButtonPresenterFactory.class));
-
-        bind(SlideshowControlsPresenter.class)
-                .toProvider(SlideshowControlsPresenterProvider.class);
-
-        bind(ButtonPanelView.ButtonPanelPresenter.class)
-                .toProvider(ButtonPanelPresenterProvider.class);
-        bind(ButtonPanelView.class).annotatedWith(Names.named("Main"))
-                .to(ButtonPanelViewImpl.class).in(Singleton.class);
-        bind(ButtonPanelView.class).annotatedWith(Names.named("Slideshow"))
-                .to(ButtonPanelViewImpl.class).in(Singleton.class);
         bind(TreeSelectionHandlerInterface.class).to(TreeSelectionHandler.class);
-        install(new GinFactoryModuleBuilder().build(
-                LoadNewLocationActionFactory.class));
         bind(LoadNewLocation.class).to(LoadNewLocationImpl.class);
-
-        bind(PopupView.class).to(HelpPopup.class);
     }
 }

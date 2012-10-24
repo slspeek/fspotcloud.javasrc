@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.shared.SlideshowStatusEvent;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
@@ -48,14 +49,21 @@ public class SlideshowPresenterImpl implements SlideshowView.SlideshowPresenter,
         slideshowView.setLabelText(formatter.format(delay) + " seconds. ");
 
         if (running) {
-            slideshowView.asWidget().addStyleDependentName("running");
+            slideshowView.addStyleRunning();
+
         } else {
-            slideshowView.asWidget().removeStyleDependentName("running");
+            slideshowView.removeStyleRunning();
         }
     }
 
     @Override
     public void onEvent(SlideshowStatusEvent e) {
+        log.info("On event ....sdasdhag %%%%%%%%%%%%%%%%%%");
         redraw(e.getDelay(), e.isRunning());
+    }
+
+    @Override
+    public IsWidget getView() {
+        return slideshowView;
     }
 }

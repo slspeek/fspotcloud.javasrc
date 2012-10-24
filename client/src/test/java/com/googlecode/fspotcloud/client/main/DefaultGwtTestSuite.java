@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.client.main;
 
 import com.google.gwt.junit.tools.GWTTestSuite;
-import com.googlecode.fspotcloud.client.main.event.GwtTestEventModule;
 import com.googlecode.fspotcloud.client.main.ui.GwtTestImageViewImpl;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -36,7 +35,6 @@ public class DefaultGwtTestSuite extends TestCase {
         GWTTestSuite suite = new GWTTestSuite("All Gwt Tests");
         suite.addTestSuite(GwtTestImageViewImpl.class);
         //suite.addTestSuite(GwtTestButtonPanelPresenterProvider.class);
-        suite.addTestSuite(GwtTestEventModule.class);
 
         return suite;
     }

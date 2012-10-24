@@ -30,6 +30,11 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface SlideshowView extends IsWidget {
     void setLabelText(String text);
 
+    void addStyleRunning();
+
+    void removeStyleRunning();
+
     interface SlideshowPresenter {
+        IsWidget getView();
     }
 }

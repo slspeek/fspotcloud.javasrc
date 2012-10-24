@@ -31,6 +31,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 
 import java.util.logging.Logger;
@@ -40,12 +41,16 @@ public class SlideshowViewImpl extends Composite implements SlideshowView {
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(SlideshowViewImpl.class.getName());
     private static final SlideshowViewImplUiBinder uiBinder = GWT.create(SlideshowViewImplUiBinder.class);
+    private final Resources resources;
+
     @UiField
     HorizontalPanel mainPanel;
     @UiField
     Label intervalLabel;
 
-    public SlideshowViewImpl() {
+    @Inject
+    public SlideshowViewImpl(Resources resources) {
+        this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
         log.info("created");
     }
@@ -53,6 +58,16 @@ public class SlideshowViewImpl extends Composite implements SlideshowView {
     @Override
     public void setLabelText(String text) {
         intervalLabel.setText(text);
+    }
+
+    @Override
+    public void addStyleRunning() {
+
+    }
+
+    @Override
+    public void removeStyleRunning() {
+        asWidget().addStyleName(resources.style().running());
     }
 
     interface SlideshowViewImplUiBinder extends UiBinder<Widget, SlideshowViewImpl> {

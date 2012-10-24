@@ -22,23 +22,18 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.event.navigation;
+package com.googlecode.fspotcloud.client.useraction;
 
-import com.google.inject.Provider;
-import com.googlecode.fspotcloud.client.main.event.UserEvent;
-import com.googlecode.fspotcloud.client.main.event.UserEventHandler;
-import com.googlecode.fspotcloud.client.view.action.api.ActionDef;
+import com.google.inject.BindingAnnotation;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-public class NavigationEventProvider implements Provider<UserEvent<? extends UserEventHandler>> {
-    private final ActionDef action;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-    public NavigationEventProvider(ActionDef action) {
-        this.action = action;
-    }
-
-    @Override
-    public UserEvent<? extends UserEventHandler> get() {
-        return new NavigationEvent(action);
-    }
+@BindingAnnotation
+@Target({FIELD, PARAMETER, METHOD})
+@Retention(RUNTIME)
+public @interface MainToolbar {
 }

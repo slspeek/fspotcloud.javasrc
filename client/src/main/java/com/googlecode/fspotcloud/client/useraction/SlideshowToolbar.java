@@ -22,10 +22,17 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.event.navigation;
+package com.googlecode.fspotcloud.client.useraction;
+import com.google.inject.BindingAnnotation;
 
-import com.googlecode.fspotcloud.client.main.event.UserEventHandler;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-public interface NavigationHandler extends UserEventHandler {
+@BindingAnnotation
+@Target({FIELD, PARAMETER, METHOD})
+@Retention(RUNTIME)
+public @interface SlideshowToolbar {
 }

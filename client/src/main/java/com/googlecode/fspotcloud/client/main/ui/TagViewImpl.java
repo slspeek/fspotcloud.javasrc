@@ -43,6 +43,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.client.useraction.MainToolbar;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 import java.util.logging.Logger;
@@ -76,7 +77,8 @@ public class TagViewImpl extends Composite implements TagView,
     @Inject
     public TagViewImpl(TreeView treeView,
                        ImageRasterView imageRasterView,
-                       TimerInterface timer, ActionToolbar actionToolbar) {
+                       TimerInterface timer,
+                       @MainToolbar ActionToolbar actionToolbar) {
         this.timer = timer;
         this.treeView = treeView;
         this.actionToolbar = actionToolbar;
