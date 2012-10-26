@@ -30,6 +30,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.event.SlideshowStatusEvent;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -42,7 +43,7 @@ public class SlideshowDelayPresenterImpl implements SlideshowDelayView.Slideshow
     @Inject
     public SlideshowDelayPresenterImpl(SlideshowDelayView slideshowDelayView) {
         this.slideshowDelayView = slideshowDelayView;
-        log.info("Created");
+        log.log(Level.FINEST, "Created");
     }
 
     public void redraw(float delay, boolean running) {
@@ -58,7 +59,6 @@ public class SlideshowDelayPresenterImpl implements SlideshowDelayView.Slideshow
 
     @Override
     public void onEvent(SlideshowStatusEvent e) {
-        log.info("On event ....sdasdhag %%%%%%%%%%%%%%%%%%");
         redraw(e.getDelay(), e.isRunning());
     }
 

@@ -88,7 +88,7 @@ public class ImageServlet extends HttpServlet {
             }
 
             response.setContentType("image/jpeg");
-            setCacheExpireDate(response, 3600 * 24 * 365);
+            setCacheExpireDate(response, 3600 * 24 * 30);
 
             OutputStream out = response.getOutputStream();
             out.write(imageData);

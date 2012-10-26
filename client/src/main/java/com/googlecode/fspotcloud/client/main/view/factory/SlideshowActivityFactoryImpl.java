@@ -26,33 +26,34 @@ package com.googlecode.fspotcloud.client.main.view.factory;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.SlideshowViewImpl;
+import com.googlecode.fspotcloud.client.main.view.SingleImagePresenterImpl;
 import com.googlecode.fspotcloud.client.main.view.SlideshowActivity;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterPresenterFactory;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
-import com.googlecode.fspotcloud.client.main.view.api.SlideshowActivityFactory;
-import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
+import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
 
 public class SlideshowActivityFactoryImpl
         implements SlideshowActivityFactory {
-    private final ImageRasterPresenterFactory imageRasterPresenterFactory;
-    private final SlideshowViewImpl slideshowView;
+    private final SingleImagePresenterImpl singleImagePresenter;
+    private final SlideshowView slideshowView;
+    private SlideshowActivity singleton;
 
     @Inject
     public SlideshowActivityFactoryImpl(
-            ImageRasterPresenterFactory imageRasterPresenterFactory,
-            SlideshowViewImpl slideshowView) {
+            SingleImagePresenterImpl singleImagePresenter, SlideshowView slideshowView) {
         super();
-        this.imageRasterPresenterFactory = imageRasterPresenterFactory;
+        this.singleImagePresenter = singleImagePresenter;
         this.slideshowView = slideshowView;
     }
 
     @Override
-    public SlideshowView.SlideshowPresenter get(BasePlace place) {
-        ImageRasterView.ImageRasterPresenter raster = imageRasterPresenterFactory.get(place,
-                slideshowView.getImageRasterView());
-
-        return new SlideshowActivity(slideshowView, raster);
+    public SlideshowView.SlideshowPresenter get(SlideshowPlace place) {
+        if (singleton == null) {
+            singleImagePresenter.init();
+            singleton = new SlideshowActivity(slideshowView, singleImagePresenter);
+        }
+        singleton.setCurrentPlace(place);
+        return singleton;
     }
 }

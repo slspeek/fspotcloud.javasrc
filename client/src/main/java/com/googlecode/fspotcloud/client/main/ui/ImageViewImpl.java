@@ -50,6 +50,7 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
     private final Logger log = Logger.getLogger(ImageViewImpl.class.getName());
     private static final ImageViewImplUiBinder uiBinder = GWT.create(ImageViewImplUiBinder.class);
     private final TimerInterface timer;
+    private final String location;
     @UiField
     Label info;
     @UiField
@@ -65,10 +66,11 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
         this.timer = timer;
         this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
-        init(location);
+        this.location = location;
+        init();
     }
 
-    private void init(String location) {
+    private void init() {
         image.ensureDebugId("image-view-" + location);
     }
 
@@ -79,7 +81,7 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @UiHandler("image")
     public void imageClicked(ClickEvent event) {
-        log.info("image clicked");
+        log.info("image clicked " + location);
         this.presenter.imageClicked();
     }
 

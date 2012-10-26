@@ -62,12 +62,12 @@ public class SlideshowDelayViewImpl extends Composite implements SlideshowDelayV
 
     @Override
     public void addStyleRunning() {
-
+        asWidget().addStyleName(resources.style().running());
     }
 
     @Override
     public void removeStyleRunning() {
-        asWidget().addStyleName(resources.style().running());
+        asWidget().removeStyleName(resources.style().running());
     }
 
     interface SlideshowViewImplUiBinder extends UiBinder<Widget, SlideshowDelayViewImpl> {

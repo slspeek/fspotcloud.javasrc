@@ -34,7 +34,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
+import com.googlecode.fspotcloud.client.main.view.SingleImageView;
+import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.useraction.SlideshowToolbar;
@@ -46,22 +47,21 @@ import java.util.logging.Logger;
 public class SlideshowViewImpl extends Composite implements SlideshowView,
         MouseMoveHandler {
     private final Logger log = Logger.getLogger(SlideshowViewImpl.class.getName());
-    private static final SingleImageViewImplUiBinder uiBinder = GWT.create(SingleImageViewImplUiBinder.class);
+    private static final SlideshowViewImplUiBinder uiBinder = GWT.create(SlideshowViewImplUiBinder.class);
     private final ActionToolbar actionToolbar;
-    private final ImageRasterView imageRasterView;
+    private final ImageView imageView;
     private final TimerInterface timer;
-
     @UiField
     LayoutPanel layout;
     private SlideshowPresenter presenter;
 
     @Inject
-    public SlideshowViewImpl(ImageRasterView imageRasterView,
+    public SlideshowViewImpl(@SingleImageView ImageView imageView,
                              @SlideshowToolbar ActionToolbar actionToolbar,
                              TimerInterface timer) {
         this.actionToolbar = actionToolbar;
         this.timer = timer;
-        this.imageRasterView = imageRasterView;
+        this.imageView = imageView;
         initWidget(uiBinder.createAndBindUi(this));
         layout.addDomHandler(this, MouseMoveEvent.getType());
         log.info("created");
@@ -73,8 +73,8 @@ public class SlideshowViewImpl extends Composite implements SlideshowView,
     }
 
     @UiFactory
-    public ImageRasterViewImpl getImageRasterView() {
-        return (ImageRasterViewImpl) imageRasterView;
+    public ImageViewImpl getImageView() {
+        return (ImageViewImpl) imageView;
     }
 
     public void showControls(int duration) {
@@ -109,6 +109,6 @@ public class SlideshowViewImpl extends Composite implements SlideshowView,
         this.presenter = slideshowActivity;
     }
 
-    interface SingleImageViewImplUiBinder extends UiBinder<LayoutPanel, SlideshowViewImpl> {
+    interface SlideshowViewImplUiBinder extends UiBinder<LayoutPanel, SlideshowViewImpl> {
     }
 }

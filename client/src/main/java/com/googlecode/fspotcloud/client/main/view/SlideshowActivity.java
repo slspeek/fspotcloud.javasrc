@@ -31,36 +31,34 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
+import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
 import java.util.logging.Logger;
 
 
-public class SlideshowActivity extends AbstractActivity implements SlideshowView.SlideshowPresenter {
-    @SuppressWarnings("unused")
+public class SlideshowActivity extends AbstractActivity
+        implements SlideshowView.SlideshowPresenter {
+
     private final Logger log = Logger.getLogger(SlideshowActivity.class.getName());
     private final SlideshowView slideshowView;
-    private final ImageRasterView.ImageRasterPresenter imageRasterPresenter;
-    private EventBus eventBus;
+    private final SingleImagePresenterImpl singleImagePresenter;
+
+    private SlideshowPlace currentPlace;
 
     public SlideshowActivity(SlideshowView imageView,
-                             ImageRasterView.ImageRasterPresenter imageRasterPresenter) {
+                             SingleImagePresenterImpl singleImagePresenter) {
         this.slideshowView = imageView;
-        this.imageRasterPresenter = imageRasterPresenter;
+        this.singleImagePresenter = singleImagePresenter;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         slideshowView.setPresenter(this);
-        this.eventBus = eventBus;
         panel.setWidget(slideshowView);
+    }
 
-        Scheduler scheduler = Scheduler.get();
-        scheduler.scheduleDeferred(new ScheduledCommand() {
-            @Override
-            public void execute() {
-                imageRasterPresenter.init();
-            }
-        });
-        slideshowView.hideControlsLater(3000);
+    public void setCurrentPlace(SlideshowPlace currentPlace) {
+        this.currentPlace = currentPlace;
+        singleImagePresenter.setCurrentPlace(currentPlace);
     }
 }

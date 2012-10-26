@@ -29,7 +29,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 
 public interface SlideshowView extends IsWidget {
-    ImageRasterView getImageRasterView();
+    ImageView getImageView();
 
     void hideControlsLater(int visibleDuration);
 

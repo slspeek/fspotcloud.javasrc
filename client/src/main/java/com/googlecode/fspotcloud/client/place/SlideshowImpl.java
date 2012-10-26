@@ -119,6 +119,15 @@ public class SlideshowImpl implements Slideshow {
     }
 
     @Override
+    public void togglePause() {
+        if (isRunning) {
+            pause();
+        } else {
+            start();
+        }
+    }
+
+    @Override
     public float faster() {
         delay /= INCREASE_FACTOR;
         fireStatusChanged();

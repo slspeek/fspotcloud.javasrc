@@ -38,4 +38,6 @@ public interface Slideshow {
     boolean isRunning();
 
     void pause();
+
+    void togglePause();
 }

@@ -22,11 +22,18 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view.api;
+package com.googlecode.fspotcloud.client.main.view;
 
-import com.googlecode.fspotcloud.client.place.SlideshowPlace;
+import com.google.inject.BindingAnnotation;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-public interface SlideshowActivityFactory {
-    SlideshowView.SlideshowPresenter get(SlideshowPlace place);
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@BindingAnnotation
+@Target({FIELD, PARAMETER, METHOD})
+@Retention(RUNTIME)
+public @interface SingleImageView {
 }

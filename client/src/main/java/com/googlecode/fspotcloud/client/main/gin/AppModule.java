@@ -37,6 +37,7 @@ import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
 import com.googlecode.fspotcloud.client.main.view.api.*;
+import com.googlecode.fspotcloud.client.main.view.factory.SingleImageViewProvider;
 import com.googlecode.fspotcloud.client.main.view.factory.SlideshowActivityFactoryImpl;
 import com.googlecode.fspotcloud.client.main.view.factory.SlideshowDelayPresenterFactoryImpl;
 import com.googlecode.fspotcloud.client.main.view.factory.TagPresenterFactoryImpl;
@@ -51,6 +52,7 @@ public class AppModule extends AbstractGinModule {
     @Override
     protected void configure() {
 
+        bind(ImageView.class).annotatedWith(SingleImageView.class).toProvider(SingleImageViewProvider.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
         bind(MVPSetup.class).in(Singleton.class);

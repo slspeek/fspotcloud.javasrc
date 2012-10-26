@@ -102,8 +102,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
             activity = loginPresenter;
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SlideshowPlace) {
-            BasePlace basePlace = (BasePlace) place;
-            activity = slideshowActivityFactory.get(basePlace);
+            SlideshowPlace slideshowPlace = (SlideshowPlace) place;
+            activity = slideshowActivityFactory.get(slideshowPlace);
             modeController.setMode(Modes.SLIDESHOW);
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;
