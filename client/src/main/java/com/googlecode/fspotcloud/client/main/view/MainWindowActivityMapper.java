@@ -34,13 +34,14 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class MainWindowActivityMapper implements ActivityMapper {
     private final Logger log = Logger.getLogger(MainWindowActivityMapper.class.getName());
     private final TagPresenterFactory tagPresenterFactory;
-    private final SingleViewActivityFactory singleViewActivityFactory;
+    private final SlideshowActivityFactory slideshowActivityFactory;
     private final Navigator navigator;
     private final IModeController modeController;
     private final LoginView.LoginPresenter loginPresenter;
@@ -52,7 +53,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
 
     @Inject
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
-                                    SingleViewActivityFactory singleViewActivityFactory,
+                                    SlideshowActivityFactory slideshowActivityFactory,
                                     Navigator navigator, IModeController modeController,
                                     LoginView.LoginPresenter loginPresenter,
                                     SignUpView.SignUpPresenter signUpPresenter,
@@ -61,7 +62,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter) {
         super();
-        this.singleViewActivityFactory = singleViewActivityFactory;
+        this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagPresenterFactory = tagPresenterFactory;
         this.navigator = navigator;
         this.modeController = modeController;
@@ -75,7 +76,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
 
     @Override
     public Activity getActivity(Place place) {
-        log.info("getActivity : " + place);
+        log.log(Level.FINE, "getActivity : " + place);
         storeCurrentRasterDimension(place);
 
         Activity activity = null;
@@ -102,7 +103,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SlideshowPlace) {
             BasePlace basePlace = (BasePlace) place;
-            activity = singleViewActivityFactory.get(basePlace);
+            activity = slideshowActivityFactory.get(basePlace);
             modeController.setMode(Modes.SLIDESHOW);
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;

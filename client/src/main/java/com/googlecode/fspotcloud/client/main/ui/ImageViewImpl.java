@@ -24,7 +24,9 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -40,9 +42,10 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.reveregroup.gwt.imagepreloader.FitImage;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class ImageViewImpl extends ResizeComposite implements ImageView {
     private final Logger log = Logger.getLogger(ImageViewImpl.class.getName());
     private static final ImageViewImplUiBinder uiBinder = GWT.create(ImageViewImplUiBinder.class);
@@ -53,8 +56,8 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
     FitImage image;
     @UiField
     LayoutPanel layout;
-    private ImageView.ImagePresenter presenter;
-    private final Resources resources;
+    protected ImageView.ImagePresenter presenter;
+    protected final Resources resources;
 
     @Inject
     public ImageViewImpl(@Assisted
@@ -82,9 +85,13 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @UiHandler("image")
     public void infoHover(MouseMoveEvent event) {
+        showLabel();
+        hideLabelLater(3000);
+    }
+
+    private void showLabel() {
         layout.setWidgetBottomHeight(info, 0, Unit.CM, 16, Unit.PX);
         layout.animate(500);
-        hideLabelLater(3000);
     }
 
     public void hideLabelLater(final int duration) {
@@ -125,7 +132,7 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @Override
     public void adjustSize() {
-        log.info("Called adjust size");
+        log.log(Level.FINE,"Called adjust size");
         onResize();
     }
 

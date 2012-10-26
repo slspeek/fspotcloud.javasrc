@@ -37,8 +37,8 @@ import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
 import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.client.main.view.factory.SingleImageViewActivityFactoryImpl;
-import com.googlecode.fspotcloud.client.main.view.factory.SlideshowPresenterFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.SlideshowActivityFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.SlideshowDelayPresenterFactoryImpl;
 import com.googlecode.fspotcloud.client.main.view.factory.TagPresenterFactoryImpl;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -58,9 +58,9 @@ public class AppModule extends AbstractGinModule {
         bind(TagView.class).to(TagViewImpl.class).in(Singleton.class);
         bind(TreeView.class).to(TreeViewImpl.class).in(Singleton.class);
         bind(ImageRasterView.class).to(ImageRasterViewImpl.class);
-        bind(SingleViewActivityFactory.class)
-                .to(SingleImageViewActivityFactoryImpl.class);
-        bind(SingleImageView.class).to(SingleImageViewImpl.class);
+        bind(SlideshowActivityFactory.class)
+                .to(SlideshowActivityFactoryImpl.class);
+        bind(SlideshowView.class).to(SlideshowViewImpl.class);
         bind(LoginView.class).to(LoginViewImpl.class);
         bind(LoginView.LoginPresenter.class).to(LoginPresenterImpl.class);
         bind(SignUpView.class).to(SignUpViewImpl.class);
@@ -84,7 +84,7 @@ public class AppModule extends AbstractGinModule {
         bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
         bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
-        bind(SlideshowView.class).to(SlideshowViewImpl.class).in(Singleton.class);
+        bind(SlideshowDelayView.class).to(SlideshowDelayViewImpl.class).in(Singleton.class);
         bind(TimerInterface.class).to(TimerImpl.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
@@ -93,8 +93,8 @@ public class AppModule extends AbstractGinModule {
                 .in(Singleton.class);
         bind(SelectionChangeEvent.Handler.class).to(TreeSelectionHandler.class)
                 .in(Singleton.class);
-        bind(SlideshowView.SlideshowPresenter.class)
-                .toProvider(SlideshowPresenterFactoryImpl.class);
+        bind(SlideshowDelayView.SlideshowPresenter.class)
+                .toProvider(SlideshowDelayPresenterFactoryImpl.class);
         install(new GinFactoryModuleBuilder().implement(
                 ImageRasterView.ImageRasterPresenter.class,
                 ImageRasterPresenterImpl.class)

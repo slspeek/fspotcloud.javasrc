@@ -25,34 +25,34 @@
 package com.googlecode.fspotcloud.client.main.view.factory;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ui.SingleImageViewImpl;
-import com.googlecode.fspotcloud.client.main.view.SingleImageActivity;
+import com.googlecode.fspotcloud.client.main.ui.SlideshowViewImpl;
+import com.googlecode.fspotcloud.client.main.view.SlideshowActivity;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterPresenterFactory;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
-import com.googlecode.fspotcloud.client.main.view.api.SingleImageView.SingleImagePresenter;
-import com.googlecode.fspotcloud.client.main.view.api.SingleViewActivityFactory;
+import com.googlecode.fspotcloud.client.main.view.api.SlideshowActivityFactory;
+import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 
 
-public class SingleImageViewActivityFactoryImpl
-        implements SingleViewActivityFactory {
+public class SlideshowActivityFactoryImpl
+        implements SlideshowActivityFactory {
     private final ImageRasterPresenterFactory imageRasterPresenterFactory;
-    private final SingleImageViewImpl singleImageView;
+    private final SlideshowViewImpl slideshowView;
 
     @Inject
-    public SingleImageViewActivityFactoryImpl(
+    public SlideshowActivityFactoryImpl(
             ImageRasterPresenterFactory imageRasterPresenterFactory,
-            SingleImageViewImpl singleImageView) {
+            SlideshowViewImpl slideshowView) {
         super();
         this.imageRasterPresenterFactory = imageRasterPresenterFactory;
-        this.singleImageView = singleImageView;
+        this.slideshowView = slideshowView;
     }
 
     @Override
-    public SingleImagePresenter get(BasePlace place) {
+    public SlideshowView.SlideshowPresenter get(BasePlace place) {
         ImageRasterView.ImageRasterPresenter raster = imageRasterPresenterFactory.get(place,
-                singleImageView.getImageRasterView());
+                slideshowView.getImageRasterView());
 
-        return new SingleImageActivity(singleImageView, raster);
+        return new SlideshowActivity(slideshowView, raster);
     }
 }

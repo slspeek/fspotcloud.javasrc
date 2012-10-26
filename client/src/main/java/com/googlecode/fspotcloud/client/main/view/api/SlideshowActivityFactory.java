@@ -22,10 +22,11 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.shared;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-public interface SlideshowStatus {
-    float getDelay();
+import com.googlecode.fspotcloud.client.place.BasePlace;
 
-    boolean isRunning();
+
+public interface SlideshowActivityFactory {
+    SlideshowView.SlideshowPresenter get(BasePlace place);
 }

@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-public class ImageRasterPresenterImpl extends AbstractActivity implements ImageRasterView.ImageRasterPresenter {
+public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPresenter {
     private final Logger log = Logger.getLogger(ImageRasterPresenterImpl.class.getName());
     private final String tagId;
     private final String photoId;
@@ -61,7 +61,8 @@ public class ImageRasterPresenterImpl extends AbstractActivity implements ImageR
     @Inject
     public ImageRasterPresenterImpl(@Assisted
                                     BasePlace place, @Assisted
-    ImageRasterView imageRasterView, Navigator navigator,
+                                    ImageRasterView imageRasterView,
+                                    Navigator navigator,
                                     ImagePresenterFactory imagePresenterFactory) {
         tagId = place.getTagId();
         photoId = place.getPhotoId();
@@ -133,7 +134,6 @@ public class ImageRasterPresenterImpl extends AbstractActivity implements ImageR
             Scheduler.get().scheduleDeferred(new ScheduledCommand() {
                 @Override
                 public void execute() {
-                    // TODO Auto-generated method stub
                     presenter.init();
                 }
             });
@@ -146,11 +146,6 @@ public class ImageRasterPresenterImpl extends AbstractActivity implements ImageR
             view.setDescription("");
             view.asWidget().setVisible(false);
         }
-    }
-
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(imageRasterView);
     }
 
     @Override

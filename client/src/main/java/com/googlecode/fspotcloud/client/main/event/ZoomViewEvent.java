@@ -22,21 +22,20 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.shared;
+package com.googlecode.fspotcloud.client.main.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
 
-public class SlideshowStatusEvent extends GwtEvent<SlideshowStatusEvent.Handler>
-        implements SlideshowStatus {
-    public static final Type<SlideshowStatusEvent.Handler> TYPE = new Type<SlideshowStatusEvent.Handler>();
-    private final float delay;
-    private final boolean running;
+public class ZoomViewEvent extends GwtEvent<ZoomViewEvent.Handler> {
+    public static final Type<ZoomViewEvent.Handler> TYPE = new Type<ZoomViewEvent.Handler>();
+    private final String photoId;
+    private final String tagId;
 
-    public SlideshowStatusEvent(boolean running, float delay) {
-        this.running = running;
-        this.delay = delay;
+    public ZoomViewEvent(String tagId, String photoId) {
+        this.tagId = tagId;
+        this.photoId = photoId;
     }
 
     public Type<Handler> getAssociatedType() {
@@ -47,15 +46,15 @@ public class SlideshowStatusEvent extends GwtEvent<SlideshowStatusEvent.Handler>
         handler.onEvent(this);
     }
 
-    public float getDelay() {
-        return delay;
+    public String getPhotoId() {
+        return photoId;
     }
 
-    public boolean isRunning() {
-        return running;
+    public String getTagId() {
+        return tagId;
     }
 
     public static interface Handler extends EventHandler {
-        void onEvent(SlideshowStatusEvent e);
+        void onEvent(ZoomViewEvent e);
     }
 }

@@ -29,7 +29,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.googlecode.fspotcloud.client.main.shared.ZoomViewEvent;
+import com.googlecode.fspotcloud.client.main.event.ZoomViewEvent;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;

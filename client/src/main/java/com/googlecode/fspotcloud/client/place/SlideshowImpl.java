@@ -27,7 +27,7 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.shared.SlideshowStatusEvent;
+import com.googlecode.fspotcloud.client.main.event.SlideshowStatusEvent;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Direction;

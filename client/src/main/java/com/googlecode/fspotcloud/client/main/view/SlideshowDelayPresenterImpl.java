@@ -27,32 +27,32 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.shared.SlideshowStatusEvent;
-import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
+import com.googlecode.fspotcloud.client.main.event.SlideshowStatusEvent;
+import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 
 import java.util.logging.Logger;
 
 
-public class SlideshowPresenterImpl implements SlideshowView.SlideshowPresenter,
+public class SlideshowDelayPresenterImpl implements SlideshowDelayView.SlideshowPresenter,
         SlideshowStatusEvent.Handler {
-    private final Logger log = Logger.getLogger(SlideshowPresenterImpl.class.getName());
-    private final SlideshowView slideshowView;
+    private final Logger log = Logger.getLogger(SlideshowDelayPresenterImpl.class.getName());
+    private final SlideshowDelayView slideshowDelayView;
     private final NumberFormat formatter = NumberFormat.getDecimalFormat();
 
     @Inject
-    public SlideshowPresenterImpl(SlideshowView slideshowView) {
-        this.slideshowView = slideshowView;
+    public SlideshowDelayPresenterImpl(SlideshowDelayView slideshowDelayView) {
+        this.slideshowDelayView = slideshowDelayView;
         log.info("Created");
     }
 
     public void redraw(float delay, boolean running) {
-        slideshowView.setLabelText(formatter.format(delay) + " seconds. ");
+        slideshowDelayView.setLabelText(formatter.format(delay) + " seconds. ");
 
         if (running) {
-            slideshowView.addStyleRunning();
+            slideshowDelayView.addStyleRunning();
 
         } else {
-            slideshowView.removeStyleRunning();
+            slideshowDelayView.removeStyleRunning();
         }
     }
 
@@ -64,6 +64,6 @@ public class SlideshowPresenterImpl implements SlideshowView.SlideshowPresenter,
 
     @Override
     public IsWidget getView() {
-        return slideshowView;
+        return slideshowDelayView;
     }
 }

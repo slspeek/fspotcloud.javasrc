@@ -22,12 +22,10 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.client.main.event;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+public interface SlideshowStatus {
+    float getDelay();
 
-
-@WithTokenizers({ManageUsersPlace.Tokenizer.class, EditUserGroupPlace.Tokenizer.class, MyUserGroupsPlace.Tokenizer.class,  SlideshowPlace.Tokenizer.class, BasePlace.Tokenizer.class,LoginPlace.Tokenizer.class, SignUpPlace.Tokenizer.class, UserAccountPlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+    boolean isRunning();
 }

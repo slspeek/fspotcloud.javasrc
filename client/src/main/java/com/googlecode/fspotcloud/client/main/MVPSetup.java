@@ -36,7 +36,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
-import com.googlecode.fspotcloud.client.main.shared.ZoomViewEventHandlerImpl;
+import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
 import com.googlecode.fspotcloud.client.main.ui.HasOneWidgetAdapter;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.ui.UserPagesResources;

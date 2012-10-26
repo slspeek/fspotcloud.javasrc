@@ -57,9 +57,6 @@ public class SlideshowPlace extends BasePlace {
         return 0;
     }
 
-    public class Tokeninzer {
-    }
-
     public static class Tokenizer implements PlaceTokenizer<SlideshowPlace> {
         @Override
         public SlideshowPlace getPlace(String token) {

@@ -22,19 +22,32 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view.api;
+package com.googlecode.fspotcloud.client.main.event;
 
-import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.api.Initializable;
+import com.googlecode.fspotcloud.client.place.api.Navigator;
 
 
-public interface SingleImageView extends IsWidget {
-    ImageRasterView getImageRasterView();
+public class ZoomViewEventHandlerImpl implements ZoomViewEvent.Handler,
+        Initializable {
+    private final Navigator navigator;
+    private final EventBus eventBus;
 
-    void hideControlsLater(int visibleDuration);
+    @Inject
+    public ZoomViewEventHandlerImpl(Navigator navigator, EventBus eventBus) {
+        super();
+        this.navigator = navigator;
+        this.eventBus = eventBus;
+    }
 
-    void setPresenter(SingleImagePresenter singleImageActivity);
+    public void init() {
+        eventBus.addHandler(ZoomViewEvent.TYPE, this);
+    }
 
-    interface SingleImagePresenter extends Activity {
+    @Override
+    public void onEvent(ZoomViewEvent e) {
+        navigator.toggleZoomViewAsync(e.getTagId(), e.getPhotoId());
     }
 }

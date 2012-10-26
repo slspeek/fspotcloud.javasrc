@@ -38,7 +38,7 @@ public interface ImageRasterView extends IsWidget {
 
     void setPagingText(String text);
 
-    interface ImageRasterPresenter extends Initializable, Activity {
+    interface ImageRasterPresenter extends Initializable {
         public void onMouseWheelNorth();
 
         public void onMouseWheelSouth();

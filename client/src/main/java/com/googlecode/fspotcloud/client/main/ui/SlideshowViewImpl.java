@@ -25,51 +25,90 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
+import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.client.useraction.SlideshowToolbar;
+import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 import java.util.logging.Logger;
 
 
-public class SlideshowViewImpl extends Composite implements SlideshowView {
-    @SuppressWarnings("unused")
+public class SlideshowViewImpl extends Composite implements SlideshowView,
+        MouseMoveHandler {
     private final Logger log = Logger.getLogger(SlideshowViewImpl.class.getName());
-    private static final SlideshowViewImplUiBinder uiBinder = GWT.create(SlideshowViewImplUiBinder.class);
-    private final Resources resources;
+    private static final SingleImageViewImplUiBinder uiBinder = GWT.create(SingleImageViewImplUiBinder.class);
+    private final ActionToolbar actionToolbar;
+    private final ImageRasterView imageRasterView;
+    private final TimerInterface timer;
 
     @UiField
-    HorizontalPanel mainPanel;
-    @UiField
-    Label intervalLabel;
+    LayoutPanel layout;
+    private SlideshowPresenter presenter;
 
     @Inject
-    public SlideshowViewImpl(Resources resources) {
-        this.resources = resources;
+    public SlideshowViewImpl(ImageRasterView imageRasterView,
+                             @SlideshowToolbar ActionToolbar actionToolbar,
+                             TimerInterface timer) {
+        this.actionToolbar = actionToolbar;
+        this.timer = timer;
+        this.imageRasterView = imageRasterView;
         initWidget(uiBinder.createAndBindUi(this));
+        layout.addDomHandler(this, MouseMoveEvent.getType());
         log.info("created");
     }
 
-    @Override
-    public void setLabelText(String text) {
-        intervalLabel.setText(text);
+    @UiFactory
+    public ActionToolbar getButtonPanelView() {
+        return  actionToolbar;
+    }
+
+    @UiFactory
+    public ImageRasterViewImpl getImageRasterView() {
+        return (ImageRasterViewImpl) imageRasterView;
+    }
+
+    public void showControls(int duration) {
+        layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 50, Unit.PX);
+        layout.animate(duration);
+    }
+
+    public void hideControls(int duration) {
+        layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 0, Unit.PX);
+        layout.animate(duration);
     }
 
     @Override
-    public void addStyleRunning() {
-
+    public void hideControlsLater(int visibleDuration) {
+        timer.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                hideControls(1000);
+            }
+        });
+        timer.schedule(visibleDuration);
     }
 
     @Override
-    public void removeStyleRunning() {
-        asWidget().addStyleName(resources.style().running());
+    public void onMouseMove(MouseMoveEvent event) {
+        showControls(600);
+        hideControlsLater(6000);
     }
 
-    interface SlideshowViewImplUiBinder extends UiBinder<Widget, SlideshowViewImpl> {
+    @Override
+    public void setPresenter(SlideshowPresenter slideshowActivity) {
+        this.presenter = slideshowActivity;
+    }
+
+    interface SingleImageViewImplUiBinder extends UiBinder<LayoutPanel, SlideshowViewImpl> {
     }
 }

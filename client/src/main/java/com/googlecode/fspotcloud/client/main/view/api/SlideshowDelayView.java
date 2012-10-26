@@ -24,9 +24,17 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.google.gwt.user.client.ui.IsWidget;
 
 
-public interface SingleViewActivityFactory {
-    SingleImageView.SingleImagePresenter get(BasePlace place);
+public interface SlideshowDelayView extends IsWidget {
+    void setLabelText(String text);
+
+    void addStyleRunning();
+
+    void removeStyleRunning();
+
+    interface SlideshowPresenter {
+        IsWidget getView();
+    }
 }

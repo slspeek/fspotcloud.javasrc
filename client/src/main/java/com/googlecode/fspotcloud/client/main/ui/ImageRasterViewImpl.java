@@ -24,7 +24,9 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class ImageRasterViewImpl extends ResizeComposite
         implements ImageRasterView,
         MouseWheelHandler {
@@ -97,11 +99,7 @@ public class ImageRasterViewImpl extends ResizeComposite
                 }
             }
 
-            layoutPanel.add(pagingLabel);
-            layoutPanel.setWidgetBottomHeight(pagingLabel, 0, Unit.PT, 16,
-                    Unit.PT);
-            layoutPanel.setWidgetRightWidth(pagingLabel, 0, Unit.PT, 10,
-                    Unit.PCT);
+            addPagingLabel();
 
             storedRowCount = rowCount;
             storedColumnCount = columnCount;
@@ -109,6 +107,14 @@ public class ImageRasterViewImpl extends ResizeComposite
 
             return result;
         }
+    }
+
+    private void addPagingLabel() {
+        layoutPanel.add(pagingLabel);
+        layoutPanel.setWidgetBottomHeight(pagingLabel, 0, Unit.PT, 16,
+                Unit.PT);
+        layoutPanel.setWidgetRightWidth(pagingLabel, 0, Unit.PT, 10,
+                Unit.PCT);
     }
 
     @Override

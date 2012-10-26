@@ -30,29 +30,29 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
-import com.googlecode.fspotcloud.client.main.view.api.SingleImageView;
+import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 
 import java.util.logging.Logger;
 
 
-public class SingleImageActivity extends AbstractActivity implements SingleImageView.SingleImagePresenter {
+public class SlideshowActivity extends AbstractActivity implements SlideshowView.SlideshowPresenter {
     @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(SingleImageActivity.class.getName());
-    private final SingleImageView singleImageView;
+    private final Logger log = Logger.getLogger(SlideshowActivity.class.getName());
+    private final SlideshowView slideshowView;
     private final ImageRasterView.ImageRasterPresenter imageRasterPresenter;
     private EventBus eventBus;
 
-    public SingleImageActivity(SingleImageView imageView,
-                               ImageRasterView.ImageRasterPresenter imageRasterPresenter) {
-        this.singleImageView = imageView;
+    public SlideshowActivity(SlideshowView imageView,
+                             ImageRasterView.ImageRasterPresenter imageRasterPresenter) {
+        this.slideshowView = imageView;
         this.imageRasterPresenter = imageRasterPresenter;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        singleImageView.setPresenter(this);
+        slideshowView.setPresenter(this);
         this.eventBus = eventBus;
-        panel.setWidget(singleImageView);
+        panel.setWidget(slideshowView);
 
         Scheduler scheduler = Scheduler.get();
         scheduler.scheduleDeferred(new ScheduledCommand() {
@@ -61,6 +61,6 @@ public class SingleImageActivity extends AbstractActivity implements SingleImage
                 imageRasterPresenter.init();
             }
         });
-        singleImageView.hideControlsLater(3000);
+        slideshowView.hideControlsLater(3000);
     }
 }
