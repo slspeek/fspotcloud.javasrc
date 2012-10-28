@@ -1,0 +1,92 @@
+description = 'Keyboard Action Framework'
+
+apply plugin: 'gwt2'
+apply plugin: 'jetty'
+
+if ("${analysis}" == "true") {
+    [findbugsMain, findbugsTest]*.enabled = false
+}
+
+configurations {
+    sources
+    javascript
+}
+
+dependencies {
+    compile "com.google.gwt.inject:gin:1.5.0"
+    compile ext.libs.inject
+    compile ext.libs.guice
+    compile ext.libs.guice_assisted_inject
+    compile ext.libs.guava
+    compile ext.libs.guava_gwt
+    compile "com.google.gwt:gwt-user:${gwt_version}"
+    compile "com.google.gwt:gwt-dev:${gwt_version}"
+
+    testCompile project(':test-util')
+    compile "junit:junit:3.8.1"
+    testCompile ext.libs.junit
+    testCompile ext.libs.jukito
+    testCompile ext.libs.mockito
+    testCompile ext.libs.gwt_test_utils
+}
+
+task convertIcons(type: Exec, dependsOn: classes) {
+    inputs.dir "src/main/resources/images/originals"
+    outputs.dir "build/classes/main/images/"
+    commandLine "./convert_gradle.sh", "${icon_size}"
+}
+
+
+task javascriptJar(type: Jar, dependsOn: compileGwt) {
+    classifier = 'javascript'
+    excludes = ['**/WEB-INF/web.xml']
+    from "${buildDir}/gwt/out",
+            "${rootDir}/keyboard-action/src/main/webapp",
+            "${rootDir}/keyboard-action/src/main/resources"
+}
+
+test {
+    exclude '**/*GwtTest*'
+    jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
+}
+compileGwt.dependsOn convertIcons
+gwtDevMode.dependsOn convertIcons
+
+gwtModules = ['com.googlecode.fspotcloud.KeyboardActionTestModule']
+
+compileGwt {
+    style = 'OBF' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+}
+//compileGwt.enabled = false;
+
+gwtDevMode {
+    startupUrls = ["http://localhost:8080/keyboard-action/KA.html"
+    ]
+}
+
+task unpackJavascript(dependsOn: javascriptJar) << {
+    mkdir "$buildDir/exploded"
+    def myTests = file("build/libs/keyboard-action-${version}-javascript.jar")
+    ant.unjar(dest: "$buildDir/exploded/", src: myTests)
+}
+
+jettyRun.dependsOn unpackJavascript
+
+jettyRun {
+    webAppSourceDirectory = file "build/exploded"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    sources sourcesJar
+    javascript javascriptJar
+}
+
+task cleanUp(type: Delete) {
+    delete 'src/main/webapp/testharness', 'src/main/webapp/WEB-INF', 'gwt-unitCache', 'war', '../war', 'src/main/gwt-unitCache/'
+}
+clean.dependsOn cleanUp

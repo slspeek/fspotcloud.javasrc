@@ -1,0 +1,41 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui"
+             xmlns:admin="urn:import:com.googlecode.fspotcloud.client.admin.ui">
+    <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
+    <g:DockLayoutPanel unit='PX'>
+        <g:north size="30">
+            <g:Label styleName="{res.style.titleLabel}" ui:field="titleLabel" text="F-Spot Cloud Dashboard">
+            </g:Label>
+        </g:north>
+        <g:center>
+            <g:SplitLayoutPanel styleName="{res.style.main}" ui:field="horizontalSplitPanel">
+                <g:west size="250">
+                    <main:TreeViewImpl styleName="{res.style.tree}" ui:field="treeView"></main:TreeViewImpl>
+                </g:west>
+                <g:center>
+                    <g:HorizontalPanel>
+                        <g:SimplePanel width="400px" height="100%" ui:field="tagDetailsViewContainer"></g:SimplePanel>
+                        <admin:GlobalActionsViewImpl ui:field="globalActionsView"></admin:GlobalActionsViewImpl>
+                    </g:HorizontalPanel>
+                </g:center>
+            </g:SplitLayoutPanel>
+        </g:center>
+        <g:south size='100'>
+            <g:LayoutPanel styleName="{res.style.footer}">
+                <g:layer left="33%" width="100px" top="0%" height="30px">
+                    <g:PushButton ui:field="toPhotos">To photos</g:PushButton>
+                </g:layer>
+                <g:layer top="0%" width="100px" left="60%" height="50px">
+                    <g:PushButton ui:field="manageGroups">Manage usergroups</g:PushButton>
+                </g:layer>
+                <g:layer bottom="0%" height="20">
+                    <g:HTML>
+                        <center>&copy; 2010-2012 Steven L. Speek</center>
+                    </g:HTML>
+                </g:layer>
+            </g:LayoutPanel>
+        </g:south>
+    </g:DockLayoutPanel>
+</ui:UiBinder> 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='testharness'>
+    <!-- Inherit the core Web Toolkit stuff. -->
+    <inherits name="com.google.common.collect.Collect"/>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.resources.Resources"/>
+
+    <inherits name="com.google.gwt.user.Debug"/>
+    <inherits name="com.google.gwt.logging.Logging"/>
+    <inherits name='com.google.gwt.user.theme.chrome.Chrome'/>
+    <!-- inherit I18N stuff -->
+    <inherits name="com.google.gwt.i18n.I18N"/>
+    <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->
+    <!-- GWT dispatch -->
+
+    <inherits name="com.google.gwt.inject.Inject"/>
+    <inherits name="com.google.gwt.junit.JUnit"/>
+
+    <source path="keyboardaction"/>
+</module>

@@ -1,0 +1,20 @@
+description = 'Production GAE war'
+
+apply plugin: 'war'
+
+dependencies {
+    compile project(':server-module-gae')
+}
+
+task unpackJavascript(dependsOn: ':client:javascriptJar') << {
+    def myTests = file("../client/build/libs/client-${version}-javascript.jar")
+    ant.unjar(dest: "$buildDir/javascript/", src: myTests)
+}
+
+war {
+    webXml = file('src/main/resources/WEB-INF/web.xml')
+    from "build/javascript"
+    from "src/main/resources"
+}
+
+war.dependsOn unpackJavascript

@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
+    <ui:style>
+        table {
+        text-align: center;
+        }
+    </ui:style>
+    <g:LayoutPanel ui:field="layoutPanel"></g:LayoutPanel>
+</ui:UiBinder> 

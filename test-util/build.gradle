@@ -1,0 +1,7 @@
+description = 'test-util'
+
+
+dependencies {
+    compile ext.libs.junit
+    compile ext.libs.commons_lang
+}

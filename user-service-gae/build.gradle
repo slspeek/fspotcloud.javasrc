@@ -1,0 +1,13 @@
+description = 'User service App Engine'
+
+dependencies {
+    compile project(':user-service-api')
+    compile project(':model-api')
+    compile "com.google.appengine:appengine-api-1.0-sdk:${gae_version}"
+    compile ext.libs.inject
+    compile ext.libs.guice
+    compile ext.libs.servlet_spec
+
+    testCompile ext.libs.jukito
+    testCompile ext.libs.junit
+}

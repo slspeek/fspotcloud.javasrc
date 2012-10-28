@@ -1,0 +1,98 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:style>
+        .header-label {
+        width: 100%;
+        font-size: 125%;
+        text-align: center;
+        background: #66BDFF;
+        }
+
+        .property-label {
+        background: #66BDFF;
+        }
+
+        .property-value {
+        background: #70C7FF;
+        }
+        .label-details {
+        border: 1px solid blue;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <table style="{style.label-details}">
+            <theader>
+                <tr>
+                    <td colspan="2">
+                        <g:Label styleName="{style.header-label}" ui:field="headerLabel">Instance information</g:Label>
+                    </td>
+                </tr>
+            </theader>
+            <tbody>
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Date we last saw the peer</g:Label>
+                    </td>
+                    <td>
+                        <g:Label styleName="{style.property-value}" ui:field="lastSeenPeerValueLabel"></g:Label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Synchronize with peer</g:Label>
+                    </td>
+                    <td>
+                        <g:Button ui:field="updateButton">Synchronize</g:Button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Number of photos on the peer</g:Label>
+                    </td>
+                    <td>
+                        <g:Label ui:field="peerPhotoCountValueLabel"></g:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Tag count on peer</g:Label>
+                    </td>
+                    <td>
+                        <g:Label styleName="{style.property-value}" ui:field="tagCountOnPeerValueLabel"></g:Label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Number of commands pending</g:Label>
+                    </td>
+                    <td>
+                        <g:Label ui:field="pendingCommandCountValueLabel"></g:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Delete all pending commands</g:Label>
+                    </td>
+                    <td>
+                        <g:Button ui:field="deleteAllCommandsButton">Clear queue</g:Button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <g:Label styleName="{style.property-label}">Remove all imported data</g:Label>
+                    </td>
+                    <td>
+                        <g:Button ui:field="deleteAllTagsButton">Remove all</g:Button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </g:HTMLPanel>
+</ui:UiBinder> 

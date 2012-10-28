@@ -1,0 +1,70 @@
+import org.apache.tools.ant.filters.ExpandProperties
+
+description = 'Integration testing for prod-j2ee-war'
+
+dependencies {
+    testCompile project(':server-module-j2ee')
+    testCompile project(path: ':e2e-test', configuration: 'testCompile')
+    testCompile ext.libs.guava_testlib
+    testCompile ext.libs.guiceberry
+    testCompile ext.libs.junit
+    testCompile ext.libs.jetty
+}
+
+task unpackTest(dependsOn: ':e2e-test:packageTests') << {
+//    myTests = file("../e2e-test/build/libs/e2e-test-${version}-tests.jar")
+//    ant.unjar(dest: "$buildDir/classes/test", src: myTests)
+}
+
+task unpackWar(dependsOn: ':prod-j2ee-war:assemble') << {
+    mkdir "$buildDir/exploded-war-raw"
+    mkdir "$buildDir/exploded"
+    def myTests = file("../prod-j2ee-war/build/libs/prod-j2ee-war-${version}.war")
+    ant.unjar(dest: "$buildDir/exploded-war-raw/", src: myTests)
+}
+
+task copyWar(dependsOn: unpackWar, type: Copy) {
+    ant.properties['bot.secret.userinput'] = "${bot_secret}".toString()
+    ant.properties['admin.email'] = "rms@example.com"
+    from('build/exploded-war-raw') {
+        include "**/properties.properties"
+        filter(ExpandProperties, project: ant.project)
+    }
+    from('build/exploded-war-raw') {
+        exclude "**/properties.properties"
+        //exclude "WEB-INF/lib/*"
+    }
+    from('src/test/resources') {
+        include 'WEB-INF/web.xml'
+    }
+    into 'build/exploded'
+}
+
+task peerStop(type: Exec) {
+    commandLine "telnet", "localhost", "4444"
+    ignoreExitValue = true
+}
+
+test {
+
+    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
+        'com.googlecode.fspotcloud.test.IntegrationGuiceBerryEnv'
+    systemProperties['bot.secret'] = bot_secret
+    systemProperties['endpoint'] = "localhost:8000"
+    systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
+    testLogging.showStandardStreams = true
+    include "com/googlecode/fspotcloud/test/DashboardITest.class"
+    ignoreFailures = true
+}
+
+test.dependsOn unpackTest, copyWar, ":peer:assemble"
+
+test << {
+    println "Stopping peer"
+    peerStop.execute()
+}
+
+task deleteDB(type: Delete) {
+    delete '../MODELJPA', 'runtime', 'derby.log', "MODELJPA"
+}
+clean.dependsOn deleteDB, peerStop

@@ -1,0 +1,15 @@
+description = 'peer-rpc'
+
+if ("${analysis}" == "true") {
+    checkstyleMain.ignoreFailures = false
+}
+
+dependencies {
+    compile project(':rpc')
+    compile ext.libs.gwt_servlet
+    compile ext.libs.guava
+    compile ext.libs.openpojo
+
+    testCompile ext.libs.junit
+    testCompile project(":test-util")
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+
+    <programGroup defaultName="F-Spot Cloud Peer"
+                  location="applications" iconFile="$INSTALL_PATH/icons/FSpot.png"/>
+
+    <shortcut
+            name="Peer bot"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="yes"
+            startup="no"
+            target="$INSTALL_PATH/peer.sh"
+            commandLine=""
+            workingDirectory="$INSTALL_PATH"
+            description="The peer connector to the cloud"
+            iconFile="$INSTALL_PATH/icons/PeerBot.png"
+            iconIndex="0"
+            type="Application"
+            encoding="UTF-8"
+            terminal="true"
+            KdeSubstUID="false"
+            initialState="normal">
+    </shortcut>
+
+    <shortcut
+            name="F-Spot Cloud  Documentation"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="yes"
+            startup="no"
+            target="x-www-browser"
+            commandLine="http://code.google.com/p/fspotcloud"
+            workingDirectory=""
+            initialState="normal"
+            iconFile="$INSTALL_PATH/icons/Docs.png"
+            iconIndex="0"
+            type="Application"
+            encoding="UTF-8"
+            description="The project site"
+            terminal="false">
+    </shortcut>
+
+
+    <shortcut
+            name="Uninstaller"
+            programGroup="yes"
+            desktop="yes"
+            applications="no"
+            startMenu="no"
+            startup="no"
+            target="java"
+            commandLine="-jar
+     &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
+            initialState="noShow"
+            iconFile="trashcan_full"
+            iconIndex="0"
+            workingDirectory=""
+            type="Application"
+            encoding="UTF-8"
+            description="F-Spot Cloud  uninstaller">
+    </shortcut>
+
+</shortcuts>

@@ -1,0 +1,36 @@
+description = 'User service api'
+
+configurations {
+    provided
+    testFixtures {
+        extendsFrom testRuntime
+    }
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+    test {
+        compileClasspath += configurations.provided
+        runtimeClasspath += compileClasspath
+    }
+}
+
+dependencies {
+    compile project(':model-api')
+    compile ext.libs.inject
+    compile ext.libs.guice_servlet
+    provided ext.libs.servlet_spec
+    compile ext.libs.guava
+    testCompile project(":model-jpa-j2ee")
+    testCompile ext.libs.junit
+    testCompile ext.libs.jukito
+}
+
+task testJar(type: Jar, dependsOn: compileTestJava) {
+    from sourceSets.test.output.classesDir
+    classifier = 'test'
+}
+
+artifacts {
+    testFixtures testJar
+}

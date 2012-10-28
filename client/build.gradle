@@ -1,0 +1,80 @@
+description = 'GWT client'
+
+apply plugin: 'gwt2'
+if ("${analysis}" == "true") {
+    [findbugsMain, findbugsTest]*.enabled = false
+}
+
+pmdMain {
+    ignoreFailures = true
+}
+configurations {
+    javascript
+}
+
+dependencies {
+    compile project(':rpc')
+    compile project(path: ':rpc', configuration: 'sources')
+    compile project(path: ':keyboard-action', configuration: 'sources')
+    compile project(':keyboard-action')
+    compile "com.google.gwt.inject:gin:1.5.0"
+    compile ext.libs.inject
+    compile ext.libs.guice
+    compile ext.libs.guice_assisted_inject
+    compile ext.libs.guava
+    compile ext.libs.guava_gwt
+    compile "com.google.gwt:gwt-user:${gwt_version}"
+    compile "com.reveregroup.gwt:gwt-image-loader:1.1.4"
+    compile "com.google.gwt:gwt-dev:${gwt_version}"
+
+    testCompile "junit:junit:3.8.1"
+    testCompile ext.libs.junit
+    testCompile ext.libs.jukito
+    testCompile ext.libs.mockito
+    testCompile "org.jmock:jmock:2.5.1"
+    testCompile ext.libs.gwt_test_utils
+}
+
+task convertIcons(type: Exec, dependsOn: classes) {
+    inputs.dir "src/main/resources/images/originals"
+    outputs.dir "build/classes/main/images/"
+    commandLine "./convert_gradle.sh", "${icon_size}"
+}
+
+task writeVersion(type: Exec, dependsOn: classes) {
+    outputs.file "build/classes/main/version.txt"
+    commandLine "./write_version_gradle.sh", "${version}"
+}
+
+task javascriptJar(type: Jar, dependsOn: compileGwt) {
+    classifier = 'javascript'
+    excludes = ['**/WEB-INF/web.xml']
+    from "${buildDir}/gwt/out",
+            "${rootDir}/client/src/main/webapp",
+            "${rootDir}/client/src/main/resources"
+}
+
+test {
+    exclude '**/*GwtTest*'
+    jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
+}
+compileGwt.dependsOn convertIcons, writeVersion
+gwtDevMode.dependsOn convertIcons, writeVersion
+
+gwtModules = ['com.googlecode.fspotcloud.FSpotCloud', 'com.googlecode.fspotcloud.dashboard']
+
+compileGwt {
+    style = 'PRETTY' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+}
+
+gwtDevMode {
+    startupUrls = ["http://localhost:8080/FSpotCloud.html",
+            "http://localhost:8050/j2ee-e2e/FSpotCloud.html",
+            "http://localhost:8080/Dashboard.html",
+            "http://localhost:8050/j2ee-e2e/Dashboard.html"
+    ]
+}
+
+artifacts {
+    javascript javascriptJar
+}

@@ -1,0 +1,30 @@
+description = 'Selenium tests'
+
+configurations {
+    testCompile
+}
+
+dependencies {
+    testCompile project(':test-util')
+    testCompile project(':client')
+    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
+    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
+    testCompile ext.libs.guava_testlib
+    testCompile ext.libs.junit
+    testCompile ext.libs.guiceberry
+    testCompile ext.libs.inject
+    testCompile ext.libs.guice
+}
+
+test {
+    exclude "*"
+}
+
+task packageTests(type: Jar, dependsOn: compileTestJava) {
+    from sourceSets.test.output.classesDir
+    classifier = 'tests'
+}
+
+artifacts {
+    testCompile packageTests
+}

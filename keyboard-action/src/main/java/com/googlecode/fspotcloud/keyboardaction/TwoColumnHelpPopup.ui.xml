@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:with type="com.googlecode.fspotcloud.keyboardaction.KeyboardActionResources" field="res"></ui:with>
+    <g:HTMLPanel>
+        <g:Label ui:field="titleLabel" styleName="{res.style.helpTitle}"></g:Label>
+        <g:Anchor ui:field="closeAnchor" styleName="{res.style.helpClose}">Close</g:Anchor>
+        <div class="{res.style.helpBigBody}">
+            <span ui:field="helpBodyLeft" class="{res.style.helpLeftBody}"></span>
+            <span ui:field="helpBodyRight" class="{res.style.helpRightBody}"></span>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

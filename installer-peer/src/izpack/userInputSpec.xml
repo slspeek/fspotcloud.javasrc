@@ -1,0 +1,19 @@
+<userInput>
+    <panel order="0">
+        <field type="title" txt="Peer Configuration" bold="true" size="1"/>
+        <field type="staticText" align="left" txt="F-Spot Cloud server address"/>
+        <field type="text" align="left" variable="endpoint.userinput">
+            <spec txt="" size="25" set="localhost:8080"/>
+        </field>
+        <field type="staticText" align="left"
+               txt="Secret for the peer to server communication"/>
+        <field type="text" align="left" variable="bot.secret.userinput">
+            <spec txt="" size="25" set="SECRET"/>
+        </field>
+        <field type="staticText" align="left" txt="F-Spot database to use:"/>
+        <field type="file" align="left" variable="photos.db.userinput">
+            <spec txt="" size="25" set="$USER_HOME/.config/f-spot/photos.db"/>
+        </field>
+        <field type="divider" align="bottom"/>
+    </panel>
+</userInput>

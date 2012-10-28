@@ -1,0 +1,55 @@
+description = 'Installer for J2EE setup'
+buildscript {
+    repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = 'GitHub'
+            addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+        }
+    }
+
+    dependencies {
+        classpath 'bmuschko:gradle-izpack-plugin:0.2.1'
+    }
+}
+
+configurations {
+    apache_tomcat
+}
+apply plugin: 'izpack'
+
+dependencies {
+    izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.1'
+    apache_tomcat 'org.apache.tomcat:apache-tomcat:6.0.35@zip'
+}
+
+task initDirs << {
+    mkdir "${buildDir}/assemble/izpack/dependency"
+}
+
+task copyFiles(type: Copy, dependsOn: initDirs) {
+    from "src/izpack"
+    into "${buildDir}/assemble/izpack"
+}
+
+task unpackWar(dependsOn: [':prod-j2ee-war:war', 'unpackTomcatDistribution']) << {
+    def myWar = file("../prod-j2ee-war/build/libs/prod-j2ee-war-${version}.war")
+    ant.unjar(dest: "${buildDir}/assemble/izpack/war", src: myWar)
+}
+
+task unpackTomcatDistribution << {
+    def myTests = configurations.apache_tomcat.files.iterator().next()
+    ant.unzip(dest: "${buildDir}/assemble/izpack", src: myTests)
+}
+
+izPackCreateInstaller.dependsOn copyFiles, unpackWar
+
+izpack {
+    baseDir = file("$buildDir/assemble/izpack")
+    installFile = file('src/izpack/install.xml')
+    outputFile = file("$buildDir/distributions/fspotcloud-j2ee-server-installer-${version}.jar")
+    compression = 'deflate'
+    compressionLevel = 9
+    appProperties = ['project.version': version, 'tomcat.version': tomcat_version]
+}
+
+build.dependsOn izPackCreateInstaller

@@ -1,0 +1,93 @@
+@def mainBackground #98EFFF;
+
+.titleLabel {
+    text-align: center;
+    font-size:200%;
+    background: #5CB3FF;
+}
+
+.tree {
+    background: #7AD1FF;
+ }
+
+  .main {
+     background: #98EFFF;
+  }
+
+  .footer {
+     background: #5CB3FF;
+
+ }
+
+.importedTag {
+	color: green;
+	font-size: 130%;
+	background: aqua;
+}
+
+.button {
+	padding: 3px;
+	margin: auto;
+}
+
+.headerLabel {
+    width: 100%;
+    font-size: 125%;
+    text-align: center;
+    background: #66BDFF;
+}
+
+.propertyLabel {
+    background: #66BDFF;
+}
+
+.propertyValue {
+    background: #70C7FF;
+}
+
+.labelDetails {
+    border: 1px solid blue;
+}
+
+.editUsergroup {
+    background: mainBackground;
+    font-size: 130%;
+}
+
+.editUsergroupHeader {
+    font-size: 20pt;
+}
+
+.usergroupName {
+    font-size: 20pt;
+    font-style: bold;
+}
+
+.manageUsers {
+   background: mainBackground;
+    font-size: 130%;
+}
+
+.myUsergroups {
+    background: mainBackground;
+    font-size: 130%;
+    vertical-align: top;
+}
+
+.myUsergroupsTable {
+    background: mainBackground;
+    font-size: 130%;
+    vertical-align: top;
+}
+
+.tableLayout {
+    /** background: black;*/
+}
+
+.tableLayoutLayer {
+    /* background: pink; */
+}
+
+.tableHeader {
+    font-size: 15pt;
+}

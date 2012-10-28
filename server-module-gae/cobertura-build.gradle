@@ -1,0 +1,87 @@
+description = 'F-SpotCloud Server GAE Configuration'
+
+
+
+configurations {
+    cobTuRA
+}
+
+dependencies {
+    compile project(path: ':server', configuration: 'instrumented')
+    compile project(':model-jpa-gae')
+    compile project(':user-service-gae')
+    compile ext.libs.inject
+    compile ext.libs.guice
+    compile ext.libs.guice_assisted_inject
+    compile("com.googlecode.taskqueue-dispatch:dispatch:${taskqueue_dispatch_version}") {
+        exclude(module: 'gwt-user')
+    }
+    compile("com.googlecode.bot-dispatch:command-jpa-gae:${bot_dispatch_version}") {
+        exclude(module: 'gwt-user')
+    }
+    compile("com.googlecode.bot-dispatch:command-jpa:${bot_dispatch_version}") {
+        exclude(module: 'gwt-user')
+    }
+    compile ext.libs.bot_dispatch_command_api
+    compile ext.libs.servlet_spec
+    compile ext.libs.simple_blobstore_gae
+
+    cobTuRA group: 'net.sourceforge.cobertura', name: 'cobertura', version: '1.9.4.1'
+    testRuntime group: 'net.sourceforge.cobertura', name: 'cobertura', version: '1.9.4.1'
+
+
+    testCompile project(':user-service-openid')
+    testCompile project(':peer')
+    testCompile project(':user-service-api')
+    testCompile project(':test-util')
+    testCompile project(path: ':user-service-api', configuration: 'testFixtures')
+    testCompile project(path: ':peer-server-integration', configuration: 'testCompile')
+    testCompile("com.googlecode.taskqueue-dispatch:direct:${taskqueue_dispatch_version}") {
+        exclude(module: 'gwt-user')
+    }
+    testCompile ext.libs.guiceberry
+    testCompile ext.libs.guava_testlib
+    testCompile ext.libs.gae_testing
+    testCompile ext.libs.junit
+    testCompile ext.libs.test_ng
+    testCompile ext.libs.mockito
+    testCompile "log4j:log4j:1.2.16"
+}
+
+
+task unpackTest(dependsOn: ':peer-server-integration:packageTests') << {
+    def myTests = file("../peer-server-integration/build/libs/peer-server-integration-${version}-tests.jar")
+    ant.unjar(dest: "$buildDir/classes/test", src: myTests)
+}
+
+test {
+    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule'] =
+        'com.googlecode.fspotcloud.server.admin.integration.GaeNoAuthIntegrationIntegrationModule'
+    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule'] =
+        'com.googlecode.fspotcloud.server.admin.integration.GaeIntegrationGuiceBerryEnv'
+    //include 'com/googlecode/fspotcloud/server/admin/integration/AuthenticationIntegrationTest.class'
+    testLogging.showStandardStreams = true
+}
+
+test.doFirst { task ->
+    // delete data file for cobertura, otherwise coverage would be added
+    //delete(file:cobSerFile, failonerror:false)
+    ant.taskdef(resource: 'tasks.properties', classpath: configurations.cobTuRA.asPath)
+}
+
+test.doLast {
+    ant.'cobertura-report'(destdir: "${project.buildDir}/reports/coverage",
+            format: 'html', datafile: "../server/build/cobertura.ser", srcdir: "../server/src/main/java") {
+
+    }
+
+}
+
+
+test.dependsOn(unpackTest)
+
+test {
+    useTestNG()
+    jvmArgs = ["-Dnet.sourceforge.cobertura.datafile=../server/build/cobertura.ser"]
+}
+

@@ -1,0 +1,33 @@
+description = 'Peer server integration tests'
+
+dependencies {
+    testCompile project(':server')
+    testCompile project(':model-api')
+    testCompile project(':peer')
+    testCompile project(':test-util')
+    testCompile project(':rpc')
+    testCompile("com.googlecode.taskqueue-dispatch:direct:${taskqueue_dispatch_version}") {
+        exclude(module: 'gwt-user')
+    }
+    testCompile project(":user-service-openid")
+    testCompile project(path: ':user-service-api', configuration: 'testFixtures')
+    testCompile ext.libs.test_ng
+    testCompile ext.libs.mockito
+    testCompile ext.libs.guava_testlib
+    testCompile ext.libs.guiceberry
+}
+
+test.useTestNG()
+
+task packageTests(type: Jar, dependsOn: compileTestJava) {
+    from sourceSets.test.output.classesDir
+    classifier = 'tests'
+}
+
+test {
+    exclude '*'
+}
+
+artifacts {
+    testCompile packageTests
+}
