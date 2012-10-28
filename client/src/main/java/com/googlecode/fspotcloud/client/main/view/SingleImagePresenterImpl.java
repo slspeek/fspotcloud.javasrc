@@ -30,6 +30,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.api.DoubleImageView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -42,9 +43,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-public class SingleImagePresenterImpl implements ImageView.ImagePresenter, AsyncCallback<List<PhotoInfo>> {
+public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter, AsyncCallback<List<PhotoInfo>> {
     private final Logger log = Logger.getLogger(SingleImagePresenterImpl.class.getName());
-    private final ImageView imageView;
+    private final DoubleImageView imageView;
     private final Navigator navigator;
     private final EventBus eventBus;
     private final Slideshow slideshow;
@@ -52,10 +53,11 @@ public class SingleImagePresenterImpl implements ImageView.ImagePresenter, Async
 
     private PhotoInfo info;
     private SlideshowPlace currentPlace;
+    private SlideshowPlace previousPlace;
 
 
     @Inject
-    public SingleImagePresenterImpl(@SingleImageView ImageView imageView,
+    public SingleImagePresenterImpl(DoubleImageView imageView,
                                     Navigator navigator,
                                     EventBus eventBus,
                                     Slideshow slideshow) {
@@ -70,9 +72,17 @@ public class SingleImagePresenterImpl implements ImageView.ImagePresenter, Async
     }
 
     public void setImage() {
-        String url = "image?id=" + currentPlace.getPhotoId();
+        String url = getUrl(currentPlace);
         imageView.setImageUrl(url);
+        if (previousPlace != null) {
+            url = getUrl(previousPlace);
+            imageView.setPreviousImageUrl(url);
+        }
         imageView.adjustSize();
+    }
+
+    private String getUrl(SlideshowPlace place) {
+        return "image?id=" + place.getPhotoId();
     }
 
     private void setInformation() {
@@ -90,12 +100,8 @@ public class SingleImagePresenterImpl implements ImageView.ImagePresenter, Async
         slideshow.togglePause();
     }
 
-    @Override
-    public void setSelected(boolean selected) {
-        imageView.setSelected(selected);
-    }
-
     public void setCurrentPlace(SlideshowPlace currentPlace) {
+        this.previousPlace = this.currentPlace;
         this.currentPlace = currentPlace;
         Scheduler scheduler = Scheduler.get();
         scheduler.scheduleDeferred(new Scheduler.ScheduledCommand() {

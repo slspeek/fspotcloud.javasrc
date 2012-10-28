@@ -53,6 +53,7 @@ public class AppModule extends AbstractGinModule {
     protected void configure() {
 
         bind(ImageView.class).annotatedWith(SingleImageView.class).toProvider(SingleImageViewProvider.class).in(Singleton.class);
+        bind(DoubleImageView.class).to(DoubleImageViewImpl.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
         bind(MVPSetup.class).in(Singleton.class);

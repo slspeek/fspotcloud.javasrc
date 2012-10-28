@@ -11,7 +11,7 @@
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.slideshow}" ui:field="layout">
         <g:layer>
-            <my:ImageViewImpl></my:ImageViewImpl>
+            <my:DoubleImageViewImpl></my:DoubleImageViewImpl>
         </g:layer>
         <g:layer left="25%" right="25%" bottom="0cm" height="0px">
             <ka:ActionToolbar></ka:ActionToolbar>

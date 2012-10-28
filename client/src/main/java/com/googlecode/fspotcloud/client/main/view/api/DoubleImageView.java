@@ -24,18 +24,25 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.client.main.ui.DoubleImageViewImpl;
+import com.googlecode.fspotcloud.client.main.api.Initializable;
 
 
-public interface SlideshowView extends IsWidget {
-    DoubleImageViewImpl getDoubleImageView();
+public interface DoubleImageView extends IsWidget {
 
-    void hideControlsLater(int visibleDuration);
+    void setImageUrl(String url);
 
-    void setPresenter(SlideshowPresenter slideshowActivity);
+    void setPreviousImageUrl(String url);
 
-    interface SlideshowPresenter extends Activity {
+    void setPresenter(ImagePresenter presenter);
+
+    void setDescription(String date);
+
+    void hideLabelLater(int visibleDuration);
+
+    void adjustSize();
+
+    interface ImagePresenter extends Initializable {
+        void imageClicked();
     }
 }

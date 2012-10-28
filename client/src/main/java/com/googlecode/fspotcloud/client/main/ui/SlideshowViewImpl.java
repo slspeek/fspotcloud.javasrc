@@ -34,8 +34,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.SingleImageView;
-import com.googlecode.fspotcloud.client.main.view.api.ImageView;
+import com.googlecode.fspotcloud.client.main.view.api.DoubleImageView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.useraction.SlideshowToolbar;
@@ -49,19 +48,19 @@ public class SlideshowViewImpl extends Composite implements SlideshowView,
     private final Logger log = Logger.getLogger(SlideshowViewImpl.class.getName());
     private static final SlideshowViewImplUiBinder uiBinder = GWT.create(SlideshowViewImplUiBinder.class);
     private final ActionToolbar actionToolbar;
-    private final ImageView imageView;
+    private final DoubleImageView doubleImageView;
     private final TimerInterface timer;
     @UiField
     LayoutPanel layout;
     private SlideshowPresenter presenter;
 
     @Inject
-    public SlideshowViewImpl(@SingleImageView ImageView imageView,
+    public SlideshowViewImpl(DoubleImageView imageView,
                              @SlideshowToolbar ActionToolbar actionToolbar,
                              TimerInterface timer) {
         this.actionToolbar = actionToolbar;
         this.timer = timer;
-        this.imageView = imageView;
+        this.doubleImageView = imageView;
         initWidget(uiBinder.createAndBindUi(this));
         layout.addDomHandler(this, MouseMoveEvent.getType());
         log.info("created");
@@ -73,8 +72,8 @@ public class SlideshowViewImpl extends Composite implements SlideshowView,
     }
 
     @UiFactory
-    public ImageViewImpl getImageView() {
-        return (ImageViewImpl) imageView;
+    public DoubleImageViewImpl getDoubleImageView() {
+        return (DoubleImageViewImpl) doubleImageView;
     }
 
     public void showControls(int duration) {
