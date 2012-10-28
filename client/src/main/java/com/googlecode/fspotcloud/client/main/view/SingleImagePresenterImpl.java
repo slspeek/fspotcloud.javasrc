@@ -40,6 +40,7 @@ import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -72,6 +73,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     }
 
     public void setImage() {
+        imageView.removeAnimationStyles();
         String url = getUrl(currentPlace);
         imageView.setImageUrl(url);
         if (previousPlace != null) {
@@ -79,6 +81,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
             imageView.setPreviousImageUrl(url);
         }
         imageView.adjustSize();
+        imageView.addAnimationStyles();
     }
 
     private String getUrl(SlideshowPlace place) {
@@ -115,7 +118,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
 
     @Override
     public void onFailure(Throwable caught) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        log.log(Level.WARNING, "error during information for photo lookup", caught);
     }
 
     @Override

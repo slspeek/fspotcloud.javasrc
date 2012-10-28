@@ -119,14 +119,18 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
         info.setText(text);
     }
 
-
-    public void setSelected(boolean selected) {
-        if (selected) {
-            setStyleName(resources.style().selectedImage());
-        } else {
-            setStyleName(resources.style().image());
-        }
+    @Override
+    public void addAnimationStyles() {
+         image.addStyleName(resources.style().imageIn());
+        previousImage.addStyleName(resources.style().imageOut());
     }
+
+    @Override
+    public void removeAnimationStyles() {
+        image.removeStyleName(resources.style().imageIn());
+        previousImage.removeStyleName(resources.style().imageOut());
+    }
+
 
     @Override
     public void onResize() {

@@ -30,8 +30,6 @@ import com.googlecode.fspotcloud.client.main.ui.DoubleImageViewImpl;
 
 
 public interface SlideshowView extends IsWidget {
-    DoubleImageViewImpl getDoubleImageView();
-
     void hideControlsLater(int visibleDuration);
 
     void setPresenter(SlideshowPresenter slideshowActivity);
