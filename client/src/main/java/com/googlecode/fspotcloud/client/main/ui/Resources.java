@@ -175,6 +175,10 @@ public interface Resources extends ClientBundle {
 
         String image();
 
+        String imageIn();
+
+        String imageOut();
+
         String tagView();
 
         String button();

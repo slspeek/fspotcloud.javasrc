@@ -70,12 +70,6 @@
 	background-color: black;
 }
 
-.image {
-	padding: 4px;
-	margin: auto;
-
-
-}
 
 
 .selectedImage {
@@ -193,3 +187,74 @@
 	font-size: 110%;
 }
 
+.image {
+	padding: 4px;
+	margin: auto;
+
+
+}
+
+.imageIn {
+  -webkit-animation: fade_in 2s;
+     -moz-animation: fade_in 2s;
+       -o-animation: fade_in 2s;
+          animation: fade_in 2s;
+          	padding: 4px;
+          	margin: auto;
+
+}
+
+
+
+@-webkit-keyframes fade_in {
+  0%   { opacity: 0.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1.0; }
+}
+@-moz-keyframes fade_in {
+  0%   { opacity: 0.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1.0; }
+}
+@-o-keyframes fade_in {
+  0%   { opacity: 0.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1.0; }
+}
+@keyframes fade_in {
+  0%   { opacity: 0.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1.0; }
+}
+
+.imageOut {
+	padding: 4px;
+	margin: auto;
+
+  -webkit-animation: fade_out 2s ;
+     -moz-animation: fade_out 2s;
+       -o-animation: fade_out 2s;
+          animation: fade_out 2s;
+}
+
+@-webkit-keyframes fade_out {
+  0%   { opacity: 1.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 0.0; }
+}
+@-moz-keyframes fade_out {
+  0%   { opacity: 1.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 0.0; }
+}
+@-o-keyframes fade_out {
+  0%   { opacity: 1.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 0.0; }
+}
+@keyframes fade_out {
+  0%   { opacity: 1.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 0.0; }
+
+}

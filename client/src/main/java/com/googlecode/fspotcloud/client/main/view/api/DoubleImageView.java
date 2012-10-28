@@ -42,6 +42,10 @@ public interface DoubleImageView extends IsWidget {
 
     void adjustSize();
 
+    void addAnimationStyles();
+
+    void removeAnimationStyles();
+
     interface ImagePresenter extends Initializable {
         void imageClicked();
     }

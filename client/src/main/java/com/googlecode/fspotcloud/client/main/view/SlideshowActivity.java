@@ -33,6 +33,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
