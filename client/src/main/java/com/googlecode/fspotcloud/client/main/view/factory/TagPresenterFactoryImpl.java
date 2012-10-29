@@ -62,6 +62,7 @@ public class TagPresenterFactoryImpl implements TagPresenterFactory {
 
     @Override
     public TagPresenter get(BasePlace place) {
+        //SingleImagePresenter integration should go here
         final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory.get(place,
                 tagView.getImageRasterView());
         TagPresenter presenter = new TagActivity(tagView, rasterPresenter);

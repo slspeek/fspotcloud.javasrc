@@ -1,0 +1,58 @@
+@def slideshowAnimationTime 0.9s;
+
+.imageIn {
+  -webkit-animation: fade_in slideshowAnimationTime ease-in-out;
+     -moz-animation: fade_in slideshowAnimationTime;
+       -o-animation: fade_in slideshowAnimationTime;
+          animation: fade_in slideshowAnimationTime;
+   margin: auto;
+   padding: 4px;
+}
+
+
+
+@-webkit-keyframes fade_in {
+    from   { left: 200%; }
+    to { left: 0%; }
+}
+@-moz-keyframes fade_in {
+  from   { left: 200%; }
+    to { left: 0%; }
+}
+@-o-keyframes fade_in {
+  from   { left: 200%; }
+    to { left: 0%; }
+}
+@keyframes fade_in {
+  from   { left: 200%; }
+    to { left: 0%; }
+}
+
+.imageOut {
+    margin: auto;
+ 	padding: 4px;
+ 	opacity: 0;
+
+
+  -webkit-animation: fade_out slideshowAnimationTime ease-in-out;
+     -moz-animation: fade_out slideshowAnimationTime;
+       -o-animation: fade_out slideshowAnimationTime;
+          animation: fade_out slideshowAnimationTime;
+}
+
+@-webkit-keyframes fade_out {
+   from   { left: 0%; opacity: 1; }
+   to { left: -200%; opacity: 1;}
+}
+@-moz-keyframes fade_out {
+ from   { left: 0%; opacity: 1; }
+   to { left: -200%; opacity: 1;}
+}
+@-o-keyframes fade_out {
+ from   { left: 0%; opacity: 1; }
+   to { left: -200%; opacity: 1;}
+}
+@keyframes fade_out {
+ from   { left: 0%; opacity: 1; }
+   to { left: -200%; opacity: 1;}
+}
