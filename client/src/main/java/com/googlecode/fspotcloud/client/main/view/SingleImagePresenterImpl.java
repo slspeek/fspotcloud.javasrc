@@ -73,7 +73,9 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     }
 
     public void setImage() {
+        log.log(Level.FINE, "start set image");
         imageView.removeAnimationStyles();
+        log.log(Level.FINE, "animation removed");
         String url = getUrl(currentPlace);
         imageView.setImageUrl(url);
         if (previousPlace != null) {
@@ -81,7 +83,9 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
             imageView.setPreviousImageUrl(url);
         }
         imageView.adjustSize();
+        log.log(Level.FINE, "animation added");
         imageView.addAnimationStyles();
+        log.log(Level.FINE, "animation added");
     }
 
     private String getUrl(SlideshowPlace place) {
@@ -106,6 +110,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     public void setCurrentPlace(SlideshowPlace currentPlace) {
         this.previousPlace = this.currentPlace;
         this.currentPlace = currentPlace;
+        log.log(Level.FINE, "start set currentplace");
         Scheduler scheduler = Scheduler.get();
         scheduler.scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override

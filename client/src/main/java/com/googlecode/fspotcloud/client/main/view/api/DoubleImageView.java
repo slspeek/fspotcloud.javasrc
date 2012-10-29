@@ -46,6 +46,8 @@ public interface DoubleImageView extends IsWidget {
 
     void removeAnimationStyles();
 
+    void setPreviousImageVisible(boolean visible);
+
     interface ImagePresenter extends Initializable {
         void imageClicked();
     }
