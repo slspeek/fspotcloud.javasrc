@@ -31,12 +31,9 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.DoubleImageView;
-import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowActions;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
 import java.util.List;
@@ -44,8 +41,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter, AsyncCallback<List<PhotoInfo>> {
-    private final Logger log = Logger.getLogger(SingleImagePresenterImpl.class.getName());
+public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter, AsyncCallback<List<PhotoInfo>> {
+    private final Logger log = Logger.getLogger(DoubleImagePresenterImpl.class.getName());
     private final DoubleImageView imageView;
     private final Navigator navigator;
     private final EventBus eventBus;
@@ -58,7 +55,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
 
 
     @Inject
-    public SingleImagePresenterImpl(DoubleImageView imageView,
+    public DoubleImagePresenterImpl(DoubleImageView imageView,
                                     Navigator navigator,
                                     EventBus eventBus,
                                     Slideshow slideshow) {
@@ -73,9 +70,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     }
 
     public void setImage() {
-        log.log(Level.FINE, "start set image");
         imageView.removeAnimationStyles();
-        log.log(Level.FINE, "animation removed");
         String url = getUrl(currentPlace);
         imageView.setImageUrl(url);
         if (previousPlace != null) {
@@ -83,9 +78,7 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
             imageView.setPreviousImageUrl(url);
         }
         imageView.adjustSize();
-        log.log(Level.FINE, "animation added");
         imageView.addAnimationStyles();
-        log.log(Level.FINE, "animation added");
     }
 
     private String getUrl(SlideshowPlace place) {
@@ -103,14 +96,12 @@ public class SingleImagePresenterImpl implements DoubleImageView.ImagePresenter,
 
     @Override
     public void imageClicked() {
-        log.info("about to fire stop slideshow event");
         slideshow.togglePause();
     }
 
     public void setCurrentPlace(SlideshowPlace currentPlace) {
         this.previousPlace = this.currentPlace;
         this.currentPlace = currentPlace;
-        log.log(Level.FINE, "start set currentplace");
         Scheduler scheduler = Scheduler.get();
         scheduler.scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override

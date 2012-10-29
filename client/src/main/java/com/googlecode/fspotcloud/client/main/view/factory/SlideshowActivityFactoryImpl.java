@@ -25,33 +25,31 @@
 package com.googlecode.fspotcloud.client.main.view.factory;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ui.SlideshowViewImpl;
-import com.googlecode.fspotcloud.client.main.view.SingleImagePresenterImpl;
+import com.googlecode.fspotcloud.client.main.view.DoubleImagePresenterImpl;
 import com.googlecode.fspotcloud.client.main.view.SlideshowActivity;
 import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
 
 public class SlideshowActivityFactoryImpl
         implements SlideshowActivityFactory {
-    private final SingleImagePresenterImpl singleImagePresenter;
+    private final DoubleImagePresenterImpl doubleImagePresenter;
     private final SlideshowView slideshowView;
     private SlideshowActivity singleton;
 
     @Inject
     public SlideshowActivityFactoryImpl(
-            SingleImagePresenterImpl singleImagePresenter, SlideshowView slideshowView) {
+            DoubleImagePresenterImpl doubleImagePresenter, SlideshowView slideshowView) {
         super();
-        this.singleImagePresenter = singleImagePresenter;
+        this.doubleImagePresenter = doubleImagePresenter;
         this.slideshowView = slideshowView;
     }
 
     @Override
     public SlideshowView.SlideshowPresenter get(SlideshowPlace place) {
         if (singleton == null) {
-            singleImagePresenter.init();
-            singleton = new SlideshowActivity(slideshowView, singleImagePresenter);
+            doubleImagePresenter.init();
+            singleton = new SlideshowActivity(slideshowView, doubleImagePresenter);
         }
         singleton.setCurrentPlace(place);
         return singleton;
