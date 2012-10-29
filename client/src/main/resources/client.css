@@ -70,16 +70,12 @@
     border-style: solid;
 }
 
-
-
-
 .selectedImage {
 	padding: 4px;
 	margin: auto;
 	border-style: solid;
 	border-color: borderColor;
-  border-width: 1px;
-
+    border-width: 1px;
 }
 	
 

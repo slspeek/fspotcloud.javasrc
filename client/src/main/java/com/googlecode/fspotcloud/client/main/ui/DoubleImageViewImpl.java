@@ -58,11 +58,16 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
     LayoutPanel layout;
     protected ImagePresenter presenter;
     protected final Resources resources;
+    private final FadeAnimationResources fadeAnimationResources;
+    private final AnimationStyle animationStyle;
+            
 
     @Inject
-    public DoubleImageViewImpl(TimerInterface timer, Resources resources) {
+    public DoubleImageViewImpl(TimerInterface timer, Resources resources, FadeAnimationResources fadeAnimationResources) {
         this.timer = timer;
         this.resources = resources;
+        this.fadeAnimationResources = fadeAnimationResources;
+        this.animationStyle = fadeAnimationResources.style();
         initWidget(UI_BINDER_DOUBLE.createAndBindUi(this));
         init();
     }
@@ -121,14 +126,14 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
 
     @Override
     public void addAnimationStyles() {
-         image.addStyleName(resources.style().imageIn());
-        previousImage.addStyleName(resources.style().imageOut());
+         image.addStyleName(animationStyle.imageIn());
+        previousImage.addStyleName(animationStyle.imageOut());
     }
 
     @Override
     public void removeAnimationStyles() {
-        image.removeStyleName(resources.style().imageIn());
-        previousImage.removeStyleName(resources.style().imageOut());
+        image.removeStyleName(animationStyle.imageIn());
+        previousImage.removeStyleName(animationStyle.imageOut());
     }
 
     @Override

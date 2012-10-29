@@ -25,15 +25,11 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -42,14 +38,14 @@ public class SlideshowActivity extends AbstractActivity
 
     private final Logger log = Logger.getLogger(SlideshowActivity.class.getName());
     private final SlideshowView slideshowView;
-    private final SingleImagePresenterImpl singleImagePresenter;
+    private final DoubleImagePresenterImpl doubleImagePresenter;
 
     private SlideshowPlace currentPlace;
 
     public SlideshowActivity(SlideshowView imageView,
-                             SingleImagePresenterImpl singleImagePresenter) {
+                             DoubleImagePresenterImpl doubleImagePresenter) {
         this.slideshowView = imageView;
-        this.singleImagePresenter = singleImagePresenter;
+        this.doubleImagePresenter = doubleImagePresenter;
     }
 
     @Override
@@ -60,6 +56,6 @@ public class SlideshowActivity extends AbstractActivity
 
     public void setCurrentPlace(SlideshowPlace currentPlace) {
         this.currentPlace = currentPlace;
-        singleImagePresenter.setCurrentPlace(currentPlace);
+        doubleImagePresenter.setCurrentPlace(currentPlace);
     }
 }

@@ -37,6 +37,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
+import com.googlecode.fspotcloud.client.main.ui.FadeAnimationResources;
 import com.googlecode.fspotcloud.client.main.ui.HasOneWidgetAdapter;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.ui.UserPagesResources;
@@ -57,15 +58,20 @@ public class MVPSetup {
     private final PlaceController placeController;
     private final ClientLoginManager clientLoginManager;
     private final ZoomViewEventHandlerImpl zoomViewEventHandler;
+    private final FadeAnimationResources fadeAnimationResources;
+
 
     @Inject
     public MVPSetup(MainWindowActivityMapper activityMapper, EventBus eventBus,
                     PlaceController placeController,
+
                     Resources resources,
                     AdminResources adminResources, ClientLoginManager clientLoginManager,
                     UserPagesResources userPagesResources,
                     UserActionHandlerBinder userActionHandlerBinder,
-                    ZoomViewEventHandlerImpl zoomViewEventHandler) {
+                    ZoomViewEventHandlerImpl zoomViewEventHandler, FadeAnimationResources fadeAnimationResources) {
+        this.fadeAnimationResources = fadeAnimationResources;
+
         zoomViewEventHandler.init();
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
@@ -75,6 +81,7 @@ public class MVPSetup {
         resources.style().ensureInjected();
         adminResources.style().ensureInjected();
         userPagesResources.style().ensureInjected();
+        fadeAnimationResources.style().ensureInjected();
     }
 
     public void setup() {
