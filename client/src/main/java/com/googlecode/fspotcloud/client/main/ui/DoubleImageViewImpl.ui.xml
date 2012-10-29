@@ -6,11 +6,11 @@
     <g:LayoutPanel ui:field="layout">
 
         <g:layer>
-            <fit:FitImage styleName="{res.style.imageOut}"
+            <fit:FitImage
                           ui:field="previousImage"></fit:FitImage>
         </g:layer>
         <g:layer>
-            <fit:FitImage styleName="{res.style.imageIn}"
+            <fit:FitImage
                           ui:field="image"></fit:FitImage>
         </g:layer>
         <g:layer left='25%' right='25%' bottom='0cm' height="16px">

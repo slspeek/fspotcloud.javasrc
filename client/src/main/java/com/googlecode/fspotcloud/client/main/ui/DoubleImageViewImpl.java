@@ -131,6 +131,11 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
         previousImage.removeStyleName(resources.style().imageOut());
     }
 
+    @Override
+    public void setPreviousImageVisible(boolean visible) {
+        previousImage.setVisible(visible);
+    }
+
 
     @Override
     public void onResize() {
