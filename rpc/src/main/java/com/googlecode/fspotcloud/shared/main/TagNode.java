@@ -172,4 +172,40 @@ public class TagNode implements Serializable {
     public boolean isImportIssued() {
         return importIssued;
     }
+
+    public List<TagNode> subTreeAsList() {
+        List<TagNode> result = newArrayList();
+        buildSubTreeList(result);
+        return result;
+    }
+
+    private void buildSubTreeList(List<TagNode> result) {
+        result.add(this);
+        for (TagNode child: children) {
+            child.buildSubTreeList(result);
+        }
+    }
+
+    public TagNode findByTagId(String tagId) {
+       TagNode result = null;
+       for(TagNode node: subTreeAsList()) {
+           if (tagId.equals(node.getId())) {
+               result = node;
+               break;
+           }
+       }
+       return result;
+    }
+
+    public static TagNode find(List<TagNode> all, String tagId) {
+       TagNode result = null;
+        for(TagNode node: all) {
+            TagNode searched = node.findByTagId(tagId);
+            if (searched != null) {
+                result = searched;
+                break;
+            }
+        }
+        return result;
+    }
 }

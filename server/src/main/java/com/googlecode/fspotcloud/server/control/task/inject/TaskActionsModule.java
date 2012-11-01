@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.server.control.task.inject;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.*;
 import com.googlecode.fspotcloud.server.control.task.handler.intern.*;
+import com.googlecode.fspotcloud.server.main.handler.RssFeedHandler;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
 
@@ -42,5 +43,6 @@ public class TaskActionsModule extends ActionHandlerModule {
         bindHandler(TagUpdateAction.class, TagUpdateHandler.class);
         bindHandler(ImportManyTagsPhotosAction.class,
                 ImportManyTagsPhotosHandler.class);
+        bindHandler(RssFeedAction.class, RssFeedHandler.class);
     }
 }

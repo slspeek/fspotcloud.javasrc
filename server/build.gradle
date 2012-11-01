@@ -17,6 +17,7 @@ dependencies {
     compile project(':model-api')
     compile project(':user-service-api')
     compile project(':peer-rpc')
+    compile 'org.jdom:jdom:1.1'
     compile ext.libs.bot_dispatch_controller
     compile ext.libs.bot_dispatch_api
     compile ext.libs.bot_dispatch_command_api
