@@ -22,23 +22,40 @@
  *
  */
 
-package com.googlecode.fspotcloud.server.inject;
+package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
-import com.google.inject.servlet.ServletModule;
-import com.googlecode.fspotcloud.server.cron.CronServlet;
-import com.googlecode.fspotcloud.server.cron.RssServlet;
-import com.googlecode.fspotcloud.server.image.ImageServlet;
-import net.customware.gwt.dispatch.server.guice.GuiceStandardDispatchServlet;
+import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import net.customware.gwt.dispatch.shared.Action;
+import net.customware.gwt.dispatch.shared.general.StringResult;
+
+import java.io.Serializable;
 
 
-public class ServerServletModule extends ServletModule {
+public class RssFeedAction implements Action<StringResult>,
+        Serializable {
+    private static final long serialVersionUID = 8429390701736230375L;
+    private final String tagId;
+
+    public RssFeedAction(String tagId) {
+        super();
+        this.tagId = tagId;
+    }
+
     @Override
-    protected void configureServlets() {
-        serve("/fspotcloud/dispatch").with(GuiceStandardDispatchServlet.class);
-        serve("/com.googlecode.fspotcloud.dashboard/dispatch")
-                .with(GuiceStandardDispatchServlet.class);
-        serve("/image").with(ImageServlet.class);
-        serve("/cron").with(CronServlet.class);
-        serve("/rss").with(RssServlet.class);
+    public boolean equals(Object obj) {
+        if (obj instanceof RssFeedAction) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    public String getTagId() {
+        return tagId;
     }
 }
