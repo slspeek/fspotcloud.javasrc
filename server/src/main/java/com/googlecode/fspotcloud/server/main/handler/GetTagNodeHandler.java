@@ -65,6 +65,6 @@ public class GetTagNodeHandler extends SimpleActionHandler<GetTagNodeAction, Tag
 
         node.setApprovedUserGroups(tag.getApprovedUserGroups());
 
-        return new TagNodeResult(node); //To change body of implemented methods use File | Settings | File Templates.
+        return new TagNodeResult(node);
     }
 }

@@ -37,10 +37,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
-import com.googlecode.fspotcloud.client.main.ui.FadeAnimationResources;
-import com.googlecode.fspotcloud.client.main.ui.HasOneWidgetAdapter;
-import com.googlecode.fspotcloud.client.main.ui.Resources;
-import com.googlecode.fspotcloud.client.main.ui.UserPagesResources;
+import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
@@ -58,19 +55,18 @@ public class MVPSetup {
     private final PlaceController placeController;
     private final ClientLoginManager clientLoginManager;
     private final ZoomViewEventHandlerImpl zoomViewEventHandler;
-    private final FadeAnimationResources fadeAnimationResources;
+    private final StylesSetup stylesSetup;
 
 
     @Inject
-    public MVPSetup(MainWindowActivityMapper activityMapper, EventBus eventBus,
+    public MVPSetup(MainWindowActivityMapper activityMapper,
+                    EventBus eventBus,
                     PlaceController placeController,
-
-                    Resources resources,
-                    AdminResources adminResources, ClientLoginManager clientLoginManager,
-                    UserPagesResources userPagesResources,
+                    ClientLoginManager clientLoginManager,
                     UserActionHandlerBinder userActionHandlerBinder,
-                    ZoomViewEventHandlerImpl zoomViewEventHandler, FadeAnimationResources fadeAnimationResources) {
-        this.fadeAnimationResources = fadeAnimationResources;
+                    ZoomViewEventHandlerImpl zoomViewEventHandler,
+                    StylesSetup stylesSetup) {
+        this.stylesSetup = stylesSetup;
 
         zoomViewEventHandler.init();
         this.activityMapper = activityMapper;
@@ -78,14 +74,12 @@ public class MVPSetup {
         this.placeController = placeController;
         this.clientLoginManager = clientLoginManager;
         this.zoomViewEventHandler = zoomViewEventHandler;
-        resources.style().ensureInjected();
-        adminResources.style().ensureInjected();
-        userPagesResources.style().ensureInjected();
-        fadeAnimationResources.style().ensureInjected();
+
     }
 
     public void setup() {
         log.info("Starting MVP setup");
+        stylesSetup.injectStyles();
         ActivityManager activityManager = new ActivityManager(activityMapper,
                 eventBus);
         activityManager.setDisplay(new HasOneWidgetAdapter(appWidget));
