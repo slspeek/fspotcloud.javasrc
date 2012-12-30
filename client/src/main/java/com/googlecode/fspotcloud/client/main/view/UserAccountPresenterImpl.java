@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.common.base.Objects;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -32,9 +33,12 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
-import com.googlecode.fspotcloud.shared.main.GetUserInfo;
-import com.googlecode.fspotcloud.shared.main.UserInfo;
+import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.shared.main.*;
+import net.customware.gwt.dispatch.client.DispatchAsync;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -42,12 +46,20 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
     private final Logger log = Logger.getLogger(UserAccountPresenterImpl.class.getName());
     private final UserAccountView view;
     private final ClientLoginManager clientLoginManager;
+    private final DispatchAsync dispatch;
+    private final PlaceGoTo placeGoTo;
+
+    private static final String YOUR_PASSWORD_WAS_CHANGED = "Your password was changed";
 
     @Inject
     public UserAccountPresenterImpl(UserAccountView view,
-                                    ClientLoginManager clientLoginManager) {
+                                    ClientLoginManager clientLoginManager,
+                                    DispatchAsync dispatch,
+                                    PlaceGoTo placeGoTo) {
         this.view = view;
         this.clientLoginManager = clientLoginManager;
+        this.dispatch = dispatch;
+        this.placeGoTo = placeGoTo;
     }
 
     @Override
@@ -70,5 +82,55 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
                         view.setLastLoginTime(date);
                     }
                 });
+    }
+
+    @Override
+    public void updateAccount() {
+        String oldPw = view.getOldPasswordField();
+        String password = verifyPasswords();
+
+        if (password == null) {
+            view.setStatusText("Passwords do not match");
+        } else {
+            UpdateUserAction action = new UpdateUserAction(password, oldPw);
+            send(action);
+        }
+
+    }
+
+    private void send(UpdateUserAction action) {
+        dispatch.execute(action,
+                new AsyncCallback<UpdateUserResult>() {
+                    public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
+
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        view.setStatusText(AN_ERROR_PROHIBITED_CHANGING_PASSWORDS);
+                        log.log(Level.WARNING, "SignUp failed ", caught);
+                    }
+
+                    @Override
+                    public void onSuccess(UpdateUserResult result) {
+                        if (result.getSuccess()) {
+                            view.setStatusText(YOUR_PASSWORD_WAS_CHANGED);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void cancel() {
+        placeGoTo.goTo(new BasePlace("latest", "latest"));
+    }
+
+
+    private String verifyPasswords() {
+        String password = view.getPasswordField();
+
+        if (Objects.equal(password, view.getPasswordAgainField())) {
+            return password;
+        } else {
+            return null;
+        }
     }
 }

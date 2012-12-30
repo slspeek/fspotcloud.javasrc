@@ -32,6 +32,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.SignUpPlace;
+import com.googlecode.fspotcloud.client.place.UserAccountPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
@@ -132,7 +133,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
 
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
-                            cancel();
+                            placeGoTo.goTo(new UserAccountPlace());
                         } else {
                             view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
                         }

@@ -66,7 +66,7 @@ public class SaveUserGroupHandler extends SimpleActionHandler<SaveUserGroupActio
                 throw new UsergroupNotFoundException();
             }
         } else {
-            throw new UserIsNotLoggedException();
+            throw new UserIsNotLoggedOnException();
         }
         return new VoidResult();
     }

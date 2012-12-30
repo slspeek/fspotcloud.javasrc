@@ -48,14 +48,6 @@ public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResul
     @Inject
     private SecretGenerator secretGenerator;
 
-    @Inject
-    public SignUpHandler(UserDao userDao, IMail mailer,
-                         ConfirmationMailGenerator confirmationMailGenerator) {
-        this.userDao = userDao;
-        this.mailer = mailer;
-        this.confirmationMailGenerator = confirmationMailGenerator;
-    }
-
     @Override
     public SignUpResult execute(SignUpAction action, ExecutionContext context)
             throws DispatchException {
@@ -63,12 +55,13 @@ public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResul
         User mayBeExisted = userDao.findOrNew(email);
 
         if (!mayBeExisted.hasRegistered()) {
+            final User existingUser = mayBeExisted;
             String emailConfirmationSecret = secretGenerator.getSecret(email);
-            mayBeExisted.setNickname(action.getNickname());
-            mayBeExisted.setCredentials(action.getPassword());
-            mayBeExisted.setEmailVerificationSecret(emailConfirmationSecret);
-            mayBeExisted.setRegistered(true);
-            userDao.save(mayBeExisted);
+            existingUser.setNickname(action.getNickname());
+            existingUser.setCredentials(action.getPassword());
+            existingUser.setEmailVerificationSecret(emailConfirmationSecret);
+            existingUser.setRegistered(true);
+            userDao.save(existingUser);
 
             String confirmationMail = confirmationMailGenerator.getMailBody(email,
                     emailConfirmationSecret);

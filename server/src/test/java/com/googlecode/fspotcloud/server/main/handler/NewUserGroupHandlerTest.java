@@ -46,7 +46,7 @@ public class NewUserGroupHandlerTest {
         verify(userGroupDao).save(userGroupEntity);
     }
 
-    @Test(expected = UserIsNotLoggedException.class)
+    @Test(expected = UserIsNotLoggedOnException.class)
     public void testNotLoggedIn() throws Exception {
         when(userService.isUserLoggedIn()).thenReturn(false);
         GetUserGroupResult result = handler.execute(new NewUserGroupAction(), null);
