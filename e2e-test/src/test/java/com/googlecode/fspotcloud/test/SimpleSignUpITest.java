@@ -30,6 +30,8 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
+
 
 public class SimpleSignUpITest {
     public static final String RMS_FSF_ORG = "rms@example.com";
@@ -55,6 +57,7 @@ public class SimpleSignUpITest {
         signUpPage.open();
         signUpPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
         signUpPage.signUp();
+        sleepShort();
         signUpPage.verifySuccess();
         emailConfirmationPage.open(RMS_FSF_ORG).success();
         signUpPage.open();
