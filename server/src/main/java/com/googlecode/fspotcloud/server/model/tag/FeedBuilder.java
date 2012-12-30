@@ -12,12 +12,17 @@ import org.jdom.output.XMLOutputter;
 
 import javax.inject.Provider;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FeedBuilder {
 
     @javax.inject.Inject
     @ServerAddress
     Provider<String> serverAddressProvider;
+
+    @Inject
+    private Logger log;
 
 
     public String getFeed(TagNode tagNode) {
@@ -26,7 +31,7 @@ public class FeedBuilder {
             XMLOutputter xmlOutputter = new XMLOutputter();
             result = xmlOutputter.outputString(getFeedDocument(tagNode));
         }   catch (Exception e) {
-
+            log.log(Level.FINE, "Failed outputting xml for feed for node " + tagNode, e);
         }
         return result;
     }
