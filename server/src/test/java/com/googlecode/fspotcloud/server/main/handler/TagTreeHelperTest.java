@@ -99,4 +99,15 @@ public class TagTreeHelperTest {
         TagNode root1 = result.get(0);
         assertEquals(CHILD, root1.getId());
     }
+
+    @Test
+    public void testRogueSubsetRoots() throws Exception {
+        TagNode root = new TagNode(ROOT, "0");
+        TagNode child = new TagNode(CHILD, "0");
+
+        TagTreeHelper helper = new TagTreeHelper(newArrayList(root), newHashSet(CHILD));
+        List<TagNode> result = helper.getSubTree();
+        assertEquals(0, result.size());
+
+    }
 }

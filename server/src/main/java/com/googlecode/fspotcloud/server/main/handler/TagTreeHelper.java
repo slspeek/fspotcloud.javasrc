@@ -116,8 +116,10 @@ public class TagTreeHelper {
         Set<TagNode> nodeSet = newHashSet();
 
         for (String tagId : subSet) {
-            final TagNode e = index.get(tagId);
-            nodeSet.add(new TagNode(e));
+            if (index.containsKey(tagId)) {
+                final TagNode e = index.get(tagId);
+                nodeSet.add(new TagNode(e));
+            }
         }
 
         return nodeSet;
