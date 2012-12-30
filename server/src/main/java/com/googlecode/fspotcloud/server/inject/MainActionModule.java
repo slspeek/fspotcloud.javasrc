@@ -51,7 +51,7 @@ public class MainActionModule extends ActionHandlerModule {
         bindHandler(GetTagNodeAction.class, GetTagNodeHandler.class);
         bindHandler(RequestFullsizeImageAction.class,
                 RequestFullsizeImageHandler.class);
-
+        bindHandler(UpdateUserAction.class, UpdateUserHandler.class);
         bind(IUserGroupHelper.class).to(UserGroupHelper.class);
     }
 }

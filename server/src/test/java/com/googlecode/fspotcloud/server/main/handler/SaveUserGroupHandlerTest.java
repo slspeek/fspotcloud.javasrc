@@ -30,7 +30,7 @@ public class SaveUserGroupHandlerTest {
     @Inject
     private UserGroupDao userGroupDao;
 
-    @Test(expected = UserIsNotLoggedException.class)
+    @Test(expected = UserIsNotLoggedOnException.class)
     public void testUnauthorized() throws Exception {
 
         handler.execute(new SaveUserGroupAction(new UserGroupInfo(1L, FAMILY, CLOSE_FAMILY, false)), null);

@@ -63,7 +63,7 @@ public class NewUserGroupHandler extends SimpleActionHandler<NewUserGroupAction,
             userGroupDao.save(newGroup);
             info = GetUserGroupHandler.get(newGroup);
         } else {
-            throw new UserIsNotLoggedException();
+            throw new UserIsNotLoggedOnException();
         }
         return new GetUserGroupResult(info);
     }

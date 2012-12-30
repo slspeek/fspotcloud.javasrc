@@ -25,11 +25,11 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
 
@@ -43,15 +43,25 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
     @UiField
     Label emailValueLabel;
     @UiField
-    Label nicknameValueLabel;
-    @UiField
     Label lastLoginValueLabel;
+    @UiField
+    PasswordTextBox oldPasswordTextBox;
+
+    @UiField
+    PasswordTextBox passwordTextBox;
+    @UiField
+    PasswordTextBox passwordAgainTextBox;
+    @UiField
+    Label statusLabel;
+    @UiField
+    PushButton save;
+    @UiField
+    PushButton cancel;
 
     @Inject
     public UserAccountViewImpl() {
         initWidget(uiBinder.createAndBindUi(this));
         emailValueLabel.ensureDebugId("email");
-        nicknameValueLabel.ensureDebugId("nickname");
         lastLoginValueLabel.ensureDebugId("last-login");
         log.info("Created ");
     }
@@ -67,9 +77,35 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
     }
 
     @Override
-    public void setNickname(String nickname) {
-        nicknameValueLabel.setText(nickname);
+    public String getOldPasswordField() {
+        return oldPasswordTextBox.getText();
     }
+
+    @Override
+    public String getPasswordField() {
+        return passwordTextBox.getText();
+    }
+
+    @Override
+    public String getPasswordAgainField() {
+        return passwordAgainTextBox.getText();
+    }
+
+    @Override
+    public void setStatusText(String text) {
+        statusLabel.setText(text);
+    }
+
+    @UiHandler("save")
+    public void onPush(ClickEvent e) {
+        presenter.updateAccount();
+    }
+
+    @UiHandler("cancel")
+    public void onCancel(ClickEvent e) {
+        presenter.cancel();
+    }
+
 
     @Override
     public void setPresenter(UserAccountView.UserAccountPresenter presenter) {

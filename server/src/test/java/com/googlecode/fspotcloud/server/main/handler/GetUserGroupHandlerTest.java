@@ -26,7 +26,7 @@ public class GetUserGroupHandlerTest {
     @Inject
     private UserGroupDao userGroupDao;
 
-    @Test(expected = UserIsNotLoggedException.class)
+    @Test(expected = UserIsNotLoggedOnException.class)
     public void testUnauthorized() throws Exception {
         handler.execute(new GetUserGroupAction(ID), null);
         verify(userService).isUserLoggedIn();
