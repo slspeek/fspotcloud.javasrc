@@ -64,7 +64,7 @@ public class GetUserGroupHandler extends SimpleActionHandler<GetUserGroupAction,
             }
 
         } else {
-            throw new UserIsNotLoggedException();
+            throw new UserIsNotLoggedOnException();
         }
 
     }

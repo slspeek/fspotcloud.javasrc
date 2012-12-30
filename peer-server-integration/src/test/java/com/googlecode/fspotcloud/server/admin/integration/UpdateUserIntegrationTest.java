@@ -26,11 +26,13 @@ package com.googlecode.fspotcloud.server.admin.integration;
 
 import com.google.common.testing.TearDown;
 import com.google.guiceberry.testng.TestNgGuiceBerry;
+import com.googlecode.fspotcloud.server.main.handler.UserIsNotLoggedOnException;
+import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.main.SignUpAction;
-import com.googlecode.fspotcloud.shared.main.SignUpResult;
-import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
+import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.user.UserService;
 import net.customware.gwt.dispatch.server.Dispatch;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -40,24 +42,25 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class SignUpIntegrationTest {
-    static final Logger log = Logger.getLogger(SignUpIntegrationTest.class.getName());
-    public static final String RMS_FSF_ORG1 = "rms@example.com";
-    public static final String RMS_FSF_ORG = RMS_FSF_ORG1;
+public class UpdateUserIntegrationTest {
+    static final Logger log = Logger.getLogger(UpdateUserIntegrationTest.class.getName());
+    public static final String RMS_FSF_ORG = "rms@example.com";
     private TearDown toTearDown;
     @Inject
     UserDao userDao;
     @Inject
     Dispatch dispatch;
+    @Inject
+    UserService userService;
 
     @BeforeMethod
     public void setUp(Method m) throws SQLException {
         // Make this the call to TestNgGuiceBerry.setUp as early as possible
         toTearDown = TestNgGuiceBerry.setUp(this, m,
-                NoAuthPlaceHolderIntegrationModule.class);
+                PlaceHolderIntegrationModule.class);
 
         userDao.deleteBulk(100);
         assertTrue(userDao.isEmpty());
@@ -70,19 +73,31 @@ public class SignUpIntegrationTest {
     }
 
     @Test
-    public void signUp() throws Exception {
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
+    public void signUpAndLogin() throws Exception {
+        SignUpAction action = new SignUpAction(RMS_FSF_ORG, "ihp", "rms");
         SignUpResult result = dispatch.execute(action);
         assertTrue(result.getSuccess());
+
+        //Bypassing email-confirmation
+        User rms = userDao.find(RMS_FSF_ORG);
+        rms.setEnabled(true);
+        userDao.save(rms);
+
+        AuthenticationAction authenticationAction = new AuthenticationAction(RMS_FSF_ORG,
+                "ihp");
+        AuthenticationResult authenticationResult = dispatch.execute(authenticationAction);
+        assertTrue(authenticationResult.getSuccess());
+        assertEquals(RMS_FSF_ORG, userService.getEmail());
+        Assert.assertTrue(userService.isUserAdmin());
+
+        UpdateUserAction updateUserAction = new UpdateUserAction("new", "ihp");
+        UpdateUserResult updateUserResult = dispatch.execute(updateUserAction);
+        Assert.assertTrue(updateUserResult.getSuccess());
     }
 
-    @Test
-    public void signUpTwice() throws Exception {
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
-        SignUpResult result = dispatch.execute(action);
-        assertTrue(result.getSuccess());
-        action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
-        result = dispatch.execute(action);
-        assertFalse(result.getSuccess());
+    @Test(expectedExceptions = UserIsNotLoggedOnException.class)
+    public void NotLoggedIn() throws Exception {
+        UpdateUserAction updateUserAction = new UpdateUserAction("new", "ihp");
+        UpdateUserResult updateUserResult = dispatch.execute(updateUserAction);
     }
 }

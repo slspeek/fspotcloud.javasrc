@@ -22,31 +22,41 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view.api;
+package com.googlecode.fspotcloud.shared.main;
 
-import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.base.Objects;
+import net.customware.gwt.dispatch.shared.Result;
 
 
-public interface UserAccountView extends IsWidget {
-    void setEmail(String email);
+@GwtCompatible
+public class UpdateUserResult implements Result {
+    private boolean success;
 
-    void setLastLoginTime(String date);
+    public UpdateUserResult() {
+    }
 
-    public String getOldPasswordField();
+    public UpdateUserResult(boolean success) {
+        this.success = success;
+    }
 
-    public String getPasswordField();
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UpdateUserResult) {
+            UpdateUserResult other = (UpdateUserResult) obj;
 
-    public String getPasswordAgainField();
+            return Objects.equal(other.success, getSuccess());
+        } else {
+            return false;
+        }
+    }
 
-    void setStatusText(String text);
+    @Override
+    public int hashCode() {
+        return 1;
+    }
 
-    void setPresenter(UserAccountPresenter presenter);
-
-    interface UserAccountPresenter extends Activity {
-        void updateAccount();
-
-        void cancel();
-
+    public boolean getSuccess() {
+        return success;
     }
 }
