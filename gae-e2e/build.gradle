@@ -63,8 +63,9 @@ test {
     systemProperties['bot.secret'] = bot_secret
     systemProperties['endpoint'] = "localhost:8080"
     systemProperties['stop.port'] = "5555"
+    systemProperties['pause.time'] = "${test_pause_time}"
     systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
-    println "All tests: ${all_tests}"
+    println "All tests: ${all_tests} pause time: ${test_pause_time}"
     if ("${all_tests}" == "true") {
         include "com/googlecode/fspotcloud/test/LocalSuite.class"
     } else {

@@ -24,16 +24,23 @@
 
 package com.googlecode.fspotcloud.test;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Sleep {
     private static final int pauseTime = Integer.valueOf(System.getProperty(
             "pause.time",
             "900"));
+
+    private static final Logger LOGGER = Logger.getLogger(Sleep.class.getName());
 
     public static void sleepShort() throws InterruptedException {
         sleepShort(1);
     }
 
     public static void sleepShort(int times) throws InterruptedException {
-        Thread.sleep(pauseTime * times);
+        final int millis = pauseTime * times;
+        LOGGER.log(Level.INFO, "Sleeping for " + millis);
+        Thread.sleep(millis);
     }
 }

@@ -68,6 +68,7 @@ test {
     systemProperties['bot.secret'] = bot_secret
     systemProperties['endpoint'] = "localhost:8050/j2ee-e2e"
     systemProperties['stop.port'] = "5555"
+    systemProperties['pause.time'] = "${test_pause_time}"
     systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
     if ("${all_tests}" == "true") {
         include "com/googlecode/fspotcloud/test/LocalSuite.class"
