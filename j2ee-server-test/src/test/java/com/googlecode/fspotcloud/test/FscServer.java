@@ -62,7 +62,7 @@ public class FscServer {
         Context root = new Context(server, "/", Context.SESSIONS);
 
         root.addFilter(GuiceFilter.class, "/*", 0);
-        root.addServlet(DefaultServlet.class, "/");
+        //root.addServlet(DefaultServlet.class, "/");
     }
 
     protected Module getFscModule() {
