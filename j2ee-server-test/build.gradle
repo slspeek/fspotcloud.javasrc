@@ -55,6 +55,7 @@ test {
     testLogging.showStandardStreams = true
     include "com/googlecode/fspotcloud/test/DashboardITest.class"
     ignoreFailures = true
+    exclude  "*"
 }
 
 test.dependsOn unpackTest, copyWar, ":peer:assemble"
