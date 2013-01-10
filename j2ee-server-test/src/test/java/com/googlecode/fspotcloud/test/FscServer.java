@@ -37,36 +37,32 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.logging.Logger;
 
 
 public class FscServer {
     private final Server server;
+    private final Logger log = Logger.getLogger(FscServer.class.getName());
 
     public FscServer(int port) throws IOException, URISyntaxException {
         server = new Server(port);
 
         final URL url = new File("build/exploded").getAbsoluteFile().toURI()
                 .toURL();
-
-        //        final Resource resource = new FileResource(url);
-        //        final ResourceHandler handler = new ResourceHandler();
-        //        handler.setBaseResource(resource);
-        //        server.addHandler(handler);
         WebAppContext webApp = new WebAppContext();
         webApp.setContextPath("/");
         webApp.setWar(url.toExternalForm());
-        webApp.setServer(server);
-
         server.addHandler(webApp);
-
         Context root = new Context(server, "/", Context.SESSIONS);
 
         root.addFilter(GuiceFilter.class, "/*", 0);
-        //root.addServlet(DefaultServlet.class, "/");
+        root.addServlet(DefaultServlet.class, "/");
     }
 
     protected Module getFscModule() {
-        return new J2eeTotalModule(10, "VERY_GRADLE", "slspeek@gmail.com",
+        return new J2eeTotalModule(10,
+                System.getProperty("bot.secret"),
+                "rms@example.com",
                 "smtp.xs4all.nl");
     }
 
@@ -74,17 +70,9 @@ public class FscServer {
         try {
             TestServerGuiceServletConfig.MODULE = getFscModule();
             server.start();
-
             return TestServerGuiceServletConfig.INJECTOR;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        FscServer server1 = new FscServer(8080);
-        server1.start();
-        Thread.sleep(20000);
-        server1.server.stop();
     }
 }

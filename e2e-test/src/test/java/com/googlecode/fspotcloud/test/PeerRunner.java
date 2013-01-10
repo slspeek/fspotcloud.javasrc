@@ -24,30 +24,37 @@
 
 package com.googlecode.fspotcloud.test;
 
+import com.google.common.base.Joiner;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 
 /**
  * @author steven
  */
 public class PeerRunner {
+    private final Logger log = Logger.getLogger(PeerRunner.class.getName());
+
     private final String endpoint;
     private final String secret;
     private final String peerJar;
     private final String stopPort;
 
+
     @Inject
     public PeerRunner() {
-        this.endpoint = System.getProperty("endpoint");
-        this.secret = System.getProperty("bot.secret");
-        this.peerJar = System.getProperty("peer.jar");
+        endpoint = System.getProperty("endpoint");
+        secret = System.getProperty("bot.secret");
+        peerJar = System.getProperty("peer.jar");
         stopPort = System.getProperty("stop.port");
     }
 
     public void startPeer(String db) throws IOException {
         String[] command = getCommand(db);
+        Joiner joiner = Joiner.on(" ");
+        log.info("Peer started with: " + joiner.join(command));
         Process peer = Runtime.getRuntime().exec(command);
     }
 
