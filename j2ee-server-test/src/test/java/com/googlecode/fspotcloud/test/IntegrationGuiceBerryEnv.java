@@ -24,38 +24,86 @@
 
 package com.googlecode.fspotcloud.test;
 
-import com.google.guiceberry.GuiceBerryEnvMain;
+import com.google.guiceberry.*;
+import com.google.guiceberry.controllable.IcMaster;
+import com.google.guiceberry.controllable.StaticMapInjectionController;
+import com.google.guiceberry.controllable.TestIdServerModule;
+import com.google.inject.*;
 import com.google.inject.name.Names;
+import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
+import com.thoughtworks.selenium.Selenium;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverBackedSelenium;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-public class IntegrationGuiceBerryEnv extends SeleniumGuiceBerryEnv {
+public class IntegrationGuiceBerryEnv extends AbstractModule {
     public static final int PORT = 8000;
 
+    @Provides
+    @Singleton
+    @PortNumber
+    int getPortNumber() {
+        return 8000;
+    }
+
+    @Provides
+    @TestScoped
+    Selenium getWebDriver(@PortNumber int portNumber, TestId testId) {
+        WebDriver driver = new FirefoxDriver();
+        final String baseUrl = "http://localhost:" + portNumber;
+        driver.get(baseUrl);
+        driver.manage().addCookie(new Cookie(TestId.COOKIE_NAME, testId.toString()));
+        return new WebDriverBackedSelenium(driver, baseUrl);
+    }
+
+    private IcMaster icMaster;
+    @Provides
+    @Singleton
+    FscServer buildPetStoreServer(@PortNumber int portNumber) {
+        FscServer result = null;
+        try {
+            result = new FscServer(portNumber) {
+                @Override
+                protected Module getFscModule() {
+                    // !!! HERE !!!
+                    Module module = icMaster.buildServerModule(
+                            new TestIdServerModule(),
+                            super.getFscModule());
+
+                    return module; //super.getFscModule();
+                    //return super.getFscModule();
+                }
+            };
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (URISyntaxException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return result;
+    }
     @Override
     protected void configure() {
-        super.configure();
+        install(new GuiceBerryModule());
         bind(GuiceBerryEnvMain.class).to(ServerStarter.class);
-        bind(String.class).annotatedWith(Names.named("baseUrl"))
-                .toInstance("http://localhost:8000");
         bind(ILogin.class).to(RegularLoginBot.class);
+        bind(TestWrapper.class).to(SeleniumTestWrapper.class);
+        // !!!! HERE !!!!
+        icMaster = new IcMaster()
+                .thatControls(StaticMapInjectionController.strategy(),
+                        Key.get(SecretGenerator.class));
+        install(icMaster.buildClientModule());
     }
 
     private static final class ServerStarter implements GuiceBerryEnvMain {
+        @Inject
         private FscServer server;
 
         public void run() {
-            // Starting a server should never be done in a @Provides method
-            try {
-                server = new FscServer(PORT); // (or inside Provider's get).
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-
             server.start();
         }
     }

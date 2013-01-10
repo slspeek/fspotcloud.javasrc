@@ -4,11 +4,14 @@ description = 'Integration testing for prod-j2ee-war'
 
 dependencies {
     testCompile project(':server-module-j2ee')
+    testCompile project(':test-util')
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
     testCompile ext.libs.guava_testlib
     testCompile ext.libs.guiceberry
     testCompile ext.libs.junit
     testCompile ext.libs.jetty
+//    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
+//    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
 }
 
 task unpackTest(dependsOn: ':e2e-test:packageTests') << {
@@ -24,15 +27,10 @@ task unpackWar(dependsOn: ':prod-j2ee-war:assemble') << {
 }
 
 task copyWar(dependsOn: unpackWar, type: Copy) {
-    ant.properties['bot.secret.userinput'] = "${bot_secret}".toString()
-    ant.properties['admin.email'] = "rms@example.com"
-    from('build/exploded-war-raw') {
-        include "**/properties.properties"
-        filter(ExpandProperties, project: ant.project)
-    }
+
     from('build/exploded-war-raw') {
         exclude "**/properties.properties"
-        //exclude "WEB-INF/lib/*"
+        exclude "WEB-INF/lib/*"
     }
     from('src/test/resources') {
         include 'WEB-INF/web.xml'
@@ -50,12 +48,13 @@ test {
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.test.IntegrationGuiceBerryEnv'
     systemProperties['bot.secret'] = bot_secret
+    systemProperties['stop.port'] = "5555"
     systemProperties['endpoint'] = "localhost:8000"
     systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
     testLogging.showStandardStreams = true
-    include "com/googlecode/fspotcloud/test/DashboardITest.class"
+    include "com/googlecode/fspotcloud/test/MyFirstControlledInjectITest.class"
     ignoreFailures = true
-    exclude  "*"
+    //exclude  "*"
 }
 
 test.dependsOn unpackTest, copyWar, ":peer:assemble"

@@ -42,9 +42,12 @@ public class EmailConfirmationPage {
     Selenium selenium;
 
     public EmailConfirmationPage open(String email) {
-        selenium.open("/confirm?email=" + email + "&secret=thiswillgetharder");
-        selenium.waitForPageToLoad("30000");
+        return open(email, "thiswillgetharder");
+    }
 
+    public EmailConfirmationPage open(String email, String secret) {
+        selenium.open("/confirm?email=" + email + "&secret=" + secret);
+        selenium.waitForPageToLoad("30000");
         return this;
     }
 

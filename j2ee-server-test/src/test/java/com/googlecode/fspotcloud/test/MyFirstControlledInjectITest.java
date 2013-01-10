@@ -24,28 +24,47 @@
 
 package com.googlecode.fspotcloud.test;
 
+import com.google.guiceberry.controllable.InjectionController;
 import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import org.junit.Rule;
 import org.junit.Test;
 
 import javax.inject.Inject;
 
+public class MyFirstControlledInjectITest {
 
-public class DashboardITest {
+    public static final String CONTROLLED_INJECT = "ControlledInject";
+    public static final String RMS_FSF_ORG = "rms@example.com";
+    public static final String CREDENTIALS = "ihp";
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    PeerRunner peerRunner;
-    @Inject
     DashboardPage dashboardPage;
+    @Inject
+    private LoginPage loginPage;
+    @Inject
+    private SignUpPage signUpPage;
+    @Inject
+    private EmailConfirmationPage emailConfirmationPage;
+    @com.google.inject.Inject
+    InjectionController<SecretGenerator> secretGeneratorInjectionController;
+
 
     @Test
     public void testImportFurniture() throws Exception {
-        peerRunner.startPeer("../peer/src/test/resources/photos.db");
-        dashboardPage.loginAndOpen();
-        dashboardPage.synchronize();
-        dashboardPage.open();
-        dashboardPage.toggleImportForTagId("1"); //Furniture
-        peerRunner.stopPeer();
+        secretGeneratorInjectionController.setOverride(new SecretGenerator() {
+            @Override
+            public String getSecret(String user) {
+                return CONTROLLED_INJECT;
+            }
+        });
+        signUpPage.open();
+        signUpPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
+        signUpPage.signUp();
+        emailConfirmationPage.open(RMS_FSF_ORG, CONTROLLED_INJECT).success();
+        loginPage.open();
+        loginPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
+        loginPage.login();
     }
 }

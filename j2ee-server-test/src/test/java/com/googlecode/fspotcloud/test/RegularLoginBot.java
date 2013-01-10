@@ -31,15 +31,18 @@ public class RegularLoginBot implements ILogin {
     public static final String RMS_FSF_ORG = "rms@example.com";
     public static final String CREDENTIALS = "ihp";
     @Inject
-    LoginPage loginPage;
+    private LoginPage loginPage;
     @Inject
-    SignUpPage signUpPage;
+    private SignUpPage signUpPage;
+    @Inject
+    private EmailConfirmationPage emailConfirmationPage;
 
     @Override
     public void login() throws Exception {
         signUpPage.open();
         signUpPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
         signUpPage.signUp();
+        emailConfirmationPage.open(RMS_FSF_ORG).success();
         loginPage.open();
         loginPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
         loginPage.login();
