@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Sleep {
-    private static final int pauseTime = Integer.valueOf(System.getProperty(
+    private static final int PAUSE_TIME = Integer.valueOf(System.getProperty(
             "pause.time",
             "900"));
 
@@ -38,9 +38,9 @@ public class Sleep {
         sleepShort(1);
     }
 
-    public static void sleepShort(int times) throws InterruptedException {
-        final int millis = pauseTime * times;
-        LOGGER.log(Level.INFO, "Sleeping for " + millis);
+    public static void sleepShort(final int times) throws InterruptedException {
+        final int millis = PAUSE_TIME * times;
+        LOGGER.log(Level.FINE, "Sleeping for " + millis);
         Thread.sleep(millis);
     }
 }

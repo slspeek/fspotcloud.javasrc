@@ -15,7 +15,9 @@ public class FreePortFinder {
         socket = new ServerSocket(i);
         socket.close();
         return i;
-      } catch (IOException portInUse) {}
+      } catch (IOException portInUse) {
+          break;
+      }
     }
     throw new RuntimeException("Can't find a free port");
   }
