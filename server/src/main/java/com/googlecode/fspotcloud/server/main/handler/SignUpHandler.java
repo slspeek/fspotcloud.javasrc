@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
+import com.google.inject.Provider;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
@@ -46,7 +47,7 @@ public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResul
     @Inject
     private ConfirmationMailGenerator confirmationMailGenerator;
     @Inject
-    private SecretGenerator secretGenerator;
+    private Provider<SecretGenerator> secretGeneratorProvider;
 
     @Override
     public SignUpResult execute(SignUpAction action, ExecutionContext context)
@@ -56,7 +57,7 @@ public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResul
 
         if (!mayBeExisted.hasRegistered()) {
             final User existingUser = mayBeExisted;
-            String emailConfirmationSecret = secretGenerator.getSecret(email);
+            String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
             existingUser.setNickname(action.getNickname());
             existingUser.setCredentials(action.getPassword());
             existingUser.setEmailVerificationSecret(emailConfirmationSecret);
