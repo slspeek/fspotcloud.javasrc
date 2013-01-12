@@ -4,6 +4,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
@@ -17,15 +18,18 @@ public class LogoutHandler implements IActionHandler
 {
     private final Logger log = Logger.getLogger(LogoutHandler.class.getName());
     private final ClientLoginManager clientLoginManager;
+    private final TreeView.TreePresenter treePresenter;
 
     @Inject
-    public LogoutHandler(ClientLoginManager clientLoginManager) {
+    public LogoutHandler(ClientLoginManager clientLoginManager,
+                         TreeView.TreePresenter treePresenter) {
         this.clientLoginManager = clientLoginManager;
+        this.treePresenter = treePresenter;
     }
 
     @Override
     public void performAction(String actionId) {
-        clientLoginManager.getUserInfoAsync(new GetUserInfo("post-login"),
+        clientLoginManager.getUserInfoAsync(new GetUserInfo(""),
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -52,6 +56,7 @@ public class LogoutHandler implements IActionHandler
                         });
                     }
                 });
+          treePresenter.reloadTree();
 
 
     }

@@ -24,6 +24,8 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
@@ -39,6 +41,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 
 public class NavigatorImpl implements Navigator {
     private final Logger log = Logger.getLogger(NavigatorImpl.class.getName());
@@ -46,14 +50,20 @@ public class NavigatorImpl implements Navigator {
     private final PlaceWhere placeWhere;
     private final DataManager dataManager;
     private final PlaceCalculator placeCalculator;
+    private final MainPlaceHistoryMapper placeHistoryMapper;
+
 
     @Inject
-    public NavigatorImpl(PlaceWhere placeWhere, PlaceGoTo placeGoTo,
-                         PlaceCalculator placeCalculator, DataManager dataManager) {
+    public NavigatorImpl(PlaceWhere placeWhere,
+                         PlaceGoTo placeGoTo,
+                         PlaceCalculator placeCalculator,
+                         DataManager dataManager,
+                         MainPlaceHistoryMapper placeHistoryMapper) {
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
         this.placeCalculator = placeCalculator;
         this.dataManager = dataManager;
+        this.placeHistoryMapper = placeHistoryMapper;
     }
 
     @Override
@@ -230,6 +240,7 @@ public class NavigatorImpl implements Navigator {
     @Override
     public void getPageAsync(String tagId, final int pageSize,
                              final int pageNumber, final AsyncCallback<List<PhotoInfo>> callback) {
+        log.info("getPageAsync: " + tagId + " " + pageSize + " " + pageNumber);
         dataManager.getTagNode(tagId,
                 new AsyncCallback<TagNode>() {
                     @Override
@@ -248,9 +259,10 @@ public class NavigatorImpl implements Navigator {
 
     private void getPage(TagNode node, int pageSize, int pageNumber,
                          AsyncCallback<List<PhotoInfo>> callback) {
-        PhotoInfoStore store = node.getCachedPhotoList();
-        log.info("Store: " + store);
-
+        PhotoInfoStore store = getSafePhotoInfoStore(node);
+        if (pageNumber < 0) {
+            return;
+        }
         int offset = pageNumber * pageSize;
         List<PhotoInfo> result = new ArrayList<PhotoInfo>();
 
@@ -265,9 +277,23 @@ public class NavigatorImpl implements Navigator {
         callback.onSuccess(result);
     }
 
+    private PhotoInfoStore getSafePhotoInfoStore(TagNode node) {
+        PhotoInfoStore store;
+        if (node == null) {
+            List<PhotoInfo> empty = newArrayList();
+            store = new PhotoInfoStore(empty);
+
+
+        } else {
+            store = node.getCachedPhotoList();
+        }
+        return store;
+    }
+
     @Override
     public void getPageAsync(String tagId, final String photoId,
                              final int pageSize, final AsyncCallback<List<PhotoInfo>> callback) {
+        log.info("getPageAsync: " + tagId + " " + pageSize + " photoId: " + photoId);
         dataManager.getTagNode(tagId,
                 new AsyncCallback<TagNode>() {
                     @Override
@@ -279,7 +305,7 @@ public class NavigatorImpl implements Navigator {
 
                     @Override
                     public void onSuccess(TagNode result) {
-                        PhotoInfoStore store = result.getCachedPhotoList();
+                        PhotoInfoStore store = getSafePhotoInfoStore(result);
                         int index = store.indexOf(photoId);
                         int pageNumber = index / pageSize;
                         getPage(result, pageSize, pageNumber, callback);
@@ -331,8 +357,12 @@ public class NavigatorImpl implements Navigator {
                         }
                     }
                 }
+                if (latestNode != null) {
+                    goToTag(latestNode.getId(), latestNode.getCachedPhotoList());
 
-                goToTag(latestNode.getId(), latestNode.getCachedPhotoList());
+                } else {
+                    log.info("No tags public");
+                }
             }
         });
     }
@@ -441,6 +471,10 @@ public class NavigatorImpl implements Navigator {
                         } else {
                             callback.onFailure(new RuntimeException(
                                     "label not found."));
+                            Place now = placeWhere.where();
+                            String nextUrl = "#" + placeHistoryMapper.getToken(now);
+
+                            placeGoTo.goTo(new LoginPlace(nextUrl));
                         }
                     }
                 });

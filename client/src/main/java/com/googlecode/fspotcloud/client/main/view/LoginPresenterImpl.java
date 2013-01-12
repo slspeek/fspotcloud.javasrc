@@ -26,14 +26,16 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
-import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.SignUpPlace;
-import com.googlecode.fspotcloud.client.place.UserAccountPlace;
+import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
@@ -53,13 +55,23 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final LoginView view;
     private final DispatchAsync dispatch;
     private final PlaceGoTo placeGoTo;
+    private final PlaceWhere placeWhere;
+    private final MainPlaceHistoryMapper mainPlaceHistoryMapper;
+    private final TreeView.TreePresenter treePresenter;
 
     @Inject
-    public LoginPresenterImpl(LoginView loginView, DispatchAsync dispatch,
-                              PlaceGoTo placeGoTo) {
+    public LoginPresenterImpl(LoginView loginView,
+                              DispatchAsync dispatch,
+                              PlaceGoTo placeGoTo,
+                              PlaceWhere placeWhere,
+                              MainPlaceHistoryMapper mainPlaceHistoryMapper,
+                              TreeView.TreePresenter treePresenter) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
+        this.placeWhere = placeWhere;
+        this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
+        this.treePresenter = treePresenter;
     }
 
     @Override
@@ -67,7 +79,9 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
         this.view.setPresenter(this);
         panel.setWidget(view);
         view.focusUserNameField();
-        dispatch.execute(new GetUserInfo("post-login"),
+        String nextUrl;
+        nextUrl = getNextUrl();
+        dispatch.execute(new GetUserInfo("post-login?next=" + nextUrl),
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -81,6 +95,10 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                         view.setGoogleLoginHref(loginUrl);
                     }
                 });
+    }
+
+    private String getNextUrl() {
+        return ((LoginPlace) placeWhere.getRawWhere()).getNextUrl();
     }
 
     @Override
@@ -133,7 +151,18 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
 
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
-                            placeGoTo.goTo(new UserAccountPlace());
+                            String nextUrl = getNextUrl();
+                            if (!nextUrl.equals("")) {
+                                treePresenter.reloadTree();
+                                nextUrl = nextUrl.substring(1);
+                                Place place = mainPlaceHistoryMapper.getPlace(nextUrl);
+
+                                placeGoTo.goTo(place);
+
+                                //Window.open(nextUrl, "", "");
+                            }  else {
+                                placeGoTo.goTo(new UserAccountPlace());
+                            }
                         } else {
                             view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
                         }

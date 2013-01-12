@@ -34,6 +34,7 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -68,11 +69,13 @@ public class DataManagerImpl implements DataManager {
 
     public void getTagNode(final String id,
                            final AsyncCallback<TagNode> callback) {
+        log.info("getTagNode: " + id);
         if (tagTreeData != null) {
             TagNode node = tagNodeIndex.get(id);
             callback.onSuccess(node);
         } else {
             if (!isCalled) {
+
                 getTagTree(new AsyncCallback<List<TagNode>>() {
                     @Override
                     public void onFailure(Throwable arg0) {
@@ -116,8 +119,17 @@ public class DataManagerImpl implements DataManager {
         }
     }
 
+    @Override
+    public void reset() {
+        isCalled = false;
+        tagTreeData = null;
+        tagNodeIndex.clear();
+    }
+
     public void getTagTree(final AsyncCallback<List<TagNode>> callback) {
+        log.info("getTagTree ");
         if (tagTreeData != null) {
+            log.info("getTagTree cached");
             callback.onSuccess(tagTreeData);
         } else {
             queue.add(new Runnable() {
@@ -129,6 +141,7 @@ public class DataManagerImpl implements DataManager {
 
             if (!isCalled) {
                 isCalled = true;
+                log.info("getTagTree CALLING OUT!");
                 dispatchAsync.execute(new GetTagTreeAction(),
                         new AsyncCallback<TagTreeResult>() {
                             public void onFailure(Throwable caught) {
@@ -136,11 +149,15 @@ public class DataManagerImpl implements DataManager {
                             }
 
                             public void onSuccess(TagTreeResult result) {
+                                try {
                                 tagTreeData = result.getTree();
                                 indexingUtil.rebuildTagNodeIndex(tagNodeIndex,
                                         tagTreeData);
                                 callbackHook.run();
-                                log.info("Hook ran !");
+                                log.info("Hook ran ! for:" + result.getTree());
+                                } catch (Exception e) {
+                                    log.log(Level.FINEST, "error", e);
+                                }
                             }
                         });
             }

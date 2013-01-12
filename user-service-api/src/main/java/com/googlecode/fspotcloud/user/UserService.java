@@ -25,9 +25,9 @@
 package com.googlecode.fspotcloud.user;
 
 public interface UserService {
-    String getThirdPartyLogoutURL();
+    String getThirdPartyLogoutURL(String nextUrl);
 
-    String getThirdPartyLoginURL();
+    String getThirdPartyLoginURL(String nextUrl);
 
     String getEmail();
 

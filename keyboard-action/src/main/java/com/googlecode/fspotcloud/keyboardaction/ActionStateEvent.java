@@ -64,7 +64,7 @@ class ActionStateEvent extends Event<IActionEnableHandler> {
 
     @Override
     protected void dispatch(IActionEnableHandler handlerI) {
-        log.log(Level.OFF, "in dispatch for " + this);
+        //log.log(Level.OFF, "in dispatch for " + this);
         handlerI.onEvent(this);
     }
 

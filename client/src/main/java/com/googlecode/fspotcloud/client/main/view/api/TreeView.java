@@ -42,5 +42,7 @@ public interface TreeView extends IsWidget {
 
     interface TreePresenter extends Initializable {
         void setPlace(BasePlace place);
+
+        void reloadTree();
     }
 }

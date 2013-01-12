@@ -24,9 +24,12 @@
 
 package com.googlecode.fspotcloud.client.place.api;
 
+import com.google.gwt.place.shared.Place;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 
 
 public interface PlaceWhere {
     BasePlace where();
+
+    Place getRawWhere();
 }

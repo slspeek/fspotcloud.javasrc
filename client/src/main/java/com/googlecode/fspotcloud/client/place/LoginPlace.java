@@ -29,6 +29,17 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class LoginPlace extends Place {
+
+    public String getNextUrl() {
+        return nextUrl;
+    }
+
+    final private String nextUrl;
+
+    public LoginPlace(String nextUrl) {
+        this.nextUrl = nextUrl;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other instanceof LoginPlace) {
@@ -46,12 +57,13 @@ public class LoginPlace extends Place {
     public static class Tokenizer implements PlaceTokenizer<LoginPlace> {
         @Override
         public LoginPlace getPlace(String token) {
-            return new LoginPlace();
+
+            return new LoginPlace(token);
         }
 
         @Override
         public String getToken(LoginPlace place) {
-            return "";
+            return place.getNextUrl();
         }
     }
 }

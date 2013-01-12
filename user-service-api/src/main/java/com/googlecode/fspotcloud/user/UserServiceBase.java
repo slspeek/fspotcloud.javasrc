@@ -33,7 +33,7 @@ public abstract class UserServiceBase implements com.googlecode.fspotcloud.user.
     @Inject
     Provider<ILoginMetaData> loginMetaDataProvider;
     @Inject
-    UrlUtil urlUtil;
+    protected UrlUtil urlUtil;
 
     @Override
     public String getEmail() {
@@ -43,13 +43,5 @@ public abstract class UserServiceBase implements com.googlecode.fspotcloud.user.
     @Override
     public boolean isUserLoggedIn() {
         return getEmail() != null;
-    }
-
-    protected String getPostThirdPartyLoginURL() {
-        return urlUtil.toAbsoluteURL("post-login");
-    }
-
-    protected String getPostThirdPartyLogoutURL() {
-        return urlUtil.toAbsoluteURL("FSpotCloud.html");
     }
 }

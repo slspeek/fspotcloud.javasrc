@@ -107,6 +107,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     }
 
     private void requestTagTreeData() {
+
         dataManager.getTagTree(new AsyncCallback<List<TagNode>>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -121,6 +122,8 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     }
 
     public void reloadTree() {
+        log.info("ABout to reload the tree data");
+        dataManager.reset();
         requestTagTreeData();
     }
 
