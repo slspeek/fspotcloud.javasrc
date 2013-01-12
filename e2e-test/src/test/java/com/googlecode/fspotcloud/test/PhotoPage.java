@@ -42,9 +42,13 @@ public class PhotoPage {
     @Inject
     Selenium selenium;
 
-    public void open() {
-        selenium.open("/");
+    public void open(String token) {
+        selenium.open("/" + token );
         selenium.waitForPageToLoad("30000");
+    }
+
+    public void open() {
+        open("");
     }
 
     public void about() {

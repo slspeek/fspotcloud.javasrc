@@ -36,11 +36,14 @@ import com.googlecode.fspotcloud.client.main.view.api.ImagePresenterFactory;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
+import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -55,15 +58,18 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
     protected final ImageRasterView imageRasterView;
     private final Navigator navigator;
     private final ImagePresenterFactory imagePresenterFactory;
+    private final PlaceGoTo placeGoTo;
     List<ImageView> imageViewList;
     final List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
 
     @Inject
     public ImageRasterPresenterImpl(@Assisted
-                                    BasePlace place, @Assisted
-                                    ImageRasterView imageRasterView,
+                                        BasePlace place, @Assisted
+    ImageRasterView imageRasterView,
                                     Navigator navigator,
-                                    ImagePresenterFactory imagePresenterFactory) {
+                                    ImagePresenterFactory imagePresenterFactory,
+                                    PlaceGoTo placeGoTo) {
+        this.placeGoTo = placeGoTo;
         tagId = place.getTagId();
         photoId = place.getPhotoId();
         columnCount = place.getColumnCount();
@@ -82,10 +88,12 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
     }
 
     public void setImages() {
+        log.log(Level.FINEST, "setImages public");
         navigator.getPageAsync(tagId, photoId, pageSize,
                 new AsyncCallback<List<PhotoInfo>>() {
                     @Override
                     public void onSuccess(List<PhotoInfo> result) {
+                        log.log(Level.FINEST, "onSucces: " + result);
                         imageViewList = imageRasterView.buildRaster(rowCount,
                                 columnCount);
                         setImages(result);
@@ -108,13 +116,14 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
 
                     @Override
                     public void onFailure(Throwable caught) {
+                        log.log(Level.FINEST, "setImages caught an error", caught);
                     }
                 });
+        log.log(Level.FINEST, "setImages public exiting");
     }
 
     private void setImages(List<PhotoInfo> result) {
         imagePresenterList.clear();
-
         int i = 0;
 
         for (; i < result.size(); i++) {

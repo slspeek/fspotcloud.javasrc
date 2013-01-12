@@ -35,7 +35,7 @@ public class UrlUtil {
     @ServerAddress
     Provider<String> serverAddressProvider;
 
-    protected String toAbsoluteURL(String url) {
+    public String toAbsoluteURL(String url) {
         String result = serverAddressProvider.get() + "/" + url;
 
         return result;

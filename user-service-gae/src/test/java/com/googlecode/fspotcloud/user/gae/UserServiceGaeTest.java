@@ -73,18 +73,18 @@ public class UserServiceGaeTest {
     @Test
     public void createLoginURL(
             com.google.appengine.api.users.UserService delegate) {
-        when(delegate.createLoginURL("http://localhost:8080/context/post-login"))
+        when(delegate.createLoginURL("http://localhost:8080/context/"))
                 .thenReturn("url");
-        Assert.assertEquals("url", userService.getThirdPartyLoginURL());
+        Assert.assertEquals("url", userService.getThirdPartyLoginURL(""));
     }
 
     @Test
     public void createLogoutURL(
             com.google.appengine.api.users.UserService delegate) {
         when(delegate.createLogoutURL(
-                "http://localhost:8080/context/FSpotCloud.html"))
+                "http://localhost:8080/context/"))
                 .thenReturn("url");
-        Assert.assertEquals("url", userService.getThirdPartyLogoutURL());
+        Assert.assertEquals("url", userService.getThirdPartyLogoutURL(""));
     }
 
     @Test

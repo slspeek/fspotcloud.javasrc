@@ -13,6 +13,7 @@ public class LoginHandler implements IActionHandler
     private final Logger log = Logger.getLogger(LoginHandler.class.getName());
     private final PlaceGoTo placeGoTo;
 
+
     @Inject
     public LoginHandler(PlaceGoTo placeGoTo) {
         this.placeGoTo = placeGoTo;
@@ -20,6 +21,6 @@ public class LoginHandler implements IActionHandler
 
     @Override
     public void performAction(String actionId) {
-        placeGoTo.goTo(new LoginPlace());
+        placeGoTo.goTo(new LoginPlace(""));
     }
 }

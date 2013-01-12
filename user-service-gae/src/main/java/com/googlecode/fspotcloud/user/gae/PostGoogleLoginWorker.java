@@ -32,6 +32,7 @@ import com.googlecode.fspotcloud.user.LoginMetaData;
 import com.googlecode.fspotcloud.user.PostThirdPartyLoginWorker;
 
 import javax.inject.Inject;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -50,12 +51,12 @@ public class PostGoogleLoginWorker implements PostThirdPartyLoginWorker {
         User gaeUser = googleUserService.getCurrentUser();
 
         if (gaeUser != null) {
-            log.info("User is logged on");
-
             String email = gaeUser.getEmail();
             com.googlecode.fspotcloud.server.model.api.User user = userDao.findOrNew(email);
             metaDataUpdater.doUpdate(user, LoginMetaData.Type.GAE_LOGIN);
-            log.info("User is logged on and after loginMeta update");
+            log.info("User: " + email + " is logged on and after loginMeta update");
+        }  else {
+            log.log(Level.INFO, "After a google login, no user was found.");
         }
     }
 }

@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
@@ -58,6 +59,17 @@ public class NavigatorImplTest extends TestCase {
     final BasePlace r1_3_zoomed_in = new BasePlace("6", "101", 1, 1);
     BasePlace r1_3next = new BasePlace("6", "103", 1, 3);
 
+    MainPlaceHistoryMapper mainPlaceHistoryMapper = new MainPlaceHistoryMapper() {
+        @Override
+        public Place getPlace(String token) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public String getToken(Place place) {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+    };
     @Override
     protected void setUp() throws Exception {
         context = new Mockery();
@@ -65,11 +77,11 @@ public class NavigatorImplTest extends TestCase {
     }
 
     public Navigator get(PlaceGoTo goTo) {
-        return new NavigatorImpl(null, goTo, placeCalculator, dataManager);
+        return new NavigatorImpl(null, goTo, placeCalculator, dataManager, mainPlaceHistoryMapper);
     }
 
     public Navigator get(PlaceWhere where, PlaceGoTo goTo) {
-        return new NavigatorImpl(where, goTo, placeCalculator, dataManager);
+        return new NavigatorImpl(where, goTo, placeCalculator, dataManager, mainPlaceHistoryMapper);
     }
 
     public void testGoLast() {

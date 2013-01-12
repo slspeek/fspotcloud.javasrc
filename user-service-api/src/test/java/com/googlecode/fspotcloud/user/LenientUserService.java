@@ -36,12 +36,12 @@ package com.googlecode.fspotcloud.user;
  */
 public class LenientUserService implements UserService {
     @Override
-    public String getThirdPartyLoginURL() {
+    public String getThirdPartyLoginURL(String nextUrl) {
         return "";
     }
 
     @Override
-    public String getThirdPartyLogoutURL() {
+    public String getThirdPartyLogoutURL(String nextUrl) {
         return "";
     }
 

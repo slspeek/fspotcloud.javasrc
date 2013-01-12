@@ -51,8 +51,8 @@ public class GetUserInfoHandlerTest {
             throws DispatchException {
         when(service.isUserLoggedIn()).thenReturn(Boolean.TRUE);
         when(service.isUserAdmin()).thenReturn(Boolean.FALSE);
-        when(service.getThirdPartyLoginURL()).thenReturn("login_url");
-        when(service.getThirdPartyLogoutURL()).thenReturn("logout_url");
+        when(service.getThirdPartyLoginURL("")).thenReturn("login_url");
+        when(service.getThirdPartyLogoutURL("")).thenReturn("logout_url");
         when(service.getEmail()).thenReturn("foo@bar.com");
 
         UserInfo info = handler.execute(new GetUserInfo(""), null);
@@ -65,8 +65,8 @@ public class GetUserInfoHandlerTest {
             throws DispatchException {
         when(service.isUserLoggedIn()).thenReturn(Boolean.FALSE);
         when(service.isUserAdmin()).thenReturn(Boolean.FALSE);
-        when(service.getThirdPartyLoginURL()).thenReturn("login_url");
-        when(service.getThirdPartyLogoutURL()).thenReturn("logout_url");
+        when(service.getThirdPartyLoginURL("")).thenReturn("login_url");
+        when(service.getThirdPartyLogoutURL("")).thenReturn("logout_url");
         when(service.getEmail()).thenReturn(null);
 
         UserInfo info = handler.execute(new GetUserInfo(""), null);

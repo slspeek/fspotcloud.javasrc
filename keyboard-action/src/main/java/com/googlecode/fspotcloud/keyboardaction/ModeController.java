@@ -33,7 +33,7 @@ public class ModeController implements IModeController {
     public void setMode(String mode) {
         if (!Objects.equal(this.mode, mode)) {
             this.mode = mode;
-            log.log(Level.FINEST, "Set mode to: " + mode);
+            //log.log(Level.FINEST, "Set mode to: " + mode);
             fireEnabledStateEvens();
         }
     }
@@ -56,7 +56,7 @@ public class ModeController implements IModeController {
             } else {
                 event = new ActionStateEvent(actionId, relevant);
             }
-            log.log(Level.FINEST, "Firing: " + event);
+            //log.log(Level.FINEST, "Firing: " + event);
             eventBus.fireEvent(event);
         }
     }
