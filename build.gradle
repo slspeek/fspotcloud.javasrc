@@ -21,6 +21,7 @@ buildscript {
 }
 
 
+<<<<<<< HEAD
 project.ext {
         libs = [
                 bot_dispatch_bot: "com.googlecode.bot-dispatch:bot:${bot_dispatch_version}",
@@ -89,7 +90,7 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'com.googlecode.fspotcloud'
-    version = "0.86-${build_number}"
+    version = "0.87-${build_number}"
 }
 
 subprojects {

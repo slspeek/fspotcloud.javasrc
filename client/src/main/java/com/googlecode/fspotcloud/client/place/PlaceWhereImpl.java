@@ -48,4 +48,10 @@ public class PlaceWhereImpl extends PlaceGoToImpl implements PlaceWhere {
 
         return lastBasePlace;
     }
+
+    @Override
+    public Place getRawWhere(){
+        Place place = placeController.getWhere();
+        return place;
+    }
 }

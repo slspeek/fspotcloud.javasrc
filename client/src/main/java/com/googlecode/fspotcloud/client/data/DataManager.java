@@ -38,4 +38,6 @@ public interface DataManager {
     void getAdminTagTree(final AsyncCallback<List<TagNode>> callback);
 
     void getAdminTagNode(String tagId, AsyncCallback<TagNode> asyncCallback);
+
+    void reset();
 }
