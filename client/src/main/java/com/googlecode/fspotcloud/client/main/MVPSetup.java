@@ -56,6 +56,7 @@ public class MVPSetup {
     private final ClientLoginManager clientLoginManager;
     private final ZoomViewEventHandlerImpl zoomViewEventHandler;
     private final StylesSetup stylesSetup;
+    private final MainPlaceHistoryMapper mainPlaceHistoryMapper;
 
 
     @Inject
@@ -65,9 +66,10 @@ public class MVPSetup {
                     ClientLoginManager clientLoginManager,
                     UserActionHandlerBinder userActionHandlerBinder,
                     ZoomViewEventHandlerImpl zoomViewEventHandler,
-                    StylesSetup stylesSetup) {
+                    StylesSetup stylesSetup,
+                    MainPlaceHistoryMapper mainPlaceHistoryMapper) {
         this.stylesSetup = stylesSetup;
-
+        this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
         zoomViewEventHandler.init();
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
@@ -83,15 +85,12 @@ public class MVPSetup {
         ActivityManager activityManager = new ActivityManager(activityMapper,
                 eventBus);
         activityManager.setDisplay(new HasOneWidgetAdapter(appWidget));
-
-        MainPlaceHistoryMapper historyMapper = GWT.create(MainPlaceHistoryMapper.class);
-        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
+        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(mainPlaceHistoryMapper);
         HandlerRegistration r = historyHandler.register(placeController, eventBus, defaultPlace);
 
         log.info("Just before handleCurrentHistory()");
         RootLayoutPanel.get().add(appWidget);
         historyHandler.handleCurrentHistory();
         log.info("Setup finished");
-        clientLoginManager.getAsync();
     }
 }

@@ -54,21 +54,6 @@ public class ClientLoginManager {
         this.dispatch = dispatch;
     }
 
-    public void getAsync() {
-        getUserInfoAsync(new GetUserInfo(""),
-                new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "User info failure ", caught);
-                    }
-
-                    @Override
-                    public void onSuccess(UserInfo result) {
-                        log.info("User is " + result);
-                    }
-                });
-    }
-
     public void getUserInfoAsync(GetUserInfo info,
                                  AsyncCallback<UserInfo> callback) {
         dispatch.execute(info, callback);
