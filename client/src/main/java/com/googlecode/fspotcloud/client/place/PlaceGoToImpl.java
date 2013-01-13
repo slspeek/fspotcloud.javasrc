@@ -32,14 +32,22 @@ import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 
 public class PlaceGoToImpl implements PlaceGoTo {
     protected final PlaceController placeController;
+    protected final MainPlaceHistoryMapper mainPlaceHistoryMapper;
 
     @Inject
-    public PlaceGoToImpl(PlaceController placeController) {
+    public PlaceGoToImpl(PlaceController placeController,
+                         MainPlaceHistoryMapper mainPlaceHistoryMapper) {
         this.placeController = placeController;
+        this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
     }
 
     @Override
     public void goTo(Place place) {
         placeController.goTo(place);
+    }
+
+    @Override
+    public void goTo(String token) {
+        goTo(mainPlaceHistoryMapper.getPlace(token.substring(1)));
     }
 }

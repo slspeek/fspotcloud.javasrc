@@ -31,5 +31,7 @@ import com.googlecode.fspotcloud.client.place.BasePlace;
 public interface PlaceWhere {
     BasePlace where();
 
+    String whereToken();
+
     Place getRawWhere();
 }

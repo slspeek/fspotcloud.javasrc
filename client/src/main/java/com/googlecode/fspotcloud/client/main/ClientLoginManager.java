@@ -28,8 +28,12 @@
 */
 package com.googlecode.fspotcloud.client.main;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.place.LoginPlace;
+import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
 import com.googlecode.fspotcloud.shared.main.LogoutAction;
@@ -48,10 +52,16 @@ import java.util.logging.Logger;
 public class ClientLoginManager {
     private final Logger log = Logger.getLogger(ClientLoginManager.class.getName());
     private final DispatchAsync dispatch;
+    private final PlaceWhere placeWhere;
+    private final PlaceGoTo placeGoTo;
 
     @Inject
-    public ClientLoginManager(DispatchAsync dispatch) {
+    public ClientLoginManager(DispatchAsync dispatch,
+                              PlaceWhere placeWhere,
+                              PlaceGoTo placeGoTo) {
         this.dispatch = dispatch;
+        this.placeWhere = placeWhere;
+        this.placeGoTo = placeGoTo;
     }
 
     public void getUserInfoAsync(GetUserInfo info,
@@ -61,5 +71,10 @@ public class ClientLoginManager {
 
     public void logout(AsyncCallback<VoidResult> resultAsyncCallback) {
         dispatch.execute(new LogoutAction(), resultAsyncCallback);
+    }
+
+    public void redirectToLogin() {
+        String nextUrl = placeWhere.whereToken();
+        placeGoTo.goTo(new LoginPlace(nextUrl));
     }
 }
