@@ -90,14 +90,10 @@ public class PrivateAccessITest {
         signUpPage.fillForm(SLSPEEK_GMAIL_COM, SLSPEEK_GMAIL_COM);
         signUpPage.signUp();
         emailConfirmationPage.open(SLSPEEK_GMAIL_COM).success();
-        photoPage.open();
-        loginPage.open();
+        photoPage.open("#BasePlace:1:7:2:2");
         loginPage.fillForm(SLSPEEK_GMAIL_COM, SLSPEEK_GMAIL_COM);
         loginPage.login();
-        userAccountPage.open();
-        photoPage.open();
-        photoPage.clickImage(0, 0);
-        photoPage.assertPagingLabelSays(1, 9);
+        photoPage.assertPagingLabelSays(1, 3);
         photoPage.logout();
         dashboardPage.loginAndOpen();
         myUserGroupsPage.open();
