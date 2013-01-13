@@ -47,7 +47,9 @@ import com.googlecode.fspotcloud.client.main.view.TagCell;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.PlaceGoToImpl;
+import com.googlecode.fspotcloud.client.place.PlaceWhereImpl;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 
 
 public class AdminModule extends AbstractGinModule {
@@ -66,6 +68,7 @@ public class AdminModule extends AbstractGinModule {
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
         bind(TagCell.class);
         bind(PlaceGoTo.class).to(PlaceGoToImpl.class);
+        bind(PlaceWhere.class).to(PlaceWhereImpl.class);
         bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
         bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);

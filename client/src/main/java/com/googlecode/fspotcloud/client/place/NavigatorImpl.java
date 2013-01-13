@@ -24,12 +24,11 @@
 
 package com.googlecode.fspotcloud.client.place;
 
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.IndexingUtil;
+import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
@@ -50,7 +49,7 @@ public class NavigatorImpl implements Navigator {
     private final PlaceWhere placeWhere;
     private final DataManager dataManager;
     private final PlaceCalculator placeCalculator;
-    private final MainPlaceHistoryMapper placeHistoryMapper;
+    private final ClientLoginManager clientLoginManager;
 
 
     @Inject
@@ -58,12 +57,12 @@ public class NavigatorImpl implements Navigator {
                          PlaceGoTo placeGoTo,
                          PlaceCalculator placeCalculator,
                          DataManager dataManager,
-                         MainPlaceHistoryMapper placeHistoryMapper) {
+                         ClientLoginManager clientLoginManager) {
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
         this.placeCalculator = placeCalculator;
         this.dataManager = dataManager;
-        this.placeHistoryMapper = placeHistoryMapper;
+        this.clientLoginManager = clientLoginManager;
     }
 
     @Override
@@ -471,10 +470,7 @@ public class NavigatorImpl implements Navigator {
                         } else {
                             callback.onFailure(new RuntimeException(
                                     "label not found."));
-                            Place now = placeWhere.where();
-                            String nextUrl = "#" + placeHistoryMapper.getToken(now);
-
-                            placeGoTo.goTo(new LoginPlace(nextUrl));
+                            clientLoginManager.redirectToLogin();
                         }
                     }
                 });
