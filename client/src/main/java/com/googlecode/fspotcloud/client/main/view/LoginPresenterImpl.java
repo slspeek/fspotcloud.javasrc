@@ -56,7 +56,6 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final DispatchAsync dispatch;
     private final PlaceGoTo placeGoTo;
     private final PlaceWhere placeWhere;
-    private final MainPlaceHistoryMapper mainPlaceHistoryMapper;
     private final TreeView.TreePresenter treePresenter;
 
     @Inject
@@ -64,13 +63,11 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                               DispatchAsync dispatch,
                               PlaceGoTo placeGoTo,
                               PlaceWhere placeWhere,
-                              MainPlaceHistoryMapper mainPlaceHistoryMapper,
                               TreeView.TreePresenter treePresenter) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
-        this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
         this.treePresenter = treePresenter;
     }
 
@@ -154,12 +151,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {
                                 treePresenter.reloadTree();
-                                nextUrl = nextUrl.substring(1);
-                                Place place = mainPlaceHistoryMapper.getPlace(nextUrl);
-
-                                placeGoTo.goTo(place);
-
-                                //Window.open(nextUrl, "", "");
+                                placeGoTo.goTo(nextUrl);
                             }  else {
                                 placeGoTo.goTo(new UserAccountPlace());
                             }

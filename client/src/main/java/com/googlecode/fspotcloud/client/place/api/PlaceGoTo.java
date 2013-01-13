@@ -29,4 +29,6 @@ import com.google.gwt.place.shared.Place;
 
 public interface PlaceGoTo {
     void goTo(Place place);
+
+    void goTo(String token);
 }

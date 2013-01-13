@@ -28,6 +28,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
+import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.DispatchAsyncTestImpl;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Direction;
@@ -70,18 +71,21 @@ public class NavigatorImplTest extends TestCase {
             return null;  //To change body of implemented methods use File | Settings | File Templates.
         }
     };
+    private ClientLoginManager clientLoginManager;
+
     @Override
     protected void setUp() throws Exception {
         context = new Mockery();
+        clientLoginManager = null;
         super.setUp();
     }
 
     public Navigator get(PlaceGoTo goTo) {
-        return new NavigatorImpl(null, goTo, placeCalculator, dataManager, mainPlaceHistoryMapper);
+        return new NavigatorImpl(null, goTo, placeCalculator, dataManager, clientLoginManager);
     }
 
     public Navigator get(PlaceWhere where, PlaceGoTo goTo) {
-        return new NavigatorImpl(where, goTo, placeCalculator, dataManager, mainPlaceHistoryMapper);
+        return new NavigatorImpl(where, goTo, placeCalculator, dataManager, clientLoginManager);
     }
 
     public void testGoLast() {

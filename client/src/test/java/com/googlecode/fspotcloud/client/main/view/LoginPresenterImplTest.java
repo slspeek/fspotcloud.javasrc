@@ -26,7 +26,10 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
+import com.googlecode.fspotcloud.client.place.LoginPlace;
+import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
@@ -53,9 +56,11 @@ public class LoginPresenterImplTest {
     LoginPresenterImpl presenter;
 
     @Before
-    public void train(LoginView loginView) throws Exception {
+    public void train(LoginView loginView, PlaceWhere placeWhere) throws Exception {
+        when(placeWhere.getRawWhere()).thenReturn(new LoginPlace(""));
         when(loginView.getPasswordField()).thenReturn(SECRET);
         when(loginView.getUserNameField()).thenReturn(ADMIN);
+
     }
 
     @Test
@@ -66,7 +71,7 @@ public class LoginPresenterImplTest {
         verify(dispatch).execute(actionCaptor.capture(), captor.capture());
 
         GetUserInfo action = (GetUserInfo) actionCaptor.getValue();
-        assertEquals("post-login", action.getDestinationUrl());
+        assertEquals("post-login?next=", action.getDestinationUrl());
         verify(loginView).setPresenter(presenter);
         verify(loginView).focusUserNameField();
         verify(panel).setWidget(loginView);
