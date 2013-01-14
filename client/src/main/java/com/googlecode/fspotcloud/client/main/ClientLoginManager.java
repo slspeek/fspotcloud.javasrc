@@ -28,9 +28,10 @@
 */
 package com.googlecode.fspotcloud.client.main;
 
-import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
@@ -40,8 +41,11 @@ import com.googlecode.fspotcloud.shared.main.LogoutAction;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 
 /**
@@ -51,30 +55,95 @@ import java.util.logging.Logger;
  */
 public class ClientLoginManager {
     private final Logger log = Logger.getLogger(ClientLoginManager.class.getName());
+    private boolean isCalled = false;
+    private final List<Runnable> queue = newArrayList();
+    private final Runnable callbackHook = new Runnable() {
+        @Override
+        public void run() {
+            for (Runnable task : queue) {
+                task.run();
+            }
+
+            queue.clear();
+        }
+    };
     private final DispatchAsync dispatch;
     private final PlaceWhere placeWhere;
     private final PlaceGoTo placeGoTo;
+    private UserInfo currentUser;
+    private final DataManager dataManager;
 
     @Inject
     public ClientLoginManager(DispatchAsync dispatch,
                               PlaceWhere placeWhere,
-                              PlaceGoTo placeGoTo) {
+                              PlaceGoTo placeGoTo,
+                              DataManager dataManager
+                              ) {
         this.dispatch = dispatch;
         this.placeWhere = placeWhere;
         this.placeGoTo = placeGoTo;
+        this.dataManager = dataManager;
     }
 
-    public void getUserInfoAsync(GetUserInfo info,
-                                 AsyncCallback<UserInfo> callback) {
-        dispatch.execute(info, callback);
+    public void getUserInfoAsync(final AsyncCallback<UserInfo> callback) {
+        if (currentUser != null) {
+            callback.onSuccess(currentUser);
+        } else {
+            queue.add(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onSuccess(currentUser);
+                }
+            });
+            if (!isCalled) {
+                dispatch.execute(new GetUserInfo(""), new AsyncCallback<UserInfo>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        log.log(Level.WARNING, "Error during getUserInfo ", caught);
+                    }
+
+                    @Override
+                    public void onSuccess(UserInfo result) {
+                        currentUser = result;
+                        callbackHook.run();
+                    }
+                });
+            }
+        }
     }
+
+
 
     public void logout(AsyncCallback<VoidResult> resultAsyncCallback) {
         dispatch.execute(new LogoutAction(), resultAsyncCallback);
     }
 
     public void redirectToLogin() {
-        String nextUrl = placeWhere.whereToken();
-        placeGoTo.goTo(new LoginPlace(nextUrl));
+        getUserInfoAsync(new AsyncCallback<UserInfo>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+
+            @Override
+            public void onSuccess(UserInfo result) {
+                if (!result.isLoggedIn()) {
+                    String nextUrl = placeWhere.whereToken();
+                    placeGoTo.goTo(new LoginPlace(nextUrl));
+                }
+            }
+        });
+
+    }
+
+    private void reset() {
+        queue.clear();
+        isCalled = false;
+        currentUser = null;
+    }
+
+    public void resetApplicationData() {
+        reset();
+        dataManager.reset();
     }
 }

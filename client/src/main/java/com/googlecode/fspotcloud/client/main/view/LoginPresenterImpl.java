@@ -31,6 +31,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.*;
@@ -57,18 +58,22 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final PlaceGoTo placeGoTo;
     private final PlaceWhere placeWhere;
     private final TreeView.TreePresenter treePresenter;
+    private final ClientLoginManager clientLoginManager;
+
 
     @Inject
     public LoginPresenterImpl(LoginView loginView,
                               DispatchAsync dispatch,
                               PlaceGoTo placeGoTo,
                               PlaceWhere placeWhere,
-                              TreeView.TreePresenter treePresenter) {
+                              TreeView.TreePresenter treePresenter,
+                              ClientLoginManager clientLoginManager) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
         this.treePresenter = treePresenter;
+        this.clientLoginManager = clientLoginManager;
     }
 
     @Override
@@ -95,6 +100,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     }
 
     private String getNextUrl() {
+
         return ((LoginPlace) placeWhere.getRawWhere()).getNextUrl();
     }
 
@@ -144,17 +150,19 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
 
                     @Override
                     public void onSuccess(AuthenticationResult result) {
-                        log.info("Server said: " + result.getSuccess());
+                        log.info("Server replied to auth requ: " + result.getSuccess());
 
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
+                            clientLoginManager.resetApplicationData();
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {
-                                treePresenter.reloadTree();
                                 placeGoTo.goTo(nextUrl);
                             }  else {
                                 placeGoTo.goTo(new UserAccountPlace());
                             }
+                            treePresenter.reloadTree();
+                            log.info("Reached!!!!");
                         } else {
                             view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
                         }
