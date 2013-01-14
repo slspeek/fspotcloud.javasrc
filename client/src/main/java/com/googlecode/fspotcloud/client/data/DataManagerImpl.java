@@ -121,6 +121,7 @@ public class DataManagerImpl implements DataManager {
 
     @Override
     public void reset() {
+        queue.clear();
         isCalled = false;
         tagTreeData = null;
         tagNodeIndex.clear();

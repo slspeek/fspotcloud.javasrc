@@ -16,7 +16,6 @@
         </g:layer>
         <g:layer bottom="0%" height="0%">
             <g:HTML ui:field="horizontalFocusPanel"></g:HTML>
-
         </g:layer>
         <g:layer left="0%" width="0%">
             <g:HTML ui:field="verticalFocusPanel"></g:HTML>
