@@ -47,11 +47,4 @@ public class TokenizerUtil {
         return Integer.parseInt(tokens[3]);
     }
 
-    public boolean isTreeVisible() {
-        return Boolean.parseBoolean(tokens[4]);
-    }
-
-    public boolean isButtonsVisible() {
-        return Boolean.parseBoolean(tokens[5]);
-    }
 }

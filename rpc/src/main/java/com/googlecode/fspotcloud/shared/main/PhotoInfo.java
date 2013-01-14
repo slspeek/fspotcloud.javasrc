@@ -57,7 +57,7 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo> {
         this.exifData = exifData;
     }
 
-    @SuppressWarnings("unused")
+    /** Needed for Serializable */
     private PhotoInfo() {
     }
 

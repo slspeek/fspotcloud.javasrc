@@ -72,7 +72,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     }
 
     private void loadUserInfo() {
-        clientLoginManager.getUserInfoAsync(new GetUserInfo(""),
+        clientLoginManager.getUserInfoAsync(
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -122,8 +122,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     }
 
     public void reloadTree() {
-        log.info("ABout to reload the tree data");
-        dataManager.reset();
+        log.info("About to reload the tree data");
         requestTagTreeData();
     }
 

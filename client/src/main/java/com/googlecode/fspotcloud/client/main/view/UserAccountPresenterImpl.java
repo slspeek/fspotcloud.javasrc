@@ -66,7 +66,7 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         this.view.setPresenter(this);
         panel.setWidget(view);
-        clientLoginManager.getUserInfoAsync(new GetUserInfo(""),
+        clientLoginManager.getUserInfoAsync(
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {
