@@ -85,12 +85,13 @@ public class PrivateAccessITest {
         tagApprovalPage.approveUserGroup();
         photoPage.open();
         photoPage.logout();
-        userAccountPage.open();
+        photoPage.open();
         signUpPage.open();
         signUpPage.fillForm(SLSPEEK_GMAIL_COM, SLSPEEK_GMAIL_COM);
         signUpPage.signUp();
         emailConfirmationPage.open(SLSPEEK_GMAIL_COM).success();
         photoPage.open("#BasePlace:1:7:2:2");
+        sleepShort();
         loginPage.fillForm(SLSPEEK_GMAIL_COM, SLSPEEK_GMAIL_COM);
         loginPage.login();
         photoPage.assertPagingLabelSays(1, 3);

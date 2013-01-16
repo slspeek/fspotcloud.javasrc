@@ -109,6 +109,13 @@ public class SignUpViewImpl extends Composite implements SignUpView {
         });
     }
 
+    @Override
+    public void clearFields() {
+        passwordAgainTextBox.setText("");
+        passwordTextBox.setText("");
+        emailTextBox.setText("");
+    }
+
     interface SignUpViewImplUiBinder extends UiBinder<Widget, SignUpViewImpl> {
     }
 }

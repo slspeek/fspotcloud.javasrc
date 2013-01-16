@@ -5,8 +5,12 @@ configurations {
     testFixtures {
         extendsFrom testRuntime
     }
+    sources
 }
 
+pmdMain {
+    //ignoreFailures = true
+}
 sourceSets {
     main { compileClasspath += configurations.provided }
     test {
@@ -21,6 +25,8 @@ dependencies {
     compile libs.guice_servlet
     provided libs.servlet_spec
     compile libs.guava
+    compile libs.gwt_dispatch
+
     testCompile project(":model-jpa-j2ee")
     testCompile libs.junit
     testCompile libs.jukito
@@ -31,6 +37,13 @@ task testJar(type: Jar, dependsOn: compileTestJava) {
     classifier = 'test'
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+
 artifacts {
+    sources sourcesJar
     testFixtures testJar
 }

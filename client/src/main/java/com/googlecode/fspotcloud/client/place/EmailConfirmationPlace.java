@@ -35,7 +35,7 @@ public class EmailConfirmationPlace extends Place {
     private String secret;
     private String email;
 
-    public EmailConfirmationPlace(String secret, String email) {
+    public EmailConfirmationPlace(String email, String secret) {
         this.secret = secret;
         this.email = email;
     }

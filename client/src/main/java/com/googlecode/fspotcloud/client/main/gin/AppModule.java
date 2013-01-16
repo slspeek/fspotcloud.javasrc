@@ -46,6 +46,7 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
+import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 public class AppModule extends AbstractGinModule {
 
@@ -80,6 +81,8 @@ public class AppModule extends AbstractGinModule {
         bind(ManageUsersView.class).to(ManageUsersViewImpl.class);
         bind(ManageUsersView.ManageUsersPresenter.class)
                 .to(ManageUsersPresenterImpl.class);
+        bind(EmailConfirmationView.class).to(EmailConfirmationViewImpl.class);
+        bind(EmailConfirmationView.EmailConfirmationPresenter.class).to(EmailConfirmationActivity.class);
 
         bind(PlaceCalculator.class);
         bind(PlaceGoTo.class).to(PlaceGoToImpl.class);

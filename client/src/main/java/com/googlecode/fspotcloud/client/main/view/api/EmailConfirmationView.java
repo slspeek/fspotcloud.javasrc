@@ -22,16 +22,17 @@
  *
  */
 
-package com.googlecode.fspotcloud.user.inject;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.inject.servlet.ServletModule;
-import com.googlecode.fspotcloud.user.emailconfirmation.ConfirmationServlet;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.IsWidget;
 
 
-public class AbstractUserServletModule extends ServletModule {
-    @Override
-    protected void configureServlets() {
-        super.configureServlets();
-        serve("/confirm").with(ConfirmationServlet.class);
+public interface EmailConfirmationView extends IsWidget {
+
+    void setStatusText(String text);
+
+    interface EmailConfirmationPresenter extends Activity {
+
     }
 }

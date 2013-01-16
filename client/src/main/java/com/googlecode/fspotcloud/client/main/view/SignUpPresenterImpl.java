@@ -83,6 +83,7 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
 
     @Override
     public void cancel() {
+        view.clearFields();
         placeGoTo.goTo(new BasePlace("latest", "latest"));
     }
 
@@ -99,6 +100,7 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
                     public void onSuccess(SignUpResult result) {
                         if (result.getSuccess()) {
                             view.setStatusText(SIGNED_UP_SUCCESSFULLY);
+                            view.clearFields();
                         } else {
                             view.setStatusText(SIGN_UP_FAILED);
                         }
@@ -108,7 +110,6 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
 
     private String verifyPasswords() {
         String password = view.getPasswordField();
-
         if (Objects.equal(password, view.getPasswordAgainField())) {
             return password;
         } else {

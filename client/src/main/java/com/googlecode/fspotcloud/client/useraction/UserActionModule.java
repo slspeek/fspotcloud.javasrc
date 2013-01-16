@@ -65,6 +65,7 @@ public class UserActionModule extends AbstractGinModule {
 
         bind(ActionToolbar.class).annotatedWith(MainToolbar.class).toProvider(MainToolbarProvider.class);
         bind(ActionToolbar.class).annotatedWith(SlideshowToolbar.class).toProvider(SlideshowToolbarProvider.class);
+        bind(ActionToolbar.class).annotatedWith(EmailConfirmationToolbar.class).toProvider(EmailConfirmationToolbarProvider.class);
         install(new GinFactoryModuleBuilder().build(SetRasterHandlerFactory.class));
     }
 }
