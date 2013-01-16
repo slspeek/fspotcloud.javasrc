@@ -24,48 +24,37 @@
 
 package com.googlecode.fspotcloud.user.emailconfirmation;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.googlecode.fspotcloud.server.model.api.User;
-import com.googlecode.fspotcloud.server.model.api.UserDao;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Logger;
+import com.googlecode.fspotcloud.server.model.api.*;
+import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.main.EmailConfirmationAction;
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.AbstractSimpleResult;
+import net.customware.gwt.dispatch.shared.DispatchException;
 
 
-@Singleton
-public class ConfirmationServlet extends HttpServlet {
-    @VisibleForTesting
+public class EmailConfirmationHandler extends SimpleActionHandler<EmailConfirmationAction, VoidResult> {
+    private final UserDao userDao;
+
     @Inject
-    UserDao userDao;
+    public EmailConfirmationHandler(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String secret = request.getParameter("secret");
-        String email = request.getParameter("email");
+    public VoidResult execute(EmailConfirmationAction action, ExecutionContext context) throws DispatchException {
+        String secret = action.getSecret();
+        String email = action.getEmail();
         User user = userDao.find(email);
         final String storedSecret = user.emailVerificationSecret();
-        Logger.getAnonymousLogger()
-                .info("EM: " + email + " secret: " + secret + " stored-s: " +
-                        storedSecret);
-
-        PrintWriter out = response.getWriter();
-
         if (secret.equals(storedSecret)) {
             user.setEnabled(true);
             userDao.save(user);
-            out.println("Success");
-            out.close();
+
         } else {
-            out.println("Failure");
-            out.close();
+            throw new RuntimeException("Verifaction failed");
         }
+        return new VoidResult();
     }
 }

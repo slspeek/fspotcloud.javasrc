@@ -62,10 +62,8 @@ public class Mailer implements IMail {
             msg.setText(body);
             Transport.send(msg);
         } catch (AddressException e) {
-            e.printStackTrace();
             Logger.getAnonymousLogger().info(e.getLocalizedMessage());
         } catch (MessagingException e) {
-            e.printStackTrace();
             Logger.getAnonymousLogger().info(e.getLocalizedMessage());
         }
     }
@@ -106,10 +104,8 @@ public class Mailer implements IMail {
             msg.setContent(multipart);
             Transport.send(msg);
         } catch (AddressException e) {
-            e.printStackTrace();
             Logger.getAnonymousLogger().info(e.getLocalizedMessage());
         } catch (MessagingException e) {
-            e.printStackTrace();
             Logger.getAnonymousLogger().info(e.getLocalizedMessage());
         }
     }
