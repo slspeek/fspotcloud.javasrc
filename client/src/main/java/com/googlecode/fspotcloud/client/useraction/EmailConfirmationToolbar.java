@@ -22,13 +22,18 @@
  *
  */
 
-package com.googlecode.fspotcloud.test;
+package com.googlecode.fspotcloud.client.useraction;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import com.google.inject.BindingAnnotation;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({DashboardITest.class, PrivateAccessITest.class})
-public class ShortSuite {
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@BindingAnnotation
+@Target({FIELD, PARAMETER, METHOD})
+@Retention(RUNTIME)
+public @interface EmailConfirmationToolbar {
 }

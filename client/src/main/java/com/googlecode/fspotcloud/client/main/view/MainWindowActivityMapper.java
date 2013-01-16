@@ -50,6 +50,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final MyUserGroupsView.MyUserGroupsPresenter myUserGroupsPresenter;
     private final EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter;
     private final ManageUsersView.ManageUsersPresenter manageUsersPresenter;
+    private final EmailConfirmationView.EmailConfirmationPresenter emailConfirmationPresenter;
 
     @Inject
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
@@ -60,7 +61,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     UserAccountView.UserAccountPresenter userAccountActivity,
                                     MyUserGroupsView.MyUserGroupsPresenter myUserGroupsPresenter,
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
-                                    ManageUsersView.ManageUsersPresenter manageUsersPresenter) {
+                                    ManageUsersView.ManageUsersPresenter manageUsersPresenter,
+                                    EmailConfirmationView.EmailConfirmationPresenter emailConfirmationPresenter) {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagPresenterFactory = tagPresenterFactory;
@@ -72,6 +74,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.myUserGroupsPresenter = myUserGroupsPresenter;
         this.editUserGroupPresenter = editUserGroupPresenter;
         this.manageUsersPresenter = manageUsersPresenter;
+        this.emailConfirmationPresenter = emailConfirmationPresenter;
     }
 
     @Override
@@ -84,6 +87,9 @@ public class MainWindowActivityMapper implements ActivityMapper {
         if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;
             modeController.setMode(Modes.LOGIN);
+        } else if (place instanceof EmailConfirmationPlace) {
+            activity = emailConfirmationPresenter;
+            modeController.setMode(Modes.TAG_VIEW);
         } else if (place instanceof SignUpPlace) {
             activity = signUpPresenter;
             modeController.setMode(Modes.LOGIN);

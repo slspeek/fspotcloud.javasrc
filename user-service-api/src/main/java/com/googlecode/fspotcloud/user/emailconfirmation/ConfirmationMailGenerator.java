@@ -38,8 +38,7 @@ public class ConfirmationMailGenerator {
     public String getMailBody(String user, String secret) {
         String result = "Hello " + user + ",\n";
         result += "Please click this link to confirm your email address:\n";
-        result += serverAddressProvider.get() + "/confirm?email=" + user +
-                "&secret=" + secret;
+        result += serverAddressProvider.get() + "/#EmailConfirmationPlace:" + user + ":" + secret;
         result += "\n";
         result += "The F-Spot Cloud Team";
 

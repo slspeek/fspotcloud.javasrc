@@ -41,6 +41,8 @@ public interface SignUpView extends IsWidget {
 
     public void focusEmailField();
 
+    void clearFields();
+
     interface SignUpPresenter extends Activity {
         void signUp();
 
