@@ -29,6 +29,6 @@ import org.junit.runners.Suite;
 
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SimpleSignUpITest.class})
+@Suite.SuiteClasses({DashboardITest.class, TabularITest.class, PrivateAccessITest.class})
 public class ShortSuite {
 }
