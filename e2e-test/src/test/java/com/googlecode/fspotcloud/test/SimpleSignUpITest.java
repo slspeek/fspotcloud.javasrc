@@ -78,6 +78,8 @@ public class SimpleSignUpITest {
         loginPage.open();
         loginPage.fillForm(MOOG_BB_ORG, NSA);
         loginPage.login();
+        photoPage.open();
+        photoPage.logout();
 
         loginPage.open();
         loginPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
