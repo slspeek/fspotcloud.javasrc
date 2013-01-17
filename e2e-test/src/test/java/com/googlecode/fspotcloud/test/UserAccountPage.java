@@ -49,7 +49,7 @@ public class UserAccountPage {
     }
 
     public void verifyEmail(String email) {
-        assertEquals(selenium.getText("gwt-debug-email"), email);
+        assertEquals(email, selenium.getText("gwt-debug-email"));
     }
 
     public Date getLastLogin() {
