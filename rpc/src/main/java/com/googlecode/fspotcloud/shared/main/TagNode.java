@@ -197,9 +197,9 @@ public class TagNode implements Serializable {
        return result;
     }
 
-    public static TagNode find(List<TagNode> all, String tagId) {
+    public static TagNode find(TagNode root, String tagId) {
        TagNode result = null;
-        for(TagNode node: all) {
+        for(TagNode node: root.getChildren()) {
             TagNode searched = node.findByTagId(tagId);
             if (searched != null) {
                 result = searched;

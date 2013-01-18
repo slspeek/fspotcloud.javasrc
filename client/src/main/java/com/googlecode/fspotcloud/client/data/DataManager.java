@@ -33,9 +33,9 @@ import java.util.List;
 public interface DataManager {
     void getTagNode(String id, AsyncCallback<TagNode> callback);
 
-    void getTagTree(final AsyncCallback<List<TagNode>> callback);
+    void getTagTree(final AsyncCallback<TagNode> callback);
 
-    void getAdminTagTree(final AsyncCallback<List<TagNode>> callback);
+    void getAdminTagTree(final AsyncCallback<TagNode> callback);
 
     void getAdminTagNode(String tagId, AsyncCallback<TagNode> asyncCallback);
 

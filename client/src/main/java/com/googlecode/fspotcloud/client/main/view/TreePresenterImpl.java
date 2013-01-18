@@ -94,8 +94,8 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
                 });
     }
 
-    private void setModel(List<TagNode> roots) {
-        TagTreeModel treeModel = new TagTreeModel(roots, selectionModel,
+    private void setModel(TagNode root) {
+        TagTreeModel treeModel = new TagTreeModel(root, selectionModel,
                 new Provider<Cell<TagNode>>() {
                     @Override
                     public Cell<TagNode> get() {
@@ -108,14 +108,14 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
 
     private void requestTagTreeData() {
 
-        dataManager.getTagTree(new AsyncCallback<List<TagNode>>() {
+        dataManager.getTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
                 log.warning("Loading of the tree data failed: " + caught);
             }
 
             @Override
-            public void onSuccess(List<TagNode> result) {
+            public void onSuccess(TagNode result) {
                 setModel(result);
             }
         });

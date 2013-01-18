@@ -78,19 +78,19 @@ public class PeerServerIntegrationHardCasesTest extends PeerServerEnvironment {
     @Test
     public void getTagTreeAfterOneSynchronize() throws Exception {
         TagTreeResult result = fetchTagTree();
-        assertTrue(result.getTree().isEmpty());
+        assertTrue(result.getTree().getChildren().isEmpty());
         Logger.getAnonymousLogger().info("Start");
         synchronizePeer();
         Logger.getAnonymousLogger().info("Fetch tree");
         result = fetchTagTree();
         //As nothing is imported yet
-        assertTrue(result.getTree().isEmpty());
+        assertTrue(result.getTree().getChildren().isEmpty());
         Logger.getAnonymousLogger().info("Import tag 3");
         importTag("3");
         Logger.getAnonymousLogger().info("Fetch tree");
         result = fetchTagTree();
 
-        TagNode mac = result.getTree().get(0);
+        TagNode mac = result.getTree().getChildren().get(0);
         assertEquals("Mac", mac.getTagName());
 
         setPeerTestDatabase("photos_smaller.db");
@@ -98,7 +98,7 @@ public class PeerServerIntegrationHardCasesTest extends PeerServerEnvironment {
         synchronizePeer();
         Logger.getAnonymousLogger().info("Fetch tree last time");
         result = fetchTagTree();
-        mac = result.getTree().get(0);
+        mac = result.getTree().getChildren().get(0);
         assertEquals("Macintosh", mac.getTagName());
     }
 }

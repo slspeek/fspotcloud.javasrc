@@ -33,16 +33,16 @@ import java.util.List;
 
 @GwtCompatible
 public class TagTreeResult implements Result {
-    private List<TagNode> tree;
+    private TagNode tree;
 
     public TagTreeResult() {
     }
 
-    public TagTreeResult(List<TagNode> tree) {
+    public TagTreeResult(TagNode tree) {
         this.tree = tree;
     }
 
-    public List<TagNode> getTree() {
+    public TagNode getTree() {
         return tree;
     }
 
@@ -50,7 +50,7 @@ public class TagTreeResult implements Result {
     public boolean equals(Object obj) {
         if (obj instanceof TagTreeResult) {
             TagTreeResult other = (TagTreeResult) obj;
-            List<TagNode> otherNodes = other.getTree();
+           TagNode otherNodes = other.getTree();
 
             return Objects.equal(otherNodes, getTree());
         } else {

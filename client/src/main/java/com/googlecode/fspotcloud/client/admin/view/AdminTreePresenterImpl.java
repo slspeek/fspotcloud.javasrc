@@ -72,8 +72,8 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
         selectionModel.addSelectionChangeHandler(this);
     }
 
-    private void setModel(List<TagNode> roots) {
-        TagTreeModel treeModel = new TagTreeModel(roots, selectionModel,
+    private void setModel(TagNode root) {
+        TagTreeModel treeModel = new TagTreeModel(root, selectionModel,
                 new Provider<Cell<TagNode>>() {
                     @Override
                     public Cell<TagNode> get() {
@@ -84,14 +84,14 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
     }
 
     private void requestTagTreeData() {
-        dataManager.getAdminTagTree(new AsyncCallback<List<TagNode>>() {
+        dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert("Exception: " + caught);
             }
 
             @Override
-            public void onSuccess(List<TagNode> result) {
+            public void onSuccess(TagNode result) {
                 setModel(result);
             }
         });
