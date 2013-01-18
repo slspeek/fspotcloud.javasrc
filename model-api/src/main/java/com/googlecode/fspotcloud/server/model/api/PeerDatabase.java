@@ -45,9 +45,13 @@ public interface PeerDatabase extends HasSetKey<String>, Serializable {
 
     String getPeerName();
 
-    void setCachedTagTree(List<TagNode> cachedTagTree);
+    void setCachedTagTree(TagNode cachedTagTree);
 
-    List<TagNode> getCachedTagTree();
+    TagNode getCachedAdminTagTree();
+
+    void setCachedAdminTagTree(TagNode cachedTagTree);
+
+    TagNode getCachedTagTree();
 
     void setTagCount(int tagCount);
 

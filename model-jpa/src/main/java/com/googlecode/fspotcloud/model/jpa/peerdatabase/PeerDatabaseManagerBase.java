@@ -80,10 +80,12 @@ public abstract class PeerDatabaseManagerBase<T extends PeerDatabase, U extends 
     @Override
     public void resetCachedTagTree() {
         T dp = get();
-        List<TagNode> tree = dp.getCachedTagTree();
+        TagNode tree = dp.getCachedTagTree();
+        TagNode admin = dp.getCachedAdminTagTree();
 
-        if (tree != null) {
+        if (tree != null || admin !=null ) {
             dp.setCachedTagTree(null);
+            dp.setCachedAdminTagTree(null);
             save(dp);
 
             //log.info("TagTree RESET (was:" + tree + ")");

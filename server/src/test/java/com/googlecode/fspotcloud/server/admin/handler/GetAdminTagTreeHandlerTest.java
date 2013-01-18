@@ -28,12 +28,15 @@
 */
 package com.googlecode.fspotcloud.server.admin.handler;
 
+import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.GetAdminTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import com.googlecode.fspotcloud.user.IAdminPermission;
 import org.jukito.JukitoRunner;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,10 +57,18 @@ public class GetAdminTagTreeHandlerTest {
     @Inject
     GetAdminTagTreeHandler handler;
     private final GetAdminTagTreeAction action = new GetAdminTagTreeAction();
+    private final PeerDatabaseEntity pd = new PeerDatabaseEntity();
+
+    @Before
+    public void setUp(PeerDatabaseDao peerDatabaseDao) throws Exception {
+        when(peerDatabaseDao.get()).thenReturn(pd);
+    }
 
     @Test
     public void testNormalExecuteNoTags(TagDao tagManager,
-                                        IAdminPermission adminPermission) throws Exception {
+                                        IAdminPermission adminPermission,
+                                        PeerDatabaseDao peerDatabaseDao
+    ) throws Exception {
         TagTreeResult result = handler.execute(action, null);
         verify(tagManager).getTags();
         assertTrue(result.getTree().getChildren().isEmpty());
@@ -65,7 +76,8 @@ public class GetAdminTagTreeHandlerTest {
 
     @Test
     public void testNormalExecuteOneTags(TagDao tagManager,
-                                         IAdminPermission adminPermission) throws Exception {
+                                         IAdminPermission adminPermission,
+                                         PeerDatabaseDao peerDatabaseDao) throws Exception {
         List<TagNode> list = newArrayList();
         list.add(new TagNode("1"));
         when(tagManager.getTags()).thenReturn(list);
@@ -77,7 +89,8 @@ public class GetAdminTagTreeHandlerTest {
 
     @Test(expected = SecurityException.class)
     public void testUnAuthorizedExecute(TagDao tagManager,
-                                        IAdminPermission adminPermission) throws Exception {
+                                        IAdminPermission adminPermission,
+                                        PeerDatabaseDao peerDatabaseDao) throws Exception {
         doThrow(new SecurityException()).when(adminPermission)
                 .checkAdminPermission();
 

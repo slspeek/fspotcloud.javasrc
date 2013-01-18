@@ -40,7 +40,7 @@ public class TreeBuilder {
         this.flatNodes = flatNodes;
     }
 
-    public List<TagNode> getRoots() {
+    public TagNode getRoots() {
         return getFilteredRoots(new Filter() {
             @Override
             public boolean isValid(TagNode node) {
@@ -58,7 +58,7 @@ public class TreeBuilder {
         }
     }
 
-    public List<TagNode> getPublicRoots() {
+    public TagNode getPublicRoots() {
         return getFilteredRoots(new Filter() {
             @Override
             public boolean isValid(TagNode node) {
@@ -67,24 +67,24 @@ public class TreeBuilder {
         });
     }
 
-    private List<TagNode> getFilteredRoots(Filter f) {
+    private TagNode getFilteredRoots(Filter f) {
         buildMap();
 
-        List<TagNode> roots = new ArrayList<TagNode>();
+        TagNode root = new TagNode();
 
         for (TagNode node : flatNodes) {
             if (f.isValid(node)) {
                 TagNode parent = getFilteredParent(node, f);
 
                 if (parent == null) {
-                    roots.add(node);
+                    root.addChild(node);
                 } else {
                     parent.addChild(node);
                 }
             }
         }
 
-        return roots;
+        return root;
     }
 
     private TagNode getFilteredParent(TagNode node, Filter filter) {
