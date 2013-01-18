@@ -30,10 +30,7 @@ import com.googlecode.fspotcloud.peer.db.Data;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
-import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
-import com.googlecode.fspotcloud.shared.dashboard.UserSynchronizesPeerAction;
-import com.googlecode.fspotcloud.shared.dashboard.UserUnImportsTagAction;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.dashboard.*;
 import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import net.customware.gwt.dispatch.server.Dispatch;
@@ -70,6 +67,10 @@ public class PeerServerEnvironment {
 
     protected TagTreeResult fetchTagTree() throws DispatchException {
         return dispatch.execute(new GetTagTreeAction());
+    }
+
+    protected TagTreeResult fetchAdminTagTree() throws DispatchException {
+        return dispatch.execute(new GetAdminTagTreeAction());
     }
 
     protected void setUpPeer() throws SQLException {

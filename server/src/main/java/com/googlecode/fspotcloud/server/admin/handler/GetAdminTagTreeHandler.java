@@ -78,8 +78,8 @@ public class GetAdminTagTreeHandler extends SimpleActionHandler<GetAdminTagTreeA
             TreeBuilder builder = new TreeBuilder(tags);
             TagNode tree = builder.getRoots();
             p.setCachedAdminTagTree(tree);
-//            log.info("Builded, about to save");
-//            peerDatabaseDao.save(p);
+            log.info("Builded, about to save");
+            peerDatabaseDao.save(p);
             return tree;
         }
     }

@@ -71,6 +71,27 @@ public class PeerDatabaseManagerTest {
     }
 
     @Test
+    public void resetCachedAdminTagTree() {
+        PeerDatabase defaultPD = manager.get();
+        TagNode list = defaultPD.getCachedAdminTagTree();
+        assertNull(list);
+        list = new TagNode();
+        defaultPD.setCachedAdminTagTree(list);
+        manager.save(defaultPD);
+        defaultPD = null;
+        defaultPD = manager.get();
+        list = defaultPD.getCachedAdminTagTree();
+        assertNotNull(list);
+        defaultPD.setCachedAdminTagTree(null);
+        assertNull(defaultPD.getCachedAdminTagTree());
+        manager.save(defaultPD);
+        defaultPD = null;
+        defaultPD = manager.get();
+        list = defaultPD.getCachedAdminTagTree();
+        assertNull(list);
+    }
+
+    @Test
     public void resetCachedTagTree2() {
         manager.resetCachedTagTree();
 
