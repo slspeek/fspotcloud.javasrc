@@ -42,6 +42,7 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import javax.inject.Provider;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -87,7 +88,8 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
         dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
-                Window.alert("Exception: " + caught);
+                //Window.alert("Exception: " + caught);
+                log.log(Level.WARNING, "getAdminTagTree", caught);
             }
 
             @Override

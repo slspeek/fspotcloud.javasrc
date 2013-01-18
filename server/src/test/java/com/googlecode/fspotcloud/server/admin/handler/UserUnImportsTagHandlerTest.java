@@ -104,8 +104,8 @@ public class UserUnImportsTagHandlerTest {
                                                         ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
             throws Exception {
         PeerDatabase peer = new PeerDatabaseEntity();
-        List<TagNode> emptyList = newArrayList();
-        peer.setCachedTagTree(emptyList);
+
+        peer.setCachedTagTree(new TagNode());
 
         Tag tagOne = new TagEntity();
         tagOne.setId(TAG_ID);

@@ -51,10 +51,10 @@ public class TreeBuilderTest {
     @Test
     public void testVerySimpleTree() {
         TreeBuilder builder = new TreeBuilder(nodes);
-        List<TagNode> trees = builder.getRoots();
-        assertEquals(2, trees.size());
+        TagNode trees = builder.getRoots();
+        assertEquals(2, trees.getChildren().size());
 
-        TagNode root = trees.get(0);
+        TagNode root = trees.getChildren().get(0);
         List<TagNode> level_1s = root.getChildren();
         assertEquals(2, level_1s.size());
     }
@@ -62,10 +62,10 @@ public class TreeBuilderTest {
     @Test
     public void testPublicTreeSimpleTree() {
         TreeBuilder builder = new TreeBuilder(nodes);
-        List<TagNode> trees = builder.getPublicRoots();
-        assertEquals(2, trees.size());
+        TagNode trees = builder.getPublicRoots();
+        assertEquals(2, trees.getChildren().size());
 
-        TagNode root = trees.get(0);
+        TagNode root = trees.getChildren().get(0);
         List<TagNode> level_1s = root.getChildren();
         assertEquals(0, level_1s.size());
     }

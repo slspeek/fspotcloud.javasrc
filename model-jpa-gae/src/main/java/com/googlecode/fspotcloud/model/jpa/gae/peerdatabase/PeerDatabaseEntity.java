@@ -61,7 +61,11 @@ public class PeerDatabaseEntity implements PeerDatabase, Serializable {
     private String imageDimension = "1024x768";
     @Basic
     Blob cachedTagTreeData = null;
-    private transient ArrayList<TagNode> cachedTagTree = null;
+    private transient TagNode cachedTagTree = null;
+    @Basic
+    Blob cachedAdminTagTreeData = null;
+    private transient TagNode cachedAdminTagTree = null;
+
 
     public PeerDatabaseEntity() {
     }
@@ -152,23 +156,44 @@ public class PeerDatabaseEntity implements PeerDatabase, Serializable {
     }
 
     @Override
-    public void setCachedTagTree(List<TagNode> newTagTree) {
+    public void setCachedTagTree(TagNode newTagTree) {
         if (newTagTree == null) {
             this.cachedTagTreeData = null;
             this.cachedTagTree = null;
         } else {
-            this.cachedTagTree = new ArrayList<TagNode>(newTagTree);
+            this.cachedTagTree = newTagTree;
             this.cachedTagTreeData = new Blob(SerializationUtils.serialize(
                     this.cachedTagTree));
         }
     }
 
     @Override
-    public List<TagNode> getCachedTagTree() {
+    public TagNode getCachedTagTree() {
         if ((cachedTagTree == null) && (cachedTagTreeData != null)) {
-            cachedTagTree = (ArrayList<TagNode>) SerializationUtils.deserialize(cachedTagTreeData.getBytes());
+            cachedTagTree = (TagNode) SerializationUtils.deserialize(cachedTagTreeData.getBytes());
         }
 
         return cachedTagTree;
+    }
+
+    @Override
+    public void setCachedAdminTagTree(TagNode newTagTree) {
+        if (newTagTree == null) {
+            this.cachedAdminTagTreeData = null;
+            this.cachedAdminTagTree = null;
+        } else {
+            this.cachedAdminTagTree = newTagTree;
+            this.cachedAdminTagTreeData = new Blob(SerializationUtils.serialize(
+                    this.cachedAdminTagTree));
+        }
+    }
+
+    @Override
+    public TagNode getCachedAdminTagTree() {
+        if ((cachedAdminTagTree == null) && (cachedAdminTagTreeData != null)) {
+            cachedAdminTagTree = (TagNode) SerializationUtils.deserialize(cachedAdminTagTreeData.getBytes());
+        }
+
+        return cachedAdminTagTree;
     }
 }

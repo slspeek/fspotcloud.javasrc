@@ -52,9 +52,9 @@ public class PeerDatabaseManagerTest {
     @Test
     public void resetCachedTagTree() {
         PeerDatabase defaultPD = manager.get();
-        List<TagNode> list = defaultPD.getCachedTagTree();
+        TagNode list = defaultPD.getCachedTagTree();
         assertNull(list);
-        list = new ArrayList<TagNode>();
+        list = new TagNode();
         defaultPD.setCachedTagTree(list);
         manager.save(defaultPD);
         defaultPD = null;
@@ -75,9 +75,9 @@ public class PeerDatabaseManagerTest {
         manager.resetCachedTagTree();
 
         PeerDatabase defaultPD = manager.get();
-        List<TagNode> list = defaultPD.getCachedTagTree();
+        TagNode list = defaultPD.getCachedTagTree();
         assertNull(list);
-        list = new ArrayList<TagNode>();
+        list = new TagNode();
         defaultPD.setCachedTagTree(list);
         manager.save(defaultPD);
         defaultPD = null;
@@ -109,7 +109,7 @@ public class PeerDatabaseManagerTest {
     @Test
     public void testGetCachedTagTree() {
         PeerDatabase defaultPD = manager.get();
-        List<TagNode> list = defaultPD.getCachedTagTree();
+        TagNode list = defaultPD.getCachedTagTree();
         assertNull(list);
     }
 

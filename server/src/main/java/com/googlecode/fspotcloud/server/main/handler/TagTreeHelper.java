@@ -35,33 +35,33 @@ import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class TagTreeHelper {
-    private List<TagNode> fullTree;
+    private TagNode fullTree;
     private Set<String> subSet;
     private Map<String, TagNode> index = newHashMap();
 
-    public TagTreeHelper(List<TagNode> fullTree, Set<String> subSet) {
+    public TagTreeHelper(TagNode fullTree, Set<String> subSet) {
         this.fullTree = fullTree;
         this.subSet = subSet;
     }
 
     private void buildIndex() {
-        for (TagNode root : fullTree) {
-            index(root);
-        }
+        index(fullTree);
     }
 
     private void index(TagNode tagNode) {
-        index.put(tagNode.getId(), tagNode);
-
+        String tagId = tagNode.getId();
+        if (tagId != null) {
+            index.put(tagNode.getId(), tagNode);
+        }
         for (TagNode child : tagNode.getChildren()) {
             index(child);
         }
     }
 
-    public List<TagNode> getSubTree() {
+    public TagNode getSubTree() {
         buildIndex();
 
-        List<TagNode> roots = newArrayList();
+        TagNode root = new TagNode();
         Set<TagNode> selected = subSetNodes();
 
         for (TagNode unconnected : selected) {
@@ -69,14 +69,14 @@ public class TagTreeHelper {
 
             if (parent == null) {
 
-                roots.add(unconnected);
+                root.addChild(unconnected);
             } else {
                 TagNode parentInSelected = find(parent, selected);
                 parentInSelected.addChild(unconnected);
             }
         }
 
-        return roots;
+        return root;
     }
 
     private TagNode find(TagNode parent, Set<TagNode> selected) {
@@ -93,7 +93,7 @@ public class TagTreeHelper {
         String id = node.getId();
         node = index.get(id);
 
-        if (/*node.getParentId() == null || */"0".equals(node.getParentId())) {
+        if ("0".equals(node.getParentId())) {
             return null;
         } else {
             TagNode parent;

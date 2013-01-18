@@ -110,12 +110,13 @@ public class GetTagTreeHandlerTest {
 
         final PeerDatabaseEntity peerDatabaseEntity = new PeerDatabaseEntity();
 
-        List<TagNode> list = newArrayList();
+        final TagNode root = new TagNode();
         final TagNode tagNode = new TagNode("1");
+        root.addChild(tagNode);
         tagNode.setImportIssued(true);
-        list.add(tagNode);
 
-        peerDatabaseEntity.setCachedTagTree(newArrayList(tagNode));
+
+        peerDatabaseEntity.setCachedTagTree(root);
         when(peers.get()).thenReturn(peerDatabaseEntity);
 
         TagTreeResult result = handler.execute(action, null);

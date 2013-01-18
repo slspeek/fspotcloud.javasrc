@@ -99,7 +99,7 @@ public class PhotoDataCallbackTest {
 
     @Test
     public void testOnSuccess() {
-        peer.setCachedTagTree(new ArrayList<TagNode>());
+        peer.setCachedTagTree(new TagNode());
         callback.onSuccess(result);
         assertEquals(date, photo1.getDate());
         assertEquals(DESCRIPTION, photo1.getDescription());
