@@ -84,8 +84,8 @@ public abstract class CachedPeerDatabaseManagerBase<T extends PeerDatabase, U ex
         T dp = get();
         TagNode tree = dp.getCachedTagTree();
         dp.setCachedTagTree(null);
+        dp.setCachedAdminTagTree(null);
         save(dp);
-        log.info("RESET Tree was:" + tree);
     }
 
     protected abstract T newInstance();

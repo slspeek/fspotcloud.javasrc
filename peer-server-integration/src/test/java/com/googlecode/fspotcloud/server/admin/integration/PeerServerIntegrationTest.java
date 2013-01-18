@@ -39,6 +39,7 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class PeerServerIntegrationTest extends PeerServerEnvironment {
@@ -95,6 +96,24 @@ public class PeerServerIntegrationTest extends PeerServerEnvironment {
 
         TagTreeResult result = fetchTagTree();
         assertTrue(result.getTree().getChildren().isEmpty());
+    }
+
+    @Test
+    public void getAdminTagTreeSimple() throws Exception {
+        setUpPeer();
+
+        TagTreeResult result = fetchAdminTagTree();
+        assertTrue(result.getTree().getChildren().isEmpty());
+    }
+
+    @Test
+    public void getAdminTagTree() throws Exception {
+        setUpPeer();
+        synchronizePeer();
+        importTag("1");
+
+        TagTreeResult result = fetchAdminTagTree();
+        assertFalse(result.getTree().getChildren().isEmpty());
     }
 
     @Test
