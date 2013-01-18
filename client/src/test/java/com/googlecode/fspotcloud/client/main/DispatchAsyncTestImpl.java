@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class DispatchAsyncTestImpl implements DispatchAsync {
-    private List<TagNode> tagTreeData;
+    private TagNode tagTreeData;
 
     public DispatchAsyncTestImpl() {
         initData();
@@ -55,7 +55,7 @@ public class DispatchAsyncTestImpl implements DispatchAsync {
         return node;
     }
 
-    public List<TagNode> initData() {
+    public TagNode initData() {
         TagNode root1 = createNode("1", "Friends", 10);
         PhotoInfo pi1 = new PhotoInfo("1", "Daniel", new Date(1));
         PhotoInfo pi2 = new PhotoInfo("2", "Aute", new Date(2));
@@ -114,8 +114,11 @@ public class DispatchAsyncTestImpl implements DispatchAsync {
         cats.addChild(felix);
         cats.addChild(woefje);
         cats.addChild(otherCats);
-        tagTreeData = ImmutableList.of(root1, cats, root3);
 
+        tagTreeData = new TagNode();
+        tagTreeData.addChild(root1);
+        tagTreeData.addChild(cats);
+        tagTreeData.addChild(root3);
         //System.out.println(felix.getCachedPhotoList());
         return tagTreeData;
     }

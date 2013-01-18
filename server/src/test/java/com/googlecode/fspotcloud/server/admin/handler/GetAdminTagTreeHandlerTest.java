@@ -60,7 +60,7 @@ public class GetAdminTagTreeHandlerTest {
                                         IAdminPermission adminPermission) throws Exception {
         TagTreeResult result = handler.execute(action, null);
         verify(tagManager).getTags();
-        assertTrue(result.getTree().isEmpty());
+        assertTrue(result.getTree().getChildren().isEmpty());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class GetAdminTagTreeHandlerTest {
 
         TagTreeResult result = handler.execute(action, null);
         verify(tagManager).getTags();
-        assertEquals(1, result.getTree().size());
+        assertEquals(1, result.getTree().getChildren().size());
     }
 
     @Test(expected = SecurityException.class)

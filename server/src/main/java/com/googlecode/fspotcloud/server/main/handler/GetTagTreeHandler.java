@@ -73,8 +73,9 @@ public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, Tag
             TagTreeHelper helper = new TagTreeHelper(fullTree, visibleTags);
             subTree = helper.getSubTree();
         }
-
-        return new TagTreeResult(subTree);
+        TagNode tree = new TagNode();
+        tree.setChildren(subTree);
+        return new TagTreeResult(tree);
     }
 
     private List<TagNode> getImportIssuedTree() {

@@ -328,19 +328,19 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void goToLatestTag() {
-        dataManager.getTagTree(new AsyncCallback<List<TagNode>>() {
+        dataManager.getTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
                 // TODO Auto-generated method stub
             }
 
             @Override
-            public void onSuccess(List<TagNode> result) {
+            public void onSuccess(TagNode result) {
                 Date latest = new Date(0);
                 TagNode latestNode = null;
                 IndexingUtil util = new IndexingUtil();
                 Map<String, TagNode> tagNodeIndex = new HashMap<String, TagNode>();
-                util.rebuildTagNodeIndex(tagNodeIndex, result);
+                util.rebuildTagNodeIndex(tagNodeIndex, result.getChildren());
 
                 for (String tagId : tagNodeIndex.keySet()) {
                     TagNode node = tagNodeIndex.get(tagId);

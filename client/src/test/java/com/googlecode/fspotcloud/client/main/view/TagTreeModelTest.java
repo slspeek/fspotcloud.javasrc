@@ -35,7 +35,7 @@ import java.util.List;
 
 
 public class TagTreeModelTest extends TestCase {
-    public final List<TagNode> data;
+    public final TagNode data;
     private TagTreeModel model;
 
     public TagTreeModelTest() {

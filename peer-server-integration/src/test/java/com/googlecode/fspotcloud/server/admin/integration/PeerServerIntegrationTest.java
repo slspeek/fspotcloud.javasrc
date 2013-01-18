@@ -94,7 +94,7 @@ public class PeerServerIntegrationTest extends PeerServerEnvironment {
         setUpPeer();
 
         TagTreeResult result = fetchTagTree();
-        assertTrue(result.getTree().isEmpty());
+        assertTrue(result.getTree().getChildren().isEmpty());
     }
 
     @Test

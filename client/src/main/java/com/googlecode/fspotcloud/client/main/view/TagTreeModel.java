@@ -37,15 +37,15 @@ import java.util.logging.Logger;
 
 public class TagTreeModel implements TreeViewModel {
     private final Logger log = Logger.getLogger(TagTreeModel.class.getName());
-    final List<TagNode> roots;
+    final TagNode root;
     final SelectionModel<TagNode> selectionModel;
     final Provider<Cell<TagNode>> cellProvider;
 
-    public TagTreeModel(List<TagNode> roots,
+    public TagTreeModel(TagNode root,
                         SelectionModel<TagNode> selectionModel,
                         Provider<Cell<TagNode>> cellProvider) {
         super();
-        this.roots = roots;
+        this.root = root;
         this.selectionModel = selectionModel;
         this.cellProvider = cellProvider;
     }
@@ -53,6 +53,7 @@ public class TagTreeModel implements TreeViewModel {
     @Override
     public <T> NodeInfo<?> getNodeInfo(T value) {
         if (value == null) {
+            List<TagNode> roots = root.getChildren();
             ListDataProvider<TagNode> rootNodes = new ListDataProvider<TagNode>(roots);
 
             return new DefaultNodeInfo<TagNode>(rootNodes, cellProvider.get(),
