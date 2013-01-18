@@ -60,8 +60,9 @@ public class GetAdminTagTreeHandler extends SimpleActionHandler<GetAdminTagTreeA
 
         List<TagNode> tags = tagManager.getTags();
         TreeBuilder builder = new TreeBuilder(tags);
-        List<TagNode> tree = builder.getRoots();
-
+        List<TagNode> treeRoots = builder.getRoots();
+        TagNode tree = new TagNode();
+        tree.setChildren(treeRoots);
         return new TagTreeResult(tree);
     }
 }

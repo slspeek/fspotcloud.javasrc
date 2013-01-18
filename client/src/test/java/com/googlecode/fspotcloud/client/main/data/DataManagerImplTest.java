@@ -44,10 +44,10 @@ public class DataManagerImplTest extends TestCase {
     private static final String ID = "1";
     private static final String WRONG_ID = "2";
     private DataManagerImpl dataManager;
-    AsyncCallback<List<TagNode>> firstCall;
+    AsyncCallback<TagNode> firstCall;
     AsyncCallback<TagNode> secondCall;
-    AsyncCallback<List<TagNode>> thirdCall;
-    ArgumentCaptor<AsyncCallback<List<TagNode>>> remoteCallCaptor;
+    AsyncCallback<TagNode> thirdCall;
+    ArgumentCaptor<AsyncCallback<TagNode>> remoteCallCaptor;
     ArgumentCaptor<AsyncCallback<TagTreeResult>> newRemoteCallCaptor;
     final TagNode tagNode = new TagNode(ID);
     DispatchAsync dispatchAsync;
@@ -60,7 +60,7 @@ public class DataManagerImplTest extends TestCase {
         thirdCall = mock(AsyncCallback.class);
         dispatchAsync = mock(DispatchAsync.class);
         dataManager = new DataManagerImpl(dispatchAsync);
-        remoteCallCaptor = (ArgumentCaptor<AsyncCallback<List<TagNode>>>) (Object) ArgumentCaptor.forClass(AsyncCallback.class);
+        remoteCallCaptor = (ArgumentCaptor<AsyncCallback<TagNode>>) (Object) ArgumentCaptor.forClass(AsyncCallback.class);
         newRemoteCallCaptor = (ArgumentCaptor<AsyncCallback<TagTreeResult>>) (Object) ArgumentCaptor.forClass(AsyncCallback.class);
         actionCapture = ArgumentCaptor.forClass(GetTagTreeAction.class);
         super.setUp();
@@ -73,7 +73,7 @@ public class DataManagerImplTest extends TestCase {
                 .execute(actionCapture.capture(), newRemoteCallCaptor.capture());
 
         AsyncCallback<TagTreeResult> callback = newRemoteCallCaptor.getValue();
-        List<TagNode> result = new ArrayList<TagNode>();
+        TagNode result = new TagNode();
         callback.onSuccess(new TagTreeResult(result));
         verify(firstCall).onSuccess(result);
     }
@@ -86,8 +86,8 @@ public class DataManagerImplTest extends TestCase {
         verifyNoMoreInteractions(dispatchAsync);
 
         AsyncCallback<TagTreeResult> callback = newRemoteCallCaptor.getValue();
-        List<TagNode> result = new ArrayList<TagNode>();
-        result.add(tagNode);
+        TagNode result = new TagNode();
+        result.addChild(tagNode);
         callback.onSuccess(new TagTreeResult(result));
         verify(firstCall).onSuccess(result);
         verify(secondCall).onSuccess(tagNode);
@@ -103,8 +103,10 @@ public class DataManagerImplTest extends TestCase {
         verifyNoMoreInteractions(dispatchAsync);
 
         AsyncCallback<TagTreeResult> callback = newRemoteCallCaptor.getValue();
-        List<TagNode> result = new ArrayList<TagNode>();
-        result.add(tagNode);
+        TagNode result = new TagNode();
+        result.addChild(tagNode);
+
+
         callback.onSuccess(new TagTreeResult(result));
         verify(firstCall).onSuccess(result);
         verify(secondCall).onSuccess(tagNode);
@@ -121,8 +123,8 @@ public class DataManagerImplTest extends TestCase {
         verifyNoMoreInteractions(dispatchAsync);
 
         AsyncCallback<TagTreeResult> callback = newRemoteCallCaptor.getValue();
-        List<TagNode> result = new ArrayList<TagNode>();
-        result.add(tagNode);
+        TagNode result = new TagNode();
+        result.addChild(tagNode);
         callback.onSuccess(new TagTreeResult(result));
         verify(firstCall).onSuccess(result);
         verify(secondCall).onSuccess(null);
@@ -139,8 +141,8 @@ public class DataManagerImplTest extends TestCase {
         verifyNoMoreInteractions(dispatchAsync);
 
         AsyncCallback<TagTreeResult> callback = newRemoteCallCaptor.getValue();
-        List<TagNode> result = new ArrayList<TagNode>();
-        result.add(tagNode);
+        TagNode result = new TagNode();
+        result.addChild(tagNode);
         callback.onSuccess(new TagTreeResult(result));
 
         verify(firstCall).onSuccess(result);
@@ -154,8 +156,8 @@ public class DataManagerImplTest extends TestCase {
                 .execute(actionCapture.capture(), newRemoteCallCaptor.capture());
 
         AsyncCallback<TagTreeResult> callback = newRemoteCallCaptor.getValue();
-        List<TagNode> result = new ArrayList<TagNode>();
-        result.add(tagNode);
+        TagNode result = new TagNode();
+        result.addChild(tagNode);
         callback.onSuccess(new TagTreeResult(result));
 
         verify(firstCall).onSuccess(result);

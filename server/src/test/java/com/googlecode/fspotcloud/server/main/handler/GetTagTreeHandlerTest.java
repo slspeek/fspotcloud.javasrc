@@ -68,7 +68,7 @@ public class GetTagTreeHandlerTest {
 
         TagTreeResult result = handler.execute(action, null);
         verify(tagManager).getTags();
-        assertTrue(result.getTree().isEmpty());
+        assertTrue(result.getTree().getChildren().isEmpty());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class GetTagTreeHandlerTest {
         TagTreeResult result = handler.execute(action, null);
         verify(tagManager).getTags();
         //No imported tags
-        assertEquals(0, result.getTree().size());
+        assertEquals(0, result.getTree().getChildren().size());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class GetTagTreeHandlerTest {
 
         TagTreeResult result = handler.execute(action, null);
         verify(tagManager).getTags();
-        assertEquals(1, result.getTree().size());
+        assertEquals(1, result.getTree().getChildren().size());
     }
 
     @Test
@@ -119,7 +119,7 @@ public class GetTagTreeHandlerTest {
         when(peers.get()).thenReturn(peerDatabaseEntity);
 
         TagTreeResult result = handler.execute(action, null);
-        assertEquals(1, result.getTree().size());
+        assertEquals(1, result.getTree().getChildren().size());
         verifyNoMoreInteractions(tagManager);
     }
 }

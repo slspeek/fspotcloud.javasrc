@@ -56,7 +56,7 @@ public class DataManagerImpl implements DataManager {
         }
     };
 
-    private List<TagNode> tagTreeData = null;
+    private TagNode tagTreeData = null;
     private final Map<String, TagNode> tagNodeIndex = newHashMap();
     private final Map<String, TagNode> adminTagNodeIndex = newHashMap();
     private final DispatchAsync dispatchAsync;
@@ -76,14 +76,14 @@ public class DataManagerImpl implements DataManager {
         } else {
             if (!isCalled) {
 
-                getTagTree(new AsyncCallback<List<TagNode>>() {
+                getTagTree(new AsyncCallback<TagNode>() {
                     @Override
                     public void onFailure(Throwable arg0) {
                         callback.onFailure(arg0);
                     }
 
                     @Override
-                    public void onSuccess(List<TagNode> arg0) {
+                    public void onSuccess(TagNode arg0) {
                         callback.onSuccess(tagNodeIndex.get(id));
                     }
                 });
@@ -105,14 +105,14 @@ public class DataManagerImpl implements DataManager {
         if (node != null) {
             callback.onSuccess(node);
         } else {
-            getAdminTagTree(new AsyncCallback<List<TagNode>>() {
+            getAdminTagTree(new AsyncCallback<TagNode>() {
                 @Override
                 public void onFailure(Throwable arg0) {
                     callback.onFailure(arg0);
                 }
 
                 @Override
-                public void onSuccess(List<TagNode> arg0) {
+                public void onSuccess(TagNode arg0) {
                     callback.onSuccess(adminTagNodeIndex.get(id));
                 }
             });
@@ -127,7 +127,7 @@ public class DataManagerImpl implements DataManager {
         tagNodeIndex.clear();
     }
 
-    public void getTagTree(final AsyncCallback<List<TagNode>> callback) {
+    public void getTagTree(final AsyncCallback<TagNode> callback) {
         log.info("getTagTree ");
         if (tagTreeData != null) {
             log.info("getTagTree cached");
@@ -153,7 +153,7 @@ public class DataManagerImpl implements DataManager {
                                 try {
                                 tagTreeData = result.getTree();
                                 indexingUtil.rebuildTagNodeIndex(tagNodeIndex,
-                                        tagTreeData);
+                                        tagTreeData.getChildren());
                                 callbackHook.run();
                                 log.info("Hook ran ! for:" + result.getTree());
                                 } catch (Exception e) {
@@ -165,7 +165,7 @@ public class DataManagerImpl implements DataManager {
         }
     }
 
-    public void getAdminTagTree(final AsyncCallback<List<TagNode>> callback) {
+    public void getAdminTagTree(final AsyncCallback<TagNode> callback) {
         dispatchAsync.execute(new GetAdminTagTreeAction(),
                 new AsyncCallback<TagTreeResult>() {
                     public void onFailure(Throwable caught) {
@@ -174,7 +174,7 @@ public class DataManagerImpl implements DataManager {
 
                     public void onSuccess(TagTreeResult result) {
                         indexingUtil.rebuildTagNodeIndex(adminTagNodeIndex,
-                                result.getTree());
+                                result.getTree().getChildren());
                         callback.onSuccess(result.getTree());
                     }
                 });
