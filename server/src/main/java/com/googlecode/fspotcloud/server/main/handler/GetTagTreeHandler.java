@@ -63,8 +63,8 @@ public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, Tag
     @Override
     public TagTreeResult execute(GetTagTreeAction action,
                                  ExecutionContext context) throws DispatchException {
-        List<TagNode> subTree;
-        List<TagNode> fullTree = getImportIssuedTree();
+        TagNode subTree;
+        TagNode fullTree = getImportIssuedTree();
 
         if (userService.isUserAdmin()) {
             subTree = fullTree;
@@ -73,12 +73,10 @@ public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, Tag
             TagTreeHelper helper = new TagTreeHelper(fullTree, visibleTags);
             subTree = helper.getSubTree();
         }
-        TagNode tree = new TagNode();
-        tree.setChildren(subTree);
-        return new TagTreeResult(tree);
+        return new TagTreeResult(subTree);
     }
 
-    private List<TagNode> getImportIssuedTree() {
+    private TagNode getImportIssuedTree() {
         PeerDatabase p = peerDatabaseDao.get();
 
         if (p.getCachedTagTree() != null) {
@@ -90,7 +88,7 @@ public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, Tag
 
             List<TagNode> tags = tagManager.getTags();
             TreeBuilder builder = new TreeBuilder(tags);
-            List<TagNode> tree = builder.getPublicRoots();
+            TagNode tree = builder.getPublicRoots();
             p.setCachedTagTree(tree);
             log.info("Builded, about to save");
             peerDatabaseDao.save(p);

@@ -57,7 +57,7 @@ public class PeerDatabaseEntityTest {
 
     @Test
     public void testResetCachedTagTree() {
-        List<TagNode> cachedTagTree = new ArrayList<TagNode>();
+        TagNode cachedTagTree = new TagNode();
         PeerDatabaseEntity instance = new PeerDatabaseEntity();
         instance.setCachedTagTree(cachedTagTree);
         instance.setCachedTagTree(null);

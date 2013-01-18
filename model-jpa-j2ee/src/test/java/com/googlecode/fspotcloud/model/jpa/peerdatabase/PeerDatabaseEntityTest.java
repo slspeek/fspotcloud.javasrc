@@ -49,14 +49,15 @@ public class PeerDatabaseEntityTest {
 
         PeerDatabaseEntity instance = new PeerDatabaseEntity();
         List expResult = null;
-        List result = instance.getCachedTagTree();
+        TagNode result = instance.getCachedTagTree();
         assertEquals(expResult, result);
+        TagNode root = new TagNode();
+        TagNode tree = new TagNode("1");
+        root.addChild(tree);
+        instance.setCachedTagTree(root);
 
-        List<TagNode> tree = Lists.newArrayList(new TagNode("1"));
-        instance.setCachedTagTree(tree);
-
-        List<TagNode> rTree = instance.getCachedTagTree();
-        TagNode rNode = rTree.get(0);
+        TagNode rTree = instance.getCachedTagTree();
+        TagNode rNode = rTree.getChildren().get(0);
         assertEquals("1", rNode.getId());
 
         instance.setCachedTagTree(null);

@@ -24,6 +24,8 @@
 
 package com.googlecode.fspotcloud.server.admin.handler;
 
+import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.server.model.tag.TreeBuilder;
 import com.googlecode.fspotcloud.shared.dashboard.GetAdminTagTreeAction;
@@ -45,24 +47,40 @@ public class GetAdminTagTreeHandler extends SimpleActionHandler<GetAdminTagTreeA
     private Logger log;
     private final TagDao tagManager;
     private final IAdminPermission adminPermission;
+    private final PeerDatabaseDao peerDatabaseDao;
 
     @Inject
     public GetAdminTagTreeHandler(TagDao tagManager,
-                                  IAdminPermission adminPermission) {
+                                  IAdminPermission adminPermission,
+                                  PeerDatabaseDao peerDatabaseDao) {
         this.tagManager = tagManager;
         this.adminPermission = adminPermission;
+        this.peerDatabaseDao = peerDatabaseDao;
     }
 
     @Override
     public TagTreeResult execute(GetAdminTagTreeAction action,
                                  ExecutionContext context) throws DispatchException {
         adminPermission.checkAdminPermission();
+        return new TagTreeResult(getFullTree());
+    }
 
-        List<TagNode> tags = tagManager.getTags();
-        TreeBuilder builder = new TreeBuilder(tags);
-        List<TagNode> treeRoots = builder.getRoots();
-        TagNode tree = new TagNode();
-        tree.setChildren(treeRoots);
-        return new TagTreeResult(tree);
+    private TagNode getFullTree() {
+        PeerDatabase p = peerDatabaseDao.get();
+
+        if (p.getCachedAdminTagTree() != null) {
+            log.info("Got the admin tree from cache HIT");
+
+            return p.getCachedAdminTagTree();
+        } else {
+            log.info("Missed the cache; building admin");
+            List<TagNode> tags = tagManager.getTags();
+            TreeBuilder builder = new TreeBuilder(tags);
+            TagNode tree = builder.getRoots();
+            p.setCachedAdminTagTree(tree);
+//            log.info("Builded, about to save");
+//            peerDatabaseDao.save(p);
+            return tree;
+        }
     }
 }
