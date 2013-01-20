@@ -21,9 +21,9 @@
                 Boston, MA 02111-1307, USA.
  *
  */
-
 package com.googlecode.fspotcloud.client.data;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.shared.dashboard.GetAdminTagTreeAction;
@@ -38,64 +38,59 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
+
+
+
+
 import static com.google.common.collect.Maps.newHashMap;
 
+@GwtCompatible
 public class DataManagerImpl implements DataManager {
     private final Logger log = Logger.getLogger(DataManagerImpl.class.getName());
-    private final IndexingUtil indexingUtil;
-    private boolean isCalled = false;
-    private final List<Runnable> queue = newArrayList();
-    private final Runnable callbackHook = new Runnable() {
-        @Override
-        public void run() {
-            for (Runnable task : queue) {
-                task.run();
-            }
-
-            queue.clear();
-        }
-    };
-
-    private TagNode tagTreeData = null;
+    private final IndexingUtil indexingUtil = new IndexingUtil();
     private final Map<String, TagNode> tagNodeIndex = newHashMap();
     private final Map<String, TagNode> adminTagNodeIndex = newHashMap();
     private final DispatchAsync dispatchAsync;
+    private final GetTagTreeMemoProc getTagTreeMemoProc;
 
     @Inject
-    public DataManagerImpl(DispatchAsync dispatchAsync) {
+    public DataManagerImpl(DispatchAsync dispatchAsync,
+                           GetTagTreeMemoProc getTagTreeMemoProc) {
         this.dispatchAsync = dispatchAsync;
-        this.indexingUtil = new IndexingUtil();
+        this.getTagTreeMemoProc = getTagTreeMemoProc;
+    }
+
+    public void getTagTree(final AsyncCallback<TagNode> callback) {
+        log.info("getTagTree ");
+        getTagTreeMemoProc.getAsync(new AsyncCallback<TagTreeResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                callback.onFailure(caught);
+            }
+
+            @Override
+            public void onSuccess(TagTreeResult result) {
+                callback.onSuccess(result.getTree());
+            }
+        });
     }
 
     public void getTagNode(final String id,
                            final AsyncCallback<TagNode> callback) {
         log.info("getTagNode: " + id);
-        if (tagTreeData != null) {
-            TagNode node = tagNodeIndex.get(id);
-            callback.onSuccess(node);
-        } else {
-            if (!isCalled) {
-
-                getTagTree(new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable arg0) {
-                        callback.onFailure(arg0);
-                    }
-
-                    @Override
-                    public void onSuccess(TagNode arg0) {
-                        callback.onSuccess(tagNodeIndex.get(id));
-                    }
-                });
-            } else {
-                queue.add(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onSuccess(tagNodeIndex.get(id));
-                    }
-                });
+        getTagTree(new AsyncCallback<TagNode>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                callback.onFailure(caught);
             }
-        }
+
+            @Override
+            public void onSuccess(TagNode result) {
+                indexingUtil.rebuildTagNodeIndex(tagNodeIndex, result);
+                callback.onSuccess(tagNodeIndex.get(id));
+            }
+        });
+
     }
 
     public void getAdminTagNode(final String id,
@@ -121,49 +116,10 @@ public class DataManagerImpl implements DataManager {
 
     @Override
     public void reset() {
-        queue.clear();
-        isCalled = false;
-        tagTreeData = null;
+        getTagTreeMemoProc.reset();
         tagNodeIndex.clear();
     }
 
-    public void getTagTree(final AsyncCallback<TagNode> callback) {
-        log.info("getTagTree ");
-        if (tagTreeData != null) {
-            log.info("getTagTree cached");
-            callback.onSuccess(tagTreeData);
-        } else {
-            queue.add(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onSuccess(tagTreeData);
-                }
-            });
-
-            if (!isCalled) {
-                isCalled = true;
-                log.info("getTagTree CALLING OUT!");
-                dispatchAsync.execute(new GetTagTreeAction(),
-                        new AsyncCallback<TagTreeResult>() {
-                            public void onFailure(Throwable caught) {
-                                callback.onFailure(caught);
-                            }
-
-                            public void onSuccess(TagTreeResult result) {
-                                try {
-                                tagTreeData = result.getTree();
-                                indexingUtil.rebuildTagNodeIndex(tagNodeIndex,
-                                        tagTreeData.getChildren());
-                                callbackHook.run();
-                                log.info("Hook ran ! for:" + result.getTree());
-                                } catch (Exception e) {
-                                    log.log(Level.FINEST, "error", e);
-                                }
-                            }
-                        });
-            }
-        }
-    }
 
     public void getAdminTagTree(final AsyncCallback<TagNode> callback) {
         dispatchAsync.execute(new GetAdminTagTreeAction(),
@@ -174,7 +130,7 @@ public class DataManagerImpl implements DataManager {
 
                     public void onSuccess(TagTreeResult result) {
                         indexingUtil.rebuildTagNodeIndex(adminTagNodeIndex,
-                                result.getTree().getChildren());
+                                result.getTree());
                         callback.onSuccess(result.getTree());
                     }
                 });
