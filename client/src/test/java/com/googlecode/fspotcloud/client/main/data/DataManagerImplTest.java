@@ -26,15 +26,16 @@ package com.googlecode.fspotcloud.client.main.data;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
+import com.googlecode.fspotcloud.client.data.GetTagTreeMemoProc;
 import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import junit.framework.TestCase;
 import net.customware.gwt.dispatch.client.DispatchAsync;
+import org.jukito.JukitoRunner;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static org.mockito.Mockito.*;
@@ -59,7 +60,8 @@ public class DataManagerImplTest extends TestCase {
         secondCall = mock(AsyncCallback.class);
         thirdCall = mock(AsyncCallback.class);
         dispatchAsync = mock(DispatchAsync.class);
-        dataManager = new DataManagerImpl(dispatchAsync);
+        GetTagTreeMemoProc getTagTreeMemoProc = new GetTagTreeMemoProc(dispatchAsync);
+        dataManager = new DataManagerImpl(dispatchAsync, getTagTreeMemoProc);
         remoteCallCaptor = (ArgumentCaptor<AsyncCallback<TagNode>>) (Object) ArgumentCaptor.forClass(AsyncCallback.class);
         newRemoteCallCaptor = (ArgumentCaptor<AsyncCallback<TagTreeResult>>) (Object) ArgumentCaptor.forClass(AsyncCallback.class);
         actionCapture = ArgumentCaptor.forClass(GetTagTreeAction.class);

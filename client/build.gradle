@@ -68,6 +68,7 @@ gwt {
 
 compileGwt {
     style = 'PRETTY' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+    strict = true
 }
 
 gwtDev {
