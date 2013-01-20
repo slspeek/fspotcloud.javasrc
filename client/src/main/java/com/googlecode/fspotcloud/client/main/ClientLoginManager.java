@@ -55,61 +55,28 @@ import static com.google.common.collect.Lists.newArrayList;
  */
 public class ClientLoginManager {
     private final Logger log = Logger.getLogger(ClientLoginManager.class.getName());
-    private boolean isCalled = false;
-    private final List<Runnable> queue = newArrayList();
-    private final Runnable callbackHook = new Runnable() {
-        @Override
-        public void run() {
-            for (Runnable task : queue) {
-                task.run();
-            }
-
-            queue.clear();
-        }
-    };
     private final DispatchAsync dispatch;
     private final PlaceWhere placeWhere;
     private final PlaceGoTo placeGoTo;
     private UserInfo currentUser;
     private final DataManager dataManager;
+    private final GetUserInfoMemoProc getUserInfoMemoProc;
 
     @Inject
     public ClientLoginManager(DispatchAsync dispatch,
                               PlaceWhere placeWhere,
                               PlaceGoTo placeGoTo,
-                              DataManager dataManager
-                              ) {
+                              DataManager dataManager,
+                              GetUserInfoMemoProc getUserInfoMemoProc) {
         this.dispatch = dispatch;
         this.placeWhere = placeWhere;
         this.placeGoTo = placeGoTo;
         this.dataManager = dataManager;
+        this.getUserInfoMemoProc = getUserInfoMemoProc;
     }
 
     public void getUserInfoAsync(final AsyncCallback<UserInfo> callback) {
-        if (currentUser != null) {
-            callback.onSuccess(currentUser);
-        } else {
-            queue.add(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onSuccess(currentUser);
-                }
-            });
-            if (!isCalled) {
-                dispatch.execute(new GetUserInfo(""), new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.WARNING, "Error during getUserInfo ", caught);
-                    }
-
-                    @Override
-                    public void onSuccess(UserInfo result) {
-                        currentUser = result;
-                        callbackHook.run();
-                    }
-                });
-            }
-        }
+        getUserInfoMemoProc.getAsync(callback);
     }
 
 
@@ -137,9 +104,7 @@ public class ClientLoginManager {
     }
 
     private void reset() {
-        queue.clear();
-        isCalled = false;
-        currentUser = null;
+        getUserInfoMemoProc.reset();
     }
 
     public void resetApplicationData() {

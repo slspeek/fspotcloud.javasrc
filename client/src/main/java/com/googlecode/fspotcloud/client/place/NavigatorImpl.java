@@ -340,7 +340,7 @@ public class NavigatorImpl implements Navigator {
                 TagNode latestNode = null;
                 IndexingUtil util = new IndexingUtil();
                 Map<String, TagNode> tagNodeIndex = new HashMap<String, TagNode>();
-                util.rebuildTagNodeIndex(tagNodeIndex, result.getChildren());
+                util.rebuildTagNodeIndex(tagNodeIndex, result);
 
                 for (String tagId : tagNodeIndex.keySet()) {
                     TagNode node = tagNodeIndex.get(tagId);

@@ -65,6 +65,7 @@ gwtModules = ['com.googlecode.fspotcloud.FSpotCloud', 'com.googlecode.fspotcloud
 
 compileGwt {
     style = 'PRETTY' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+    strict = true
 }
 
 gwtDevMode {

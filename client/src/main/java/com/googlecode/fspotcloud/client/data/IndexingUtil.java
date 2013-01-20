@@ -32,16 +32,11 @@ import java.util.logging.Logger;
 
 
 public class IndexingUtil {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(IndexingUtil.class.getName());
 
     public void rebuildTagNodeIndex(Map<String, TagNode> tagNodeIndex,
-                                    List<TagNode> tagTreeData) {
+                                    TagNode tagTree) {
         tagNodeIndex.clear();
-
-        for (TagNode root : tagTreeData) {
-            addTagNodeIndex(tagNodeIndex, root);
-        }
+        addTagNodeIndex(tagNodeIndex, tagTree);
     }
 
     private void addTagNodeIndex(Map<String, TagNode> tagNodeIndex, TagNode node) {

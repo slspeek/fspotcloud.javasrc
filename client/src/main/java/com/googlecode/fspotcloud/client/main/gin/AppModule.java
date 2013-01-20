@@ -33,6 +33,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
+import com.googlecode.fspotcloud.client.data.GetTagTreeMemoProc;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
@@ -56,6 +57,7 @@ public class AppModule extends AbstractGinModule {
         bind(ImageView.class).annotatedWith(SingleImageView.class).toProvider(SingleImageViewProvider.class).in(Singleton.class);
         bind(DoubleImageView.class).to(DoubleImageViewImpl.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
+        //bind(GetTagTreeMemoProc.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
         bind(MVPSetup.class).in(Singleton.class);
         bind(TagCell.class);
