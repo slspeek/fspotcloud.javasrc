@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.gin;
 
+import com.google.code.ginmvp.client.GinMvpModule;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -53,7 +54,7 @@ public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
-
+        install(new GinMvpModule(MainWindowActivityMapper.class,  BasePlace.class,MvpDisplay.class, MainPlaceHistoryMapper.class));
         bind(ImageView.class).annotatedWith(SingleImageView.class).toProvider(SingleImageViewProvider.class).in(Singleton.class);
         bind(DoubleImageView.class).to(DoubleImageViewImpl.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
@@ -89,7 +90,7 @@ public class AppModule extends AbstractGinModule {
         bind(PlaceCalculator.class);
         bind(PlaceGoTo.class).to(PlaceGoToImpl.class);
         bind(PlaceWhere.class).to(PlaceWhereImpl.class);
-        bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
+        //bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
         bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(SlideshowDelayView.class).to(SlideshowDelayViewImpl.class).in(Singleton.class);
