@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main;
 
+import com.google.code.ginmvp.client.GinMvpDisplay;
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -49,7 +50,8 @@ import java.util.logging.Logger;
 public class MVPSetup {
     private final Logger log = Logger.getLogger(MVPSetup.class.getName());
     private final Place defaultPlace = new BasePlace("latest", "latest", 1, 1);
-    private final DockLayoutPanel appWidget = new DockLayoutPanel(Unit.PX);
+    //private final DockLayoutPanel appWidget = new DockLayoutPanel(Unit.PX);
+    private final GinMvpDisplay appWidget;
     private final EventBus eventBus;
     private final MainWindowActivityMapper activityMapper;
     private final PlaceController placeController;
@@ -57,6 +59,7 @@ public class MVPSetup {
     private final ZoomViewEventHandlerImpl zoomViewEventHandler;
     private final StylesSetup stylesSetup;
     private final MainPlaceHistoryMapper mainPlaceHistoryMapper;
+    private final PlaceHistoryHandler placeHistoryHandler;
 
 
     @Inject
@@ -67,9 +70,12 @@ public class MVPSetup {
                     UserActionHandlerBinder userActionHandlerBinder,
                     ZoomViewEventHandlerImpl zoomViewEventHandler,
                     StylesSetup stylesSetup,
-                    MainPlaceHistoryMapper mainPlaceHistoryMapper) {
+                    MainPlaceHistoryMapper mainPlaceHistoryMapper,
+                    GinMvpDisplay appWidget, PlaceHistoryHandler placeHistoryHandler) {
+        this.appWidget = appWidget;
         this.stylesSetup = stylesSetup;
         this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
+        this.placeHistoryHandler = placeHistoryHandler;
         zoomViewEventHandler.init();
         this.activityMapper = activityMapper;
         this.eventBus = eventBus;
@@ -82,15 +88,16 @@ public class MVPSetup {
     public void setup() {
         log.info("Starting MVP setup");
         stylesSetup.injectStyles();
-        ActivityManager activityManager = new ActivityManager(activityMapper,
-                eventBus);
-        activityManager.setDisplay(new HasOneWidgetAdapter(appWidget));
-        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(mainPlaceHistoryMapper);
-        HandlerRegistration r = historyHandler.register(placeController, eventBus, defaultPlace);
-
-        log.info("Just before handleCurrentHistory()");
+//        ActivityManager activityManager = new ActivityManager(activityMapper,
+//                eventBus);
+//        activityManager.setDisplay(new HasOneWidgetAdapter(appWidget));
+//        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(mainPlaceHistoryMapper);
+//        HandlerRegistration r = historyHandler.register(placeController, eventBus, defaultPlace);
+//
+//        log.info("Just before handleCurrentHistory()");
+        log.info("appwidget " + appWidget);
         RootLayoutPanel.get().add(appWidget);
-        historyHandler.handleCurrentHistory();
+        placeHistoryHandler.handleCurrentHistory();
         log.info("Setup finished");
     }
 }

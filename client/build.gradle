@@ -26,6 +26,7 @@ dependencies {
     compile "com.google.gwt:gwt-user:${gwt_version}"
     compile "com.reveregroup.gwt:gwt-image-loader:1.1.4"
     compile "com.google.gwt:gwt-dev:${gwt_version}"
+    compile "com.google.code.ginmvp:ginmvp-core:1.1"
 
     testCompile "junit:junit:3.8.1"
     testCompile ext.libs.junit

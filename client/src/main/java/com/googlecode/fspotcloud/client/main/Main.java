@@ -39,13 +39,20 @@ public class Main implements EntryPoint {
     @Override
     public void onModuleLoad() {
         log.info("F-SpotCloud loading");
+        MVPSetup setup;
 
         try {
-            MVPSetup setup = injector.getMVPSetup();
-            log.info("gin finished the construction of the application graph");
+
+            setup = injector.getMVPSetup();
+            log.info("Gin finished the construction of the application graph!");
+        } catch (Throwable e) {
+            log.log(Level.SEVERE, "Gin could not constructed object graph", e);
+            return;
+        }
+        try {
             setup.setup();
         } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in MVP setup", e);
+            log.log(Level.SEVERE, "MVP setup failed", e);
         }
     }
 }

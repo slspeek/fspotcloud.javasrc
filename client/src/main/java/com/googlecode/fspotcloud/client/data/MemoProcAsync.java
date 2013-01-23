@@ -24,7 +24,6 @@ public abstract class MemoProcAsync<T> {
             callback.onSuccess(data);
         } else {
             queue.add(callback);
-            //Logger.getAnonymousLogger().info("Queue size:" + queue.size());
             if (!isCalled) {
                 isCalled = true;
                 getAsyncImpl(new AsyncCallback<T>() {

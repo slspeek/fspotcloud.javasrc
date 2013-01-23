@@ -36,6 +36,9 @@ public class BasePlace extends Place implements PhotoInTag, Raster {
     private final int columnCount;
     private final int rowCount;
 
+    public BasePlace() {
+        this("latest", "latest");
+    }
     public BasePlace(String tagId, String photoId) {
         this(tagId, photoId, 1, 1);
     }
