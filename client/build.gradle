@@ -69,7 +69,7 @@ gwt {
 
 compileGwt {
     style = 'PRETTY' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
-    strict = true
+    compileReport = Boolean.valueOf("${gwt_compile_report}")
 }
 
 gwtDev {
