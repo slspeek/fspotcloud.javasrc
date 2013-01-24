@@ -47,35 +47,35 @@ public class NavigationActionHandler implements IActionHandler {
 
         log.info("On Navigation Event: " + actionId);
 
-        if (actionId.equals(NavigationActions.BACK)) {
+        if (actionId.equals(NavigationActions.BACK_ID)) {
             navigator.goAsync(Direction.BACKWARD, Unit.SINGLE);
 
 
-        } else if (actionId.equals(NavigationActions.NEXT)) {
+        } else if (actionId.equals(NavigationActions.NEXT_ID)) {
             navigator.goAsync(Direction.FORWARD, Unit.SINGLE);
 
 
-        } else if (actionId.equals(NavigationActions.HOME)) {
+        } else if (actionId.equals(NavigationActions.HOME_ID)) {
             navigator.goAsync(Direction.BACKWARD, Unit.BORDER);
 
 
-        } else if (actionId.equals(NavigationActions.END)) {
+        } else if (actionId.equals(NavigationActions.END_ID)) {
             navigator.goAsync(Direction.FORWARD, Unit.BORDER);
 
 
-        } else if (actionId.equals(NavigationActions.PAGE_DOWN)) {
+        } else if (actionId.equals(NavigationActions.PAGE_DOWN_ID)) {
             navigator.goAsync(Direction.FORWARD, Unit.PAGE);
 
 
-        } else if (actionId.equals(NavigationActions.PAGE_UP)) {
+        } else if (actionId.equals(NavigationActions.PAGE_UP_ID)) {
             navigator.goAsync(Direction.BACKWARD, Unit.PAGE);
 
 
-        } else if (actionId.equals(NavigationActions.ROW_DOWN)) {
+        } else if (actionId.equals(NavigationActions.ROW_DOWN_ID)) {
             navigator.goAsync(Direction.FORWARD, Unit.ROW);
 
 
-        } else if (actionId.equals(NavigationActions.ROW_UP)) {
+        } else if (actionId.equals(NavigationActions.ROW_UP_ID)) {
             navigator.goAsync(Direction.BACKWARD, Unit.ROW);
 
 

@@ -9,16 +9,18 @@ import com.googlecode.fspotcloud.keyboardaction.ConfigBuilder;
 
 public class UserActionHandlerBinder {
 
+    private final ApplicationActions applicationActions;
 
     @Inject
     UserActionHandlerBinder(ConfigBuilder configBuilder,
                             HideControlsHandler hideControlsHandler,
                             TreeFocusHandler treeFocusHandler,
-                            DemoFactory demoFactory
-    ) {
-        configBuilder.bindHandler(ApplicationActions.HIDE_CONTROLS, hideControlsHandler);
-        configBuilder.bindHandler(ApplicationActions.TREE_FOCUS, treeFocusHandler);
-        configBuilder.bindHandler(ApplicationActions.DEMO, demoFactory.getDemo());
+                            DemoFactory demoFactory,
+                            ApplicationActions applicationActions) {
+        this.applicationActions = applicationActions;
+        configBuilder.bindHandler(applicationActions.hide_controls, hideControlsHandler);
+        configBuilder.bindHandler(applicationActions.tree_focus, treeFocusHandler);
+        configBuilder.bindHandler(applicationActions.demo, demoFactory.getDemo());
     }
 
 }

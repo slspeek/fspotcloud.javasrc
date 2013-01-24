@@ -15,6 +15,7 @@ public class AboutBinder extends AbstractBinder {
     private final LicenseHandler licenseHandler;
     private final ProjectSiteHandler projectSiteHandler;
     private final ProtonHandler protonHandler;
+    private final AboutActions aboutActions;
 
     @Inject
     public AboutBinder(
@@ -23,7 +24,8 @@ public class AboutBinder extends AbstractBinder {
             FSpotHandler fSpotHandler,
             LicenseHandler licenseHandler,
             ProjectSiteHandler projectSiteHandler,
-            ProtonHandler protonHandler) {
+            ProtonHandler protonHandler,
+            AboutActions aboutActions) {
         super(categoryDef.ABOUT);
 
         this.buildServerHandler = buildServerHandler;
@@ -31,16 +33,17 @@ public class AboutBinder extends AbstractBinder {
         this.licenseHandler = licenseHandler;
         this.projectSiteHandler = projectSiteHandler;
         this.protonHandler = protonHandler;
+        this.aboutActions = aboutActions;
     }
 
 
     @Override
     public void build() {
-        bind(AboutActions.PROJECT_HOSTING, projectSiteHandler, get('J'));
-        bind(AboutActions.BUILD_SERVER, buildServerHandler, get('B'));
-        bind(AboutActions.LICENSE, licenseHandler, get('L'));
-        bind(AboutActions.F_SPOT, fSpotHandler, get('U'));
-        bind(AboutActions.PROTON, protonHandler, get('P'));
+        bind(aboutActions.project_hosting, projectSiteHandler, get('J'));
+        bind(aboutActions.build_server, buildServerHandler, get('B'));
+        bind(aboutActions.license, licenseHandler, get('L'));
+        bind(aboutActions.f_spot, fSpotHandler, get('U'));
+        bind(aboutActions.proton, protonHandler, get('P'));
     }
 
     private KeyboardBinding get(char c) {

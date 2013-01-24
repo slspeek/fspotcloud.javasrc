@@ -10,13 +10,16 @@ import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 public class SlideshowToolbarProvider implements Provider<ActionToolbar> {
     private final KeyboardActionFactory keyboardActionFactory;
     private final SlideshowDelayView.SlideshowPresenter slideshowPresenter;
+    private final SlideshowActions actions;
 
     @Inject
     public SlideshowToolbarProvider(UserActionFactory actionFactory,
                                     KeyboardActionFactory keyboardActionFactory,
-                                    SlideshowDelayView.SlideshowPresenter slideshowPresenter) {
+                                    SlideshowDelayView.SlideshowPresenter slideshowPresenter,
+                                    SlideshowActions actions) {
         this.keyboardActionFactory = keyboardActionFactory;
         this.slideshowPresenter = slideshowPresenter;
+        this.actions = actions;
     }
 
 
@@ -24,12 +27,12 @@ public class SlideshowToolbarProvider implements Provider<ActionToolbar> {
     public ActionToolbar get() {
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
 
-        toolbar.add(SlideshowActions.SLIDESHOW_START);
-        toolbar.add(SlideshowActions.SLIDESHOW_PAUSE);
-        toolbar.add(SlideshowActions.SLIDESHOW_STOP);
-        toolbar.add(SlideshowActions.SLIDESHOW_SLOWER);
+        toolbar.add(actions.slideshow_start);
+        toolbar.add(actions.slideshow_pause);
+        toolbar.add(actions.slideshow_stop);
+        toolbar.add(actions.slideshow_slower);
         toolbar.add(slideshowPresenter.getView().asWidget());
-        toolbar.add(SlideshowActions.SLIDESHOW_FASTER);
+        toolbar.add(actions.slideshow_faster);
 
         return toolbar;
     }
