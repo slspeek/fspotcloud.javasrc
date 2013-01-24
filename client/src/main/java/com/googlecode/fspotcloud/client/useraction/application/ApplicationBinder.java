@@ -6,10 +6,7 @@ import com.googlecode.fspotcloud.client.useraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.useraction.application.handler.*;
-import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
-import com.googlecode.fspotcloud.keyboardaction.HelpConfig;
-import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.*;
 
 public class ApplicationBinder extends AbstractBinder {
 
@@ -22,6 +19,7 @@ public class ApplicationBinder extends AbstractBinder {
     private final ZoomOutHandler zoomOutHandler;
     private final HelpActionsFactory helpActionsFactory;
     private final CategoryDef categoryDef;
+    private final ApplicationActions actions;
 
     @Inject
     public ApplicationBinder(AboutHandlerFactory handlerFactory,
@@ -31,7 +29,8 @@ public class ApplicationBinder extends AbstractBinder {
                              ZoomInHandler zoomInHandler,
                              ZoomOutHandler zoomOutHandler,
                              CategoryDef categoryDef,
-                             HelpActionsFactory helpActionsFactory) {
+                             HelpActionsFactory helpActionsFactory,
+                             ApplicationActions actions) {
         super(categoryDef.APPLICATION);
         this.aboutHandlerFactory = handlerFactory;
         this.dashboardHandler = dashboardHandler;
@@ -41,48 +40,47 @@ public class ApplicationBinder extends AbstractBinder {
         this.zoomOutHandler = zoomOutHandler;
         this.categoryDef = categoryDef;
         this.helpActionsFactory = helpActionsFactory;
+        this.actions = actions;
     }
 
 
     @Override
     public void build() {
         KeyboardBinding helpBinding = KeyboardBinding.bind(new KeyStroke('H')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
+        bind(actions.show_help, getHelpHandler(), helpBinding);
+
+        KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_ESCAPE)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
+        bind(actions.hide_help, helpActionsFactory.getCloseHelp(), hideHelpBinding);
+
+        KeyboardBinding aboutBinding = KeyboardBinding.bind(new KeyStroke('A')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
+        bind(actions.about, aboutHandlerFactory.getAboutHandler(), aboutBinding);
+        bind(actions.dashboard, dashboardHandler, get('D'));
+        bind(actions.login, loginHandler, get('N'));
+        bind(actions.logout, logoutHandler, get('O'));
+        bind(actions.zoom_in, zoomInHandler, get(KeyStroke.KEY_NUM_PAD_PLUS));
+        bind(actions.zoom_out, zoomOutHandler, get(KeyStroke.KEY_NUM_PAD_MINUS));
+
+        //these action's handlers have such heavy dependencies, they are bound later,
+        //in UserActionFactoryBinder (out of good names ..)
+        configBuilder.register(category, actions.hide_controls, get('F'));
+        configBuilder.register(category, actions.demo, get('7'));
+        configBuilder.register(category, actions.tree_focus, get(KeyCodes.KEY_ENTER));
+    }
+
+    private IActionHandler getHelpHandler() {
         final HelpConfig helpConfig = new HelpConfig("Keyboard help");
         helpConfig.addToFirstColumn(categoryDef.NAVIGATION, categoryDef.RASTER);
         helpConfig.addToSecondColumn(categoryDef.APPLICATION, categoryDef.SLIDESHOW);
-        bind(ApplicationActions.SHOW_HELP, helpActionsFactory.getHelpAction(helpConfig), helpBinding);
-
-
-        KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_ESCAPE)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
-        bind(ApplicationActions.HIDE_HELP, helpActionsFactory.getCloseHelp(), hideHelpBinding);
-
-        KeyboardBinding aboutBinding = KeyboardBinding.bind(new KeyStroke('A')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.ABOUT, aboutHandlerFactory.getAboutHandler(), aboutBinding);
-
-        KeyboardBinding dashboardBinding = KeyboardBinding.bind(new KeyStroke('D')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.DASHBOARD, dashboardHandler, dashboardBinding);
-
-        KeyboardBinding hideControlsBinding = KeyboardBinding.bind(new KeyStroke('F')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        configBuilder.register(category, ApplicationActions.HIDE_CONTROLS, hideControlsBinding);
-
-        KeyboardBinding demoBinding = KeyboardBinding.bind(new KeyStroke('7')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        configBuilder.register(category, ApplicationActions.DEMO, demoBinding);
-
-
-        KeyboardBinding loginBinding = KeyboardBinding.bind(new KeyStroke('N')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.LOGIN, loginHandler, loginBinding);
-
-        KeyboardBinding logoutBinding = KeyboardBinding.bind(new KeyStroke('O')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.LOGOUT, logoutHandler, logoutBinding);
-
-        KeyboardBinding treeFocusBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_ENTER)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        configBuilder.register(category, ApplicationActions.TREE_FOCUS, treeFocusBinding);
-
-        KeyboardBinding zoomInBinding = KeyboardBinding.bind(new KeyStroke(KeyStroke.KEY_NUM_PAD_PLUS)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.ZOOM_IN, zoomInHandler, zoomInBinding);
-
-        KeyboardBinding zoomOutBinding = KeyboardBinding.bind(new KeyStroke(KeyStroke.KEY_NUM_PAD_MINUS)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(ApplicationActions.ZOOM_OUT, zoomOutHandler, zoomOutBinding);
+        return helpActionsFactory.getHelpAction(helpConfig);
     }
+
+    private KeyboardBinding get(int characterCode) {
+        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
+    }
+
+    private KeyboardBinding get(char characterCode) {
+        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
+    }
+
 
 }

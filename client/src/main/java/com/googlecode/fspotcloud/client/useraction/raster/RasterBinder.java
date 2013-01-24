@@ -18,6 +18,7 @@ public class RasterBinder extends AbstractBinder {
     private final MailFullSizeHandler mailFullSizeHandler;
     private final ResetRasterHandler resetRasterHandler;
     private final ToggleTabularViewHandler toggleTabularViewHandler;
+    private final RasterActions actions;
 
     @Inject
     public RasterBinder(
@@ -29,7 +30,8 @@ public class RasterBinder extends AbstractBinder {
             RemoveRowHandler removeRowHandler,
             MailFullSizeHandler mailFullSizeHandler,
             ResetRasterHandler resetRasterHandler,
-            ToggleTabularViewHandler toggleTabularViewHandler) {
+            ToggleTabularViewHandler toggleTabularViewHandler,
+            RasterActions actions) {
         super(categoryDef.RASTER);
         this.setRasterHandlerFactory = setRasterHandlerFactory;
         this.addColumnHandler = addColumnHandler;
@@ -39,24 +41,25 @@ public class RasterBinder extends AbstractBinder {
         this.mailFullSizeHandler = mailFullSizeHandler;
         this.resetRasterHandler = resetRasterHandler;
         this.toggleTabularViewHandler = toggleTabularViewHandler;
+        this.actions = actions;
     }
 
     @Override
     public void build() {
-        bind(RasterActions.ADD_COLUMN, addColumnHandler, getKey('Z'));
-        bind(RasterActions.REMOVE_COLUMN, removeColumnHandler, getKey('X'));
-        bind(RasterActions.ADD_ROW, addRowHandler, getKey('C'));
-        bind(RasterActions.REMOVE_ROW, removeRowHandler, getKey('V'));
-        bind(RasterActions.MAIL_FULLSIZE, mailFullSizeHandler, getKey('M'));
-        bind(RasterActions.SET_DEFAULT_RASTER, resetRasterHandler, getKey('0'));
-        bind(RasterActions.TOGGLE_TABULAR_VIEW, toggleTabularViewHandler, getKey('1'));
+        bind(actions.add_column, addColumnHandler, getKey('Z'));
+        bind(actions.remove_column, removeColumnHandler, getKey('X'));
+        bind(actions.add_row, addRowHandler, getKey('C'));
+        bind(actions.remove_row, removeRowHandler, getKey('V'));
+        bind(actions.mail_fullsize, mailFullSizeHandler, getKey('M'));
+        bind(actions.set_default_raster, resetRasterHandler, getKey('0'));
+        bind(actions.toggle_tabular_view, toggleTabularViewHandler, getKey('1'));
 
 
-        bind(RasterActions.SET_RASTER_2x2, setRasterHandlerFactory.get(2), getKey('2'));
-        bind(RasterActions.SET_RASTER_3x3, setRasterHandlerFactory.get(3), getKey('3'));
-        bind(RasterActions.SET_RASTER_4x4, setRasterHandlerFactory.get(4), getKey('4'));
-        bind(RasterActions.SET_RASTER_5x5, setRasterHandlerFactory.get(5), getKey('5'));
-        bind(RasterActions.SET_RASTER_6x6, setRasterHandlerFactory.get(6), getKey('6'));
+        bind(actions.set_raster_2x2, setRasterHandlerFactory.get(2), getKey('2'));
+        bind(actions.set_raster_3x3, setRasterHandlerFactory.get(3), getKey('3'));
+        bind(actions.set_raster_4x4, setRasterHandlerFactory.get(4), getKey('4'));
+        bind(actions.set_raster_5x5, setRasterHandlerFactory.get(5), getKey('5'));
+        bind(actions.set_raster_6x6, setRasterHandlerFactory.get(6), getKey('6'));
     }
 
     private KeyboardBinding getKey(char i) {

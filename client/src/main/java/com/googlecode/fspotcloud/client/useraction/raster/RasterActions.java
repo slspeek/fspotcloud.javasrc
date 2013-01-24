@@ -1,55 +1,64 @@
 package com.googlecode.fspotcloud.client.useraction.raster;
 
 import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;
 
 public class RasterActions {
 
-    private static final Resources RESOURCES = GWT.create(Resources.class);
-    private static final SetRasterActionFactory setRasterActionFactory = new SetRasterActionFactory();
+    private  final Resources RESOURCES;
+    private  final SetRasterActionFactory setRasterActionFactory;
 
-    public static final ActionDef ADD_COLUMN = new ActionDef("add-column",
-            "Add column",
-            "Adds one column to raster",
-            RESOURCES.addColumnIcon());
-    public static final ActionDef ADD_ROW = new ActionDef("add-row",
-            "Add row",
-            "Adds one row to raster",
-            RESOURCES.addRowIcon());
+    public  final ActionDef add_column;
+    public  final ActionDef add_row;
+    public  final ActionDef remove_column;
+    public  final ActionDef remove_row;
+    public  final ActionDef set_default_raster;
+    public  final ActionDef toggle_tabular_view;
+    public  final ActionDef set_raster_2x2;
+    public  final ActionDef set_raster_3x3;
+    public  final ActionDef set_raster_4x4;
+    public  final ActionDef set_raster_5x5;
+    public  final ActionDef set_raster_6x6;
+    public  final ActionDef mail_fullsize;
 
-    public static final ActionDef REMOVE_COLUMN = new ActionDef("remove-column",
-            "Remove column",
-            "Removes one column from the raster",
-            RESOURCES.removeColumnIcon());
-
-    public static final ActionDef REMOVE_ROW = new ActionDef("remove-row",
-            "Remove row",
-            "Removes one row from the raster",
-            RESOURCES.removeRowIcon());
-
-    public static final ActionDef SET_DEFAULT_RASTER = new ActionDef("reset",
-            "Reset raster",
-            "Resets raster to defaults",
-            RESOURCES.resetIcon());
-
-    public static final ActionDef TOGGLE_TABULAR_VIEW = new ActionDef("raster",
-            "Toggle raster",
-            "Toggle tabular viewing",
-            RESOURCES.tabularIcon());
-
-    public static final ActionDef SET_RASTER_2x2 = setRasterActionFactory.getSetRasterTo(2, 2);
-
-    public static final ActionDef SET_RASTER_3x3 = setRasterActionFactory.getSetRasterTo(3, 3);
-
-    public static final ActionDef SET_RASTER_4x4 = setRasterActionFactory.getSetRasterTo(4, 4);
-
-    public static final ActionDef SET_RASTER_5x5 = setRasterActionFactory.getSetRasterTo(5, 5);
-
-    public static final ActionDef SET_RASTER_6x6 = setRasterActionFactory.getSetRasterTo(6, 6);
-
-    public static final ActionDef MAIL_FULLSIZE = new ActionDef("mail-fullsize",
-            "Mail fullsize",
-            "Mail the high resolution version of the image to you",
-            RESOURCES.emailIcon());
+    @Inject
+    public RasterActions(Resources resources, SetRasterActionFactory setRasterActionFactory) {
+        RESOURCES = resources;
+        this.setRasterActionFactory = setRasterActionFactory;
+        mail_fullsize = new ActionDef("mail-fullsize",
+                "Mail fullsize",
+                "Mail the high resolution version of the image to you",
+                RESOURCES.emailIcon());
+        set_raster_6x6 = this.setRasterActionFactory.getSetRasterTo(6, 6);
+        set_raster_5x5 = this.setRasterActionFactory.getSetRasterTo(5, 5);
+        set_raster_4x4 = this.setRasterActionFactory.getSetRasterTo(4, 4);
+        set_raster_3x3 = this.setRasterActionFactory.getSetRasterTo(3, 3);
+        set_raster_2x2 = this.setRasterActionFactory.getSetRasterTo(2, 2);
+        toggle_tabular_view = new ActionDef("raster",
+                "Toggle raster",
+                "Toggle tabular viewing",
+                RESOURCES.tabularIcon());
+        set_default_raster = new ActionDef("reset",
+                "Reset raster",
+                "Resets raster to defaults",
+                RESOURCES.resetIcon());
+        remove_row = new ActionDef("remove-row",
+                "Remove row",
+                "Removes one row from the raster",
+                RESOURCES.removeRowIcon());
+        remove_column = new ActionDef("remove-column",
+                "Remove column",
+                "Removes one column from the raster",
+                RESOURCES.removeColumnIcon());
+        add_row = new ActionDef("add-row",
+                "Add row",
+                "Adds one row to raster",
+                RESOURCES.addRowIcon());
+        add_column = new ActionDef("add-column",
+                "Add column",
+                "Adds one column to raster",
+                RESOURCES.addColumnIcon());
+    }
 }

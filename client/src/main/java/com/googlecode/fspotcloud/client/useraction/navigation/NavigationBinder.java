@@ -12,43 +12,36 @@ import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 public class NavigationBinder extends AbstractBinder {
 
     private final NavigationActionHandler navigationActionHandler;
+    private final NavigationActions navigationActions;
 
     @Inject
     public NavigationBinder(
-            CategoryDef categoryDef, NavigationActionHandler navigationActionHandler) {
+            CategoryDef categoryDef, NavigationActionHandler navigationActionHandler,
+            NavigationActions navigationActions) {
         super(categoryDef.NAVIGATION);
         this.navigationActionHandler = navigationActionHandler;
+        this.navigationActions = navigationActions;
     }
 
 
     @Override
     public void build() {
-        KeyboardBinding homeBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_HOME)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.HOME_DEF, homeBinding);
-
-        KeyboardBinding pageUpBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_PAGEUP)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.PAGE_UP_DEF, pageUpBinding);
-
-        KeyboardBinding rowUpBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_UP)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.ROW_UP_DEF, rowUpBinding);
-
-        KeyboardBinding backBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_LEFT)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.BACK_DEF, backBinding);
-
-        KeyboardBinding nextBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_RIGHT)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.NEXT_DEF, nextBinding);
-
-        KeyboardBinding rowDownBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_DOWN)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.ROW_DOWN_DEF, rowDownBinding);
-
-        KeyboardBinding pageDownBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_PAGEDOWN)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.PAGE_DOWN_DEF, pageDownBinding);
-
-        KeyboardBinding endBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_END)).withDefaultModes(Modes.TAG_VIEW);
-        bind(NavigationActions.END_DEF, endBinding);
+        bind(navigationActions.home, get(KeyCodes.KEY_HOME));
+        bind(navigationActions.page_up, get(KeyCodes.KEY_PAGEUP));
+        bind(navigationActions.row_up, get(KeyCodes.KEY_UP));
+        bind(navigationActions.back, get(KeyCodes.KEY_LEFT));
+        bind(navigationActions.next, get(KeyCodes.KEY_RIGHT));
+        bind(navigationActions.row_down, get(KeyCodes.KEY_DOWN));
+        bind(navigationActions.page_down, get(KeyCodes.KEY_PAGEDOWN));
+        bind(navigationActions.end, get(KeyCodes.KEY_END));
     }
 
     public void bind(ActionDef actionDef, KeyboardBinding keyBinding) {
         super.bind(actionDef, navigationActionHandler, keyBinding);
     }
+
+    private KeyboardBinding get(int character) {
+        return KeyboardBinding.bind(new KeyStroke(character)).withDefaultModes(Modes.TAG_VIEW);
+    }
+
 }
