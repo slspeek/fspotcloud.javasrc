@@ -65,7 +65,11 @@ gwtDevMode.dependsOn convertIcons, writeVersion
 gwtModules = ['com.googlecode.fspotcloud.FSpotCloud', 'com.googlecode.fspotcloud.dashboard']
 
 compileGwt {
-    style = 'PRETTY' // Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+    if (Boolean.valueOf("${release}")) {
+        style = 'OBF'
+    } else {
+        style = 'PRETTY'
+    }
     compileReport = Boolean.valueOf("${gwt_compile_report}")
 }
 

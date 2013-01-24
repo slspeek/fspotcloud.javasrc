@@ -14,12 +14,27 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
 
 
     private final KeyboardActionFactory keyboardActionFactory;
+    private final AboutActions aboutActions;
+    private final ApplicationActions applicationActions;
+    private final NavigationActions navigationActions;
+    private final SlideshowActions slideshowActions;
+    private final RasterActions rasterActions;
+
 
     @Inject
     public MainToolbarProvider(UserActionFactory actionFactory,
-                               KeyboardActionFactory keyboardActionFactory
-    ) {
+                               KeyboardActionFactory keyboardActionFactory,
+                               AboutActions aboutActions,
+                               ApplicationActions applicationActions,
+                               NavigationActions navigationActions,
+                               SlideshowActions slideshowActions,
+                               RasterActions rasterActions) {
         this.keyboardActionFactory = keyboardActionFactory;
+        this.aboutActions = aboutActions;
+        this.applicationActions = applicationActions;
+        this.navigationActions = navigationActions;
+        this.slideshowActions = slideshowActions;
+        this.rasterActions = rasterActions;
     }
 
 
@@ -27,23 +42,23 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
     public ActionToolbar get() {
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
 
-        toolbar.add(ApplicationActions.SHOW_HELP);
-        toolbar.add(ApplicationActions.DEMO);
-        toolbar.add(NavigationActions.HOME_DEF);
-        toolbar.add(NavigationActions.PAGE_UP_DEF);
-        toolbar.add(NavigationActions.BACK_DEF);
-        toolbar.add(SlideshowActions.SLIDESHOW_START);
-        toolbar.add(NavigationActions.NEXT_DEF);
-        toolbar.add(NavigationActions.PAGE_DOWN_DEF);
-        toolbar.add(NavigationActions.END_DEF);
-        toolbar.add(ApplicationActions.ZOOM_IN);
-        toolbar.add(ApplicationActions.ZOOM_OUT);
-        toolbar.add(RasterActions.MAIL_FULLSIZE);
-        toolbar.add(ApplicationActions.LOGIN);
-        toolbar.add(ApplicationActions.LOGOUT);
-        toolbar.add(ApplicationActions.ABOUT);
-        toolbar.add(AboutActions.PROJECT_HOSTING);
-        toolbar.add(ApplicationActions.DASHBOARD);
+        toolbar.add(applicationActions.show_help);
+        toolbar.add(applicationActions.demo);
+        toolbar.add(navigationActions.home);
+        toolbar.add(navigationActions.page_up);
+        toolbar.add(navigationActions.back);
+        toolbar.add(slideshowActions.slideshow_start);
+        toolbar.add(navigationActions.next);
+        toolbar.add(navigationActions.page_down);
+        toolbar.add(navigationActions.end);
+        toolbar.add(applicationActions.zoom_in);
+        toolbar.add(applicationActions.zoom_out);
+        toolbar.add(rasterActions.mail_fullsize);
+        toolbar.add(applicationActions.login);
+        toolbar.add(applicationActions.logout);
+        toolbar.add(applicationActions.about);
+        toolbar.add(aboutActions.project_hosting);
+        toolbar.add(applicationActions.dashboard);
         return toolbar;
     }
 }

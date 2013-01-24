@@ -1,36 +1,47 @@
 package com.googlecode.fspotcloud.client.useraction.about;
 
-import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;
 
 public class AboutActions {
 
-    private static final Resources RESOURCES = GWT.create(Resources.class);
+    private final Resources RESOURCES;
 
-    public static final ActionDef LICENSE = new ActionDef("license",
-            "License",
-            "View the license",
-            RESOURCES.licenceIcon());
+    public final ActionDef license;
 
-    public static final ActionDef PROJECT_HOSTING = new ActionDef("project-hosting",
-            "Project site",
-            "Go to the site on Google Project Hosting",
-            RESOURCES.projectSiteIcon());
+    public final ActionDef project_hosting;
 
-    public static final ActionDef F_SPOT = new ActionDef("f-spot",
-            "F-Spot",
-            "Go to the F-Spot site",
-            RESOURCES.fspotIcon());
+    public final ActionDef f_spot;
 
-    public static final ActionDef PROTON = new ActionDef("proton",
-            "Proton radio",
-            "Go to the Proton Radio site",
-            RESOURCES.protonIcon());
+    public final ActionDef proton;
 
-    public static final ActionDef BUILD_SERVER = new ActionDef("build-server",
-            "Build server",
-            "Go to the Jenkins build server",
-            RESOURCES.buildServerIcon());
+    public final ActionDef build_server;
+
+    @Inject
+    public AboutActions(Resources RESOURCES) {
+        this.RESOURCES = RESOURCES;
+        license = new ActionDef("license",
+                "License",
+                "View the license",
+                RESOURCES.licenceIcon());
+        project_hosting = new ActionDef("project-hosting",
+                "Project site",
+                "Go to the site on Google Project Hosting",
+                RESOURCES.projectSiteIcon());
+        f_spot = new ActionDef("f-spot",
+                "F-Spot",
+                "Go to the F-Spot site",
+                RESOURCES.fspotIcon());
+        proton = new ActionDef("proton",
+                "Proton radio",
+                "Go to the Proton Radio site",
+                RESOURCES.protonIcon());
+        build_server = new ActionDef("build-server",
+                "Build server",
+                "Go to the Jenkins build server",
+                RESOURCES.buildServerIcon());
+    }
+
 
 }

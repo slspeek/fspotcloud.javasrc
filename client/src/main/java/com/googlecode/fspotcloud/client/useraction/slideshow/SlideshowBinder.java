@@ -10,13 +10,12 @@ import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 
 public class SlideshowBinder extends AbstractBinder {
 
-
     private final FasterHandler fasterHandler;
     private final PauseHandler pauseHandler;
     private final SlowerHandler slowerHandler;
     private final StartHandler startHandler;
     private final StopHandler stopHandler;
-
+    private final SlideshowActions actions;
 
     @Inject
     public SlideshowBinder(
@@ -25,33 +24,30 @@ public class SlideshowBinder extends AbstractBinder {
             PauseHandler pauseHandler,
             SlowerHandler slowerHandler,
             StartHandler startHandler,
-            StopHandler stopHandler) {
+            StopHandler stopHandler,
+            SlideshowActions actions) {
         super(categoryDef.SLIDESHOW);
         this.fasterHandler = fasterHandler;
         this.pauseHandler = pauseHandler;
         this.slowerHandler = slowerHandler;
         this.startHandler = startHandler;
         this.stopHandler = stopHandler;
+        this.actions = actions;
     }
-
 
     @Override
     public void build() {
-        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('Q')).withDefaultModes(Modes.SLIDESHOW);
-        bind(SlideshowActions.SLIDESHOW_STOP, stopHandler, binding);
-
-        binding = KeyboardBinding.bind(new KeyStroke('M')).withDefaultModes(Modes.SLIDESHOW);
-        bind(SlideshowActions.SLIDESHOW_FASTER, fasterHandler, binding);
-
-        binding = KeyboardBinding.bind(new KeyStroke('N')).withDefaultModes(Modes.SLIDESHOW);
-        bind(SlideshowActions.SLIDESHOW_SLOWER, slowerHandler, binding);
-
+        KeyboardBinding binding;
+        bind(actions.slideshow_stop, stopHandler, get('Q'));
+        bind(actions.slideshow_faster, fasterHandler, get('M'));
+        bind(actions.slideshow_slower, slowerHandler, get('N'));
         binding = KeyboardBinding.bind(new KeyStroke('S')).withDefaultModes(Modes.SLIDESHOW, Modes.TAG_VIEW, Modes.TREE_VIEW);
-        bind(SlideshowActions.SLIDESHOW_START, startHandler, binding);
+        bind(actions.slideshow_start, startHandler, binding);
+        bind(actions.slideshow_pause, pauseHandler, get(KeyStroke.KEY_SPACE));
+    }
 
-        binding = KeyboardBinding.bind(new KeyStroke(KeyStroke.KEY_SPACE)).withDefaultModes(Modes.SLIDESHOW);
-        bind(SlideshowActions.SLIDESHOW_PAUSE, pauseHandler, binding);
-
+    private KeyboardBinding get(int code) {
+        return KeyboardBinding.bind(new KeyStroke(code)).withDefaultModes(Modes.SLIDESHOW);
     }
 
 }

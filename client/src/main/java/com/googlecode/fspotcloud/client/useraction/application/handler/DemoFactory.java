@@ -11,21 +11,28 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 public class DemoFactory {
 
     private final DemoBuilderFactory demoBuilderFactory;
+    private final ApplicationActions applicationActions;
+    private final NavigationActions navigationActions;
+    private final RasterActions rasterActions;
 
     @Inject
-    public DemoFactory(DemoBuilderFactory demoBuilderFactory) {
+    public DemoFactory(DemoBuilderFactory demoBuilderFactory,
+                       ApplicationActions applicationActions,
+                       NavigationActions navigationActions,
+                       RasterActions rasterActions) {
         this.demoBuilderFactory = demoBuilderFactory;
+        this.applicationActions = applicationActions;
+        this.navigationActions = navigationActions;
+        this.rasterActions = rasterActions;
     }
 
    public IActionHandler getDemo() {
-        DemoBuilder builder = demoBuilderFactory.get(ApplicationActions.DEMO);
-        builder.addStep(NavigationActions.HOME_DEF, 3000);
-        builder.addStep(RasterActions.TOGGLE_TABULAR_VIEW, 4000);
-        builder.addStep(NavigationActions.NEXT_DEF, 3000);
-        builder.addStep(RasterActions.TOGGLE_TABULAR_VIEW,  3000);
-        builder.addStep(NavigationActions.PAGE_DOWN_DEF, 3000);
-
-
+        DemoBuilder builder = demoBuilderFactory.get(applicationActions.demo);
+        builder.addStep(navigationActions.home, 3000);
+        builder.addStep(rasterActions.toggle_tabular_view, 4000);
+        builder.addStep(navigationActions.next, 3000);
+        builder.addStep(rasterActions.toggle_tabular_view,  3000);
+        builder.addStep(navigationActions.page_down, 3000);
         return builder.getDemo();
     }
 

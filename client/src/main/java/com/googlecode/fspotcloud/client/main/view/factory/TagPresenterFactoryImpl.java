@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view.factory;
 
+import com.google.code.ginmvp.client.ActivityAsyncProxy;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.TagActivity;
@@ -69,4 +70,5 @@ public class TagPresenterFactoryImpl implements TagPresenterFactory {
         treePresenter.setPlace(place);
         return presenter;
     }
+
 }

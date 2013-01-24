@@ -12,15 +12,12 @@
     <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->
     <!-- GWT dispatch -->
     <inherits name='net.customware.gwt.dispatch.Dispatch'/>
-    <inherits name="com.google.gwt.inject.Inject"/>
     <inherits name="com.google.gwt.junit.JUnit"/>
     <!-- Other module inherits -->
     <inherits name='com.google.code.ginmvp.GinMvp'/>
-    <inherits name="com.google.gwt.activity.Activity"/>
-    <inherits name="com.google.gwt.place.Place"/>
     <inherits name="com.reveregroup.gwt.imagepreloader.ImagePreloader"/>
     <!-- Specify the app entry point class. -->
     <entry-point class="com.googlecode.fspotcloud.client.main.Main"></entry-point>
-    <set-property name="gwt.logging.logLevel" value="FINEST"/>
+    <set-property name="gwt.logging.logLevel" value="INFO"/>
     <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
 </module>

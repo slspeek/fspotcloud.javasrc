@@ -85,8 +85,8 @@ public class AppModule extends AbstractGinModule {
         bind(ManageUsersView.ManageUsersPresenter.class)
                 .to(ManageUsersPresenterImpl.class);
         bind(EmailConfirmationView.class).to(EmailConfirmationViewImpl.class);
-        bind(EmailConfirmationView.EmailConfirmationPresenter.class).to(EmailConfirmationActivity.class);
-
+        bind(EmailConfirmationView.EmailConfirmationPresenter.class)
+                .to(EmailConfirmationActivity.class);
         bind(PlaceCalculator.class);
         bind(PlaceGoTo.class).to(PlaceGoToImpl.class);
         bind(PlaceWhere.class).to(PlaceWhereImpl.class);
