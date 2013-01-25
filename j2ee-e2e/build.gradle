@@ -12,6 +12,7 @@ dependencies {
     tomcat ext.libs.tomcat
 
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
+    testCompile project(':model-jpa-j2ee')
     testCompile "org.seleniumhq.selenium:selenium:2.0b3"
     testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
     testCompile ext.libs.guiceberry
@@ -20,7 +21,13 @@ dependencies {
     testCompile ext.libs.guice
 }
 
-task unpackWar(dependsOn: ':prod-j2ee-war:assemble') << {
+
+task setupFixture(type:JavaExec) {
+    main = "com.googlecode.fspotcloud.test.J2eeFixtureRunner"
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task unpackWar(dependsOn: [':prod-j2ee-war:assemble', setupFixture]) << {
     mkdir "$buildDir/exploded-war-raw"
     mkdir "$buildDir/exploded"
     def myTests = file("../prod-j2ee-war/build/libs/prod-j2ee-war-${version}.war")

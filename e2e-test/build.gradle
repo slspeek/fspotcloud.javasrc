@@ -7,6 +7,7 @@ configurations {
 dependencies {
     testCompile project(':test-util')
     testCompile project(':client')
+    testCompile project(':model-api')
     testCompile "org.seleniumhq.selenium:selenium:2.0b3"
     testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
     testCompile ext.libs.guava_testlib

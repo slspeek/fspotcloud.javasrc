@@ -16,6 +16,8 @@ gaeRun.daemon = Boolean.parseBoolean(server_daemon)
 
 dependencies {
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
+    testCompile ext.libs.gae_testing
+    testCompile project(':model-jpa-gae')
     testCompile "org.seleniumhq.selenium:selenium:2.0b3"
     testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
     testCompile ext.libs.guiceberry
@@ -24,6 +26,8 @@ dependencies {
     testCompile ext.libs.inject
     testCompile ext.libs.guice
 }
+
+
 
 task unpackWar(dependsOn: ':prod-gae-war:assemble') << {
     mkdir "$buildDir/exploded-war-raw"
@@ -44,6 +48,13 @@ task copyWar(dependsOn: unpackWar, type: Copy) {
     into 'build/exploded'
 }
 
+task setupFixture(type:Copy, dependsOn: copyWar) {
+    from('src/test/resources/') {
+        include "local_db.bin"
+    }
+    into 'build/exploded/WEB-INF/appengine-generated/'
+}
+
 task unpackTest(dependsOn: ":e2e-test:packageTests") << {
     def myTests = file("../e2e-test/build/libs/e2e-test-${version}-tests.jar")
     ant.unjar(dest: "$buildDir/classes/test", src: myTests)
@@ -54,7 +65,7 @@ task peerStop(type: Exec) {
     ignoreExitValue = true
 }
 
-gaeRun.dependsOn copyWar
+gaeRun.dependsOn setupFixture
 test.dependsOn gaeRun, unpackTest, ":peer:assemble"
 
 test {

@@ -27,7 +27,7 @@ package com.googlecode.fspotcloud.server.admin.integration;
 import com.google.inject.Singleton;
 import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.command.CommandManager;
-import com.googlecode.fspotcloud.model.jpa.ModelModule;
+import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
 
 
@@ -36,7 +36,7 @@ public class J2eeNoAuthIntegrationIntegrationModule
     @Override
     public void configure() {
         super.configure();
-        install(new ModelModule(3, "derby"));
+        install(new J2eeModelModule(3, "derby"));
         bind(Commands.class).to(CommandManager.class).in(Singleton.class);
         install(new J2eeSimpleBlobstoreModule());
     }

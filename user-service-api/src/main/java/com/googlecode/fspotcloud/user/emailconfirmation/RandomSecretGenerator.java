@@ -24,7 +24,7 @@
 
 package com.googlecode.fspotcloud.user.emailconfirmation;
 
-public class TestSecretGenerator implements SecretGenerator {
+public class RandomSecretGenerator implements SecretGenerator {
     @Override
     public String getSecret(String user) {
         //return user;

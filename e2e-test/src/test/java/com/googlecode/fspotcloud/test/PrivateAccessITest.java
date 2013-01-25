@@ -54,11 +54,8 @@ public class PrivateAccessITest {
     @Inject
     private LoginPage loginPage;
     @Inject
-    private SignUpPage signUpPage;
-    @Inject
     private UserAccountPage userAccountPage;
-    @Inject
-    private EmailConfirmationPage emailConfirmationPage;
+
 
     @Test
     public void testAccess() throws Exception {
@@ -66,19 +63,17 @@ public class PrivateAccessITest {
         dashboardPage.manageUsergroups();
         myUserGroupsPage.open();
         myUserGroupsPage.newUserGroup();
-        myUserGroupsPage.newUserGroup();
-        myUserGroupsPage.newUserGroup();
         myUserGroupsPage.selectFirstRow();
         myUserGroupsPage.editUserGroup();
 
         editUserGroupPage.fill("GNU Friends",
                 "My friends from all over the world");
+
         editUserGroupPage.save();
         myUserGroupsPage.open();
         myUserGroupsPage.selectFirstRow();
         myUserGroupsPage.manageUserGroup();
-        manageUsersPage.newUser(SLSPEEK_GMAIL_COM);
-        dashboardPage.open();
+        manageUsersPage.newUser(ILogin.SLS);
         dashboardPage.manageApprovalForTag("1");
         sleepShort();
         tagApprovalPage.selectTopDeniedGroup();
@@ -86,14 +81,12 @@ public class PrivateAccessITest {
         photoPage.open();
         photoPage.logout();
         photoPage.open();
-        signUpPage.open();
-        signUpPage.fillForm(SLSPEEK_GMAIL_COM, SLSPEEK_GMAIL_COM);
-        signUpPage.signUp();
-        emailConfirmationPage.open(SLSPEEK_GMAIL_COM).success();
         photoPage.open("#BasePlace:1:7:2:2");
         sleepShort();
-        loginPage.fillForm(SLSPEEK_GMAIL_COM, SLSPEEK_GMAIL_COM);
+        //loginPage.open();
+        loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
         loginPage.login();
+        //photoPage.open();
         photoPage.assertPagingLabelSays(1, 3);
         photoPage.logout();
         dashboardPage.loginAndOpen();

@@ -33,7 +33,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.jpa.gae.command.CommandManager;
-import com.googlecode.fspotcloud.model.jpa.CachedModelModule;
+import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 import com.googlecode.fspotcloud.user.gae.UserModuleGae;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchModule;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchServletModule;
@@ -60,7 +60,7 @@ public class GaeTotalModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new ServerTotalModule(maxTicks, botSecret, fromAddress, ""));
-        install(new CachedModelModule(maxTicks, "gae"));
+        install(new GaeCachedModelModule(maxTicks, "gae"));
         install(new TaskQueueDispatchModule());
         install(new TaskQueueDispatchServletModule());
         install(new UserModuleGae());
