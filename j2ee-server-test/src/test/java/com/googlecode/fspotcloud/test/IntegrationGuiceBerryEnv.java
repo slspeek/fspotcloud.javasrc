@@ -90,7 +90,6 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
     protected void configure() {
         install(new GuiceBerryModule());
         bind(GuiceBerryEnvMain.class).to(ServerStarter.class);
-        bind(ILogin.class).to(RegularLoginBot.class);
         bind(TestWrapper.class).to(SeleniumTestWrapper.class);
         // !!!! HERE !!!!
         icMaster = new IcMaster()

@@ -163,7 +163,7 @@ public class LoginPresenterImplTest {
         AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
         callback.onSuccess(new AuthenticationResult(true));
         verify(loginView).setStatusText(LoginPresenterImpl.LOGGED_IN);
-
+        verify(loginView).clearFields();
         verifyNoMoreInteractions(loginView, dispatch);
     }
 }
