@@ -49,11 +49,11 @@ import com.googlecode.simplejpadao.EntityModule;
 import net.sf.jsr107cache.Cache;
 
 
-public class CachedModelModule extends AbstractModule {
+public class GaeCachedModelModule extends AbstractModule {
     private final int maxDelete;
     private final String persistenceUnit;
 
-    public CachedModelModule(int maxDelete, String persistenceUnit) {
+    public GaeCachedModelModule(int maxDelete, String persistenceUnit) {
         this.maxDelete = maxDelete;
         this.persistenceUnit = persistenceUnit;
     }

@@ -37,11 +37,11 @@ import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
 import com.googlecode.simplejpadao.EntityModule;
 
 
-public class ModelModule extends AbstractModule {
+public class J2eeModelModule extends AbstractModule {
     private final int maxDelete;
     private final String persistenceUnit;
 
-    public ModelModule(int maxDelete, String persistenceUnit) {
+    public J2eeModelModule(int maxDelete, String persistenceUnit) {
         this.maxDelete = maxDelete;
         this.persistenceUnit = persistenceUnit;
     }

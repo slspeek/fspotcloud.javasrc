@@ -26,7 +26,7 @@ package com.googlecode.fspotcloud.server.model.test.gae;
 
 import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.TestWrapper;
-import com.googlecode.fspotcloud.model.jpa.CachedModelModule;
+import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 import com.googlecode.fspotcloud.model.jpa.gae.usergroup.UserGroupManager;
 import com.googlecode.fspotcloud.server.model.test.GaeLocalDatastoreTestWrapper;
 import com.googlecode.simplejpadao.SimpleDAOGenId;
@@ -37,7 +37,7 @@ public class UserGroupGuiceBerryEnv extends GuiceBerryModule {
     protected void configure() {
         super.configure();
         bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-        install(new CachedModelModule(100, "gae-test"));
+        install(new GaeCachedModelModule(100, "gae-test"));
         bind(SimpleDAOGenId.class).to(UserGroupManager.class);
     }
 }

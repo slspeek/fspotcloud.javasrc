@@ -25,7 +25,7 @@
 package com.googlecode.fspotcloud.server.model.test;
 
 import com.google.guiceberry.GuiceBerryModule;
-import com.googlecode.fspotcloud.model.jpa.ModelModule;
+import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.fspotcloud.model.jpa.user.UserManager;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
@@ -38,7 +38,7 @@ public class UserGuiceBerryEnv extends GuiceBerryModule {
     @Override
     protected void configure() {
         super.configure();
-        install(new ModelModule(MAX_DELETE, PERSISTENCE_UNIT));
+        install(new J2eeModelModule(MAX_DELETE, PERSISTENCE_UNIT));
         bind(SimpleDAONamedId.class).to(UserManager.class);
     }
 }
