@@ -154,6 +154,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
 
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
+                            view.clearFields();
                             clientLoginManager.resetApplicationData();
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {

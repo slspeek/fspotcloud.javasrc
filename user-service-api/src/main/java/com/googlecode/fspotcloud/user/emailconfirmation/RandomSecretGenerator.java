@@ -24,10 +24,19 @@
 
 package com.googlecode.fspotcloud.user.emailconfirmation;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 public class RandomSecretGenerator implements SecretGenerator {
+
+
+    private SecureRandom random = new SecureRandom();
+
+    public String nextSessionId() {
+        return new BigInteger(130, random).toString(32);
+    }
     @Override
     public String getSecret(String user) {
-        //return user;
-        return "thiswillgetharder";
+        return nextSessionId();
     }
 }

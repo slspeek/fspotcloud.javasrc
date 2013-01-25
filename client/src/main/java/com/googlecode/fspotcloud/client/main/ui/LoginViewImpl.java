@@ -112,6 +112,12 @@ public class LoginViewImpl extends Composite implements LoginView {
         });
     }
 
+    @Override
+    public void clearFields() {
+       userNameTextBox.setText(""); //To change body of implemented methods use File | Settings | File Templates.
+       passwordTextBox.setText(""); //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     @UiHandler("login")
     public void loginClicked(ClickEvent e) {
         presenter.login();
