@@ -41,10 +41,6 @@ public class EmailConfirmationPage {
     @Inject
     Selenium selenium;
 
-    public EmailConfirmationPage open(String email) {
-        return open(email, "thiswillgetharder");
-    }
-
     public EmailConfirmationPage open(String email, String secret) {
         selenium.open("/#EmailConfirmationPlace:" + email + ":" + secret);
         selenium.waitForPageToLoad("30000");

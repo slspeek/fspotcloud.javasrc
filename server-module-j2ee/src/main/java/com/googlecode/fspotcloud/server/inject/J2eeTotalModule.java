@@ -29,7 +29,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.command.CommandManager;
-import com.googlecode.fspotcloud.model.jpa.ModelModule;
+import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.fspotcloud.user.openid.OpenIdUserModule;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchDirectModule;
 
@@ -58,7 +58,7 @@ public class J2eeTotalModule extends AbstractModule {
     protected void configure() {
         install(new ServerTotalModule(maxTicks, botSecret, adminEmail,
                 smtpServer));
-        install(new ModelModule(maxTicks, "derby"));
+        install(new J2eeModelModule(maxTicks, "derby"));
         install(new TaskQueueDispatchDirectModule());
         install(new OpenIdUserModule(adminEmail));
         bind(Commands.class).to(CommandManager.class).in(Singleton.class);

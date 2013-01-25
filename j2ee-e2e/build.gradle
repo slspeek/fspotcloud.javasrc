@@ -31,7 +31,13 @@ dependencies {
     testCompile libs.guice
 }
 
-task unpackWar(dependsOn: ':prod-j2ee-war:assemble') << {
+
+task setupFixture(type:JavaExec) {
+    main = "com.googlecode.fspotcloud.test.J2eeFixtureRunner"
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task unpackWar(dependsOn: [':prod-j2ee-war:assemble', setupFixture]) << {
     mkdir "$buildDir/exploded-war-raw"
     mkdir "$buildDir/exploded"
     def myTests = file("../prod-j2ee-war/build/libs/prod-j2ee-war-${version}.war")

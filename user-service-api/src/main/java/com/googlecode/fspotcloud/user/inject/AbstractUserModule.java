@@ -26,8 +26,8 @@ package com.googlecode.fspotcloud.user.inject;
 
 import com.google.inject.AbstractModule;
 import com.googlecode.fspotcloud.user.*;
+import com.googlecode.fspotcloud.user.emailconfirmation.RandomSecretGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
-import com.googlecode.fspotcloud.user.emailconfirmation.TestSecretGenerator;
 
 
 public class AbstractUserModule extends AbstractModule {
@@ -37,6 +37,6 @@ public class AbstractUserModule extends AbstractModule {
         bind(ILoginMetaDataUpdater.class).to(LoginMetaDataUpdater.class);
         bind(String.class).annotatedWith(ServerAddress.class)
                 .toProvider(ServerAddressProvider.class);
-        bind(SecretGenerator.class).to(TestSecretGenerator.class);
+        bind(SecretGenerator.class).to(RandomSecretGenerator.class);
     }
 }

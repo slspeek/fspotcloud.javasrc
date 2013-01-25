@@ -25,13 +25,13 @@
 package com.googlecode.fspotcloud.server.model.test;
 
 import com.google.guiceberry.GuiceBerryModule;
-import com.googlecode.fspotcloud.model.jpa.ModelModule;
+import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 
 
 public class J2eeModelGuiceBerryEnv extends GuiceBerryModule {
     @Override
     protected void configure() {
         super.configure();
-        install(new ModelModule(100, "derby-test"));
+        install(new J2eeModelModule(100, "derby-test"));
     }
 }

@@ -28,6 +28,8 @@ dependencies {
     testCompile libs.guice
 }
 
+
+
 task unpackWar(dependsOn: ':prod-gae-war:assemble') << {
     mkdir "$buildDir/exploded-war-raw"
     mkdir "$buildDir/exploded"
@@ -45,6 +47,13 @@ task copyWar(dependsOn: unpackWar, type: Copy) {
         exclude "**/properties.properties"
     }
     into 'build/exploded'
+}
+
+task setupFixture(type:Copy, dependsOn: copyWar) {
+    from('src/test/resources/') {
+        include "local_db.bin"
+    }
+    into 'build/exploded/WEB-INF/appengine-generated/'
 }
 
 task unpackTest(dependsOn: ":e2e-test:packageTests") << {

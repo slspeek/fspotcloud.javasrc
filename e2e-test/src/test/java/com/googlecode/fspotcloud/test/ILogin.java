@@ -21,17 +21,13 @@
                 Boston, MA 02111-1307, USA.
  *
  */
-
-/*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
 package com.googlecode.fspotcloud.test;
 
-
-/**
- * @author steven
- */
 public interface ILogin {
+    String RMS_FSF_ORG = "rms@example.com";
+    String CREDENTIALS = "GNU";
+    String SLS = "slspeek@gmail.com";
+    String SLS_CRED = SLS;
+
     void login() throws Exception;
 }

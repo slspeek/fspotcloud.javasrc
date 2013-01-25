@@ -28,7 +28,7 @@ import com.google.guiceberry.TestWrapper;
 import com.google.inject.Singleton;
 import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.jpa.gae.command.CommandManager;
-import com.googlecode.fspotcloud.model.jpa.CachedModelModule;
+import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 
 
 public class GaeNoAuthIntegrationIntegrationModule
@@ -38,7 +38,7 @@ public class GaeNoAuthIntegrationIntegrationModule
         super.configure();
         System.setProperty("appengine.orm.disable.duplicate.emf.exception",
                 "true");
-        install(new CachedModelModule(3, "gae"));
+        install(new GaeCachedModelModule(3, "gae"));
         bind(Commands.class).to(CommandManager.class).in(Singleton.class);
 
         bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
