@@ -131,6 +131,11 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     }
 
     @Override
+    public void resendConfirmation() {
+        placeGoTo.goTo(new SendConfirmationPlace());
+    }
+
+    @Override
     public void cancel() {
         placeGoTo.goTo(new BasePlace("latest", "latest"));
     }

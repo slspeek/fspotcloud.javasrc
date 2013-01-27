@@ -22,25 +22,41 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view.api;
+package com.googlecode.fspotcloud.client.place;
 
-import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceTokenizer;
 
 
-public interface ResendEmailConfirmationView extends IsWidget {
-    void setPresenter(ResendEmailConfirmationPresenter presenter);
+public class SendConfirmationPlace extends Place {
 
-    public String getEmailField();
+    public SendConfirmationPlace() {
+    }
 
-    public void setStatusText(String text);
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 
-    void clearEmailField();
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SendConfirmationPlace) {
+            return true;
+        } else {
+            return false;
+        }
 
-    interface ResendEmailConfirmationPresenter extends Activity {
+    }
 
-        void send();
+    public static class Tokenizer implements PlaceTokenizer<SendConfirmationPlace> {
+        @Override
+        public SendConfirmationPlace getPlace(String token) {
+            return new SendConfirmationPlace();
+        }
 
-        void cancel();
+        @Override
+        public String getToken(SendConfirmationPlace place) {
+            return "";
+        }
     }
 }

@@ -59,6 +59,8 @@ public class AppModule extends AbstractGinModule {
         bind(DoubleImageView.class).to(DoubleImageViewImpl.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
         //bind(GetTagTreeMemoProc.class);
+        bind(SendConfirmationView.class).to(SendConfirmationViewImpl.class).in(Singleton.class);
+        bind(SendConfirmationView.SendConfirmationPresenter.class).to(SendConfirmationActivity.class);
         bind(MailFullsizeView.class).to(MailFullsizeViewImpl.class).in(Singleton.class);
         install(new GinFactoryModuleBuilder().implement(MailFullsizeView.MailFullsizePresenter.class,
                 MailFullsizeActivity.class).build(MailFullsizeActivityFactory.class));

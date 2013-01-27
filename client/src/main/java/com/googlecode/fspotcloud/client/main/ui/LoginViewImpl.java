@@ -56,6 +56,8 @@ public class LoginViewImpl extends Composite implements LoginView {
     PushButton signUp;
     @UiField
     PushButton cancel;
+    @UiField
+    PushButton resend;
 
     @Inject
     public LoginViewImpl() {
@@ -114,8 +116,8 @@ public class LoginViewImpl extends Composite implements LoginView {
 
     @Override
     public void clearFields() {
-       userNameTextBox.setText(""); //To change body of implemented methods use File | Settings | File Templates.
-       passwordTextBox.setText(""); //To change body of implemented methods use File | Settings | File Templates.
+       userNameTextBox.setText("");
+       passwordTextBox.setText("");
     }
 
     @UiHandler("login")
@@ -126,6 +128,11 @@ public class LoginViewImpl extends Composite implements LoginView {
     @UiHandler("signUp")
     public void signUpClicked(ClickEvent e) {
         presenter.signUp();
+    }
+
+    @UiHandler("resend")
+    public void resendClicked(ClickEvent e) {
+        presenter.resendConfirmation();
     }
 
     @UiHandler("cancel")
