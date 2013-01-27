@@ -22,21 +22,25 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.IsWidget;
 
 
-@WithTokenizers({EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+public interface ResendEmailConfirmationView extends IsWidget {
+    void setPresenter(ResendEmailConfirmationPresenter presenter);
+
+    public String getEmailField();
+
+    public void setStatusText(String text);
+
+    void clearEmailField();
+
+    interface ResendEmailConfirmationPresenter extends Activity {
+
+        void send();
+
+        void cancel();
+    }
 }

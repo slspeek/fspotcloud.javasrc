@@ -45,6 +45,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final SlideshowActivityFactory slideshowActivityFactory;
     private final Navigator navigator;
     private final IModeController modeController;
+    private final MailFullsizeActivityFactory mailFullsizeActivityFactory;
     private final ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter;
     private final ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter;
     private final ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity;
@@ -57,7 +58,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
                                     SlideshowActivityFactory slideshowActivityFactory,
                                     Navigator navigator, IModeController modeController,
-                                    ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
+                                    MailFullsizeActivityFactory mailFullsizeActivityFactory, ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
                                     ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter,
                                     ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity,
                                     ActivityAsyncProxy<MyUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter,
@@ -69,6 +70,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.tagPresenterFactory = tagPresenterFactory;
         this.navigator = navigator;
         this.modeController = modeController;
+        this.mailFullsizeActivityFactory = mailFullsizeActivityFactory;
         this.loginPresenter = loginPresenter;
         this.signUpPresenter = signUpPresenter;
         this.userAccountActivity = userAccountActivity;
@@ -85,7 +87,10 @@ public class MainWindowActivityMapper implements ActivityMapper {
 
         Activity activity = null;
 
-        if (place instanceof UserAccountPlace) {
+        if (place instanceof MailFullsizePlace) {
+            activity = mailFullsizeActivityFactory.get((MailFullsizePlace) place);
+            modeController.setMode(Modes.LOGIN);
+        } else if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof EmailConfirmationPlace) {

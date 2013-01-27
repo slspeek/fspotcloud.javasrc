@@ -30,7 +30,6 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEvent;
-import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
@@ -45,17 +44,15 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
     private final boolean thumb;
     private final EventBus eventBus;
     private final PhotoInfo info;
-    @SuppressWarnings("unused")
-    private final Resources resources;
 
     @Inject
     public ImagePresenterImpl(@Assisted
                               String tagId, @Assisted
-    ImageView imageView, @Assisted
-    boolean thumb, @Assisted
-    PhotoInfo info, EventBus eventBus, Resources resources) {
+                              ImageView imageView, @Assisted
+                              boolean thumb, @Assisted
+                              PhotoInfo info,
+                              EventBus eventBus) {
         this.tagId = tagId;
-        this.resources = resources;
         photoId = info.getId();
         this.imageView = imageView;
         this.thumb = thumb;
@@ -63,6 +60,7 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
         this.info = info;
     }
 
+    @Override
     public void init() {
         imageView.setPresenter(this);
         setImage();
@@ -70,6 +68,7 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
     }
 
     public void setImage() {
+        log.info(photoId);
         if (photoId != null) {
             String date;
 
