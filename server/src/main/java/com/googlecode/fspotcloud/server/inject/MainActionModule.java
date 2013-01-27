@@ -56,5 +56,6 @@ public class MainActionModule extends ActionHandlerModule {
         bindHandler(UpdateUserAction.class, UpdateUserHandler.class);
         bind(IUserGroupHelper.class).to(UserGroupHelper.class);
         bindHandler(EmailConfirmationAction.class, EmailConfirmationHandler.class);
+        bindHandler(SendConfirmationEmailAction.class, SendConfirmationEmailHandler.class);
     }
 }
