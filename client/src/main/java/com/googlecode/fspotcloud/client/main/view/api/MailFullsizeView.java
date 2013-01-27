@@ -22,21 +22,28 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.uibinder.client.UiFactory;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.client.main.ui.ImageViewImpl;
 
 
-@WithTokenizers({EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+public interface MailFullsizeView extends IsWidget {
+    void setPresenter(MailFullsizePresenter presenter);
+
+    void setStatusText(String text);
+
+    void setImageUrl(String url);
+
+    @UiFactory
+    ImageViewImpl getImageView();
+
+    interface MailFullsizePresenter extends Activity {
+
+        void mailImage();
+
+        void cancel();
+    }
 }

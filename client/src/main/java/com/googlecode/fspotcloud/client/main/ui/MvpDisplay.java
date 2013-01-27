@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MvpDisplay implements GinMvpDisplay{
@@ -15,9 +16,9 @@ public class MvpDisplay implements GinMvpDisplay{
     private HasOneWidgetAdapter adapter = new HasOneWidgetAdapter(dockLayoutPanel);
     @Override
     public void setWidget(IsWidget w) {
-        log.info("set widget starting");
+        log.log(Level.FINEST, "set widget starting");
         adapter.setWidget(w);
-        log.info("set widget ending");
+        log.log(Level.FINEST, "set widget ending");
     }
 
     @Override

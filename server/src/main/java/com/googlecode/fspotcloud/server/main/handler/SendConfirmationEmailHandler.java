@@ -28,12 +28,12 @@ import com.google.inject.Provider;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
+import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
 import com.googlecode.fspotcloud.shared.main.SignUpAction;
 import com.googlecode.fspotcloud.shared.main.SignUpResult;
 import com.googlecode.fspotcloud.user.emailconfirmation.ConfirmationMailGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
-import net.customware.gwt.dispatch.server.Dispatch;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
@@ -41,29 +41,33 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 
 
-public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResult> {
+public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfirmationEmailAction, VoidResult> {
     @Inject
     private UserDao userDao;
     @Inject
-    private Dispatch dispatch;
+    private IMail mailer;
+    @Inject
+    private ConfirmationMailGenerator confirmationMailGenerator;
+    @Inject
+    private Provider<SecretGenerator> secretGeneratorProvider;
 
     @Override
-    public SignUpResult execute(SignUpAction action, ExecutionContext context)
-            throws DispatchException {
+    public VoidResult execute(SendConfirmationEmailAction action, ExecutionContext context) throws DispatchException {
         final String email = action.getEmail();
         User mayBeExisted = userDao.findOrNew(email);
 
-        if (!mayBeExisted.hasRegistered()) {
-            final User newUser = mayBeExisted;
+        if (mayBeExisted.hasRegistered()) {
+            final User registeredUser = mayBeExisted;
+            String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
+            registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
+            userDao.save(registeredUser);
 
-            newUser.setNickname(action.getNickname());
-            newUser.setCredentials(action.getPassword());
-            newUser.setRegistered(true);
-            userDao.save(newUser);
-            dispatch.execute(new SendConfirmationEmailAction(email));
-            return new SignUpResult(true);
-        } else {
-            return new SignUpResult(false);
+            String confirmationMail = confirmationMailGenerator.getMailBody(email,
+                    emailConfirmationSecret);
+            mailer.send(email, "F-Spot Cloud email confirmation",
+                    confirmationMail);
+
         }
+        return new VoidResult();
     }
 }

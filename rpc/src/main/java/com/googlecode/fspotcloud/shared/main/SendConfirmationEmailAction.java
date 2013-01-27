@@ -22,21 +22,26 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.shared.main;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.common.annotations.GwtCompatible;
+import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import net.customware.gwt.dispatch.shared.Action;
 
 
-@WithTokenizers({EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+@GwtCompatible
+public class SendConfirmationEmailAction implements Action<VoidResult> {
+    private String email;
+
+
+    public SendConfirmationEmailAction(String email) {
+        this.email = email;
+    }
+
+    public SendConfirmationEmailAction() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

@@ -41,22 +41,42 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class PojoTest {
     // Configured for expectation, so we know when a class gets added or removed.
-    private static final int EXPECTED_CLASS_COUNT = 24;
+    private static final int EXPECTED_CLASS_COUNT = 28;
 
     // The package to test
     private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
     private List<PojoClass> pojoClasses;
     private PojoValidator pojoValidator;
     private final Class<?>[] POJO_CLASSES = new Class<?>[]{
-            AuthenticationAction.class, AuthenticationResult.class, DeleteUserGroupAction.class,
-            GetMyUserGroupsAction.class, GetMyUserGroupsResult.class, GetUserGroupAction.class, GetUserGroupResult.class,
-            GrantUserAction.class, LogoutAction.class,
-            GetTagTreeAction.class, GetUserInfo.class, PhotoInfo.class,
-            PhotoInfoStore.class, TagNode.class, TagTreeResult.class,
-            RequestFullsizeImageAction.class, RevokeTagAction.class, RevokeUserAction.class,
-            NewUserGroupAction.class, SaveUserGroupAction.class, SignUpAction.class, SignUpResult.class,
+
+            AuthenticationAction.class,
+            AuthenticationResult.class,
+            DeleteUserGroupAction.class,
+            EmailConfirmationAction.class,
+            GetMyUserGroupsAction.class,
+            GetMyUserGroupsResult.class,
+            GetTagTreeAction.class,
+            GetUserGroupAction.class,
+            GetUserGroupResult.class,
+            GetUserInfo.class,
+            GrantUserAction.class,
+            LogoutAction.class,
+            NewUserGroupAction.class,
+            PhotoInfo.class,
+            PhotoInfoStore.class,
+            RequestFullsizeImageAction.class,
+            RevokeTagAction.class,
+            RevokeUserAction.class,
+            SaveUserGroupAction.class,
+            SendConfirmationEmailAction.class,
+            SignUpAction.class,
+            SignUpResult.class,
+            TagNode.class,
+            TagTreeResult.class,
+            UpdateUserAction.class,
+            UpdateUserResult.class,
             UserGroupInfo.class,
-            UserInfo.class
+            UserInfo.class,
     };
 
     @Before
