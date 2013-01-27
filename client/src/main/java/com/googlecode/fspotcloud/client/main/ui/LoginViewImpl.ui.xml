@@ -8,34 +8,43 @@
                 <g:layer top="0%" height="14%" width="100%" left="0%">
                     <g:Label addStyleNames="{res.style.titleLabel}">F-Spot Cloud Native Login</g:Label>
                 </g:layer>
-                <g:layer top="25%" height="13%" left="0%" width="30%">
+                <g:layer top="17%" height="13%" left="0%" width="30%">
                     <g:Label addStyleNames="{res.style.label}">Email</g:Label>
                 </g:layer>
-                <g:layer top="25%" height="13%" left="30%" width="70%">
+                <g:layer top="17%" height="13%" left="30%" width="70%">
                     <g:TextBox ui:field="userNameTextBox" addStyleNames="{res.style.textBox}"></g:TextBox>
                 </g:layer>
-                <g:layer top="50%" height="13%" left="0%" width="30%">
+                <g:layer top="33%" height="13%" left="0%" width="30%">
                     <g:Label addStyleNames="{res.style.label}">Password</g:Label>
                 </g:layer>
-                <g:layer top="50%" height="13%" left="30%" width="70%">
+                <g:layer top="33%" height="13%" left="30%" width="70%">
                     <g:PasswordTextBox ui:field="passwordTextBox"
                                        addStyleNames="{res.style.textBox}"></g:PasswordTextBox>
                 </g:layer>
-                <g:layer top="65%" height="8%" left="0%" width="100%">
+                <g:layer top="49%" height="8%" left="0%" width="100%">
                     <g:Label ui:field="statusLabel" addStyleNames="{res.style.statusLabel}">Please login</g:Label>
                 </g:layer>
-                <g:layer top="75%" width="100%" height="12%">
+                <g:layer top="60%" width="100%" height="10%">
                     <g:LayoutPanel>
-                        <g:layer top="5%" height="90%" left="0%" width="20%">
+                        <g:layer top="5%" height="90%" left="0%" width="19%">
                             <g:PushButton ui:field="login" addStyleNames="{res.style.button}">Login</g:PushButton>
                         </g:layer>
-                        <g:layer top="5%" height="90%" right="0%" width="20%">
+                        <g:layer top="5%" height="90%" right="0%" width="22%">
                             <g:PushButton ui:field="cancel" addStyleNames="{res.style.button}">Cancel</g:PushButton>
                         </g:layer>
-                        <g:layer top="5%" height="90%" left="40%" width="20%">
+                        <g:layer top="5%" height="90%" left="39%" width="23%">
                             <g:PushButton ui:field="signUp" addStyleNames="{res.style.button}">Sign up</g:PushButton>
                         </g:layer>
 
+
+                    </g:LayoutPanel>
+                </g:layer>
+                <g:layer top="73%" width="100%" height="10%">
+                    <g:LayoutPanel>
+                        <g:layer top="5%" height="90%" left="25%" width="50%">
+                            <g:PushButton ui:field="resend" addStyleNames="{res.style.button}">Resend confirmation
+                            </g:PushButton>
+                        </g:layer>
                     </g:LayoutPanel>
                 </g:layer>
                 <g:layer bottom="0%" height="10%" left="0%" width="100%">

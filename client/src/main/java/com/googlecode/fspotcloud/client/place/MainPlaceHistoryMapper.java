@@ -37,6 +37,7 @@ import com.google.gwt.place.shared.WithTokenizers;
         LoginPlace.Tokenizer.class,
         SignUpPlace.Tokenizer.class,
         UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class})
+        MailFullsizePlace.Tokenizer.class,
+        SendConfirmationPlace.Tokenizer.class})
 public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
 }
