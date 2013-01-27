@@ -28,33 +28,18 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
 
 
-public interface LoginView extends IsWidget {
-    void setPresenter(LoginPresenter presenter);
+public interface SendConfirmationView extends IsWidget {
+    void setPresenter(SendConfirmationPresenter presenter);
 
-    public String getUserNameField();
-
-    public String getPasswordField();
+    public String getEmailField();
 
     public void setStatusText(String text);
 
-    public void setGoogleLoginHref(String href);
+    void clearEmailField();
 
-    public void focusUserNameField();
+    interface SendConfirmationPresenter extends Activity {
 
-    public void focusPasswordField();
-
-    void clearFields();
-
-    interface LoginPresenter extends Activity {
-        public void onUserFieldKeyUp(int keyCode);
-
-        public void onPasswordFieldKeyUp(int keyCode);
-
-        void login();
-
-        void signUp();
-
-        void resendConfirmation();
+        void send();
 
         void cancel();
     }
