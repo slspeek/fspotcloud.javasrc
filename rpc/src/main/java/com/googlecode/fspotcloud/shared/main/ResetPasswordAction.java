@@ -22,24 +22,36 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.shared.main;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.common.annotations.GwtCompatible;
+import net.customware.gwt.dispatch.shared.Action;
 
 
-@WithTokenizers({EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class,
-        SendConfirmationPlace.Tokenizer.class,
-        SendResetPasswordPlace.Tokenizer.class,
-        ChangePasswordPlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+@GwtCompatible
+public class ResetPasswordAction implements Action<UpdateUserResult> {
+    private String email;
+    private String secret;
+    private String newPassword;
+
+    public ResetPasswordAction() {
+    }
+
+    public ResetPasswordAction(String email, String secret, String newPassword) {
+        this.email = email;
+        this.secret = secret;
+        this.newPassword = newPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
 }

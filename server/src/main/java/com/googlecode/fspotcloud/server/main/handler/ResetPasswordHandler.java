@@ -26,10 +26,10 @@ package com.googlecode.fspotcloud.server.main.handler;
 
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
-import com.googlecode.fspotcloud.shared.main.SignUpAction;
-import com.googlecode.fspotcloud.shared.main.SignUpResult;
-import net.customware.gwt.dispatch.server.Dispatch;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
+import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
+import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
+import com.googlecode.fspotcloud.user.UserService;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
@@ -37,29 +37,29 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 
 
-public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResult> {
+public class ResetPasswordHandler extends SimpleActionHandler<ResetPasswordAction, UpdateUserResult> {
+
     @Inject
     private UserDao userDao;
-    @Inject
-    private Dispatch dispatch;
 
     @Override
-    public SignUpResult execute(SignUpAction action, ExecutionContext context)
-            throws DispatchException {
-        final String email = action.getEmail();
-        User mayBeExisted = userDao.findOrNew(email);
-
-        if (!mayBeExisted.hasRegistered()) {
-            final User newUser = mayBeExisted;
-
-            newUser.setNickname(action.getNickname());
-            newUser.setCredentials(action.getPassword());
-            newUser.setRegistered(true);
-            userDao.save(newUser);
-            dispatch.execute(new SendConfirmationEmailAction(email));
-            return new SignUpResult(true);
-        } else {
-            return new SignUpResult(false);
-        }
+    public UpdateUserResult execute(ResetPasswordAction action, ExecutionContext context) throws DispatchException {
+            User user = userDao.find(action.getEmail());
+            if (user.hasRegistered()) {
+                if (user.getEnabled()) {
+                    if (action.getSecret().equals(user.emailVerificationSecret())) {
+                        user.setCredentials(action.getNewPassword());
+                        user.setEmailVerificationSecret("");
+                        userDao.save(user);
+                        return new UpdateUserResult(true);
+                    } else {
+                        return new UpdateUserResult(false);
+                    }
+                } else {
+                    throw new EmailNotVerifiedException();
+                }
+            } else {
+                throw new UserNotRegisteredException();
+            }
     }
 }
