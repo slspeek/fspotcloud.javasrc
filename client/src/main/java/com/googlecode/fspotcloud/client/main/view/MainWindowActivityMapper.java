@@ -54,18 +54,24 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter;
     private final ManageUsersView.ManageUsersPresenter manageUsersPresenter;
     private final ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter;
+    private final ChangePasswordActivityFactory changePasswordActivityFactory;
+    private final SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter;
 
     @Inject
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
                                     SlideshowActivityFactory slideshowActivityFactory,
                                     Navigator navigator, IModeController modeController,
-                                    MailFullsizeActivityFactory mailFullsizeActivityFactory, ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity, ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
+                                    MailFullsizeActivityFactory mailFullsizeActivityFactory,
+                                    ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity,
+                                    ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
                                     ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter,
                                     ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity,
                                     ActivityAsyncProxy<MyUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter,
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter,
-                                    ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter) {
+                                    ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
+                                    ChangePasswordActivityFactory changePasswordActivityFactory,
+                                    SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter) {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagPresenterFactory = tagPresenterFactory;
@@ -80,6 +86,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.editUserGroupPresenter = editUserGroupPresenter;
         this.manageUsersPresenter = manageUsersPresenter;
         this.emailConfirmationPresenter = emailConfirmationPresenter;
+        this.changePasswordActivityFactory = changePasswordActivityFactory;
+        this.sendResetPasswordPresenter = sendResetPasswordPresenter;
     }
 
     @Override
@@ -94,6 +102,12 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SendConfirmationPlace) {
             activity = confirmationPresenterActivity;
+            modeController.setMode(Modes.LOGIN);
+        } else if (place instanceof ChangePasswordPlace) {
+            activity = changePasswordActivityFactory.get((ChangePasswordPlace) place);
+            modeController.setMode(Modes.LOGIN);
+        } else if (place instanceof SendResetPasswordPlace) {
+            activity = sendResetPasswordPresenter;
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;

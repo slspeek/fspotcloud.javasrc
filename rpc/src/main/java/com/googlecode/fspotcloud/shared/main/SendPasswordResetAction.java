@@ -22,25 +22,26 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view.api;
+package com.googlecode.fspotcloud.shared.main;
 
-import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.common.annotations.GwtCompatible;
+import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import net.customware.gwt.dispatch.shared.Action;
 
 
-public interface ResetPasswordView extends IsWidget {
-    void setPresenter(ResetPasswordPresenter presenter);
+@GwtCompatible
+public class SendPasswordResetAction implements Action<VoidResult> {
+    private String email;
 
-    public String getEmailField();
 
-    public void setStatusText(String text);
+    public SendPasswordResetAction(String email) {
+        this.email = email;
+    }
 
-    void clearEmailField();
+    public SendPasswordResetAction() {
+    }
 
-    interface ResetPasswordPresenter extends Activity {
-
-        void resetPassword();
-
-        void cancel();
+    public String getEmail() {
+        return email;
     }
 }
