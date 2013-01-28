@@ -56,6 +56,8 @@ public interface LoginView extends IsWidget {
 
         void resendConfirmation();
 
+        void passwordReset();
+
         void cancel();
     }
 }

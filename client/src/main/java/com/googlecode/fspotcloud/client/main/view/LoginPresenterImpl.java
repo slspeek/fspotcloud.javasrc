@@ -136,6 +136,11 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     }
 
     @Override
+    public void passwordReset() {
+        placeGoTo.goTo(new SendResetPasswordPlace());
+    }
+
+    @Override
     public void cancel() {
         placeGoTo.goTo(new BasePlace("latest", "latest"));
     }

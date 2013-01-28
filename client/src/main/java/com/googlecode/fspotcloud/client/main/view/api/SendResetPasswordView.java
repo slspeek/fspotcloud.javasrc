@@ -22,26 +22,25 @@
  *
  */
 
-package com.googlecode.fspotcloud.user.emailconfirmation;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.googlecode.fspotcloud.user.inject.ServerAddress;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.IsWidget;
 
 
-public class ConfirmationMailGenerator {
-    @Inject
-    @ServerAddress
-    private Provider<String> serverAddressProvider;
+public interface SendResetPasswordView extends IsWidget {
+    void setPresenter(ResetPasswordPresenter presenter);
 
-    public String getMailBody(String user, String secret) {
-        String result = "Hello " + user + ",\n";
-        result += "Please click this link to confirm your email address:\n";
-        result += serverAddressProvider.get() + "/#EmailConfirmationPlace:" + user + ":" + secret;
-        result += "\n";
-        result += "The F-Spot Cloud Team";
+    public String getEmailField();
 
-        return result;
+    public void setStatusText(String text);
+
+    void clearEmailField();
+
+    interface ResetPasswordPresenter extends Activity {
+
+        void resetPassword();
+
+        void cancel();
     }
 }

@@ -25,35 +25,34 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.SendConfirmationView;
-import com.googlecode.fspotcloud.client.main.view.api.TagView;
+import com.googlecode.fspotcloud.client.main.view.api.SendResetPasswordView;
+import com.googlecode.fspotcloud.client.place.SendResetPasswordPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
+import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Logger;
 
 
-public class SendConfirmationActivity extends AbstractActivity implements SendConfirmationView.SendConfirmationPresenter {
+public class SendPasswordResetActivity extends AbstractActivity implements SendResetPasswordView.ResetPasswordPresenter {
     @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(SendConfirmationActivity.class.getName());
-    private final SendConfirmationView view;
+    private final Logger log = Logger.getLogger(SendPasswordResetActivity.class.getName());
+    private final SendResetPasswordView view;
     private final DispatchAsync dispatchAsync;
     private final Navigator navigator;
 
 
     @Inject
-    public SendConfirmationActivity(SendConfirmationView view,
-                                    DispatchAsync dispatchAsync,
-                                    Navigator navigator) {
+    public SendPasswordResetActivity(SendResetPasswordView view,
+                                     DispatchAsync dispatchAsync,
+                                     Navigator navigator) {
         this.view = view;
         this.dispatchAsync = dispatchAsync;
         this.navigator = navigator;
@@ -66,9 +65,9 @@ public class SendConfirmationActivity extends AbstractActivity implements SendCo
     }
 
     @Override
-    public void send() {
+    public void resetPassword() {
         String email = view.getEmailField();
-        SendConfirmationEmailAction action = new SendConfirmationEmailAction(email);
+        SendPasswordResetAction action = new SendPasswordResetAction(email);
         dispatchAsync.execute(action, new AsyncCallback<VoidResult>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -80,7 +79,6 @@ public class SendConfirmationActivity extends AbstractActivity implements SendCo
                 view.setStatusText("Success. Check your email.");
             }
         });
-
     }
 
     @Override

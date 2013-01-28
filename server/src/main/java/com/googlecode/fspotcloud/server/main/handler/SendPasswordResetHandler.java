@@ -29,7 +29,7 @@ import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
+import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
 import com.googlecode.fspotcloud.user.emailconfirmation.MailGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -39,7 +39,7 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 
 
-public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfirmationEmailAction, VoidResult> {
+public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordResetAction, VoidResult> {
     @Inject
     private UserDao userDao;
     @Inject
@@ -50,7 +50,7 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
     private Provider<SecretGenerator> secretGeneratorProvider;
 
     @Override
-    public VoidResult execute(SendConfirmationEmailAction action, ExecutionContext context) throws DispatchException {
+    public VoidResult execute(SendPasswordResetAction action, ExecutionContext context) throws DispatchException {
         final String email = action.getEmail();
         User mayBeExisted = userDao.findOrNew(email);
 
@@ -60,9 +60,9 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
             registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
             userDao.save(registeredUser);
 
-            String confirmationMail = mailGenerator.getConfirmationMailBody(email,
+            String confirmationMail = mailGenerator.getPasswordResetMailBody(email,
                     emailConfirmationSecret);
-            mailer.send(email, "F-Spot Cloud email confirmation",
+            mailer.send(email, "F-Spot Cloud reset password link",
                     confirmationMail);
 
         }

@@ -58,6 +58,9 @@ public class LoginViewImpl extends Composite implements LoginView {
     PushButton cancel;
     @UiField
     PushButton resend;
+    @UiField
+    PushButton passwordReset;
+
 
     @Inject
     public LoginViewImpl() {
@@ -133,6 +136,11 @@ public class LoginViewImpl extends Composite implements LoginView {
     @UiHandler("resend")
     public void resendClicked(ClickEvent e) {
         presenter.resendConfirmation();
+    }
+
+    @UiHandler("passwordReset")
+    public void passwordResetClicked(ClickEvent e) {
+        presenter.passwordReset();
     }
 
     @UiHandler("cancel")
