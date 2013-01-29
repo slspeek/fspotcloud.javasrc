@@ -27,25 +27,40 @@ package com.googlecode.fspotcloud.server.inject;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
+import com.google.inject.servlet.ServletModule;
+import com.googlecode.fspotcloud.server.cron.CronServlet;
+import com.googlecode.fspotcloud.server.cron.RssServlet;
+import com.googlecode.fspotcloud.server.image.ImageServlet;
 import com.googlecode.fspotcloud.server.main.PropertiesLoader;
+import net.customware.gwt.dispatch.server.guice.GuiceStandardDispatchServlet;
+import com.googlecode.fspotcloud.test.Fixture;
 
 import java.util.Properties;
+import java.util.logging.Logger;
 
 
-public class GaeGuiceServletConfig extends GuiceServletContextListener {
+public class GaeFixtureServletConfig extends GuiceServletContextListener {
     final Properties p = (new PropertiesLoader("properties.properties")).loadProperties();
+
+    Injector injector;
+    public GaeFixtureServletConfig() {
+        injector = Guice.createInjector(new GaeTotalModule(100,"",""), new FixtureServletModulde());
+        Fixture fixture = new Fixture(injector);
+        fixture.run();
+        Logger.getAnonymousLogger().info("We are called!");
+    }
 
     @Override
     protected Injector getInjector() {
         System.setProperty("java.util.logging.config.file", "logging.properties");
 
-        int maxTicks = Integer.valueOf(p.getProperty(
-                "fspotcloud.max.data.ticks",
-                "100"));
-        String botSecret = p.getProperty("fspotcloud.bot.secret");
-        String fromAddress = p.getProperty("fspotcloud.from.address");
-        Injector i = Guice.createInjector(new GaeTotalModule(maxTicks,
-                botSecret, fromAddress));
-        return i;
+        return injector;
+    }
+
+    class FixtureServletModulde extends ServletModule {
+        @Override
+        protected void configureServlets() {
+            serve("/fixture").with(FixtureRunServlet.class);
+        }
     }
 }

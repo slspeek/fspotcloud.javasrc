@@ -26,10 +26,7 @@ package com.googlecode.fspotcloud.server.model.tag;
 
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class TreeBuilder {
@@ -40,13 +37,15 @@ public class TreeBuilder {
         this.flatNodes = flatNodes;
     }
 
-    public TagNode getRoots() {
-        return getFilteredRoots(new Filter() {
+    public TagNode getFullTree() {
+        final TagNode tree = getFilteredTree(new Filter() {
             @Override
             public boolean isValid(TagNode node) {
                 return true;
             }
         });
+        sortTree(tree);
+        return tree;
     }
 
     private void buildMap() {
@@ -58,16 +57,26 @@ public class TreeBuilder {
         }
     }
 
-    public TagNode getPublicRoots() {
-        return getFilteredRoots(new Filter() {
+    private void sortTree(TagNode node) {
+        List<TagNode> childNodes = node.getChildren();
+        for(TagNode child: childNodes) {
+            sortTree(child);
+        }
+        Collections.sort(childNodes);
+    }
+
+    public TagNode getPublicTree() {
+        final TagNode publicTree = getFilteredTree(new Filter() {
             @Override
             public boolean isValid(TagNode node) {
                 return node.isImportIssued();
             }
         });
+        sortTree(publicTree);
+        return publicTree;
     }
 
-    private TagNode getFilteredRoots(Filter f) {
+    private TagNode getFilteredTree(Filter f) {
         buildMap();
 
         TagNode root = new TagNode();
