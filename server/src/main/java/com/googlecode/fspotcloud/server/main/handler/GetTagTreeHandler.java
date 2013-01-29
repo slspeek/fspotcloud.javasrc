@@ -88,7 +88,7 @@ public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, Tag
 
             List<TagNode> tags = tagManager.getTags();
             TreeBuilder builder = new TreeBuilder(tags);
-            TagNode tree = builder.getPublicRoots();
+            TagNode tree = builder.getPublicTree();
             p.setCachedTagTree(tree);
             log.info("Builded, about to save");
             peerDatabaseDao.save(p);

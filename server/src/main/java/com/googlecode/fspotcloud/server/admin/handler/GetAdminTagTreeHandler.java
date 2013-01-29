@@ -76,7 +76,7 @@ public class GetAdminTagTreeHandler extends SimpleActionHandler<GetAdminTagTreeA
             log.info("Missed the cache; building admin");
             List<TagNode> tags = tagManager.getTags();
             TreeBuilder builder = new TreeBuilder(tags);
-            TagNode tree = builder.getRoots();
+            TagNode tree = builder.getFullTree();
             p.setCachedAdminTagTree(tree);
             log.info("Builded, about to save");
             peerDatabaseDao.save(p);

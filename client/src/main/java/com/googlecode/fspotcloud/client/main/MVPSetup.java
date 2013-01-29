@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
 import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
+import com.googlecode.fspotcloud.client.useraction.UserActionHandlerBinder;
 
 import java.util.logging.Logger;
 
@@ -44,7 +45,8 @@ public class MVPSetup {
     public MVPSetup(ZoomViewEventHandlerImpl zoomViewEventHandler,
                     StylesSetup stylesSetup,
                     GinMvpDisplay appWidget,
-                    PlaceHistoryHandler placeHistoryHandler) {
+                    PlaceHistoryHandler placeHistoryHandler,
+                    UserActionHandlerBinder userActionHandlerBinder) {
         this.appWidget = appWidget;
         this.stylesSetup = stylesSetup;
         this.placeHistoryHandler = placeHistoryHandler;
