@@ -25,6 +25,8 @@
 package com.googlecode.fspotcloud.shared.main;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -36,14 +38,14 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 
 @GwtCompatible
-public class TagNode implements Serializable {
+public class TagNode implements Serializable, Comparable<TagNode> {
     private int count;
-    private String description;
+    private String description = "";
     private boolean importIssued;
     private String id;
     private TagNode parent;
     private String parentId;
-    private String tagName;
+    private String tagName = "";
     private PhotoInfoStore cachedPhotoList = new PhotoInfoStore(Collections.EMPTY_LIST);
     private List<TagNode> children = newArrayList();
     private Set<Long> approvedUserGroups = newHashSet();
@@ -153,8 +155,13 @@ public class TagNode implements Serializable {
     }
 
     public String toString() {
-        return "TagNode(" + String.valueOf(tagName) + ": " +
-                String.valueOf(id) + " " + String.valueOf(cachedPhotoList) + ")";
+        return Objects.toStringHelper(this.getClass()).add("name", tagName)
+                .add("id", id)
+                .add("parent", parent)
+                .add("photos", cachedPhotoList)
+                .add("children", children)
+                .omitNullValues()
+                .toString();
     }
 
     public void setCachedPhotoList(PhotoInfoStore cachedPhotoList) {
@@ -207,5 +214,11 @@ public class TagNode implements Serializable {
             }
         }
         return result;
+    }
+
+    @Override
+    public int compareTo(TagNode o) {
+        return  ComparisonChain.start()
+                .compare(this.tagName, o.tagName).result();
     }
 }

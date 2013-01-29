@@ -39,11 +39,15 @@ public class TreeBuilderTest {
     @Before
     public void setUp() throws Exception {
         TagNode root = new TagNode("1", "0");
+        root.setTagName("Root node");
         TagNode level1_a = new TagNode("2", "1");
+        level1_a.setTagName("Abelian groups");
         TagNode level2_b = new TagNode("3", "1");
+        level2_b.setTagName("Z as ring");
         level2_b.setImportIssued(true);
 
         TagNode secondRoot = new TagNode("4", "0");
+        secondRoot.setTagName("Boolean algebra");
         secondRoot.setImportIssued(true);
         nodes = ImmutableList.of(root, level1_a, level2_b, secondRoot);
     }
@@ -51,10 +55,10 @@ public class TreeBuilderTest {
     @Test
     public void testVerySimpleTree() {
         TreeBuilder builder = new TreeBuilder(nodes);
-        TagNode trees = builder.getRoots();
+        TagNode trees = builder.getFullTree();
         assertEquals(2, trees.getChildren().size());
 
-        TagNode root = trees.getChildren().get(0);
+        TagNode root = trees.getChildren().get(1);
         List<TagNode> level_1s = root.getChildren();
         assertEquals(2, level_1s.size());
     }
@@ -62,7 +66,8 @@ public class TreeBuilderTest {
     @Test
     public void testPublicTreeSimpleTree() {
         TreeBuilder builder = new TreeBuilder(nodes);
-        TagNode trees = builder.getPublicRoots();
+        TagNode trees = builder.getPublicTree();
+
         assertEquals(2, trees.getChildren().size());
 
         TagNode root = trees.getChildren().get(0);

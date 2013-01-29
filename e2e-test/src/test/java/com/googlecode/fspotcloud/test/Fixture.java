@@ -1,5 +1,6 @@
 package com.googlecode.fspotcloud.test;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
@@ -10,6 +11,7 @@ public class Fixture implements Runnable {
 
     UserDao userDao;
 
+    @Inject
     public Fixture(Injector injector) {
         userDao = injector.getInstance(UserDao.class);
     }
