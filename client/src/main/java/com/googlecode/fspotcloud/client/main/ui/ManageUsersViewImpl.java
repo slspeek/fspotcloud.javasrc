@@ -75,8 +75,10 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
                 return info;
             }
         };
+        nameColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
         table.addColumn(nameColumn, "Email");
+        table.setWidth("100%");
         // Create a data provider.
         dataProvider = new ListDataProvider<String>();
 
