@@ -166,6 +166,9 @@ public interface Resources extends ClientBundle {
     @Source("images/Email.png")
     ImageResource emailIcon();
 
+    @Source("images/Rss.png")
+    ImageResource rssReedIcon();
+
     public interface Style extends CssResource {
         String slideshow();
 
