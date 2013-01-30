@@ -57,12 +57,6 @@ public class SimpleSignUpITest {
         signUpPage.open();
         signUpPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
         signUpPage.signUp();
-        sleepShort();
-        signUpPage.verifySuccess();
-        //emailConfirmationPage.open(RMS_FSF_ORG).success();
-        signUpPage.open();
-        signUpPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
-        signUpPage.signUp();
         signUpPage.verifyFailure();
         signUpPage.open();
         signUpPage.fillForm(MOOG_BB_ORG, NSA);
