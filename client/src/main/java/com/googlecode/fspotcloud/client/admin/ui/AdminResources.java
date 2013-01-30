@@ -44,6 +44,7 @@ public interface AdminResources extends ClientBundle {
         String myUsergroups();
 
         String myUsergroupsTable();
+        String usergroupsTest();
 
         String button();
 

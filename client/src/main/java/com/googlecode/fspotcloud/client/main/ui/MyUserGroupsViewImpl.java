@@ -24,15 +24,18 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -79,6 +82,7 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
                 return info.getName();
             }
         };
+        nameColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
         // Create address column.
         TextColumn<UserGroupInfo> descColumn = new TextColumn<UserGroupInfo>() {
@@ -87,10 +91,19 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
                 return info.getDescription();
             }
         };
+        descColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
+        TextColumn<UserGroupInfo> publicColumn = new TextColumn<UserGroupInfo>() {
+            @Override
+            public String getValue(UserGroupInfo object) {
+                return object.isPublic() ? "yes":"no";
+            }
+        };
+        publicColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
         // Add the columns.
         table.addColumn(nameColumn, "Name");
         table.addColumn(descColumn, "Description");
+        table.addColumn(publicColumn, "Public");
         // Create a data provider.
         dataProvider = new ListDataProvider<UserGroupInfo>();
 
@@ -98,6 +111,7 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
         dataProvider.addDataDisplay(table);
         table.setSelectionModel(selectionModel);
         table.setPageSize(25);
+        table.setWidth("100%");
     }
 
     @UiHandler("newButton")

@@ -72,12 +72,15 @@
     background: mainBackground;
     font-size: 130%;
     vertical-align: top;
+
 }
 
 .myUsergroupsTable {
     background: mainBackground;
-    font-size: 130%;
+
     vertical-align: top;
+    position: relative;
+    margin: 0px;
 }
 
 .tableLayout {
@@ -89,5 +92,9 @@
 }
 
 .tableHeader {
-    font-size: 15pt;
+    font-size: 10pt;
+}
+
+.usergroupsTest {
+
 }
