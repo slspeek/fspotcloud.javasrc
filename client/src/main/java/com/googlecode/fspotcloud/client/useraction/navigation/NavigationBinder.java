@@ -6,6 +6,7 @@ import com.googlecode.fspotcloud.client.useraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 
@@ -13,14 +14,16 @@ public class NavigationBinder extends AbstractBinder {
 
     private final NavigationActionHandler navigationActionHandler;
     private final NavigationActions navigationActions;
+    private final RssFeedHandler rssFeedHandler;
 
     @Inject
     public NavigationBinder(
             CategoryDef categoryDef, NavigationActionHandler navigationActionHandler,
-            NavigationActions navigationActions) {
+            NavigationActions navigationActions, RssFeedHandler rssFeedHandler) {
         super(categoryDef.NAVIGATION);
         this.navigationActionHandler = navigationActionHandler;
         this.navigationActions = navigationActions;
+        this.rssFeedHandler = rssFeedHandler;
     }
 
 
@@ -34,6 +37,7 @@ public class NavigationBinder extends AbstractBinder {
         bind(navigationActions.row_down, get(KeyCodes.KEY_DOWN));
         bind(navigationActions.page_down, get(KeyCodes.KEY_PAGEDOWN));
         bind(navigationActions.end, get(KeyCodes.KEY_END));
+        bind(navigationActions.rss_feed, rssFeedHandler, get(KeyCodes.KEY_DELETE));
     }
 
     public void bind(ActionDef actionDef, KeyboardBinding keyBinding) {

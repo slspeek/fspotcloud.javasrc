@@ -24,6 +24,7 @@ public class NavigationActions {
     public final ActionDef page_down;
     public final static String END_ID = "end";
     public final ActionDef end;
+    public final ActionDef rss_feed;
 
     @Inject
     public NavigationActions(Resources resources) {
@@ -60,5 +61,9 @@ public class NavigationActions {
                 "Home",
                 "Go to the first image of the category",
                 RESOURCES.homeIcon());
+        rss_feed = new ActionDef("rss_feed",
+                "RSS-feed",
+                "The RSS-feed for this category",
+                RESOURCES.rssReedIcon());
     }
 }
