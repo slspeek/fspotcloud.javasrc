@@ -28,6 +28,7 @@ import com.googlecode.fspotcloud.model.jpa.tag.CachedTagManagerBase;
 import com.googlecode.fspotcloud.model.jpa.tag.TagManagerBase;
 import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
+import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.simplejpadao.AbstractDAO;
 
 import javax.inject.Inject;
@@ -54,4 +55,6 @@ public class CachedTagManager extends CachedTagManagerBase<Tag, TagEntity>
     public AbstractDAO<Tag, String> getDelegate() {
         return delegate;
     }
+
+
 }

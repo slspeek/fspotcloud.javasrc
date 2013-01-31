@@ -10,16 +10,19 @@ public class StylesSetup {
     private final UserPagesResources userPagesResources;
     private final FadeAnimationResources fadeAnimationResources;
     private final AdminResources adminResources; //necessary
+    private final HomeResources homeResources;
 
     @Inject
     public StylesSetup(Resources resources,
                        UserPagesResources userPagesResources,
                        FadeAnimationResources fadeAnimationResources,
-                       AdminResources adminResources) {
+                       AdminResources adminResources,
+                       HomeResources homeResources) {
         this.resources = resources;
         this.userPagesResources = userPagesResources;
         this.fadeAnimationResources = fadeAnimationResources;
         this.adminResources = adminResources;
+        this.homeResources = homeResources;
     }
 
     public void injectStyles() {
@@ -27,6 +30,7 @@ public class StylesSetup {
         userPagesResources.style().ensureInjected();
         fadeAnimationResources.style().ensureInjected();
         adminResources.style().ensureInjected();
+        homeResources.style().ensureInjected();
     }
 
 

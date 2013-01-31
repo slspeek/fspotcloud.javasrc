@@ -22,25 +22,33 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.api.HomeView;
 
 
-@WithTokenizers({HomePlace.Tokenizer.class,
-        EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class,
-        SendConfirmationPlace.Tokenizer.class,
-        SendResetPasswordPlace.Tokenizer.class,
-        ChangePasswordPlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+public class HomeViewImpl extends Composite implements HomeView {
+
+    private HomePresenter presenter;
+    private static final HomeViewImplUiBinder uiBinder = GWT.create(HomeViewImplUiBinder.class);
+
+
+    @Inject
+    public HomeViewImpl()
+    {
+        initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    public void setPresenter(HomePresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    interface HomeViewImplUiBinder extends UiBinder<Widget, HomeViewImpl> {
+    }
 }
