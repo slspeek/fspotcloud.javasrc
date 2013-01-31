@@ -22,25 +22,25 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.TextResource;
 
 
-@WithTokenizers({HomePlace.Tokenizer.class,
-        EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class,
-        SendConfirmationPlace.Tokenizer.class,
-        SendResetPasswordPlace.Tokenizer.class,
-        ChangePasswordPlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+public interface HomeResources extends ClientBundle {
+    @Source("home.css")
+    Style style();
+
+    @Source("images/Welcome.png")
+    ImageResource welcomeIcon();
+
+
+    public interface Style extends CssResource {
+        String page();
+        String welcome();
+        String waiting();
+    }
 }

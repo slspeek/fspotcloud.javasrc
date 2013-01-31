@@ -41,7 +41,8 @@ public abstract class TagManagerBase<T extends Tag, U extends T>
         extends SimpleDAONamedIdImpl<Tag, U, String> implements TagDao {
     private final Logger log = Logger.getLogger(TagManagerBase.class.getName());
 
-    public static TagNode getTagNode(Tag tag) {
+    @Override
+    public TagNode getTagNode(Tag tag) {
         TagNode node = new TagNode();
         node.setId(tag.getId());
         node.setImportIssued(tag.isImportIssued());

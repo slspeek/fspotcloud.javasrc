@@ -47,24 +47,7 @@ public class GetTagNodeHandler extends SimpleActionHandler<GetTagNodeAction, Tag
     public TagNodeResult execute(GetTagNodeAction action,
                                  ExecutionContext context) throws DispatchException {
         Tag tag = tagDao.find(action.getTagId());
-        TagNode node = new TagNode();
-        node.setId(tag.getId());
-        node.setImportIssued(tag.isImportIssued());
-        node.setParentId(tag.getParentId());
-        node.setTagName(tag.getTagName());
-        node.setCount(tag.getCount());
-
-        SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
-
-        if (photoList != null) {
-            node.setCachedPhotoList(new PhotoInfoStore(photoList));
-        } else {
-            throw new IllegalStateException(
-                    "photoList field of Tag should not be null");
-        }
-
-        node.setApprovedUserGroups(tag.getApprovedUserGroups());
-
+        TagNode node = tagDao.getTagNode(tag);
         return new TagNodeResult(node);
     }
 }

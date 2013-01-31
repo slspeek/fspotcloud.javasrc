@@ -360,6 +360,7 @@ public class NavigatorImpl implements Navigator {
                     goToTag(latestNode.getId(), latestNode.getCachedPhotoList());
 
                 } else {
+                    placeGoTo.goTo(new LoginPlace());
                     log.info("No tags public");
                 }
             }

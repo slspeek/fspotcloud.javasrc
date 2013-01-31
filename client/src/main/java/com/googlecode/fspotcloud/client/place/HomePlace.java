@@ -24,23 +24,39 @@
 
 package com.googlecode.fspotcloud.client.place;
 
-import com.google.gwt.place.shared.PlaceHistoryMapper;
-import com.google.gwt.place.shared.WithTokenizers;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceTokenizer;
 
 
-@WithTokenizers({HomePlace.Tokenizer.class,
-        EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        MyUserGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class,
-        SendConfirmationPlace.Tokenizer.class,
-        SendResetPasswordPlace.Tokenizer.class,
-        ChangePasswordPlace.Tokenizer.class})
-public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
+public class HomePlace extends Place {
+
+    public HomePlace() {
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof HomePlace) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static class Tokenizer implements PlaceTokenizer<HomePlace> {
+        @Override
+        public HomePlace getPlace(String token) {
+            return new HomePlace();
+        }
+
+        @Override
+        public String getToken(HomePlace place) {
+            return "";
+        }
+    }
 }

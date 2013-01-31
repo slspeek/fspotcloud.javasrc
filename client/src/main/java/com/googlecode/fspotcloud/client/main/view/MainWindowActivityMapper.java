@@ -56,6 +56,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter;
     private final ChangePasswordActivityFactory changePasswordActivityFactory;
     private final SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter;
+    private final HomeView.HomePresenter homePresenter;
 
     @Inject
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
@@ -71,7 +72,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter,
                                     ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
                                     ChangePasswordActivityFactory changePasswordActivityFactory,
-                                    SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter) {
+                                    SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter,
+                                    HomeView.HomePresenter homePresenter) {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagPresenterFactory = tagPresenterFactory;
@@ -88,6 +90,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.emailConfirmationPresenter = emailConfirmationPresenter;
         this.changePasswordActivityFactory = changePasswordActivityFactory;
         this.sendResetPasswordPresenter = sendResetPasswordPresenter;
+        this.homePresenter = homePresenter;
     }
 
     @Override
@@ -102,6 +105,9 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SendConfirmationPlace) {
             activity = confirmationPresenterActivity;
+            modeController.setMode(Modes.LOGIN);
+        } else if (place instanceof HomePlace) {
+            activity = homePresenter;
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof ChangePasswordPlace) {
             activity = changePasswordActivityFactory.get((ChangePasswordPlace) place);
@@ -138,11 +144,6 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.SLIDESHOW);
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;
-
-            if (basePlace.getTagId().equals("latest")) {
-                navigator.goToLatestTag();
-            }
-
             activity = tagPresenterFactory.get(basePlace);
             modeController.setMode(Modes.TAG_VIEW);
         } else {
