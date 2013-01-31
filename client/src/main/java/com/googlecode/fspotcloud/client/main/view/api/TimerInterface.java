@@ -24,6 +24,9 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
+
+@GwtCompatible
 public interface TimerInterface {
     void scheduleRepeating(int millis);
 

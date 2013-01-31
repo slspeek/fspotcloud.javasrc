@@ -1,0 +1,17 @@
+@def foregroundColor Silver;
+
+
+ .page {
+	background-color: Black;
+	border-color: darkGrey;
+    color: foregroundColor;
+}
+
+.welcome {
+    color: White;
+    font-size: 250%;
+}
+
+.waiting {
+    font-size: 100%;
+}

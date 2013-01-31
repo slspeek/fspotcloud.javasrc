@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.client.main;
 
 import com.google.code.ginmvp.client.GinMvpDisplay;
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
@@ -34,7 +35,7 @@ import com.googlecode.fspotcloud.client.useraction.UserActionHandlerBinder;
 
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class MVPSetup {
     private final Logger log = Logger.getLogger(MVPSetup.class.getName());
     private final GinMvpDisplay appWidget;

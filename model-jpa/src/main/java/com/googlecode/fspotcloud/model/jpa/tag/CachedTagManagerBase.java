@@ -49,11 +49,34 @@ public abstract class CachedTagManagerBase<T extends Tag, U extends T>
     private Integer maxDelete;
 
     @Override
+    public TagNode getTagNode(Tag tag) {
+        TagNode node = new TagNode();
+        node.setId(tag.getId());
+        node.setImportIssued(tag.isImportIssued());
+        node.setParentId(tag.getParentId());
+        node.setTagName(tag.getTagName());
+        node.setCount(tag.getCount());
+
+        SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
+
+        if (photoList != null) {
+            node.setCachedPhotoList(new PhotoInfoStore(photoList));
+        } else {
+            throw new IllegalStateException(
+                    "photoList field of Tag should not be null");
+        }
+
+        node.setApprovedUserGroups(tag.getApprovedUserGroups());
+
+        return node;
+    }
+
+    @Override
     public List<TagNode> getTags() {
         List<TagNode> result = new ArrayList<TagNode>();
 
         for (Tag tag : findAll(1000)) {
-            TagNode node = new TagNode();
+            TagNode node = getTagNode(tag);
             node.setId(tag.getId());
             node.setImportIssued(tag.isImportIssued());
             node.setParentId(tag.getParentId());
