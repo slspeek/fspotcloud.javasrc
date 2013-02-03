@@ -30,6 +30,7 @@ import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
+import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailResult;
 import com.googlecode.fspotcloud.user.emailconfirmation.MailGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -39,7 +40,7 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 
 
-public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfirmationEmailAction, VoidResult> {
+public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfirmationEmailAction, SendConfirmationEmailResult> {
     @Inject
     private UserDao userDao;
     @Inject
@@ -50,11 +51,11 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
     private Provider<SecretGenerator> secretGeneratorProvider;
 
     @Override
-    public VoidResult execute(SendConfirmationEmailAction action, ExecutionContext context) throws DispatchException {
+    public SendConfirmationEmailResult execute(SendConfirmationEmailAction action, ExecutionContext context) throws DispatchException {
         final String email = action.getEmail();
-        User mayBeExisted = userDao.findOrNew(email);
+        User mayBeExisted = userDao.find(email);
 
-        if (mayBeExisted.hasRegistered()) {
+        if (mayBeExisted != null && mayBeExisted.hasRegistered()) {
             final User registeredUser = mayBeExisted;
             String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
             registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
@@ -64,8 +65,9 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
                     emailConfirmationSecret);
             mailer.send(email, "F-Spot Cloud email confirmation",
                     confirmationMail);
-
+           return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.SUCCESS);
+        } else {
+            return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.NOT_REGISTERED);
         }
-        return new VoidResult();
     }
 }

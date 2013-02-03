@@ -188,37 +188,30 @@ public class TagNode implements Serializable, Comparable<TagNode> {
 
     private void buildSubTreeList(List<TagNode> result) {
         result.add(this);
-        for (TagNode child: children) {
+        for (TagNode child : children) {
             child.buildSubTreeList(result);
         }
     }
 
     public TagNode findByTagId(String tagId) {
-       TagNode result = null;
-       for(TagNode node: subTreeAsList()) {
-           if (tagId.equals(node.getId())) {
-               result = node;
-               break;
-           }
-       }
-       return result;
-    }
-
-    public static TagNode find(TagNode root, String tagId) {
-       TagNode result = null;
-        for(TagNode node: root.getChildren()) {
-            TagNode searched = node.findByTagId(tagId);
-            if (searched != null) {
-                result = searched;
+        TagNode result = null;
+        for (TagNode node : subTreeAsList()) {
+            if (tagId.equals(node.getId())) {
+                result = node;
                 break;
             }
         }
         return result;
     }
 
+    public static TagNode find(TagNode root, String tagId) {
+        TagNode result = root.findByTagId(tagId);
+        return result;
+    }
+
     @Override
     public int compareTo(TagNode o) {
-        return  ComparisonChain.start()
+        return ComparisonChain.start()
                 .compare(this.tagName, o.tagName).result();
     }
 }

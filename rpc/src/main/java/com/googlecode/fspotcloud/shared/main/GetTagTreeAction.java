@@ -32,4 +32,19 @@ import net.customware.gwt.dispatch.shared.Action;
 public class GetTagTreeAction implements Action<TagTreeResult> {
     public GetTagTreeAction() {
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof GetTagTreeAction) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 42;
+    }
 }

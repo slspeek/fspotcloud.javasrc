@@ -30,7 +30,7 @@ import net.customware.gwt.dispatch.shared.Action;
 
 
 @GwtCompatible
-public class SendConfirmationEmailAction implements Action<VoidResult> {
+public class SendConfirmationEmailAction implements Action<SendConfirmationEmailResult> {
     private String email;
 
 

@@ -22,30 +22,29 @@
  *
  */
 
-package com.googlecode.fspotcloud.test;
+package com.googlecode.fspotcloud.shared.main;
 
-import com.google.guiceberry.junit4.GuiceBerryRule;
-import org.junit.Rule;
-import org.junit.Test;
+import com.google.common.annotations.GwtCompatible;
+import net.customware.gwt.dispatch.shared.Result;
 
-import javax.inject.Inject;
 
-import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
+@GwtCompatible
+public class SendConfirmationEmailResult implements Result {
 
-public class ApplicationActionsITest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    PhotoPage photoPage;
+    private Code code;
 
-    @Test
-    public void showPopups() throws Exception {
-        photoPage.open();
-        photoPage.about();
-        sleepShort();
-        photoPage.about();
-        photoPage.showHelp();
-        sleepShort();
-        photoPage.hideHelp();
+    public enum Code {
+        NOT_REGISTERED,
+        SUCCESS
+    }
+
+    private SendConfirmationEmailResult() {}
+
+    public SendConfirmationEmailResult(Code code) {
+        this.code = code;
+    }
+
+    public Code getCode() {
+        return code;
     }
 }
