@@ -25,18 +25,14 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.SendConfirmationView;
-import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
+import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Logger;
@@ -69,15 +65,23 @@ public class SendConfirmationActivity extends AbstractActivity implements SendCo
     public void send() {
         String email = view.getEmailField();
         SendConfirmationEmailAction action = new SendConfirmationEmailAction(email);
-        dispatchAsync.execute(action, new AsyncCallback<VoidResult>() {
+        dispatchAsync.execute(action, new AsyncCallback<SendConfirmationEmailResult>() {
             @Override
             public void onFailure(Throwable caught) {
                 view.setStatusText("Failed. Maybe you should sign-up first.");
             }
 
             @Override
-            public void onSuccess(VoidResult result) {
-                view.setStatusText("Success. Check your email.");
+            public void onSuccess(SendConfirmationEmailResult result) {
+                switch (result.getCode()) {
+                    case SUCCESS:
+                        view.setStatusText("Success. Check your email.");
+                        break;
+                    case NOT_REGISTERED:
+                        view.setStatusText("Failed. Please register first.");
+                        break;
+                }
+
             }
         });
 

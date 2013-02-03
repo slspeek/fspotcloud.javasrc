@@ -27,9 +27,7 @@ package com.googlecode.fspotcloud.server.main.handler;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
-import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
-import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
-import com.googlecode.fspotcloud.user.UserService;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
@@ -37,29 +35,30 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 
 
-public class ResetPasswordHandler extends SimpleActionHandler<ResetPasswordAction, UpdateUserResult> {
+public class ResetPasswordHandler extends SimpleActionHandler<ResetPasswordAction, ResetPasswordResult> {
 
     @Inject
     private UserDao userDao;
 
     @Override
-    public UpdateUserResult execute(ResetPasswordAction action, ExecutionContext context) throws DispatchException {
-            User user = userDao.find(action.getEmail());
-            if (user.hasRegistered()) {
-                if (user.getEnabled()) {
-                    if (action.getSecret().equals(user.emailVerificationSecret())) {
-                        user.setCredentials(action.getNewPassword());
-                        user.setEmailVerificationSecret("");
-                        userDao.save(user);
-                        return new UpdateUserResult(true);
-                    } else {
-                        return new UpdateUserResult(false);
-                    }
+    public ResetPasswordResult execute(ResetPasswordAction action, ExecutionContext context) throws DispatchException {
+        User user = userDao.find(action.getEmail());
+        if (user != null && user.hasRegistered()) {
+            if (user.getEnabled()) {
+                if (action.getSecret().equals(user.emailVerificationSecret())) {
+                    user.setCredentials(action.getNewPassword());
+                    user.setEmailVerificationSecret(null);
+                    userDao.save(user);
+                    return new ResetPasswordResult(ResetPasswordResult.Code.SUCCESS);
                 } else {
-                    throw new EmailNotVerifiedException();
+                    return new ResetPasswordResult(ResetPasswordResult.Code.WRONG_CODE);
                 }
             } else {
-                throw new UserNotRegisteredException();
+                return new ResetPasswordResult(ResetPasswordResult.Code.NOT_VERIFIED);
             }
+
+        } else {
+            return new ResetPasswordResult(ResetPasswordResult.Code.NOT_REGISTERED);
+        }
     }
 }
