@@ -8,6 +8,7 @@ import com.googlecode.fspotcloud.user.inject.ServerAddress;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Text;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import javax.inject.Provider;
@@ -28,7 +29,7 @@ public class FeedBuilder {
     public String getFeed(TagNode tagNode) {
         String result = "";
         try {
-            XMLOutputter xmlOutputter = new XMLOutputter();
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             result = xmlOutputter.outputString(getFeedDocument(tagNode));
         }   catch (Exception e) {
             log.log(Level.FINE, "Failed outputting xml for feed for node " + tagNode, e);

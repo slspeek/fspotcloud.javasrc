@@ -25,16 +25,10 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
-import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
-import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
-import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.server.model.tag.FeedBuilder;
-import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
-import com.googlecode.fspotcloud.server.model.tag.TreeBuilder;
 import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
-import com.googlecode.fspotcloud.user.UserService;
 import net.customware.gwt.dispatch.server.Dispatch;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
@@ -42,8 +36,6 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import net.customware.gwt.dispatch.shared.general.StringResult;
 
 import javax.inject.Inject;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 
@@ -52,6 +44,7 @@ public class RssFeedHandler extends SimpleActionHandler<RssFeedAction, StringRes
 
     private final Dispatch dispatch;
     private final FeedBuilder feedBuilder;
+
     @Inject
     public RssFeedHandler(Dispatch dispatch, FeedBuilder feedBuilder) {
         this.dispatch = dispatch;
@@ -65,8 +58,8 @@ public class RssFeedHandler extends SimpleActionHandler<RssFeedAction, StringRes
         TagTreeResult tagTreeResult = dispatch.execute(new GetTagTreeAction());
         TagNode tagNode = TagNode.find(tagTreeResult.getTree(), action.getTagId());
         if (tagNode != null) {
-        String rss = feedBuilder.getFeed(tagNode);
-        return new StringResult(rss);
+            String rss = feedBuilder.getFeed(tagNode);
+            return new StringResult(rss);
         } else {
             return new StringResult("Not found");
         }

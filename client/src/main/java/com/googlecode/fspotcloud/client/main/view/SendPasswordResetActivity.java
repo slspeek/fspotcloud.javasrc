@@ -34,8 +34,10 @@ import com.googlecode.fspotcloud.client.main.view.api.SendResetPasswordView;
 import com.googlecode.fspotcloud.client.place.SendResetPasswordPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
+import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Logger;
@@ -68,15 +70,26 @@ public class SendPasswordResetActivity extends AbstractActivity implements SendR
     public void resetPassword() {
         String email = view.getEmailField();
         SendPasswordResetAction action = new SendPasswordResetAction(email);
-        dispatchAsync.execute(action, new AsyncCallback<VoidResult>() {
+        dispatchAsync.execute(action, new AsyncCallback<SendPasswordResetResult>() {
             @Override
             public void onFailure(Throwable caught) {
                 view.setStatusText("Failed. Maybe you should sign-up first.");
             }
 
             @Override
-            public void onSuccess(VoidResult result) {
-                view.setStatusText("Success. Check your email.");
+            public void onSuccess(SendPasswordResetResult result) {
+                switch(result.getCode()) {
+                    case SUCCESS:
+                        view.setStatusText("Success. Check your email.");
+                        break;
+                    case NOT_VERIFIED:
+                        view.setStatusText("Failed. Please verify your account first.");
+                        break;
+                    case NOT_REGISTERED:
+                        view.setStatusText("Failed. Please register first.");
+                        break;
+
+                }
             }
         });
     }

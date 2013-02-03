@@ -20,6 +20,12 @@ task sourceCodeJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+task testsJar(type: Jar, dependsOn: compileTestJava) {
+    from sourceSets.test.output.classesDir
+    classifier = 'tests'
+}
+
 artifacts {
     sourceCode sourceCodeJar
+    testCompile testsJar
 }

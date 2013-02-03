@@ -34,6 +34,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class TagNodeTest {
     TagNode node;
@@ -91,5 +92,16 @@ public class TagNodeTest {
         Map<TagNode, String> map = Maps.newHashMap();
         map.put(new TagNode("3"), "FOO");
         assertEquals("FOO", map.get(new TagNode("3")));
+    }
+
+    @Test
+    public void testFind() throws Exception {
+        TagNodeTestFactory factory = new TagNodeTestFactory();
+        TagNode node = factory.getSingleNodeWithOnePicture();
+
+        TagNode found = TagNode.find(node, "1");
+        assertNotNull(found);
+
+
     }
 }

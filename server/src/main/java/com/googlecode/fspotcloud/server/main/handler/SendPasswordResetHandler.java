@@ -28,7 +28,7 @@ import com.google.inject.Provider;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
 import com.googlecode.fspotcloud.user.emailconfirmation.MailGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
@@ -39,7 +39,7 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 
 
-public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordResetAction, VoidResult> {
+public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordResetAction, SendPasswordResetResult> {
     @Inject
     private UserDao userDao;
     @Inject
@@ -50,22 +50,27 @@ public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordRe
     private Provider<SecretGenerator> secretGeneratorProvider;
 
     @Override
-    public VoidResult execute(SendPasswordResetAction action, ExecutionContext context) throws DispatchException {
+    public SendPasswordResetResult execute(SendPasswordResetAction action, ExecutionContext context) throws DispatchException {
         final String email = action.getEmail();
-        User mayBeExisted = userDao.findOrNew(email);
-
-        if (mayBeExisted.hasRegistered()) {
+        final User mayBeExisted = userDao.find(email);
+        if (mayBeExisted != null && mayBeExisted.hasRegistered()) {
             final User registeredUser = mayBeExisted;
-            String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
-            registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
-            userDao.save(registeredUser);
+            if (registeredUser.getEnabled()) {
+                String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
+                registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
+                userDao.save(registeredUser);
 
-            String confirmationMail = mailGenerator.getPasswordResetMailBody(email,
-                    emailConfirmationSecret);
-            mailer.send(email, "F-Spot Cloud reset password link",
-                    confirmationMail);
+                String confirmationMail = mailGenerator.getPasswordResetMailBody(email,
+                        emailConfirmationSecret);
+                mailer.send(email, "F-Spot Cloud reset password link",
+                        confirmationMail);
+                return new SendPasswordResetResult(SendPasswordResetResult.Code.SUCCESS);
+            } else {
+                return new SendPasswordResetResult(SendPasswordResetResult.Code.NOT_VERIFIED);
+            }
 
+        } else {
+            return new SendPasswordResetResult(SendPasswordResetResult.Code.NOT_REGISTERED);
         }
-        return new VoidResult();
     }
 }
