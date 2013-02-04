@@ -4,55 +4,57 @@
              xmlns:c='urn:import:com.google.gwt.user.cellview.client'>
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.myUsergroups}">
-        <g:layer top="5%" height="10%" left="10%" width="30%">
-            <g:HTMLPanel>
-                <div class="{res.style.editUsergroupHeader}">
-                    Granting to tag:
-                </div>
-            </g:HTMLPanel>
-        </g:layer>
-        <g:layer top="5%" height="10%" left="50%" width="30%">
-            <g:Label ui:field="tagName" styleName="{res.style.usergroupName}"></g:Label>
-        </g:layer>
-        <g:layer top="15%" height="80%" left="10%" width="40%">
-            <g:LayoutPanel>
-                <g:layer height="10%" top="0%">
-                    <g:HTMLPanel>
-                        <div class="{res.style.tableHeader}">
-                            Approved usergroups
-                        </div>
-                    </g:HTMLPanel>
+        <g:layer top="5%" height="90%" left="5%" width="90%">
+            <g:LayoutPanel styleName="{res.style.myUsergroups}">
+                <g:layer top="0%" height="10%" left="0%" width="50%">
+                    <g:Label styleName="{res.style.usergroupName}">
+                            Granting to tag:
+                    </g:Label>
                 </g:layer>
-                <g:layer top="10%" height="80%">
-                    <c:CellTable ui:field="approved"></c:CellTable>
+                <g:layer top="0%" height="10%" left="50%" width="50%">
+                    <g:Label ui:field="tagName" styleName="{res.style.usergroupName}"></g:Label>
                 </g:layer>
-                <g:layer top="80%" height="40px" left="0%" width="25%">
-                    <g:PushButton ui:field="removeButton">Remove</g:PushButton>
+                <g:layer top="15%" height="80%" left="0%" width="50%">
+                    <g:LayoutPanel styleName="{res.style.propertyValue}">
+                        <g:layer height="10%" top="0%">
+                            <g:HTMLPanel>
+                                <div class="{res.style.tableHeader}">
+                                    Approved usergroups
+                                </div>
+                            </g:HTMLPanel>
+                        </g:layer>
+                        <g:layer top="10%" height="80%">
+                            <c:CellTable ui:field="approved" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                        </g:layer>
+                        <g:layer bottom="2%" height="40px" left="0%" width="25%">
+                            <g:PushButton ui:field="removeButton">Remove</g:PushButton>
+                        </g:layer>
+
+                    </g:LayoutPanel>
+                </g:layer>
+                <g:layer top="15%" height="80%" right="0%" width="50%">
+                    <g:LayoutPanel styleName="{res.style.propertyValue}">
+                        <g:layer height="10%" top="0%" right="0%" width="100%">
+                            <g:HTMLPanel>
+                                <div class="{res.style.tableHeader}">
+                                    Denied usergroups
+                                </div>
+                            </g:HTMLPanel>
+                        </g:layer>
+                        <g:layer top="10%" height="80%">
+                            <c:CellTable ui:field="other" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                        </g:layer>
+                        <g:layer bottom="2%" height="40px" left="0%" width="25%">
+                            <g:PushButton ui:field="approveButton">Approve</g:PushButton>
+                        </g:layer>
+
+                    </g:LayoutPanel>
+                </g:layer>
+                <g:layer bottom="0%" height="40px" left="0%" width="15%">
+                    <g:PushButton ui:field="dashboardButton">Dashboard</g:PushButton>
                 </g:layer>
 
             </g:LayoutPanel>
         </g:layer>
-        <g:layer top="15%" height="80%" right="10%" width="40%">
-            <g:LayoutPanel>
-                <g:layer height="10%" top="0%" right="0%" width="100%">
-                    <g:HTMLPanel>
-                        <div class="{res.style.tableHeader}">
-                            Denied usergroups
-                        </div>
-                    </g:HTMLPanel>
-                </g:layer>
-                <g:layer top="10%" height="80%">
-                    <c:CellTable ui:field="other"></c:CellTable>
-                </g:layer>
-                <g:layer top="80%" height="40px" left="0%" width="25%">
-                    <g:PushButton ui:field="approveButton">Approve</g:PushButton>
-                </g:layer>
-
-            </g:LayoutPanel>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="10%" width="10%">
-            <g:PushButton ui:field="dashboardButton">Dashboard</g:PushButton>
-        </g:layer>
-
     </g:LayoutPanel>
 </ui:UiBinder> 
