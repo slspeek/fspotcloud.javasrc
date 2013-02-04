@@ -2,6 +2,7 @@
 
 .titleLabel {
     text-align: center;
+
     font-size:200%;
     background: #5CB3FF;
 }
@@ -26,13 +27,30 @@
 }
 
 .button {
+    margin: 0;
+    padding: 3px 5px;
+    text-decoration: none;
+
+    cursor: pointer;
+    cursor: hand;
+    background: url("images/hborder.png") repeat-x 0px -27px;
+    border: 1px outset #ccc;
 	padding: 3px;
 	margin: auto;
+
+    text-align: center;
+    background-color: #ccc;
 }
 
+.button:focus {
+    color: blue;
+    background-color: green;
+
+}
 .headerLabel {
     width: 100%;
     font-size: 125%;
+
     text-align: center;
     background: #66BDFF;
 }
@@ -60,7 +78,10 @@
 
 .usergroupName {
     font-size: 20pt;
-    font-style: bold;
+    font-weight: bold;
+    background-color: #66BDFF;
+    margin-top: 4px;
+    margin-bottom: 25%;
 }
 
 .manageUsers {
@@ -92,7 +113,7 @@
 }
 
 .tableHeader {
-    font-size: 10pt;
+
 }
 
 .usergroupsTest {

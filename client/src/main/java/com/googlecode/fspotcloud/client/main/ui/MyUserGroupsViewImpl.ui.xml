@@ -9,32 +9,32 @@
     <g:LayoutPanel styleName="{res.style.myUsergroups}">
         <g:layer top="0%" height="10%" left="0%" width="100%">
             <g:HTMLPanel>
-                <div class="{res.style.editUsergroupHeader}">
+                <div class="{res.style.usergroupName}">
                     Usergroup Management
                 </div>
             </g:HTMLPanel>
         </g:layer>
         <g:layer top="8%" height="80%" left="0%" width="100%">
-            <g:LayoutPanel >
+            <g:LayoutPanel styleName="{res.style.propertyValue}">
                 <g:layer right="0%" width="100%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
                     <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="0%" width="20%">
-            <g:PushButton ui:field="newButton">New usergroup</g:PushButton>
+            <g:PushButton ui:field="newButton" stylePrimaryName="{res.style.button}">New usergroup</g:PushButton>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="25%" width="10%">
-            <g:PushButton ui:field="editButton">Edit</g:PushButton>
+            <g:PushButton ui:field="editButton" stylePrimaryName="{res.style.button}">Edit</g:PushButton>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="40%" width="20%">
-            <g:PushButton ui:field="manageButton">Manage users</g:PushButton>
+            <g:PushButton ui:field="manageButton" stylePrimaryName="{res.style.button}">Manage users</g:PushButton>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="65%" width="15%">
-            <g:PushButton ui:field="deleteButton">Delete</g:PushButton>
+            <g:PushButton ui:field="deleteButton" stylePrimaryName="{res.style.button}">Delete</g:PushButton>
         </g:layer>
         <g:layer bottom="5%" height="40px" right="0%" width="15%">
-            <g:PushButton ui:field="dashboardButton">Dashboard</g:PushButton>
+            <g:PushButton ui:field="dashboardButton" stylePrimaryName="{res.style.button}">Dashboard</g:PushButton>
         </g:layer>
     </g:LayoutPanel>
         </g:layer>

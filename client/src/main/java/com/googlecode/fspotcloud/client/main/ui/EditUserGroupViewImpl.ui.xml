@@ -3,12 +3,8 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.editUsergroup}">
-        <g:layer top="5%" height="15%" left="10%" width="40%">
-            <g:HTMLPanel>
-                <div class="{res.style.editUsergroupHeader}">
-                    Edit user group
-                </div>
-            </g:HTMLPanel>
+        <g:layer top="5%" height="10%" left="10%" width="80%">
+            <g:Label styleName="{res.style.usergroupName}">Edit user group</g:Label>
         </g:layer>
         <g:layer top="15%" height="5%" left="10%" width="30%">
             <g:Label>Name</g:Label>
@@ -25,14 +21,14 @@
         <g:layer top="35%" height="5%" left="40%" width="40%">
             <g:CheckBox ui:field="publicCheckBox">Viewable for everybody</g:CheckBox>
         </g:layer>
-        <g:layer top="45%" height="5%" left="10%" width="30%">
-            <g:Label ui:field="statusLabel">Status</g:Label>
+        <g:layer top="45%" height="5%" left="10%" width="80%">
+            <g:Label ui:field="statusLabel" styleName="{res.style.propertyValue}">Status</g:Label>
         </g:layer>
-        <g:layer top="55%" height="5%" left="30%" width="5%">
-            <g:PushButton ui:field="save">Save</g:PushButton>
+        <g:layer top="55%" height="5%" left="10%" width="10%">
+            <g:PushButton ui:field="save" stylePrimaryName="{res.style.button}">Save</g:PushButton>
         </g:layer>
-        <g:layer top="55%" height="5%" left="50%" width="5%">
-            <g:PushButton ui:field="cancel">Cancel</g:PushButton>
+        <g:layer top="55%" height="5%" right="10%" width="10%">
+            <g:PushButton ui:field="cancel" stylePrimaryName="{res.style.button}">Cancel</g:PushButton>
         </g:layer>
     </g:LayoutPanel>
 </ui:UiBinder> 
