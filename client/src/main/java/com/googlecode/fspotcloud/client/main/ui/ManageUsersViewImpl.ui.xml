@@ -7,13 +7,13 @@
     <g:layer top="5%" height="90%" left="5%" width="90%">
     <g:LayoutPanel styleName="{res.style.manageUsers}">
         <g:layer top="0%" height="10%" left="0%" width="50%">
-            <g:Label styleName="{res.style.editUsergroupHeader}">User Management for:</g:Label>
+            <g:Label styleName="{res.style.usergroupName}">User Management for:</g:Label>
         </g:layer>
         <g:layer top="0%" height="10%" left="40%" width="30%">
             <g:Label ui:field="userGroupName" styleName="{res.style.usergroupName}"></g:Label>
         </g:layer>
         <g:layer top="12%" height="70%" left="0%" width="85%" >
-            <g:LayoutPanel styleName="{res.style.usergroupsTest}">
+            <g:LayoutPanel styleName="{res.style.propertyValue}">
                 <g:layer top="0%" height="100%">
                     <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                 </g:layer>
@@ -23,13 +23,13 @@
             <g:TextBox ui:field="emailTextBox"></g:TextBox>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="25%" width="20%">
-            <g:PushButton ui:field="newButton">Add user</g:PushButton>
+            <g:PushButton ui:field="newButton" stylePrimaryName="{res.style.button}">Add user</g:PushButton>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="50%" width="10%">
-            <g:PushButton ui:field="deleteButton">Delete</g:PushButton>
+            <g:PushButton ui:field="deleteButton" stylePrimaryName="{res.style.button}">Delete</g:PushButton>
         </g:layer>
         <g:layer bottom="5%" height="40px" left="65%" width="20%">
-            <g:PushButton ui:field="myUsergroupsButton">My usergroups</g:PushButton>
+            <g:PushButton ui:field="myUsergroupsButton" stylePrimaryName="{res.style.button}">My usergroups</g:PushButton>
         </g:layer>
     </g:LayoutPanel>
     </g:layer>
