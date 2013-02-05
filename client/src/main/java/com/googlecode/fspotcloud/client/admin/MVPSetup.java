@@ -40,6 +40,7 @@ import com.googlecode.fspotcloud.client.admin.view.AdminActivityMapper;
 import com.googlecode.fspotcloud.client.admin.view.DashboardPresenterImpl;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.ui.HasOneWidgetAdapter;
+import com.googlecode.fspotcloud.client.main.ui.PushButtonResources;
 import com.googlecode.fspotcloud.client.place.AdminPlaceHistoryMapper;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 
@@ -59,8 +60,10 @@ public class MVPSetup {
     @Inject
     public MVPSetup(EventBus eventBus, PlaceController placeController,
                     DashboardPresenterImpl dashboardImpl,
-                    ClientLoginManager clientLoginManager, AdminActivityMapper mapper,
-                    AdminResources adminResources) {
+                    ClientLoginManager clientLoginManager,
+                    AdminActivityMapper mapper,
+                    AdminResources adminResources,
+                    PushButtonResources pushButtonResources) {
         super();
         this.eventBus = eventBus;
         this.placeController = placeController;
@@ -68,6 +71,8 @@ public class MVPSetup {
         this.clientLoginManager = clientLoginManager;
         this.mapper = mapper;
         adminResources.style().ensureInjected();
+        pushButtonResources.style().ensureInjected();
+
     }
 
     public void setup() {

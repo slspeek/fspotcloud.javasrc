@@ -35,6 +35,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
 import com.googlecode.fspotcloud.client.main.ui.TreeViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 
@@ -46,9 +47,9 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     final GlobalActionsView globalActionsView;
     final TreeView treeView;
     @UiField
-    PushButton toPhotos;
+    PushButtonExt toPhotos;
     @UiField
-    PushButton manageGroups;
+    PushButtonExt manageGroups;
 
     @Inject
     public DashboardViewImpl(TreeView treeView,

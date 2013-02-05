@@ -48,9 +48,9 @@ public class EditUserGroupViewImpl extends Composite
     @UiField
     Label statusLabel;
     @UiField
-    PushButton save;
+    PushButtonExt save;
     @UiField
-    PushButton cancel;
+    PushButtonExt cancel;
     @UiField
     CheckBox publicCheckBox;
 

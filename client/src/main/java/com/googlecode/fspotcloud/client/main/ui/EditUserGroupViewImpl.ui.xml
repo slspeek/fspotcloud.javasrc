@@ -1,34 +1,35 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.editUsergroup}">
-        <g:layer top="5%" height="10%" left="10%" width="80%">
-            <g:Label styleName="{res.style.usergroupName}">Edit user group</g:Label>
+        <g:layer top="5%" height="6%" left="10%" width="80%">
+            <g:Label styleName="{res.style.titleLabel}">Edit user group</g:Label>
         </g:layer>
         <g:layer top="15%" height="5%" left="10%" width="30%">
-            <g:Label>Name</g:Label>
+            <g:Label styleName="{res.style.propertyLabel}">Name</g:Label>
         </g:layer>
         <g:layer top="15%" height="5%" left="40%" width="40%">
-            <g:TextBox ui:field="nameTextBox"></g:TextBox>
+            <g:TextBox ui:field="nameTextBox" styleName="{res.style.propertyInput}"></g:TextBox>
         </g:layer>
         <g:layer top="25%" height="5%" left="10%" width="30%">
-            <g:Label>Description</g:Label>
+            <g:Label styleName="{res.style.propertyLabel}">Description</g:Label>
         </g:layer>
         <g:layer top="25%" height="5%" left="40%" width="40%">
-            <g:TextBox ui:field="descriptionTextBox"></g:TextBox>
+            <g:TextBox ui:field="descriptionTextBox" styleName="{res.style.propertyInput}"></g:TextBox>
         </g:layer>
         <g:layer top="35%" height="5%" left="40%" width="40%">
-            <g:CheckBox ui:field="publicCheckBox">Viewable for everybody</g:CheckBox>
+            <g:CheckBox ui:field="publicCheckBox" styleName="{res.style.propertyLabel}">Viewable for everybody</g:CheckBox>
         </g:layer>
         <g:layer top="45%" height="5%" left="10%" width="80%">
             <g:Label ui:field="statusLabel" styleName="{res.style.propertyValue}">Status</g:Label>
         </g:layer>
         <g:layer top="55%" height="5%" left="10%" width="10%">
-            <g:PushButton ui:field="save" stylePrimaryName="{res.style.button}">Save</g:PushButton>
+            <main:PushButtonExt ui:field="save">Save</main:PushButtonExt>
         </g:layer>
         <g:layer top="55%" height="5%" right="10%" width="10%">
-            <g:PushButton ui:field="cancel" stylePrimaryName="{res.style.button}">Cancel</g:PushButton>
+            <main:PushButtonExt ui:field="cancel">Cancel</main:PushButtonExt>
         </g:layer>
     </g:LayoutPanel>
 </ui:UiBinder> 
