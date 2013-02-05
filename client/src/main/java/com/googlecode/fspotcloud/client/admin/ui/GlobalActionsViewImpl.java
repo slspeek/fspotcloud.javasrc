@@ -32,6 +32,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
 
 
 public class GlobalActionsViewImpl extends Composite
@@ -47,11 +48,11 @@ public class GlobalActionsViewImpl extends Composite
     @UiField
     Label pendingCommandCountValueLabel;
     @UiField
-    Button updateButton;
+    PushButtonExt updateButton;
     @UiField
-    Button deleteAllTagsButton;
+    PushButtonExt deleteAllTagsButton;
     @UiField
-    Button deleteAllCommandsButton;
+    PushButtonExt deleteAllCommandsButton;
 
     public GlobalActionsViewImpl() {
         initWidget(uiBinder.createAndBindUi(this));

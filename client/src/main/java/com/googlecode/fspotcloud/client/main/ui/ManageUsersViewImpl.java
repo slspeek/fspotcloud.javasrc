@@ -51,13 +51,13 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     @UiField
     CellTable<String> table;
     @UiField
-    PushButton newButton;
+    PushButtonExt   newButton;
     @UiField
     TextBox emailTextBox;
     @UiField
-    PushButton deleteButton;
+    PushButtonExt   deleteButton;
     @UiField
-    PushButton myUsergroupsButton;
+    PushButtonExt   myUsergroupsButton;
     @UiField
     Label userGroupName;
 

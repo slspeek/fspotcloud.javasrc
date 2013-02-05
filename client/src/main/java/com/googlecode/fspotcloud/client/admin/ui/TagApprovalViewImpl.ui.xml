@@ -7,12 +7,12 @@
         <g:layer top="5%" height="90%" left="5%" width="90%">
             <g:LayoutPanel styleName="{res.style.myUsergroups}">
                 <g:layer top="0%" height="10%" left="0%" width="50%">
-                    <g:Label styleName="{res.style.usergroupName}">
+                    <g:Label styleName="{res.style.titleLabel}">
                             Granting to tag:
                     </g:Label>
                 </g:layer>
                 <g:layer top="0%" height="10%" left="50%" width="50%">
-                    <g:Label ui:field="tagName" styleName="{res.style.usergroupName}"></g:Label>
+                    <g:Label ui:field="tagName" styleName="{res.style.titleLabel}"></g:Label>
                 </g:layer>
                 <g:layer top="15%" height="80%" left="0%" width="50%">
                     <g:LayoutPanel styleName="{res.style.propertyValue}">

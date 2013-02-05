@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:HTMLPanel>
         <table>
@@ -59,7 +60,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Request import of this label</g:Label>
                     </td>
                     <td>
-                        <g:Button ui:field="importTagButton">Import label</g:Button>
+                        <main:PushButtonExt ui:field="importTagButton">Import label</main:PushButtonExt>
                     </td>
                 </tr>
                 <tr>
@@ -67,7 +68,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Approve usergroups</g:Label>
                     </td>
                     <td>
-                        <g:Button ui:field="manageAccessButton">Manage access</g:Button>
+                        <main:PushButtonExt ui:field="manageAccessButton">Manage access</main:PushButtonExt>
                     </td>
                 </tr>
             </tbody>

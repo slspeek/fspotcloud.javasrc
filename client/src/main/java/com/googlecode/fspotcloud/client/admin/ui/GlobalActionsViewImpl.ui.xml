@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:HTMLPanel>
         <table style="{res.style.labelDetails}">
@@ -26,7 +27,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Synchronize with peer</g:Label>
                     </td>
                     <td>
-                        <g:Button ui:field="updateButton">Synchronize</g:Button>
+                        <main:PushButtonExt ui:field="updateButton">Synchronize</main:PushButtonExt>
                     </td>
                 </tr>
 
@@ -35,7 +36,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of photos on the peer</g:Label>
                     </td>
                     <td>
-                        <g:Label ui:field="peerPhotoCountValueLabel"></g:Label>
+                        <g:Label ui:field="peerPhotoCountValueLabel" styleName="{res.style.propertyNumberValue}"></g:Label>
                     </td>
                 </tr>
                 <tr>
@@ -43,7 +44,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Tag count on peer</g:Label>
                     </td>
                     <td>
-                        <g:Label styleName="{res.style.propertyValue}" ui:field="tagCountOnPeerValueLabel"></g:Label>
+                        <g:Label styleName="{res.style.propertyNumberValue}" ui:field="tagCountOnPeerValueLabel"></g:Label>
                     </td>
                 </tr>
 
@@ -52,7 +53,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of commands pending</g:Label>
                     </td>
                     <td>
-                        <g:Label ui:field="pendingCommandCountValueLabel"></g:Label>
+                        <g:Label ui:field="pendingCommandCountValueLabel" styleName="{res.style.propertyNumberValue}"></g:Label>
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +61,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Delete all pending commands</g:Label>
                     </td>
                     <td>
-                        <g:Button ui:field="deleteAllCommandsButton">Clear queue</g:Button>
+                        <main:PushButtonExt ui:field="deleteAllCommandsButton">Clear queue</main:PushButtonExt>
                     </td>
                 </tr>
 
@@ -69,7 +70,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Remove all imported data</g:Label>
                     </td>
                     <td>
-                        <g:Button ui:field="deleteAllTagsButton">Remove all</g:Button>
+                        <main:PushButtonExt ui:field="deleteAllTagsButton">Remove all</main:PushButtonExt>
                     </td>
                 </tr>
 

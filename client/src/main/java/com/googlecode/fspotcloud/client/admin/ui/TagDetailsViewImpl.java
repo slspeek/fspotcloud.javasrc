@@ -31,6 +31,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
 
 
 public class TagDetailsViewImpl extends Composite implements TagDetailsView {
@@ -46,9 +47,9 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     @UiField
     Label tagLoadedCountValueLabel;
     @UiField
-    Button importTagButton;
+    PushButtonExt importTagButton;
     @UiField
-    Button manageAccessButton;
+    PushButtonExt  manageAccessButton;
     private TagDetailsPresenter presenter;
 
     public TagDetailsViewImpl() {
