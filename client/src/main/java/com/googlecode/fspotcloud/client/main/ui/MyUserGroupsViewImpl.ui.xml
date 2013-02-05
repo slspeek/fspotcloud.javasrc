@@ -1,42 +1,44 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:c='urn:import:com.google.gwt.user.cellview.client'>
+             xmlns:c='urn:import:com.google.gwt.user.cellview.client'
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
 
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.myUsergroups}">
         <g:layer top="5%" height="90%" left="5%" width="90%">
-    <g:LayoutPanel styleName="{res.style.myUsergroups}">
-        <g:layer top="0%" height="10%" left="0%" width="100%">
-            <g:HTMLPanel>
-                <div class="{res.style.usergroupName}">
-                    Usergroup Management
-                </div>
-            </g:HTMLPanel>
-        </g:layer>
-        <g:layer top="8%" height="80%" left="0%" width="100%">
-            <g:LayoutPanel styleName="{res.style.propertyValue}">
-                <g:layer right="0%" width="100%" bottom="0%" height="100%" styleName="{res.style.tableLayoutLayer}">
-                    <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+            <g:LayoutPanel styleName="{res.style.myUsergroups}">
+                <g:layer top="0%" height="10%" left="0%" width="100%">
+                    <g:HTMLPanel>
+                        <div class="{res.style.titleLabel}">
+                            Usergroup Management
+                        </div>
+                    </g:HTMLPanel>
+                </g:layer>
+                <g:layer top="8%" height="80%" left="0%" width="100%">
+                    <g:LayoutPanel styleName="{res.style.propertyValue}">
+                        <g:layer right="0%" width="100%" bottom="0%" height="100%"
+                                 styleName="{res.style.tableLayoutLayer}">
+                            <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                        </g:layer>
+                    </g:LayoutPanel>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="0%" width="20%">
+                    <main:PushButtonExt ui:field="newButton">New usergroup</main:PushButtonExt>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="25%" width="10%">
+                    <main:PushButtonExt ui:field="editButton">Edit</main:PushButtonExt>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="40%" width="20%">
+                    <main:PushButtonExt ui:field="manageButton">Manage users</main:PushButtonExt>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="65%" width="15%">
+                    <main:PushButtonExt ui:field="deleteButton">Delete</main:PushButtonExt>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" right="0%" width="15%">
+                    <main:PushButtonExt ui:field="dashboardButton">Dashboard</main:PushButtonExt>
                 </g:layer>
             </g:LayoutPanel>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="0%" width="20%">
-            <g:PushButton ui:field="newButton" stylePrimaryName="{res.style.button}">New usergroup</g:PushButton>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="25%" width="10%">
-            <g:PushButton ui:field="editButton" stylePrimaryName="{res.style.button}">Edit</g:PushButton>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="40%" width="20%">
-            <g:PushButton ui:field="manageButton" stylePrimaryName="{res.style.button}">Manage users</g:PushButton>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="65%" width="15%">
-            <g:PushButton ui:field="deleteButton" stylePrimaryName="{res.style.button}">Delete</g:PushButton>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" right="0%" width="15%">
-            <g:PushButton ui:field="dashboardButton" stylePrimaryName="{res.style.button}">Dashboard</g:PushButton>
-        </g:layer>
-    </g:LayoutPanel>
         </g:layer>
     </g:LayoutPanel>
 </ui:UiBinder> 

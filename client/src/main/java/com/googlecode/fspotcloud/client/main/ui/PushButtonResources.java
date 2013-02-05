@@ -22,61 +22,21 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.TextResource;
 
 
-public interface AdminResources extends ClientBundle {
-    @Source("admin.css")
+public interface PushButtonResources extends ClientBundle {
+
+    @Source("pushbutton.css")
     Style style();
 
+
     public interface Style extends CssResource {
-        String copyleft();
-
-        String editUsergroup();
-
-        String editUsergroupHeader();
-
-        String manageUsers();
-
-        String usergroupName();
-
-        String myUsergroups();
-
-        String myUsergroupsTable();
-
-        String usergroupsTest();
-
-        String tree();
-
-        String main();
-
-        String footer();
-
-        String titleLabel();
-
-        String importedTag();
-
-        String headerLabel();
-
-        String propertyLabel();
-
-        String propertyInput();
-
-        String propertyValue();
-
-        String propertyNumberValue();
-
-        String labelDetails();
-
-        String globalActions();
-
-        String tableLayout();
-
-        String tableLayoutLayer();
-
-        String tableHeader();
+        String button();
     }
 }

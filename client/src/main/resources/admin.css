@@ -1,10 +1,13 @@
-@def mainBackground #98EFFF;
+@def mainBackground #84DBFF;
+@def notBlack #505050;
+@def verticalPropertyPadding 6px;
 
 .titleLabel {
     text-align: center;
-
+    color: notBlack;
     font-size:200%;
     background: #5CB3FF;
+    padding-top: 9px;
 }
 
 .tree {
@@ -12,7 +15,7 @@
  }
 
   .main {
-     background: #98EFFF;
+     background: mainBackground;
   }
 
   .footer {
@@ -22,34 +25,12 @@
 
 .importedTag {
 	color: green;
-	font-size: 130%;
-	background: aqua;
 }
 
-.button {
-    margin: 0;
-    padding: 3px 5px;
-    text-decoration: none;
-
-    cursor: pointer;
-    cursor: hand;
-    background: url("images/hborder.png") repeat-x 0px -27px;
-    border: 1px outset #ccc;
-	padding: 3px;
-	margin: auto;
-
-    text-align: center;
-    background-color: #ccc;
-}
-
-.button:focus {
-    color: blue;
-    background-color: green;
-
-}
 .headerLabel {
     width: 100%;
-    font-size: 125%;
+    font-size: 13.5pt;
+    color: notBlack;
 
     text-align: center;
     background: #66BDFF;
@@ -57,65 +38,97 @@
 
 .propertyLabel {
     background: #66BDFF;
+    font-size: 13pt;
+    font-weight: normal;
+    padding-top: verticalPropertyPadding;
+    padding-bottom: verticalPropertyPadding;
 }
 
+.propertyInput {
+    background: #DEFFFF;
+    font-size: 13pt;
+    font-weight: normal;
+    padding-top: verticalPropertyPadding;
+    padding-bottom: verticalPropertyPadding;
+}
 .propertyValue {
     background: #70C7FF;
+    font-size: 13pt;
+    font-weight: normal;
+    padding-top: verticalPropertyPadding;
+    padding-bottom: verticalPropertyPadding;
+}
+
+.propertyNumberValue {
+    background: #70C7FF;
+    font-size: 13pt;
+    font-weight: normal;
+    text-align: right;
+    padding-top: verticalPropertyPadding;
+    padding-bottom: verticalPropertyPadding;
 }
 
 .labelDetails {
+    border: 1px solid blue;
+    float: left;
+}
+
+.globalActions {
+    float: right;
     border: 1px solid blue;
 }
 
 .editUsergroup {
     background: mainBackground;
-    font-size: 130%;
 }
 
 .editUsergroupHeader {
-    font-size: 20pt;
+     width: 100%;
+     font-size: 13.5pt;
+     color: notBlack;
+
+     text-align: center;
+     background: #66BDFF;
 }
 
 .usergroupName {
-    font-size: 20pt;
-    font-weight: bold;
-    background-color: #66BDFF;
-    margin-top: 4px;
-    margin-bottom: 25%;
+     width: 100%;
+     font-size: 13.5pt;
+     color: notBlack;
+
+     text-align: center;
+     background: #66BDFF;
 }
 
 .manageUsers {
    background: mainBackground;
-    font-size: 130%;
 }
 
 .myUsergroups {
     background: mainBackground;
-    font-size: 130%;
     vertical-align: top;
-
 }
 
 .myUsergroupsTable {
     background: mainBackground;
-
     vertical-align: top;
     position: relative;
     margin: 0px;
 }
 
 .tableLayout {
-    /** background: black;*/
 }
 
 .tableLayoutLayer {
-    /* background: pink; */
 }
 
 .tableHeader {
-
 }
 
 .usergroupsTest {
+}
 
+.copyleft {
+    background-color: #88BDFF;
+    color: #EEEEEE;
 }

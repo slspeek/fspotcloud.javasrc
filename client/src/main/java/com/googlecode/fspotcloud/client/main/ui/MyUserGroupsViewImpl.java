@@ -36,7 +36,6 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -57,15 +56,15 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
     @UiField
     CellTable<UserGroupInfo> table;
     @UiField
-    PushButton newButton;
+    PushButtonExt newButton;
     @UiField
-    PushButton editButton;
+    PushButtonExt editButton;
     @UiField
-    PushButton deleteButton;
+    PushButtonExt deleteButton;
     @UiField
-    PushButton manageButton;
+    PushButtonExt manageButton;
     @UiField
-    PushButton dashboardButton;
+    PushButtonExt dashboardButton;
 
     @Inject
     public MyUserGroupsViewImpl() {

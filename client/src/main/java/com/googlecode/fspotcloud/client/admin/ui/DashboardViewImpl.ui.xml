@@ -5,7 +5,7 @@
              xmlns:admin="urn:import:com.googlecode.fspotcloud.client.admin.ui">
     <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
     <g:DockLayoutPanel unit='PX'>
-        <g:north size="40">
+        <g:north size="50">
             <g:Label styleName="{res.style.titleLabel}" ui:field="titleLabel" text="F-Spot Cloud Dashboard">
             </g:Label>
         </g:north>
@@ -16,23 +16,23 @@
                 </g:west>
                 <g:center>
                     <g:HorizontalPanel>
-                        <g:SimplePanel width="400px" height="100%" ui:field="tagDetailsViewContainer"></g:SimplePanel>
-                        <admin:GlobalActionsViewImpl ui:field="globalActionsView"></admin:GlobalActionsViewImpl>
+                        <g:SimplePanel styleName="{res.style.labelDetails}" width="400px" height="100%" ui:field="tagDetailsViewContainer"></g:SimplePanel>
+                        <admin:GlobalActionsViewImpl styleName="{res.style.globalActions}" ui:field="globalActionsView"></admin:GlobalActionsViewImpl>
                     </g:HorizontalPanel>
                 </g:center>
             </g:SplitLayoutPanel>
         </g:center>
-        <g:south size='100'>
+        <g:south size='70'>
             <g:LayoutPanel styleName="{res.style.footer}">
-                <g:layer left="10%" width="20%" top="10%" height="45px">
-                    <g:PushButton ui:field="toPhotos" stylePrimaryName="{res.style.button}">To photos</g:PushButton>
+                <g:layer left="10%" width="20%" top="10%" height="37px">
+                    <main:PushButtonExt ui:field="toPhotos" >To photos</main:PushButtonExt>
                 </g:layer>
-                <g:layer top="10%" width="25%" right="10%" height="45px">
-                    <g:PushButton ui:field="manageGroups" stylePrimaryName="{res.style.button}">Manage usergroups</g:PushButton>
+                <g:layer top="10%" width="25%" right="10%" height="37px">
+                    <main:PushButtonExt ui:field="manageGroups">Manage usergroups</main:PushButtonExt>
                 </g:layer>
                 <g:layer bottom="0%" height="20px">
                     <g:HTML>
-                        <center>Copyleft 2010-2013 Steven L. Speek</center>
+                        <div class="{res.style.copyleft}"><center>Copyleft 2010-2013 Steven L. Speek</center></div>
                     </g:HTML>
                 </g:layer>
             </g:LayoutPanel>
