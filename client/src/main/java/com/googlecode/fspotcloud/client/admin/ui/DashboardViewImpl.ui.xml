@@ -12,12 +12,12 @@
         <g:center>
             <g:SplitLayoutPanel styleName="{res.style.main}" ui:field="horizontalSplitPanel">
                 <g:west size="250">
-                    <main:TreeViewImpl styleName="{res.style.tree}" ui:field="treeView"></main:TreeViewImpl>
+                    <main:TreeViewImpl styleName="{res.style.tree}"></main:TreeViewImpl>
                 </g:west>
                 <g:center>
                     <g:HorizontalPanel>
-                        <g:SimplePanel styleName="{res.style.labelDetails}" width="400px" height="100%" ui:field="tagDetailsViewContainer"></g:SimplePanel>
-                        <admin:GlobalActionsViewImpl styleName="{res.style.globalActions}" ui:field="globalActionsView"></admin:GlobalActionsViewImpl>
+                        <admin:TagDetailsViewImpl styleName="{res.style.labelDetails}" width="400px" height="100%"></admin:TagDetailsViewImpl>
+                        <admin:GlobalActionsViewImpl styleName="{res.style.globalActions}" ></admin:GlobalActionsViewImpl>
                     </g:HorizontalPanel>
                 </g:center>
             </g:SplitLayoutPanel>

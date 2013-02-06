@@ -32,6 +32,7 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.view.TagTreeModel;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
@@ -56,8 +57,10 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
     private final Resources resources;
 
     @Inject
-    public AdminTreePresenterImpl(TreeView treeView, DataManager dataManager,
-                                  SingleSelectionModel<TagNode> selectionModel, PlaceGoTo placeGoTo,
+    public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
+                                  DataManager dataManager,
+                                  SingleSelectionModel<TagNode> selectionModel,
+                                  PlaceGoTo placeGoTo,
                                   Resources resources) {
         super();
         this.treeView = treeView;
@@ -105,7 +108,7 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
 
     @Override
     public void setPlace(BasePlace place) {
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
     }
 
     @Override

@@ -65,13 +65,14 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
     @Override
     public void init() {
-        log.info("init");
+        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@init");
+        tagDetailsView.setPresenter(this);
         populateView();
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        tagDetailsView.setPresenter(this);
+
         panel.setWidget(tagDetailsView);
     }
 

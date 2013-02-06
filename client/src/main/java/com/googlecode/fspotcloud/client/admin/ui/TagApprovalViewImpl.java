@@ -121,7 +121,7 @@ public class TagApprovalViewImpl extends Composite implements TagApprovalView {
         otherDataProvider.addDataDisplay(other);
         other.setSelectionModel(otherSelectionModel);
 
-        log.info("Created " + this);
+        log.info("Created. ");
     }
 
     @UiHandler("approveButton")

@@ -39,6 +39,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
@@ -71,11 +72,11 @@ public class TagViewImpl extends Composite implements TagView,
     private final TimerInterface timer;
     @SuppressWarnings("unused")
     private TagPresenter presenter;
-    final int id = ID++;
+    int id = ++ID;
     private final ActionToolbar actionToolbar;
 
     @Inject
-    public TagViewImpl(TreeView treeView,
+    public TagViewImpl(@BasicTreeView TreeView treeView,
                        ImageRasterView imageRasterView,
                        TimerInterface timer,
                        @MainToolbar ActionToolbar actionToolbar) {

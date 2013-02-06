@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.client.useraction.application.handler;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
@@ -45,7 +46,7 @@ public class TreeFocusHandler implements IActionHandler {
     private final IModeController modeController;
 
     @Inject
-    public TreeFocusHandler(TreeView treeView, TagView tagView,
+    public TreeFocusHandler(@BasicTreeView TreeView treeView, TagView tagView,
                             Slideshow slideshow, IModeController modeController) {
         super();
         this.slideshow = slideshow;

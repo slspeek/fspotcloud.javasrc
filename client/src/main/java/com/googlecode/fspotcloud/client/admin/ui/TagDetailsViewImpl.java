@@ -33,9 +33,12 @@ import com.google.gwt.user.client.ui.*;
 import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
 
+import java.util.logging.Logger;
+
 
 public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     private static final TagDetailsViewImplUiBinder uiBinder = GWT.create(TagDetailsViewImplUiBinder.class);
+    private static final Logger log = Logger.getLogger(TagDetailsViewImpl.class.getName());
     @UiField
     Label tagNameValueLabel;
     @UiField
@@ -52,10 +55,14 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     PushButtonExt  manageAccessButton;
     private TagDetailsPresenter presenter;
 
+    private static int count;
+
+
     public TagDetailsViewImpl() {
         initWidget(uiBinder.createAndBindUi(this));
         importTagButton.ensureDebugId("import-tag-button");
         manageAccessButton.ensureDebugId("manage-access-button");
+        log.info("TagDetailsView created: " + ++count);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
@@ -23,7 +24,7 @@ public class LogoutHandler implements IActionHandler
 
     @Inject
     public LogoutHandler(ClientLoginManager clientLoginManager,
-                         TreeView.TreePresenter treePresenter,
+                         @BasicTreeView TreeView.TreePresenter treePresenter,
                          DataManager dataManager) {
         this.clientLoginManager = clientLoginManager;
         this.treePresenter = treePresenter;

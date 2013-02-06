@@ -32,6 +32,7 @@ import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsActivityFactory
 import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -44,19 +45,25 @@ public class TagDetailsActivityMapper implements ActivityMapper {
             TagDetailsActivityFactory tagDetailsActivityFactory) {
         super();
         this.tagDetailsActivityFactory = tagDetailsActivityFactory;
+        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     }
 
     @Override
     public Activity getActivity(Place place) {
-        log.info("getActivity: " + place);
+        try {
+            log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@getActivity: " + place);
 
-        TagDetailsView.TagDetailsPresenter activity = null;
+            TagDetailsView.TagDetailsPresenter activity = null;
 
-        if (place instanceof TagPlace) {
-            activity = tagDetailsActivityFactory.get((TagPlace) place);
-            activity.init();
+            if (place instanceof TagPlace) {
+                activity = tagDetailsActivityFactory.get((TagPlace) place);
+                activity.init();
+            }
+
+            return activity;
+        } catch (Exception e) {
+            log.log(Level.INFO, "getActivity error", e);
+            throw new RuntimeException(e);
         }
-
-        return activity;
     }
 }

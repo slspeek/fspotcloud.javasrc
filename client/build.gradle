@@ -64,7 +64,7 @@ compileGwt.dependsOn convertIcons, writeVersion
 gwtDev.dependsOn convertIcons, writeVersion
 
 gwt {
-			modules = ['com.googlecode.fspotcloud.FSpotCloud', 'com.googlecode.fspotcloud.dashboard']
+			modules = ['com.googlecode.fspotcloud.FSpotCloud']
 }
 
 compileGwt {
