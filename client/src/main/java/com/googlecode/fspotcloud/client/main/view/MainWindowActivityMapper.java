@@ -29,6 +29,8 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
+import com.googlecode.fspotcloud.client.admin.view.api.TagApprovalView;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -57,6 +59,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final ChangePasswordActivityFactory changePasswordActivityFactory;
     private final SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter;
     private final HomeView.HomePresenter homePresenter;
+    private final TagApprovalView.TagApprovalPresenter approvalPresenter;
+    private final DashboardView.DashboardPresenter dashboardPresenter;
 
     @Inject
     public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
@@ -73,7 +77,9 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
                                     ChangePasswordActivityFactory changePasswordActivityFactory,
                                     SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter,
-                                    HomeView.HomePresenter homePresenter) {
+                                    HomeView.HomePresenter homePresenter,
+                                    TagApprovalView.TagApprovalPresenter approvalPresenter,
+                                    DashboardView.DashboardPresenter dashboardPresenter) {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagPresenterFactory = tagPresenterFactory;
@@ -91,6 +97,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.changePasswordActivityFactory = changePasswordActivityFactory;
         this.sendResetPasswordPresenter = sendResetPasswordPresenter;
         this.homePresenter = homePresenter;
+        this.approvalPresenter = approvalPresenter;
+        this.dashboardPresenter = dashboardPresenter;
     }
 
     @Override
@@ -99,8 +107,11 @@ public class MainWindowActivityMapper implements ActivityMapper {
         storeCurrentRasterDimension(place);
 
         Activity activity = null;
-
-        if (place instanceof MailFullsizePlace) {
+         if (place instanceof TagApprovalPlace) {
+            approvalPresenter.setTagId(((TagApprovalPlace) place).getTagId());
+            modeController.setMode(Modes.LOGIN);
+            return approvalPresenter;
+        } else if (place instanceof MailFullsizePlace) {
             activity = mailFullsizeActivityFactory.get((MailFullsizePlace) place);
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SendConfirmationPlace) {
@@ -146,6 +157,11 @@ public class MainWindowActivityMapper implements ActivityMapper {
             BasePlace basePlace = (BasePlace) place;
             activity = tagPresenterFactory.get(basePlace);
             modeController.setMode(Modes.TAG_VIEW);
+        } else  if (place instanceof TagPlace) {
+                modeController.setMode(Modes.LOGIN);
+
+                return dashboardPresenter.withPlace((TagPlace) place);
+
         } else {
             log.warning("getActivity will return null for:" + place);
         }

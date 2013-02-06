@@ -48,8 +48,6 @@ public class AdminTagCell extends AbstractCell<TagNode> {
     @Override
     public void render(com.google.gwt.cell.client.Cell.Context arg0,
                        TagNode value, SafeHtmlBuilder sb) {
-        log.info("" + value.isImportIssued());
-
         if (value.isImportIssued()) {
             SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(),
                     resources.style().importedTag());

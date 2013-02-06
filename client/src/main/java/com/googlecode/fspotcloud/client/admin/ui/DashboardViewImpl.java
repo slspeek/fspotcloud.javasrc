@@ -35,30 +35,48 @@ import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
 import com.googlecode.fspotcloud.client.main.ui.TreeViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.client.place.HomePlace;
+import com.googlecode.fspotcloud.client.place.MyUserGroupsPlace;
+import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+
+import java.util.logging.Logger;
 
 
 public class DashboardViewImpl extends Composite implements DashboardView {
     private static final DashboardViewImplUiBinder uiBinder = GWT.create(DashboardViewImplUiBinder.class);
-    @UiField
-    SimplePanel tagDetailsViewContainer;
-    final GlobalActionsView globalActionsView;
-    final TreeView treeView;
+    private static final Logger log = Logger.getLogger(DashboardViewImpl.class.getName());
+
+    private final PlaceGoTo placeGoTo;
+    private final TagDetailsViewImpl tagDetailsView;
+    private final GlobalActionsView globalActionsView;
+    private final TreeView treeView;
     @UiField
     PushButtonExt toPhotos;
     @UiField
     PushButtonExt manageGroups;
 
+    public static int counter;
+
     @Inject
-    public DashboardViewImpl(TreeView treeView,
-                             GlobalActionsView globalActionsView) {
+    public DashboardViewImpl(@AdminTreeView TreeView treeView,
+                             GlobalActionsView globalActionsView,
+                             TagDetailsView tagDetailsView,
+                             PlaceGoTo placeGoTo) {
+        this.placeGoTo = placeGoTo;
+        counter++;
         this.treeView = treeView;
         this.globalActionsView = globalActionsView;
+        this.tagDetailsView = (TagDetailsViewImpl) tagDetailsView;
         initWidget(uiBinder.createAndBindUi(this));
         toPhotos.ensureDebugId("to-photos-button");
         manageGroups.ensureDebugId("manage-groups-button");
+        log.info("Dashboard created: " + counter);
+
     }
 
     @UiFactory
@@ -66,9 +84,11 @@ public class DashboardViewImpl extends Composite implements DashboardView {
         return (GlobalActionsViewImpl) globalActionsView;
     }
 
+    @UiFactory
     @Override
-    public HasOneWidget getTagDetailsContainer() {
-        return tagDetailsViewContainer;
+    public TagDetailsViewImpl getTagDetailsView() {
+        log.info("Dashboard getTagDetail..: " + counter);
+        return tagDetailsView;
     }
 
     @UiFactory
@@ -78,12 +98,12 @@ public class DashboardViewImpl extends Composite implements DashboardView {
 
     @UiHandler("toPhotos")
     public void toPhotosClicked(ClickEvent e) {
-        Window.Location.replace("FSpotCloud.html");
+        placeGoTo.goTo(new HomePlace());
     }
 
     @UiHandler("manageGroups")
     public void manageGroupsClicked(ClickEvent e) {
-        Window.Location.replace("FSpotCloud.html#MyUserGroupsPlace:");
+        placeGoTo.goTo(new MyUserGroupsPlace());
     }
 
     interface DashboardViewImplUiBinder extends UiBinder<Widget, DashboardViewImpl> {

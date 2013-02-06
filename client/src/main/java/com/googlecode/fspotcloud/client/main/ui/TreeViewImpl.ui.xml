@@ -5,10 +5,10 @@
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
     <g:LayoutPanel>
         <g:layer width="100%" top="0%" height="95%">
-            <g:ScrollPanel ui:field="tagTreeViewPanel" styleName="{res.style.treeBlock}"></g:ScrollPanel>
+            <g:ScrollPanel ui:field="tagTreeViewPanel"></g:ScrollPanel>
         </g:layer>
         <g:layer width="100%" bottom="0%" height="5%">
-            <g:Label ui:field="userInfoLabel" styleName="{res.style.userInfoLabel"></g:Label>
+            <g:Label ui:field="userInfoLabel"></g:Label>
         </g:layer>
     </g:LayoutPanel>
 </ui:UiBinder> 

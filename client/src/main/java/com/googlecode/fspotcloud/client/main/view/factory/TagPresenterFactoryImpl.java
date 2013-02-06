@@ -24,8 +24,8 @@
 
 package com.googlecode.fspotcloud.client.main.view.factory;
 
-import com.google.code.ginmvp.client.ActivityAsyncProxy;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.TagActivity;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterPresenterFactory;
@@ -40,7 +40,6 @@ import java.util.logging.Logger;
 
 
 public class TagPresenterFactoryImpl implements TagPresenterFactory {
-    @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(TagPresenterFactoryImpl.class.getName());
     private final TagViewImpl tagView;
     private final TreePresenter treePresenter;
@@ -48,22 +47,17 @@ public class TagPresenterFactoryImpl implements TagPresenterFactory {
 
     @Inject
     public TagPresenterFactoryImpl(TagView tagView,
-                                   TreePresenter treePresenter,
+                                   @BasicTreeView TreePresenter treePresenter,
                                    ImageRasterPresenterFactory rasterFactory) {
         super();
         this.tagView = (TagViewImpl) tagView;
         this.treePresenter = treePresenter;
         this.rasterFactory = rasterFactory;
-        init();
-    }
-
-    private void init() {
-        treePresenter.init();
+        this.treePresenter.init();
     }
 
     @Override
     public TagPresenter get(BasePlace place) {
-        //SingleImagePresenter integration should go here
         final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory.get(place,
                 tagView.getImageRasterView());
         TagPresenter presenter = new TagActivity(tagView, rasterPresenter);

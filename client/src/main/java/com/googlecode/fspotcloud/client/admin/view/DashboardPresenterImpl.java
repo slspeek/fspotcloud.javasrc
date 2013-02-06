@@ -26,31 +26,39 @@ package com.googlecode.fspotcloud.client.admin.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.admin.ui.DashboardViewFactory;
 import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
+import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsActivityFactory;
+import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
+import com.googlecode.fspotcloud.client.main.gin.Finished;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView.TreePresenter;
+import com.googlecode.fspotcloud.client.place.TagPlace;
 
 
-public class DashboardPresenterImpl extends AbstractActivity implements com.googlecode.fspotcloud.client.admin.view.api.DashboardView.DashboardPresenter {
-    private final DashboardViewFactory dashboardViewFactory;
+public class DashboardPresenterImpl extends AbstractActivity
+        implements com.googlecode.fspotcloud.client.admin.view.api.DashboardView.DashboardPresenter {
+    private final DashboardView dashboardView;
     private final TreeView.TreePresenter treePresenter;
     private final GlobalActionsPresenter globalActionsPresenter;
+    private final TagDetailsActivityFactory tagDetailsActivityFactory;
+
 
     @Inject
-    public DashboardPresenterImpl(DashboardViewFactory dashboardViewFactory,
-                                  TreePresenter treePresenter,
-                                  GlobalActionsPresenter globalActionsPresenter) {
+    public DashboardPresenterImpl(DashboardView dashboardView,
+                                  @AdminTreeView TreePresenter treePresenter,
+                                  GlobalActionsPresenter globalActionsPresenter,
+                                  TagDetailsActivityFactory tagDetailsActivityFactory) {
         super();
-        this.dashboardViewFactory = dashboardViewFactory;
+        this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
         this.globalActionsPresenter = globalActionsPresenter;
-    }
-
-    public DashboardView getView() {
-        return dashboardViewFactory.get();
+        this.tagDetailsActivityFactory = tagDetailsActivityFactory;
+        init();
     }
 
     @Override
@@ -60,7 +68,16 @@ public class DashboardPresenterImpl extends AbstractActivity implements com.goog
     }
 
     @Override
+    public DashboardView.DashboardPresenter withPlace(TagPlace place) {
+        TagDetailsView tagDetailsView = dashboardView.getTagDetailsView();
+        TagDetailsView.TagDetailsPresenter activity = tagDetailsActivityFactory.get(place);
+        //tagDetailsView.setPresenter(activity);
+        activity.init();
+        return this;
+    }
+
+    @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(getView());
+        panel.setWidget(dashboardView);
     }
 }
