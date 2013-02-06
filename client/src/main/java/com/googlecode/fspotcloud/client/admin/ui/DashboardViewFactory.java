@@ -24,29 +24,45 @@
 
 package com.googlecode.fspotcloud.client.admin.ui;
 
+import com.google.gwt.activity.shared.ActivityManager;
+import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.fspotcloud.client.admin.view.TagDetailsActivityMapper;
 import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
-import com.googlecode.fspotcloud.client.main.ui.ViewFactory;
+import com.googlecode.fspotcloud.client.main.gin.Raw;
+import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
+import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
 
+import javax.swing.text.ViewFactory;
 import java.util.logging.Logger;
 
 
-public class DashboardViewFactory extends ViewFactory {
+public class DashboardViewFactory implements Provider<DashboardView> {
     private final Logger log = Logger.getLogger(DashboardViewFactory.class.getName());
     private final DashboardView dashboardView;
+    private final EventBus eventBus;
 
     @Inject
-    public DashboardViewFactory(EventBus eventBus, DashboardView dashboardView,
-                                TagDetailsActivityMapper detailsMapper) {
-        super(eventBus);
+    public DashboardViewFactory(EventBus eventBus, @Raw DashboardView dashboardView
+                                ) {
+        this.eventBus = eventBus;
         this.dashboardView = dashboardView;
-        register(detailsMapper, dashboardView.getTagDetailsContainer());
-        log.info("after register");
+        //register(detailsMapper, dashboardView.getTagDetailsContainer());
+        log.info("after register ");
     }
 
     public DashboardView get() {
         return dashboardView;
+    }
+
+    public void register(ActivityMapper mapper, HasOneWidget display) {
+        ActivityManager manager = new ActivityManager(mapper, eventBus);
+        manager.setDisplay(display);
+        log.info("registered: " + mapper);
     }
 }

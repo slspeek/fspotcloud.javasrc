@@ -31,6 +31,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
@@ -54,7 +55,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     private BasePlace place;
 
     @Inject
-    public TreePresenterImpl(TreeView treeView, DataManager dataManager,
+    public TreePresenterImpl(@BasicTreeView TreeView treeView, DataManager dataManager,
                              SingleSelectionModel<TagNode> singleSelectionModel,
                              TreeSelectionHandlerInterface treeSelectionHandler,
                              ClientLoginManager clientLoginManager) {

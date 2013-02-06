@@ -49,7 +49,7 @@ public class TagDetailsActivityFactoryImpl implements TagDetailsActivityFactory 
     public TagDetailsPresenter get(TagPlace place) {
         TagDetailsPresenter presenter = new TagDetailsActivity(tagDetailsView,
                 place, dataManager, dispatch, placeGoTo);
-        presenter.init();
+        //presenter.init();
 
         return presenter;
     }

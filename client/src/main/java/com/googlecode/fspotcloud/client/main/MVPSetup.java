@@ -29,6 +29,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.admin.view.DashboardPresenterImpl;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
 import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
 import com.googlecode.fspotcloud.client.useraction.UserActionHandlerBinder;
@@ -56,9 +57,13 @@ public class MVPSetup {
 
     public void setup() {
         log.info("Starting MVP setup");
+
         stylesSetup.injectStyles();
+
         RootLayoutPanel.get().add(appWidget);
+
         placeHistoryHandler.handleCurrentHistory();
+
         log.info("MVP setup finished");
     }
 }

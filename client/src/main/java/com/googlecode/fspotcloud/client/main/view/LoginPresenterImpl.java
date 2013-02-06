@@ -32,6 +32,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.*;
@@ -66,7 +67,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                               DispatchAsync dispatch,
                               PlaceGoTo placeGoTo,
                               PlaceWhere placeWhere,
-                              TreeView.TreePresenter treePresenter,
+                              @BasicTreeView TreeView.TreePresenter treePresenter,
                               ClientLoginManager clientLoginManager) {
         this.view = loginView;
         this.dispatch = dispatch;

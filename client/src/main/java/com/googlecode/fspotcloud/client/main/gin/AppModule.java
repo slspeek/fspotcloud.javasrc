@@ -32,6 +32,13 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Singleton;
+import com.googlecode.fspotcloud.client.admin.gin.TagDetailsActivityFactoryImpl;
+import com.googlecode.fspotcloud.client.admin.ui.*;
+import com.googlecode.fspotcloud.client.admin.view.AdminTreePresenterImpl;
+import com.googlecode.fspotcloud.client.admin.view.DashboardPresenterImpl;
+import com.googlecode.fspotcloud.client.admin.view.TagApprovalPresenterImpl;
+import com.googlecode.fspotcloud.client.admin.view.TagDetailsActivityMapper;
+import com.googlecode.fspotcloud.client.admin.view.api.*;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
 import com.googlecode.fspotcloud.client.data.GetTagTreeMemoProc;
@@ -61,7 +68,6 @@ public class AppModule extends AbstractGinModule {
         bind(ImageView.class).annotatedWith(SingleImageView.class).toProvider(SingleImageViewProvider.class).in(Singleton.class);
         bind(DoubleImageView.class).to(DoubleImageViewImpl.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
-        //bind(GetTagTreeMemoProc.class);
         bind(SendConfirmationView.class).to(SendConfirmationViewImpl.class).in(Singleton.class);
         bind(SendConfirmationView.SendConfirmationPresenter.class).to(SendConfirmationActivity.class);
         bind(MailFullsizeView.class).to(MailFullsizeViewImpl.class).in(Singleton.class);
@@ -76,7 +82,7 @@ public class AppModule extends AbstractGinModule {
         bind(MVPSetup.class).in(Singleton.class);
         bind(TagCell.class);
         bind(TagView.class).to(TagViewImpl.class).in(Singleton.class);
-        bind(TreeView.class).to(TreeViewImpl.class).in(Singleton.class);
+
         bind(ImageRasterView.class).to(ImageRasterViewImpl.class);
         bind(SlideshowActivityFactory.class)
                 .to(SlideshowActivityFactoryImpl.class);
@@ -103,7 +109,6 @@ public class AppModule extends AbstractGinModule {
         bind(PlaceCalculator.class);
         bind(PlaceGoTo.class).to(PlaceGoToImpl.class);
         bind(PlaceWhere.class).to(PlaceWhereImpl.class);
-        //bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
         bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(SlideshowDelayView.class).to(SlideshowDelayViewImpl.class).in(Singleton.class);
@@ -111,8 +116,7 @@ public class AppModule extends AbstractGinModule {
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
         bind(TagPresenterFactory.class).to(TagPresenterFactoryImpl.class);
-        bind(TreeView.TreePresenter.class).to(TreePresenterImpl.class)
-                .in(Singleton.class);
+
         bind(SelectionChangeEvent.Handler.class).to(TreeSelectionHandler.class)
                 .in(Singleton.class);
         bind(SlideshowDelayView.SlideshowPresenter.class)
@@ -129,5 +133,26 @@ public class AppModule extends AbstractGinModule {
 
         bind(TreeSelectionHandlerInterface.class).to(TreeSelectionHandler.class);
         bind(LoadNewLocation.class).to(LoadNewLocationImpl.class);
+
+        //admin
+        bind(TagDetailsActivityFactory.class)
+                .to(TagDetailsActivityFactoryImpl.class).in(Singleton.class);
+        bind(TagDetailsView.class).to(TagDetailsViewImpl.class)
+                .in(Singleton.class);
+        bind(DashboardView.class).to(DashboardViewImpl.class).in(Singleton.class);
+        bind(DashboardView.DashboardPresenter.class)
+                .to(DashboardPresenterImpl.class);
+        bind(GlobalActionsView.class).to(GlobalActionsViewImpl.class)
+                .in(Singleton.class);
+        bind(TreeView.TreePresenter.class).annotatedWith(AdminTreeView.class).to(AdminTreePresenterImpl.class)
+                .in(Singleton.class);
+        bind(TreeView.class).annotatedWith(AdminTreeView.class).to(TreeViewImpl.class);
+        bind(TreeView.class).annotatedWith(BasicTreeView.class).to(TreeViewImpl.class);
+        bind(TreeView.TreePresenter.class).annotatedWith(BasicTreeView.class).to(TreePresenterImpl.class)
+                .in(Singleton.class);
+
+        bind(TagApprovalView.class).to(TagApprovalViewImpl.class).in(Singleton.class);;
+        bind(TagApprovalView.TagApprovalPresenter.class)
+                .to(TagApprovalPresenterImpl.class);
     }
 }

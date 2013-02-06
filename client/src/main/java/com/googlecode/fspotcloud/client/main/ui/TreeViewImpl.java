@@ -37,6 +37,7 @@ import com.google.gwt.view.client.TreeViewModel;
 import com.googlecode.fspotcloud.client.main.view.CustomCellTree;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -49,14 +50,16 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
     @UiField
     Label userInfoLabel;
 
+    private static int counter;
     public TreeViewImpl() {
         initWidget(uiBinder.createAndBindUi(this));
         userInfoLabel.ensureDebugId("user-info-label");
-        log.info("Created.");
+        log.log(Level.FINE, "Treeview created: " + ++counter);
     }
 
     @Override
     public void setTreeModel(TreeViewModel model) {
+        log.log(Level.FINE, "setTreeModel on " + this);
         cellTree = new CustomCellTree(model, null);
         tagTreeViewPanel.setWidget(cellTree);
     }
@@ -76,6 +79,11 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
         if (cellTree != null) {
             cellTree.setFocus(true);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TreeViewImpl: " + counter;
     }
 
     @Override

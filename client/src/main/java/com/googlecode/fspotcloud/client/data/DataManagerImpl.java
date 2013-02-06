@@ -61,7 +61,7 @@ public class DataManagerImpl implements DataManager {
     }
 
     public void getTagTree(final AsyncCallback<TagNode> callback) {
-        log.info("getTagTree ");
+        log.log(Level.FINEST, "getTagTree ");
         getTagTreeMemoProc.getAsync(new AsyncCallback<TagTreeResult>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -77,7 +77,7 @@ public class DataManagerImpl implements DataManager {
 
     public void getTagNode(final String id,
                            final AsyncCallback<TagNode> callback) {
-        log.info("getTagNode: " + id);
+        log.log(Level.FINEST, "getTagNode: " + id);
         getTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {

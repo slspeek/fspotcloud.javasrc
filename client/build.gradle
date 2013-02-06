@@ -62,7 +62,7 @@ test {
 compileGwt.dependsOn convertIcons, writeVersion
 gwtDevMode.dependsOn convertIcons, writeVersion
 
-gwtModules = ['com.googlecode.fspotcloud.FSpotCloud', 'com.googlecode.fspotcloud.dashboard']
+gwtModules = ['com.googlecode.fspotcloud.FSpotCloud']
 
 compileGwt {
     if (Boolean.valueOf("${release}")) {
@@ -75,9 +75,7 @@ compileGwt {
 
 gwtDevMode {
     startupUrls = ["http://localhost:8080/FSpotCloud.html",
-            "http://localhost:8050/j2ee-e2e/FSpotCloud.html",
-            "http://localhost:8080/Dashboard.html",
-            "http://localhost:8050/j2ee-e2e/Dashboard.html"
+            "http://localhost:8050/j2ee-e2e/FSpotCloud.html"
     ]
 }
 
