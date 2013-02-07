@@ -51,6 +51,7 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
     Label userInfoLabel;
 
     private static int counter;
+
     public TreeViewImpl() {
         initWidget(uiBinder.createAndBindUi(this));
         userInfoLabel.ensureDebugId("user-info-label");

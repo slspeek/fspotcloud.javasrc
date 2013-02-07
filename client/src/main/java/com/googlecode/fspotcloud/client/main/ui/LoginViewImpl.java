@@ -119,8 +119,8 @@ public class LoginViewImpl extends Composite implements LoginView {
 
     @Override
     public void clearFields() {
-       userNameTextBox.setText("");
-       passwordTextBox.setText("");
+        userNameTextBox.setText("");
+        passwordTextBox.setText("");
     }
 
     @UiHandler("login")

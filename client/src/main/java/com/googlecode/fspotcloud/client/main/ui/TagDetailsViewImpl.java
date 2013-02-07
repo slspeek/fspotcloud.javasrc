@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -30,8 +30,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 
 import java.util.logging.Logger;
 
@@ -52,7 +51,7 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     @UiField
     PushButtonExt importTagButton;
     @UiField
-    PushButtonExt  manageAccessButton;
+    PushButtonExt manageAccessButton;
     private TagDetailsPresenter presenter;
 
     private static int count;

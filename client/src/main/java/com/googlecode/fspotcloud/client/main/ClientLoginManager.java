@@ -31,21 +31,16 @@ package com.googlecode.fspotcloud.client.main;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.GetUserInfo;
 import com.googlecode.fspotcloud.shared.main.LogoutAction;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 
 /**
@@ -80,7 +75,6 @@ public class ClientLoginManager {
     }
 
 
-
     public void logout(AsyncCallback<VoidResult> resultAsyncCallback) {
         dispatch.execute(new LogoutAction(), resultAsyncCallback);
     }
@@ -97,6 +91,8 @@ public class ClientLoginManager {
                 if (!result.isLoggedIn()) {
                     String nextUrl = placeWhere.whereToken();
                     placeGoTo.goTo(new LoginPlace(nextUrl));
+                } else {
+                    log.log(Level.FINE, "No redirect to login because user is allready logged in.");
                 }
             }
         });

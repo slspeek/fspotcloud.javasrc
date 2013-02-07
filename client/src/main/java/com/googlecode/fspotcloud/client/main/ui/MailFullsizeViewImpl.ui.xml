@@ -1,7 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction"
              xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.UserPagesResources" field="res"></ui:with>
     <g:LayoutPanel addStyleNames="{res.style.userPage}">
@@ -11,10 +10,12 @@
                     <g:Label addStyleNames="{res.style.titleLabel}">Mail full-size image</g:Label>
                 </g:layer>
                 <g:layer top="11%" height="70%" width="100%" left="0%">
-                     <main:ImageViewImpl></main:ImageViewImpl>
+                    <main:ImageViewImpl></main:ImageViewImpl>
                 </g:layer>
                 <g:layer top="82%" height="8%" left="0%" width="100%">
-                    <g:Label addStyleNames="{res.style.statusLabel}" ui:field="statusLabel">Do you want this image mailed to you?</g:Label>
+                    <g:Label addStyleNames="{res.style.statusLabel}" ui:field="statusLabel">Do you want this image
+                        mailed to you?
+                    </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="9%" left="0%" width="30%">
                     <g:PushButton ui:field="mail" addStyleNames="{res.style.button}">Mail image</g:PushButton>

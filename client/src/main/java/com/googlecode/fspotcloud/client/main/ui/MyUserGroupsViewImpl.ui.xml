@@ -4,7 +4,7 @@
              xmlns:c='urn:import:com.google.gwt.user.cellview.client'
              xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
 
-    <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.myUsergroups}">
         <g:layer top="5%" height="90%" left="5%" width="90%">
             <g:LayoutPanel styleName="{res.style.myUsergroups}">

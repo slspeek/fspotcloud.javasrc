@@ -38,6 +38,7 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -78,8 +79,13 @@ public class GetAdminTagTreeHandler extends SimpleActionHandler<GetAdminTagTreeA
             TreeBuilder builder = new TreeBuilder(tags);
             TagNode tree = builder.getFullTree();
             p.setCachedAdminTagTree(tree);
-            log.info("Builded, about to save");
-            peerDatabaseDao.save(p);
+            try {
+                log.info("Builded, about to save");
+                peerDatabaseDao.save(p);
+            } catch (Exception e) {
+                log.log(Level.INFO, "Saving peerDatabase with admin-tree failed: ", e);
+            }
+
             return tree;
         }
     }

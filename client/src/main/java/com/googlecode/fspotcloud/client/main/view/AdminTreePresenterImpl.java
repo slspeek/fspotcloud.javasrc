@@ -22,10 +22,9 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view;
+package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.Cell;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -34,7 +33,6 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
-import com.googlecode.fspotcloud.client.main.view.TagTreeModel;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
@@ -42,7 +40,6 @@ import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import javax.inject.Provider;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

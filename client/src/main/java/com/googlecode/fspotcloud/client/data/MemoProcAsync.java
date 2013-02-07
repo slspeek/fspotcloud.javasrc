@@ -4,7 +4,6 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -15,7 +14,8 @@ public abstract class MemoProcAsync<T> {
 
     private T data = null;
 
-    public MemoProcAsync() {}
+    public MemoProcAsync() {
+    }
 
     public abstract void getAsyncImpl(AsyncCallback<T> callback);
 

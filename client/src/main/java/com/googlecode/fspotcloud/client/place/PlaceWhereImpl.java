@@ -32,6 +32,7 @@ import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 
 public class PlaceWhereImpl extends PlaceGoToImpl implements PlaceWhere {
     private BasePlace lastBasePlace = new BasePlace("latest", "");
+
     @Inject
     public PlaceWhereImpl(PlaceController placeController,
                           MainPlaceHistoryMapper mainPlaceHistoryMapper) {
@@ -55,7 +56,7 @@ public class PlaceWhereImpl extends PlaceGoToImpl implements PlaceWhere {
     }
 
     @Override
-    public Place getRawWhere(){
+    public Place getRawWhere() {
         Place place = placeController.getWhere();
         return place;
     }

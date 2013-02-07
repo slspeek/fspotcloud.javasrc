@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;

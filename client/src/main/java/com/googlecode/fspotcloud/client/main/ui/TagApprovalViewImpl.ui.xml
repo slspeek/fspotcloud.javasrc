@@ -1,14 +1,15 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:c='urn:import:com.google.gwt.user.cellview.client'>
-    <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
+             xmlns:c='urn:import:com.google.gwt.user.cellview.client'
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui"   >
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.myUsergroups}">
         <g:layer top="5%" height="90%" left="5%" width="90%">
             <g:LayoutPanel styleName="{res.style.myUsergroups}">
                 <g:layer top="0%" height="10%" left="0%" width="50%">
                     <g:Label styleName="{res.style.titleLabel}">
-                            Granting to tag:
+                        Granting to tag:
                     </g:Label>
                 </g:layer>
                 <g:layer top="0%" height="10%" left="50%" width="50%">
@@ -27,9 +28,8 @@
                             <c:CellTable ui:field="approved" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
                         <g:layer bottom="2%" height="40px" left="0%" width="25%">
-                            <g:PushButton ui:field="removeButton">Remove</g:PushButton>
+                            <main:PushButtonExt ui:field="removeButton">Remove</main:PushButtonExt>
                         </g:layer>
-
                     </g:LayoutPanel>
                 </g:layer>
                 <g:layer top="15%" height="80%" right="0%" width="50%">
@@ -45,13 +45,13 @@
                             <c:CellTable ui:field="other" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
                         <g:layer bottom="2%" height="40px" left="0%" width="25%">
-                            <g:PushButton ui:field="approveButton">Approve</g:PushButton>
+                            <main:PushButtonExt ui:field="approveButton">Approve</main:PushButtonExt>
                         </g:layer>
 
                     </g:LayoutPanel>
                 </g:layer>
-                <g:layer bottom="0%" height="40px" left="0%" width="15%">
-                    <g:PushButton ui:field="dashboardButton">Dashboard</g:PushButton>
+                <g:layer bottom="0%" height="40px" left="0%" width="25%">
+                    <main:PushButtonExt ui:field="dashboardButton">Dashboard</main:PushButtonExt>
                 </g:layer>
 
             </g:LayoutPanel>

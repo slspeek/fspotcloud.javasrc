@@ -32,8 +32,6 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import junit.framework.TestCase;
 import net.customware.gwt.dispatch.client.DispatchAsync;
-import org.jukito.JukitoRunner;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
 import java.util.logging.Logger;

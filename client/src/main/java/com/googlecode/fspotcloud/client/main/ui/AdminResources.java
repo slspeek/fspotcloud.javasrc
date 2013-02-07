@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;

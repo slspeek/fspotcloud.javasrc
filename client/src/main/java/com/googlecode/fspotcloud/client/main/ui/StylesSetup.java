@@ -1,8 +1,6 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.resources.client.CssResource;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.ui.AdminResources;
 
 public class StylesSetup {
 

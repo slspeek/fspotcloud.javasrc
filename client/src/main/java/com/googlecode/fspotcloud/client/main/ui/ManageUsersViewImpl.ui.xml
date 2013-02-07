@@ -3,36 +3,36 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:c='urn:import:com.google.gwt.user.cellview.client'
              xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
-    <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.myUsergroups}">
-    <g:layer top="5%" height="90%" left="5%" width="90%">
-    <g:LayoutPanel styleName="{res.style.manageUsers}">
-        <g:layer top="0%" height="10%" left="0%" width="50%">
-            <g:Label styleName="{res.style.titleLabel}">User Management for:</g:Label>
-        </g:layer>
-        <g:layer top="0%" height="10%" left="40%" width="30%">
-            <g:Label ui:field="userGroupName" styleName="{res.style.titleLabel}"></g:Label>
-        </g:layer>
-        <g:layer top="12%" height="70%" left="0%" width="85%" >
-            <g:LayoutPanel styleName="{res.style.propertyValue}">
-                <g:layer top="0%" height="100%">
-                    <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+        <g:layer top="5%" height="90%" left="5%" width="90%">
+            <g:LayoutPanel styleName="{res.style.manageUsers}">
+                <g:layer top="0%" height="10%" left="0%" width="50%">
+                    <g:Label styleName="{res.style.titleLabel}">User Management for:</g:Label>
+                </g:layer>
+                <g:layer top="0%" height="10%" left="40%" width="30%">
+                    <g:Label ui:field="userGroupName" styleName="{res.style.titleLabel}"></g:Label>
+                </g:layer>
+                <g:layer top="12%" height="70%" left="0%" width="85%">
+                    <g:LayoutPanel styleName="{res.style.propertyValue}">
+                        <g:layer top="0%" height="100%">
+                            <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                        </g:layer>
+                    </g:LayoutPanel>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="0%" width="20%">
+                    <g:TextBox ui:field="emailTextBox"></g:TextBox>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="25%" width="20%">
+                    <main:PushButtonExt ui:field="newButton">Add user</main:PushButtonExt>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="50%" width="10%">
+                    <main:PushButtonExt ui:field="deleteButton">Delete</main:PushButtonExt>
+                </g:layer>
+                <g:layer bottom="5%" height="40px" left="65%" width="20%">
+                    <main:PushButtonExt ui:field="myUsergroupsButton">My usergroups</main:PushButtonExt>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>
-        <g:layer bottom="5%" height="40px" left="0%" width="20%">
-            <g:TextBox ui:field="emailTextBox"></g:TextBox>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="25%" width="20%">
-            <main:PushButtonExt ui:field="newButton">Add user</main:PushButtonExt>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="50%" width="10%">
-            <main:PushButtonExt ui:field="deleteButton" >Delete</main:PushButtonExt>
-        </g:layer>
-        <g:layer bottom="5%" height="40px" left="65%" width="20%">
-            <main:PushButtonExt ui:field="myUsergroupsButton">My usergroups</main:PushButtonExt>
-        </g:layer>
-    </g:LayoutPanel>
-    </g:layer>
     </g:LayoutPanel>
 </ui:UiBinder> 
