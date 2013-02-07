@@ -22,11 +22,35 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view.api;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
+
+import java.util.Set;
 
 
-public interface TagDetailsActivityFactory {
-    TagDetailsView.TagDetailsPresenter get(TagPlace place);
+public interface TagApprovalView extends IsWidget {
+    void setPresenter(TagApprovalPresenter presenter);
+
+    void setApprovedGroups(Set<UserGroupInfo> approvedGroups);
+
+    void setOtherGroups(Set<UserGroupInfo> approvedGroups);
+
+    void setTagName(String name);
+
+    UserGroupInfo getApprovedSelected();
+
+    UserGroupInfo getOtherSelected();
+
+    interface TagApprovalPresenter extends Activity {
+        void remove();
+
+        void approve();
+
+        void setTagId(String tagId);
+
+        void dashboard();
+    }
 }

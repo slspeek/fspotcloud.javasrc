@@ -38,8 +38,6 @@ import com.googlecode.fspotcloud.client.place.ChangePasswordPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
-import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
-import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Level;
@@ -96,18 +94,18 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
 
                     @Override
                     public void onSuccess(ResetPasswordResult result) {
-                        switch(result.getCode()) {
+                        switch (result.getCode()) {
                             case SUCCESS:
-                             break;
+                                break;
                             case NOT_REGISTERED:
-                            view.setStatusText("Failed. Please register first.");
+                                view.setStatusText("Failed. Please register first.");
                                 break;
                             case NOT_VERIFIED:
-                            view.setStatusText("Failed. Please verify your account first.");
+                                view.setStatusText("Failed. Please verify your account first.");
                                 break;
                             case WRONG_CODE:
-                            view.setStatusText("Failed; you had the wrong code, try it again.");
-                            break;
+                                view.setStatusText("Failed; you had the wrong code, try it again.");
+                                break;
                         }
                     }
                 });

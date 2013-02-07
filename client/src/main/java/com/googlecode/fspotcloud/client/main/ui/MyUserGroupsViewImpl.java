@@ -24,16 +24,13 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,6 +38,8 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.MyUserGroupsView;
+import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.List;
@@ -53,6 +52,7 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
     private MyUserGroupsPresenter presenter;
     private final ListDataProvider<UserGroupInfo> dataProvider;
     private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
+    private final PlaceGoTo placeGoTo;
     @UiField
     CellTable<UserGroupInfo> table;
     @UiField
@@ -67,7 +67,8 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
     PushButtonExt dashboardButton;
 
     @Inject
-    public MyUserGroupsViewImpl() {
+    public MyUserGroupsViewImpl(PlaceGoTo placeGoTo) {
+        this.placeGoTo = placeGoTo;
         initWidget(uiBinder.createAndBindUi(this));
         newButton.ensureDebugId("new-button");
         editButton.ensureDebugId("edit-button");
@@ -95,7 +96,7 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
         TextColumn<UserGroupInfo> publicColumn = new TextColumn<UserGroupInfo>() {
             @Override
             public String getValue(UserGroupInfo object) {
-                return object.isPublic() ? "yes":"no";
+                return object.isPublic() ? "yes" : "no";
             }
         };
         publicColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -135,7 +136,7 @@ public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView 
 
     @UiHandler("dashboardButton")
     public void onDashboardButton(ClickEvent event) {
-        Window.Location.replace("Dashboard.html");
+        placeGoTo.goTo(TagPlace.DEFAULT);
     }
 
     @Override

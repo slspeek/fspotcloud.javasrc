@@ -22,14 +22,14 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view;
+package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsActivityFactory;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsActivityFactory;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 
 import java.util.logging.Level;

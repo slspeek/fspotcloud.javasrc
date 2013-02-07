@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -30,15 +30,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
-import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
-import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
-import com.googlecode.fspotcloud.client.main.ui.TreeViewImpl;
+import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
+import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.HomePlace;
 import com.googlecode.fspotcloud.client.place.MyUserGroupsPlace;

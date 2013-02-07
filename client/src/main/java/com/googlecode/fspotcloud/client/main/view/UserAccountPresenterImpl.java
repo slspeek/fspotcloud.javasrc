@@ -35,7 +35,9 @@ import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
+import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
+import com.googlecode.fspotcloud.shared.main.UserInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Level;

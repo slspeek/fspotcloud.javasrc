@@ -6,7 +6,6 @@ import com.googlecode.fspotcloud.client.useraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;
-import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 

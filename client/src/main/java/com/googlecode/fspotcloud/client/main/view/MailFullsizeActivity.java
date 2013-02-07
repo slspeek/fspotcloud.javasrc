@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -72,18 +71,18 @@ public class MailFullsizeActivity extends AbstractActivity implements MailFullsi
                     @Override
                     public void onSuccess(List<PhotoInfo> result) {
                         if (result.size() > 0) {
-                        PhotoInfo info = result.get(0);
-                        final ImageView.ImagePresenter imagePresenter = imagePresenterFactory.get(
-                                mailFullsizePlace.getTagId(),
-                                info,
-                                imageView,
-                                false);
-                        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                            @Override
-                            public void execute() {
-                                imagePresenter.init();
-                            }
-                        });
+                            PhotoInfo info = result.get(0);
+                            final ImageView.ImagePresenter imagePresenter = imagePresenterFactory.get(
+                                    mailFullsizePlace.getTagId(),
+                                    info,
+                                    imageView,
+                                    false);
+                            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                                @Override
+                                public void execute() {
+                                    imagePresenter.init();
+                                }
+                            });
                         } else {
                             log.info("No photo info");
                         }
@@ -95,19 +94,19 @@ public class MailFullsizeActivity extends AbstractActivity implements MailFullsi
 
     @Override
     public void mailImage() {
-            final String id = mailFullsizePlace.getPhotoId();
-            dispatchAsync.execute(new RequestFullsizeImageAction(id),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            mailFullsizeView.setStatusText("Full size failed on server");
-                        }
+        final String id = mailFullsizePlace.getPhotoId();
+        dispatchAsync.execute(new RequestFullsizeImageAction(id),
+                new AsyncCallback<VoidResult>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        mailFullsizeView.setStatusText("Full size failed on server");
+                    }
 
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            mailFullsizeView.setStatusText("Full size succeed on server, you can await the image. It may take a couple of days.");
-                        }
-                    });
+                    @Override
+                    public void onSuccess(VoidResult result) {
+                        mailFullsizeView.setStatusText("Full size succeed on server, you can await the image. It may take a couple of days.");
+                    }
+                });
     }
 
     @Override

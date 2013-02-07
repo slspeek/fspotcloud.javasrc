@@ -31,7 +31,7 @@ import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 public interface ImagePresenterFactory {
     ImageView.ImagePresenter get(@Assisted
                                  String tagId, @Assisted
-    PhotoInfo info, @Assisted
-    ImageView imageView, @Assisted
-    boolean thumb);
+                                 PhotoInfo info, @Assisted
+                                 ImageView imageView, @Assisted
+                                 boolean thumb);
 }

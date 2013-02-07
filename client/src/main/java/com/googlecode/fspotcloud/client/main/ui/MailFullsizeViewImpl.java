@@ -25,18 +25,18 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
-import com.googlecode.fspotcloud.client.main.view.api.ImageViewFactory;
 import com.googlecode.fspotcloud.client.main.view.api.MailFullsizeView;
-import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
 import com.googlecode.fspotcloud.client.main.view.factory.ImageViewFactoryImpl;
 
 import java.util.logging.Logger;

@@ -22,39 +22,11 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view.api;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.client.place.TagPlace;
 
 
-public interface GlobalActionsView extends IsWidget {
-    void setPresenter(GlobalActionsPresenter presenter);
-
-    HasText getTagCountValue();
-
-    HasText getPhotoCountOnPeerValue();
-
-    HasText getPendingCommandCountValue();
-
-    HasText getLastSeenPeerValue();
-
-    HasEnabled getDeleteAllTagsButton();
-
-    HasEnabled getDeleteAllCommandsButton();
-
-    HasEnabled getUpdateButton();
-
-    boolean confirm(String message);
-
-    interface GlobalActionsPresenter {
-        void init();
-
-        void deleteAllCommands();
-
-        void deleteAllTags();
-
-        void update();
-    }
+public interface TagDetailsActivityFactory {
+    TagDetailsView.TagDetailsPresenter get(TagPlace place);
 }

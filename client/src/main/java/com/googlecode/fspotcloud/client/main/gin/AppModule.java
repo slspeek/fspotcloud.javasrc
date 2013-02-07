@@ -29,40 +29,27 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Singleton;
-import com.googlecode.fspotcloud.client.admin.gin.TagDetailsActivityFactoryImpl;
-import com.googlecode.fspotcloud.client.admin.ui.*;
-import com.googlecode.fspotcloud.client.admin.view.AdminTreePresenterImpl;
-import com.googlecode.fspotcloud.client.admin.view.DashboardPresenterImpl;
-import com.googlecode.fspotcloud.client.admin.view.TagApprovalPresenterImpl;
-import com.googlecode.fspotcloud.client.admin.view.TagDetailsActivityMapper;
-import com.googlecode.fspotcloud.client.admin.view.api.*;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
-import com.googlecode.fspotcloud.client.data.GetTagTreeMemoProc;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
 import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.client.main.view.factory.SingleImageViewProvider;
-import com.googlecode.fspotcloud.client.main.view.factory.SlideshowActivityFactoryImpl;
-import com.googlecode.fspotcloud.client.main.view.factory.SlideshowDelayPresenterFactoryImpl;
-import com.googlecode.fspotcloud.client.main.view.factory.TagPresenterFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
 
-        install(new GinMvpModule(MainWindowActivityMapper.class,  HomePlace.class,MvpDisplay.class, MainPlaceHistoryMapper.class));
+        install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
         bind(HomeView.class).to(HomeViewImpl.class);
         bind(HomeView.HomePresenter.class).to(HomeActivity.class);
         bind(ImageView.class).annotatedWith(SingleImageView.class).toProvider(SingleImageViewProvider.class).in(Singleton.class);
@@ -146,12 +133,13 @@ public class AppModule extends AbstractGinModule {
                 .in(Singleton.class);
         bind(TreeView.TreePresenter.class).annotatedWith(AdminTreeView.class).to(AdminTreePresenterImpl.class)
                 .in(Singleton.class);
-        bind(TreeView.class).annotatedWith(AdminTreeView.class).to(TreeViewImpl.class);
-        bind(TreeView.class).annotatedWith(BasicTreeView.class).to(TreeViewImpl.class);
+        bind(TreeView.class).annotatedWith(AdminTreeView.class).to(TreeViewImpl.class).in(Singleton.class);
+        bind(TreeView.class).annotatedWith(BasicTreeView.class).to(TreeViewImpl.class).in(Singleton.class);
         bind(TreeView.TreePresenter.class).annotatedWith(BasicTreeView.class).to(TreePresenterImpl.class)
                 .in(Singleton.class);
 
-        bind(TagApprovalView.class).to(TagApprovalViewImpl.class).in(Singleton.class);;
+        bind(TagApprovalView.class).to(TagApprovalViewImpl.class).in(Singleton.class);
+        ;
         bind(TagApprovalView.TagApprovalPresenter.class)
                 .to(TagApprovalPresenterImpl.class);
     }

@@ -36,7 +36,9 @@ public class LoginPlace extends Place {
 
     final private String nextUrl;
 
-    public LoginPlace() {this("");}
+    public LoginPlace() {
+        this("");
+    }
 
     public LoginPlace(String nextUrl) {
         this.nextUrl = nextUrl;

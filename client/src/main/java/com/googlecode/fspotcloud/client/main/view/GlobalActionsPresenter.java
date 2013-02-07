@@ -22,11 +22,11 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view;
+package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.shared.dashboard.*;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -120,6 +120,11 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
         globalActionsView.setPresenter(this);
         log.info("init");
         getMetaData();
+    }
+
+    @Override
+    public void stop() {
+        timer.cancel();
     }
 
     private void getMetaData() {

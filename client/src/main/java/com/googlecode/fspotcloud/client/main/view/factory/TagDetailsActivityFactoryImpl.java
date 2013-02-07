@@ -22,14 +22,14 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.gin;
+package com.googlecode.fspotcloud.client.main.view.factory;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.view.TagDetailsActivity;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsActivityFactory;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.admin.view.api.TagDetailsView.TagDetailsPresenter;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.main.view.TagDetailsActivity;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsActivityFactory;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView.TagDetailsPresenter;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import net.customware.gwt.dispatch.client.DispatchAsync;

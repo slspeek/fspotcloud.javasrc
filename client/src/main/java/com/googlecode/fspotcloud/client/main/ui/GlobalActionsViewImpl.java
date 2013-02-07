@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,8 +31,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import com.googlecode.fspotcloud.client.admin.view.api.GlobalActionsView;
-import com.googlecode.fspotcloud.client.main.ui.PushButtonExt;
+import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
 
 
 public class GlobalActionsViewImpl extends Composite

@@ -31,7 +31,6 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 import junit.framework.TestCase;
 
 import javax.inject.Provider;
-import java.util.List;
 
 
 public class TagTreeModelTest extends TestCase {

@@ -27,7 +27,6 @@ package com.googlecode.fspotcloud.client.main.ui;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.TextResource;
 
 
 public interface HomeResources extends ClientBundle {
@@ -40,7 +39,9 @@ public interface HomeResources extends ClientBundle {
 
     public interface Style extends CssResource {
         String page();
+
         String welcome();
+
         String waiting();
     }
 }

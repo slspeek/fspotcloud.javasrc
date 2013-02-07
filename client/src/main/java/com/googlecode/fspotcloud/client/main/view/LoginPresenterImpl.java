@@ -26,8 +26,6 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -170,7 +168,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {
                                 placeGoTo.goTo(nextUrl);
-                            }  else {
+                            } else {
                                 placeGoTo.goTo(new UserAccountPlace());
                             }
                             treePresenter.reloadTree();

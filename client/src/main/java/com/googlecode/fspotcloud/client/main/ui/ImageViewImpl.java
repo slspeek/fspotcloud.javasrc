@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -134,7 +133,7 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @Override
     public void adjustSize() {
-        log.log(Level.FINE,"Called adjust size");
+        log.log(Level.FINE, "Called adjust size");
         onResize();
     }
 

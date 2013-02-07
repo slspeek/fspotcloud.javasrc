@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.client.place;
 
 import com.google.common.base.Objects;
-import com.google.common.hash.HashCode;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 

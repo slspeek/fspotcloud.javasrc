@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.client.useraction.application;
 
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;

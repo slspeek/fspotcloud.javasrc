@@ -2,13 +2,14 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
-    <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.AdminResources" field="res"></ui:with>
     <g:HTMLPanel>
         <table style="{res.style.labelDetails}">
             <theader>
                 <tr>
                     <td colspan="2">
-                        <g:Label styleName="{res.style.headerLabel}" ui:field="headerLabel">Instance information</g:Label>
+                        <g:Label styleName="{res.style.headerLabel}" ui:field="headerLabel">Instance information
+                        </g:Label>
                     </td>
                 </tr>
             </theader>
@@ -36,7 +37,8 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of photos on the peer</g:Label>
                     </td>
                     <td>
-                        <g:Label ui:field="peerPhotoCountValueLabel" styleName="{res.style.propertyNumberValue}"></g:Label>
+                        <g:Label ui:field="peerPhotoCountValueLabel"
+                                 styleName="{res.style.propertyNumberValue}"></g:Label>
                     </td>
                 </tr>
                 <tr>
@@ -44,7 +46,8 @@
                         <g:Label styleName="{res.style.propertyLabel}">Tag count on peer</g:Label>
                     </td>
                     <td>
-                        <g:Label styleName="{res.style.propertyNumberValue}" ui:field="tagCountOnPeerValueLabel"></g:Label>
+                        <g:Label styleName="{res.style.propertyNumberValue}"
+                                 ui:field="tagCountOnPeerValueLabel"></g:Label>
                     </td>
                 </tr>
 
@@ -53,7 +56,8 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of commands pending</g:Label>
                     </td>
                     <td>
-                        <g:Label ui:field="pendingCommandCountValueLabel" styleName="{res.style.propertyNumberValue}"></g:Label>
+                        <g:Label ui:field="pendingCommandCountValueLabel"
+                                 styleName="{res.style.propertyNumberValue}"></g:Label>
                     </td>
                 </tr>
                 <tr>

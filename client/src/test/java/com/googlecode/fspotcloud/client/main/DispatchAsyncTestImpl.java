@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.client.main;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
@@ -36,7 +35,6 @@ import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;
 
 import java.util.Date;
-import java.util.List;
 
 
 public class DispatchAsyncTestImpl implements DispatchAsync {

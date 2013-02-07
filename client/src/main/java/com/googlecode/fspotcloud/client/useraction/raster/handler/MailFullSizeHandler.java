@@ -35,7 +35,7 @@ public class MailFullSizeHandler implements IActionHandler {
         clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
-               log.log(Level.INFO, "client login manager return an error", caught);
+                log.log(Level.INFO, "client login manager return an error", caught);
             }
 
             @Override

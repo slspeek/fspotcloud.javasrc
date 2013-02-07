@@ -37,6 +37,7 @@
 
 .propertyLabel {
     background: #66BDFF;
+    text-align: left;
     font-size: 13pt;
     font-weight: normal;
     padding-top: verticalPropertyPadding;
@@ -53,6 +54,7 @@
 .propertyValue {
     background: #70C7FF;
     font-size: 13pt;
+    text-align: left;
     font-weight: normal;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
@@ -68,13 +70,13 @@
 }
 
 .labelDetails {
-    border: 1px solid blue;
-    float: left;
+    padding: 2px;
+
 }
 
 .globalActions {
-    float: right;
-    border: 1px solid blue;
+    padding: 2px;
+
 }
 
 .editUsergroup {

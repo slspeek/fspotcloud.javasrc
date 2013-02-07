@@ -24,19 +24,15 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
-import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.view.api.ImagePresenterFactory;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
@@ -64,8 +60,8 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
 
     @Inject
     public ImageRasterPresenterImpl(@Assisted
-                                        BasePlace place, @Assisted
-    ImageRasterView imageRasterView,
+                                    BasePlace place, @Assisted
+                                    ImageRasterView imageRasterView,
                                     Navigator navigator,
                                     ImagePresenterFactory imagePresenterFactory,
                                     PlaceGoTo placeGoTo) {

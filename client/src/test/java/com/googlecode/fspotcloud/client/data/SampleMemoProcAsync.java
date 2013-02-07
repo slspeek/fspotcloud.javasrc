@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.logging.Logger;
 
-public class SampleMemoProcAsync extends MemoProcAsync<String>{
+public class SampleMemoProcAsync extends MemoProcAsync<String> {
 
     private int callCount = 0;
     private AsyncCallback<String> callback;

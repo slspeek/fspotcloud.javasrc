@@ -11,14 +11,12 @@ import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.EmailConfirmationAction;
 import net.customware.gwt.dispatch.client.DispatchAsync;
-import net.customware.gwt.dispatch.shared.AbstractSimpleResult;
 
 public class EmailConfirmationActivity extends AbstractActivity implements EmailConfirmationView.EmailConfirmationPresenter {
 
     private final EmailConfirmationView emailConfirmationView;
     private final DispatchAsync dispatchAsync;
     private final PlaceWhere placeWhere;
-
 
 
     @Inject

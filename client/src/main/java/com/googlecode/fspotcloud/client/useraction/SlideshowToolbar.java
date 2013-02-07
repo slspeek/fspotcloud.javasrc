@@ -23,6 +23,7 @@
  */
 
 package com.googlecode.fspotcloud.client.useraction;
+
 import com.google.inject.BindingAnnotation;
 
 import java.lang.annotation.Retention;

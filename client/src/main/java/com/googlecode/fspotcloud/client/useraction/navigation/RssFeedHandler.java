@@ -8,13 +8,14 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.logging.Logger;
 
-public class RssFeedHandler implements IActionHandler{
+public class RssFeedHandler implements IActionHandler {
 
-    private final Logger log= Logger.getLogger(RssFeedHandler.class.getName());
+    private final Logger log = Logger.getLogger(RssFeedHandler.class.getName());
     @Inject
     private PlaceWhere placeWhere;
     @Inject
     private LoadNewLocation loader;
+
     @Override
     public void performAction(String actionId) {
         BasePlace basePlace = placeWhere.where();

@@ -29,13 +29,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.SendConfirmationView;
 import com.googlecode.fspotcloud.client.main.view.api.SendResetPasswordView;
-import com.googlecode.fspotcloud.client.place.SendResetPasswordPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
-import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -78,7 +73,7 @@ public class SendPasswordResetActivity extends AbstractActivity implements SendR
 
             @Override
             public void onSuccess(SendPasswordResetResult result) {
-                switch(result.getCode()) {
+                switch (result.getCode()) {
                     case SUCCESS:
                         view.setStatusText("Success. Check your email.");
                         break;

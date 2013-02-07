@@ -27,20 +27,13 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.shared.dashboard.GetAdminTagTreeAction;
-import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static com.google.common.collect.Lists.newArrayList;
-
-
-
 
 import static com.google.common.collect.Maps.newHashMap;
 

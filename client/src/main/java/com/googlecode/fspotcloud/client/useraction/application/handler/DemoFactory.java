@@ -26,12 +26,12 @@ public class DemoFactory {
         this.rasterActions = rasterActions;
     }
 
-   public IActionHandler getDemo() {
+    public IActionHandler getDemo() {
         DemoBuilder builder = demoBuilderFactory.get(applicationActions.demo);
         builder.addStep(navigationActions.home, 3000);
         builder.addStep(rasterActions.toggle_tabular_view, 4000);
         builder.addStep(navigationActions.next, 3000);
-        builder.addStep(rasterActions.toggle_tabular_view,  3000);
+        builder.addStep(rasterActions.toggle_tabular_view, 3000);
         builder.addStep(navigationActions.page_down, 3000);
         return builder.getDemo();
     }
