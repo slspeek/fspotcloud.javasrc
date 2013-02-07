@@ -68,7 +68,7 @@ public class SlideshowViewImpl extends Composite implements SlideshowView,
 
     @UiFactory
     public ActionToolbar getButtonPanelView() {
-        return  actionToolbar;
+        return actionToolbar;
     }
 
     @UiFactory

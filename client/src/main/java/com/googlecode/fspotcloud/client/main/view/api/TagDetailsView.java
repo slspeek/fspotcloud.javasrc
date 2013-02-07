@@ -22,21 +22,36 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view.api;
+package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.HasEnabled;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.client.place.TagPlace;
 
 
-public interface DashboardView extends IsWidget {
-    GlobalActionsView getGlobalActionsView();
+public interface TagDetailsView extends IsWidget {
+    HasEnabled getImportButton();
 
-    TagDetailsView getTagDetailsView();
+    HasText getImportButtonText();
 
-    interface DashboardPresenter extends Activity {
+    HasText getTagNameValue();
+
+    HasText getTagDescriptionValue();
+
+    HasText getTagImportIssuedValue();
+
+    HasText getTagLoadedImagesCountValue();
+
+    HasText getTagImageCountValue();
+
+    void setPresenter(TagDetailsPresenter presenter);
+
+    interface TagDetailsPresenter extends Activity {
+        void importTag();
+
+        void manageAccess();
+
         void init();
-
-        DashboardPresenter withPlace(TagPlace place);
     }
 }

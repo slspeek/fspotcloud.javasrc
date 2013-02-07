@@ -1,27 +1,26 @@
 package com.googlecode.fspotcloud.client.useraction.raster;
 
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;
 
 public class RasterActions {
 
-    private  final Resources RESOURCES;
-    private  final SetRasterActionFactory setRasterActionFactory;
+    private final Resources RESOURCES;
+    private final SetRasterActionFactory setRasterActionFactory;
 
-    public  final ActionDef add_column;
-    public  final ActionDef add_row;
-    public  final ActionDef remove_column;
-    public  final ActionDef remove_row;
-    public  final ActionDef set_default_raster;
-    public  final ActionDef toggle_tabular_view;
-    public  final ActionDef set_raster_2x2;
-    public  final ActionDef set_raster_3x3;
-    public  final ActionDef set_raster_4x4;
-    public  final ActionDef set_raster_5x5;
-    public  final ActionDef set_raster_6x6;
-    public  final ActionDef mail_fullsize;
+    public final ActionDef add_column;
+    public final ActionDef add_row;
+    public final ActionDef remove_column;
+    public final ActionDef remove_row;
+    public final ActionDef set_default_raster;
+    public final ActionDef toggle_tabular_view;
+    public final ActionDef set_raster_2x2;
+    public final ActionDef set_raster_3x3;
+    public final ActionDef set_raster_4x4;
+    public final ActionDef set_raster_5x5;
+    public final ActionDef set_raster_6x6;
+    public final ActionDef mail_fullsize;
 
     @Inject
     public RasterActions(Resources resources, SetRasterActionFactory setRasterActionFactory) {

@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.view;
+package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
@@ -30,7 +30,6 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
-import com.googlecode.fspotcloud.client.main.view.TagCell;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Logger;

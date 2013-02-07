@@ -35,6 +35,7 @@ import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -328,10 +329,26 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void goToLatestTag() {
+        goToLatestTag(new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                log.log(Level.WARNING, "goToLatestTag failed because: ", caught);
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                //no op
+            }
+        });
+    }
+
+    @Override
+    public void goToLatestTag(final AsyncCallback<String> report) {
         dataManager.getTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
-                // TODO Auto-generated method stub
+                log.log(Level.WARNING, "goToLatestTag failed because: ", caught);
+                report.onFailure(caught);
             }
 
             @Override
@@ -358,10 +375,33 @@ public class NavigatorImpl implements Navigator {
                 }
                 if (latestNode != null) {
                     goToTag(latestNode.getId(), latestNode.getCachedPhotoList());
+                    report.onSuccess("Success");
 
                 } else {
-                    placeGoTo.goTo(new LoginPlace());
-                    log.info("No tags public");
+                    handleNoTagsPublic(report);
+                }
+            }
+        });
+    }
+
+    private void handleNoTagsPublic(final AsyncCallback<String> report) {
+        clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                log.log(Level.WARNING, "No user info because: ", caught);
+                report.onFailure(caught);
+            }
+
+            @Override
+            public void onSuccess(UserInfo result) {
+                if (result.isAdmin()) {
+                    placeGoTo.goTo(TagPlace.DEFAULT);
+                    report.onSuccess("To dashboard");
+                } else if (!result.isLoggedIn()) {
+                    clientLoginManager.redirectToLogin();
+                    report.onSuccess("Redirect to login");
+                } else {
+                    report.onSuccess("Sorry no public labels to view yet");
                 }
             }
         });

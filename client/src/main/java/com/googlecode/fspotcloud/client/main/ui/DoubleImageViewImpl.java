@@ -60,7 +60,7 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
     protected final Resources resources;
     private final FadeAnimationResources fadeAnimationResources;
     private final AnimationStyle animationStyle;
-            
+
 
     @Inject
     public DoubleImageViewImpl(TimerInterface timer, Resources resources, FadeAnimationResources fadeAnimationResources) {
@@ -126,7 +126,7 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
 
     @Override
     public void addAnimationStyles() {
-         image.addStyleName(animationStyle.imageIn());
+        image.addStyleName(animationStyle.imageIn());
         previousImage.addStyleName(animationStyle.imageOut());
     }
 
@@ -151,7 +151,7 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
 
     @Override
     public void adjustSize() {
-        log.log(Level.FINE,"Called adjust size");
+        log.log(Level.FINE, "Called adjust size");
         onResize();
     }
 

@@ -22,15 +22,41 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.gin;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
-import com.googlecode.fspotcloud.client.admin.MVPSetup;
-import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
+import com.google.gwt.user.client.ui.HasEnabled;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.IsWidget;
 
 
-@GinModules({AdminModule.class, StandardDispatchModule.class})
-public interface AdminGinjector extends Ginjector {
-    MVPSetup getMVPSetup();
+public interface GlobalActionsView extends IsWidget {
+    void setPresenter(GlobalActionsPresenter presenter);
+
+    HasText getTagCountValue();
+
+    HasText getPhotoCountOnPeerValue();
+
+    HasText getPendingCommandCountValue();
+
+    HasText getLastSeenPeerValue();
+
+    HasEnabled getDeleteAllTagsButton();
+
+    HasEnabled getDeleteAllCommandsButton();
+
+    HasEnabled getUpdateButton();
+
+    boolean confirm(String message);
+
+    interface GlobalActionsPresenter {
+        void init();
+
+        void deleteAllCommands();
+
+        void deleteAllTags();
+
+        void update();
+
+        void stop();
+    }
 }

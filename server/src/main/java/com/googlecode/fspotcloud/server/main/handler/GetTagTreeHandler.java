@@ -40,6 +40,7 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -90,8 +91,12 @@ public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, Tag
             TreeBuilder builder = new TreeBuilder(tags);
             TagNode tree = builder.getPublicTree();
             p.setCachedTagTree(tree);
-            log.info("Builded, about to save");
-            peerDatabaseDao.save(p);
+            try {
+                log.info("Builded, about to save");
+                peerDatabaseDao.save(p);
+            } catch (Exception e) {
+                log.log(Level.INFO, "Saving peerDatabase with basic-tree failed: ", e);
+            }
 
             return tree;
         }

@@ -29,8 +29,6 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
-import com.googlecode.fspotcloud.client.admin.view.api.TagApprovalView;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -107,7 +105,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         storeCurrentRasterDimension(place);
 
         Activity activity = null;
-         if (place instanceof TagApprovalPlace) {
+        if (place instanceof TagApprovalPlace) {
             approvalPresenter.setTagId(((TagApprovalPlace) place).getTagId());
             modeController.setMode(Modes.LOGIN);
             return approvalPresenter;
@@ -157,10 +155,10 @@ public class MainWindowActivityMapper implements ActivityMapper {
             BasePlace basePlace = (BasePlace) place;
             activity = tagPresenterFactory.get(basePlace);
             modeController.setMode(Modes.TAG_VIEW);
-        } else  if (place instanceof TagPlace) {
-                modeController.setMode(Modes.LOGIN);
+        } else if (place instanceof TagPlace) {
+            modeController.setMode(Modes.LOGIN);
 
-                return dashboardPresenter.withPlace((TagPlace) place);
+            return dashboardPresenter.withPlace((TagPlace) place);
 
         } else {
             log.warning("getActivity will return null for:" + place);

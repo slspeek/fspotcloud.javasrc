@@ -24,18 +24,15 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.aria.client.ToolbarRole;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.EmailConfirmationView;
-import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
 import com.googlecode.fspotcloud.client.useraction.EmailConfirmationToolbar;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
@@ -47,6 +44,7 @@ public class EmailConfirmationViewImpl extends Composite implements EmailConfirm
 
     interface EmailConfirmationViewImplUiBinder extends UiBinder<Widget, EmailConfirmationViewImpl> {
     }
+
     private static final EmailConfirmationViewImplUiBinder uiBinder = GWT.create(EmailConfirmationViewImplUiBinder.class);
 
     private final ActionToolbar actionToolbar;
@@ -61,7 +59,8 @@ public class EmailConfirmationViewImpl extends Composite implements EmailConfirm
         statusLabel.ensureDebugId("status");
     }
 
-    @UiFactory ActionToolbar getToolbar() {
+    @UiFactory
+    ActionToolbar getToolbar() {
         return actionToolbar;
     }
 

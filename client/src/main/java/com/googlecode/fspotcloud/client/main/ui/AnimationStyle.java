@@ -24,16 +24,13 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.TextResource;
 
 
 public interface AnimationStyle extends CssResource {
 
 
-        String imageIn();
+    String imageIn();
 
-        String imageOut();
+    String imageOut();
 }

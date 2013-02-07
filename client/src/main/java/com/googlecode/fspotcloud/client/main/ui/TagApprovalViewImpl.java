@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.admin.view.api.TagApprovalView;
+import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.List;

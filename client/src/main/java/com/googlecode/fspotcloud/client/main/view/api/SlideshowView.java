@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.client.main.ui.DoubleImageViewImpl;
 
 
 public interface SlideshowView extends IsWidget {

@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
-    <ui:with type="com.googlecode.fspotcloud.client.admin.ui.AdminResources" field="res"></ui:with>
+    <ui:with type="com.googlecode.fspotcloud.client.main.ui.AdminResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.editUsergroup}">
         <g:layer top="5%" height="6%" left="10%" width="80%">
             <g:Label styleName="{res.style.titleLabel}">Edit user group</g:Label>
@@ -20,7 +20,8 @@
             <g:TextBox ui:field="descriptionTextBox" styleName="{res.style.propertyInput}"></g:TextBox>
         </g:layer>
         <g:layer top="35%" height="5%" left="40%" width="40%">
-            <g:CheckBox ui:field="publicCheckBox" styleName="{res.style.propertyLabel}">Viewable for everybody</g:CheckBox>
+            <g:CheckBox ui:field="publicCheckBox" styleName="{res.style.propertyLabel}">Viewable for everybody
+            </g:CheckBox>
         </g:layer>
         <g:layer top="45%" height="5%" left="10%" width="80%">
             <g:Label ui:field="statusLabel" styleName="{res.style.propertyValue}">Status</g:Label>

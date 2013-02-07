@@ -1,20 +1,19 @@
 package com.googlecode.fspotcloud.client.useraction.slideshow;
 
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.ActionDef;
 
 public class SlideshowActions {
 
-    private  final Resources RESOURCES;
+    private final Resources RESOURCES;
 
 
-    public  final ActionDef slideshow_start;
-    public  final ActionDef slideshow_stop;
-    public  final ActionDef slideshow_pause;
-    public  final ActionDef slideshow_slower;
-    public  final ActionDef slideshow_faster;
+    public final ActionDef slideshow_start;
+    public final ActionDef slideshow_stop;
+    public final ActionDef slideshow_pause;
+    public final ActionDef slideshow_slower;
+    public final ActionDef slideshow_faster;
 
     @Inject
     public SlideshowActions(Resources resources) {

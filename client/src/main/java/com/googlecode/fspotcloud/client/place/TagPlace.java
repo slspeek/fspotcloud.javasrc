@@ -29,6 +29,9 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class TagPlace extends Place {
+
+    public static TagPlace DEFAULT = new TagPlace("0");
+
     private final String tagId;
 
     public TagPlace(String tagId) {

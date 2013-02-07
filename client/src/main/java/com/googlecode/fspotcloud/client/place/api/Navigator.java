@@ -55,6 +55,8 @@ public interface Navigator {
 
     void goToLatestTag();
 
+    void goToLatestTag(AsyncCallback<String> report);
+
     void setRasterWidth(int width);
 
     void setRasterHeight(int height);

@@ -26,13 +26,11 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.HomeView;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 
 import java.util.logging.Logger;
@@ -54,6 +52,16 @@ public class HomeActivity extends AbstractActivity implements HomeView.HomePrese
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
         containerWidget.setWidget(homeView);
-        navigator.goToLatestTag();
+        navigator.goToLatestTag(new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                homeView.setStatusText(result);
+            }
+        });
     }
 }

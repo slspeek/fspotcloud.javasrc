@@ -22,23 +22,17 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.admin.ui;
+package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.web.bindery.event.shared.HandlerRegistration;
-import com.googlecode.fspotcloud.client.admin.view.TagDetailsActivityMapper;
-import com.googlecode.fspotcloud.client.admin.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.main.gin.Raw;
-import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
-import com.googlecode.fspotcloud.client.place.MainPlaceHistoryMapper;
+import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
 
-import javax.swing.text.ViewFactory;
 import java.util.logging.Logger;
 
 
@@ -49,7 +43,7 @@ public class DashboardViewFactory implements Provider<DashboardView> {
 
     @Inject
     public DashboardViewFactory(EventBus eventBus, @Raw DashboardView dashboardView
-                                ) {
+    ) {
         this.eventBus = eventBus;
         this.dashboardView = dashboardView;
         //register(detailsMapper, dashboardView.getTagDetailsContainer());
