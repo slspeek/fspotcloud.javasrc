@@ -172,13 +172,9 @@ public interface Resources extends ClientBundle {
     public interface Style extends CssResource {
         String slideshow();
 
-        String footerBlock();
+
 
         String image();
-
-        String imageIn();
-
-        String imageOut();
 
         String tagView();
 
@@ -192,21 +188,11 @@ public interface Resources extends ClientBundle {
 
         String userInfoLabel();
 
-        String helpCategory();
 
-        String helpDescription();
-
-        String helpKey();
-
-        String helpPopup();
-
-        String helpSeparator();
-
-        String helpTitle();
 
         String pagerLabel();
 
-        String buttonPanelBlock();
+
 
         String selectedImage();
 

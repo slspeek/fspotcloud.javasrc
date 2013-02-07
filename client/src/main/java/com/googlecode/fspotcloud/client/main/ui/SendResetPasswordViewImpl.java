@@ -45,9 +45,9 @@ public class SendResetPasswordViewImpl extends Composite implements SendResetPas
     @UiField
     Label statusLabel;
     @UiField
-    PushButton send;
+    BigPushButton  send;
     @UiField
-    PushButton cancel;
+    BigPushButton  cancel;
 
     @Inject
     public SendResetPasswordViewImpl() {

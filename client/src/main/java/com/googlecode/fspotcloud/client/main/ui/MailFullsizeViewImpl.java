@@ -50,9 +50,9 @@ public class MailFullsizeViewImpl extends Composite implements MailFullsizeView 
     @UiField
     Label statusLabel;
     @UiField
-    PushButton mail;
+    BigPushButton  mail;
     @UiField
-    PushButton cancel;
+    BigPushButton  cancel;
 
     @Inject
     public MailFullsizeViewImpl(ImageViewFactoryImpl imageViewFactory) {

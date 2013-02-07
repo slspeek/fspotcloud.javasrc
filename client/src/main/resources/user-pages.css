@@ -2,17 +2,25 @@
 
 
 @def ligherColor  Black;
-@def treeColor Silver;
-@def thirdColor #504A4B; /**#342826;*/
-/**@def thirdColor #0C0000; /**#342826;*/
-
+@def allMostBlack  #464646;
+@def allMostWhite  #E6E6E6;
+@def thirdColor #504A4B;
 
  .textBox {
      background:ligherColor;
      color: foregroundColor;
      font-size: 190%;
-     border-color: treeColor;
+
  }
+
+ .textBox:focus {
+      background: allMostBlack;
+      color: white;
+      font-size: 190%;
+      border-style: ridge;
+      border-width: 2px;
+      border-color: allMostWhite;
+  }
 
  .anchor {
      color: grey;
@@ -39,18 +47,9 @@
      color: foregroundColor;
  }
 
- .button {
-    font-size: 200%;
-    text-align:center;
-    color: #504A4B;
-
-
- }
-
  .titleLabel {
     background: thirdColor;
     font-type: bold;
     font-size: 250%;
     color: foregroundColor;
-
  }
