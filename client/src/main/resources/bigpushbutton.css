@@ -1,0 +1,12 @@
+.button {
+    font-size: 200%;
+    text-align: center;
+    color: #504A4B;
+ }
+
+.button:focus {
+    color: black;
+    border-style: ridge;
+    border-width: 3px;
+    border-color: #E6E6E6;
+}

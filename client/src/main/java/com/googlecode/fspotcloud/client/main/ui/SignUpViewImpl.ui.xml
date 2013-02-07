@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.UserPagesResources" field="res"></ui:with>
     <g:LayoutPanel addStyleNames="{res.style.userPage}">
         <g:layer top="5%" height="90%" width="92%" left="4%">
@@ -33,10 +34,10 @@
                     </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="12%" left="0%" width="20%">
-                    <g:PushButton ui:field="signUp" addStyleNames="{res.style.button}">SignUp</g:PushButton>
+                    <main:BigPushButton ui:field="signUp" >SignUp</main:BigPushButton>
                 </g:layer>
                 <g:layer bottom="0%" height="12%" right="0%" width="20%">
-                    <g:PushButton ui:field="cancel" addStyleNames="{res.style.button}">Cancel</g:PushButton>
+                    <main:BigPushButton ui:field="cancel" >Cancel</main:BigPushButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>

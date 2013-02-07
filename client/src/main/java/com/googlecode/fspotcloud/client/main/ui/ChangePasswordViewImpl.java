@@ -47,9 +47,9 @@ public class ChangePasswordViewImpl extends Composite implements ChangePasswordV
     @UiField
     Label statusLabel;
     @UiField
-    PushButton change;
+    BigPushButton  change;
     @UiField
-    PushButton cancel;
+    BigPushButton  cancel;
 
     @Inject
     public ChangePasswordViewImpl() {

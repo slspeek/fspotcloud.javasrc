@@ -18,10 +18,10 @@
                     </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="9%" left="0%" width="30%">
-                    <g:PushButton ui:field="mail" addStyleNames="{res.style.button}">Mail image</g:PushButton>
+                    <main:BigPushButton ui:field="mail">Mail image</main:BigPushButton>
                 </g:layer>
                 <g:layer bottom="0%" height="9%" right="0%" width="30%">
-                    <g:PushButton ui:field="cancel" addStyleNames="{res.style.button}">Cancel</g:PushButton>
+                    <main:BigPushButton ui:field="cancel">Cancel</main:BigPushButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>
