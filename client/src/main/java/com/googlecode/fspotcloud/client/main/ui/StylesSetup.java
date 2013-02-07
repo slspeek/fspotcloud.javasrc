@@ -10,6 +10,7 @@ public class StylesSetup {
     private final AdminResources adminResources; //necessary
     private final HomeResources homeResources;
     private final PushButtonResources pushButtonResources;
+    private final BigPushButtonResources bigPushButtonResources;
 
     @Inject
     public StylesSetup(Resources resources,
@@ -17,13 +18,15 @@ public class StylesSetup {
                        FadeAnimationResources fadeAnimationResources,
                        AdminResources adminResources,
                        HomeResources homeResources,
-                       PushButtonResources pushButtonResources) {
+                       PushButtonResources pushButtonResources,
+                       BigPushButtonResources bigPushButtonResources) {
         this.resources = resources;
         this.userPagesResources = userPagesResources;
         this.fadeAnimationResources = fadeAnimationResources;
         this.adminResources = adminResources;
         this.homeResources = homeResources;
         this.pushButtonResources = pushButtonResources;
+        this.bigPushButtonResources = bigPushButtonResources;
     }
 
     public void injectStyles() {
@@ -33,6 +36,7 @@ public class StylesSetup {
         adminResources.style().ensureInjected();
         homeResources.style().ensureInjected();
         pushButtonResources.style().ensureInjected();
+        bigPushButtonResources.style().ensureInjected();
     }
 
 

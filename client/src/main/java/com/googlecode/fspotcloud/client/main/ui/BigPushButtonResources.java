@@ -28,21 +28,13 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 
-public interface UserPagesResources extends ClientBundle {
-    @Source("user-pages.css")
+public interface BigPushButtonResources extends ClientBundle {
+
+    @Source("bigpushbutton.css")
     Style style();
 
+
     public interface Style extends CssResource {
-        String textBox();
-
-        String anchor();
-
-        String label();
-
-        String statusLabel();
-
-        String titleLabel();
-
-        String userPage();
+        String button();
     }
 }

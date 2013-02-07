@@ -45,9 +45,9 @@ public class SendConfirmationViewImpl extends Composite implements SendConfirmat
     @UiField
     Label statusLabel;
     @UiField
-    PushButton send;
+    BigPushButton  send;
     @UiField
-    PushButton cancel;
+    BigPushButton  cancel;
 
     @Inject
     public SendConfirmationViewImpl() {

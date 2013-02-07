@@ -54,9 +54,9 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
     @UiField
     Label statusLabel;
     @UiField
-    PushButton save;
+    BigPushButton  save;
     @UiField
-    PushButton cancel;
+    BigPushButton  cancel;
 
     @Inject
     public UserAccountViewImpl() {

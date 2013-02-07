@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.UserPagesResources" field="res"></ui:with>
     <g:LayoutPanel styleName="{res.style.userPage}">
         <g:layer top="1%" height="49%" width="92%" left="4%">
@@ -9,19 +10,18 @@
                     <g:Label addStyleNames="{res.style.titleLabel}">User profile</g:Label>
                 </g:layer>
                 <g:layer top="17%" height="15%" left="0%" width="30%">
-                    <g:Label>Email</g:Label>
+                    <g:Label addStyleNames="{res.style.label}">Email</g:Label>
                 </g:layer>
                 <g:layer top="17%" height="15%" left="45%" width="40%">
-                    <g:Label ui:field="emailValueLabel"></g:Label>
+                    <g:Label ui:field="emailValueLabel" ></g:Label>
                 </g:layer>
                 <g:layer top="35%" height="15%" left="0%" width="30%">
-                    <g:Label>Last login</g:Label>
+                    <g:Label addStyleNames="{res.style.label}">Last login</g:Label>
                 </g:layer>
                 <g:layer top="35%" height="15%" left="45%" width="40%">
                     <g:Label ui:field="lastLoginValueLabel"></g:Label>
                 </g:layer>
             </g:LayoutPanel>
-
         </g:layer>
         <g:layer bottom="1%" height="49%" width="92%" left="4%">
             <g:LayoutPanel>
@@ -51,10 +51,10 @@
                     </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="16%" left="0%" width="40%">
-                    <g:PushButton ui:field="save" addStyleNames="{res.style.button}">Change password</g:PushButton>
+                    <main:BigPushButton ui:field="save" >Change password</main:BigPushButton>
                 </g:layer>
                 <g:layer bottom="0%" height="16%" right="0%" width="35%">
-                    <g:PushButton ui:field="cancel" addStyleNames="{res.style.button}">Main Page</g:PushButton>
+                    <main:BigPushButton ui:field="cancel">Main Page</main:BigPushButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>
