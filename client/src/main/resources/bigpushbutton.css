@@ -6,7 +6,7 @@
 
 .button:focus {
     color: black;
-    border-style: ridge;
-    border-width: 3px;
-    border-color: #E6E6E6;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
 }

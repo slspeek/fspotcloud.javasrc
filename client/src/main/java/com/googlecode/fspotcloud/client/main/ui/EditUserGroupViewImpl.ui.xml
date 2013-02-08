@@ -20,7 +20,7 @@
             <g:TextBox ui:field="descriptionTextBox" styleName="{res.style.propertyInput}"></g:TextBox>
         </g:layer>
         <g:layer top="35%" height="5%" left="40%" width="40%">
-            <g:CheckBox ui:field="publicCheckBox" styleName="{res.style.propertyLabel}">Viewable for everybody
+            <g:CheckBox ui:field="publicCheckBox" styleName="{res.style.publicCheckbox}">Viewable for everybody
             </g:CheckBox>
         </g:layer>
         <g:layer top="45%" height="5%" left="10%" width="80%">

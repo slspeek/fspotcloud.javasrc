@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.TreeViewModel;
-import com.googlecode.fspotcloud.client.main.view.CustomCellTree;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 
 import java.util.logging.Level;
@@ -44,7 +44,8 @@ import java.util.logging.Logger;
 public class TreeViewImpl extends ResizeComposite implements TreeView {
     private final Logger log = Logger.getLogger(TreeViewImpl.class.getName());
     private static final TreeViewImplUiBinder uiBinder = GWT.create(TreeViewImplUiBinder.class);
-    CellTree cellTree;
+    private CellTree cellTree;
+    private final CellTreeFactory cellTreeFactory;
     @UiField
     ScrollPanel tagTreeViewPanel;
     @UiField
@@ -52,7 +53,9 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
 
     private static int counter;
 
-    public TreeViewImpl() {
+    @Inject
+    public TreeViewImpl(CellTreeFactory cellTreeFactory) {
+        this.cellTreeFactory = cellTreeFactory;
         initWidget(uiBinder.createAndBindUi(this));
         userInfoLabel.ensureDebugId("user-info-label");
         log.log(Level.FINE, "Treeview created: " + ++counter);
@@ -61,7 +64,7 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
     @Override
     public void setTreeModel(TreeViewModel model) {
         log.log(Level.FINE, "setTreeModel on " + this);
-        cellTree = new CustomCellTree(model, null);
+        cellTree = cellTreeFactory.get(model);
         tagTreeViewPanel.setWidget(cellTree);
     }
 

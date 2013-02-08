@@ -48,7 +48,7 @@ public class TagTreeModelTest extends TestCase {
                 new Provider<Cell<TagNode>>() {
                     @Override
                     public Cell<TagNode> get() {
-                        return new TagCell();
+                        return null;
                     }
                 });
     }

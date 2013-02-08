@@ -41,11 +41,6 @@
     font-size: 150%;
 }
 
-.importedTag {
-	color: green;
-	font-size: 130%;
-}
-
  .tagView {
 	border-style: solid;
 	border-width: thick;
@@ -54,6 +49,10 @@
     border-collapse: collapse;
     border-width: 1px;
     color: #F0F0F0;
+}
+
+.tag {
+	color: white;
 }
 
 .button {

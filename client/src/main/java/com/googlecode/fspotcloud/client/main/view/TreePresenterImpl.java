@@ -135,7 +135,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
                 }
             }
         } catch (Exception e) {
-            log.log(Level.SEVERE, "openTreeNode", e);
+            log.log(Level.INFO, "openTreeNode", e);
         }
     }
 
