@@ -25,9 +25,14 @@
  .anchor {
      color: grey;
      background: thirdColor;
-     font-size: 150%;
+     font-size: 160%;
      text-align:center;
  }
+
+ .anchor:focus {
+      background: thirdColor;
+      font-weight: bold;
+  }
 
  .label {
     background: thirdColor;

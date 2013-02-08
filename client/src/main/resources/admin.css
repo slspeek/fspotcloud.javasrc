@@ -24,6 +24,11 @@
 
 .importedTag {
 	color: green;
+	font-weight: bold;
+}
+
+.tag {
+	color: black;
 }
 
 .headerLabel {
@@ -44,6 +49,19 @@
     padding-bottom: verticalPropertyPadding;
 }
 
+.publicCheckbox:focus {
+    background: #FFFFDE;
+}
+
+.publicCheckbox {
+    background: #66BDFF;
+    text-align: left;
+    font-size: 13pt;
+    font-weight: normal;
+    padding-top: verticalPropertyPadding;
+    padding-bottom: verticalPropertyPadding;
+}
+
 .propertyInput {
     background: #DEFFFF;
     font-size: 13pt;
@@ -51,6 +69,13 @@
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
 }
+
+.propertyInput:focus {
+    background: #FFFFDE;
+    padding-top: verticalPropertyPadding;
+    padding-bottom: verticalPropertyPadding;
+}
+
 .propertyValue {
     background: #70C7FF;
     font-size: 13pt;
@@ -124,9 +149,6 @@
 }
 
 .tableHeader {
-}
-
-.usergroupsTest {
 }
 
 .copyleft {

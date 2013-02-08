@@ -47,7 +47,7 @@ public interface AdminResources extends ClientBundle {
 
         String myUsergroupsTable();
 
-        String usergroupsTest();
+        String publicCheckbox();
 
         String tree();
 
@@ -58,6 +58,8 @@ public interface AdminResources extends ClientBundle {
         String titleLabel();
 
         String importedTag();
+
+        String tag();
 
         String headerLabel();
 

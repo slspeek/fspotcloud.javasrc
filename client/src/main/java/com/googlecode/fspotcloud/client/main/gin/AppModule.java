@@ -133,8 +133,8 @@ public class AppModule extends AbstractGinModule {
                 .in(Singleton.class);
         bind(TreeView.TreePresenter.class).annotatedWith(AdminTreeView.class).to(AdminTreePresenterImpl.class)
                 .in(Singleton.class);
-        bind(TreeView.class).annotatedWith(AdminTreeView.class).to(TreeViewImpl.class).in(Singleton.class);
-        bind(TreeView.class).annotatedWith(BasicTreeView.class).to(TreeViewImpl.class).in(Singleton.class);
+        bind(TreeView.class).annotatedWith(AdminTreeView.class).toProvider(AdminTreeViewProvider.class).in(Singleton.class);
+        bind(TreeView.class).annotatedWith(BasicTreeView.class).toProvider(BasicTreeViewProvider.class).in(Singleton.class);
         bind(TreeView.TreePresenter.class).annotatedWith(BasicTreeView.class).to(TreePresenterImpl.class)
                 .in(Singleton.class);
 

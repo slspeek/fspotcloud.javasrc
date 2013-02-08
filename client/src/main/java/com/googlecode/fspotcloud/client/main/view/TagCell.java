@@ -25,7 +25,11 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Logger;
@@ -34,10 +38,19 @@ import java.util.logging.Logger;
 public class TagCell extends AbstractCell<TagNode> {
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(TagCell.class.getName());
-
+    private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
+    private final Resources resources = GWT.create(Resources.class);
     @Override
     public void render(com.google.gwt.cell.client.Cell.Context arg0,
                        TagNode value, SafeHtmlBuilder sb) {
-        sb.appendEscaped(value.getTagName());
+        SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(),
+                resources.style().tag());
+        log.info(snippetHtml.asString());
+        sb.append(snippetHtml);
+    }
+
+    public interface MyTemplates extends SafeHtmlTemplates {
+        @Template("<span class=\"{1}\">{0}</span>")
+        SafeHtml message(String message, String style);
     }
 }
