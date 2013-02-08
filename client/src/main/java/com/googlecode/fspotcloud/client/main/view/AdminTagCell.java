@@ -29,7 +29,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.googlecode.fspotcloud.client.main.ui.Resources;
+import com.googlecode.fspotcloud.client.main.ui.AdminResources;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Logger;
@@ -38,27 +38,23 @@ import java.util.logging.Logger;
 public class AdminTagCell extends AbstractCell<TagNode> {
     private final Logger log = Logger.getLogger(TagCell.class.getName());
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
-    private final Resources resources;
-
-    public AdminTagCell(Resources resources) {
-        this.resources = resources;
-    }
+    private final AdminResources resources = GWT.create(AdminResources.class);
 
     @Override
     public void render(com.google.gwt.cell.client.Cell.Context arg0,
                        TagNode value, SafeHtmlBuilder sb) {
+        String styleName;
         if (value.isImportIssued()) {
-            SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(),
-                    resources.style().importedTag());
-            log.info(snippetHtml.asString());
-            sb.append(snippetHtml);
+            styleName = resources.style().importedTag();
         } else {
-            sb.appendEscaped(value.getTagName());
+            styleName = resources.style().tag();
         }
+        SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(), styleName);
+        sb.append(snippetHtml);
     }
 
     public interface MyTemplates extends SafeHtmlTemplates {
-        @Template("<span style=\"color: green\" class=\"{1}\">{0}</span>")
+        @Template("<span class=\"{1}\">{0}</span>")
         SafeHtml message(String message, String style);
     }
 }

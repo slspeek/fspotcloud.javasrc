@@ -90,6 +90,8 @@ public class DashboardPresenterImpl extends AbstractActivity
 
     @Override
     public DashboardView.DashboardPresenter withPlace(TagPlace place) {
+        ((AdminTreePresenterImpl)treePresenter).setPlace(place);
+
         activity = tagDetailsActivityFactory.get(place);
         activity.init();
         return this;

@@ -25,6 +25,8 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.Cell;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.cellview.client.TreeNode;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -46,12 +48,16 @@ import java.util.logging.Logger;
 
 public class AdminTreePresenterImpl implements TreeView.TreePresenter,
         Handler {
+
     private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
     private final TreeView treeView;
     private final DataManager dataManager;
     private final SingleSelectionModel<TagNode> selectionModel;
     private final PlaceGoTo placeGoTo;
     private final Resources resources;
+
+    private TagPlace place;
+    private Runnable openSelectedNode;
 
     @Inject
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
@@ -78,17 +84,20 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
                 new Provider<Cell<TagNode>>() {
                     @Override
                     public Cell<TagNode> get() {
-                        return new AdminTagCell(resources);
+                        return new AdminTagCell();
                     }
                 });
         treeView.setTreeModel(treeModel);
+        if (openSelectedNode != null) {
+            openSelectedNode.run();
+            openSelectedNode = null;
+        }
     }
 
     private void requestTagTreeData() {
         dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
-                //Window.alert("Exception: " + caught);
                 log.log(Level.WARNING, "getAdminTagTree", caught);
             }
 
@@ -99,15 +108,57 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
         });
     }
 
+    @Override
+    public void setPlace(BasePlace place) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void reloadTree() {
         requestTagTreeData();
     }
 
-    @Override
-    public void setPlace(BasePlace place) {
-        //throw new UnsupportedOperationException();
+    private void openSelectedTreeNode(TreeNode node) {
+        try {
+            for (int i = 0; i < node.getChildCount(); i++) {
+                TreeNode child = node.setChildOpen(i, true, false);
+
+                if (child != null) {
+                    openSelectedTreeNode(child);
+                }
+            }
+        } catch (Exception e) {
+            log.log(Level.INFO, "openTreeNode", e);
+        }
     }
 
+    public void setPlace(TagPlace place) {
+        this.place = place;
+        updatePlace();
+    }
+
+    private void updatePlace() {
+        if (place != null) {
+            TagNode node = new TagNode();
+            String tagId = place.getTagId();
+            node.setId(tagId);
+            selectionModel.setSelected(node, true);
+
+            TreeNode root = treeView.getRootNode();
+
+            if (root != null) {
+                openSelectedTreeNode(root);
+            } else {
+                openSelectedNode = new Runnable() {
+                    @Override
+                    public void run() {
+                        updatePlace();
+                    }
+                };
+            }
+        } else {
+            log.warning("place is null");
+        }
+    }
     @Override
     public void onSelectionChange(SelectionChangeEvent event) {
         log.info("Selection event from tree" + selectionModel);

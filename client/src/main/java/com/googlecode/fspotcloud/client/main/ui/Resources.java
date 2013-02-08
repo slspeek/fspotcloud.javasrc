@@ -172,7 +172,7 @@ public interface Resources extends ClientBundle {
     public interface Style extends CssResource {
         String slideshow();
 
-
+        String tag();
 
         String image();
 
@@ -188,15 +188,9 @@ public interface Resources extends ClientBundle {
 
         String userInfoLabel();
 
-
-
         String pagerLabel();
 
-
-
         String selectedImage();
-
-        String importedTag();
 
         String running();
     }
