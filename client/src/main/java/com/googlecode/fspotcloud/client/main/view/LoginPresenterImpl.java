@@ -29,7 +29,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
@@ -57,7 +57,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final PlaceGoTo placeGoTo;
     private final PlaceWhere placeWhere;
     private final TreeView.TreePresenter treePresenter;
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
 
 
     @Inject
@@ -66,13 +66,13 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                               PlaceGoTo placeGoTo,
                               PlaceWhere placeWhere,
                               @BasicTreeView TreeView.TreePresenter treePresenter,
-                              ClientLoginManager clientLoginManager) {
+                              IClientLoginManager IClientLoginManager) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
         this.treePresenter = treePresenter;
-        this.clientLoginManager = clientLoginManager;
+        this.IClientLoginManager = IClientLoginManager;
     }
 
     @Override
@@ -164,7 +164,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
                             view.clearFields();
-                            clientLoginManager.resetApplicationData();
+                            IClientLoginManager.resetApplicationData();
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {
                                 placeGoTo.goTo(nextUrl);
