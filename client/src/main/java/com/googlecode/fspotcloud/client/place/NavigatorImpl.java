@@ -28,7 +28,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.IndexingUtil;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
@@ -50,7 +50,7 @@ public class NavigatorImpl implements Navigator {
     private final PlaceWhere placeWhere;
     private final DataManager dataManager;
     private final PlaceCalculator placeCalculator;
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
 
 
     @Inject
@@ -58,12 +58,12 @@ public class NavigatorImpl implements Navigator {
                          PlaceGoTo placeGoTo,
                          PlaceCalculator placeCalculator,
                          DataManager dataManager,
-                         ClientLoginManager clientLoginManager) {
+                         IClientLoginManager IClientLoginManager) {
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
         this.placeCalculator = placeCalculator;
         this.dataManager = dataManager;
-        this.clientLoginManager = clientLoginManager;
+        this.IClientLoginManager = IClientLoginManager;
     }
 
     @Override
@@ -385,7 +385,7 @@ public class NavigatorImpl implements Navigator {
     }
 
     private void handleNoTagsPublic(final AsyncCallback<String> report) {
-        clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+        IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
                 log.log(Level.WARNING, "No user info because: ", caught);
@@ -398,7 +398,7 @@ public class NavigatorImpl implements Navigator {
                     placeGoTo.goTo(TagPlace.DEFAULT);
                     report.onSuccess("To dashboard");
                 } else if (!result.isLoggedIn()) {
-                    clientLoginManager.redirectToLogin();
+                    IClientLoginManager.redirectToLogin();
                     report.onSuccess("Redirect to login");
                 } else {
                     report.onSuccess("Sorry no public labels to view yet");
@@ -511,7 +511,7 @@ public class NavigatorImpl implements Navigator {
                         } else {
                             callback.onFailure(new RuntimeException(
                                     "label not found."));
-                            clientLoginManager.redirectToLogin();
+                            IClientLoginManager.redirectToLogin();
                         }
                     }
                 });

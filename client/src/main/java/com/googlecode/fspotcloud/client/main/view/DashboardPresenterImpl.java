@@ -29,42 +29,41 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
-import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsActivityFactory;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.main.view.api.TreeView.TreePresenter;
+import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.HomePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
+import java.util.logging.Logger;
+
 
 public class DashboardPresenterImpl extends AbstractActivity
         implements DashboardView.DashboardPresenter {
+    private final Logger log = Logger.getLogger(DashboardPresenterImpl.class.getName());
     private final DashboardView dashboardView;
     private final TreeView.TreePresenter treePresenter;
-    private final GlobalActionsPresenter globalActionsPresenter;
+    private final GlobalActionsView.GlobalActionsPresenter globalActionsPresenter;
     private final TagDetailsActivityFactory tagDetailsActivityFactory;
     private TagDetailsView.TagDetailsPresenter activity;
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager clientLoginManager;
     private final PlaceGoTo placeGoTo;
 
 
     @Inject
     public DashboardPresenterImpl(DashboardView dashboardView,
-                                  @AdminTreeView TreePresenter treePresenter,
-                                  GlobalActionsPresenter globalActionsPresenter,
+                                  @AdminTreeView TreeView.TreePresenter treePresenter,
+                                  GlobalActionsView.GlobalActionsPresenter globalActionsPresenter,
                                   TagDetailsActivityFactory tagDetailsActivityFactory,
-                                  ClientLoginManager clientLoginManager,
+                                  IClientLoginManager IClientLoginManager,
                                   PlaceGoTo placeGoTo) {
         this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
         this.globalActionsPresenter = globalActionsPresenter;
         this.tagDetailsActivityFactory = tagDetailsActivityFactory;
-        this.clientLoginManager = clientLoginManager;
+        this.clientLoginManager = IClientLoginManager;
         this.placeGoTo = placeGoTo;
     }
 
@@ -81,8 +80,10 @@ public class DashboardPresenterImpl extends AbstractActivity
                 if (result.isAdmin()) {
                     treePresenter.init();
                     globalActionsPresenter.init();
-                }  else if(result.isLoggedIn()) {
+                } else if (result.isLoggedIn()) {
                     placeGoTo.goTo(new HomePlace());
+                } else {
+                    clientLoginManager.redirectToLogin();
                 }
             }
         });
@@ -90,7 +91,7 @@ public class DashboardPresenterImpl extends AbstractActivity
 
     @Override
     public DashboardView.DashboardPresenter withPlace(TagPlace place) {
-        ((AdminTreePresenterImpl)treePresenter).setPlace(place);
+        ((AdminTreePresenterImpl) treePresenter).setPlace(place);
 
         activity = tagDetailsActivityFactory.get(place);
         activity.init();

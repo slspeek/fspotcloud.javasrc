@@ -1,7 +1,7 @@
 package com.googlecode.fspotcloud.client.useraction.application.handler;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.logging.Logger;
@@ -10,16 +10,16 @@ public class LoginHandler implements IActionHandler
 
 {
     private final Logger log = Logger.getLogger(LoginHandler.class.getName());
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
 
 
     @Inject
-    public LoginHandler(ClientLoginManager clientLoginManager) {
-        this.clientLoginManager = clientLoginManager;
+    public LoginHandler(IClientLoginManager IClientLoginManager) {
+        this.IClientLoginManager = IClientLoginManager;
     }
 
     @Override
     public void performAction(String actionId) {
-        clientLoginManager.redirectToLogin();
+        IClientLoginManager.redirectToLogin();
     }
 }

@@ -31,7 +31,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
@@ -47,7 +47,7 @@ import java.util.logging.Logger;
 public class UserAccountPresenterImpl extends AbstractActivity implements UserAccountView.UserAccountPresenter {
     private final Logger log = Logger.getLogger(UserAccountPresenterImpl.class.getName());
     private final UserAccountView view;
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
     private final DispatchAsync dispatch;
     private final PlaceGoTo placeGoTo;
 
@@ -55,11 +55,11 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
 
     @Inject
     public UserAccountPresenterImpl(UserAccountView view,
-                                    ClientLoginManager clientLoginManager,
+                                    IClientLoginManager IClientLoginManager,
                                     DispatchAsync dispatch,
                                     PlaceGoTo placeGoTo) {
         this.view = view;
-        this.clientLoginManager = clientLoginManager;
+        this.IClientLoginManager = IClientLoginManager;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
     }
@@ -68,7 +68,7 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         this.view.setPresenter(this);
         panel.setWidget(view);
-        clientLoginManager.getUserInfoAsync(
+        IClientLoginManager.getUserInfoAsync(
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {

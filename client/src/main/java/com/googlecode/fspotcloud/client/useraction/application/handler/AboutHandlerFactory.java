@@ -51,9 +51,10 @@ public class AboutHandlerFactory {
 
     public IActionHandler getAboutHandler() {
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
-        builder.appendEscaped(resources.getVersion().getText());
+        builder.appendEscapedLines(resources.getVersion().getText());
         HelpConfig helpConfig = new HelpConfig("About F-Spot Cloud", builder.toSafeHtml());
         helpConfig.addToFirstColumn(categoryDef.ABOUT);
         return helpActionsFactory.getHelpAction(helpConfig);
     }
+
 }
