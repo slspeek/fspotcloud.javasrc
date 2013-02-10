@@ -48,7 +48,7 @@ import java.util.logging.Logger;
  *
  * @author steven
  */
-public class ClientLoginManager {
+public class ClientLoginManager implements IClientLoginManager {
     private final Logger log = Logger.getLogger(ClientLoginManager.class.getName());
     private final DispatchAsync dispatch;
     private final PlaceWhere placeWhere;
@@ -70,15 +70,18 @@ public class ClientLoginManager {
         this.getUserInfoMemoProc = getUserInfoMemoProc;
     }
 
+    @Override
     public void getUserInfoAsync(final AsyncCallback<UserInfo> callback) {
         getUserInfoMemoProc.getAsync(callback);
     }
 
 
+    @Override
     public void logout(AsyncCallback<VoidResult> resultAsyncCallback) {
         dispatch.execute(new LogoutAction(), resultAsyncCallback);
     }
 
+    @Override
     public void redirectToLogin() {
         getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
@@ -99,10 +102,12 @@ public class ClientLoginManager {
 
     }
 
-    private void reset() {
+    @Override
+    public void reset() {
         getUserInfoMemoProc.reset();
     }
 
+    @Override
     public void resetApplicationData() {
         reset();
         dataManager.reset();

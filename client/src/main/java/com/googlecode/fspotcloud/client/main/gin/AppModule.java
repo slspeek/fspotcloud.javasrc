@@ -33,6 +33,8 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
+import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
@@ -131,6 +133,7 @@ public class AppModule extends AbstractGinModule {
                 .to(DashboardPresenterImpl.class);
         bind(GlobalActionsView.class).to(GlobalActionsViewImpl.class)
                 .in(Singleton.class);
+        bind(GlobalActionsView.GlobalActionsPresenter.class).to(GlobalActionsPresenter.class);
         bind(TreeView.TreePresenter.class).annotatedWith(AdminTreeView.class).to(AdminTreePresenterImpl.class)
                 .in(Singleton.class);
         bind(TreeView.class).annotatedWith(AdminTreeView.class).toProvider(AdminTreeViewProvider.class).in(Singleton.class);
@@ -142,5 +145,7 @@ public class AppModule extends AbstractGinModule {
         ;
         bind(TagApprovalView.TagApprovalPresenter.class)
                 .to(TagApprovalPresenterImpl.class);
+
+        bind(IClientLoginManager.class).to(ClientLoginManager.class).in(Singleton.class);
     }
 }

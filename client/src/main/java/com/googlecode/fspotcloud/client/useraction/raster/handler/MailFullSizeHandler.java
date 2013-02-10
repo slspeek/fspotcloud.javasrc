@@ -3,7 +3,7 @@ package com.googlecode.fspotcloud.client.useraction.raster.handler;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.MailFullsizePlace;
@@ -19,20 +19,20 @@ public class MailFullSizeHandler implements IActionHandler {
     private final Logger log = Logger.getLogger(MailFullSizeHandler.class.getName());
     private final PlaceWhere placeWhere;
     private final PlaceGoTo placeGoTo;
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
 
     @Inject
     public MailFullSizeHandler(PlaceWhere placeWhere,
                                PlaceGoTo placeGoTo,
-                               ClientLoginManager clientLoginManager) {
+                               IClientLoginManager IClientLoginManager) {
         this.placeWhere = placeWhere;
         this.placeGoTo = placeGoTo;
-        this.clientLoginManager = clientLoginManager;
+        this.IClientLoginManager = IClientLoginManager;
     }
 
     @Override
     public void performAction(String actionId) {
-        clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+        IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
                 log.log(Level.INFO, "client login manager return an error", caught);

@@ -30,7 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
@@ -49,19 +49,19 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     private final DataManager dataManager;
     private final SingleSelectionModel<TagNode> selectionModel;
     private final TreeSelectionHandlerInterface treeSelectionHandler;
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
     private BasePlace place;
 
     @Inject
     public TreePresenterImpl(@BasicTreeView TreeView treeView, DataManager dataManager,
                              SingleSelectionModel<TagNode> singleSelectionModel,
                              TreeSelectionHandlerInterface treeSelectionHandler,
-                             ClientLoginManager clientLoginManager) {
+                             IClientLoginManager IClientLoginManager) {
         this.treeView = treeView;
         this.dataManager = dataManager;
         this.selectionModel = singleSelectionModel;
         this.treeSelectionHandler = treeSelectionHandler;
-        this.clientLoginManager = clientLoginManager;
+        this.IClientLoginManager = IClientLoginManager;
     }
 
     public void init() {
@@ -71,7 +71,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
     }
 
     private void loadUserInfo() {
-        clientLoginManager.getUserInfoAsync(
+        IClientLoginManager.getUserInfoAsync(
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {

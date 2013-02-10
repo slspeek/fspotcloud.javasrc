@@ -4,7 +4,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.ClientLoginManager;
+import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
@@ -18,22 +18,22 @@ public class LogoutHandler implements IActionHandler
 
 {
     private final Logger log = Logger.getLogger(LogoutHandler.class.getName());
-    private final ClientLoginManager clientLoginManager;
+    private final IClientLoginManager IClientLoginManager;
     private final TreeView.TreePresenter treePresenter;
     private final DataManager dataManager;
 
     @Inject
-    public LogoutHandler(ClientLoginManager clientLoginManager,
+    public LogoutHandler(IClientLoginManager IClientLoginManager,
                          @BasicTreeView TreeView.TreePresenter treePresenter,
                          DataManager dataManager) {
-        this.clientLoginManager = clientLoginManager;
+        this.IClientLoginManager = IClientLoginManager;
         this.treePresenter = treePresenter;
         this.dataManager = dataManager;
     }
 
     @Override
     public void performAction(String actionId) {
-        clientLoginManager.getUserInfoAsync(
+        IClientLoginManager.getUserInfoAsync(
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -42,7 +42,7 @@ public class LogoutHandler implements IActionHandler
 
                     @Override
                     public void onSuccess(final UserInfo result) {
-                        clientLoginManager.logout(new AsyncCallback<VoidResult>() {
+                        IClientLoginManager.logout(new AsyncCallback<VoidResult>() {
                             @Override
                             public void onFailure(Throwable caught) {
                                 log.log(Level.SEVERE,
@@ -58,7 +58,7 @@ public class LogoutHandler implements IActionHandler
                                 }
                             }
                         });
-                        clientLoginManager.resetApplicationData();
+                        IClientLoginManager.resetApplicationData();
                         treePresenter.reloadTree();
                     }
                 });
