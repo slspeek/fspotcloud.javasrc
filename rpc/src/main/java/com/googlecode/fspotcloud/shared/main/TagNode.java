@@ -32,6 +32,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.base.Objects.equal;
 import static com.google.common.collect.Lists.newArrayList;
@@ -157,9 +159,9 @@ public class TagNode implements Serializable, Comparable<TagNode> {
     public String toString() {
         return Objects.toStringHelper(this.getClass()).add("name", tagName)
                 .add("id", id)
-                .add("parent", parent)
+                .add("parent id", parentId)
                 .add("photos", cachedPhotoList)
-                .add("children", children)
+                .add("childrenCount", getChildren().size())
                 .omitNullValues()
                 .toString();
     }
@@ -208,6 +210,29 @@ public class TagNode implements Serializable, Comparable<TagNode> {
         TagNode result = root.findByTagId(tagId);
         return result;
     }
+
+    public List<Integer> pathTo(TagNode root) {
+        List<Integer> result = newArrayList();
+        if (!equals(root)) {
+            TagNode parent = getParent();
+            int index = -1;
+            if (parent != null) {
+
+                final List<TagNode> parentChildren = parent.getChildren();
+                for (int i = 0; i < parentChildren.size(); i++) {
+                    TagNode child = parentChildren.get(i);
+                    if (equals(child)) {
+                        index = i;
+                        break;
+                    }
+                }
+                result.addAll(parent.pathTo(root));
+                result.add(index);
+            }
+        }
+        return result;
+    }
+
 
     @Override
     public int compareTo(TagNode o) {

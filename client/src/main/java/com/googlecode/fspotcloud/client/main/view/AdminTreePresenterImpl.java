@@ -24,9 +24,6 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
-import com.google.gwt.cell.client.Cell;
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.cellview.client.TreeNode;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -41,60 +38,51 @@ import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
-import javax.inject.Provider;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class AdminTreePresenterImpl implements TreeView.TreePresenter,
+public class AdminTreePresenterImpl extends TreePresenterBase implements TreeView.TreePresenter,
         Handler {
 
     private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
-    private final TreeView treeView;
-    private final DataManager dataManager;
-    private final SingleSelectionModel<TagNode> selectionModel;
     private final PlaceGoTo placeGoTo;
-    private final Resources resources;
-
-    private TagPlace place;
-    private Runnable openSelectedNode;
 
     @Inject
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
                                   DataManager dataManager,
                                   SingleSelectionModel<TagNode> selectionModel,
-                                  PlaceGoTo placeGoTo,
-                                  Resources resources) {
-        super();
-        this.treeView = treeView;
-        this.dataManager = dataManager;
-        this.selectionModel = selectionModel;
+                                  PlaceGoTo placeGoTo) {
+        super(treeView, dataManager, selectionModel);
         this.placeGoTo = placeGoTo;
-        this.resources = resources;
     }
 
+    @Override
     public void init() {
-        log.info("init");
-        reloadTree();
+        super.init();
         selectionModel.addSelectionChangeHandler(this);
     }
 
-    private void setModel(TagNode root) {
-        TagTreeModel treeModel = new TagTreeModel(root, selectionModel,
-                new Provider<Cell<TagNode>>() {
-                    @Override
-                    public Cell<TagNode> get() {
-                        return new AdminTagCell();
-                    }
-                });
-        treeView.setTreeModel(treeModel);
-        if (openSelectedNode != null) {
-            openSelectedNode.run();
-            openSelectedNode = null;
+    @Override
+    public void onSelectionChange(SelectionChangeEvent event) {
+        log.log(Level.FINE, "Selection event from tree" + selectionModel);
+
+        TagNode node = selectionModel.getSelectedObject();
+
+        if (node != null) {
+            String tagId = node.getId();
+            log.log(Level.FINEST, "About to go");
+            placeGoTo.goTo(new TagPlace(tagId));
         }
     }
 
-    private void requestTagTreeData() {
+    public void setPlace(TagPlace place) {
+        log.log(Level.FINE, "Set place with place " + place);
+        this.place = place;
+        updatePlace();
+    }
+
+    protected void requestTagTreeData() {
         dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -111,64 +99,5 @@ public class AdminTreePresenterImpl implements TreeView.TreePresenter,
     @Override
     public void setPlace(BasePlace place) {
         //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void reloadTree() {
-        requestTagTreeData();
-    }
-
-    private void openSelectedTreeNode(TreeNode node) {
-        try {
-            for (int i = 0; i < node.getChildCount(); i++) {
-                TreeNode child = node.setChildOpen(i, true, false);
-
-                if (child != null) {
-                    openSelectedTreeNode(child);
-                }
-            }
-        } catch (Exception e) {
-            log.log(Level.INFO, "openTreeNode", e);
-        }
-    }
-
-    public void setPlace(TagPlace place) {
-        this.place = place;
-        updatePlace();
-    }
-
-    private void updatePlace() {
-        if (place != null) {
-            TagNode node = new TagNode();
-            String tagId = place.getTagId();
-            node.setId(tagId);
-            selectionModel.setSelected(node, true);
-
-            TreeNode root = treeView.getRootNode();
-
-            if (root != null) {
-                openSelectedTreeNode(root);
-            } else {
-                openSelectedNode = new Runnable() {
-                    @Override
-                    public void run() {
-                        updatePlace();
-                    }
-                };
-            }
-        } else {
-            log.warning("place is null");
-        }
-    }
-    @Override
-    public void onSelectionChange(SelectionChangeEvent event) {
-        log.info("Selection event from tree" + selectionModel);
-
-        TagNode node = selectionModel.getSelectedObject();
-
-        if (node != null) {
-            String tagId = node.getId();
-            log.info("About to go");
-            placeGoTo.goTo(new TagPlace(tagId));
-        }
     }
 }

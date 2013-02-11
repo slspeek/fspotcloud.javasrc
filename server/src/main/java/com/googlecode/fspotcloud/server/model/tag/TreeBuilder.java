@@ -84,15 +84,15 @@ public class TreeBuilder {
         for (TagNode node : flatNodes) {
             if (f.isValid(node)) {
                 TagNode parent = getFilteredParent(node, f);
-
                 if (parent == null) {
                     root.addChild(node);
+                    node.setParent(root);
                 } else {
                     parent.addChild(node);
+                    node.setParent(parent);
                 }
             }
         }
-
         return root;
     }
 
@@ -101,7 +101,6 @@ public class TreeBuilder {
             return null;
         } else {
             TagNode parent;
-
             while ((parent = index.get(node.getParentId())) != null) {
                 if (filter.isValid(parent)) {
                     return parent;
@@ -109,7 +108,6 @@ public class TreeBuilder {
                     node = parent;
                 }
             }
-
             return null;
         }
     }

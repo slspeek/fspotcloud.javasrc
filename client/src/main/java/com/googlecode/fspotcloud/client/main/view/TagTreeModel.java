@@ -74,9 +74,7 @@ public class TagTreeModel implements TreeViewModel {
 
     @Override
     public boolean isLeaf(Object value) {
-        if (value == null) {
-            return false;
-        } else if (value instanceof TagNode) {
+        if (value instanceof TagNode) {
             TagNode node = (TagNode) value;
             List<TagNode> children = node.getChildren();
             boolean hasNoChildren = children.isEmpty();
@@ -84,8 +82,7 @@ public class TagTreeModel implements TreeViewModel {
             return hasNoChildren;
         } else {
             log.warning("isLeaf called with non-TagNode value: " + value);
+            return false;
         }
-
-        return false;
     }
 }

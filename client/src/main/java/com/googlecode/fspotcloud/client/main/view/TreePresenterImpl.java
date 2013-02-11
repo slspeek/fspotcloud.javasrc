@@ -43,30 +43,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class TreePresenterImpl implements TreeView.TreePresenter {
+public class TreePresenterImpl extends TreePresenterBase {
     private final Logger log = Logger.getLogger(TreePresenterImpl.class.getName());
-    private final TreeView treeView;
-    private final DataManager dataManager;
-    private final SingleSelectionModel<TagNode> selectionModel;
     private final TreeSelectionHandlerInterface treeSelectionHandler;
     private final IClientLoginManager IClientLoginManager;
     private BasePlace place;
 
     @Inject
-    public TreePresenterImpl(@BasicTreeView TreeView treeView, DataManager dataManager,
+    public TreePresenterImpl(@BasicTreeView TreeView treeView,
+                             DataManager dataManager,
                              SingleSelectionModel<TagNode> singleSelectionModel,
                              TreeSelectionHandlerInterface treeSelectionHandler,
                              IClientLoginManager IClientLoginManager) {
-        this.treeView = treeView;
-        this.dataManager = dataManager;
-        this.selectionModel = singleSelectionModel;
+        super(treeView, dataManager, singleSelectionModel);
         this.treeSelectionHandler = treeSelectionHandler;
         this.IClientLoginManager = IClientLoginManager;
     }
 
     public void init() {
+        super.init();
         treeSelectionHandler.setSelectionModel(selectionModel);
-        reloadTree();
         loadUserInfo();
     }
 
@@ -93,7 +89,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
                 });
     }
 
-    private void setModel(TagNode root) {
+    protected void setModel(TagNode root) {
         TagTreeModel treeModel = new TagTreeModel(root, selectionModel,
                 new Provider<Cell<TagNode>>() {
                     @Override
@@ -105,7 +101,7 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
         updatePlace();
     }
 
-    private void requestTagTreeData() {
+    protected void requestTagTreeData() {
 
         dataManager.getTagTree(new AsyncCallback<TagNode>() {
             @Override
@@ -120,46 +116,9 @@ public class TreePresenterImpl implements TreeView.TreePresenter {
         });
     }
 
-    public void reloadTree() {
-        log.info("About to reload the tree data");
-        requestTagTreeData();
-    }
-
-    private void openSelectedTreeNode(TreeNode node) {
-        try {
-            for (int i = 0; i < node.getChildCount(); i++) {
-                TreeNode child = node.setChildOpen(i, true, false);
-
-                if (child != null) {
-                    openSelectedTreeNode(child);
-                }
-            }
-        } catch (Exception e) {
-            log.log(Level.INFO, "openTreeNode", e);
-        }
-    }
-
     public void setPlace(BasePlace place) {
         this.place = place;
         updatePlace();
     }
 
-    private void updatePlace() {
-        if (place != null) {
-            TagNode node = new TagNode();
-            String tagId = place.getTagId();
-            node.setId(tagId);
-            selectionModel.setSelected(node, true);
-
-            TreeNode root = treeView.getRootNode();
-
-            if (root != null) {
-                openSelectedTreeNode(root);
-            } else {
-                log.warning("Root node is null");
-            }
-        } else {
-            log.warning("place is null");
-        }
-    }
 }
