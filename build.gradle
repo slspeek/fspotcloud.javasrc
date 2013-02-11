@@ -41,6 +41,7 @@ allprojects {
                 jdo_api: "javax.jdo:jdo-api:3.0",
                 jta: "javax.transaction:jta:1.1",
                 commons_lang: "commons-lang:commons-lang:2.6",
+                commons_codec: "commons-codec:commons-codec:1.7",
                 gae_testing: ["com.google.appengine:appengine-local-runtime:${gae_version}",
                         "com.google.appengine:appengine-api-stubs:${gae_version}",
                         "com.google.appengine:appengine-testing:${gae_version}"],

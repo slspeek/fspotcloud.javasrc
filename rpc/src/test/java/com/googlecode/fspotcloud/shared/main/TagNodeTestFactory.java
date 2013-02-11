@@ -16,4 +16,27 @@ public class TagNodeTestFactory {
         node.setCachedPhotoList(new PhotoInfoStore(newArrayList(info)));
         return node;
     }
+
+    public TagNode getRootWithOneChild() {
+        TagNode root = new TagNode("0");
+        TagNode child = new TagNode("1", "0");
+        root.addChild(child);
+        child.setParent(root);
+        return root;
+    }
+
+    public TagNode getRootWithThreeChildren() {
+        TagNode root = new TagNode("0");
+        TagNode child = new TagNode("1", "0");
+        TagNode child2 = new TagNode("2", "0");
+        TagNode child3 = new TagNode("3", "0");
+        root.addChild(child);
+        root.addChild(child2);
+        root.addChild(child3);
+        child.setParent(root);
+        child2.setParent(root);
+        child3.setParent(root);
+
+        return root;
+    }
 }

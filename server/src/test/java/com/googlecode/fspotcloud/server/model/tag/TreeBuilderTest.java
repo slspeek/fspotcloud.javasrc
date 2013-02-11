@@ -59,6 +59,7 @@ public class TreeBuilderTest {
         assertEquals(2, trees.getChildren().size());
 
         TagNode root = trees.getChildren().get(1);
+        assertEquals(trees, root.getParent());
         List<TagNode> level_1s = root.getChildren();
         assertEquals(2, level_1s.size());
     }
@@ -71,6 +72,7 @@ public class TreeBuilderTest {
         assertEquals(2, trees.getChildren().size());
 
         TagNode root = trees.getChildren().get(0);
+        assertEquals(trees, root.getParent());
         List<TagNode> level_1s = root.getChildren();
         assertEquals(0, level_1s.size());
     }
