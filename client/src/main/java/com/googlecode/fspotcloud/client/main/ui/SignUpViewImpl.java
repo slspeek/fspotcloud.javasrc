@@ -50,9 +50,9 @@ public class SignUpViewImpl extends Composite implements SignUpView {
     @UiField
     Label statusLabel;
     @UiField
-    BigPushButton  signUp;
+    BigPushButton signUp;
     @UiField
-    BigPushButton  cancel;
+    BigPushButton cancel;
 
     @Inject
     public SignUpViewImpl() {

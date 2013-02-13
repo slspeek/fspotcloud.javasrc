@@ -10,7 +10,6 @@ public class AdminTreeViewProvider implements Provider<TreeView> {
     AdminCellTreeFactory adminCellTreeFactory;
 
 
-
     @Override
     public TreeView get() {
         return new TreeViewImpl(adminCellTreeFactory);

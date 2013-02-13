@@ -2,13 +2,9 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.user.cellview.client.TreeNode;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import javax.inject.Provider;
@@ -16,20 +12,20 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class TreePresenterBase implements TreeView.TreePresenter {
+public abstract class TreePresenterBase implements TreeView.TreePresenter, Provider<Cell<TagNode>> {
     private Logger log = Logger.getLogger(TreePresenterBase.class.getName());
-    
+
     protected final TreeView treeView;
     protected final DataManager dataManager;
-    protected final SingleSelectionModel<TagNode> selectionModel;
-  
+    protected final SingleSelectionModelExt selectionModel;
+
     protected TagPlace place;
     protected TagTreeModel treeModel;
     protected TagNode model;
 
     protected TreePresenterBase(TreeView treeView,
                                 DataManager dataManager,
-                                SingleSelectionModel<TagNode> selectionModel) {
+                                SingleSelectionModelExt selectionModel) {
         this.treeView = treeView;
         this.dataManager = dataManager;
         this.selectionModel = selectionModel;
@@ -43,19 +39,13 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter {
 
     protected void setModel(TagNode root) {
         model = root;
-        treeModel = new TagTreeModel(root, selectionModel,
-                new Provider<Cell<TagNode>>() {
-                    @Override
-                    public Cell<TagNode> get() {
-                        return new AdminTagCell();
-                    }
-                });
+        treeModel = new TagTreeModel(root, selectionModel, this
+        );
         treeView.setTreeModel(treeModel);
         log.log(Level.FINE, "setModel before updatePlace. With model:" + model);
         updatePlace();
     }
 
-   
 
     public void reloadTree() {
         requestTagTreeData();
@@ -80,17 +70,21 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter {
 
     protected void updatePlace() {
         if (place != null && model != null) {
-            log.log(Level.FINE, "Update place with non-trivial place " + place);
+            log.log(Level.FINE, "Update place with non-trivial place and model has been set" + place);
 
             TagNode selectedNode = model.findByTagId(place.getTagId());
-            selectionModel.setSelected(selectedNode, true);
             TreeNode root = treeView.getRootNode();
             log.log(Level.FINE, "tree model root and selected node " + root + " " + selectedNode);
-            if (root != null) {
+            if (root != null && selectedNode != null) {
                 openSelectedTreeNode(root, selectedNode);
+                selectionModel.setSelectedQuietly(selectedNode, true);
             }
         } else {
-            log.log(Level.FINE, "place is null");
+            log.log(Level.FINE, "place or model is null");
         }
     }
+
+    @Override
+    abstract public Cell<TagNode> get();
+
 }

@@ -32,7 +32,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
@@ -50,9 +49,9 @@ public class MailFullsizeViewImpl extends Composite implements MailFullsizeView 
     @UiField
     Label statusLabel;
     @UiField
-    BigPushButton  mail;
+    BigPushButton mail;
     @UiField
-    BigPushButton  cancel;
+    BigPushButton cancel;
 
     @Inject
     public MailFullsizeViewImpl(ImageViewFactoryImpl imageViewFactory) {

@@ -51,15 +51,15 @@ public class LoginViewImpl extends Composite implements LoginView {
     @UiField
     Label statusLabel;
     @UiField
-    BigPushButton  login;
+    BigPushButton login;
     @UiField
-    BigPushButton  signUp;
+    BigPushButton signUp;
     @UiField
-    BigPushButton  cancel;
+    BigPushButton cancel;
     @UiField
-    BigPushButton  resend;
+    BigPushButton resend;
     @UiField
-    BigPushButton  passwordReset;
+    BigPushButton passwordReset;
 
 
     @Inject

@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.gwt.cell.client.Cell;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -31,7 +32,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
-import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
@@ -51,7 +51,7 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
     @Inject
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
                                   DataManager dataManager,
-                                  SingleSelectionModel<TagNode> selectionModel,
+                                  SingleSelectionModelExt selectionModel,
                                   PlaceGoTo placeGoTo) {
         super(treeView, dataManager, selectionModel);
         this.placeGoTo = placeGoTo;
@@ -94,6 +94,11 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
                 setModel(result);
             }
         });
+    }
+
+    @Override
+    public Cell<TagNode> get() {
+        return new AdminTagCell();
     }
 
     @Override

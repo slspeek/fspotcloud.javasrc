@@ -40,6 +40,7 @@ public class TagCell extends AbstractCell<TagNode> {
     private final Logger log = Logger.getLogger(TagCell.class.getName());
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final Resources resources = GWT.create(Resources.class);
+
     @Override
     public void render(com.google.gwt.cell.client.Cell.Context arg0,
                        TagNode value, SafeHtmlBuilder sb) {

@@ -10,7 +10,6 @@ public class BasicTreeViewProvider implements Provider<TreeView> {
     BasicCellTreeFactory basicCellTreeFactory;
 
 
-
     @Override
     public TreeView get() {
         return new TreeViewImpl(basicCellTreeFactory);
