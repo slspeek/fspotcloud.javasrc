@@ -35,14 +35,14 @@ import org.jmock.Mockery;
 public class TreeSelectionHandlerTest extends TestCase {
     Mockery context;
     TreeSelectionHandlerInterface handler;
-    SingleSelectionModel<TagNode> model;
+    SingleSelectionModelExt model;
     Navigator navigator;
 
     @Override
     protected void setUp() throws Exception {
         context = new Mockery();
         navigator = context.mock(Navigator.class);
-        model = new SingleSelectionModel<TagNode>();
+        model = new SingleSelectionModelExt();
         super.setUp();
     }
 

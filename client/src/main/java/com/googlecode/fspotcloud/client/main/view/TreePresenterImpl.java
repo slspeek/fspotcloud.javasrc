@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.Cell;
-import com.google.gwt.user.cellview.client.TreeNode;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
@@ -35,11 +34,10 @@ import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
-import javax.inject.Provider;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -47,12 +45,11 @@ public class TreePresenterImpl extends TreePresenterBase {
     private final Logger log = Logger.getLogger(TreePresenterImpl.class.getName());
     private final TreeSelectionHandlerInterface treeSelectionHandler;
     private final IClientLoginManager IClientLoginManager;
-    private BasePlace place;
 
     @Inject
     public TreePresenterImpl(@BasicTreeView TreeView treeView,
                              DataManager dataManager,
-                             SingleSelectionModel<TagNode> singleSelectionModel,
+                             SingleSelectionModelExt singleSelectionModel,
                              TreeSelectionHandlerInterface treeSelectionHandler,
                              IClientLoginManager IClientLoginManager) {
         super(treeView, dataManager, singleSelectionModel);
@@ -89,17 +86,6 @@ public class TreePresenterImpl extends TreePresenterBase {
                 });
     }
 
-    protected void setModel(TagNode root) {
-        TagTreeModel treeModel = new TagTreeModel(root, selectionModel,
-                new Provider<Cell<TagNode>>() {
-                    @Override
-                    public Cell<TagNode> get() {
-                        return new TagCell();
-                    }
-                });
-        treeView.setTreeModel(treeModel);
-        updatePlace();
-    }
 
     protected void requestTagTreeData() {
 
@@ -116,8 +102,13 @@ public class TreePresenterImpl extends TreePresenterBase {
         });
     }
 
+    @Override
+    public Cell<TagNode> get() {
+        return new TagCell();
+    }
+
     public void setPlace(BasePlace place) {
-        this.place = place;
+        this.place = new TagPlace(place.getTagId());
         updatePlace();
     }
 

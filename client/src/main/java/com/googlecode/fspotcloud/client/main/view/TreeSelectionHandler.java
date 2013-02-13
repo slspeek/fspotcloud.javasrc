@@ -32,12 +32,13 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class TreeSelectionHandler implements TreeSelectionHandlerInterface {
     private final Logger log = Logger.getLogger(TreeSelectionHandler.class.getName());
-    private SingleSelectionModel<TagNode> selectionModel;
+    private SingleSelectionModelExt selectionModel;
     private final Navigator navigator;
 
     @Inject
@@ -45,14 +46,14 @@ public class TreeSelectionHandler implements TreeSelectionHandlerInterface {
         this.navigator = navigator;
     }
 
-    public void setSelectionModel(SingleSelectionModel<TagNode> selectionModel) {
+    public void setSelectionModel(SingleSelectionModelExt selectionModel) {
         this.selectionModel = selectionModel;
         selectionModel.addSelectionChangeHandler(this);
     }
 
     @Override
     public void onSelectionChange(SelectionChangeEvent event) {
-        log.info("Selection event from tree" + selectionModel);
+        log.log(Level.FINE, "Selection event from tree" + selectionModel);
 
         TagNode node = selectionModel.getSelectedObject();
 
