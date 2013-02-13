@@ -17,7 +17,7 @@
                     <g:LayoutPanel>
                         <g:layer left="0%" width="50%">
                             <main:TagDetailsViewImpl styleName="{res.style.labelDetails}" width="400px"
-                                                      height="100%"></main:TagDetailsViewImpl>
+                                                     height="100%"></main:TagDetailsViewImpl>
                         </g:layer>
                         <g:layer right="0%" width="50%">
                             <main:GlobalActionsViewImpl

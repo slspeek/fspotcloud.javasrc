@@ -13,7 +13,7 @@
                     <g:Label addStyleNames="{res.style.label}">Email</g:Label>
                 </g:layer>
                 <g:layer top="17%" height="15%" left="45%" width="40%">
-                    <g:Label ui:field="emailValueLabel" ></g:Label>
+                    <g:Label ui:field="emailValueLabel"></g:Label>
                 </g:layer>
                 <g:layer top="35%" height="15%" left="0%" width="30%">
                     <g:Label addStyleNames="{res.style.label}">Last login</g:Label>
@@ -51,7 +51,7 @@
                     </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="16%" left="0%" width="40%">
-                    <main:BigPushButton ui:field="save" >Change password</main:BigPushButton>
+                    <main:BigPushButton ui:field="save">Change password</main:BigPushButton>
                 </g:layer>
                 <g:layer bottom="0%" height="16%" right="0%" width="35%">
                     <main:BigPushButton ui:field="cancel">Main Page</main:BigPushButton>
