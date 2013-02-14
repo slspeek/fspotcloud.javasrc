@@ -34,9 +34,15 @@ public interface DashboardView extends IsWidget {
 
     TagDetailsView getTagDetailsView();
 
+    void setPresenter(DashboardPresenter presenter);
+
     interface DashboardPresenter extends Activity {
         void init();
 
         DashboardPresenter withPlace(TagPlace place);
+
+        void onToPhotos();
+
+        void onManageGroups();
     }
 }

@@ -27,19 +27,24 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
+import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class TreeSelectionHandler implements TreeSelectionHandlerInterface {
-    private final Logger log = Logger.getLogger(TreeSelectionHandler.class.getName());
+public class AdminTreeSelectionHandler implements TreeSelectionHandlerInterface {
+    private final Logger log = Logger.getLogger(AdminTreeSelectionHandler.class.getName());
     private SingleSelectionModelExt selectionModel;
-    private final Navigator navigator;
+    private final PlaceGoTo placeGoTo;
     private boolean ignoreNext = false;
+
+    @Inject
+    public AdminTreeSelectionHandler(PlaceGoTo placeGoTo) {
+        this.placeGoTo = placeGoTo;
+    }
 
     @Override
     public boolean isIgnoreNext() {
@@ -48,15 +53,9 @@ public class TreeSelectionHandler implements TreeSelectionHandlerInterface {
 
     @Override
     public void setIgnoreNext(boolean ignoreNext) {
-
-        log.log(Level.FINE, "setting ignoreNext: " + ignoreNext);
         this.ignoreNext = ignoreNext;
     }
 
-    @Inject
-    public TreeSelectionHandler(Navigator navigator) {
-        this.navigator = navigator;
-    }
 
     public void setSelectionModel(SingleSelectionModelExt selectionModel) {
         this.selectionModel = selectionModel;
@@ -66,22 +65,14 @@ public class TreeSelectionHandler implements TreeSelectionHandlerInterface {
     @Override
     public void onSelectionChange(SelectionChangeEvent event) {
         log.log(Level.FINE, "Selection event from tree" + selectionModel);
-        if (ignoreNext) {
-            log.log(Level.FINE, "Ignoring: " + ignoreNext);
-            ignoreNext = false;
-
-            return;
-        }
 
         TagNode node = selectionModel.getSelectedObject();
 
         if (node != null) {
             String tagId = node.getId();
-            goToPhoto(tagId, node.getCachedPhotoList());
+            placeGoTo.goTo(new TagPlace(tagId));
         }
     }
 
-    private void goToPhoto(String otherTagId, PhotoInfoStore store) {
-        navigator.goToTag(otherTagId, store);
-    }
+
 }

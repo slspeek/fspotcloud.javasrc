@@ -46,7 +46,7 @@ public class IntersectionDeleteITest {
     PhotoPage photoPage;
 
     @Test
-    public void testImport() throws Exception {
+    public void testDelteAfterImport() throws Exception {
         peerRunner.startPeer("../peer/src/test/resources/photos.db");
         dashboardPage.loginAndOpen();
         dashboardPage.toggleImportForTagId("2");
