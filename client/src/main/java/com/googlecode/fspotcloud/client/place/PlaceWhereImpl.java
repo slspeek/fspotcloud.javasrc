@@ -31,7 +31,6 @@ import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 
 
 public class PlaceWhereImpl extends PlaceGoToImpl implements PlaceWhere {
-    private BasePlace lastBasePlace = new BasePlace("latest", "");
 
     @Inject
     public PlaceWhereImpl(PlaceController placeController,
@@ -45,6 +44,7 @@ public class PlaceWhereImpl extends PlaceGoToImpl implements PlaceWhere {
 
         if (place instanceof BasePlace) {
             lastBasePlace = (BasePlace) place;
+
         }
 
         return lastBasePlace;

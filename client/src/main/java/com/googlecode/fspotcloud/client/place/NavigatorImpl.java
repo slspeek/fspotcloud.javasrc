@@ -306,8 +306,20 @@ public class NavigatorImpl implements Navigator {
                     @Override
                     public void onSuccess(TagNode result) {
                         PhotoInfoStore store = getSafePhotoInfoStore(result);
+                        int pageNumber = 0;
                         int index = store.indexOf(photoId);
-                        int pageNumber = index / pageSize;
+                        if (index == -1) {
+                            if (!store.isEmpty()) {
+                                PhotoInfo info = store.get(0);
+                                BasePlace lastBasePlace = placeWhere.where();
+                                placeGoTo.goTo(new BasePlace(lastBasePlace.getTagId(), info.getId(),
+                                        lastBasePlace.getColumnCount(), lastBasePlace.getRowCount()));
+
+                            }
+
+                        } else {
+                            pageNumber = index / pageSize;
+                        }
                         getPage(result, pageSize, pageNumber, callback);
                     }
                 });

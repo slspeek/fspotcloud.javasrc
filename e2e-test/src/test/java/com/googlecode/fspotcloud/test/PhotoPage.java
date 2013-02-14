@@ -91,8 +91,9 @@ public class PhotoPage {
     public void assertPagingLabelSays(int pos, int total) {
         String pagingLabelText = selenium.getText("gwt-debug-paging-label");
 
-        if (!pagingLabelText.contains(pos + " of " + total)) {
-            fail();
+        final String label = pos + " of " + total;
+        if (!pagingLabelText.contains(label)) {
+            fail("Expected: " + label + " in: " + pagingLabelText);
         }
     }
 }

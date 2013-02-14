@@ -38,9 +38,6 @@ import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.place.HomePlace;
-import com.googlecode.fspotcloud.client.place.MyUserGroupsPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 
 import java.util.logging.Logger;
 
@@ -49,10 +46,10 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     private static final DashboardViewImplUiBinder uiBinder = GWT.create(DashboardViewImplUiBinder.class);
     private static final Logger log = Logger.getLogger(DashboardViewImpl.class.getName());
 
-    private final PlaceGoTo placeGoTo;
     private final TagDetailsViewImpl tagDetailsView;
     private final GlobalActionsView globalActionsView;
     private final TreeView treeView;
+    private DashboardPresenter presenter;
     @UiField
     PushButtonExt toPhotos;
     @UiField
@@ -63,9 +60,8 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     @Inject
     public DashboardViewImpl(@AdminTreeView TreeView treeView,
                              GlobalActionsView globalActionsView,
-                             TagDetailsView tagDetailsView,
-                             PlaceGoTo placeGoTo) {
-        this.placeGoTo = placeGoTo;
+                             TagDetailsView tagDetailsView
+    ) {
         counter++;
         this.treeView = treeView;
         this.globalActionsView = globalActionsView;
@@ -89,6 +85,11 @@ public class DashboardViewImpl extends Composite implements DashboardView {
         return tagDetailsView;
     }
 
+    @Override
+    public void setPresenter(DashboardPresenter presenter) {
+        this.presenter = presenter;
+    }
+
     @UiFactory
     public TreeViewImpl getTreeView() {
         return (TreeViewImpl) treeView;
@@ -96,12 +97,12 @@ public class DashboardViewImpl extends Composite implements DashboardView {
 
     @UiHandler("toPhotos")
     public void toPhotosClicked(ClickEvent e) {
-        placeGoTo.goTo(new HomePlace());
+        presenter.onToPhotos();
     }
 
     @UiHandler("manageGroups")
     public void manageGroupsClicked(ClickEvent e) {
-        placeGoTo.goTo(new MyUserGroupsPlace());
+        presenter.onManageGroups();
     }
 
     interface DashboardViewImplUiBinder extends UiBinder<Widget, DashboardViewImpl> {

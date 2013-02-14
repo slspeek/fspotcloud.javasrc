@@ -1,7 +1,7 @@
- @def allMostBlack  #464646;
+@def mainBackground #84DBFF;
 
 .cellTreeWidget {
-
+   background-color: mainBackground;
 }
 
 .cellTreeEmptyMessage {
@@ -60,8 +60,9 @@
 }
 
  .cellTreeSelectedItem {
+  /* background: #5CB3FF; */
   background-color: #5CB3FF;
-  color: white;
+  color: cyan;
   height: auto;
   overflow: visible;
 }

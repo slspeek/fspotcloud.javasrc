@@ -27,11 +27,10 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SelectionChangeEvent.Handler;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
+import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
@@ -42,8 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class AdminTreePresenterImpl extends TreePresenterBase implements TreeView.TreePresenter,
-        Handler {
+public class AdminTreePresenterImpl extends TreePresenterBase implements TreeView.TreePresenter {
 
     private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
     private final PlaceGoTo placeGoTo;
@@ -52,20 +50,16 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
                                   DataManager dataManager,
                                   SingleSelectionModelExt selectionModel,
-                                  PlaceGoTo placeGoTo) {
-        super(treeView, dataManager, selectionModel);
+                                  PlaceGoTo placeGoTo,
+                                  @AdminTreeView TreeSelectionHandlerInterface treeSelectionHandler
+    ) {
+        super(treeView, dataManager, selectionModel, treeSelectionHandler);
         this.placeGoTo = placeGoTo;
     }
 
-    @Override
-    public void init() {
-        super.init();
-        selectionModel.addSelectionChangeHandler(this);
-    }
 
-    @Override
-    public void onSelectionChange(SelectionChangeEvent event) {
-        log.log(Level.FINE, "Selection event from tree" + selectionModel);
+    public void onSelectionChange2(SelectionChangeEvent event) {
+        log.log(Level.FINE, "Selection event from admin tree" + event);
 
         TagNode node = selectionModel.getSelectedObject();
 
