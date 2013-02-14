@@ -1,7 +1,7 @@
  @def allMostBlack  #464646;
 
 .cellTreeWidget {
-
+   background-color: black;
 }
 
 .cellTreeEmptyMessage {
@@ -19,7 +19,9 @@
 .cellTreeItemImage {
 
 }
+.foo {
 
+}
 .cellTreeItemImageValue {
 
 }
@@ -61,6 +63,7 @@
 
  .cellTreeSelectedItem {
   background-color: allMostBlack;
+  background: allMostBlack;
   color: white;
   height: auto;
   overflow: visible;

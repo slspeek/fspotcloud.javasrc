@@ -33,6 +33,8 @@ import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 public class PlaceGoToImpl implements PlaceGoTo {
     protected final PlaceController placeController;
     protected final MainPlaceHistoryMapper mainPlaceHistoryMapper;
+    protected BasePlace lastBasePlace = new BasePlace("latest", "");
+    protected String activeTagId;
 
     @Inject
     public PlaceGoToImpl(PlaceController placeController,
@@ -43,11 +45,20 @@ public class PlaceGoToImpl implements PlaceGoTo {
 
     @Override
     public void goTo(Place place) {
+        if (place instanceof TagPlace) {
+            activeTagId = ((TagPlace) place).getTagId();
+        } else if (place instanceof BasePlace) {
+            activeTagId = ((BasePlace) place).getTagId();
+        }
         placeController.goTo(place);
     }
 
     @Override
     public void goTo(String token) {
         goTo(mainPlaceHistoryMapper.getPlace(token.substring(1)));
+    }
+
+    public String getLastTagId() {
+        return activeTagId;
     }
 }

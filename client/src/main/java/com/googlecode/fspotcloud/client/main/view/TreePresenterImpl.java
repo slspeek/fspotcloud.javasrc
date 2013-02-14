@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
@@ -43,23 +42,21 @@ import java.util.logging.Logger;
 
 public class TreePresenterImpl extends TreePresenterBase {
     private final Logger log = Logger.getLogger(TreePresenterImpl.class.getName());
-    private final TreeSelectionHandlerInterface treeSelectionHandler;
     private final IClientLoginManager IClientLoginManager;
 
     @Inject
     public TreePresenterImpl(@BasicTreeView TreeView treeView,
                              DataManager dataManager,
                              SingleSelectionModelExt singleSelectionModel,
-                             TreeSelectionHandlerInterface treeSelectionHandler,
+                             @BasicTreeView TreeSelectionHandlerInterface treeSelectionHandler,
                              IClientLoginManager IClientLoginManager) {
-        super(treeView, dataManager, singleSelectionModel);
-        this.treeSelectionHandler = treeSelectionHandler;
+        super(treeView, dataManager, singleSelectionModel, treeSelectionHandler);
         this.IClientLoginManager = IClientLoginManager;
     }
 
     public void init() {
         super.init();
-        treeSelectionHandler.setSelectionModel(selectionModel);
+        //treeSelectionHandler.setSelectionModel(selectionModel);
         loadUserInfo();
     }
 

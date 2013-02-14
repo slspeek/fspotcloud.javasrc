@@ -29,7 +29,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
@@ -106,8 +105,8 @@ public class AppModule extends AbstractGinModule {
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
         bind(TagPresenterFactory.class).to(TagPresenterFactoryImpl.class);
 
-        bind(SelectionChangeEvent.Handler.class).to(TreeSelectionHandler.class)
-                .in(Singleton.class);
+//        bind(SelectionChangeEvent.Handler.class).to(AdminTreeSelectionHandler.class)
+//                .in(Singleton.class);
         bind(SlideshowDelayView.SlideshowPresenter.class)
                 .toProvider(SlideshowDelayPresenterFactoryImpl.class);
         install(new GinFactoryModuleBuilder().implement(
@@ -120,7 +119,8 @@ public class AppModule extends AbstractGinModule {
         install(new GinFactoryModuleBuilder().implement(ImageView.class,
                 ImageViewImpl.class).build(ImageViewFactory.class));
 
-        bind(TreeSelectionHandlerInterface.class).to(TreeSelectionHandler.class);
+        bind(TreeSelectionHandlerInterface.class).annotatedWith(AdminTreeView.class).to(AdminTreeSelectionHandler.class);
+        bind(TreeSelectionHandlerInterface.class).annotatedWith(BasicTreeView.class).to(TreeSelectionHandler.class);
         bind(LoadNewLocation.class).to(LoadNewLocationImpl.class);
 
         //admin

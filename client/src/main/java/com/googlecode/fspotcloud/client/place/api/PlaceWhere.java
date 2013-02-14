@@ -33,5 +33,7 @@ public interface PlaceWhere {
 
     String whereToken();
 
+    String getLastTagId();
+
     Place getRawWhere();
 }

@@ -29,12 +29,17 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.*;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.HomePlace;
+import com.googlecode.fspotcloud.client.place.MyUserGroupsPlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.logging.Logger;
@@ -49,7 +54,9 @@ public class DashboardPresenterImpl extends AbstractActivity
     private final TagDetailsActivityFactory tagDetailsActivityFactory;
     private TagDetailsView.TagDetailsPresenter activity;
     private final IClientLoginManager clientLoginManager;
+    private final DataManager dataManager;
     private final PlaceGoTo placeGoTo;
+    private final PlaceWhere placeWhere;
 
 
     @Inject
@@ -58,13 +65,17 @@ public class DashboardPresenterImpl extends AbstractActivity
                                   GlobalActionsView.GlobalActionsPresenter globalActionsPresenter,
                                   TagDetailsActivityFactory tagDetailsActivityFactory,
                                   IClientLoginManager IClientLoginManager,
-                                  PlaceGoTo placeGoTo) {
+                                  DataManager dataManager,
+                                  PlaceGoTo placeGoTo,
+                                  PlaceWhere placeWhere) {
         this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
         this.globalActionsPresenter = globalActionsPresenter;
         this.tagDetailsActivityFactory = tagDetailsActivityFactory;
         this.clientLoginManager = IClientLoginManager;
+        this.dataManager = dataManager;
         this.placeGoTo = placeGoTo;
+        this.placeWhere = placeWhere;
     }
 
     @Override
@@ -99,7 +110,33 @@ public class DashboardPresenterImpl extends AbstractActivity
     }
 
     @Override
+    public void onToPhotos() {
+        final String tagId = placeWhere.getLastTagId();
+        dataManager.getAdminTagNode(tagId, new AsyncCallback<TagNode>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                placeGoTo.goTo(new HomePlace());
+            }
+
+            @Override
+            public void onSuccess(TagNode result) {
+                if (result != null && result.isImportIssued()) {
+                    placeGoTo.goTo(new BasePlace(tagId, "", 5, 4));
+                } else {
+                    placeGoTo.goTo(new HomePlace());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onManageGroups() {
+        placeGoTo.goTo(new MyUserGroupsPlace());
+    }
+
+    @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        dashboardView.setPresenter(this);
         panel.setWidget(dashboardView);
         init();
     }
