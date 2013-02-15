@@ -108,6 +108,6 @@ public class RemovePhotosFromTagHandler extends AbstractBatchActionHandler<Remov
     }
 
     private void clearTreeCache() {
-        peerDatabaseManager.resetCachedTagTree();
+        peerDatabaseManager.resetCachedTagTrees();
     }
 }

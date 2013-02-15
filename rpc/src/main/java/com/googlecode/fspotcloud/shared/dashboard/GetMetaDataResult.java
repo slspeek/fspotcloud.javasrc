@@ -41,6 +41,7 @@ public class GetMetaDataResult implements IsSerializable, Result {
     private String instanceName;
     private long photoCount;
     private Date photosLastCounted;
+    private String adminTreeHash;
 
     public GetMetaDataResult() {
     }
@@ -103,5 +104,13 @@ public class GetMetaDataResult implements IsSerializable, Result {
 
     public int getPendingCommandCount() {
         return pendingCommandCount;
+    }
+
+    public void setAdminTreeHash(String adminTreeHash) {
+        this.adminTreeHash = adminTreeHash;
+    }
+
+    public String getAdminTreeHash() {
+        return adminTreeHash;
     }
 }

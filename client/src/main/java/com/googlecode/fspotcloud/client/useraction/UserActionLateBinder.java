@@ -5,18 +5,20 @@ import com.googlecode.fspotcloud.client.useraction.application.ApplicationAction
 import com.googlecode.fspotcloud.client.useraction.application.handler.DemoFactory;
 import com.googlecode.fspotcloud.client.useraction.application.handler.HideControlsHandler;
 import com.googlecode.fspotcloud.client.useraction.application.handler.TreeFocusHandler;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardLateBinder;
 import com.googlecode.fspotcloud.keyboardaction.ConfigBuilder;
 
-public class UserActionHandlerBinder {
+public class UserActionLateBinder {
 
     private final ApplicationActions applicationActions;
 
     @Inject
-    UserActionHandlerBinder(ConfigBuilder configBuilder,
-                            HideControlsHandler hideControlsHandler,
-                            TreeFocusHandler treeFocusHandler,
-                            DemoFactory demoFactory,
-                            ApplicationActions applicationActions) {
+    UserActionLateBinder(ConfigBuilder configBuilder,
+                         HideControlsHandler hideControlsHandler,
+                         TreeFocusHandler treeFocusHandler,
+                         DemoFactory demoFactory,
+                         ApplicationActions applicationActions,
+                         DashboardLateBinder dashboardLateBinder) {
         this.applicationActions = applicationActions;
         configBuilder.bindHandler(applicationActions.hide_controls, hideControlsHandler);
         configBuilder.bindHandler(applicationActions.tree_focus, treeFocusHandler);

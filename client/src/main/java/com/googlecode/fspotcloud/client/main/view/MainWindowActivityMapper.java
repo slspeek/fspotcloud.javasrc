@@ -156,11 +156,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
             activity = tagPresenterFactory.get(basePlace);
             modeController.setMode(Modes.TAG_VIEW);
         } else if (place instanceof TagPlace) {
-
-            modeController.setMode(Modes.LOGIN);
-
+            modeController.setMode(Modes.DASHBOARD);
             return dashboardPresenter.withPlace((TagPlace) place);
-
         } else {
             log.warning("getActivity will return null for:" + place);
         }

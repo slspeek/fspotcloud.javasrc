@@ -28,6 +28,7 @@ import com.google.inject.Inject;
 import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
+import com.googlecode.fspotcloud.server.util.DigestTool;
 import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataAction;
 import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataResult;
 import com.googlecode.fspotcloud.user.IAdminPermission;
@@ -35,6 +36,7 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
 import net.customware.gwt.dispatch.shared.DispatchException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 
 public class GetMetaDataHandler extends SimpleActionHandler<GetMetaDataAction, GetMetaDataResult> {
@@ -66,6 +68,8 @@ public class GetMetaDataHandler extends SimpleActionHandler<GetMetaDataAction, G
             dataInfo.setPhotoCount(peerDatabase.getPhotoCount());
             dataInfo.setTagCount(peerDatabase.getTagCount());
             dataInfo.setPendingCommandCount(getPendingCommandCount());
+            DigestTool tool = new DigestTool();
+            dataInfo.setAdminTreeHash(tool.getHash(peerDatabase.getCachedAdminTagTree()));
         } catch (Exception e) {
             throw new ActionException(e);
         }

@@ -88,7 +88,7 @@ public class TagDataCallbackTest {
         assertEquals(10, tag.getCount());
         assertEquals(TAGNAME, tag.getTagName());
         assertNull(tag.getParentId());
-        verify(peers).resetCachedTagTree();
+        verify(peers).resetCachedTagTrees();
         verifyNoMoreInteractions(peers);
     }
 
@@ -99,7 +99,7 @@ public class TagDataCallbackTest {
         assertEquals(10, tag.getCount());
         assertEquals(TAGNAME, tag.getTagName());
         assertNull(tag.getParentId());
-        verify(peers).resetCachedTagTree();
+        verify(peers).resetCachedTagTrees();
         verifyNoMoreInteractions(peers);
     }
 }

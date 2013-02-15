@@ -50,7 +50,7 @@ public class DeleteTagsHandlerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        target = new DeleteTagsHandler(dispatchAsync, tagManager);
+        target = new DeleteTagsHandler(dispatchAsync, tagManager, peerDatabaseDao);
         System.out.println(tagManager);
     }
 

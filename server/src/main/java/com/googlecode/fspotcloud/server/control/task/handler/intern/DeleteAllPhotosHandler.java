@@ -25,6 +25,8 @@
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllPhotosAction;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
@@ -40,13 +42,16 @@ public class DeleteAllPhotosHandler extends SimpleActionHandler<DeleteAllPhotosA
     private final Logger log = Logger.getLogger(DeleteAllPhotosHandler.class.getName());
     private final TaskQueueDispatch dispatchAsync;
     private final PhotoDao photoManager;
+    private final PeerDatabaseDao peerDatabaseDao;
 
     @Inject
     public DeleteAllPhotosHandler(TaskQueueDispatch dispatchAsync,
-                                  PhotoDao photoManager) {
+                                  PhotoDao photoManager,
+                                  PeerDatabaseDao peerDatabaseDao) {
         super();
         this.dispatchAsync = dispatchAsync;
         this.photoManager = photoManager;
+        this.peerDatabaseDao = peerDatabaseDao;
     }
 
     @Override
@@ -56,8 +61,9 @@ public class DeleteAllPhotosHandler extends SimpleActionHandler<DeleteAllPhotosA
 
         if (!photoManager.isEmpty()) {
             dispatchAsync.execute(new DeleteAllPhotosAction());
+        } else {
+            peerDatabaseDao.resetCachedTagTrees();
         }
-
         return new VoidResult();
     }
 }
