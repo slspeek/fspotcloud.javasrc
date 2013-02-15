@@ -19,6 +19,7 @@ dependencies {
     compile project(':peer-rpc')
     compile 'org.jdom:jdom:1.1'
     compile ext.libs.commons_codec
+    compile ext.libs.commons_lang
 
     compile ext.libs.bot_dispatch_controller
     compile ext.libs.bot_dispatch_api

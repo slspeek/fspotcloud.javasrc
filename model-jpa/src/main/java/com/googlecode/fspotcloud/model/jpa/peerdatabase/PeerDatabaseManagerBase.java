@@ -32,6 +32,7 @@ import com.googlecode.simplejpadao.SimpleDAONamedIdImpl;
 import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -78,7 +79,7 @@ public abstract class PeerDatabaseManagerBase<T extends PeerDatabase, U extends 
     }
 
     @Override
-    public void resetCachedTagTree() {
+    public void resetCachedTagTrees() {
         T dp = get();
         TagNode tree = dp.getCachedTagTree();
         TagNode admin = dp.getCachedAdminTagTree();
@@ -88,7 +89,7 @@ public abstract class PeerDatabaseManagerBase<T extends PeerDatabase, U extends 
             dp.setCachedAdminTagTree(null);
             save(dp);
 
-            //log.info("TagTree RESET (was:" + tree + ")");
+            log.log(Level.FINEST,  "TagTree RESET (was:" + tree + ")");
         }
     }
 

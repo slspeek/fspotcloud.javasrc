@@ -80,7 +80,7 @@ public abstract class CachedPeerDatabaseManagerBase<T extends PeerDatabase, U ex
     }
 
     @Override
-    public void resetCachedTagTree() {
+    public void resetCachedTagTrees() {
         T dp = get();
         TagNode tree = dp.getCachedTagTree();
         dp.setCachedTagTree(null);

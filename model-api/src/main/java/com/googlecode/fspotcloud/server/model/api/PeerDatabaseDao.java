@@ -32,5 +32,5 @@ public interface PeerDatabaseDao extends SimpleDAONamedId<PeerDatabase, String> 
 
     void touchPeerContact();
 
-    void resetCachedTagTree();
+    void resetCachedTagTrees();
 }

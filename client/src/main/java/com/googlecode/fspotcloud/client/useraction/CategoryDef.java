@@ -11,6 +11,7 @@ public class CategoryDef {
     public final ActionCategory SLIDESHOW;
     public final ActionCategory RASTER;
     public final ActionCategory ABOUT;
+    public final ActionCategory DASHBOARD;
 
     @Inject
     public CategoryDef(ConfigBuilder configBuilder) {
@@ -19,5 +20,6 @@ public class CategoryDef {
         SLIDESHOW = configBuilder.createActionCategory("Slideshow");
         RASTER = configBuilder.createActionCategory("Viewing raster");
         ABOUT = configBuilder.createActionCategory("About");
+        DASHBOARD = configBuilder.createActionCategory("Dashboard");
     }
 }

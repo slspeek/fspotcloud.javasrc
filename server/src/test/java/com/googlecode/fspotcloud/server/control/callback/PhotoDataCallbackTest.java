@@ -113,6 +113,6 @@ public class PhotoDataCallbackTest {
         PhotoInfo info = tag1.getCachedPhotoList().first();
         assertEquals(PHOTO_ID, info.getId());
         assertEquals(VERSION, info.getVersion());
-        verify(peerDatabaseDao).resetCachedTagTree();
+        verify(peerDatabaseDao).resetCachedTagTrees();
     }
 }

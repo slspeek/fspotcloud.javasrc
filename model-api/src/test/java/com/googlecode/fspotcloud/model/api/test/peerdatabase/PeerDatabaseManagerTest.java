@@ -34,8 +34,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -93,7 +91,7 @@ public class PeerDatabaseManagerTest {
 
     @Test
     public void resetCachedTagTree2() {
-        manager.resetCachedTagTree();
+        manager.resetCachedTagTrees();
 
         PeerDatabase defaultPD = manager.get();
         TagNode list = defaultPD.getCachedTagTree();
@@ -105,7 +103,7 @@ public class PeerDatabaseManagerTest {
         defaultPD = manager.get();
         list = defaultPD.getCachedTagTree();
         assertNotNull(list);
-        manager.resetCachedTagTree();
+        manager.resetCachedTagTrees();
         defaultPD = null;
         defaultPD = manager.get();
         list = defaultPD.getCachedTagTree();

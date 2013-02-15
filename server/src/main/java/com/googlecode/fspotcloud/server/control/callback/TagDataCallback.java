@@ -69,7 +69,7 @@ public class TagDataCallback implements SerializableAsyncCallback<TagDataResult>
     }
 
     private void clearTreeCache() {
-        peerDatabaseDao.resetCachedTagTree();
+        peerDatabaseDao.resetCachedTagTrees();
     }
 
     private void recieveTag(TagData data, Tag tag) {

@@ -24,13 +24,14 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class TagPlace extends Place {
 
-    public static TagPlace DEFAULT = new TagPlace("0");
+    public static TagPlace DEFAULT = new TagPlace("");
 
     private final String tagId;
 
@@ -47,8 +48,7 @@ public class TagPlace extends Place {
         if (other instanceof TagPlace) {
             TagPlace basePlace = (TagPlace) other;
             String tagId = basePlace.getTagId();
-
-            return equal(this.tagId, tagId);
+            return Objects.equal(this.tagId, tagId);
         } else {
             return false;
         }
@@ -56,31 +56,11 @@ public class TagPlace extends Place {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-
-        if (tagId != null) {
-            hash += tagId.hashCode();
-        }
-
-        return hash;
+        return Objects.hashCode(tagId);
     }
 
     public String toString() {
-        String result = getClass().getName() + ": tagId: " + tagId;
-
-        return result;
-    }
-
-    public static boolean equal(Object a, Object b) {
-        if (a == null) {
-            if (b == null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return a.equals(b);
-        }
+        return Objects.toStringHelper(this).add("tagId", tagId).toString();
     }
 
     public static class Tokenizer implements PlaceTokenizer<TagPlace> {
