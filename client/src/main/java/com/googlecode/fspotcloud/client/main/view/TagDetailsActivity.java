@@ -65,7 +65,7 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
     @Override
     public void init() {
-        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@init");
+        log.log(Level.FINE, "init");
         tagDetailsView.setPresenter(this);
         populateView();
     }
@@ -88,7 +88,7 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
                         @Override
                         public void onSuccess(VoidResult result) {
-                            Window.Location.reload();
+                            populateView();
                         }
                     });
         } else {
@@ -101,7 +101,7 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
                         @Override
                         public void onSuccess(VoidResult result) {
-                            Window.Location.reload();
+                            populateView();
                         }
                     });
         }
@@ -137,7 +137,6 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
                 .setText(String.valueOf(tag.getCount()));
         tagDetailsView.getTagImportIssuedValue()
                 .setText(tag.isImportIssued() ? "yes" : "no");
-        // tagDetailsView.getImportButton().setEnabled(!tag.isImportIssued());
         tagDetailsView.getImportButtonText()
                 .setText(tag.isImportIssued() ? "Remove" : "Import");
         tagDetailsView.getTagLoadedImagesCountValue()

@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllTagsAction;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
@@ -40,12 +41,16 @@ public class DeleteTagsHandler extends SimpleActionHandler<DeleteAllTagsAction, 
     private final Logger log = Logger.getLogger(DeleteTagsHandler.class.getName());
     private final TaskQueueDispatch dispatchAsync;
     private final TagDao tagManager;
+    private final PeerDatabaseDao peerDatabaseDao;
 
     @Inject
-    public DeleteTagsHandler(TaskQueueDispatch dispatchAsync, TagDao tagManager) {
+    public DeleteTagsHandler(TaskQueueDispatch dispatchAsync,
+                             TagDao tagManager,
+                             PeerDatabaseDao peerDatabaseDao) {
         super();
         this.dispatchAsync = dispatchAsync;
         this.tagManager = tagManager;
+        this.peerDatabaseDao = peerDatabaseDao;
     }
 
     @Override
@@ -56,6 +61,8 @@ public class DeleteTagsHandler extends SimpleActionHandler<DeleteAllTagsAction, 
 
         if (!tagManager.isEmpty()) {
             dispatchAsync.execute(new DeleteAllTagsAction());
+        } else {
+            peerDatabaseDao.resetCachedTagTrees();
         }
 
         return new VoidResult();

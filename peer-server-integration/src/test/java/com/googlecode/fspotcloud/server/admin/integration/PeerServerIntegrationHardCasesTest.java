@@ -63,7 +63,7 @@ public class PeerServerIntegrationHardCasesTest extends PeerServerEnvironment {
     @Test
     public void shouldBeNull() throws SQLException, DispatchException {
         fetchTagTree();
-        peers.resetCachedTagTree();
+        peers.resetCachedTagTrees();
 
         PeerDatabase peer = peers.get();
         assertNull(peer.getCachedTagTree());

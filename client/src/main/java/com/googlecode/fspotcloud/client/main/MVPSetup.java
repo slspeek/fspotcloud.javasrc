@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
 import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
-import com.googlecode.fspotcloud.client.useraction.UserActionHandlerBinder;
+import com.googlecode.fspotcloud.client.useraction.UserActionLateBinder;
 
 import java.util.logging.Logger;
 
@@ -47,7 +47,7 @@ public class MVPSetup {
                     StylesSetup stylesSetup,
                     GinMvpDisplay appWidget,
                     PlaceHistoryHandler placeHistoryHandler,
-                    UserActionHandlerBinder userActionHandlerBinder) {
+                    UserActionLateBinder userActionLateBinder) {
         this.appWidget = appWidget;
         this.stylesSetup = stylesSetup;
         this.placeHistoryHandler = placeHistoryHandler;

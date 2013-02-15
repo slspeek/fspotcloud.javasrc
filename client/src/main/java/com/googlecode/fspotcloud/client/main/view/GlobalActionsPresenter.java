@@ -24,10 +24,13 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.dashboard.*;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
@@ -40,13 +43,22 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
     private final GlobalActionsView globalActionsView;
     private final DispatchAsync dispatcher;
     private final TimerInterface timer;
+    private final EventBus eventBus;
+    private final DashboardActions actions;
+
+    private String lastTreeHash = "";
 
     @Inject
     public GlobalActionsPresenter(GlobalActionsView globalActionsView,
-                                  DispatchAsync dispatcher, TimerInterface timer) {
+                                  DispatchAsync dispatcher,
+                                  TimerInterface timer,
+                                  EventBus eventBus,
+                                  DashboardActions actions) {
         super();
         this.timer = timer;
         this.globalActionsView = globalActionsView;
+        this.eventBus = eventBus;
+        this.actions = actions;
         globalActionsView.setPresenter(this);
         this.dispatcher = dispatcher;
     }
@@ -132,7 +144,7 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
                 new AsyncCallback<GetMetaDataResult>() {
                     @Override
                     public void onSuccess(GetMetaDataResult meta) {
-                        populateView(meta);
+                        processMetaData(meta);
                     }
 
                     @Override
@@ -148,6 +160,15 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
                         timer.schedule(6000);
                     }
                 });
+    }
+
+    private void processMetaData(GetMetaDataResult meta) {
+        populateView(meta);
+        String newHash = meta.getAdminTreeHash();
+        if (!newHash.equals(lastTreeHash))  {
+            lastTreeHash = newHash;
+            eventBus.fireEvent(new KeyboardActionEvent(actions.reloadTree.getId()));
+        }
     }
 
     private void populateView(GetMetaDataResult info) {
