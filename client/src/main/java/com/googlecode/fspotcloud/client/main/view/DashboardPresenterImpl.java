@@ -51,31 +51,24 @@ public class DashboardPresenterImpl extends AbstractActivity
     private final DashboardView dashboardView;
     private final TreeView.TreePresenter treePresenter;
     private final GlobalActionsView.GlobalActionsPresenter globalActionsPresenter;
-    private final TagDetailsActivityFactory tagDetailsActivityFactory;
     private TagDetailsView.TagDetailsPresenter activity;
     private final IClientLoginManager clientLoginManager;
-    private final DataManager dataManager;
     private final PlaceGoTo placeGoTo;
-    private final PlaceWhere placeWhere;
 
 
     @Inject
     public DashboardPresenterImpl(DashboardView dashboardView,
                                   @AdminTreeView TreeView.TreePresenter treePresenter,
                                   GlobalActionsView.GlobalActionsPresenter globalActionsPresenter,
-                                  TagDetailsActivityFactory tagDetailsActivityFactory,
+                                  TagDetailsActivity tagDetailsActivity,
                                   IClientLoginManager IClientLoginManager,
-                                  DataManager dataManager,
-                                  PlaceGoTo placeGoTo,
-                                  PlaceWhere placeWhere) {
+                                  PlaceGoTo placeGoTo) {
         this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
         this.globalActionsPresenter = globalActionsPresenter;
-        this.tagDetailsActivityFactory = tagDetailsActivityFactory;
+        this.activity = tagDetailsActivity;
         this.clientLoginManager = IClientLoginManager;
-        this.dataManager = dataManager;
         this.placeGoTo = placeGoTo;
-        this.placeWhere = placeWhere;
     }
 
     @Override
@@ -104,34 +97,8 @@ public class DashboardPresenterImpl extends AbstractActivity
     public DashboardView.DashboardPresenter withPlace(TagPlace place) {
         ((AdminTreePresenterImpl) treePresenter).setPlace(place);
 
-        activity = tagDetailsActivityFactory.get(place);
         activity.init();
         return this;
-    }
-
-    @Override
-    public void onToPhotos() {
-        final String tagId = placeWhere.getLastTagId();
-        dataManager.getAdminTagNode(tagId, new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                placeGoTo.goTo(new HomePlace());
-            }
-
-            @Override
-            public void onSuccess(TagNode result) {
-                if (result != null && result.isImportIssued()) {
-                    placeGoTo.goTo(new BasePlace(tagId, "", 5, 4));
-                } else {
-                    placeGoTo.goTo(new HomePlace());
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onManageGroups() {
-        placeGoTo.goTo(new MyUserGroupsPlace());
     }
 
     @Override

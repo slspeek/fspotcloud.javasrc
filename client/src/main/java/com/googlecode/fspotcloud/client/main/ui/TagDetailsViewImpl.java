@@ -30,7 +30,12 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
 import java.util.logging.Logger;
 
@@ -48,16 +53,21 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     Label tagCountValueLabel;
     @UiField
     Label tagLoadedCountValueLabel;
-    @UiField
-    PushButtonExt importTagButton;
-    @UiField
-    PushButtonExt manageAccessButton;
+    @UiField(provided = true)
+    ActionButton importTagButton;
+    @UiField(provided = true)
+    ActionButton manageAccessButton;
     private TagDetailsPresenter presenter;
 
     private static int count;
 
 
-    public TagDetailsViewImpl() {
+    @Inject
+    public TagDetailsViewImpl(UserActionFactory userActionFactory,
+                              DashboardActions dashboard,
+                              KeyboardActionFactory keyboardActionFactory) {
+        importTagButton = keyboardActionFactory.getButton(dashboard.importTag);
+        manageAccessButton = keyboardActionFactory.getButton(dashboard.manageAccess);
         initWidget(uiBinder.createAndBindUi(this));
         importTagButton.ensureDebugId("import-tag-button");
         manageAccessButton.ensureDebugId("manage-access-button");
@@ -87,16 +97,6 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     @Override
     public HasText getTagNameValue() {
         return tagNameValueLabel;
-    }
-
-    @UiHandler("importTagButton")
-    public void onImportClicked(ClickEvent event) {
-        presenter.importTag();
-    }
-
-    @UiHandler("manageAccessButton")
-    public void onManageAccessClicked(ClickEvent event) {
-        presenter.manageAccess();
     }
 
     @Override

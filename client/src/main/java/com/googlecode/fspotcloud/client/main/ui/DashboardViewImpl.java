@@ -38,6 +38,10 @@ import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
 import java.util.logging.Logger;
 
@@ -50,19 +54,28 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     private final GlobalActionsView globalActionsView;
     private final TreeView treeView;
     private DashboardPresenter presenter;
-    @UiField
-    PushButtonExt toPhotos;
-    @UiField
-    PushButtonExt manageGroups;
+    @UiField(provided = true)
+    ActionButton toPhotos;
+    @UiField(provided = true)
+    ActionButton manageGroups;
+    @UiField(provided = true)
+    ActionButton reloadTree;
 
     public static int counter;
 
     @Inject
     public DashboardViewImpl(@AdminTreeView TreeView treeView,
                              GlobalActionsView globalActionsView,
-                             TagDetailsView tagDetailsView
+                             TagDetailsView tagDetailsView,
+                             UserActionFactory userActionFactory,
+                             KeyboardActionFactory keyboardActionFactory,
+                             DashboardActions actions
     ) {
+
         counter++;
+        toPhotos = keyboardActionFactory.getButton(actions.toPhotos);
+        manageGroups = keyboardActionFactory.getButton(actions.manageUserGroups);
+        reloadTree = keyboardActionFactory.getButton(actions.reloadTree);
         this.treeView = treeView;
         this.globalActionsView = globalActionsView;
         this.tagDetailsView = (TagDetailsViewImpl) tagDetailsView;
@@ -93,16 +106,6 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     @UiFactory
     public TreeViewImpl getTreeView() {
         return (TreeViewImpl) treeView;
-    }
-
-    @UiHandler("toPhotos")
-    public void toPhotosClicked(ClickEvent e) {
-        presenter.onToPhotos();
-    }
-
-    @UiHandler("manageGroups")
-    public void manageGroupsClicked(ClickEvent e) {
-        presenter.onManageGroups();
     }
 
     interface DashboardViewImplUiBinder extends UiBinder<Widget, DashboardViewImpl> {

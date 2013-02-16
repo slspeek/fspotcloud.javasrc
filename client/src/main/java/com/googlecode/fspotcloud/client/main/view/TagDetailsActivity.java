@@ -29,11 +29,13 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.place.TagApprovalPlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
 import com.googlecode.fspotcloud.shared.dashboard.UserUnImportsTagAction;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
@@ -47,20 +49,17 @@ import java.util.logging.Logger;
 public class TagDetailsActivity extends AbstractActivity implements TagDetailsView.TagDetailsPresenter {
     private final Logger log = Logger.getLogger(TagDetailsActivity.class.getName());
     private final TagDetailsView tagDetailsView;
-    private final TagPlace tagPlace;
-    private TagNode tagNode;
     private final DataManager dataManager;
-    private final DispatchAsync dispatch;
-    private final PlaceGoTo placeGoTo;
+    private final PlaceWhere placeWhere;
 
-    public TagDetailsActivity(TagDetailsView tagDetailsView, TagPlace tagPlace,
-                              DataManager dataManager, DispatchAsync dispatch, PlaceGoTo placeGoTo) {
+    @Inject
+    public TagDetailsActivity(TagDetailsView tagDetailsView,
+                              DataManager dataManager,
+                              PlaceWhere placeWhere) {
         super();
         this.tagDetailsView = tagDetailsView;
-        this.tagPlace = tagPlace;
         this.dataManager = dataManager;
-        this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
+        this.placeWhere = placeWhere;
     }
 
     @Override
@@ -72,49 +71,12 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-
         panel.setWidget(tagDetailsView);
     }
 
-    @Override
-    public void importTag() {
-        if (tagNode.isImportIssued()) {
-            dispatch.execute(new UserUnImportsTagAction(tagPlace.getTagId()),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            log.log(Level.SEVERE, "Action Exception ", caught);
-                        }
-
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            populateView();
-                        }
-                    });
-        } else {
-            dispatch.execute(new UserImportsTagAction(tagPlace.getTagId()),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            log.log(Level.SEVERE, "Action Exception ", caught);
-                        }
-
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            populateView();
-                        }
-                    });
-        }
-    }
-
-    @Override
-    public void manageAccess() {
-        placeGoTo.goTo(new TagApprovalPlace(tagNode.getId()));
-    }
-
-    private void populateView() {
-        String tagId = tagPlace.getTagId();
-        dataManager.getAdminTagNode(tagId,
+    public void populateView() {
+        TagPlace tagPlace = (TagPlace) placeWhere.getRawWhere();
+        dataManager.getAdminTagNode(tagPlace.getTagId(),
                 new AsyncCallback<TagNode>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -124,7 +86,6 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
                     @Override
                     public void onSuccess(TagNode result) {
-                        tagNode = result;
                         populateView(result);
                     }
                 });
