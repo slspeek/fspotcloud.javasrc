@@ -40,9 +40,5 @@ public interface DashboardView extends IsWidget {
         void init();
 
         DashboardPresenter withPlace(TagPlace place);
-
-        void onToPhotos();
-
-        void onManageGroups();
     }
 }
