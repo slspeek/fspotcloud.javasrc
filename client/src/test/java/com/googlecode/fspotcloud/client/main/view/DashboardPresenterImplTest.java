@@ -6,7 +6,6 @@ import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsActivityFactory;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.HomePlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;

@@ -28,42 +28,23 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsActivityFactory;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.place.TagPlace;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class TagDetailsActivityMapper implements ActivityMapper {
     private final Logger log = Logger.getLogger(TagDetailsActivityMapper.class.getName());
-    private final TagDetailsActivityFactory tagDetailsActivityFactory;
+    private final TagDetailsActivity tagDetailsActivity;
 
     @Inject
     public TagDetailsActivityMapper(
-            TagDetailsActivityFactory tagDetailsActivityFactory) {
+            TagDetailsActivity tagDetailsActivity) {
         super();
-        this.tagDetailsActivityFactory = tagDetailsActivityFactory;
-        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        this.tagDetailsActivity = tagDetailsActivity;
     }
 
     @Override
     public Activity getActivity(Place place) {
-        try {
-            log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@getActivity: " + place);
-
-            TagDetailsView.TagDetailsPresenter activity = null;
-
-            if (place instanceof TagPlace) {
-                activity = tagDetailsActivityFactory.get((TagPlace) place);
-                activity.init();
-            }
-
-            return activity;
-        } catch (Exception e) {
-            log.log(Level.INFO, "getActivity error", e);
-            throw new RuntimeException(e);
-        }
+        return tagDetailsActivity;
     }
 }

@@ -124,8 +124,8 @@ public class AppModule extends AbstractGinModule {
         bind(LoadNewLocation.class).to(LoadNewLocationImpl.class);
 
         //admin
-        bind(TagDetailsActivityFactory.class)
-                .to(TagDetailsActivityFactoryImpl.class).in(Singleton.class);
+        bind(TagDetailsView.TagDetailsPresenter.class)
+                .to(TagDetailsActivity.class).in(Singleton.class);
         bind(TagDetailsView.class).to(TagDetailsViewImpl.class)
                 .in(Singleton.class);
         bind(DashboardView.class).to(DashboardViewImpl.class).in(Singleton.class);

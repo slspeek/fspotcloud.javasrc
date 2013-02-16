@@ -63,69 +63,6 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
         this.dispatcher = dispatcher;
     }
 
-    @Override
-    public void deleteAllCommands() {
-        globalActionsView.getDeleteAllCommandsButton().setEnabled(false);
-        dispatcher.execute(new UserDeletesAllCommandsAction(),
-                new AsyncCallback<VoidResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "Action Exception ", caught);
-                        globalActionsView.getDeleteAllCommandsButton()
-                                .setEnabled(true);
-                    }
-
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        globalActionsView.getDeleteAllCommandsButton()
-                                .setEnabled(true);
-                    }
-                });
-    }
-
-    @Override
-    public void deleteAllTags() {
-        globalActionsView.getDeleteAllTagsButton().setEnabled(false);
-
-        if (globalActionsView.confirm("Really delete all tags and photos?")) {
-            dispatcher.execute(new UserDeletesAllAction(),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            log.log(Level.SEVERE, "Action Exception ", caught);
-                            globalActionsView.getDeleteAllTagsButton()
-                                    .setEnabled(true);
-                        }
-
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            globalActionsView.getDeleteAllTagsButton()
-                                    .setEnabled(true);
-                        }
-                    });
-        } else {
-            globalActionsView.getDeleteAllTagsButton().setEnabled(true);
-        }
-    }
-
-    @Override
-    public void update() {
-        log.info("update");
-        globalActionsView.getUpdateButton().setEnabled(false);
-        dispatcher.execute(new UserSynchronizesPeerAction(),
-                new AsyncCallback<VoidResult>() {
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "Action Exception ", caught);
-                        globalActionsView.getUpdateButton().setEnabled(true);
-                    }
-
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        log.info("succes update");
-                        globalActionsView.getUpdateButton().setEnabled(true);
-                    }
-                });
-    }
 
     @Override
     public void init() {

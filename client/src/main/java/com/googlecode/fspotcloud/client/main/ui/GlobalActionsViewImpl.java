@@ -31,7 +31,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
 
 public class GlobalActionsViewImpl extends Composite
@@ -46,14 +51,20 @@ public class GlobalActionsViewImpl extends Composite
     Label tagCountOnPeerValueLabel;
     @UiField
     Label pendingCommandCountValueLabel;
-    @UiField
-    PushButtonExt updateButton;
-    @UiField
-    PushButtonExt deleteAllTagsButton;
-    @UiField
-    PushButtonExt deleteAllCommandsButton;
+    @UiField(provided = true)
+    ActionButton updateButton;
+    @UiField(provided = true)
+    ActionButton deleteAllTagsButton;
+    @UiField(provided = true)
+    ActionButton deleteAllCommandsButton;
 
-    public GlobalActionsViewImpl() {
+    @Inject
+    public GlobalActionsViewImpl(DashboardActions actions,
+                                 UserActionFactory userActionFactory,
+                                 KeyboardActionFactory keyboardActionFactory) {
+        updateButton = keyboardActionFactory.getButton(actions.synchronize);
+        deleteAllTagsButton = keyboardActionFactory.getButton(actions.deleteAll);
+        deleteAllCommandsButton = keyboardActionFactory.getButton(actions.deleteCommands);
         initWidget(uiBinder.createAndBindUi(this));
         deleteAllTagsButton.ensureDebugId("delete-all-tags-button");
         tagCountOnPeerValueLabel.ensureDebugId("tag-count-on-peer-label");
@@ -64,44 +75,11 @@ public class GlobalActionsViewImpl extends Composite
                 "pending-command-count-label");
     }
 
-    @UiHandler("deleteAllCommandsButton")
-    public void onDeleteAllPhotosButtonClicked(ClickEvent event) {
-        presenter.deleteAllCommands();
-    }
 
-    @UiHandler("updateButton")
-    public void updateButtonClicked(ClickEvent event) {
-        presenter.update();
-    }
-
-    @UiHandler("deleteAllTagsButton")
-    public void deleteAllTagsButtonClicked(ClickEvent event) {
-        presenter.deleteAllTags();
-    }
 
     @Override
     public HasText getPhotoCountOnPeerValue() {
         return peerPhotoCountValueLabel;
-    }
-
-    @Override
-    public HasEnabled getDeleteAllTagsButton() {
-        return deleteAllTagsButton;
-    }
-
-    @Override
-    public HasEnabled getDeleteAllCommandsButton() {
-        return deleteAllCommandsButton;
-    }
-
-    @Override
-    public HasEnabled getUpdateButton() {
-        return updateButton;
-    }
-
-    @Override
-    public boolean confirm(String message) {
-        return Window.confirm(message);
     }
 
     @Override
