@@ -34,7 +34,7 @@ public class DashboardPresenterImplTest {
     @Inject
     private GlobalActionsView.GlobalActionsPresenter globalActionsPresenter;
     @Inject
-    private TagDetailsActivityFactory tagDetailsActivityFactory;
+    private TagDetailsActivity tagDetailsActivityFactory;
     @Inject
     private IClientLoginManager clientLoginManager;
     @Inject
