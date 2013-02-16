@@ -24,12 +24,16 @@
 
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllTagsAction;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
 import net.customware.gwt.dispatch.shared.DispatchException;
+import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -38,13 +42,16 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
+@RunWith(JukitoRunner.class)
 public class DeleteTagsHandlerTest {
     DeleteTagsHandler target;
-    @Mock
+    @Inject
     TaskQueueDispatch dispatchAsync;
-    @Mock
+    @Inject
     TagDao tagManager;
-    @Captor
+    @Inject
+    PeerDatabaseDao peerDatabaseDao;
+    @Inject
     ArgumentCaptor<DeleteAllTagsAction> newAction;
 
     @Before
@@ -59,6 +66,7 @@ public class DeleteTagsHandlerTest {
         when(tagManager.isEmpty()).thenReturn(true);
         target.execute(new DeleteAllTagsAction(), null);
         verifyNoMoreInteractions(dispatchAsync);
+        verify(peerDatabaseDao).resetCachedTagTrees();
     }
 
     @Test
