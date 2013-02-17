@@ -78,13 +78,11 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
 
     @Override
     public void setImageUrl(final String url) {
-        image.setUrl("");
         image.setUrl(url);
     }
 
     @Override
     public void setPreviousImageUrl(String url) {
-        image.setUrl("");
         previousImage.setUrl(url);
     }
 

@@ -33,6 +33,7 @@ import com.googlecode.fspotcloud.client.main.event.ZoomViewEvent;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -68,7 +69,7 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
     }
 
     public void setImage() {
-        log.info(photoId);
+        log.log(Level.FINE, "setImage imageId: " + photoId);
         if (photoId != null) {
             String date;
 
@@ -95,7 +96,7 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
 
     @Override
     public void imageClicked() {
-        log.info("about to fire zoom event");
+        log.log(Level.FINEST, "about to fire zoom event");
         eventBus.fireEvent(new ZoomViewEvent(tagId, photoId));
     }
 

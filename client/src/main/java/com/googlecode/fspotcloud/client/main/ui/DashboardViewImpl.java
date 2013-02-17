@@ -32,10 +32,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
-import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
-import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
@@ -57,6 +54,8 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     ActionButton manageGroups;
     @UiField(provided = true)
     ActionButton reloadTree;
+    @UiField(provided = true)
+    StatusViewImpl statusView;
 
     public static int counter;
 
@@ -64,10 +63,12 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     public DashboardViewImpl(@AdminTreeView TreeView treeView,
                              PeerActionsView peerActionsView,
                              TagDetailsView tagDetailsView,
+                             StatusView statusView,
                              KeyboardActionFactory keyboardActionFactory,
                              DashboardActions actions
     ) {
         counter++;
+        this.statusView = (StatusViewImpl) statusView;
         toPhotos = keyboardActionFactory.getButton(actions.toPhotos);
         manageGroups = keyboardActionFactory.getButton(actions.manageUserGroups);
         reloadTree = keyboardActionFactory.getButton(actions.reloadTree);

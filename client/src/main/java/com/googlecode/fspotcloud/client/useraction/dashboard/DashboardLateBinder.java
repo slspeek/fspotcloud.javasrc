@@ -19,6 +19,7 @@ public class DashboardLateBinder {
                         RemoveAllHandler removeAllHandler,
                         ManageAccessHandler manageAccessHandler,
                         ImportTagHandler importTagHandler,
+                        FocusTreeHandler focusTreeHandler,
                         DashboardActions actions) {
         this.actions = actions;
         configBuilder.bindHandler(actions.reloadTree, reloadTree);
@@ -29,5 +30,6 @@ public class DashboardLateBinder {
         configBuilder.bindHandler(actions.deleteAll, removeAllHandler);
         configBuilder.bindHandler(actions.manageAccess, manageAccessHandler);
         configBuilder.bindHandler(actions.importTag, importTagHandler);
+        configBuilder.bindHandler(actions.focusTree, focusTreeHandler);
     }
 }

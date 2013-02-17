@@ -33,6 +33,9 @@ public interface AdminResources extends ClientBundle {
     Style style();
 
     public interface Style extends CssResource {
+
+        String status();
+
         String copyleft();
 
         String editUsergroup();
