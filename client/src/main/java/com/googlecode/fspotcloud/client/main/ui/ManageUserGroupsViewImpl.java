@@ -46,9 +46,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-public class MyUserGroupsViewImpl extends Composite implements ManageUserGroupsView {
-    private final Logger log = Logger.getLogger(MyUserGroupsViewImpl.class.getName());
-    private static final MyUserGroupsViewImplUiBinder uiBinder = GWT.create(MyUserGroupsViewImplUiBinder.class);
+public class ManageUserGroupsViewImpl extends Composite implements ManageUserGroupsView {
+    private final Logger log = Logger.getLogger(ManageUserGroupsViewImpl.class.getName());
+    private static final ManageUserGroupsViewImplUiBinder uiBinder = GWT.create(ManageUserGroupsViewImplUiBinder.class);
     private MyUserGroupsPresenter presenter;
     private final ListDataProvider<UserGroupInfo> dataProvider;
     private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
@@ -67,7 +67,7 @@ public class MyUserGroupsViewImpl extends Composite implements ManageUserGroupsV
     PushButtonExt dashboardButton;
 
     @Inject
-    public MyUserGroupsViewImpl(PlaceGoTo placeGoTo) {
+    public ManageUserGroupsViewImpl(PlaceGoTo placeGoTo) {
         this.placeGoTo = placeGoTo;
         initWidget(uiBinder.createAndBindUi(this));
         newButton.ensureDebugId("new-button");
@@ -161,6 +161,6 @@ public class MyUserGroupsViewImpl extends Composite implements ManageUserGroupsV
         return selectionModel.getSelectedObject();
     }
 
-    interface MyUserGroupsViewImplUiBinder extends UiBinder<Widget, MyUserGroupsViewImpl> {
+    interface ManageUserGroupsViewImplUiBinder extends UiBinder<Widget, ManageUserGroupsViewImpl> {
     }
 }

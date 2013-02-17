@@ -37,7 +37,7 @@ public class UserGroupITest {
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    MyUserGroupsPage myUserGroupsPage;
+    ManageUserGroupsPage manageUserGroupsPage;
     @Inject
     EditUserGroupPage editUserGroupPage;
     @Inject
@@ -48,18 +48,18 @@ public class UserGroupITest {
     @Test
     public void createAndEditUserGroup() throws Exception {
         login.login();
-        myUserGroupsPage.open();
-        myUserGroupsPage.newUserGroup();
-        myUserGroupsPage.selectFirstRow();
-        myUserGroupsPage.editUserGroup();
+        manageUserGroupsPage.open();
+        manageUserGroupsPage.newUserGroup();
+        manageUserGroupsPage.selectFirstRow();
+        manageUserGroupsPage.editUserGroup();
 
         editUserGroupPage.fill("GNU Friends",
                 "My friends from all over the world");
         editUserGroupPage.save();
-        myUserGroupsPage.open();
-        myUserGroupsPage.verifyText("My friends from all over the world");
-        myUserGroupsPage.selectFirstRow();
-        myUserGroupsPage.manageUserGroup();
+        manageUserGroupsPage.open();
+        manageUserGroupsPage.verifyText("My friends from all over the world");
+        manageUserGroupsPage.selectFirstRow();
+        manageUserGroupsPage.manageUserGroup();
         manageUsersPage.newUser(JEFF_GOOGLE_COM);
         manageUsersPage.newUser(LINUS_KERNEL_ORG);
         manageUsersPage.fillEmail("");
@@ -68,8 +68,8 @@ public class UserGroupITest {
         manageUsersPage.deleteUser();
         manageUsersPage.verifyTextNotPresent(LINUS_KERNEL_ORG);
 
-        myUserGroupsPage.deleteUserGroup();
-        myUserGroupsPage.verifyTextNotPresent(
+        manageUserGroupsPage.deleteUserGroup();
+        manageUserGroupsPage.verifyTextNotPresent(
                 "My friends from all over the world");
     }
 }
