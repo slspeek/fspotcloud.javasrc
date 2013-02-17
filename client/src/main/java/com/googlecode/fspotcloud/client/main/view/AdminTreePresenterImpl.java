@@ -31,6 +31,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
@@ -45,16 +46,18 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
 
     private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
     private final PlaceGoTo placeGoTo;
+    private final StatusView statusView;
 
     @Inject
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
                                   DataManager dataManager,
                                   SingleSelectionModelExt selectionModel,
                                   PlaceGoTo placeGoTo,
-                                  @AdminTreeView ITreeSelectionHandler treeSelectionHandler
-    ) {
+                                  @AdminTreeView ITreeSelectionHandler treeSelectionHandler,
+                                  StatusView statusView) {
         super(treeView, dataManager, selectionModel, treeSelectionHandler);
         this.placeGoTo = placeGoTo;
+        this.statusView = statusView;
     }
 
 
@@ -77,15 +80,19 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
     }
 
     protected void requestTagTreeData() {
+        statusView.setStatusText("Requesting new category tree from the server");
         dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
                 log.log(Level.WARNING, "getAdminTagTree", caught);
+                statusView.setStatusText("The tree could not be retrieved due to a server error");
             }
 
             @Override
             public void onSuccess(TagNode result) {
+                statusView.setStatusText("Received new category tree from the server");
                 setModel(result);
+                statusView.setStatusText("Reloaded tree UI");
             }
         });
     }

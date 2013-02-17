@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -40,10 +41,12 @@ public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
     private SingleSelectionModelExt selectionModel;
     private final PlaceGoTo placeGoTo;
     private boolean ignoreNext = false;
+    private final StatusView statusView;
 
     @Inject
-    public AdminTreeSelectionHandler(PlaceGoTo placeGoTo) {
+    public AdminTreeSelectionHandler(PlaceGoTo placeGoTo, StatusView statusView) {
         this.placeGoTo = placeGoTo;
+        this.statusView = statusView;
     }
 
     @Override
@@ -70,7 +73,10 @@ public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
 
         if (node != null) {
             String tagId = node.getId();
+            statusView.setStatusText("Category: " + node.getTagName() + " selected");
             placeGoTo.goTo(new TagPlace(tagId));
+        }  else {
+            statusView.setStatusText("Nothing selected");
         }
     }
 

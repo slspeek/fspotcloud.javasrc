@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RemovePhotosFromTagAction;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.UserUnImportsTagAction;
@@ -48,14 +49,19 @@ public class UserUnImportsTagHandler extends SimpleActionHandler<UserUnImportsTa
     private final TagDao tagManager;
     private final TaskQueueDispatch dispatchAsync;
     private final IAdminPermission adminPermission;
+    private final PeerDatabaseDao peerDatabaseDao;
+
 
     @Inject
     public UserUnImportsTagHandler(TagDao tagManager,
-                                   TaskQueueDispatch dispatchAsync, IAdminPermission adminPermission) {
+                                   TaskQueueDispatch dispatchAsync,
+                                   IAdminPermission adminPermission,
+                                   PeerDatabaseDao peerDatabaseDao) {
         super();
         this.tagManager = tagManager;
         this.dispatchAsync = dispatchAsync;
         this.adminPermission = adminPermission;
+        this.peerDatabaseDao = peerDatabaseDao;
     }
 
     @Override
@@ -71,6 +77,7 @@ public class UserUnImportsTagHandler extends SimpleActionHandler<UserUnImportsTa
             if (tag.isImportIssued()) {
                 tag.setImportIssued(false);
                 tagManager.save(tag);
+                peerDatabaseDao.resetCachedTagTrees();
             }
 
             List<String> idList = new ArrayList<String>();

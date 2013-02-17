@@ -1,4 +1,4 @@
-@def slideshowAnimationTime 1.2s;
+@def slideshowAnimationTime 1.0s;
 
 .imageIn {
   -webkit-animation: fade_in slideshowAnimationTime;
@@ -13,23 +13,31 @@
 
 @-webkit-keyframes fade_in {
    0%   { opacity: 0.0;  }
+   25%  { opacity: 0.25; }
     50%  { opacity: 0.5; }
+   75%  { opacity: 0.75; }
     100% { opacity: 1.0; }
 }
 @-moz-keyframes fade_in {
-  0%   { opacity: 0.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
+  0%   { opacity: 0.0;  }
+    25%  { opacity: 0.25; }
+     50%  { opacity: 0.5; }
+    75%  { opacity: 0.75; }
+     100% { opacity: 1.0; }
 }
 @-o-keyframes fade_in {
-  0%   { opacity: 0.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
+   0%   { opacity: 0.0;  }
+     25%  { opacity: 0.25; }
+      50%  { opacity: 0.5; }
+     75%  { opacity: 0.75; }
+      100% { opacity: 1.0; }
 }
 @keyframes fade_in {
-  0%   { opacity: 0.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
+  0%   { opacity: 0.0;  }
+    25%  { opacity: 0.25; }
+     50%  { opacity: 0.5; }
+    75%  { opacity: 0.75; }
+     100% { opacity: 1.0; }
 }
 
 .imageOut {
@@ -44,22 +52,29 @@
 
 @-webkit-keyframes fade_out {
   0%   { opacity: 1.0; }
+  25%  { opacity: 0.75; }
   50%  { opacity: 0.5; }
+  75%  { opacity: 0.25; }
   100% { opacity: 0.0; }
 }
 @-moz-keyframes fade_out {
   0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
+    25%  { opacity: 0.75; }
+    50%  { opacity: 0.5; }
+    75%  { opacity: 0.25; }
+    100% { opacity: 0.0; }
 }
 @-o-keyframes fade_out {
   0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
+    25%  { opacity: 0.75; }
+    50%  { opacity: 0.5; }
+    75%  { opacity: 0.25; }
+    100% { opacity: 0.0; }
 }
 @keyframes fade_out {
   0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
-
+    25%  { opacity: 0.75; }
+    50%  { opacity: 0.5; }
+    75%  { opacity: 0.25; }
+    100% { opacity: 0.0; }
 }

@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.server.admin.handler;
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.server.control.callback.TagUpdateInstructionsCallback;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
@@ -47,13 +48,17 @@ public class UserImportsTagHandler extends SimpleActionHandler<UserImportsTagAct
     private final TagDao tagManager;
     private final ControllerDispatchAsync dispatchAsync;
     private final IAdminPermission adminPermission;
+    private final PeerDatabaseDao peerDatabaseDao;
 
     @Inject
     public UserImportsTagHandler(TagDao tagManager,
-                                 ControllerDispatchAsync dispatchAsync, IAdminPermission adminPermission) {
+                                 ControllerDispatchAsync dispatchAsync,
+                                 IAdminPermission adminPermission,
+                                 PeerDatabaseDao peerDatabaseDao) {
         this.tagManager = tagManager;
         this.dispatchAsync = dispatchAsync;
         this.adminPermission = adminPermission;
+        this.peerDatabaseDao = peerDatabaseDao;
     }
 
     @Override
@@ -68,6 +73,7 @@ public class UserImportsTagHandler extends SimpleActionHandler<UserImportsTagAct
             if (!tag.isImportIssued()) {
                 tag.setImportIssued(true);
                 tagManager.save(tag);
+                peerDatabaseDao.resetCachedTagTrees();
             }
 
             GetTagUpdateInstructionsAction peerAction = new GetTagUpdateInstructionsAction(tagId,

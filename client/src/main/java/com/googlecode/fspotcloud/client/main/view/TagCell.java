@@ -46,7 +46,6 @@ public class TagCell extends AbstractCell<TagNode> {
                        TagNode value, SafeHtmlBuilder sb) {
         SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(),
                 resources.style().tag());
-        log.info(snippetHtml.asString());
         sb.append(snippetHtml);
     }
 

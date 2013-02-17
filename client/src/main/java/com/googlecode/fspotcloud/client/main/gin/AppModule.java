@@ -54,6 +54,7 @@ public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+        bind(StatusView.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(UIRegistrationBuilder.class).to(UserActionFactory.class);
         bind(IScheduler.class).to(SchedulerImpl.class);
         install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));

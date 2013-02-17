@@ -1,5 +1,6 @@
 package com.googlecode.fspotcloud.client.useraction.dashboard;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.useraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
@@ -36,6 +37,7 @@ public class DashboardBinder extends AbstractBinder {
 
         configBuilder.register(category, actions.importTag, get('I'));
         configBuilder.register(category, actions.manageAccess, get('A'));
+        configBuilder.register(category, actions.focusTree, get(KeyCodes.KEY_ENTER));
     }
 
 

@@ -30,6 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
@@ -44,15 +45,19 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
     private final TagDetailsView tagDetailsView;
     private final DataManager dataManager;
     private final PlaceWhere placeWhere;
+    private final StatusView statusView;
+
 
     @Inject
     public TagDetailsActivity(TagDetailsView tagDetailsView,
                               DataManager dataManager,
-                              PlaceWhere placeWhere) {
+                              PlaceWhere placeWhere,
+                              StatusView statusView) {
         super();
         this.tagDetailsView = tagDetailsView;
         this.dataManager = dataManager;
         this.placeWhere = placeWhere;
+        this.statusView = statusView;
     }
 
     @Override
@@ -68,18 +73,22 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
     }
 
     public void populateView() {
+        statusView.setStatusText("Retrieving category data");
         TagPlace tagPlace = (TagPlace) placeWhere.getRawWhere();
+
         dataManager.getAdminTagNode(tagPlace.getTagId(),
                 new AsyncCallback<TagNode>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         log.log(Level.SEVERE, "Trouble retrieving admin tag tree ",
                                 caught);
+                        statusView.setStatusText("A server error prevented reloading category data");
                     }
 
                     @Override
                     public void onSuccess(TagNode result) {
                         populateView(result);
+                        statusView.setStatusText("Reloaded information for category: " + result.getTagName());
                     }
                 });
     }

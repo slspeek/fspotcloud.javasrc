@@ -65,6 +65,7 @@ public class ApplicationBinder extends AbstractBinder {
         configBuilder.register(category, actions.hide_controls, get('F'));
         configBuilder.register(category, actions.demo, get('7'));
         configBuilder.register(category, actions.tree_focus, get(KeyCodes.KEY_ENTER));
+        configBuilder.register(category, actions.reloadTree, get('R'));
     }
 
     private IActionHandler getHelpHandler() {
