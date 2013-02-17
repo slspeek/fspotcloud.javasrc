@@ -18,6 +18,7 @@ public class ApplicationActions {
     public final ActionDef show_help;
     public final ActionDef hide_help;
     public final ActionDef demo;
+    public final ActionDef reloadTree;
 
     @Inject
     public ApplicationActions(Resources RESOURCES) {
@@ -57,6 +58,7 @@ public class ApplicationActions {
         show_help = new ActionDef("help", "Help", "Show the keyboard help", RESOURCES.helpIcon());
         hide_help = new ActionDef("hide-help", "Hide help", "Hide the help popup.");
         demo = new ActionDef("demo", "Demo", "Play a demo.", RESOURCES.demoIcon());
+        reloadTree = new ActionDef("reload-tree", "Reload tree", "Reload the category tree", null);
     }
 
 }

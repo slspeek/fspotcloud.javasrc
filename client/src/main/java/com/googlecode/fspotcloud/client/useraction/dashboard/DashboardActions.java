@@ -5,6 +5,7 @@ import com.googlecode.fspotcloud.keyboardaction.ActionDef;
 
 public class DashboardActions {
     public final ActionDef reloadTree;
+    public final ActionDef focusTree;
     public final ActionDef toPhotos;
     public final ActionDef manageUserGroups;
     public final ActionDef synchronize;
@@ -27,5 +28,6 @@ public class DashboardActions {
         deleteAll = new ActionDef("remove-all", "Remove all", "Remove all imported data", null);
         importTag = new ActionDef("import-tag", "Import tag", "Import this tag", null);
         manageAccess = new ActionDef("manage-access", "Manage access", "Grant this label to usergroups", null);
+        focusTree = new ActionDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree", null);;
     }
 }

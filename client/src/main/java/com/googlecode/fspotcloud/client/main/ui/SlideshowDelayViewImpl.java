@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -36,7 +37,7 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class SlideshowDelayViewImpl extends Composite implements SlideshowDelayView {
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(SlideshowDelayViewImpl.class.getName());

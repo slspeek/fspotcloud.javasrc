@@ -2,6 +2,10 @@
 @def notBlack #505050;
 @def verticalPropertyPadding 6px;
 
+.status {
+    background-color: mainBackground;
+    font-size: 12pt;
+}
 .titleLabel {
     text-align: center;
     color: notBlack;

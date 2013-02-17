@@ -31,6 +31,7 @@ package com.googlecode.fspotcloud.server.admin.handler;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.model.jpa.tag.TagEntity;
 import com.googlecode.fspotcloud.server.control.callback.TagUpdateInstructionsCallback;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
@@ -55,6 +56,8 @@ public class UserImportsTagHandlerTest {
     UserImportsTagHandler handler;
     UserImportsTagAction action = new UserImportsTagAction("1");
     Tag tagOne;
+    @Inject
+    private PeerDatabaseDao peerDatabaseDao;
 
     @Before
     public void setup() {
@@ -71,7 +74,7 @@ public class UserImportsTagHandlerTest {
         when(tagManager.find(TAG_ID)).thenReturn(tagOne);
 
         VoidResult result = handler.execute(action, null);
-
+        verify(peerDatabaseDao).resetCachedTagTrees();
         verify(dispatchAsync)
                 .execute(actionCaptor.capture(), callbackCaptor.capture());
 
