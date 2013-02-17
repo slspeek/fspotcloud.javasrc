@@ -28,7 +28,6 @@
 */
 package com.googlecode.fspotcloud.model.jpa.peerdatabase;
 
-import com.google.common.collect.Lists;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import org.junit.Test;
 

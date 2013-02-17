@@ -28,8 +28,6 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Result;
 
-import java.util.List;
-
 
 @GwtCompatible
 public class TagTreeResult implements Result {
@@ -50,7 +48,7 @@ public class TagTreeResult implements Result {
     public boolean equals(Object obj) {
         if (obj instanceof TagTreeResult) {
             TagTreeResult other = (TagTreeResult) obj;
-           TagNode otherNodes = other.getTree();
+            TagNode otherNodes = other.getTree();
 
             return Objects.equal(otherNodes, getTree());
         } else {

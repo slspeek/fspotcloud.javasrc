@@ -2,7 +2,10 @@ package com.googlecode.fspotcloud.server.main.handler;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
-import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
+import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import net.customware.gwt.dispatch.server.Dispatch;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
@@ -31,7 +34,7 @@ public class RssFeedHandlerTest {
     public void testExistingCategory() throws Exception {
         TagTreeResult tagTreeResult = new TagTreeResult(node);
         when(dispatch.execute(tagTreeAction)).thenReturn(tagTreeResult);
-        String rss = handler.execute(action,null).get();
+        String rss = handler.execute(action, null).get();
         assertTrue(rss.contains("/#BasePlace:1:42:1:1"));
     }
 

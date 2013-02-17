@@ -18,7 +18,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
     private final Logger log = Logger.getLogger(ActionMenu.class.getName());
 
     private final MenuBar innerBar = new MenuBar(true);
-    private final ButtonDefinitions buttonDefinitions;
+    private final ActionUIRegistry actionUIRegistry;
     private final EventBus eventBus;
     private final PopupPanel popupPanel = new PopupPanel(true);
     private final KeyboardActionResources keyboardActionResources;
@@ -30,8 +30,8 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
         }
     };
 
-    public ActionMenu(String caption, ButtonDefinitions buttonDefinitions, EventBus eventBus, KeyboardActionResources keyboardActionResources, ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
-        this.buttonDefinitions = buttonDefinitions;
+    public ActionMenu(String caption, ActionUIRegistry actionUIRegistry, EventBus eventBus, KeyboardActionResources keyboardActionResources, ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
+        this.actionUIRegistry = actionUIRegistry;
         this.eventBus = eventBus;
         this.keyboardActionResources = keyboardActionResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
@@ -61,7 +61,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
     }
 
     public void add(final String actionId) {
-        ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        ActionDef actionDef = actionUIRegistry.getAction(actionId);
         SafeHtml menuItemContent = actionMenuItemSafeHtml.get(actionDef);
         MenuItem menuItem = innerBar.addItem(menuItemContent, new Scheduler.ScheduledCommand() {
             @Override
@@ -92,7 +92,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
 
     private void showPopup() {
         popupPanel.showRelativeTo(this);
-        popupPanel.setPopupPosition(popupPanel.getPopupLeft() + innerBar.getOffsetWidth()/4, popupPanel.getPopupTop() - popupPanel.getOffsetHeight() - this.getOffsetHeight());
+        popupPanel.setPopupPosition(popupPanel.getPopupLeft() + innerBar.getOffsetWidth() / 4, popupPanel.getPopupTop() - popupPanel.getOffsetHeight() - this.getOffsetHeight());
         popupPanel.show();
         innerBar.focus();
     }

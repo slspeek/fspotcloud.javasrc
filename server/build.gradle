@@ -33,7 +33,7 @@ dependencies {
 
     testCompile project(':model-jpa-j2ee')
     testCompile project(':test-util')
-    testCompile project(path:':rpc', configuration:'testCompile')
+    testCompile project(path: ':rpc', configuration: 'testCompile')
     testCompile ext.libs.junit
     testCompile ext.libs.mockito
     testCompile ext.libs.guava

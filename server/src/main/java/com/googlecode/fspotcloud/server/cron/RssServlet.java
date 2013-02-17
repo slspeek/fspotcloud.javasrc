@@ -56,7 +56,7 @@ public class RssServlet extends HttpServlet {
 
         } catch (DispatchException e) {
             response.getOutputStream().println(e.getMessage());
-        }  finally {
+        } finally {
             response.getOutputStream().close();
         }
 

@@ -37,7 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.MyUserGroupsView;
+import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-public class MyUserGroupsViewImpl extends Composite implements MyUserGroupsView {
+public class MyUserGroupsViewImpl extends Composite implements ManageUserGroupsView {
     private final Logger log = Logger.getLogger(MyUserGroupsViewImpl.class.getName());
     private static final MyUserGroupsViewImplUiBinder uiBinder = GWT.create(MyUserGroupsViewImplUiBinder.class);
     private MyUserGroupsPresenter presenter;

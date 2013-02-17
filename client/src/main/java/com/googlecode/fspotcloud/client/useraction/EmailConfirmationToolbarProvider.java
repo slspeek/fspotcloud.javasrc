@@ -13,8 +13,7 @@ public class EmailConfirmationToolbarProvider implements Provider<ActionToolbar>
     private final ApplicationActions actions;
 
     @Inject
-    public EmailConfirmationToolbarProvider(UserActionFactory actionFactory,
-                                            KeyboardActionFactory keyboardActionFactory,
+    public EmailConfirmationToolbarProvider(KeyboardActionFactory keyboardActionFactory,
                                             ApplicationActions actions) {
         this.keyboardActionFactory = keyboardActionFactory;
         this.actions = actions;

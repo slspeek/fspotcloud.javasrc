@@ -8,12 +8,9 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(JukitoRunner.class)
 public class UpdateUserHandlerNotLoggedInTest {
-     public static final String NEW_PASSWORD = "new password";
+    public static final String NEW_PASSWORD = "new password";
     public static final String OLD_PASSWORD = "old password";
 
     @Inject

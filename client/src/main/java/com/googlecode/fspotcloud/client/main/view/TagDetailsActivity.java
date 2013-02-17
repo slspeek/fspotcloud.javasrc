@@ -26,21 +26,14 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.place.TagApprovalPlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
-import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
-import com.googlecode.fspotcloud.shared.dashboard.UserUnImportsTagAction;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.TagNode;
-import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

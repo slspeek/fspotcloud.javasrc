@@ -8,18 +8,18 @@ import java.util.Map;
 import static com.google.common.collect.Maps.newHashMap;
 
 @GwtCompatible
-public class ActionImplementationRegister {
+public class ActionHandlerRegistry {
 
     private final Map<String, IActionHandler> registry = newHashMap();
 
     @Inject
-    private ActionImplementationRegister() {
+    private ActionHandlerRegistry() {
     }
 
     void putAction(String actionId, IActionHandler handlerI) {
         IActionHandler previous = registry.put(actionId, handlerI);
         if (previous != null) {
-            throw new IllegalStateException("Action bound to " + previous + ". ( attempting " + actionId + ")");
+            throw new IllegalStateException("ActionId already bound : " + actionId);
         }
     }
 

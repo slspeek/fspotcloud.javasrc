@@ -3,7 +3,7 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.user.cellview.client.TreeNode;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
+import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -19,7 +19,7 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter, Provi
     protected final TreeView treeView;
     protected final DataManager dataManager;
     protected final SingleSelectionModelExt selectionModel;
-    protected final TreeSelectionHandlerInterface treeSelectionHandler;
+    protected final ITreeSelectionHandler treeSelectionHandler;
 
     protected TagPlace place;
     protected TagTreeModel treeModel;
@@ -29,7 +29,7 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter, Provi
     protected TreePresenterBase(TreeView treeView,
                                 DataManager dataManager,
                                 SingleSelectionModelExt selectionModel,
-                                TreeSelectionHandlerInterface treeSelectionHandler) {
+                                ITreeSelectionHandler treeSelectionHandler) {
         this.treeView = treeView;
         this.dataManager = dataManager;
         this.selectionModel = selectionModel;
@@ -87,7 +87,7 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter, Provi
                     firstRun = false;
                     treeSelectionHandler.setIgnoreNext(true);
                 }
-                selectionModel.setSelectedQuietly(selectedNode, true);
+                selectionModel.setSelected(selectedNode, true);
             }
         } else {
             log.log(Level.FINE, "place or model is null");

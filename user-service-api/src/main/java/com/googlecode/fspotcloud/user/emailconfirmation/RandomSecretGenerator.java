@@ -35,6 +35,7 @@ public class RandomSecretGenerator implements SecretGenerator {
     public String nextSessionId() {
         return new BigInteger(130, random).toString(32);
     }
+
     @Override
     public String getSecret(String user) {
         return nextSessionId();

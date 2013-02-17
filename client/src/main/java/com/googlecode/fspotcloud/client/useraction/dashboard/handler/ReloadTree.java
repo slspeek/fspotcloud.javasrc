@@ -7,8 +7,10 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class ReloadTree implements IActionHandler {
 
-    @Inject @AdminTreeView
+    @Inject
+    @AdminTreeView
     TreeView.TreePresenter treePresenter;
+
     @Override
     public void performAction(String actionId) {
         treePresenter.reloadTree();

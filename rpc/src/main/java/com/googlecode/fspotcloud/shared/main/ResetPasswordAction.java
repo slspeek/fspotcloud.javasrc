@@ -34,7 +34,9 @@ public class ResetPasswordAction implements Action<ResetPasswordResult> {
     private String secret;
     private String newPassword;
 
-    /** Needed for Serializable */
+    /**
+     * Needed for Serializable
+     */
     private ResetPasswordAction() {
     }
 

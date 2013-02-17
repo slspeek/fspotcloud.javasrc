@@ -28,7 +28,6 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import com.google.web.bindery.event.shared.Event;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible

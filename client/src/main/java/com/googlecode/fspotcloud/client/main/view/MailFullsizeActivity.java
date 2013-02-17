@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.ImagePresenterFactory;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.main.view.api.MailFullsizeView;
@@ -31,6 +32,7 @@ public class MailFullsizeActivity extends AbstractActivity implements MailFullsi
     private final MailFullsizePlace mailFullsizePlace;
     private final Navigator navigator;
     private final PlaceGoTo placeGoTo;
+    private final IScheduler scheduler;
 
     @Inject
 
@@ -40,13 +42,14 @@ public class MailFullsizeActivity extends AbstractActivity implements MailFullsi
             DispatchAsync dispatchAsync,
             ImagePresenterFactory imagePresenterFactory,
             Navigator navigator,
-            PlaceGoTo placeGoTo) {
+            PlaceGoTo placeGoTo, IScheduler scheduler) {
         this.mailFullsizeView = mailFullsizeView;
         this.dispatchAsync = dispatchAsync;
         this.imagePresenterFactory = imagePresenterFactory;
         this.mailFullsizePlace = mailFullsizePlace;
         this.navigator = navigator;
         this.placeGoTo = placeGoTo;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -77,12 +80,14 @@ public class MailFullsizeActivity extends AbstractActivity implements MailFullsi
                                     info,
                                     imageView,
                                     false);
-                            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+                            scheduler.schedule(new Runnable() {
                                 @Override
-                                public void execute() {
+                                public void run() {
                                     imagePresenter.init();
                                 }
                             });
+
                         } else {
                             log.info("No photo info");
                         }

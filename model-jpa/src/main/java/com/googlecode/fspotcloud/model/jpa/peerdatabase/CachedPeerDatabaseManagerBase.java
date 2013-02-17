@@ -31,7 +31,6 @@ import com.googlecode.simplejpadao.cacheddao.CachedSimpleDAONamedIdImpl;
 
 import javax.persistence.EntityManager;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 

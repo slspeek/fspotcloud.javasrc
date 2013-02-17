@@ -29,7 +29,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.MyUserGroupsView;
+import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
 import com.googlecode.fspotcloud.client.place.EditUserGroupPlace;
 import com.googlecode.fspotcloud.client.place.ManageUsersPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
@@ -40,14 +40,14 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Logger;
 
 
-public class MyUserGroupsPresenterImpl extends AbstractActivity implements MyUserGroupsView.MyUserGroupsPresenter {
+public class MyUserGroupsPresenterImpl extends AbstractActivity implements ManageUserGroupsView.MyUserGroupsPresenter {
     private final Logger log = Logger.getLogger(MyUserGroupsPresenterImpl.class.getName());
-    private final MyUserGroupsView view;
+    private final ManageUserGroupsView view;
     private final DispatchAsync dispatch;
     private final PlaceGoTo placeGoTo;
 
     @Inject
-    public MyUserGroupsPresenterImpl(MyUserGroupsView view,
+    public MyUserGroupsPresenterImpl(ManageUserGroupsView view,
                                      DispatchAsync dispatch, PlaceGoTo placeGoTo) {
         this.view = view;
         this.dispatch = dispatch;

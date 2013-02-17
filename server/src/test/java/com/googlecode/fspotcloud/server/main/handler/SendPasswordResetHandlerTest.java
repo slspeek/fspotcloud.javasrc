@@ -5,8 +5,8 @@ import com.googlecode.fspotcloud.model.jpa.user.UserEntity;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
+import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
 import com.googlecode.fspotcloud.user.emailconfirmation.MailGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import org.jukito.JukitoRunner;
@@ -52,6 +52,7 @@ public class SendPasswordResetHandlerTest {
         SendPasswordResetResult result = handler.execute(action, null);
         Assert.assertEquals(SendPasswordResetResult.Code.NOT_REGISTERED, result.getCode());
     }
+
     @Test
     public void testNotVerified() throws Exception {
         when(userDao.find(RMS_FSF_ORG)).thenReturn(rms);

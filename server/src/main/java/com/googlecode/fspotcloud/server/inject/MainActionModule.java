@@ -28,7 +28,6 @@ import com.googlecode.fspotcloud.server.main.handler.*;
 import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
 import com.googlecode.fspotcloud.server.model.tag.UserGroupHelper;
 import com.googlecode.fspotcloud.shared.main.*;
-import com.googlecode.fspotcloud.shared.main.EmailConfirmationAction;
 import com.googlecode.fspotcloud.user.emailconfirmation.EmailConfirmationHandler;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 

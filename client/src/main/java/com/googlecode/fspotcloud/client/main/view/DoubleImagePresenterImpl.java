@@ -31,6 +31,7 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.DoubleImageView;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
@@ -47,22 +48,22 @@ public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     private final Navigator navigator;
     private final EventBus eventBus;
     private final Slideshow slideshow;
-
-
+    private final IScheduler scheduler;
     private PhotoInfo info;
     private SlideshowPlace currentPlace;
     private SlideshowPlace previousPlace;
-
 
     @Inject
     public DoubleImagePresenterImpl(DoubleImageView imageView,
                                     Navigator navigator,
                                     EventBus eventBus,
-                                    Slideshow slideshow) {
+                                    Slideshow slideshow,
+                                    IScheduler scheduler) {
         this.imageView = imageView;
         this.navigator = navigator;
         this.eventBus = eventBus;
         this.slideshow = slideshow;
+        this.scheduler = scheduler;
     }
 
     public void init() {
@@ -102,10 +103,9 @@ public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     public void setCurrentPlace(SlideshowPlace currentPlace) {
         this.previousPlace = this.currentPlace;
         this.currentPlace = currentPlace;
-        Scheduler scheduler = Scheduler.get();
-        scheduler.scheduleDeferred(new Scheduler.ScheduledCommand() {
+        scheduler.schedule(new Runnable() {
             @Override
-            public void execute() {
+            public void run() {
                 setImage();
             }
         });

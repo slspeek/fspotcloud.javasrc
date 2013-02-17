@@ -26,7 +26,10 @@ package com.googlecode.fspotcloud.server.model.tag;
 
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class TreeBuilder {
@@ -59,7 +62,7 @@ public class TreeBuilder {
 
     private void sortTree(TagNode node) {
         List<TagNode> childNodes = node.getChildren();
-        for(TagNode child: childNodes) {
+        for (TagNode child : childNodes) {
             sortTree(child);
         }
         Collections.sort(childNodes);

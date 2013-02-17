@@ -48,8 +48,8 @@ public class PhotoUpdateHandler extends AbstractBatchActionHandler<PhotoUpdateAc
     @Inject
     public PhotoUpdateHandler(@Named("maxTicks")
                               int maxTicks, @Named("maxPhotoTicks")
-    int maxPhotoTicks, @Named("defaultImageSpecs")
-    ImageSpecs imageSpecs, ControllerDispatchAsync controllerDispatch,
+                              int maxPhotoTicks, @Named("defaultImageSpecs")
+                              ImageSpecs imageSpecs, ControllerDispatchAsync controllerDispatch,
                               TaskQueueDispatch dispatchAsync) {
         super(dispatchAsync, maxTicks);
         this.controllerDispatch = controllerDispatch;

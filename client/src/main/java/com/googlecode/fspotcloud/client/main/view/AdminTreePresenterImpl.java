@@ -30,7 +30,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
-import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
+import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
@@ -51,7 +51,7 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
                                   DataManager dataManager,
                                   SingleSelectionModelExt selectionModel,
                                   PlaceGoTo placeGoTo,
-                                  @AdminTreeView TreeSelectionHandlerInterface treeSelectionHandler
+                                  @AdminTreeView ITreeSelectionHandler treeSelectionHandler
     ) {
         super(treeView, dataManager, selectionModel, treeSelectionHandler);
         this.placeGoTo = placeGoTo;

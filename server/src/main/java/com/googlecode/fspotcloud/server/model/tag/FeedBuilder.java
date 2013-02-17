@@ -12,7 +12,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import javax.inject.Provider;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +30,7 @@ public class FeedBuilder {
         try {
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             result = xmlOutputter.outputString(getFeedDocument(tagNode));
-        }   catch (Exception e) {
+        } catch (Exception e) {
             log.log(Level.FINE, "Failed outputting xml for feed for node " + tagNode, e);
         }
         return result;
@@ -67,8 +66,8 @@ public class FeedBuilder {
         title.setContent(new Text(info.getDate().toString()));
         Element description = new Element("description");
         description.setText(info.getDescription());
-        String linkText = serverAddressProvider.get() + "/#BasePlace:" + tagId +":"  + info.getId() + ":1:1";
-        Element link  = new Element("link");
+        String linkText = serverAddressProvider.get() + "/#BasePlace:" + tagId + ":" + info.getId() + ":1:1";
+        Element link = new Element("link");
         link.setText(linkText);
         result.addContent(title);
         result.addContent(link);

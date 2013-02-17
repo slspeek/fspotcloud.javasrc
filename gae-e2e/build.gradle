@@ -48,7 +48,7 @@ task copyWar(dependsOn: unpackWar, type: Copy) {
     into 'build/exploded'
 }
 
-task setupFixture(type:Copy, dependsOn: copyWar) {
+task setupFixture(type: Copy, dependsOn: copyWar) {
     from('src/test/resources/') {
         include "local_db.bin"
     }
