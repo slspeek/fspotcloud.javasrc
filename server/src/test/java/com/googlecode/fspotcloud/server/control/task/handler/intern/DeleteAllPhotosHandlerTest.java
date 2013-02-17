@@ -28,13 +28,10 @@
 */
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
-import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllPhotosAction;
-import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import org.jukito.JukitoRunner;
@@ -44,7 +41,6 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 /**
@@ -87,7 +83,7 @@ public class DeleteAllPhotosHandlerTest {
     @Test
     public void testExecuteFinalRun(PhotoDao photoDao,
                                     PeerDatabaseDao peerDatabaseDao,
-                                   TaskQueueDispatch dispatch) throws Exception {
+                                    TaskQueueDispatch dispatch) throws Exception {
         when(photoDao.isEmpty()).thenReturn(Boolean.TRUE);
         DeleteAllPhotosAction action = new DeleteAllPhotosAction();
         ExecutionContext context = null;

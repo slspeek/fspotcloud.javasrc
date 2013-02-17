@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 
 public class MainWindowActivityMapper implements ActivityMapper {
     private final Logger log = Logger.getLogger(MainWindowActivityMapper.class.getName());
-    private final TagPresenterFactory tagPresenterFactory;
+    private final TagActivityFactory tagActivityFactory;
     private final SlideshowActivityFactory slideshowActivityFactory;
     private final Navigator navigator;
     private final IModeController modeController;
@@ -50,18 +50,18 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter;
     private final ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter;
     private final ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity;
-    private final ActivityAsyncProxy<MyUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter;
+    private final ActivityAsyncProxy<ManageUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter;
     private final EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter;
     private final ManageUsersView.ManageUsersPresenter manageUsersPresenter;
     private final ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter;
     private final ChangePasswordActivityFactory changePasswordActivityFactory;
-    private final SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter;
+    private final ActivityAsyncProxy<SendResetPasswordView.ResetPasswordPresenter> sendResetPasswordPresenter;
     private final HomeView.HomePresenter homePresenter;
     private final TagApprovalView.TagApprovalPresenter approvalPresenter;
     private final DashboardView.DashboardPresenter dashboardPresenter;
 
     @Inject
-    public MainWindowActivityMapper(TagPresenterFactory tagPresenterFactory,
+    public MainWindowActivityMapper(TagActivityFactory tagActivityFactory,
                                     SlideshowActivityFactory slideshowActivityFactory,
                                     Navigator navigator, IModeController modeController,
                                     MailFullsizeActivityFactory mailFullsizeActivityFactory,
@@ -69,18 +69,18 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
                                     ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter,
                                     ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity,
-                                    ActivityAsyncProxy<MyUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter,
+                                    ActivityAsyncProxy<ManageUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter,
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter,
                                     ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
                                     ChangePasswordActivityFactory changePasswordActivityFactory,
-                                    SendResetPasswordView.ResetPasswordPresenter sendResetPasswordPresenter,
+                                    ActivityAsyncProxy<SendResetPasswordView.ResetPasswordPresenter> sendResetPasswordPresenter,
                                     HomeView.HomePresenter homePresenter,
                                     TagApprovalView.TagApprovalPresenter approvalPresenter,
                                     DashboardView.DashboardPresenter dashboardPresenter) {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
-        this.tagPresenterFactory = tagPresenterFactory;
+        this.tagActivityFactory = tagActivityFactory;
         this.navigator = navigator;
         this.modeController = modeController;
         this.mailFullsizeActivityFactory = mailFullsizeActivityFactory;
@@ -137,7 +137,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
             modeController.setMode(Modes.LOGIN);
-        } else if (place instanceof MyUserGroupsPlace) {
+        } else if (place instanceof ManageUserGroupsPlace) {
             activity = myUserGroupsPresenter;
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof EditUserGroupPlace) {
@@ -153,7 +153,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.SLIDESHOW);
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;
-            activity = tagPresenterFactory.get(basePlace);
+            activity = tagActivityFactory.get(basePlace);
             modeController.setMode(Modes.TAG_VIEW);
         } else if (place instanceof TagPlace) {
             modeController.setMode(Modes.DASHBOARD);

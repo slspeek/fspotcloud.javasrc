@@ -38,9 +38,7 @@ import org.testng.annotations.Test;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.*;
 
 public class PeerServerIntegrationTest extends PeerServerEnvironment {
     private TearDown toTearDown;

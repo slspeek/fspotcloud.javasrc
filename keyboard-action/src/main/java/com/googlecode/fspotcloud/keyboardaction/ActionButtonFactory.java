@@ -6,17 +6,17 @@ import com.google.inject.Inject;
 public class ActionButtonFactory {
 
     private final EventBus eventBus;
-    private final ButtonDefinitions buttonDefinitions;
+    private final ActionUIRegistry actionUIRegistry;
     private final KeyboardActionResources keyboardActionResources;
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
 
     @Inject
     private ActionButtonFactory(EventBus eventBus,
-                                ButtonDefinitions buttonDefinitions,
+                                ActionUIRegistry actionUIRegistry,
                                 KeyboardActionResources keyboardActionResources,
                                 ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
         this.eventBus = eventBus;
-        this.buttonDefinitions = buttonDefinitions;
+        this.actionUIRegistry = actionUIRegistry;
         this.keyboardActionResources = keyboardActionResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
     }
@@ -26,12 +26,12 @@ public class ActionButtonFactory {
     }
 
     ActionButton get(String actionId) {
-        ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        ActionDef actionDef = actionUIRegistry.getAction(actionId);
         return get(actionDef);
     }
 
     ActionMenu getMenu(String caption) {
-        return new ActionMenu(caption, buttonDefinitions, eventBus, keyboardActionResources, actionMenuItemSafeHtml);
+        return new ActionMenu(caption, actionUIRegistry, eventBus, keyboardActionResources, actionMenuItemSafeHtml);
     }
 
 }

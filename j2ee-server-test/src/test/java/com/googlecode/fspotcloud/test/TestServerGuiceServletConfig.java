@@ -43,9 +43,9 @@ public class TestServerGuiceServletConfig extends GuiceServletContextListener {
 
         try {
             INJECTOR = Guice.createInjector(MODULE);
-        }  catch (Exception e) {
-                 Logger.getAnonymousLogger().log(Level.SEVERE,
-                         "Error during injector setup", e);
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.SEVERE,
+                    "Error during injector setup", e);
         }
         Logger.getAnonymousLogger().info("Injector returned");
         return INJECTOR;

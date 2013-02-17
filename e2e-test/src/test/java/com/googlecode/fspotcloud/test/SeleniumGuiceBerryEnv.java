@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.test;
 
-import com.google.guiceberry.GuiceBerryEnvMain;
 import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.TestScoped;
 import com.google.guiceberry.TestWrapper;

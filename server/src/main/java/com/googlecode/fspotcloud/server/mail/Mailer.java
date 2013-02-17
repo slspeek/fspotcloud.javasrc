@@ -41,7 +41,7 @@ public class Mailer implements IMail {
     @Inject
     public Mailer(@FromAddress
                   String fromAddress, @SMTPServer
-    String smtpServer) {
+                  String smtpServer) {
         this.fromAddress = fromAddress;
         this.smtpServer = smtpServer;
     }

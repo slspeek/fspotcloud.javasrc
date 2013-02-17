@@ -39,7 +39,8 @@ public class SendPasswordResetResult implements Result {
         SUCCESS
     }
 
-    private SendPasswordResetResult() {}
+    private SendPasswordResetResult() {
+    }
 
     public SendPasswordResetResult(Code code) {
         this.code = code;

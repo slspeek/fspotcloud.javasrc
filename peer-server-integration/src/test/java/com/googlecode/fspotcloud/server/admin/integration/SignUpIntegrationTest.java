@@ -29,7 +29,6 @@ import com.google.guiceberry.testng.TestNgGuiceBerry;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.main.SignUpAction;
 import com.googlecode.fspotcloud.shared.main.SignUpResult;
-import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
 import net.customware.gwt.dispatch.server.Dispatch;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

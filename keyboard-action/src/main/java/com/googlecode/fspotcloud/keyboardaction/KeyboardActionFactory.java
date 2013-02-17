@@ -10,11 +10,11 @@ import java.util.List;
 public class KeyboardActionFactory {
 
 
-    private final ActionImplementationRegister actionImplementationRegister;
+    private final ActionHandlerRegistry actionHandlerRegistry;
     private final List<ActionCategory> actionCategoryList;
     private final ActionManager actionManager;
     private final ConfigBuilder configBuilder;
-    private final ButtonDefinitions buttonDefinitions;
+    private final ActionUIRegistry actionUIRegistry;
     private final NativePreviewHandler nativePreviewHandler;
     private final HelpActionsFactory helpActionsFactory;
     private final ActionButtonFactory actionButtonFactory;
@@ -23,22 +23,24 @@ public class KeyboardActionFactory {
     private IModeController modeController;
 
     @Inject
-    public KeyboardActionFactory(ActionImplementationRegister actionImplementationRegister,
+    public KeyboardActionFactory(UIRegistrationBuilder builder,
+                                 ActionHandlerRegistry actionHandlerRegistry,
                                  ActionManager actionManager,
                                  NativePreviewHandler nativePreviewHandler,
                                  HelpActionsFactory helpActionsFactory,
                                  ConfigBuilder configBuilder,
                                  IModeController modeController,
-                                 ButtonDefinitions buttonDefinitions,
+                                 ActionUIRegistry actionUIRegistry,
                                  List<ActionCategory> actionCategoryList,
                                  ActionButtonFactory actionButtonFactory) {
+        builder.build();
         this.actionButtonFactory = actionButtonFactory;
         keyboardActionResources.style().ensureInjected();
-        this.actionImplementationRegister = actionImplementationRegister;
+        this.actionHandlerRegistry = actionHandlerRegistry;
         this.actionManager = actionManager;
         this.helpActionsFactory = helpActionsFactory;
         this.actionCategoryList = actionCategoryList;
-        this.buttonDefinitions = buttonDefinitions;
+        this.actionUIRegistry = actionUIRegistry;
         this.configBuilder = configBuilder;
         this.modeController = modeController;
         this.nativePreviewHandler = nativePreviewHandler;

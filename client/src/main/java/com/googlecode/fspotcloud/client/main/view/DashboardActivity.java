@@ -29,43 +29,41 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
-import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
+import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
+import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.HomePlace;
-import com.googlecode.fspotcloud.client.place.MyUserGroupsPlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
-import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.logging.Logger;
 
 
-public class DashboardPresenterImpl extends AbstractActivity
+public class DashboardActivity extends AbstractActivity
         implements DashboardView.DashboardPresenter {
-    private final Logger log = Logger.getLogger(DashboardPresenterImpl.class.getName());
+    private final Logger log = Logger.getLogger(DashboardActivity.class.getName());
     private final DashboardView dashboardView;
     private final TreeView.TreePresenter treePresenter;
-    private final GlobalActionsView.GlobalActionsPresenter globalActionsPresenter;
+    private final PeerActionsView.PeerActionsPresenter peerActionsPresenter;
     private TagDetailsView.TagDetailsPresenter activity;
     private final IClientLoginManager clientLoginManager;
     private final PlaceGoTo placeGoTo;
 
 
     @Inject
-    public DashboardPresenterImpl(DashboardView dashboardView,
-                                  @AdminTreeView TreeView.TreePresenter treePresenter,
-                                  GlobalActionsView.GlobalActionsPresenter globalActionsPresenter,
-                                  TagDetailsActivity tagDetailsActivity,
-                                  IClientLoginManager IClientLoginManager,
-                                  PlaceGoTo placeGoTo) {
+    public DashboardActivity(DashboardView dashboardView,
+                             @AdminTreeView TreeView.TreePresenter treePresenter,
+                             PeerActionsView.PeerActionsPresenter peerActionsPresenter,
+                             TagDetailsActivity tagDetailsActivity,
+                             IClientLoginManager IClientLoginManager,
+                             PlaceGoTo placeGoTo) {
         this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
-        this.globalActionsPresenter = globalActionsPresenter;
+        this.peerActionsPresenter = peerActionsPresenter;
         this.activity = tagDetailsActivity;
         this.clientLoginManager = IClientLoginManager;
         this.placeGoTo = placeGoTo;
@@ -83,7 +81,7 @@ public class DashboardPresenterImpl extends AbstractActivity
             public void onSuccess(UserInfo result) {
                 if (result.isAdmin()) {
                     treePresenter.init();
-                    globalActionsPresenter.init();
+                    peerActionsPresenter.init();
                 } else if (result.isLoggedIn()) {
                     placeGoTo.goTo(new HomePlace());
                 } else {
@@ -110,7 +108,7 @@ public class DashboardPresenterImpl extends AbstractActivity
 
     @Override
     public void onStop() {
-        globalActionsPresenter.stop();
+        peerActionsPresenter.stop();
         super.onStop();
     }
 }

@@ -4,7 +4,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.junit.client.GWTTestCase;
-import com.googlecode.fspotcloud.testharness.MainFactory;
+import com.googlecode.fspotcloud.testharness.MainBuilder;
 
 public class ActionButtonGwtTest extends GWTTestCase {
 
@@ -15,7 +15,7 @@ public class ActionButtonGwtTest extends GWTTestCase {
     @Override
     protected void gwtSetUp() throws Exception {
         eventBus = new SimpleEventBus();
-        okDef = MainFactory.OK_DEF;
+        okDef = MainBuilder.OK_DEF;
         final KeyboardActionResources keyboardActionResources = GWT.create(KeyboardActionResources.class);
         button = new ActionButton(okDef, eventBus, keyboardActionResources);
         super.gwtSetUp();

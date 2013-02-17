@@ -45,7 +45,7 @@ public class HelpActionsFactory {
                     singleColumnHelpPopup.show();
                     final SafeHtml optionalContent = helpConfig.getOptionalContent();
                     if (optionalContent != null) {
-                       singleColumnHelpPopup.setOptionalContentDiv(optionalContent);
+                        singleColumnHelpPopup.setOptionalContentDiv(optionalContent);
                     }
                 } else {
                     secondColumn = helpContentGenerator.getHelpText(helpConfig.getSecondColumn());

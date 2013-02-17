@@ -28,10 +28,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.TagActivity;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterPresenterFactory;
-import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
-import com.googlecode.fspotcloud.client.main.view.api.TagPresenterFactory;
-import com.googlecode.fspotcloud.client.main.view.api.TagView;
+import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.main.view.api.TagView.TagPresenter;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView.TreePresenter;
 import com.googlecode.fspotcloud.client.place.BasePlace;
@@ -39,17 +36,19 @@ import com.googlecode.fspotcloud.client.place.BasePlace;
 import java.util.logging.Logger;
 
 
-public class TagPresenterFactoryImpl implements TagPresenterFactory {
-    private final Logger log = Logger.getLogger(TagPresenterFactoryImpl.class.getName());
+public class TagActivityFactoryImpl implements TagActivityFactory {
+    private final Logger log = Logger.getLogger(TagActivityFactoryImpl.class.getName());
     private final TagViewImpl tagView;
     private final TreePresenter treePresenter;
     private final ImageRasterPresenterFactory rasterFactory;
+    private final IScheduler scheduler;
 
     @Inject
-    public TagPresenterFactoryImpl(TagView tagView,
-                                   @BasicTreeView TreePresenter treePresenter,
-                                   ImageRasterPresenterFactory rasterFactory) {
+    public TagActivityFactoryImpl(TagView tagView,
+                                  @BasicTreeView TreePresenter treePresenter,
+                                  ImageRasterPresenterFactory rasterFactory, IScheduler scheduler) {
         super();
+        this.scheduler = scheduler;
         this.tagView = (TagViewImpl) tagView;
         this.treePresenter = treePresenter;
         this.rasterFactory = rasterFactory;
@@ -60,7 +59,7 @@ public class TagPresenterFactoryImpl implements TagPresenterFactory {
     public TagPresenter get(BasePlace place) {
         final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory.get(place,
                 tagView.getImageRasterView());
-        TagPresenter presenter = new TagActivity(tagView, rasterPresenter);
+        TagPresenter presenter = new TagActivity(tagView, rasterPresenter, scheduler);
         treePresenter.setPlace(place);
         return presenter;
     }

@@ -30,7 +30,7 @@ import com.googlecode.fspotcloud.client.place.TagPlace;
 
 
 public interface DashboardView extends IsWidget {
-    GlobalActionsView getGlobalActionsView();
+    PeerActionsView getPeerActionsView();
 
     TagDetailsView getTagDetailsView();
 

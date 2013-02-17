@@ -24,27 +24,24 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
-
-import java.util.List;
 
 
-public interface MyUserGroupsView extends IsWidget {
-    void setPresenter(MyUserGroupsPresenter presenter);
+public interface PeerActionsView extends IsWidget {
+    void setPresenter(PeerActionsPresenter presenter);
 
-    void setData(List<UserGroupInfo> data);
+    HasText getTagCountValue();
 
-    UserGroupInfo getSelected();
+    HasText getPhotoCountOnPeerValue();
 
-    interface MyUserGroupsPresenter extends Activity {
-        void newUserGroup();
+    HasText getPendingCommandCountValue();
 
-        void delete();
+    HasText getLastSeenPeerValue();
 
-        void manageUsers();
+    interface PeerActionsPresenter {
+        void init();
 
-        void edit();
+        void stop();
     }
 }

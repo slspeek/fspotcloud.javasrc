@@ -21,8 +21,8 @@
                                                      height="100%"></main:TagDetailsViewImpl>
                         </g:layer>
                         <g:layer right="0%" width="50%">
-                            <main:GlobalActionsViewImpl
-                                    styleName="{res.style.globalActions}"></main:GlobalActionsViewImpl>
+                            <main:PeerActionsViewImpl
+                                    styleName="{res.style.globalActions}"></main:PeerActionsViewImpl>
                         </g:layer>
                     </g:LayoutPanel>
                 </g:center>

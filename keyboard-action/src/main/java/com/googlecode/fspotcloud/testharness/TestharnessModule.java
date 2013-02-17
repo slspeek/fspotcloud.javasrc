@@ -8,17 +8,19 @@ import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
 import com.googlecode.fspotcloud.keyboardaction.ModesProvider;
 import com.googlecode.fspotcloud.keyboardaction.SimpleModesProvider;
+import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
 public class TestharnessModule extends AbstractGinModule {
 
     @Override
     public void configure() {
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+        bind(UIRegistrationBuilder.class).to(MainBuilder.class);
         install(new KeyboardActionModule());
     }
 
     @Provides
     ModesProvider getModes() {
-        return new SimpleModesProvider(MainFactory.MODES);
+        return new SimpleModesProvider(MainBuilder.MODES);
     }
 }

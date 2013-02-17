@@ -3,9 +3,6 @@ package com.googlecode.fspotcloud.server.main.handler;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import org.junit.Test;
 
-import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

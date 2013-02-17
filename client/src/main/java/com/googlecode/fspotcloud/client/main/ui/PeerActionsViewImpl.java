@@ -25,24 +25,23 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
-import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
 
-public class GlobalActionsViewImpl extends Composite
-        implements GlobalActionsView {
+public class PeerActionsViewImpl extends Composite
+        implements PeerActionsView {
     private static final GlobalActionsViewImplUiBinder uiBinder = GWT.create(GlobalActionsViewImplUiBinder.class);
-    private GlobalActionsPresenter presenter;
+    private PeerActionsPresenter presenter;
     @UiField
     Label peerPhotoCountValueLabel;
     @UiField
@@ -59,9 +58,8 @@ public class GlobalActionsViewImpl extends Composite
     ActionButton deleteAllCommandsButton;
 
     @Inject
-    public GlobalActionsViewImpl(DashboardActions actions,
-                                 UserActionFactory userActionFactory,
-                                 KeyboardActionFactory keyboardActionFactory) {
+    public PeerActionsViewImpl(DashboardActions actions,
+                               KeyboardActionFactory keyboardActionFactory) {
         updateButton = keyboardActionFactory.getButton(actions.synchronize);
         deleteAllTagsButton = keyboardActionFactory.getButton(actions.deleteAll);
         deleteAllCommandsButton = keyboardActionFactory.getButton(actions.deleteCommands);
@@ -76,7 +74,6 @@ public class GlobalActionsViewImpl extends Composite
     }
 
 
-
     @Override
     public HasText getPhotoCountOnPeerValue() {
         return peerPhotoCountValueLabel;
@@ -88,7 +85,7 @@ public class GlobalActionsViewImpl extends Composite
     }
 
     @Override
-    public void setPresenter(GlobalActionsPresenter presenter) {
+    public void setPresenter(PeerActionsPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -102,6 +99,6 @@ public class GlobalActionsViewImpl extends Composite
         return pendingCommandCountValueLabel;
     }
 
-    interface GlobalActionsViewImplUiBinder extends UiBinder<Widget, GlobalActionsViewImpl> {
+    interface GlobalActionsViewImplUiBinder extends UiBinder<Widget, PeerActionsViewImpl> {
     }
 }

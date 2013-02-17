@@ -7,8 +7,6 @@ import com.googlecode.fspotcloud.shared.dashboard.UserSynchronizesPeerAction;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
-import java.util.logging.Level;
-
 public class SynchronizeHandler implements IActionHandler {
     private final DispatchAsync dispatcher;
 

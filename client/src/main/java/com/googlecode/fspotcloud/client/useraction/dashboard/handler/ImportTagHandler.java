@@ -10,8 +10,6 @@ import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
-import java.util.logging.Level;
-
 public class ImportTagHandler implements IActionHandler {
 
     @Inject

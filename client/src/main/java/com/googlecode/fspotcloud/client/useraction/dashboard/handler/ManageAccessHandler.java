@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.client.useraction.dashboard.handler;
 
-import com.google.gwt.logging.impl.LoggerImplRegular;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.place.TagApprovalPlace;

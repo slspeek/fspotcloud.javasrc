@@ -22,8 +22,7 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
 
 
     @Inject
-    public MainToolbarProvider(UserActionFactory actionFactory,
-                               KeyboardActionFactory keyboardActionFactory,
+    public MainToolbarProvider(KeyboardActionFactory keyboardActionFactory,
                                AboutActions aboutActions,
                                ApplicationActions applicationActions,
                                NavigationActions navigationActions,

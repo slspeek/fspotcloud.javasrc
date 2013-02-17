@@ -26,7 +26,7 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.TreeSelectionHandlerInterface;
+import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -35,7 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class AdminTreeSelectionHandler implements TreeSelectionHandlerInterface {
+public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
     private final Logger log = Logger.getLogger(AdminTreeSelectionHandler.class.getName());
     private SingleSelectionModelExt selectionModel;
     private final PlaceGoTo placeGoTo;

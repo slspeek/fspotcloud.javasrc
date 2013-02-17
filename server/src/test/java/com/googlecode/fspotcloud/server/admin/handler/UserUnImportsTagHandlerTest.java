@@ -46,9 +46,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
 import javax.inject.Inject;
-import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 

@@ -25,14 +25,11 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
@@ -63,8 +60,7 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
 
 
     @Inject
-    public TagDetailsViewImpl(UserActionFactory userActionFactory,
-                              DashboardActions dashboard,
+    public TagDetailsViewImpl(DashboardActions dashboard,
                               KeyboardActionFactory keyboardActionFactory) {
         importTagButton = keyboardActionFactory.getButton(dashboard.importTag);
         manageAccessButton = keyboardActionFactory.getButton(dashboard.manageAccess);

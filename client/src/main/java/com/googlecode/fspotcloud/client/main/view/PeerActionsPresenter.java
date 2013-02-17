@@ -27,20 +27,21 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
-import com.googlecode.fspotcloud.shared.dashboard.*;
+import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataAction;
+import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPresenter {
-    private final Logger log = Logger.getLogger(GlobalActionsPresenter.class.getName());
-    private final GlobalActionsView globalActionsView;
+public class PeerActionsPresenter implements PeerActionsView.PeerActionsPresenter {
+    private final Logger log = Logger.getLogger(PeerActionsPresenter.class.getName());
+    private final PeerActionsView peerActionsView;
     private final DispatchAsync dispatcher;
     private final TimerInterface timer;
     private final EventBus eventBus;
@@ -49,24 +50,24 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
     private String lastTreeHash = "";
 
     @Inject
-    public GlobalActionsPresenter(GlobalActionsView globalActionsView,
-                                  DispatchAsync dispatcher,
-                                  TimerInterface timer,
-                                  EventBus eventBus,
-                                  DashboardActions actions) {
+    public PeerActionsPresenter(PeerActionsView peerActionsView,
+                                DispatchAsync dispatcher,
+                                TimerInterface timer,
+                                EventBus eventBus,
+                                DashboardActions actions) {
         super();
         this.timer = timer;
-        this.globalActionsView = globalActionsView;
+        this.peerActionsView = peerActionsView;
         this.eventBus = eventBus;
         this.actions = actions;
-        globalActionsView.setPresenter(this);
+        peerActionsView.setPresenter(this);
         this.dispatcher = dispatcher;
     }
 
 
     @Override
     public void init() {
-        globalActionsView.setPresenter(this);
+        peerActionsView.setPresenter(this);
         log.info("init");
         getMetaData();
     }
@@ -102,7 +103,7 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
     private void processMetaData(GetMetaDataResult meta) {
         populateView(meta);
         String newHash = meta.getAdminTreeHash();
-        if (!newHash.equals(lastTreeHash))  {
+        if (!newHash.equals(lastTreeHash)) {
             lastTreeHash = newHash;
             eventBus.fireEvent(new KeyboardActionEvent(actions.reloadTree.getId()));
         }
@@ -110,13 +111,13 @@ public class GlobalActionsPresenter implements GlobalActionsView.GlobalActionsPr
 
     private void populateView(GetMetaDataResult info) {
         log.info("populate");
-        globalActionsView.getLastSeenPeerValue()
+        peerActionsView.getLastSeenPeerValue()
                 .setText(String.valueOf(info.getPeerLastSeen()));
-        globalActionsView.getPhotoCountOnPeerValue()
+        peerActionsView.getPhotoCountOnPeerValue()
                 .setText(String.valueOf(info.getPeerPhotoCount()));
-        globalActionsView.getTagCountValue()
+        peerActionsView.getTagCountValue()
                 .setText(String.valueOf(info.getTagCount()));
-        globalActionsView.getPendingCommandCountValue()
+        peerActionsView.getPendingCommandCountValue()
                 .setText(String.valueOf(info.getPendingCommandCount()));
 
         timer.setRunnable(new Runnable() {

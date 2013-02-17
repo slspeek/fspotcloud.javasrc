@@ -55,7 +55,7 @@ public class PostGoogleLoginWorker implements PostThirdPartyLoginWorker {
             com.googlecode.fspotcloud.server.model.api.User user = userDao.findOrNew(email);
             metaDataUpdater.doUpdate(user, LoginMetaData.Type.GAE_LOGIN);
             log.info("User: " + email + " is logged on and after loginMeta update");
-        }  else {
+        } else {
             log.log(Level.INFO, "After a google login, no user was found.");
         }
     }

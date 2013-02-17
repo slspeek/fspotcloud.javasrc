@@ -6,17 +6,17 @@ import com.google.inject.Provider;
 
 public class ActionManagerFactory implements Provider<ActionManager> {
 
-    private final ActionImplementationRegister actionImplementationRegister;
+    private final ActionHandlerRegistry actionHandlerRegistry;
     private final EventBus eventBus;
 
     @Inject
-    private ActionManagerFactory(ActionImplementationRegister actionImplementationRegister, EventBus eventBus) {
-        this.actionImplementationRegister = actionImplementationRegister;
+    private ActionManagerFactory(ActionHandlerRegistry actionHandlerRegistry, EventBus eventBus) {
+        this.actionHandlerRegistry = actionHandlerRegistry;
         this.eventBus = eventBus;
     }
 
     public ActionManager get() {
-        final ActionManager actionManager = new ActionManager(actionImplementationRegister);
+        final ActionManager actionManager = new ActionManager(actionHandlerRegistry);
         eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
         return actionManager;
     }

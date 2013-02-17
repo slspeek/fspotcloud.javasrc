@@ -28,11 +28,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
-import com.googlecode.fspotcloud.server.cron.CronServlet;
-import com.googlecode.fspotcloud.server.cron.RssServlet;
-import com.googlecode.fspotcloud.server.image.ImageServlet;
 import com.googlecode.fspotcloud.server.main.PropertiesLoader;
-import net.customware.gwt.dispatch.server.guice.GuiceStandardDispatchServlet;
 import com.googlecode.fspotcloud.test.Fixture;
 
 import java.util.Properties;
@@ -43,8 +39,9 @@ public class GaeFixtureServletConfig extends GuiceServletContextListener {
     final Properties p = (new PropertiesLoader("properties.properties")).loadProperties();
 
     Injector injector;
+
     public GaeFixtureServletConfig() {
-        injector = Guice.createInjector(new GaeTotalModule(100,"",""), new FixtureServletModulde());
+        injector = Guice.createInjector(new GaeTotalModule(100, "", ""), new FixtureServletModulde());
         Fixture fixture = new Fixture(injector);
         fixture.run();
         Logger.getAnonymousLogger().info("We are called!");

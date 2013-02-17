@@ -13,8 +13,7 @@ public class SlideshowToolbarProvider implements Provider<ActionToolbar> {
     private final SlideshowActions actions;
 
     @Inject
-    public SlideshowToolbarProvider(UserActionFactory actionFactory,
-                                    KeyboardActionFactory keyboardActionFactory,
+    public SlideshowToolbarProvider(KeyboardActionFactory keyboardActionFactory,
                                     SlideshowDelayView.SlideshowPresenter slideshowPresenter,
                                     SlideshowActions actions) {
         this.keyboardActionFactory = keyboardActionFactory;

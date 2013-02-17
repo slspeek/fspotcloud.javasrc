@@ -32,9 +32,7 @@ import org.junit.Test;
 import java.util.Date;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class TagNodeTest {
     TagNode node;
@@ -71,7 +69,7 @@ public class TagNodeTest {
 
         assertEquals(new Integer(0), (child0.pathTo(simpleTree)).get(0));
 
-            TagNode child2 = simpleTree.getChildren().get(2);
+        TagNode child2 = simpleTree.getChildren().get(2);
 
         assertEquals(new Integer(2), (child2.pathTo(simpleTree)).get(0));
 
@@ -89,6 +87,7 @@ public class TagNodeTest {
         assertEquals(new Integer(0), (extra.pathTo(simpleTree)).get(1));
 
     }
+
     @Test
     public void testNumericalPathToRootInductionBase() throws Exception {
         TagNode simpleTree = factory.getSingleNodeWithOnePicture();

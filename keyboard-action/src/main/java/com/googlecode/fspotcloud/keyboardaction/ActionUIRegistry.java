@@ -8,12 +8,12 @@ import java.util.Map;
 import static com.google.common.collect.Maps.newHashMap;
 
 @GwtCompatible
-public class ButtonDefinitions {
+public class ActionUIRegistry {
 
     private final Map<String, ActionDef> registry = newHashMap();
 
     @Inject
-    private ButtonDefinitions() {
+    private ActionUIRegistry() {
     }
 
     void putAction(ActionDef actionDef) {

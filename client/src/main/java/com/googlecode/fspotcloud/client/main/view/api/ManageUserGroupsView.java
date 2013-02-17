@@ -24,10 +24,27 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.googlecode.fspotcloud.client.main.view.api.TagView.TagPresenter;
-import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
+
+import java.util.List;
 
 
-public interface TagPresenterFactory {
-    TagPresenter get(BasePlace place);
+public interface ManageUserGroupsView extends IsWidget {
+    void setPresenter(MyUserGroupsPresenter presenter);
+
+    void setData(List<UserGroupInfo> data);
+
+    UserGroupInfo getSelected();
+
+    interface MyUserGroupsPresenter extends Activity {
+        void newUserGroup();
+
+        void delete();
+
+        void manageUsers();
+
+        void edit();
+    }
 }
