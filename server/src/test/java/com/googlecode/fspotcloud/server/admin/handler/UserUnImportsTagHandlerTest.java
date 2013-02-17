@@ -93,6 +93,7 @@ public class UserUnImportsTagHandlerTest {
         assertEquals(TAG_ID, deleteAction.getTagId());
         verify(tagManager).find(TAG_ID);
         verify(tagManager).save(tagOne);
+        verify(peerDatabaseDao).resetCachedTagTrees();
         verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
     }
 
@@ -118,6 +119,7 @@ public class UserUnImportsTagHandlerTest {
         assertEquals(TAG_ID, deleteAction.getTagId());
         verify(tagManager).find(TAG_ID);
         verify(tagManager).save(tagOne);
+        verify(peerDatabaseDao).resetCachedTagTrees();
         verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
     }
 
