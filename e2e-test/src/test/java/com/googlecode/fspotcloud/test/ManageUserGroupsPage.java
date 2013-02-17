@@ -38,12 +38,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author steven
  */
-public class MyUserGroupsPage {
+public class ManageUserGroupsPage {
     @Inject
     Selenium selenium;
 
     public void open() {
-        selenium.open("/#MyUserGroupsPlace:");
+        selenium.open("/#ManageUserGroupsPlace:");
         selenium.waitForPageToLoad("30000");
     }
 
