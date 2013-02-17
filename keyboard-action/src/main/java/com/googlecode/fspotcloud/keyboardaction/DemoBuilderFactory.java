@@ -6,8 +6,6 @@ import com.google.inject.Provider;
 
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 public class DemoBuilderFactory {
 
     private final Provider<DemoBuilder> demoBuilderProvider;

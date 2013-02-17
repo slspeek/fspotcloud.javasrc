@@ -12,6 +12,7 @@ public class HelpConfig {
     private final List<ActionCategory> firstColumn = newArrayList();
     private final List<ActionCategory> secondColumn = newArrayList();
     private final SafeHtml optionalContent;
+
     public HelpConfig(String title, SafeHtml optionalContent) {
         this.title = title;
         this.optionalContent = optionalContent;

@@ -38,18 +38,24 @@ import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.*;
 import com.googlecode.fspotcloud.client.main.view.*;
 import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.client.main.view.factory.*;
+import com.googlecode.fspotcloud.client.main.view.factory.SingleImageViewProvider;
+import com.googlecode.fspotcloud.client.main.view.factory.SlideshowActivityFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.SlideshowDelayPresenterFactoryImpl;
+import com.googlecode.fspotcloud.client.main.view.factory.TagActivityFactoryImpl;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
+import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
 public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
-
+        bind(UIRegistrationBuilder.class).to(UserActionFactory.class);
+        bind(IScheduler.class).to(SchedulerImpl.class);
         install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
         bind(HomeView.class).to(HomeViewImpl.class);
         bind(HomeView.HomePresenter.class).to(HomeActivity.class);
@@ -82,8 +88,8 @@ public class AppModule extends AbstractGinModule {
         bind(UserAccountView.class).to(UserAccountViewImpl.class);
         bind(UserAccountView.UserAccountPresenter.class)
                 .to(UserAccountPresenterImpl.class);
-        bind(MyUserGroupsView.class).to(MyUserGroupsViewImpl.class);
-        bind(MyUserGroupsView.MyUserGroupsPresenter.class)
+        bind(ManageUserGroupsView.class).to(MyUserGroupsViewImpl.class);
+        bind(ManageUserGroupsView.MyUserGroupsPresenter.class)
                 .to(MyUserGroupsPresenterImpl.class);
         bind(EditUserGroupView.class).to(EditUserGroupViewImpl.class);
         bind(EditUserGroupView.EditUserGroupPresenter.class)
@@ -103,7 +109,7 @@ public class AppModule extends AbstractGinModule {
         bind(TimerInterface.class).to(TimerImpl.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
-        bind(TagPresenterFactory.class).to(TagPresenterFactoryImpl.class);
+        bind(TagActivityFactory.class).to(TagActivityFactoryImpl.class);
 
 //        bind(SelectionChangeEvent.Handler.class).to(AdminTreeSelectionHandler.class)
 //                .in(Singleton.class);
@@ -119,8 +125,8 @@ public class AppModule extends AbstractGinModule {
         install(new GinFactoryModuleBuilder().implement(ImageView.class,
                 ImageViewImpl.class).build(ImageViewFactory.class));
 
-        bind(TreeSelectionHandlerInterface.class).annotatedWith(AdminTreeView.class).to(AdminTreeSelectionHandler.class);
-        bind(TreeSelectionHandlerInterface.class).annotatedWith(BasicTreeView.class).to(TreeSelectionHandler.class);
+        bind(ITreeSelectionHandler.class).annotatedWith(AdminTreeView.class).to(AdminTreeSelectionHandler.class);
+        bind(ITreeSelectionHandler.class).annotatedWith(BasicTreeView.class).to(TreeSelectionHandler.class);
         bind(LoadNewLocation.class).to(LoadNewLocationImpl.class);
 
         //admin
@@ -130,10 +136,10 @@ public class AppModule extends AbstractGinModule {
                 .in(Singleton.class);
         bind(DashboardView.class).to(DashboardViewImpl.class).in(Singleton.class);
         bind(DashboardView.DashboardPresenter.class)
-                .to(DashboardPresenterImpl.class);
-        bind(GlobalActionsView.class).to(GlobalActionsViewImpl.class)
+                .to(DashboardActivity.class);
+        bind(PeerActionsView.class).to(PeerActionsViewImpl.class)
                 .in(Singleton.class);
-        bind(GlobalActionsView.GlobalActionsPresenter.class).to(GlobalActionsPresenter.class);
+        bind(PeerActionsView.PeerActionsPresenter.class).to(PeerActionsPresenter.class);
         bind(TreeView.TreePresenter.class).annotatedWith(AdminTreeView.class).to(AdminTreePresenterImpl.class)
                 .in(Singleton.class);
         bind(TreeView.class).annotatedWith(AdminTreeView.class).toProvider(AdminTreeViewProvider.class).in(Singleton.class);

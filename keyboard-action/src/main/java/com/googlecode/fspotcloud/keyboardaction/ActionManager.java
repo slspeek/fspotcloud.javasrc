@@ -32,11 +32,11 @@ import java.util.logging.Logger;
 @GwtCompatible
 public class ActionManager implements IKeyboardActionHandler {
     private final Logger log = Logger.getLogger(ActionManager.class.getName());
-    private final ActionImplementationRegister actionImplementationRegister;
+    private final ActionHandlerRegistry actionHandlerRegistry;
 
-    ActionManager(ActionImplementationRegister actionImplementationRegister
+    ActionManager(ActionHandlerRegistry actionHandlerRegistry
     ) {
-        this.actionImplementationRegister = actionImplementationRegister;
+        this.actionHandlerRegistry = actionHandlerRegistry;
     }
 
 
@@ -45,7 +45,7 @@ public class ActionManager implements IKeyboardActionHandler {
         log.log(Level.FINEST, "onEvent for: " + event.getActionId());
         log.log(Level.INFO, "onEvent for: " + event.getActionId());
         String actionId = event.getActionId();
-        IActionHandler handler = actionImplementationRegister.getAction(actionId);
+        IActionHandler handler = actionHandlerRegistry.getAction(actionId);
         handler.performAction(actionId);
     }
 }

@@ -24,7 +24,6 @@ public class Demo implements IActionHandler {
     private final EventBus eventBus;
 
 
-
     Demo(DemoPopup demoPopup, ActionDef actionDef, EventBus eventBus) {
         this.demoPopup = demoPopup;
         this.actionDef = actionDef;

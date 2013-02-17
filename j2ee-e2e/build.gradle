@@ -32,7 +32,7 @@ dependencies {
 }
 
 
-task setupFixture(type:JavaExec) {
+task setupFixture(type: JavaExec) {
     main = "com.googlecode.fspotcloud.test.J2eeFixtureRunner"
     classpath = sourceSets.test.runtimeClasspath
 }

@@ -24,13 +24,10 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.googlecode.fspotcloud.client.main.view.SingleSelectionModelExt;
+import com.googlecode.fspotcloud.client.main.view.api.TagView.TagPresenter;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 
 
-public interface TreeSelectionHandlerInterface extends com.google.gwt.view.client.SelectionChangeEvent.Handler {
-    void setSelectionModel(SingleSelectionModelExt selectionModel);
-
-    boolean isIgnoreNext();
-
-    void setIgnoreNext(boolean ignoreNext);
+public interface TagActivityFactory {
+    TagPresenter get(BasePlace place);
 }

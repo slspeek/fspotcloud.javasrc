@@ -4,7 +4,7 @@ apply plugin: 'war'
 apply plugin: 'gae'
 
 dependencies {
-    compile project(path:':e2e-test', configuration:'testCompile')
+    compile project(path: ':e2e-test', configuration: 'testCompile')
     compile project(':server-module-gae')
 }
 

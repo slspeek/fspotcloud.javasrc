@@ -27,12 +27,12 @@ package com.googlecode.fspotcloud.server.main.handler;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
-import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.shared.main.GetTagNodeAction;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.TagNodeResult;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
-
-import java.util.SortedSet;
 
 
 public class GetTagNodeHandler extends SimpleActionHandler<GetTagNodeAction, TagNodeResult> {

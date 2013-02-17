@@ -24,11 +24,10 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.ImagePresenterFactory;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
@@ -51,6 +50,7 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
     private final int rowCount;
     private final int pageSize;
     private final boolean thumb;
+    private final IScheduler scheduler;
     protected final ImageRasterView imageRasterView;
     private final Navigator navigator;
     private final ImagePresenterFactory imagePresenterFactory;
@@ -64,7 +64,9 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
                                     ImageRasterView imageRasterView,
                                     Navigator navigator,
                                     ImagePresenterFactory imagePresenterFactory,
+                                    IScheduler scheduler,
                                     PlaceGoTo placeGoTo) {
+        this.scheduler = scheduler;
         this.placeGoTo = placeGoTo;
         tagId = place.getTagId();
         photoId = place.getPhotoId();
@@ -136,9 +138,9 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
             }
 
             imagePresenterList.add(presenter);
-            Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            scheduler.schedule(new Runnable() {
                 @Override
-                public void execute() {
+                public void run() {
                     presenter.init();
                 }
             });

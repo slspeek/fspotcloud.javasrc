@@ -38,7 +38,8 @@ public class SendConfirmationEmailResult implements Result {
         SUCCESS
     }
 
-    private SendConfirmationEmailResult() {}
+    private SendConfirmationEmailResult() {
+    }
 
     public SendConfirmationEmailResult(Code code) {
         this.code = code;

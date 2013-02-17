@@ -16,10 +16,10 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(ActionManager.class).toProvider(ActionManagerFactory.class).in(Singleton.class);
         bind(ConfigBuilder.class).in(Singleton.class);
         bind(KeyboardActionFactory.class).asEagerSingleton();
-        bind(ButtonDefinitions.class).in(Singleton.class);
+        bind(ActionUIRegistry.class).in(Singleton.class);
         bind(NativePreviewHandler.class).in(Singleton.class);
         bind(KeyboardPreferences.class).in(Singleton.class);
-        bind(ActionImplementationRegister.class).in(Singleton.class);
+        bind(ActionHandlerRegistry.class).in(Singleton.class);
         bind(DemoBuilder.class);
         bind(DemoBuilderFactory.class).in(Singleton.class);
         bind(TwoColumnHelpPopup.class);

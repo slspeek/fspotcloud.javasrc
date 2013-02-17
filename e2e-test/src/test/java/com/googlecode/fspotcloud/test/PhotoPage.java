@@ -43,7 +43,7 @@ public class PhotoPage {
     Selenium selenium;
 
     public void open(String token) {
-        selenium.open("/" + token );
+        selenium.open("/" + token);
         selenium.waitForPageToLoad("30000");
     }
 

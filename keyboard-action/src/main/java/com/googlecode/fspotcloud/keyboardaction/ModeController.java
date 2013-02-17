@@ -6,7 +6,6 @@ import com.google.common.base.Objects;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ModeController implements IModeController {

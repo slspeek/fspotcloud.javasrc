@@ -25,13 +25,13 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
 
 import java.util.logging.Logger;
@@ -40,6 +40,7 @@ import java.util.logging.Logger;
 public class SignUpViewImpl extends Composite implements SignUpView {
     private final Logger log = Logger.getLogger(SignUpViewImpl.class.getName());
     private static final SignUpViewImplUiBinder uiBinder = GWT.create(SignUpViewImplUiBinder.class);
+    private final IScheduler scheduler;
     private SignUpPresenter presenter;
     @UiField
     TextBox emailTextBox;
@@ -55,7 +56,8 @@ public class SignUpViewImpl extends Composite implements SignUpView {
     BigPushButton cancel;
 
     @Inject
-    public SignUpViewImpl() {
+    public SignUpViewImpl(IScheduler scheduler) {
+        this.scheduler = scheduler;
         initWidget(uiBinder.createAndBindUi(this));
         emailTextBox.ensureDebugId("email");
         passwordAgainTextBox.ensureDebugId("password-again");
@@ -102,8 +104,9 @@ public class SignUpViewImpl extends Composite implements SignUpView {
 
     @Override
     public void focusEmailField() {
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            public void execute() {
+        scheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
                 emailTextBox.setFocus(true);
             }
         });

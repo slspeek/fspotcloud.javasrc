@@ -4,16 +4,16 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.useraction.about.AboutBinder;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationBinder;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardBinder;
-import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardLateBinder;
 import com.googlecode.fspotcloud.client.useraction.navigation.NavigationBinder;
 import com.googlecode.fspotcloud.client.useraction.raster.RasterBinder;
 import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
+import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserActionFactory {
+public class UserActionFactory implements UIRegistrationBuilder {
 
     private final IModeController modeController;
     private final Logger log = Logger.getLogger(UserActionFactory.class.getName());
@@ -37,4 +37,8 @@ public class UserActionFactory {
         dashboardBinder.build();
     }
 
+    @Override
+    public void build() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

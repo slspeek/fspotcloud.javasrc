@@ -5,8 +5,6 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
-import org.junit.After;
-import org.junit.Before;
 
 public class GaeFixtureRunner {
     public static void main(String[] args) {

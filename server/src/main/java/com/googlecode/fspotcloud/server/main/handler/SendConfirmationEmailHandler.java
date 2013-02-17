@@ -28,7 +28,6 @@ import com.google.inject.Provider;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailResult;
 import com.googlecode.fspotcloud.user.emailconfirmation.MailGenerator;
@@ -65,7 +64,7 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
                     emailConfirmationSecret);
             mailer.send(email, "F-Spot Cloud email confirmation",
                     confirmationMail);
-           return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.SUCCESS);
+            return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.SUCCESS);
         } else {
             return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.NOT_REGISTERED);
         }

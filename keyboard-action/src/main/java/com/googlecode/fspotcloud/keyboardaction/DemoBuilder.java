@@ -10,17 +10,17 @@ import com.google.inject.Inject;
 public class DemoBuilder {
 
     private Demo demo;
-    private final ButtonDefinitions buttonDefinitions;
+    private final ActionUIRegistry actionUIRegistry;
     private final EventBus eventBus;
     private final HelpContentGenerator helpContentGenerator;
     private final KeyboardPreferences keyboardPreferences;
 
     @Inject
-    private DemoBuilder(ButtonDefinitions buttonDefinitions,
+    private DemoBuilder(ActionUIRegistry actionUIRegistry,
                         EventBus eventBus,
                         HelpContentGenerator helpContentGenerator,
                         KeyboardPreferences keyboardPreferences) {
-        this.buttonDefinitions = buttonDefinitions;
+        this.actionUIRegistry = actionUIRegistry;
         this.eventBus = eventBus;
         this.helpContentGenerator = helpContentGenerator;
         this.keyboardPreferences = keyboardPreferences;
@@ -35,7 +35,7 @@ public class DemoBuilder {
     }
 
     public DemoBuilder addStep(String actionId, int pauseMilles) {
-        ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        ActionDef actionDef = actionUIRegistry.getAction(actionId);
         return addStep(actionDef, pauseMilles);
     }
 
@@ -46,7 +46,7 @@ public class DemoBuilder {
     }
 
     public DemoBuilder addStep(String actionId, int pauseMilles, String overridingDescription) {
-        ActionDef actionDef = buttonDefinitions.getAction(actionId);
+        ActionDef actionDef = actionUIRegistry.getAction(actionId);
         return addStep(actionDef, pauseMilles, overridingDescription);
     }
 

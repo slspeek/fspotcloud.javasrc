@@ -5,7 +5,6 @@ import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
-import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailResult;
 import org.jukito.JukitoRunner;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,9 +14,7 @@ import javax.inject.Inject;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class ResetPasswordHandlerTest {
@@ -55,6 +52,7 @@ public class ResetPasswordHandlerTest {
         ResetPasswordResult result = handler.execute(action, null);
         Assert.assertEquals(ResetPasswordResult.Code.NOT_VERIFIED, result.getCode());
     }
+
     @Test
     public void testSuccess() throws Exception {
         when(userDao.find(RMS_FSF_ORG)).thenReturn(rms);

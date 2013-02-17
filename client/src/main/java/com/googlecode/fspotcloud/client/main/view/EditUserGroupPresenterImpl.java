@@ -30,7 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
-import com.googlecode.fspotcloud.client.place.MyUserGroupsPlace;
+import com.googlecode.fspotcloud.client.place.ManageUserGroupsPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
@@ -80,7 +80,7 @@ public class EditUserGroupPresenterImpl extends AbstractActivity implements Edit
                     public void onSuccess(VoidResult result) {
                         log.info(
                                 "Successfull return from save user group server call");
-                        placeGoTo.goTo(new MyUserGroupsPlace());
+                        placeGoTo.goTo(new ManageUserGroupsPlace());
                     }
                 });
     }
@@ -107,6 +107,6 @@ public class EditUserGroupPresenterImpl extends AbstractActivity implements Edit
 
     @Override
     public void cancel() {
-        placeGoTo.goTo(new MyUserGroupsPlace());
+        placeGoTo.goTo(new ManageUserGroupsPlace());
     }
 }

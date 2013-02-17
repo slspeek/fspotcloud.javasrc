@@ -61,7 +61,6 @@ public class UserActionModule extends AbstractGinModule {
         bind(RasterBinder.class).in(Singleton.class);
 
         bind(SlideshowBinder.class).in(Singleton.class);
-        bind(com.googlecode.fspotcloud.client.useraction.UserActionFactory.class).in(Singleton.class);
 
         bind(ActionToolbar.class).annotatedWith(MainToolbar.class).toProvider(MainToolbarProvider.class);
         bind(ActionToolbar.class).annotatedWith(SlideshowToolbar.class).toProvider(SlideshowToolbarProvider.class);

@@ -40,7 +40,8 @@ public class ResetPasswordResult implements Result {
         SUCCESS
     }
 
-    private ResetPasswordResult() {}
+    private ResetPasswordResult() {
+    }
 
     public ResetPasswordResult(Code code) {
         this.code = code;

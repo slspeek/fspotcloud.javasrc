@@ -29,7 +29,6 @@ import com.google.guiceberry.controllable.IcMaster;
 import com.google.guiceberry.controllable.StaticMapInjectionController;
 import com.google.guiceberry.controllable.TestIdServerModule;
 import com.google.inject.*;
-import com.google.inject.name.Names;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.Cookie;
@@ -62,6 +61,7 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
     }
 
     private IcMaster icMaster;
+
     @Provides
     @Singleton
     FscServer buildPetStoreServer(@PortNumber int portNumber) {
@@ -86,6 +86,7 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
         }
         return result;
     }
+
     @Override
     protected void configure() {
         install(new GuiceBerryModule());

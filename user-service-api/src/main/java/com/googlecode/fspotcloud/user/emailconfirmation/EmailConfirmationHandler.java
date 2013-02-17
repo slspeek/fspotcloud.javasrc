@@ -25,12 +25,12 @@
 package com.googlecode.fspotcloud.user.emailconfirmation;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.server.model.api.*;
+import com.googlecode.fspotcloud.server.model.api.User;
+import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.EmailConfirmationAction;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.AbstractSimpleResult;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
 

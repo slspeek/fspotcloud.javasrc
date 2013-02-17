@@ -22,37 +22,15 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.place.shared.PlaceTokenizer;
+import com.googlecode.fspotcloud.client.main.view.SingleSelectionModelExt;
 
 
-public class MyUserGroupsPlace extends Place {
+public interface ITreeSelectionHandler extends com.google.gwt.view.client.SelectionChangeEvent.Handler {
+    void setSelectionModel(SingleSelectionModelExt selectionModel);
 
-    @Override
-    public int hashCode() {
-        return 1;
-    }
+    boolean isIgnoreNext();
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof MyUserGroupsPlace) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static class Tokenizer implements PlaceTokenizer<MyUserGroupsPlace> {
-        @Override
-        public MyUserGroupsPlace getPlace(String token) {
-            return new MyUserGroupsPlace();
-        }
-
-        @Override
-        public String getToken(MyUserGroupsPlace place) {
-            return "";
-        }
-    }
+    void setIgnoreNext(boolean ignoreNext);
 }

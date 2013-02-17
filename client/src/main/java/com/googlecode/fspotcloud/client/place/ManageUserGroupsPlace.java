@@ -22,29 +22,37 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view;
+package com.googlecode.fspotcloud.client.place;
 
-import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
-import com.google.inject.Inject;
-
-import java.util.logging.Logger;
+import com.google.gwt.place.shared.PlaceTokenizer;
 
 
-public class TagDetailsActivityMapper implements ActivityMapper {
-    private final Logger log = Logger.getLogger(TagDetailsActivityMapper.class.getName());
-    private final TagDetailsActivity tagDetailsActivity;
+public class ManageUserGroupsPlace extends Place {
 
-    @Inject
-    public TagDetailsActivityMapper(
-            TagDetailsActivity tagDetailsActivity) {
-        super();
-        this.tagDetailsActivity = tagDetailsActivity;
+    @Override
+    public int hashCode() {
+        return 1;
     }
 
     @Override
-    public Activity getActivity(Place place) {
-        return tagDetailsActivity;
+    public boolean equals(Object other) {
+        if (other instanceof ManageUserGroupsPlace) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static class Tokenizer implements PlaceTokenizer<ManageUserGroupsPlace> {
+        @Override
+        public ManageUserGroupsPlace getPlace(String token) {
+            return new ManageUserGroupsPlace();
+        }
+
+        @Override
+        public String getToken(ManageUserGroupsPlace place) {
+            return "";
+        }
     }
 }

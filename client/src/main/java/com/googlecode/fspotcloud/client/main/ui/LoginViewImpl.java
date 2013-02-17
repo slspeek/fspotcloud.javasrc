@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -33,6 +32,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 
 import java.util.logging.Logger;
@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 public class LoginViewImpl extends Composite implements LoginView {
     private final Logger log = Logger.getLogger(LoginViewImpl.class.getName());
     private static final LoginViewImplUiBinder uiBinder = GWT.create(LoginViewImplUiBinder.class);
+    private final IScheduler scheduler;
     private LoginPresenter presenter;
     @UiField
     TextBox userNameTextBox;
@@ -63,7 +64,8 @@ public class LoginViewImpl extends Composite implements LoginView {
 
 
     @Inject
-    public LoginViewImpl() {
+    public LoginViewImpl(IScheduler scheduler) {
+        this.scheduler = scheduler;
         initWidget(uiBinder.createAndBindUi(this));
         userNameTextBox.ensureDebugId("username");
         googleLoginLink.ensureDebugId("google-login");
@@ -101,8 +103,9 @@ public class LoginViewImpl extends Composite implements LoginView {
 
     @Override
     public void focusUserNameField() {
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            public void execute() {
+        scheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
                 userNameTextBox.setFocus(true);
             }
         });
@@ -110,11 +113,13 @@ public class LoginViewImpl extends Composite implements LoginView {
 
     @Override
     public void focusPasswordField() {
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            public void execute() {
+        scheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
                 passwordTextBox.setFocus(true);
             }
         });
+
     }
 
     @Override

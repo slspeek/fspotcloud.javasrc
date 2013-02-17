@@ -25,20 +25,17 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
-import com.googlecode.fspotcloud.client.main.view.api.GlobalActionsView;
+import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
@@ -51,7 +48,7 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     private static final Logger log = Logger.getLogger(DashboardViewImpl.class.getName());
 
     private final TagDetailsViewImpl tagDetailsView;
-    private final GlobalActionsView globalActionsView;
+    private final PeerActionsView peerActionsView;
     private final TreeView treeView;
     private DashboardPresenter presenter;
     @UiField(provided = true)
@@ -65,30 +62,27 @@ public class DashboardViewImpl extends Composite implements DashboardView {
 
     @Inject
     public DashboardViewImpl(@AdminTreeView TreeView treeView,
-                             GlobalActionsView globalActionsView,
+                             PeerActionsView peerActionsView,
                              TagDetailsView tagDetailsView,
-                             UserActionFactory userActionFactory,
                              KeyboardActionFactory keyboardActionFactory,
                              DashboardActions actions
     ) {
-
         counter++;
         toPhotos = keyboardActionFactory.getButton(actions.toPhotos);
         manageGroups = keyboardActionFactory.getButton(actions.manageUserGroups);
         reloadTree = keyboardActionFactory.getButton(actions.reloadTree);
         this.treeView = treeView;
-        this.globalActionsView = globalActionsView;
+        this.peerActionsView = peerActionsView;
         this.tagDetailsView = (TagDetailsViewImpl) tagDetailsView;
         initWidget(uiBinder.createAndBindUi(this));
         toPhotos.ensureDebugId("to-photos-button");
         manageGroups.ensureDebugId("manage-groups-button");
         log.info("Dashboard created: " + counter);
-
     }
 
     @UiFactory
-    public GlobalActionsViewImpl getGlobalActionsView() {
-        return (GlobalActionsViewImpl) globalActionsView;
+    public PeerActionsViewImpl getPeerActionsView() {
+        return (PeerActionsViewImpl) peerActionsView;
     }
 
     @UiFactory

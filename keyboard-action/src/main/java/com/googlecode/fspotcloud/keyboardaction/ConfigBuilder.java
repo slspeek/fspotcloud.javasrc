@@ -8,24 +8,24 @@ import java.util.List;
 @GwtCompatible
 public class ConfigBuilder {
 
-    private final ActionImplementationRegister actionImplementationRegister;
+    private final ActionHandlerRegistry actionHandlerRegistry;
     private final KeyboardPreferences keyboardPreferences;
-    private final ButtonDefinitions buttonDefinitions;
+    private final ActionUIRegistry actionUIRegistry;
     private final List<ActionCategory> categoryList;
 
     @Inject
-    private ConfigBuilder(ActionImplementationRegister actionImplementationRegister,
+    private ConfigBuilder(ActionHandlerRegistry actionHandlerRegistry,
                           KeyboardPreferences keyboardPreferences,
-                          ButtonDefinitions buttonDefinitions,
+                          ActionUIRegistry actionUIRegistry,
                           List<ActionCategory> categoryList) {
-        this.actionImplementationRegister = actionImplementationRegister;
+        this.actionHandlerRegistry = actionHandlerRegistry;
         this.keyboardPreferences = keyboardPreferences;
-        this.buttonDefinitions = buttonDefinitions;
+        this.actionUIRegistry = actionUIRegistry;
         this.categoryList = categoryList;
     }
 
     public ConfigBuilder register(ActionCategory actionCategory, ActionDef actionDef, KeyboardBinding keyboardBinding) {
-        buttonDefinitions.putAction(actionDef);
+        actionUIRegistry.putAction(actionDef);
         keyboardPreferences.bind(actionDef.getId(), keyboardBinding);
         actionCategory.add(actionDef);
         return this;
@@ -41,7 +41,7 @@ public class ConfigBuilder {
     }
 
     public ConfigBuilder bindHandler(ActionDef actionDef, IActionHandler actionHandler) {
-        actionImplementationRegister.putAction(actionDef.getId(), actionHandler);
+        actionHandlerRegistry.putAction(actionDef.getId(), actionHandler);
         return this;
     }
 

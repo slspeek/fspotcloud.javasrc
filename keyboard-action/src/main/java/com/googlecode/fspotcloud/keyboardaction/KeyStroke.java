@@ -37,6 +37,18 @@ public class KeyStroke {
     public static final int KEY_FORWARD_SLASH = 191;
     public static final int KEY_SPACE = 32;
 
+    public static KeyStroke shift(int keyCode) {
+        return new KeyStroke(Modifiers.SHIFT, keyCode);
+    }
+
+    public static KeyStroke ctrl(int keyCode) {
+        return new KeyStroke(Modifiers.CTRL, keyCode);
+    }
+
+    public static KeyStroke alt(int keyCode) {
+        return new KeyStroke(Modifiers.ALT, keyCode);
+    }
+
     public KeyStroke(Modifiers modifiers, int keyCode) {
         this.modifiers = modifiers;
         this.keyCode = keyCode;
