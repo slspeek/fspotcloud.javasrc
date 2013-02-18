@@ -2,6 +2,7 @@ package com.googlecode.fspotcloud.client.useraction.dashboard.handler;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.dashboard.UserSynchronizesPeerAction;
@@ -15,7 +16,7 @@ public class SynchronizeHandler implements IActionHandler {
 
     @Inject
     public SynchronizeHandler(DispatchAsync dispatcher,
-                              StatusView statusView) {
+                              @Dashboard StatusView statusView) {
         this.dispatcher = dispatcher;
         this.statusView = statusView;
     }

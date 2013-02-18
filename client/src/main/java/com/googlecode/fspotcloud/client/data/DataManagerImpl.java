@@ -27,7 +27,10 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.shared.dashboard.GetAdminTagTreeAction;
-import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.shared.main.GetTagNodeAction;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.TagNodeResult;
+import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.Map;
@@ -87,17 +90,17 @@ public class DataManagerImpl implements DataManager {
 
     public void getAdminTagNode(final String id,
                                 final AsyncCallback<TagNode> callback) {
-      dispatchAsync.execute(new GetTagNodeAction(id), new AsyncCallback<TagNodeResult>() {
-          @Override
-          public void onFailure(Throwable caught) {
-              callback.onFailure(caught);
-          }
+        dispatchAsync.execute(new GetTagNodeAction(id), new AsyncCallback<TagNodeResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                callback.onFailure(caught);
+            }
 
-          @Override
-          public void onSuccess(TagNodeResult result) {
-              callback.onSuccess(result.getInfo());
-          }
-      });
+            @Override
+            public void onSuccess(TagNodeResult result) {
+                callback.onSuccess(result.getInfo());
+            }
+        });
     }
 
     @Override

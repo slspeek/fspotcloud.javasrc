@@ -39,12 +39,12 @@ import java.util.logging.Logger;
 public class ActionButton extends PushButton implements IActionEnableHandler, IActionDemoHandler {
 
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
-    private final ActionDef actionDef;
+    private final ActionUIDef actionUIDef;
     private final EventBus eventBus;
     private final KeyboardActionResources keyboardActionResources;
 
-    ActionButton(ActionDef actionDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
-        this.actionDef = actionDef;
+    ActionButton(ActionUIDef actionUIDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
+        this.actionUIDef = actionUIDef;
         this.eventBus = eventBus;
         this.keyboardActionResources = keyboardActionResources;
         initialize();
@@ -55,19 +55,19 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
         eventBus.addHandler(ActionDemoEvent.TYPE, this);
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                log.log(Level.FINEST, "Button: " + actionDef.getId() + " pressed.");
-                eventBus.fireEvent(new KeyboardActionEvent(actionDef.getId()));
+                log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " pressed.");
+                eventBus.fireEvent(new KeyboardActionEvent(actionUIDef.getId()));
             }
         });
-        setTooltip(actionDef.getDescription());
-        setDebugId(actionDef.getId());
-        final ImageResource imageResource = actionDef.getIcon();
+        setTooltip(actionUIDef.getDescription());
+        setDebugId(actionUIDef.getId());
+        final ImageResource imageResource = actionUIDef.getIcon();
         if (imageResource != null) {
             getUpFace().setImage(new Image(imageResource));
             setStyleName(keyboardActionResources.style().button());
         } else {
             addStyleName(keyboardActionResources.style().button());
-            setCaption(actionDef.getName());
+            setCaption(actionUIDef.getName());
         }
 
     }
@@ -86,11 +86,11 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
 
     @Override
     public void onEvent(ActionStateEvent event) {
-        if (event.getActionId().equals(actionDef.getId())) {
+        if (event.getActionId().equals(actionUIDef.getId())) {
             setEnabled(event.getState());
             if (event.getState()) {
                 String keys = event.getAcceleratorString();
-                setTooltip(actionDef.getDescription() + " (" + keys + ")");
+                setTooltip(actionUIDef.getDescription() + " (" + keys + ")");
             }
             //setVisible(event.getState());
         }
@@ -98,7 +98,7 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
 
     @Override
     public void onEvent(ActionDemoEvent event) {
-        if (event.getActionId().equals(actionDef.getId())) {
+        if (event.getActionId().equals(actionUIDef.getId())) {
 
             if (event.getState()) {
                 addStyleName(keyboardActionResources.style().demo());

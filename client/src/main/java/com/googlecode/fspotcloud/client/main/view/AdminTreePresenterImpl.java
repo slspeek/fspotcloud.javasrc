@@ -30,6 +30,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
+import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
@@ -54,7 +55,7 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
                                   SingleSelectionModelExt selectionModel,
                                   PlaceGoTo placeGoTo,
                                   @AdminTreeView ITreeSelectionHandler treeSelectionHandler,
-                                  StatusView statusView) {
+                                  @Dashboard StatusView statusView) {
         super(treeView, dataManager, selectionModel, treeSelectionHandler);
         this.placeGoTo = placeGoTo;
         this.statusView = statusView;

@@ -15,7 +15,7 @@ public class Demo implements IActionHandler {
 
     private final Logger log = Logger.getLogger(Demo.class.getName());
     private final DemoPopup demoPopup;
-    private final ActionDef actionDef;
+    private final ActionUIDef actionUIDef;
     private List<DemoStep> stepList = newArrayList();
     private int currentDemoStep = 0;
     private DemoStep currentStep;
@@ -24,9 +24,9 @@ public class Demo implements IActionHandler {
     private final EventBus eventBus;
 
 
-    Demo(DemoPopup demoPopup, ActionDef actionDef, EventBus eventBus) {
+    Demo(DemoPopup demoPopup, ActionUIDef actionUIDef, EventBus eventBus) {
         this.demoPopup = demoPopup;
-        this.actionDef = actionDef;
+        this.actionUIDef = actionUIDef;
         this.eventBus = eventBus;
         demoPopup.setTitle("Demo");
         demoPopup.setDemo(this);

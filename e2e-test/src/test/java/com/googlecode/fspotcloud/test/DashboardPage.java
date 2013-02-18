@@ -60,11 +60,8 @@ public class DashboardPage {
 
     public void synchronize() throws InterruptedException {
         selenium.click("gwt-debug-update-button");
-        sleepShort(2);
-        open();
-        sleepShort(2);
-        open();
-        sleepShort(3);
+        sleepShort(4);
+
     }
 
     public void toggleImportForTagId(String id) throws InterruptedException {
@@ -72,10 +69,7 @@ public class DashboardPage {
         selenium.refresh();
         selenium.waitForPageToLoad("30000");
         selenium.click("gwt-debug-import-tag-button");
-        open();
-        sleepShort(2);
-        open();
-        sleepShort(2);
+        sleepShort(4);
     }
 
     public void manageApprovalForTag(String id) throws InterruptedException {

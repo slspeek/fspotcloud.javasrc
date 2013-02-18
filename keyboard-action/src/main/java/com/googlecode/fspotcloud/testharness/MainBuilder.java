@@ -21,11 +21,11 @@ public class MainBuilder implements UIRegistrationBuilder {
     public static final String THREE = "THREE";
     public static final String DEMO = "DEMO";
 
-    public static final ActionDef OK_DEF = new ActionDef(OK, "Ok", "Okey");
-    public static final ActionDef CANCEL_DEF = new ActionDef(CANCEL, "Cancel", "Cancel this");
-    public static final ActionDef TRY_DEF = new ActionDef(TRY, "Try it", "Please try this");
-    public static final ActionDef THREE_DEF = new ActionDef(THREE, "3", "3 this");
-    public static final ActionDef DEMO_DEF = new ActionDef(DEMO, "Demo", "Play a demo");
+    public static final ActionUIDef OK_DEF = new ActionUIDef(OK, "Ok", "Okey");
+    public static final ActionUIDef CANCEL_DEF = new ActionUIDef(CANCEL, "Cancel", "Cancel this");
+    public static final ActionUIDef TRY_DEF = new ActionUIDef(TRY, "Try it", "Please try this");
+    public static final ActionUIDef THREE_DEF = new ActionUIDef(THREE, "3", "3 this");
+    public static final ActionUIDef DEMO_DEF = new ActionUIDef(DEMO, "Demo", "Play a demo");
 
     final KeyStroke SHIFT_A = new KeyStroke(Modifiers.SHIFT, 'A');
     final KeyStroke KEY_C = new KeyStroke('C');
@@ -47,7 +47,7 @@ public class MainBuilder implements UIRegistrationBuilder {
     final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withDefaultModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
     final KeyboardBinding DEMO_BINDING = KeyboardBinding.bind(KEY_7).withDefaultModes(MODES);
 
-    private ActionDef stopDemoDef = new ActionDef("quit-demo", "Quit demo", "Stops all demos");
+    private ActionUIDef stopDemoDef = new ActionUIDef("quit-demo", "Quit demo", "Stops all demos");
     ;
 
     @Inject
@@ -98,9 +98,9 @@ public class MainBuilder implements UIRegistrationBuilder {
                 outputMesg("Running 3-action. ");
             }
         }, THREE_BINDING);
-        ActionDef showHelpDef = new ActionDef(SINGLE_COLUMN_HELP, "Help", "Show a help popup.");
-        ActionDef show2cHelpDef = new ActionDef(TWO_COLUMN_HELP, "Help 2c", "Show a help 2-column popup.");
-        ActionDef hideHelpDef = new ActionDef("hide-help", "Hide help", "Hide the help popup.");
+        ActionUIDef showHelpDef = new ActionUIDef(SINGLE_COLUMN_HELP, "Help", "Show a help popup.");
+        ActionUIDef show2cHelpDef = new ActionUIDef(TWO_COLUMN_HELP, "Help 2c", "Show a help 2-column popup.");
+        ActionUIDef hideHelpDef = new ActionUIDef("hide-help", "Hide help", "Hide the help popup.");
         KeyboardBinding showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(MODES);
         KeyboardBinding show2cHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 'H')).withDefaultModes(MODES);
         KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(MODES);

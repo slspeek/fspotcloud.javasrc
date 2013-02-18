@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
+import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
@@ -63,7 +64,7 @@ public class DashboardViewImpl extends Composite implements DashboardView {
     public DashboardViewImpl(@AdminTreeView TreeView treeView,
                              PeerActionsView peerActionsView,
                              TagDetailsView tagDetailsView,
-                             StatusView statusView,
+                             @Dashboard StatusView statusView,
                              KeyboardActionFactory keyboardActionFactory,
                              DashboardActions actions
     ) {

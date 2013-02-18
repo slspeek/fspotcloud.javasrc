@@ -1,11 +1,11 @@
 package com.googlecode.fspotcloud.client.useraction.raster;
 
-import com.googlecode.fspotcloud.keyboardaction.ActionDef;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
 public class SetRasterActionFactory {
 
-    public ActionDef getSetRasterTo(int w, int h) {
-        return new ActionDef(getId(w, h), getName(w, h), getDescription(w, h));
+    public ActionUIDef getSetRasterTo(int w, int h) {
+        return new ActionUIDef(getId(w, h), getName(w, h), getDescription(w, h));
     }
 
     private String getDescription(int w, int h) {

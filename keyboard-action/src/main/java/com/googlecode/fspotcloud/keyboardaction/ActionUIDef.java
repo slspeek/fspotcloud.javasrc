@@ -4,16 +4,16 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.resources.client.ImageResource;
 
 @GwtCompatible
-public class ActionDef {
+public class ActionUIDef {
 
     private final String id, name, description;
     private final ImageResource icon;
 
-    public ActionDef(String id, String name, String description) {
+    public ActionUIDef(String id, String name, String description) {
         this(id, name, description, null);
     }
 
-    public ActionDef(String id, String name, String description, ImageResource icon) {
+    public ActionUIDef(String id, String name, String description, ImageResource icon) {
         this.id = id;
         this.name = name;
         this.description = description;

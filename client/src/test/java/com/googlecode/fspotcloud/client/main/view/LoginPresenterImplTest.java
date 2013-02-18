@@ -31,7 +31,6 @@ import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
-import com.googlecode.fspotcloud.shared.main.GetUserInfo;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.dispatch.shared.Action;
@@ -64,13 +63,9 @@ public class LoginPresenterImplTest {
 
     @Test
     public void testStart(LoginView loginView, DispatchAsync dispatch,
-                          AcceptsOneWidget panel, ArgumentCaptor<AsyncCallback<UserInfo>> captor,
-                          ArgumentCaptor<Action> actionCaptor) throws Exception {
+                          AcceptsOneWidget panel) throws Exception {
         presenter.start(panel, null);
-        verify(dispatch).execute(actionCaptor.capture(), captor.capture());
 
-        GetUserInfo action = (GetUserInfo) actionCaptor.getValue();
-        assertEquals("post-login?next=", action.getDestinationUrl());
         verify(loginView).setPresenter(presenter);
         verify(loginView).focusUserNameField();
         verify(panel).setWidget(loginView);

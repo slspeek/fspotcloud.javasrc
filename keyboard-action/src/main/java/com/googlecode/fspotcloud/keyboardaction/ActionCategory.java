@@ -9,7 +9,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @GwtCompatible
 public class ActionCategory {
     private final String name;
-    private final List<ActionDef> actions = newArrayList();
+    private final List<ActionUIDef> actions = newArrayList();
 
     ActionCategory(String name) {
         this.name = name;
@@ -19,11 +19,11 @@ public class ActionCategory {
         return name;
     }
 
-    void add(ActionDef action) {
+    void add(ActionUIDef action) {
         actions.add(action);
     }
 
-    List<ActionDef> getActions() {
+    List<ActionUIDef> getActions() {
         return actions;
     }
 

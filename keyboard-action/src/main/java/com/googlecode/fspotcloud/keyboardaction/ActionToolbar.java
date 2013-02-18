@@ -53,8 +53,8 @@ public class ActionToolbar extends LayoutPanel {
     }
 
     public void addCategory(ActionCategory actionCategory) {
-        for (ActionDef actionDef : actionCategory.getActions()) {
-            add(actionDef);
+        for (ActionUIDef actionUIDef : actionCategory.getActions()) {
+            add(actionUIDef);
         }
     }
 
@@ -68,8 +68,8 @@ public class ActionToolbar extends LayoutPanel {
         }
     }
 
-    public void add(ActionDef actionDef) {
-        add(actionButtonFactory.get(actionDef));
+    public void add(ActionUIDef actionUIDef) {
+        add(actionButtonFactory.get(actionUIDef));
     }
 
     public void add(String actionId) {
