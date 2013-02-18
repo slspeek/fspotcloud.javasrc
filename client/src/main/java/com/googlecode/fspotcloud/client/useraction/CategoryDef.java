@@ -12,6 +12,7 @@ public class CategoryDef {
     public final ActionCategory RASTER;
     public final ActionCategory ABOUT;
     public final ActionCategory DASHBOARD;
+    public final ActionCategory USER;
 
     @Inject
     public CategoryDef(ConfigBuilder configBuilder) {
@@ -21,5 +22,6 @@ public class CategoryDef {
         RASTER = configBuilder.createActionCategory("Viewing raster");
         ABOUT = configBuilder.createActionCategory("About");
         DASHBOARD = configBuilder.createActionCategory("Dashboard");
+        USER = configBuilder.createActionCategory("User");
     }
 }

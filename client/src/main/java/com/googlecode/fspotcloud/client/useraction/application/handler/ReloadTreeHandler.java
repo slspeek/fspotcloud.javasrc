@@ -27,13 +27,8 @@ package com.googlecode.fspotcloud.client.useraction.application.handler;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
-import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
-import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
-import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Logger;
 

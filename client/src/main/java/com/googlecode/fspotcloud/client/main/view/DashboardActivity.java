@@ -79,7 +79,7 @@ public class DashboardActivity extends AbstractActivity
 
             @Override
             public void onSuccess(UserInfo result) {
-                if (result.isAdmin()) {
+                if (result.isLoggedIn() && result.isAdmin()) {
                     treePresenter.init();
                     peerActionsPresenter.init();
                 } else if (result.isLoggedIn()) {

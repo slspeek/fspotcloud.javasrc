@@ -35,24 +35,24 @@ public class DemoBuilder {
     }
 
     public DemoBuilder addStep(String actionId, int pauseMilles) {
-        ActionDef actionDef = actionUIRegistry.getAction(actionId);
-        return addStep(actionDef, pauseMilles);
+        ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
+        return addStep(actionUIDef, pauseMilles);
     }
 
-    public DemoBuilder addStep(ActionDef actionDef, int pauseMilles) {
-        ActionDemoStep step = new ActionDemoStep(actionDef, eventBus, pauseMilles, getContent(actionDef));
+    public DemoBuilder addStep(ActionUIDef actionUIDef, int pauseMilles) {
+        ActionDemoStep step = new ActionDemoStep(actionUIDef, eventBus, pauseMilles, getContent(actionUIDef));
         demo.getStepList().add(step);
         return this;
     }
 
     public DemoBuilder addStep(String actionId, int pauseMilles, String overridingDescription) {
-        ActionDef actionDef = actionUIRegistry.getAction(actionId);
-        return addStep(actionDef, pauseMilles, overridingDescription);
+        ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
+        return addStep(actionUIDef, pauseMilles, overridingDescription);
     }
 
-    public DemoBuilder addStep(ActionDef actionDef, int pauseMilles, String overridingDescription) {
+    public DemoBuilder addStep(ActionUIDef actionUIDef, int pauseMilles, String overridingDescription) {
         SafeHtml content = new SafeHtmlBuilder().appendEscaped(overridingDescription).toSafeHtml();
-        ActionDemoStep step = new ActionDemoStep(actionDef, eventBus, pauseMilles, content);
+        ActionDemoStep step = new ActionDemoStep(actionUIDef, eventBus, pauseMilles, content);
         demo.getStepList().add(step);
         return this;
     }
@@ -62,9 +62,9 @@ public class DemoBuilder {
         return this;
     }
 
-    private SafeHtml getContent(ActionDef actionDef) {
-        KeyStroke[] keyStrokes = keyboardPreferences.getDefaultKeysForAction(actionDef.getId());
-        SafeHtml result = helpContentGenerator.getHelpText(actionDef, keyStrokes);
+    private SafeHtml getContent(ActionUIDef actionUIDef) {
+        KeyStroke[] keyStrokes = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
+        SafeHtml result = helpContentGenerator.getHelpText(actionUIDef, keyStrokes);
         return result;
     }
 }

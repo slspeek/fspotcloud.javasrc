@@ -66,6 +66,10 @@ public class ApplicationBinder extends AbstractBinder {
         configBuilder.register(category, actions.demo, get('7'));
         configBuilder.register(category, actions.tree_focus, get(KeyCodes.KEY_ENTER));
         configBuilder.register(category, actions.reloadTree, get('R'));
+        KeyboardBinding binding = KeyboardBinding.bind(KeyStroke.alt('L')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
+        configBuilder.register(category, actions.goToLatest, binding);
+
+
     }
 
     private IActionHandler getHelpHandler() {

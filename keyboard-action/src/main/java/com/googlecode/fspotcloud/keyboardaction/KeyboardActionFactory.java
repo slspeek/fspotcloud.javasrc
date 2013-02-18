@@ -58,8 +58,8 @@ public class KeyboardActionFactory {
         return actionButtonFactory.get(actionId);
     }
 
-    public ActionButton getButton(ActionDef actionDef) {
-        return actionButtonFactory.get(actionDef);
+    public ActionButton getButton(ActionUIDef actionUIDef) {
+        return actionButtonFactory.get(actionUIDef);
     }
 
     public ActionToolbar getToolBar() {

@@ -28,16 +28,12 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
 
 
-public interface LoginView extends IsWidget {
+public interface LoginView extends IsWidget, StatusView {
     void setPresenter(LoginPresenter presenter);
 
     public String getUserNameField();
 
     public String getPasswordField();
-
-    public void setStatusText(String text);
-
-    public void setGoogleLoginHref(String href);
 
     public void focusUserNameField();
 
@@ -51,13 +47,5 @@ public interface LoginView extends IsWidget {
         public void onPasswordFieldKeyUp(int keyCode);
 
         void login();
-
-        void signUp();
-
-        void resendConfirmation();
-
-        void passwordReset();
-
-        void cancel();
     }
 }

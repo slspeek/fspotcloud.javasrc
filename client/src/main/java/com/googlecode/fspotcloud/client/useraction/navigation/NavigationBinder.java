@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.useraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.client.useraction.Modes;
-import com.googlecode.fspotcloud.keyboardaction.ActionDef;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 
@@ -39,8 +39,8 @@ public class NavigationBinder extends AbstractBinder {
         bind(navigationActions.rss_feed, rssFeedHandler, get(KeyCodes.KEY_DELETE));
     }
 
-    public void bind(ActionDef actionDef, KeyboardBinding keyBinding) {
-        super.bind(actionDef, navigationActionHandler, keyBinding);
+    public void bind(ActionUIDef actionUIDef, KeyboardBinding keyBinding) {
+        super.bind(actionUIDef, navigationActionHandler, keyBinding);
     }
 
     private KeyboardBinding get(int character) {

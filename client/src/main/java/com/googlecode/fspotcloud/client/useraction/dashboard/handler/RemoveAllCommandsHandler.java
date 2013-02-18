@@ -2,6 +2,7 @@ package com.googlecode.fspotcloud.client.useraction.dashboard.handler;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.dashboard.UserDeletesAllCommandsAction;
@@ -18,7 +19,7 @@ public class RemoveAllCommandsHandler implements IActionHandler {
     private Logger log = Logger.getLogger(RemoveAllCommandsHandler.class.getName());
 
     @Inject
-    public RemoveAllCommandsHandler(DispatchAsync dispatcher, StatusView statusView) {
+    public RemoveAllCommandsHandler(DispatchAsync dispatcher, @Dashboard StatusView statusView) {
         this.dispatcher = dispatcher;
         this.statusView = statusView;
     }

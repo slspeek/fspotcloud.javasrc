@@ -18,8 +18,8 @@ public abstract class AbstractBinder {
 
     public abstract void build();
 
-    protected void bind(ActionDef
-                                actionDef, IActionHandler handler, KeyboardBinding binding) {
-        configBuilder.addBinding(category, actionDef, handler, binding);
+    protected void bind(ActionUIDef
+                                actionUIDef, IActionHandler handler, KeyboardBinding binding) {
+        configBuilder.addBinding(category, actionUIDef, handler, binding);
     }
 }

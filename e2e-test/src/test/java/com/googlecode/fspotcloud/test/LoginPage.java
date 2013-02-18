@@ -54,12 +54,12 @@ public class LoginPage {
     }
 
     public void login() throws InterruptedException {
-        selenium.click("gwt-debug-login");
+        selenium.click("gwt-debug-do-login");
         selenium.waitForPageToLoad("30000");
     }
 
     public void clickGoogleLogin() throws InterruptedException {
-        selenium.click("gwt-debug-google-login");
+        selenium.click("gwt-debug-go-other-login");
         selenium.waitForPageToLoad("30000");
     }
 

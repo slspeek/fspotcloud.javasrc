@@ -10,6 +10,8 @@ public interface IClientLoginManager {
 
     void logout(AsyncCallback<VoidResult> resultAsyncCallback);
 
+    void goTo3rdPartyLogin(String nextUrl);
+
     void redirectToLogin();
 
     void reset();
