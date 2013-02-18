@@ -23,9 +23,9 @@ public class DemoBuilderFactory {
         this.eventBus = eventBus;
     }
 
-    public DemoBuilder get(ActionDef actionDef) {
+    public DemoBuilder get(ActionUIDef actionUIDef) {
         DemoBuilder demoBuilder = demoBuilderProvider.get();
-        final Demo demo = new Demo(demoPopupProvider.get(), actionDef, eventBus);
+        final Demo demo = new Demo(demoPopupProvider.get(), actionUIDef, eventBus);
         demoList.add(demo);
         demoBuilder.setDemo(demo);
         return demoBuilder;

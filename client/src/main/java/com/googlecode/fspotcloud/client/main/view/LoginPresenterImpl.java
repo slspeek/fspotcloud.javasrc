@@ -30,16 +30,15 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
-import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
-import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.place.*;
+import com.googlecode.fspotcloud.client.place.LoginPlace;
+import com.googlecode.fspotcloud.client.place.UserAccountPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
-import com.googlecode.fspotcloud.shared.main.GetUserInfo;
-import com.googlecode.fspotcloud.shared.main.UserInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Level;
@@ -56,8 +55,9 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final DispatchAsync dispatch;
     private final PlaceGoTo placeGoTo;
     private final PlaceWhere placeWhere;
-    private final TreeView.TreePresenter treePresenter;
     private final IClientLoginManager IClientLoginManager;
+    private final EventBus eventBus;
+    private final ApplicationActions applicationActions;
 
 
     @Inject
@@ -65,14 +65,16 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                               DispatchAsync dispatch,
                               PlaceGoTo placeGoTo,
                               PlaceWhere placeWhere,
-                              @BasicTreeView TreeView.TreePresenter treePresenter,
-                              IClientLoginManager IClientLoginManager) {
+                              IClientLoginManager IClientLoginManager,
+                              EventBus eventBus,
+                              ApplicationActions applicationActions) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
         this.placeWhere = placeWhere;
-        this.treePresenter = treePresenter;
         this.IClientLoginManager = IClientLoginManager;
+        this.eventBus = eventBus;
+        this.applicationActions = applicationActions;
     }
 
     @Override
@@ -80,33 +82,15 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
         this.view.setPresenter(this);
         panel.setWidget(view);
         view.focusUserNameField();
-        String nextUrl;
-        nextUrl = getNextUrl();
-        dispatch.execute(new GetUserInfo("post-login?next=" + nextUrl),
-                new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    @Override
-                    public void onSuccess(UserInfo result) {
-                        String loginUrl = result.getLoginUrl();
-                        log.info("LoginURL: " + loginUrl);
-                        view.setGoogleLoginHref(loginUrl);
-                    }
-                });
     }
 
     private String getNextUrl() {
-
         return ((LoginPlace) placeWhere.getRawWhere()).getNextUrl();
     }
 
     @Override
     public void onUserFieldKeyUp(int code) {
-        log.info("Code: " + code);
-
+        log.log(Level.FINE, "Code: " + code);
         if (code == 13) {
             view.focusPasswordField();
         }
@@ -124,26 +108,6 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
         submitToServer();
     }
 
-    @Override
-    public void signUp() {
-        placeGoTo.goTo(new SignUpPlace());
-    }
-
-    @Override
-    public void resendConfirmation() {
-        placeGoTo.goTo(new SendConfirmationPlace());
-    }
-
-    @Override
-    public void passwordReset() {
-        placeGoTo.goTo(new SendResetPasswordPlace());
-    }
-
-    @Override
-    public void cancel() {
-        placeGoTo.goTo(new BasePlace("latest", "latest"));
-    }
-
     private void submitToServer() {
         String userName = view.getUserNameField();
         String password = view.getPasswordField();
@@ -159,7 +123,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
 
                     @Override
                     public void onSuccess(AuthenticationResult result) {
-                        log.info("Server replied to auth requ: " + result.getSuccess());
+                        log.log(Level.FINE, "Server replied to auth request: " + result.getSuccess());
 
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
@@ -171,8 +135,8 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                             } else {
                                 placeGoTo.goTo(new UserAccountPlace());
                             }
-                            treePresenter.reloadTree();
-                            log.info("Reached!!!!");
+                            eventBus.fireEvent(new KeyboardActionEvent(applicationActions.reloadTree.getId()));
+                            log.log(Level.FINE, "Reached end of login");
                         } else {
                             view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
                         }

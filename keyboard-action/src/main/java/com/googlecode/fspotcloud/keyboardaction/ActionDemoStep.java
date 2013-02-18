@@ -5,14 +5,14 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 
 public class ActionDemoStep implements DemoStep {
 
-    private final ActionDef actionDef;
+    private final ActionUIDef actionUIDef;
     private final EventBus eventBus;
     private final SafeHtml content;
     private final int pauseMillis;
 
 
-    ActionDemoStep(ActionDef actionDef, EventBus eventBus, int pauseMillis, SafeHtml content) {
-        this.actionDef = actionDef;
+    ActionDemoStep(ActionUIDef actionUIDef, EventBus eventBus, int pauseMillis, SafeHtml content) {
+        this.actionUIDef = actionUIDef;
         this.eventBus = eventBus;
         this.content = content;
         this.pauseMillis = pauseMillis;
@@ -20,7 +20,7 @@ public class ActionDemoStep implements DemoStep {
 
     @Override
     public String getActionId() {
-        return actionDef.getId();
+        return actionUIDef.getId();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ActionDemoStep implements DemoStep {
         return new Runnable() {
             @Override
             public void run() {
-                eventBus.fireEvent(new KeyboardActionEvent(actionDef.getId()));
+                eventBus.fireEvent(new KeyboardActionEvent(actionUIDef.getId()));
             }
         };
     }

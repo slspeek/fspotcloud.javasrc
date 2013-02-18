@@ -10,7 +10,7 @@ public class ActionButtonGwtTest extends GWTTestCase {
 
     private ActionButton button;
     private EventBus eventBus;
-    private ActionDef okDef;
+    private ActionUIDef okDef;
 
     @Override
     protected void gwtSetUp() throws Exception {

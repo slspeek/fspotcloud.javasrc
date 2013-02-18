@@ -30,6 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
@@ -52,7 +53,7 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
     public TagDetailsActivity(TagDetailsView tagDetailsView,
                               DataManager dataManager,
                               PlaceWhere placeWhere,
-                              StatusView statusView) {
+                              @Dashboard StatusView statusView) {
         super();
         this.tagDetailsView = tagDetailsView;
         this.dataManager = dataManager;

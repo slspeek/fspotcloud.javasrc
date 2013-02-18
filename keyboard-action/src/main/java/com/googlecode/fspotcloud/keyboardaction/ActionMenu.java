@@ -61,8 +61,8 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
     }
 
     public void add(final String actionId) {
-        ActionDef actionDef = actionUIRegistry.getAction(actionId);
-        SafeHtml menuItemContent = actionMenuItemSafeHtml.get(actionDef);
+        ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
+        SafeHtml menuItemContent = actionMenuItemSafeHtml.get(actionUIDef);
         MenuItem menuItem = innerBar.addItem(menuItemContent, new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {

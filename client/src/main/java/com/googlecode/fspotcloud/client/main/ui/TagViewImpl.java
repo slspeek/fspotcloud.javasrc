@@ -47,6 +47,7 @@ import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.useraction.MainToolbar;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -87,12 +88,12 @@ public class TagViewImpl extends Composite implements TagView,
         imageRasterView.asWidget().addDomHandler(this, MouseOutEvent.getType());
         this.imageRasterView = imageRasterView;
         initWidget(uiBinder.createAndBindUi(this));
-        log.info("Created " + this);
+        log.info("Created: " + id);
     }
 
     @UiHandler("horizontalFocusPanel")
     public void infoHover(MouseOverEvent event) {
-        log.info("horizontal mouse over");
+        log.log(Level.FINER, "horizontal mouse over");
         cancelHiding();
         animateControlsIn(600);
     }
@@ -106,7 +107,7 @@ public class TagViewImpl extends Composite implements TagView,
     public void verticalMousePanel(MouseOverEvent event) {
         cancelHiding();
         animateControlsIn(600);
-        log.info("vertical mouse over");
+        log.log(Level.FINER, "vertical mouse over");
     }
 
     public void animateControlsIn(int duration) {
@@ -178,7 +179,7 @@ public class TagViewImpl extends Composite implements TagView,
 
     @Override
     public void onMouseOver(MouseOverEvent event) {
-        log.info("On mouse over");
+        log.log(Level.FINER, "On mouse over");
         cancelHiding();
         hideLabelLater(1000);
     }

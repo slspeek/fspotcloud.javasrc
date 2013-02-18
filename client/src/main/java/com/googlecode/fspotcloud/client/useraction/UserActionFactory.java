@@ -7,6 +7,7 @@ import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardBinder;
 import com.googlecode.fspotcloud.client.useraction.navigation.NavigationBinder;
 import com.googlecode.fspotcloud.client.useraction.raster.RasterBinder;
 import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowBinder;
+import com.googlecode.fspotcloud.client.useraction.user.UserBinder;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
@@ -25,6 +26,7 @@ public class UserActionFactory implements UIRegistrationBuilder {
                              RasterBinder rasterBinder,
                              SlideshowBinder slideshowBinder,
                              DashboardBinder dashboardBinder,
+                             UserBinder userBinder,
                              IModeController modeController) {
         log.log(Level.FINEST, "In constructor before doing anything");
         this.modeController = modeController;
@@ -35,6 +37,7 @@ public class UserActionFactory implements UIRegistrationBuilder {
         rasterBinder.build();
         slideshowBinder.build();
         dashboardBinder.build();
+        userBinder.build();
     }
 
     @Override

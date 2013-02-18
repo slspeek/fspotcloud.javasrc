@@ -24,24 +24,24 @@ public class ConfigBuilder {
         this.categoryList = categoryList;
     }
 
-    public ConfigBuilder register(ActionCategory actionCategory, ActionDef actionDef, KeyboardBinding keyboardBinding) {
-        actionUIRegistry.putAction(actionDef);
-        keyboardPreferences.bind(actionDef.getId(), keyboardBinding);
-        actionCategory.add(actionDef);
+    public ConfigBuilder register(ActionCategory actionCategory, ActionUIDef actionUIDef, KeyboardBinding keyboardBinding) {
+        actionUIRegistry.putAction(actionUIDef);
+        keyboardPreferences.bind(actionUIDef.getId(), keyboardBinding);
+        actionCategory.add(actionUIDef);
         return this;
     }
 
     public ConfigBuilder addBinding(ActionCategory actionCategory,
-                                    ActionDef actionDef,
+                                    ActionUIDef actionUIDef,
                                     IActionHandler handler,
                                     KeyboardBinding binding) {
-        bindHandler(actionDef, handler);
-        register(actionCategory, actionDef, binding);
+        bindHandler(actionUIDef, handler);
+        register(actionCategory, actionUIDef, binding);
         return this;
     }
 
-    public ConfigBuilder bindHandler(ActionDef actionDef, IActionHandler actionHandler) {
-        actionHandlerRegistry.putAction(actionDef.getId(), actionHandler);
+    public ConfigBuilder bindHandler(ActionUIDef actionUIDef, IActionHandler actionHandler) {
+        actionHandlerRegistry.putAction(actionUIDef.getId(), actionHandler);
         return this;
     }
 

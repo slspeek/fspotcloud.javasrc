@@ -30,17 +30,17 @@ public class ActionMenuItemSafeHtml {
         SafeHtml menuItem(String message, String outerStyle, String captionStyle, String iconStyle, String shortcutStyle, String shortcut);
     }
 
-    SafeHtml get(ActionDef actionDef) {
+    SafeHtml get(ActionUIDef actionUIDef) {
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
-        KeyStroke[] keysForAction = keyboardPreferences.getDefaultKeysForAction(actionDef.getId());
+        KeyStroke[] keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
         Joiner joiner = Joiner.on(" or ");
         String keyboardShortcuts = "(" + joiner.join(keysForAction) + ")";
 
-        final String description = actionDef.getName();
-        if (actionDef.getIcon() != null) {
+        final String description = actionUIDef.getName();
+        if (actionUIDef.getIcon() != null) {
 
             return TEMPLATES.menuItemIcon(description,
-                    actionDef.getIcon().getSafeUri(),
+                    actionUIDef.getIcon().getSafeUri(),
                     style.menuItem(),
                     style.menuItemText(),
                     style.helpActionIcon(),

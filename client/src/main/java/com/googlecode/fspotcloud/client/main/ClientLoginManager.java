@@ -31,10 +31,12 @@ package com.googlecode.fspotcloud.client.main;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.main.GetUserInfo;
 import com.googlecode.fspotcloud.shared.main.LogoutAction;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -56,18 +58,21 @@ public class ClientLoginManager implements IClientLoginManager {
     private UserInfo currentUser;
     private final DataManager dataManager;
     private final GetUserInfoMemoProc getUserInfoMemoProc;
+    private final LoadNewLocation loadNewLocation;
 
     @Inject
     public ClientLoginManager(DispatchAsync dispatch,
                               PlaceWhere placeWhere,
                               PlaceGoTo placeGoTo,
                               DataManager dataManager,
-                              GetUserInfoMemoProc getUserInfoMemoProc) {
+                              GetUserInfoMemoProc getUserInfoMemoProc,
+                              LoadNewLocation loadNewLocation) {
         this.dispatch = dispatch;
         this.placeWhere = placeWhere;
         this.placeGoTo = placeGoTo;
         this.dataManager = dataManager;
         this.getUserInfoMemoProc = getUserInfoMemoProc;
+        this.loadNewLocation = loadNewLocation;
     }
 
     @Override
@@ -79,6 +84,23 @@ public class ClientLoginManager implements IClientLoginManager {
     @Override
     public void logout(AsyncCallback<VoidResult> resultAsyncCallback) {
         dispatch.execute(new LogoutAction(), resultAsyncCallback);
+    }
+
+    @Override
+    public void goTo3rdPartyLogin(String nextUrl) {
+        dispatch.execute(new GetUserInfo("post-login?next=" + nextUrl),
+                new AsyncCallback<UserInfo>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                    }
+
+                    @Override
+                    public void onSuccess(UserInfo result) {
+                        String loginUrl = result.getLoginUrl();
+                        log.info("LoginURL: " + loginUrl);
+                        loadNewLocation.setLocation(loginUrl);
+                    }
+                });
     }
 
     @Override

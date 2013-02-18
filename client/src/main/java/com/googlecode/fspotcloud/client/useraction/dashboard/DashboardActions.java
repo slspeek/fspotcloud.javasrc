@@ -1,33 +1,34 @@
 package com.googlecode.fspotcloud.client.useraction.dashboard;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.keyboardaction.ActionDef;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
 public class DashboardActions {
-    public final ActionDef reloadTree;
-    public final ActionDef focusTree;
-    public final ActionDef toPhotos;
-    public final ActionDef manageUserGroups;
-    public final ActionDef synchronize;
-    public final ActionDef deleteAll;
-    public final ActionDef deleteCommands;
-    public final ActionDef importTag;
-    public final ActionDef manageAccess;
+    public final ActionUIDef reloadTree;
+    public final ActionUIDef focusTree;
+    public final ActionUIDef toPhotos;
+    public final ActionUIDef manageUserGroups;
+    public final ActionUIDef synchronize;
+    public final ActionUIDef deleteAll;
+    public final ActionUIDef deleteCommands;
+    public final ActionUIDef importTag;
+    public final ActionUIDef manageAccess;
 
     @Inject
     public DashboardActions() {
 
-        reloadTree = new ActionDef("reload-admin-tree",
+        reloadTree = new ActionUIDef("reload-admin-tree",
                 "Reload tree",
                 "Reload tree data from the server",
                 null);
-        toPhotos = new ActionDef("to-photos", "To photos", "Go to the photos screen", null);
-        manageUserGroups = new ActionDef("manage-usergroups", "Manage usergroups", "Manage usergroups", null);
-        synchronize = new ActionDef("synchronize", "Synchronize", "Synchronize with the peer", null);
-        deleteCommands = new ActionDef("clear-queue", "Clear queue", "Delete all pending commands", null);
-        deleteAll = new ActionDef("remove-all", "Remove all", "Remove all imported data", null);
-        importTag = new ActionDef("import-tag", "Import tag", "Import this tag", null);
-        manageAccess = new ActionDef("manage-access", "Manage access", "Grant this label to usergroups", null);
-        focusTree = new ActionDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree", null);;
+        toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen", null);
+        manageUserGroups = new ActionUIDef("manage-usergroups", "Manage usergroups", "Manage usergroups", null);
+        synchronize = new ActionUIDef("synchronize", "Synchronize", "Synchronize with the peer", null);
+        deleteCommands = new ActionUIDef("clear-queue", "Clear queue", "Delete all pending commands", null);
+        deleteAll = new ActionUIDef("remove-all", "Remove all", "Remove all imported data", null);
+        importTag = new ActionUIDef("import-tag", "Import tag", "Import this tag", null);
+        manageAccess = new ActionUIDef("manage-access", "Manage access", "Grant this label to usergroups", null);
+        focusTree = new ActionUIDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree", null);
+        ;
     }
 }

@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -34,7 +33,12 @@ import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
+import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.useraction.user.UserActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -47,33 +51,39 @@ public class LoginViewImpl extends Composite implements LoginView {
     TextBox userNameTextBox;
     @UiField
     PasswordTextBox passwordTextBox;
-    @UiField
-    Anchor googleLoginLink;
+    @UiField(provided = true)
+    ActionButton otherLogin;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton login;
-    @UiField
-    BigPushButton signUp;
-    @UiField
-    BigPushButton cancel;
-    @UiField
-    BigPushButton resend;
-    @UiField
-    BigPushButton passwordReset;
-
+    @UiField(provided = true)
+    ActionButton login;
+    @UiField(provided = true)
+    ActionButton signUp;
+    @UiField(provided = true)
+    ActionButton cancel;
+    @UiField(provided = true)
+    ActionButton resend;
+    @UiField(provided = true)
+    ActionButton passwordReset;
 
     @Inject
-    public LoginViewImpl(IScheduler scheduler) {
+    public LoginViewImpl(IScheduler scheduler, UserActions actions,
+                         KeyboardActionFactory factory,
+                         ApplicationActions applicationActions) {
         this.scheduler = scheduler;
+        otherLogin = factory.getButton(actions.otherLogin);
+        cancel = factory.getButton(applicationActions.goToLatest);
+        signUp = factory.getButton(actions.goSignUp);
+        resend = factory.getButton(actions.goResendConfirmation);
+        passwordReset = factory.getButton(actions.goResetPassword);
+        login = factory.getButton(actions.doLogin);
+
         initWidget(uiBinder.createAndBindUi(this));
+
         userNameTextBox.ensureDebugId("username");
-        googleLoginLink.ensureDebugId("google-login");
         passwordTextBox.ensureDebugId("password");
-        login.ensureDebugId("login");
-        cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
-        log.info("Created ");
+        log.log(Level.FINE, "Created");
     }
 
     @Override
@@ -94,11 +104,6 @@ public class LoginViewImpl extends Composite implements LoginView {
     @Override
     public void setStatusText(String text) {
         statusLabel.setText(text);
-    }
-
-    @Override
-    public void setGoogleLoginHref(String href) {
-        googleLoginLink.setHref(href);
     }
 
     @Override
@@ -128,30 +133,6 @@ public class LoginViewImpl extends Composite implements LoginView {
         passwordTextBox.setText("");
     }
 
-    @UiHandler("login")
-    public void loginClicked(ClickEvent e) {
-        presenter.login();
-    }
-
-    @UiHandler("signUp")
-    public void signUpClicked(ClickEvent e) {
-        presenter.signUp();
-    }
-
-    @UiHandler("resend")
-    public void resendClicked(ClickEvent e) {
-        presenter.resendConfirmation();
-    }
-
-    @UiHandler("passwordReset")
-    public void passwordResetClicked(ClickEvent e) {
-        presenter.passwordReset();
-    }
-
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
-    }
 
     @UiHandler("userNameTextBox")
     public void onUserNameKey(KeyUpEvent e) {

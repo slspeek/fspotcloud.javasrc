@@ -21,13 +21,13 @@ public class ActionButtonFactory {
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
     }
 
-    ActionButton get(ActionDef actionDef) {
-        return new ActionButton(actionDef, eventBus, keyboardActionResources);
+    ActionButton get(ActionUIDef actionUIDef) {
+        return new ActionButton(actionUIDef, eventBus, keyboardActionResources);
     }
 
     ActionButton get(String actionId) {
-        ActionDef actionDef = actionUIRegistry.getAction(actionId);
-        return get(actionDef);
+        ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
+        return get(actionUIDef);
     }
 
     ActionMenu getMenu(String caption) {
