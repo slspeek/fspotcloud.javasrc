@@ -30,8 +30,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
-import com.googlecode.fspotcloud.client.place.ManageUserGroupsPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;
@@ -39,6 +39,7 @@ import com.googlecode.fspotcloud.shared.main.SaveUserGroupAction;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -47,14 +48,18 @@ public class EditUserGroupPresenterImpl extends AbstractActivity implements Edit
     private final EditUserGroupView view;
     private final DispatchAsync dispatch;
     private UserGroupInfo userGroupInfo;
-    private final PlaceGoTo placeGoTo;
+    private final EventBus eventBus;
+    private final DashboardActions dashboardActions;
 
     @Inject
     public EditUserGroupPresenterImpl(EditUserGroupView view,
-                                      DispatchAsync dispatch, PlaceGoTo placeGoTo) {
+                                      DispatchAsync dispatch,
+                                      DashboardActions dashboardActions,
+                                      EventBus eventBus) {
         this.view = view;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
+        this.eventBus = eventBus;
+        this.dashboardActions = dashboardActions;
     }
 
     @Override
@@ -65,38 +70,43 @@ public class EditUserGroupPresenterImpl extends AbstractActivity implements Edit
 
     @Override
     public void save() {
-        log.info("Saved called!");
+        log.log(Level.FINE, "Saved called.");
+
         userGroupInfo.setName(view.getName());
         userGroupInfo.setDescription(view.getDescription());
         userGroupInfo.setPublic(view.getIsPublic());
+        view.setStatusText("Sending data to the server in order to save");
         dispatch.execute(new SaveUserGroupAction(userGroupInfo),
                 new AsyncCallback<VoidResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
+                        view.setStatusText("Group could not be saved due to a server error");
                     }
 
                     @Override
                     public void onSuccess(VoidResult result) {
+                        view.setStatusText("A save was successfully performed on the server, redirecting");
                         log.info(
                                 "Successfull return from save user group server call");
-                        placeGoTo.goTo(new ManageUserGroupsPlace());
+                        eventBus.fireEvent(new KeyboardActionEvent(dashboardActions.manageUserGroups.getId()));
                     }
                 });
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(final Long id) {
         log.info("Set id: " + id);
+        view.setStatusText("Requesting data for group with id=" + id);
         dispatch.execute(new GetUserGroupAction(id),
                 new AsyncCallback<GetUserGroupResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
+                        view.setStatusText("Requesting data for group with id=" + id + " failed due to a server error.");
                     }
 
                     @Override
                     public void onSuccess(GetUserGroupResult result) {
+                        view.setStatusText("Loaded group information");
                         userGroupInfo = result.getInfo();
                         view.setName(result.getInfo().getName());
                         view.setDescription(result.getInfo().getDescription());
@@ -105,8 +115,5 @@ public class EditUserGroupPresenterImpl extends AbstractActivity implements Edit
                 });
     }
 
-    @Override
-    public void cancel() {
-        placeGoTo.goTo(new ManageUserGroupsPlace());
-    }
+
 }

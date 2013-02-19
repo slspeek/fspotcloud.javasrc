@@ -1,5 +1,6 @@
-package com.googlecode.fspotcloud.client.useraction.dashboard.handler;
+package com.googlecode.fspotcloud.client.useraction.usergroup.handler;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
@@ -9,6 +10,7 @@ import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.useraction.PlaceMoverBase;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
+@GwtCompatible
 public class GoEditUsergroup extends PlaceMoverBase {
 
     private final ManageUserGroupsView.ManageUserGroupsPresenter presenter;

@@ -24,34 +24,32 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
-import com.googlecode.fspotcloud.client.place.EditUserGroupPlace;
-import com.googlecode.fspotcloud.client.place.ManageUsersPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsAction;
+import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsResult;
+import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class ManageUserGroupsPresenterImpl extends AbstractActivity implements ManageUserGroupsView.ManageUserGroupsPresenter {
     private final Logger log = Logger.getLogger(ManageUserGroupsPresenterImpl.class.getName());
     private final ManageUserGroupsView view;
     private final DispatchAsync dispatch;
-    private final PlaceGoTo placeGoTo;
 
     @Inject
     public ManageUserGroupsPresenterImpl(ManageUserGroupsView view,
-                                         DispatchAsync dispatch, PlaceGoTo placeGoTo) {
+                                         DispatchAsync dispatch
+    ) {
         this.view = view;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
     }
 
     @Override
@@ -63,17 +61,19 @@ public class ManageUserGroupsPresenterImpl extends AbstractActivity implements M
 
     @Override
     public void refreshData() {
+        view.setStatusText("Requesting all groups from the server");
         dispatch.execute(new GetMyUserGroupsAction(),
                 new AsyncCallback<GetMyUserGroupsResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
+                        view.setStatusText("Could not retrieve groups due to a server error");
                     }
 
                     @Override
                     public void onSuccess(GetMyUserGroupsResult result) {
                         if (result.getData() != null) {
                             view.setData(result.getData());
+                            view.setStatusText("Reloaded the table from server data");
                         }
                     }
                 });

@@ -26,9 +26,11 @@ public class DashboardBinder extends AbstractBinder {
     public void build() {
         configBuilder.register(category, actions.reloadTree, get('R'));
         configBuilder.register(category, actions.toPhotos, get('F'));
-        configBuilder.register(category, actions.manageUserGroups, get('M'));
+        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('M'))
+                .withDefaultModes(Modes.DASHBOARD).override(Modes.EDIT_GROUP, KeyStroke.alt('M'));
+        configBuilder.register(category, actions.manageUserGroups, binding);
         final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
-        KeyboardBinding binding = KeyboardBinding.bind(SHIFT_CTRL_ALT_R).withDefaultModes(Modes.DASHBOARD);
+        binding = KeyboardBinding.bind(SHIFT_CTRL_ALT_R).withDefaultModes(Modes.DASHBOARD);
         configBuilder.register(category, actions.deleteAll, binding);
         configBuilder.register(category, actions.synchronize, get('S'));
 
