@@ -1,7 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.shared.GWT;
 import com.google.inject.Inject;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class KeyboardActionFactory {
     private final NativePreviewHandler nativePreviewHandler;
     private final HelpActionsFactory helpActionsFactory;
     private final ActionButtonFactory actionButtonFactory;
-    private final KeyboardActionResources keyboardActionResources = GWT.create(KeyboardActionResources.class);
+    private final KeyboardActionResources keyboardActionResources;
 
     private IModeController modeController;
 
@@ -32,10 +31,16 @@ public class KeyboardActionFactory {
                                  IModeController modeController,
                                  ActionUIRegistry actionUIRegistry,
                                  List<ActionCategory> actionCategoryList,
-                                 ActionButtonFactory actionButtonFactory) {
+                                 ActionButtonFactory actionButtonFactory,
+                                 KeyboardActionResources keyboardActionResources,
+                                 ActionMenuResources menuResources,
+                                 ActionButtonResources buttonResources) {
+        this.keyboardActionResources = keyboardActionResources;
         builder.build();
         this.actionButtonFactory = actionButtonFactory;
-        keyboardActionResources.style().ensureInjected();
+        this.keyboardActionResources.style().ensureInjected();
+        menuResources.style().ensureInjected();
+        buttonResources.style().ensureInjected();
         this.actionHandlerRegistry = actionHandlerRegistry;
         this.actionManager = actionManager;
         this.helpActionsFactory = helpActionsFactory;
@@ -55,11 +60,11 @@ public class KeyboardActionFactory {
     }
 
     public ActionButton getButton(String actionId) {
-        return actionButtonFactory.get(actionId);
+        return actionButtonFactory.getButton(actionId);
     }
 
     public ActionButton getButton(ActionUIDef actionUIDef) {
-        return actionButtonFactory.get(actionUIDef);
+        return actionButtonFactory.getButton(actionUIDef);
     }
 
     public ActionToolbar getToolBar() {

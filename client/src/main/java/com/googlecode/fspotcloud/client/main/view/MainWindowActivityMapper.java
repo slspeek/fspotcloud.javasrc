@@ -50,7 +50,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter;
     private final ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter;
     private final ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity;
-    private final ActivityAsyncProxy<ManageUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter;
+    private final ActivityAsyncProxy<ManageUserGroupsView.ManageUserGroupsPresenter> myUserGroupsPresenter;
     private final EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter;
     private final ManageUsersView.ManageUsersPresenter manageUsersPresenter;
     private final ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter;
@@ -69,7 +69,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
                                     ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter,
                                     ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity,
-                                    ActivityAsyncProxy<ManageUserGroupsView.MyUserGroupsPresenter> myUserGroupsPresenter,
+                                    ActivityAsyncProxy<ManageUserGroupsView.ManageUserGroupsPresenter> myUserGroupsPresenter,
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter,
                                     ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
@@ -136,10 +136,10 @@ public class MainWindowActivityMapper implements ActivityMapper {
         } else if (place instanceof ManageUsersPlace) {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.MANAGE_USERS);
         } else if (place instanceof ManageUserGroupsPlace) {
             activity = myUserGroupsPresenter;
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.MANAGE_USERGROUPS);
         } else if (place instanceof EditUserGroupPlace) {
             activity = editUserGroupPresenter;
             editUserGroupPresenter.setId(((EditUserGroupPlace) place).getUserGroupId());

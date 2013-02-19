@@ -32,19 +32,17 @@ import java.util.List;
 
 
 public interface ManageUserGroupsView extends IsWidget {
-    void setPresenter(MyUserGroupsPresenter presenter);
+    void setPresenter(ManageUserGroupsPresenter presenter);
 
     void setData(List<UserGroupInfo> data);
 
     UserGroupInfo getSelected();
 
-    interface MyUserGroupsPresenter extends Activity {
-        void newUserGroup();
+    void focusTable();
 
-        void delete();
+    interface ManageUserGroupsPresenter extends Activity {
+        UserGroupInfo getSelected();
 
-        void manageUsers();
-
-        void edit();
+        void refreshData();
     }
 }

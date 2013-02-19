@@ -7,31 +7,45 @@ public class ActionButtonFactory {
 
     private final EventBus eventBus;
     private final ActionUIRegistry actionUIRegistry;
-    private final KeyboardActionResources keyboardActionResources;
+    private ActionButtonResources buttonResources;
+    private final ActionMenuResources menuResources;
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
 
     @Inject
     private ActionButtonFactory(EventBus eventBus,
                                 ActionUIRegistry actionUIRegistry,
-                                KeyboardActionResources keyboardActionResources,
+                                ActionButtonResources buttonResources,
+                                ActionMenuResources menuResources,
                                 ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
         this.eventBus = eventBus;
         this.actionUIRegistry = actionUIRegistry;
-        this.keyboardActionResources = keyboardActionResources;
+        this.buttonResources = buttonResources;
+        this.menuResources = menuResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
+        menuResources.style().ensureInjected();
+        buttonResources.style().ensureInjected();
     }
 
-    ActionButton get(ActionUIDef actionUIDef) {
-        return new ActionButton(actionUIDef, eventBus, keyboardActionResources);
+    public void setButtonResources(ActionButtonResources buttonResources) {
+        this.buttonResources = buttonResources;
     }
 
-    ActionButton get(String actionId) {
+    public ActionButton getButton(ActionUIDef actionUIDef) {
+        return getButton(actionUIDef, buttonResources);
+    }
+
+    public ActionButton getButton(ActionUIDef actionUIDef, ActionButtonResources buttonResources
+    ) {
+        return new ActionButton(actionUIDef, eventBus, buttonResources);
+    }
+
+    public ActionButton getButton(String actionId) {
         ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
-        return get(actionUIDef);
+        return getButton(actionUIDef);
     }
 
-    ActionMenu getMenu(String caption) {
-        return new ActionMenu(caption, actionUIRegistry, eventBus, keyboardActionResources, actionMenuItemSafeHtml);
+    public ActionMenu getMenu(String caption) {
+        return new ActionMenu(caption, actionUIRegistry, eventBus, menuResources, actionMenuItemSafeHtml);
     }
 
 }

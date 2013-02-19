@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.client.useraction;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
 import com.googlecode.fspotcloud.client.useraction.about.AboutBinder;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationBinder;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardBinder;
@@ -8,6 +9,7 @@ import com.googlecode.fspotcloud.client.useraction.navigation.NavigationBinder;
 import com.googlecode.fspotcloud.client.useraction.raster.RasterBinder;
 import com.googlecode.fspotcloud.client.useraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.client.useraction.user.UserBinder;
+import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupBinder;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
@@ -27,6 +29,7 @@ public class UserActionFactory implements UIRegistrationBuilder {
                              SlideshowBinder slideshowBinder,
                              DashboardBinder dashboardBinder,
                              UserBinder userBinder,
+                             UsergroupBinder usergroupBinder,
                              IModeController modeController) {
         log.log(Level.FINEST, "In constructor before doing anything");
         this.modeController = modeController;
@@ -38,6 +41,7 @@ public class UserActionFactory implements UIRegistrationBuilder {
         slideshowBinder.build();
         dashboardBinder.build();
         userBinder.build();
+        usergroupBinder.build();
     }
 
     @Override

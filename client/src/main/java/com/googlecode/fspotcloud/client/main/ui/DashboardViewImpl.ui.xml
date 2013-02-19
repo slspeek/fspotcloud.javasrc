@@ -12,10 +12,19 @@
         <g:center>
             <g:SplitLayoutPanel styleName="{res.style.main}" ui:field="horizontalSplitPanel">
                 <g:west size="250">
-                    <main:TreeViewImpl styleName="{res.style.tree}"></main:TreeViewImpl>
+                    <g:LayoutPanel>
+                        <g:layer top="5px" height="24px" left="6px" right="6px">
+                            <g:Label styleName="{res.style.headerLabel}">Category tree
+                            </g:Label>
+                        </g:layer>
+                        <g:layer top="34px" height="95%">
+                            <main:TreeViewImpl styleName="{res.style.tree}"></main:TreeViewImpl>
+                        </g:layer>
+                    </g:LayoutPanel>
                 </g:west>
                 <g:center>
                     <g:LayoutPanel>
+
                         <g:layer left="0%" width="50%">
                             <main:TagDetailsViewImpl styleName="{res.style.labelDetails}" width="400px"
                                                      height="100%"></main:TagDetailsViewImpl>
