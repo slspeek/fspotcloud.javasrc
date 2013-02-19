@@ -55,7 +55,7 @@ public class ApplicationBinder extends AbstractBinder {
         KeyboardBinding aboutBinding = KeyboardBinding.bind(new KeyStroke('A')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
         bind(actions.about, aboutHandlerFactory.getAboutHandler(), aboutBinding);
 
-        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('D')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.MANAGE_USERGROUPS, Modes.MANAGE_USERS);
+        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('D')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.MANAGE_GROUPS, Modes.MANAGE_USERS);
         bind(actions.dashboard, dashboardHandler, binding);
         bind(actions.login, loginHandler, get('N'));
         binding = KeyboardBinding.bind(KeyStroke.alt('O')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);

@@ -28,7 +28,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
 
 
-public interface EditUserGroupView extends IsWidget {
+public interface EditUserGroupView extends IsWidget, StatusView {
     void setPresenter(EditUserGroupPresenter presenter);
 
     void setName(String name);
@@ -43,11 +43,10 @@ public interface EditUserGroupView extends IsWidget {
 
     boolean getIsPublic();
 
+
     interface EditUserGroupPresenter extends Activity {
         void save();
 
         void setId(Long id);
-
-        void cancel();
     }
 }
