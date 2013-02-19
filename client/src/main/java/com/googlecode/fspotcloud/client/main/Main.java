@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.client.main;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.googlecode.fspotcloud.client.main.gin.AppGinjector;
+import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,8 @@ public class Main implements EntryPoint {
         MVPSetup setup;
 
         try {
-
+            StylesSetup stylesSetup = injector.getStylesSetup();
+            stylesSetup.injectStyles();
             setup = injector.getMVPSetup();
             log.info("Gin finished the construction of the application graph!");
         } catch (Throwable e) {

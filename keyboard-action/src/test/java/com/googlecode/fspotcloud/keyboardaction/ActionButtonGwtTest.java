@@ -16,7 +16,7 @@ public class ActionButtonGwtTest extends GWTTestCase {
     protected void gwtSetUp() throws Exception {
         eventBus = new SimpleEventBus();
         okDef = MainBuilder.OK_DEF;
-        final KeyboardActionResources keyboardActionResources = GWT.create(KeyboardActionResources.class);
+        final ActionButtonResources keyboardActionResources = GWT.create(ActionButtonResources.class);
         button = new ActionButton(okDef, eventBus, keyboardActionResources);
         super.gwtSetUp();
     }

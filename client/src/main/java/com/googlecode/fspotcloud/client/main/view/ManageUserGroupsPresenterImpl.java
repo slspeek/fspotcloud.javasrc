@@ -40,15 +40,15 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Logger;
 
 
-public class MyUserGroupsPresenterImpl extends AbstractActivity implements ManageUserGroupsView.MyUserGroupsPresenter {
-    private final Logger log = Logger.getLogger(MyUserGroupsPresenterImpl.class.getName());
+public class ManageUserGroupsPresenterImpl extends AbstractActivity implements ManageUserGroupsView.ManageUserGroupsPresenter {
+    private final Logger log = Logger.getLogger(ManageUserGroupsPresenterImpl.class.getName());
     private final ManageUserGroupsView view;
     private final DispatchAsync dispatch;
     private final PlaceGoTo placeGoTo;
 
     @Inject
-    public MyUserGroupsPresenterImpl(ManageUserGroupsView view,
-                                     DispatchAsync dispatch, PlaceGoTo placeGoTo) {
+    public ManageUserGroupsPresenterImpl(ManageUserGroupsView view,
+                                         DispatchAsync dispatch, PlaceGoTo placeGoTo) {
         this.view = view;
         this.dispatch = dispatch;
         this.placeGoTo = placeGoTo;
@@ -58,12 +58,11 @@ public class MyUserGroupsPresenterImpl extends AbstractActivity implements Manag
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         this.view.setPresenter(this);
         panel.setWidget(view);
-
-        // view.setData(newArrayList(new UserGroupInfo("foo", "Uh foo")));
         refreshData();
     }
 
-    private void refreshData() {
+    @Override
+    public void refreshData() {
         dispatch.execute(new GetMyUserGroupsAction(),
                 new AsyncCallback<GetMyUserGroupsResult>() {
                     @Override
@@ -81,65 +80,7 @@ public class MyUserGroupsPresenterImpl extends AbstractActivity implements Manag
     }
 
     @Override
-    public void newUserGroup() {
-        dispatch.execute(new NewUserGroupAction(),
-                new AsyncCallback<GetUserGroupResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    @Override
-                    public void onSuccess(GetUserGroupResult result) {
-                        log.info("New User group added");
-                        refreshData();
-                    }
-                });
-        log.info("New User group requested");
-    }
-
-    @Override
-    public void delete() {
-        UserGroupInfo info = view.getSelected();
-
-        if (info != null) {
-            log.info("Got selected for delete: " + info);
-            dispatch.execute(new DeleteUserGroupAction(info.getId()),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            //To change body of implemented methods use File | Settings | File Templates.
-                        }
-
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            log.info("Delete call returned from server");
-                            refreshData();
-                        }
-                    });
-        } else {
-            log.info("Nothing selected");
-        }
-    }
-
-    @Override
-    public void manageUsers() {
-        UserGroupInfo info = view.getSelected();
-
-        if (info != null) {
-            placeGoTo.goTo(new ManageUsersPlace(info.getId()));
-        }
-    }
-
-    @Override
-    public void edit() {
-        UserGroupInfo info = view.getSelected();
-
-        if (info != null) {
-            log.info("Got selected: " + info);
-            placeGoTo.goTo(new EditUserGroupPlace(info.getId()));
-        } else {
-            log.info("Nothing selected");
-        }
+    public UserGroupInfo getSelected() {
+        return view.getSelected();
     }
 }

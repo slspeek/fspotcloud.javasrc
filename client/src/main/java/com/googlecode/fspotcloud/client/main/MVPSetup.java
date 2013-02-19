@@ -39,25 +39,20 @@ import java.util.logging.Logger;
 public class MVPSetup {
     private final Logger log = Logger.getLogger(MVPSetup.class.getName());
     private final GinMvpDisplay appWidget;
-    private final StylesSetup stylesSetup;
     private final PlaceHistoryHandler placeHistoryHandler;
 
     @Inject
     public MVPSetup(ZoomViewEventHandlerImpl zoomViewEventHandler,
-                    StylesSetup stylesSetup,
                     GinMvpDisplay appWidget,
                     PlaceHistoryHandler placeHistoryHandler,
                     UserActionLateBinder userActionLateBinder) {
         this.appWidget = appWidget;
-        this.stylesSetup = stylesSetup;
         this.placeHistoryHandler = placeHistoryHandler;
         zoomViewEventHandler.init();
     }
 
     public void setup() {
         log.info("Starting MVP setup");
-
-        stylesSetup.injectStyles();
 
         RootLayoutPanel.get().add(appWidget);
 

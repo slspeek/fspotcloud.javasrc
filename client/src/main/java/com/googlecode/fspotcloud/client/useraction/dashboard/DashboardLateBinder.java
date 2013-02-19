@@ -31,5 +31,7 @@ public class DashboardLateBinder {
         configBuilder.bindHandler(actions.manageAccess, manageAccessHandler);
         configBuilder.bindHandler(actions.importTag, importTagHandler);
         configBuilder.bindHandler(actions.focusTree, focusTreeHandler);
+
     }
+
 }

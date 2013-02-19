@@ -39,10 +39,6 @@ public interface KeyboardActionResources extends ClientBundle {
 
     public interface Style extends CssResource {
 
-        String button();
-
-        String demo();
-
         String demoPopup();
 
         String helpTitleRow();
@@ -79,18 +75,8 @@ public interface KeyboardActionResources extends ClientBundle {
 
         String helpName();
 
-        String helpActionIcon();
-
         String helpKeys();
 
-        String popUpMenu();
-
-        String menuItem();
-
-        String menuButton();
-
-        String menuItemText();
-
-        String menuItemShortcut();
+        String helpActionIcon();
     }
 }

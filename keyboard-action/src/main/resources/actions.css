@@ -8,36 +8,6 @@
 @def helpIconTransform scale(1);
 @def hoverTransition all 0.2s ease-in-out;
 
-.button
-{
-  font-size:160%;
-  text-align:center;
-  -webkit-transform:upTransform;
-  -moz-transform:upTransform;
-  transform:upTransform;
-  margin:8px 5px 2px;
-   -moz-border-radius:15px;
-   border-radius:15px;
-}
-
-.menuButton
-{
-  font-size:160%;
-  text-align:center;
-  -webkit-transform:upTransform;
-  -moz-transform:upTransform;
-  transform:upTransform;
-  margin:8px 5px 2px;
-   -moz-border-radius:15px;
-   border-radius:15px;
-}
-
-
-.demo
-{
-    background: yellow;
-    color: purple;
-}
 
 .demoPopup
 {
@@ -48,52 +18,11 @@
    padding:5px;
 }
 
-.popUpMenu
-{
-     background-color:thirdColor;
-
-}
-.menuItemText
-{
-
-
-
-
-}
-
-
-.menuItem
-{
-    font-size:160%;
-    text-align:center;
-    background-color:thirdColor;
-    color: white;
-     -webkit-transform:upTransform;
-      -moz-transform:upTransform;
-      transform:upTransform;
-}
-.menuItem:hover
-{
-
-    -moz-transform:hoverMenuTransform;
-    transform:hoverMenuTransform;
-    -webkit-transform:hoverMenuTransform;
-    -moz-transition:hoverTransition;
-    transition:hoverTransition;
-    -webkit-transition:hoverTransition;
-
-
-}
-
-.menuItemShortcut{
-       font-size:60%;
-       margin-left:10px;
-}
-
 .helpTitleRow
 {
 
 }
+
 .helpClose
 {
     float: right;
@@ -102,25 +31,6 @@
 .helpOptionalContent
 {
     text-align: center;
-}
-
-.button:hover
-{
-  -moz-transform:hoverTransform;
-  transform:hoverTransform;
-  -webkit-transform:hoverTransform;
-  -moz-transition:hoverTransition;
-  transition:hoverTransition;
-  -webkit-transition:hoverTransition;
-  border-color:borderColor;
-  border-style:solid;
-}
-
-.button:focus
-{
-  -moz-transform:focusTransform;
-  transform:focusTransform;
-  -webkit-transform:focusTransform;
 }
 
 .buttonPanelBlock
@@ -170,7 +80,7 @@
   font-size:large;
   text-align:center;
   font-style:bold;
-    display: inline;
+  display: inline;
 
 }
 
@@ -180,6 +90,7 @@
   height: 30px;
 
 }
+
 .helpName
 {
 

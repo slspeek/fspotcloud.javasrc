@@ -69,10 +69,10 @@ public class ActionToolbar extends LayoutPanel {
     }
 
     public void add(ActionUIDef actionUIDef) {
-        add(actionButtonFactory.get(actionUIDef));
+        add(actionButtonFactory.getButton(actionUIDef));
     }
 
     public void add(String actionId) {
-        add(actionButtonFactory.get(actionId));
+        add(actionButtonFactory.getButton(actionId));
     }
 }

@@ -2,6 +2,12 @@
 @def notBlack #505050;
 @def verticalPropertyPadding 6px;
 
+@external  .gwt-SplitLayoutPanel-HDragger;
+
+.gwt-SplitLayoutPanel-HDragger { color: red;
+    background-color: #5CB3FF;
+ }
+
 .status {
     background-color: mainBackground;
     font-size: 12pt;
