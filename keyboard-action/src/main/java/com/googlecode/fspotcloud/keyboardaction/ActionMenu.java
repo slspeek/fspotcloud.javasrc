@@ -21,7 +21,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
     private final ActionUIRegistry actionUIRegistry;
     private final EventBus eventBus;
     private final PopupPanel popupPanel = new PopupPanel(true);
-    private final KeyboardActionResources keyboardActionResources;
+    private final ActionMenuResources menuResources;
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
     private Timer hideTimer = new Timer() {
         @Override
@@ -30,20 +30,24 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
         }
     };
 
-    public ActionMenu(String caption, ActionUIRegistry actionUIRegistry, EventBus eventBus, KeyboardActionResources keyboardActionResources, ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
+    public ActionMenu(String caption,
+                      ActionUIRegistry actionUIRegistry,
+                      EventBus eventBus,
+                      ActionMenuResources actionMenuResources,
+                      ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
         this.actionUIRegistry = actionUIRegistry;
         this.eventBus = eventBus;
-        this.keyboardActionResources = keyboardActionResources;
+        this.menuResources = actionMenuResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
-        addStyleName(keyboardActionResources.style().menuButton());
+        addStyleName(menuResources.style().menuButton());
         popupPanel.setWidget(innerBar);
         setText(caption);
         addClickHandler(this);//outerBar.setAutoOpen(true);
         addMouseOverHandler(this);
         addMouseOutHandler(this);
-        popupPanel.addStyleName(keyboardActionResources.style().popUpMenu());
+        popupPanel.addStyleName(menuResources.style().popUpMenu());
         popupPanel.addAutoHidePartner(this.getElement());
-        innerBar.addStyleName(keyboardActionResources.style().popUpMenu());
+        innerBar.addStyleName(menuResources.style().popUpMenu());
         innerBar.addDomHandler(new MouseOutHandler() {
             @Override
             public void onMouseOut(MouseOutEvent event) {
@@ -62,7 +66,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
 
     public void add(final String actionId) {
         ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
-        SafeHtml menuItemContent = actionMenuItemSafeHtml.get(actionUIDef);
+        SafeHtml menuItemContent = actionMenuItemSafeHtml.get(actionUIDef, menuResources);
         MenuItem menuItem = innerBar.addItem(menuItemContent, new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
@@ -70,7 +74,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
                 eventBus.fireEvent(new KeyboardActionEvent(actionId));
             }
         });
-        menuItem.addStyleName(keyboardActionResources.style().menuItem());
+        menuItem.addStyleName(menuResources.style().menuItem());
     }
 
     @Override

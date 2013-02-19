@@ -1,9 +1,14 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StylesSetup {
 
+    private final Logger log = Logger.getLogger(StylesSetup.class.getName());
     private final Resources resources;
     private final UserPagesResources userPagesResources;
     private final FadeAnimationResources fadeAnimationResources;
@@ -13,6 +18,8 @@ public class StylesSetup {
     private final BigPushButtonResources bigPushButtonResources;
     private final AdminTreeResources adminTreeResources;
     private final BasicTreeResources basicTreeResources;
+    private final BigActionButtonResources bigActionButtonResources;
+    private final AdminActionButtonResources adminActionButtonResources;
 
     @Inject
     public StylesSetup(Resources resources,
@@ -23,7 +30,9 @@ public class StylesSetup {
                        PushButtonResources pushButtonResources,
                        BigPushButtonResources bigPushButtonResources,
                        AdminTreeResources adminTreeResources,
-                       BasicTreeResources basicTreeResources) {
+                       BasicTreeResources basicTreeResources,
+                       BigActionButtonResources bigActionButtonResources,
+                       AdminActionButtonResources adminActionButtonResources) {
         this.resources = resources;
         this.userPagesResources = userPagesResources;
         this.fadeAnimationResources = fadeAnimationResources;
@@ -33,6 +42,8 @@ public class StylesSetup {
         this.bigPushButtonResources = bigPushButtonResources;
         this.adminTreeResources = adminTreeResources;
         this.basicTreeResources = basicTreeResources;
+        this.bigActionButtonResources = bigActionButtonResources;
+        this.adminActionButtonResources = adminActionButtonResources;
     }
 
     public void injectStyles() {
@@ -45,6 +56,10 @@ public class StylesSetup {
         bigPushButtonResources.style().ensureInjected();
         adminTreeResources.cellTreeStyle().ensureInjected();
         basicTreeResources.cellTreeStyle().ensureInjected();
+        bigPushButtonResources.style().ensureInjected();
+        bigActionButtonResources.style().ensureInjected();
+        adminActionButtonResources.style().ensureInjected();
+        log.log(Level.FINE, "all styles were injected");
     }
 
 

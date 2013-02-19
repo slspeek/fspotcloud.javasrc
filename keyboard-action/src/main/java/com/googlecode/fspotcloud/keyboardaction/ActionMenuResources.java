@@ -22,19 +22,29 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.gin;
+package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
-import com.googlecode.fspotcloud.client.main.MVPSetup;
-import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
-import com.googlecode.fspotcloud.client.useraction.UserActionModule;
-import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 
 
-@GinModules({AppModule.class, UserActionModule.class, StandardDispatchModule.class})
-public interface AppGinjector extends Ginjector {
-    MVPSetup getMVPSetup();
+public interface ActionMenuResources extends ClientBundle {
 
-    StylesSetup getStylesSetup();
+    @Source("actionmenu.css")
+    Style style();
+
+
+    public interface Style extends CssResource {
+        String popUpMenu();
+
+        String menuItem();
+
+        String menuButton();
+
+        String menuItemText();
+
+        String helpActionIcon();
+
+        String menuItemShortcut();
+    }
 }

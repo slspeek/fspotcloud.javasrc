@@ -2,6 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:c='urn:import:com.google.gwt.user.cellview.client'
+             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction"
              xmlns:main="urn:import:com.googlecode.fspotcloud.client.main.ui">
 
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.AdminResources" field="res"></ui:with>
@@ -24,19 +25,19 @@
                     </g:LayoutPanel>
                 </g:layer>
                 <g:layer bottom="5%" height="40px" left="0%" width="20%">
-                    <main:PushButtonExt ui:field="newButton">New usergroup</main:PushButtonExt>
+                    <ka:ActionButton ui:field="newButton"></ka:ActionButton>
                 </g:layer>
                 <g:layer bottom="5%" height="40px" left="25%" width="10%">
-                    <main:PushButtonExt ui:field="editButton">Edit</main:PushButtonExt>
+                    <ka:ActionButton ui:field="editButton"></ka:ActionButton>
                 </g:layer>
                 <g:layer bottom="5%" height="40px" left="40%" width="20%">
-                    <main:PushButtonExt ui:field="manageButton">Manage users</main:PushButtonExt>
+                    <ka:ActionButton ui:field="manageButton"></ka:ActionButton>
                 </g:layer>
                 <g:layer bottom="5%" height="40px" left="65%" width="15%">
-                    <main:PushButtonExt ui:field="deleteButton">Delete</main:PushButtonExt>
+                    <ka:ActionButton ui:field="deleteButton"></ka:ActionButton>
                 </g:layer>
-                <g:layer bottom="5%" height="40px" right="0%" width="15%">
-                    <main:PushButtonExt ui:field="dashboardButton">Dashboard</main:PushButtonExt>
+                <g:layer bottom="5%" height="60px" right="0%" width="15%">
+                    <ka:ActionButton ui:field="dashboardButton"></ka:ActionButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>

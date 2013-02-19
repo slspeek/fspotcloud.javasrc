@@ -8,7 +8,9 @@ public class UserActions {
     public final ActionUIDef goSignUp;
     public final ActionUIDef goResetPassword;
     public final ActionUIDef goResendConfirmation;
+
     public final ActionUIDef doLogin;
+
 
 
     @Inject

@@ -14,9 +14,9 @@ public class DashboardActions {
     public final ActionUIDef importTag;
     public final ActionUIDef manageAccess;
 
+
     @Inject
     public DashboardActions() {
-
         reloadTree = new ActionUIDef("reload-admin-tree",
                 "Reload tree",
                 "Reload tree data from the server",
@@ -29,6 +29,5 @@ public class DashboardActions {
         importTag = new ActionUIDef("import-tag", "Import tag", "Import this tag", null);
         manageAccess = new ActionUIDef("manage-access", "Manage access", "Grant this label to usergroups", null);
         focusTree = new ActionUIDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree", null);
-        ;
     }
 }

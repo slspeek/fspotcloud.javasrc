@@ -49,5 +49,4 @@ public class DashboardBinder extends AbstractBinder {
         return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.DASHBOARD);
     }
 
-
 }

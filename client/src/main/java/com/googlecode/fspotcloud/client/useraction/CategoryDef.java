@@ -13,6 +13,7 @@ public class CategoryDef {
     public final ActionCategory ABOUT;
     public final ActionCategory DASHBOARD;
     public final ActionCategory USER;
+    public final ActionCategory USERGROUP;
 
     @Inject
     public CategoryDef(ConfigBuilder configBuilder) {
@@ -23,5 +24,6 @@ public class CategoryDef {
         ABOUT = configBuilder.createActionCategory("About");
         DASHBOARD = configBuilder.createActionCategory("Dashboard");
         USER = configBuilder.createActionCategory("User");
+        USERGROUP = configBuilder.createActionCategory("Usergroup");
     }
 }

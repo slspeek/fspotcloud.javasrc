@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationLateBinder;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardLateBinder;
 import com.googlecode.fspotcloud.client.useraction.user.UserLateBinder;
+import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupLateBinder;
 
 public class UserActionLateBinder {
 
@@ -11,7 +12,8 @@ public class UserActionLateBinder {
     @Inject
     UserActionLateBinder(ApplicationLateBinder applicationLateBinder,
                          DashboardLateBinder dashboardLateBinder,
-                         UserLateBinder userLateBinder) {
+                         UserLateBinder userLateBinder,
+                         UsergroupLateBinder usergroupLateBinder) {
 
     }
 

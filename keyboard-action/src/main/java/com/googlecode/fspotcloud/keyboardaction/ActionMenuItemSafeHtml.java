@@ -9,15 +9,13 @@ import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.inject.Inject;
 
 public class ActionMenuItemSafeHtml {
-    private final KeyboardActionResources.Style style;
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
 
     @Inject
-    private ActionMenuItemSafeHtml(KeyboardActionResources res, KeyboardPreferences keyboardPreferences) {
+    private ActionMenuItemSafeHtml(KeyboardPreferences keyboardPreferences) {
         super();
         this.keyboardPreferences = keyboardPreferences;
-        this.style = res.style();
     }
 
     public interface MyTemplates extends SafeHtmlTemplates {
@@ -30,7 +28,8 @@ public class ActionMenuItemSafeHtml {
         SafeHtml menuItem(String message, String outerStyle, String captionStyle, String iconStyle, String shortcutStyle, String shortcut);
     }
 
-    SafeHtml get(ActionUIDef actionUIDef) {
+    SafeHtml get(ActionUIDef actionUIDef, ActionMenuResources resources) {
+        ActionMenuResources.Style style = resources.style();
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
         KeyStroke[] keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
         Joiner joiner = Joiner.on(" or ");

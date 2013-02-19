@@ -41,12 +41,15 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionUIDef actionUIDef;
     private final EventBus eventBus;
-    private final KeyboardActionResources keyboardActionResources;
+    private final ActionButtonResources resources;            ;
 
-    ActionButton(ActionUIDef actionUIDef, EventBus eventBus, KeyboardActionResources keyboardActionResources) {
+    ActionButton(ActionUIDef actionUIDef,
+                 EventBus eventBus,
+                 ActionButtonResources resources) {
         this.actionUIDef = actionUIDef;
         this.eventBus = eventBus;
-        this.keyboardActionResources = keyboardActionResources;
+        this.resources = resources;
+
         initialize();
     }
 
@@ -64,9 +67,9 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
         final ImageResource imageResource = actionUIDef.getIcon();
         if (imageResource != null) {
             getUpFace().setImage(new Image(imageResource));
-            setStyleName(keyboardActionResources.style().button());
+            setStyleName(resources.style().button());
         } else {
-            addStyleName(keyboardActionResources.style().button());
+            addStyleName(resources.style().button());
             setCaption(actionUIDef.getName());
         }
 
@@ -101,9 +104,9 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
         if (event.getActionId().equals(actionUIDef.getId())) {
 
             if (event.getState()) {
-                addStyleName(keyboardActionResources.style().demo());
+                addStyleName(resources.style().in_demo());
             } else {
-                removeStyleName(keyboardActionResources.style().demo());
+                removeStyleName(resources.style().in_demo());
             }
         }
 

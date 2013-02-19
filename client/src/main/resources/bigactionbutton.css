@@ -1,0 +1,31 @@
+@def allMostBlack #080808;
+
+.button
+{
+      font-size: 35pt;
+      text-align: center;
+      color: allMostBlack;
+}
+
+.in_demo
+{
+      background: yellow;
+      color: purple;
+}
+
+.button:hover
+{
+     color: black;
+     border-style: solid;
+     border-width: 2px;
+     border-color: green;
+}
+
+.button:focus
+{
+      color: black;
+      border-style: solid;
+      border-width: 2px;
+      border-color: blue;
+}
+

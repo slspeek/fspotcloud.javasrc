@@ -28,7 +28,7 @@
                 <g:layer top="60%" width="100%" height="10%">
                     <g:LayoutPanel>
                         <g:layer top="5%" height="90%" left="0%" width="19%">
-                            <ka:ActionButton ui:field="login">Login</ka:ActionButton>
+                            <ka:ActionButton ui:field="login"></ka:ActionButton>
                         </g:layer>
                         <g:layer top="5%" height="90%" left="39%" width="23%">
                             <ka:ActionButton ui:field="signUp"></ka:ActionButton>

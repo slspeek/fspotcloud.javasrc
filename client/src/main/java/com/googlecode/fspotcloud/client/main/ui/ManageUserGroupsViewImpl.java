@@ -25,10 +25,8 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
@@ -38,8 +36,11 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
-import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.List;
@@ -49,26 +50,35 @@ import java.util.logging.Logger;
 public class ManageUserGroupsViewImpl extends Composite implements ManageUserGroupsView {
     private final Logger log = Logger.getLogger(ManageUserGroupsViewImpl.class.getName());
     private static final ManageUserGroupsViewImplUiBinder uiBinder = GWT.create(ManageUserGroupsViewImplUiBinder.class);
-    private MyUserGroupsPresenter presenter;
+    private ManageUserGroupsPresenter presenter;
     private final ListDataProvider<UserGroupInfo> dataProvider;
     private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
-    private final PlaceGoTo placeGoTo;
+
     @UiField
     CellTable<UserGroupInfo> table;
-    @UiField
-    PushButtonExt newButton;
-    @UiField
-    PushButtonExt editButton;
-    @UiField
-    PushButtonExt deleteButton;
-    @UiField
-    PushButtonExt manageButton;
-    @UiField
-    PushButtonExt dashboardButton;
+    @UiField(provided = true)
+    ActionButton newButton;
+    @UiField(provided = true)
+    ActionButton editButton;
+    @UiField(provided = true)
+    ActionButton deleteButton;
+    @UiField(provided = true)
+    ActionButton manageButton;
+    @UiField(provided = true)
+    ActionButton dashboardButton;
 
     @Inject
-    public ManageUserGroupsViewImpl(PlaceGoTo placeGoTo) {
-        this.placeGoTo = placeGoTo;
+    public ManageUserGroupsViewImpl(
+                                    UsergroupActions actions,
+                                    ApplicationActions applicationActions,
+                                    ActionButtonFactory buttonFactory,
+                                    AdminActionButtonResources resources) {
+        buttonFactory.setButtonResources(resources);
+        newButton = buttonFactory.getButton(actions.newUsergroup);
+        editButton = buttonFactory.getButton(actions.editUsergroup);
+        deleteButton = buttonFactory.getButton(actions.deleteUsergroup);
+        manageButton = buttonFactory.getButton(actions.manageUsers);
+        dashboardButton = buttonFactory.getButton(applicationActions.dashboard);
         initWidget(uiBinder.createAndBindUi(this));
         newButton.ensureDebugId("new-button");
         editButton.ensureDebugId("edit-button");
@@ -114,33 +124,8 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
         table.setWidth("100%");
     }
 
-    @UiHandler("newButton")
-    public void onNewButton(ClickEvent event) {
-        presenter.newUserGroup();
-    }
-
-    @UiHandler("editButton")
-    public void onEditButton(ClickEvent event) {
-        presenter.edit();
-    }
-
-    @UiHandler("deleteButton")
-    public void onDeleteButton(ClickEvent event) {
-        presenter.delete();
-    }
-
-    @UiHandler("manageButton")
-    public void onManageButton(ClickEvent event) {
-        presenter.manageUsers();
-    }
-
-    @UiHandler("dashboardButton")
-    public void onDashboardButton(ClickEvent event) {
-        placeGoTo.goTo(TagPlace.DEFAULT);
-    }
-
     @Override
-    public void setPresenter(MyUserGroupsPresenter presenter) {
+    public void setPresenter(ManageUserGroupsPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -159,6 +144,11 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
     @Override
     public UserGroupInfo getSelected() {
         return selectionModel.getSelectedObject();
+    }
+
+    @Override
+    public void focusTable() {
+        table.setFocus(true);
     }
 
     interface ManageUserGroupsViewImplUiBinder extends UiBinder<Widget, ManageUserGroupsViewImpl> {

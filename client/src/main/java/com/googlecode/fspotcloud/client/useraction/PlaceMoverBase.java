@@ -16,6 +16,9 @@ public abstract class PlaceMoverBase implements IActionHandler {
 
     @Override
     public void performAction(String actionId) {
-        placeGoTo.goTo(getPlace());
+        final Place place = getPlace();
+        if (place != null) {
+            placeGoTo.goTo(place);
+        }
     }
 }
