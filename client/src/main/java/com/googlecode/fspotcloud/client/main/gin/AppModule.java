@@ -55,6 +55,7 @@ public class AppModule extends AbstractGinModule {
     @Override
     protected void configure() {
         bind(StatusView.class).annotatedWith(Dashboard.class).to(StatusViewImpl.class).in(Singleton.class);
+        bind(StatusView.class).annotatedWith(ManageGroups.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(UIRegistrationBuilder.class).to(UserActionFactory.class);
         bind(IScheduler.class).to(SchedulerImpl.class);
         install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
@@ -92,9 +93,9 @@ public class AppModule extends AbstractGinModule {
         bind(ManageUserGroupsView.class).to(ManageUserGroupsViewImpl.class).in(Singleton.class);
         bind(ManageUserGroupsView.ManageUserGroupsPresenter.class)
                 .to(ManageUserGroupsPresenterImpl.class).in(Singleton.class);
-        bind(EditUserGroupView.class).to(EditUserGroupViewImpl.class);
+        bind(EditUserGroupView.class).to(EditUserGroupViewImpl.class).in(Singleton.class);
         bind(EditUserGroupView.EditUserGroupPresenter.class)
-                .to(EditUserGroupPresenterImpl.class);
+                .to(EditUserGroupPresenterImpl.class).in(Singleton.class);
         bind(ManageUsersView.class).to(ManageUsersViewImpl.class);
         bind(ManageUsersView.ManageUsersPresenter.class)
                 .to(ManageUsersPresenterImpl.class);

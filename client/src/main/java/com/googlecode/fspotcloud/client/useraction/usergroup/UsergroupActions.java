@@ -1,14 +1,17 @@
 package com.googlecode.fspotcloud.client.useraction.usergroup;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
+@GwtCompatible
 public class UsergroupActions {
     public final ActionUIDef editUsergroup;
     public final ActionUIDef newUsergroup;
     public final ActionUIDef deleteUsergroup;
     public final ActionUIDef manageUsers;
     public final ActionUIDef usergroupTableFocus;
+    public final ActionUIDef saveUsergoup;
 
     @Inject
     public UsergroupActions() {
@@ -17,5 +20,6 @@ public class UsergroupActions {
         deleteUsergroup = new ActionUIDef("delete-usergroup", "Delete", "Delete usergroup", null);
         manageUsers = new ActionUIDef("manage-users", "Manage users", "Manage user in selected usergroup", null);
         usergroupTableFocus = new ActionUIDef("usergroup-table-focus", "Focus table", "Focus the usergroup table", null);
+        saveUsergoup = new ActionUIDef("save-usergroup", "Save", "Save this usergroup", null);
     }
 }

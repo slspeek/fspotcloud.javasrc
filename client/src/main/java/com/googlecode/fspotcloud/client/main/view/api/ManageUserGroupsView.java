@@ -31,7 +31,7 @@ import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import java.util.List;
 
 
-public interface ManageUserGroupsView extends IsWidget {
+public interface ManageUserGroupsView extends IsWidget, StatusView {
     void setPresenter(ManageUserGroupsPresenter presenter);
 
     void setData(List<UserGroupInfo> data);

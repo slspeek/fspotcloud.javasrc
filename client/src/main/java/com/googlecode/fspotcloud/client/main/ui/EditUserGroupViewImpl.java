@@ -31,7 +31,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
 
 import java.util.logging.Logger;
 
@@ -47,15 +52,19 @@ public class EditUserGroupViewImpl extends Composite
     TextBox descriptionTextBox;
     @UiField
     Label statusLabel;
-    @UiField
-    PushButtonExt save;
-    @UiField
-    PushButtonExt cancel;
+    @UiField(provided = true)
+    ActionButton save;
+    @UiField(provided = true)
+    ActionButton cancel;
     @UiField
     CheckBox publicCheckBox;
 
     @Inject
-    public EditUserGroupViewImpl() {
+    public EditUserGroupViewImpl(AdminButtonFactory factory,
+                                 UsergroupActions usergroupActions,
+                                 DashboardActions dashboardActions) {
+        save = factory.getButton(usergroupActions.saveUsergoup);
+        cancel = factory.getButton(dashboardActions.manageUserGroups);
         initWidget(uiBinder.createAndBindUi(this));
         nameTextBox.ensureDebugId("name");
         descriptionTextBox.ensureDebugId("description");
@@ -99,14 +108,9 @@ public class EditUserGroupViewImpl extends Composite
         return publicCheckBox.getValue();
     }
 
-    @UiHandler("save")
-    public void onSaveClicked(ClickEvent e) {
-        presenter.save();
-    }
-
-    @UiHandler("cancel")
-    public void onCancelClicked(ClickEvent e) {
-        presenter.cancel();
+    @Override
+    public void setStatusText(String status) {
+        statusLabel.setText(status);
     }
 
     interface EditUserGroupBinder extends UiBinder<Widget, EditUserGroupViewImpl> {

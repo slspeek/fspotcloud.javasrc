@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -35,7 +36,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
+import com.googlecode.fspotcloud.client.main.gin.Dashboard;
+import com.googlecode.fspotcloud.client.main.gin.ManageGroups;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupActions;
@@ -46,7 +51,7 @@ import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import java.util.List;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class ManageUserGroupsViewImpl extends Composite implements ManageUserGroupsView {
     private final Logger log = Logger.getLogger(ManageUserGroupsViewImpl.class.getName());
     private static final ManageUserGroupsViewImplUiBinder uiBinder = GWT.create(ManageUserGroupsViewImplUiBinder.class);
@@ -66,14 +71,18 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
     ActionButton manageButton;
     @UiField(provided = true)
     ActionButton dashboardButton;
+    @UiField(provided = true)
+    StatusViewImpl statusView;
+
 
     @Inject
-    public ManageUserGroupsViewImpl(
+    public ManageUserGroupsViewImpl(@ManageGroups StatusView statusView,
                                     UsergroupActions actions,
                                     ApplicationActions applicationActions,
-                                    ActionButtonFactory buttonFactory,
-                                    AdminActionButtonResources resources) {
-        buttonFactory.setButtonResources(resources);
+                                    AdminButtonFactory buttonFactory
+                                    ) {
+        this.statusView = (StatusViewImpl) statusView;
+
         newButton = buttonFactory.getButton(actions.newUsergroup);
         editButton = buttonFactory.getButton(actions.editUsergroup);
         deleteButton = buttonFactory.getButton(actions.deleteUsergroup);
@@ -131,11 +140,8 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
 
     @Override
     public void setData(List<UserGroupInfo> data) {
-        // Add the data to the data provider, which automatically pushes it to the
-        // widget.
         List<UserGroupInfo> list = dataProvider.getList();
         list.clear();
-
         for (UserGroupInfo contact : data) {
             list.add(contact);
         }
@@ -149,6 +155,11 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
     @Override
     public void focusTable() {
         table.setFocus(true);
+    }
+
+    @Override
+    public void setStatusText(String status) {
+        statusView.setStatusText(status);
     }
 
     interface ManageUserGroupsViewImplUiBinder extends UiBinder<Widget, ManageUserGroupsViewImpl> {
