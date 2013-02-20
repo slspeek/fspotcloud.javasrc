@@ -8,6 +8,7 @@ import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.useraction.application.handler.*;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
+import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.ESC;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 
 public class ApplicationBinder extends AbstractBinder {
@@ -60,7 +61,9 @@ public class ApplicationBinder extends AbstractBinder {
         KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('D'))
                 .withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW)
                 .override(Modes.MANAGE_GROUPS, alt('D'), new KeyStroke(KeyCodes.KEY_ESCAPE))
-                .override(Modes.MANAGE_USERS, alt('D'));
+                .override(Modes.MANAGE_USERS, alt('D'))
+                .override(Modes.TAG_ACCESS, ESC);
+
         bind(actions.dashboard, dashboardHandler, binding);
         bind(actions.login, loginHandler, get('N'));
         binding = KeyboardBinding.bind(alt('O')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);

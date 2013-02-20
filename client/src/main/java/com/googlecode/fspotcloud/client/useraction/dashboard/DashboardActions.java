@@ -7,7 +7,7 @@ public class DashboardActions {
     public final ActionUIDef reloadTree;
     public final ActionUIDef focusTree;
     public final ActionUIDef toPhotos;
-    public final ActionUIDef manageUserGroups;
+    public final ActionUIDef manageGroups;
     public final ActionUIDef synchronize;
     public final ActionUIDef deleteAll;
     public final ActionUIDef deleteCommands;
@@ -22,7 +22,7 @@ public class DashboardActions {
                 "Reload tree data from the server",
                 null);
         toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen", null);
-        manageUserGroups = new ActionUIDef("manage-usergroups", "Manage groups", "Manage groups", null);
+        manageGroups = new ActionUIDef("manage-usergroups", "Manage groups", "Manage groups", null);
         synchronize = new ActionUIDef("synchronize", "Synchronize", "Synchronize with the peer", null);
         deleteCommands = new ActionUIDef("clear-queue", "Clear queue", "Delete all pending commands", null);
         deleteAll = new ActionUIDef("remove-all", "Remove all", "Remove all imported data", null);

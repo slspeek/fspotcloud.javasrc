@@ -3,8 +3,8 @@ package com.googlecode.fspotcloud.client.useraction;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationLateBinder;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardLateBinder;
+import com.googlecode.fspotcloud.client.useraction.group.GroupLateBinder;
 import com.googlecode.fspotcloud.client.useraction.user.UserLateBinder;
-import com.googlecode.fspotcloud.client.useraction.group.UsergroupLateBinder;
 
 public class UserActionLateBinder {
 
@@ -13,7 +13,7 @@ public class UserActionLateBinder {
     UserActionLateBinder(ApplicationLateBinder applicationLateBinder,
                          DashboardLateBinder dashboardLateBinder,
                          UserLateBinder userLateBinder,
-                         UsergroupLateBinder usergroupLateBinder) {
+                         GroupLateBinder groupLateBinder) {
 
     }
 

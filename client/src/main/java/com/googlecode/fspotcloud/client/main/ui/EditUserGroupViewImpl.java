@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
-import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
+import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
@@ -58,10 +58,10 @@ public class EditUserGroupViewImpl extends Composite
 
     @Inject
     public EditUserGroupViewImpl(AdminButtonFactory factory,
-                                 UsergroupActions usergroupActions,
+                                 GroupActions groupActions,
                                  DashboardActions dashboardActions) {
-        save = factory.getButton(usergroupActions.saveGroup);
-        cancel = factory.getButton(dashboardActions.manageUserGroups);
+        save = factory.getButton(groupActions.saveGroup);
+        cancel = factory.getButton(dashboardActions.manageGroups);
         initWidget(uiBinder.createAndBindUi(this));
         nameTextBox.ensureDebugId("name");
         descriptionTextBox.ensureDebugId("description");

@@ -14,12 +14,12 @@ public class StylesSetup {
     private final FadeAnimationResources fadeAnimationResources;
     private final AdminResources adminResources;
     private final HomeResources homeResources;
-    private final PushButtonResources pushButtonResources;
     private final BigPushButtonResources bigPushButtonResources;
     private final AdminTreeResources adminTreeResources;
     private final BasicTreeResources basicTreeResources;
     private final BigActionButtonResources bigActionButtonResources;
     private final AdminActionButtonResources adminActionButtonResources;
+    private final CellTableResources cellTableResources;
 
     @Inject
     public StylesSetup(Resources resources,
@@ -27,23 +27,23 @@ public class StylesSetup {
                        FadeAnimationResources fadeAnimationResources,
                        AdminResources adminResources,
                        HomeResources homeResources,
-                       PushButtonResources pushButtonResources,
                        BigPushButtonResources bigPushButtonResources,
                        AdminTreeResources adminTreeResources,
                        BasicTreeResources basicTreeResources,
                        BigActionButtonResources bigActionButtonResources,
-                       AdminActionButtonResources adminActionButtonResources) {
+                       AdminActionButtonResources adminActionButtonResources,
+                       CellTableResources cellTableResources) {
         this.resources = resources;
         this.userPagesResources = userPagesResources;
         this.fadeAnimationResources = fadeAnimationResources;
         this.adminResources = adminResources;
         this.homeResources = homeResources;
-        this.pushButtonResources = pushButtonResources;
         this.bigPushButtonResources = bigPushButtonResources;
         this.adminTreeResources = adminTreeResources;
         this.basicTreeResources = basicTreeResources;
         this.bigActionButtonResources = bigActionButtonResources;
         this.adminActionButtonResources = adminActionButtonResources;
+        this.cellTableResources = cellTableResources;
     }
 
     public void injectStyles() {
@@ -52,13 +52,13 @@ public class StylesSetup {
         fadeAnimationResources.style().ensureInjected();
         adminResources.style().ensureInjected();
         homeResources.style().ensureInjected();
-        pushButtonResources.style().ensureInjected();
         bigPushButtonResources.style().ensureInjected();
         adminTreeResources.cellTreeStyle().ensureInjected();
         basicTreeResources.cellTreeStyle().ensureInjected();
         bigPushButtonResources.style().ensureInjected();
         bigActionButtonResources.style().ensureInjected();
         adminActionButtonResources.style().ensureInjected();
+        cellTableResources.cellTableStyle().ensureInjected();
         log.log(Level.FINE, "all styles were injected");
     }
 
