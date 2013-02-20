@@ -25,18 +25,15 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
-import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupActions;
+import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
 
 import java.util.logging.Logger;
 
@@ -63,7 +60,7 @@ public class EditUserGroupViewImpl extends Composite
     public EditUserGroupViewImpl(AdminButtonFactory factory,
                                  UsergroupActions usergroupActions,
                                  DashboardActions dashboardActions) {
-        save = factory.getButton(usergroupActions.saveUsergoup);
+        save = factory.getButton(usergroupActions.saveGroup);
         cancel = factory.getButton(dashboardActions.manageUserGroups);
         initWidget(uiBinder.createAndBindUi(this));
         nameTextBox.ensureDebugId("name");

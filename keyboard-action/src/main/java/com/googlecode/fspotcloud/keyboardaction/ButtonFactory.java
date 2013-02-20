@@ -3,7 +3,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 
-public class ActionButtonFactory {
+public class ButtonFactory {
 
     private final EventBus eventBus;
     private final ActionUIRegistry actionUIRegistry;
@@ -12,11 +12,11 @@ public class ActionButtonFactory {
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
 
     @Inject
-    private ActionButtonFactory(EventBus eventBus,
-                                ActionUIRegistry actionUIRegistry,
-                                ActionButtonResources buttonResources,
-                                ActionMenuResources menuResources,
-                                ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
+    private ButtonFactory(EventBus eventBus,
+                          ActionUIRegistry actionUIRegistry,
+                          ActionButtonResources buttonResources,
+                          ActionMenuResources menuResources,
+                          ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
         this.eventBus = eventBus;
         this.actionUIRegistry = actionUIRegistry;
         this.buttonResources = buttonResources;

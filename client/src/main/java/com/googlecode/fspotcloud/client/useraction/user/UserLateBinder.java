@@ -10,14 +10,14 @@ public class UserLateBinder {
 
     @Inject
     UserLateBinder(ConfigBuilder configBuilder,
-                   To3rdPartyLoginAction to3rdPartyLoginAction,
+                   Go3rdPartyLoginAction go3rdPartyLoginAction,
                    GoResetPasswordHandler goResetPasswordHandler,
                    GoResendConfirmationHandler goResendConfirmationHandler,
                    DoLoginHandler doLoginHandler,
                    GoSignUpHandler goSignUpHandler,
                    UserActions actions) {
         this.actions = actions;
-        configBuilder.bindHandler(actions.otherLogin, to3rdPartyLoginAction);
+        configBuilder.bindHandler(actions.otherLogin, go3rdPartyLoginAction);
         configBuilder.bindHandler(actions.goSignUp, goSignUpHandler);
         configBuilder.bindHandler(actions.goResetPassword, goResetPasswordHandler);
         configBuilder.bindHandler(actions.goResendConfirmation, goResendConfirmationHandler);

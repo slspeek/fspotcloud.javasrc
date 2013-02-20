@@ -50,7 +50,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter;
     private final ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter;
     private final ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity;
-    private final ActivityAsyncProxy<ManageUserGroupsView.ManageUserGroupsPresenter> myUserGroupsPresenter;
+    private final ActivityAsyncProxy<ManageGroupsView.ManageGroupsPresenter> myUserGroupsPresenter;
     private final EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter;
     private final ManageUsersView.ManageUsersPresenter manageUsersPresenter;
     private final ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter;
@@ -69,7 +69,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
                                     ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter,
                                     ActivityAsyncProxy<UserAccountView.UserAccountPresenter> userAccountActivity,
-                                    ActivityAsyncProxy<ManageUserGroupsView.ManageUserGroupsPresenter> myUserGroupsPresenter,
+                                    ActivityAsyncProxy<ManageGroupsView.ManageGroupsPresenter> myUserGroupsPresenter,
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter,
                                     ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
