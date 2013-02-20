@@ -56,6 +56,7 @@ public class AppModule extends AbstractGinModule {
     protected void configure() {
         bind(StatusView.class).annotatedWith(Dashboard.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(StatusView.class).annotatedWith(ManageGroups.class).to(StatusViewImpl.class).in(Singleton.class);
+        bind(StatusView.class).annotatedWith(ManageUsers.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(UIRegistrationBuilder.class).to(UserActionFactory.class);
         bind(IScheduler.class).to(SchedulerImpl.class);
         install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
@@ -90,15 +91,15 @@ public class AppModule extends AbstractGinModule {
         bind(UserAccountView.class).to(UserAccountViewImpl.class);
         bind(UserAccountView.UserAccountPresenter.class)
                 .to(UserAccountPresenterImpl.class);
-        bind(ManageUserGroupsView.class).to(ManageUserGroupsViewImpl.class).in(Singleton.class);
-        bind(ManageUserGroupsView.ManageUserGroupsPresenter.class)
-                .to(ManageUserGroupsPresenterImpl.class).in(Singleton.class);
+        bind(ManageGroupsView.class).to(ManageGroupsViewImpl.class).in(Singleton.class);
+        bind(ManageGroupsView.ManageGroupsPresenter.class)
+                .to(ManageGroupsPresenterImpl.class).in(Singleton.class);
         bind(EditUserGroupView.class).to(EditUserGroupViewImpl.class).in(Singleton.class);
         bind(EditUserGroupView.EditUserGroupPresenter.class)
                 .to(EditUserGroupPresenterImpl.class).in(Singleton.class);
-        bind(ManageUsersView.class).to(ManageUsersViewImpl.class);
+        bind(ManageUsersView.class).to(ManageUsersViewImpl.class).in(Singleton.class);
         bind(ManageUsersView.ManageUsersPresenter.class)
-                .to(ManageUsersPresenterImpl.class);
+                .to(ManageUsersActivity.class).in(Singleton.class);
         bind(EmailConfirmationView.class).to(EmailConfirmationViewImpl.class);
         bind(EmailConfirmationView.EmailConfirmationPresenter.class)
                 .to(EmailConfirmationActivity.class);
@@ -152,7 +153,7 @@ public class AppModule extends AbstractGinModule {
         bind(TagApprovalView.class).to(TagApprovalViewImpl.class).in(Singleton.class);
         ;
         bind(TagApprovalView.TagApprovalPresenter.class)
-                .to(TagApprovalPresenterImpl.class);
+                .to(TagApprovalPresenterImpl.class).in(Singleton.class);
 
         bind(IClientLoginManager.class).to(ClientLoginManager.class).in(Singleton.class);
     }

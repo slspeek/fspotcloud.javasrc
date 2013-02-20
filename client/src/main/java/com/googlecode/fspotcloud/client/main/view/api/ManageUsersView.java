@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.Set;
 
@@ -39,15 +40,15 @@ public interface ManageUsersView extends IsWidget {
 
     String getNewEmail();
 
-    void setUserGroupName(String name);
+    void setGroupName(String name);
 
-    interface ManageUsersPresenter extends Activity {
-        void newUser();
+    void clearEmail();
 
-        void delete();
+    void focusEmail();
 
+    void focusUsers();
+
+    interface ManageUsersPresenter extends Activity, IActionHandler {
         void setId(Long id);
-
-        void myUsergroupsButton();
     }
 }

@@ -30,7 +30,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
+import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsAction;
 import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsResult;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
@@ -39,14 +39,14 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ManageUserGroupsPresenterImpl extends AbstractActivity implements ManageUserGroupsView.ManageUserGroupsPresenter {
-    private final Logger log = Logger.getLogger(ManageUserGroupsPresenterImpl.class.getName());
-    private final ManageUserGroupsView view;
+public class ManageGroupsPresenterImpl extends AbstractActivity implements ManageGroupsView.ManageGroupsPresenter {
+    private final Logger log = Logger.getLogger(ManageGroupsPresenterImpl.class.getName());
+    private final ManageGroupsView view;
     private final DispatchAsync dispatch;
 
     @Inject
-    public ManageUserGroupsPresenterImpl(ManageUserGroupsView view,
-                                         DispatchAsync dispatch
+    public ManageGroupsPresenterImpl(ManageGroupsView view,
+                                     DispatchAsync dispatch
     ) {
         this.view = view;
         this.dispatch = dispatch;

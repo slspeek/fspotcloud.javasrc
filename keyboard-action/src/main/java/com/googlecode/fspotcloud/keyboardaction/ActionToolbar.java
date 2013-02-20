@@ -36,11 +36,11 @@ import static com.google.common.collect.Lists.newArrayList;
 @GwtCompatible
 public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
-    private final ActionButtonFactory actionButtonFactory;
+    private final ButtonFactory buttonFactory;
 
     ActionToolbar(KeyboardActionResources keyboardActionResources,
-                  ActionButtonFactory actionButtonFactory) {
-        this.actionButtonFactory = actionButtonFactory;
+                  ButtonFactory buttonFactory) {
+        this.buttonFactory = buttonFactory;
         addStyleName(keyboardActionResources.style().buttonPanelBlock());
     }
 
@@ -69,10 +69,10 @@ public class ActionToolbar extends LayoutPanel {
     }
 
     public void add(ActionUIDef actionUIDef) {
-        add(actionButtonFactory.getButton(actionUIDef));
+        add(buttonFactory.getButton(actionUIDef));
     }
 
     public void add(String actionId) {
-        add(actionButtonFactory.getButton(actionId));
+        add(buttonFactory.getButton(actionId));
     }
 }

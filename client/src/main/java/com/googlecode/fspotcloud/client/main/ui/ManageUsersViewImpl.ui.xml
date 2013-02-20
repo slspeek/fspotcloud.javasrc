@@ -16,22 +16,31 @@
                 </g:layer>
                 <g:layer top="12%" height="70%" left="0%" width="85%">
                     <g:LayoutPanel styleName="{res.style.propertyValue}">
-                        <g:layer top="0%" height="100%">
+                        <g:layer top="0%" height="90%">
                             <c:CellTable ui:field="table" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                        </g:layer>
+                        <g:layer bottom="0px" height="22px">
+                            <main:StatusViewImpl ui:field="status"></main:StatusViewImpl>
                         </g:layer>
                     </g:LayoutPanel>
                 </g:layer>
                 <g:layer bottom="5%" height="40px" left="0%" width="20%">
-                    <g:TextBox ui:field="emailTextBox"></g:TextBox>
+                    <g:Label styleName="{res.style.propertyLabel}">Email of new group member</g:Label>
                 </g:layer>
-                <g:layer bottom="5%" height="40px" left="25%" width="20%">
-                    <main:PushButtonExt ui:field="newButton">Add user</main:PushButtonExt>
+                <g:layer bottom="5%" height="40px" left="22%" width="20%">
+                    <g:TextBox ui:field="emailTextBox" styleName="{res.style.propertyInput}"></g:TextBox>
                 </g:layer>
-                <g:layer bottom="5%" height="40px" left="50%" width="10%">
-                    <main:PushButtonExt ui:field="deleteButton">Delete</main:PushButtonExt>
+                <g:layer bottom="5%" height="50px" left="42%" width="16%">
+                    <ka:ActionButton ui:field="addButton"></ka:ActionButton>
                 </g:layer>
-                <g:layer bottom="5%" height="40px" left="65%" width="20%">
-                    <main:PushButtonExt ui:field="myUsergroupsButton">My usergroups</main:PushButtonExt>
+                <g:layer bottom="5%" height="50px" right="26%" width="17%">
+                    <ka:ActionButton ui:field="removeButton"></ka:ActionButton>
+                </g:layer>
+                <g:layer bottom="5%" height="50px" right="8%" width="20%">
+                    <ka:ActionButton ui:field="myUsergroupsButton"></ka:ActionButton>
+                </g:layer>
+                <g:layer bottom="5%" height="50px" right="0%" width="10%">
+                    <ka:ActionButton ui:field="dashboardButton"></ka:ActionButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>

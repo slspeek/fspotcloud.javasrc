@@ -36,8 +36,7 @@ import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.useraction.user.UserActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +68,7 @@ public class LoginViewImpl extends Composite implements LoginView {
 
     @Inject
     public LoginViewImpl(IScheduler scheduler, UserActions actions,
-                         ActionButtonFactory factory,
+                         ButtonFactory factory,
                          BigActionButtonResources resources,
                          ApplicationActions applicationActions) {
         this.scheduler = scheduler;

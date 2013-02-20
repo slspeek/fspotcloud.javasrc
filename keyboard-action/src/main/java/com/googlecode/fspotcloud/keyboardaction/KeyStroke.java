@@ -151,7 +151,10 @@ public class KeyStroke {
                 result = "Control";
 
                 break;
+            case KeyCodes.KEY_DELETE:
+                result = "Delete";
 
+                break;
             default:
                 result = String.valueOf((char) keyCode);
 

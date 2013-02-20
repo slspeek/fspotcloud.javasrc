@@ -25,17 +25,22 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
+import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
+import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.List;
 import java.util.Set;
@@ -50,23 +55,39 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
     @UiField
     CellTable<String> table;
-    @UiField
-    PushButtonExt newButton;
+    @UiField(provided = true)
+    ActionButton addButton;
     @UiField
     TextBox emailTextBox;
-    @UiField
-    PushButtonExt deleteButton;
-    @UiField
-    PushButtonExt myUsergroupsButton;
+    @UiField(provided = true)
+    ActionButton removeButton;
+    @UiField(provided = true)
+    ActionButton myUsergroupsButton;
+    @UiField(provided = true)
+    ActionButton dashboardButton;
     @UiField
     Label userGroupName;
+    @UiField(provided = true)
+    StatusViewImpl status;
 
     @Inject
-    public ManageUsersViewImpl() {
+    public ManageUsersViewImpl(AdminButtonFactory factory,
+                               DashboardActions dashboardActions,
+                               UsergroupActions usergroupActions,
+                               ApplicationActions applicationActions,
+                               @ManageUsers StatusView statusView
+
+
+    ) {
+        this.status = (StatusViewImpl) statusView;
+        myUsergroupsButton = factory.getButton(dashboardActions.manageUserGroups);
+        addButton = factory.getButton(usergroupActions.addUser);
+        removeButton = factory.getButton(usergroupActions.removeUser);
+        dashboardButton = factory.getButton(applicationActions.dashboard);
         initWidget(uiBinder.createAndBindUi(this));
-        newButton.ensureDebugId("new-button");
+        addButton.ensureDebugId("new-button");
         emailTextBox.ensureDebugId("email");
-        deleteButton.ensureDebugId("delete-button");
+        removeButton.ensureDebugId("delete-button");
 
         // Create name column.
         TextColumn<String> nameColumn = new TextColumn<String>() {
@@ -88,20 +109,6 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
         table.setPageSize(25);
     }
 
-    @UiHandler("newButton")
-    public void onNewButton(ClickEvent event) {
-        presenter.newUser();
-    }
-
-    @UiHandler("deleteButton")
-    public void onDeleteButton(ClickEvent event) {
-        presenter.delete();
-    }
-
-    @UiHandler("myUsergroupsButton")
-    public void onMyUsergroupsButton(ClickEvent event) {
-        presenter.myUsergroupsButton();
-    }
 
     @Override
     public void setPresenter(ManageUsersView.ManageUsersPresenter presenter) {
@@ -129,8 +136,23 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     }
 
     @Override
-    public void setUserGroupName(String name) {
+    public void setGroupName(String name) {
         userGroupName.setText(name);
+    }
+
+    @Override
+    public void clearEmail() {
+        emailTextBox.setText("");
+    }
+
+    @Override
+    public void focusEmail() {
+        emailTextBox.setFocus(true);
+    }
+
+    @Override
+    public void focusUsers() {
+        table.setFocus(true);
     }
 
     interface ManageUsersViewImplUiBinder extends UiBinder<Widget, ManageUsersViewImpl> {

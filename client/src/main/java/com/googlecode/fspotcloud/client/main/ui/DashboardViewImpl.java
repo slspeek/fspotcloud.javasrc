@@ -36,8 +36,7 @@ import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
 
 import java.util.logging.Logger;
 
@@ -66,7 +65,7 @@ public class DashboardViewImpl extends Composite implements DashboardView {
                              PeerActionsView peerActionsView,
                              TagDetailsView tagDetailsView,
                              @Dashboard StatusView statusView,
-                             ActionButtonFactory buttonFactory,
+                             ButtonFactory buttonFactory,
                              AdminActionButtonResources resources,
                              DashboardActions actions
     ) {
