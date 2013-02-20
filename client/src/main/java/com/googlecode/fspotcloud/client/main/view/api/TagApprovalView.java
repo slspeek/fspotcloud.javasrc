@@ -26,13 +26,15 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.Set;
 
 
 public interface TagApprovalView extends IsWidget {
-    void setPresenter(TagApprovalPresenter presenter);
+
+    void setStatusText(String status);
 
     void setApprovedGroups(Set<UserGroupInfo> approvedGroups);
 
@@ -44,13 +46,12 @@ public interface TagApprovalView extends IsWidget {
 
     UserGroupInfo getOtherSelected();
 
-    interface TagApprovalPresenter extends Activity {
-        void remove();
+    void focusGrantedTable();
 
-        void approve();
+    void focusRevokedTable();
+
+    interface TagApprovalPresenter extends Activity, IActionHandler {
 
         void setTagId(String tagId);
-
-        void dashboard();
     }
 }

@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
-import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
+import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;
@@ -49,7 +49,7 @@ public class ManageUsersActivity extends AbstractActivity implements ManageUsers
     private final ManageUsersView view;
     private final StatusView statusView;
     private final DispatchAsync dispatch;
-    private final UsergroupActions usergroupActions;
+    private final GroupActions groupActions;
     private Long userGroupId;
 
     @Inject
@@ -57,11 +57,11 @@ public class ManageUsersActivity extends AbstractActivity implements ManageUsers
             ManageUsersView view,
             @ManageUsers StatusView statusView,
             DispatchAsync dispatch,
-            UsergroupActions usergroupActions) {
+            GroupActions groupActions) {
         this.view = view;
         this.statusView = statusView;
         this.dispatch = dispatch;
-        this.usergroupActions = usergroupActions;
+        this.groupActions = groupActions;
     }
 
     @Override
@@ -143,13 +143,13 @@ public class ManageUsersActivity extends AbstractActivity implements ManageUsers
 
     @Override
     public void performAction(String actionId) {
-        if (usergroupActions.addUser.getId().equals(actionId)) {
+        if (groupActions.addUser.getId().equals(actionId)) {
            addUser();
-        }   else if(usergroupActions.removeUser.getId().equals(actionId)) {
+        }   else if(groupActions.removeUser.getId().equals(actionId)) {
             removeUser();
-        } else if (usergroupActions.focusUserTable.getId().equals(actionId)) {
+        } else if (groupActions.focusUserTable.getId().equals(actionId)) {
             view.focusUsers();
-        } else if (usergroupActions.focusEmailField.getId().equals(actionId)) {
+        } else if (groupActions.focusEmailField.getId().equals(actionId)) {
             view.focusEmail();
         }
 

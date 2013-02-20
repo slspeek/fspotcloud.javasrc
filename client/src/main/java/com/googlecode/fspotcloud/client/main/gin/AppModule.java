@@ -54,6 +54,7 @@ public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+        bind(StatusView.class).to(StatusViewImpl.class);
         bind(StatusView.class).annotatedWith(Dashboard.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(StatusView.class).annotatedWith(ManageGroups.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(StatusView.class).annotatedWith(ManageUsers.class).to(StatusViewImpl.class).in(Singleton.class);
@@ -153,7 +154,7 @@ public class AppModule extends AbstractGinModule {
         bind(TagApprovalView.class).to(TagApprovalViewImpl.class).in(Singleton.class);
         ;
         bind(TagApprovalView.TagApprovalPresenter.class)
-                .to(TagApprovalPresenterImpl.class).in(Singleton.class);
+                .to(TagApprovalActivity.class).in(Singleton.class);
 
         bind(IClientLoginManager.class).to(ClientLoginManager.class).in(Singleton.class);
     }

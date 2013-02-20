@@ -73,7 +73,7 @@ public class DashboardViewImpl extends Composite implements DashboardView {
         this.statusView = (StatusViewImpl) statusView;
         buttonFactory.setButtonResources(resources);
         toPhotos = buttonFactory.getButton(actions.toPhotos);
-        manageGroups = buttonFactory.getButton(actions.manageUserGroups);
+        manageGroups = buttonFactory.getButton(actions.manageGroups);
         reloadTree = buttonFactory.getButton(actions.reloadTree);
         this.treeView = treeView;
         this.peerActionsView = peerActionsView;

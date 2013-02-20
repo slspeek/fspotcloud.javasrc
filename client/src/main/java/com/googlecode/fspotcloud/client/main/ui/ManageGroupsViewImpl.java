@@ -41,7 +41,7 @@ import com.googlecode.fspotcloud.client.main.gin.ManageGroups;
 import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
-import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
+import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
@@ -56,7 +56,7 @@ public class ManageGroupsViewImpl extends Composite implements ManageGroupsView 
     private final ListDataProvider<UserGroupInfo> dataProvider;
     private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
 
-    @UiField
+    @UiField (provided = true)
     CellTable<UserGroupInfo> table;
     @UiField(provided = true)
     ActionButton newButton;
@@ -74,11 +74,13 @@ public class ManageGroupsViewImpl extends Composite implements ManageGroupsView 
 
     @Inject
     public ManageGroupsViewImpl(@ManageGroups StatusView statusView,
-                                UsergroupActions actions,
+                                GroupActions actions,
                                 ApplicationActions applicationActions,
-                                AdminButtonFactory buttonFactory
+                                AdminButtonFactory buttonFactory,
+                                CellTableResources cellTableResources
     ) {
         this.statusView = (StatusViewImpl) statusView;
+        this.table = new CellTable<UserGroupInfo>(15, cellTableResources);
 
         newButton = buttonFactory.getButton(actions.newUsergroup);
         editButton = buttonFactory.getButton(actions.editUsergroup);

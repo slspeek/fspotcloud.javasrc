@@ -30,8 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
-import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.*;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -41,41 +40,38 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-public class TagApprovalPresenterImpl extends AbstractActivity implements TagApprovalView.TagApprovalPresenter {
-    private final Logger log = Logger.getLogger(TagApprovalPresenterImpl.class.getName());
+public class TagApprovalActivity extends AbstractActivity implements TagApprovalView.TagApprovalPresenter {
+    private final Logger log = Logger.getLogger(TagApprovalActivity.class.getName());
     private final TagApprovalView view;
     private final DispatchAsync dispatch;
-    private final PlaceGoTo placeGoTo;
+    private final GroupActions groupActions;
     private Set<UserGroupInfo> allGroups;
     private TagNode tagNode;
     private String tagId;
 
     @Inject
-    public TagApprovalPresenterImpl(TagApprovalView view,
-                                    DispatchAsync dispatch, PlaceGoTo placeGoTo) {
+    public TagApprovalActivity(TagApprovalView view,
+                               DispatchAsync dispatch,
+                               GroupActions groupActions) {
         this.view = view;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
+        this.groupActions = groupActions;
     }
 
-    private Set<UserGroupInfo> getOthers(Set<UserGroupInfo> all,
-                                         Set<Long> approved) {
+    private Set<UserGroupInfo> getNotGrantedGroups(Set<UserGroupInfo> all,
+                                                   Set<Long> approved) {
         Set<UserGroupInfo> result = newHashSet();
-
         for (UserGroupInfo info : all) {
             if (!approved.contains(info.getId())) {
                 result.add(info);
             }
         }
-
         return result;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        this.view.setPresenter(this);
         panel.setWidget(view);
-
         // view.setData(newArrayList(new UserGroupInfo("foo", "Uh foo")));
         refreshData();
     }
@@ -98,16 +94,17 @@ public class TagApprovalPresenterImpl extends AbstractActivity implements TagApp
                 });
     }
 
-    @Override
-    public void remove() {
-        UserGroupInfo info = view.getApprovedSelected();
+    private void revokeGroup() {
+        final UserGroupInfo info = view.getApprovedSelected();
 
         if (info != null) {
+            view.setStatusText("Requesting the server to revoke access for group: " + info.getName());
             dispatch.execute(new RevokeTagAction(tagId, info.getId()),
                     new AsyncCallback<VoidResult>() {
                         @Override
                         public void onFailure(Throwable caught) {
-                            //To change body of implemented methods use File | Settings | File Templates.
+                            view.setStatusText("Could not revoke access for group: " + info.getName() +
+                                    " due to a server error");
                         }
 
                         @Override
@@ -118,16 +115,16 @@ public class TagApprovalPresenterImpl extends AbstractActivity implements TagApp
         }
     }
 
-    @Override
-    public void approve() {
-        UserGroupInfo info = view.getOtherSelected();
-
+    private void grantGroup() {
+        final UserGroupInfo info = view.getOtherSelected();
         if (info != null) {
+            view.setStatusText("Requesting the server to grant access to group: "+ info.getName());
             dispatch.execute(new ApproveTagAction(tagId, info.getId()),
                     new AsyncCallback<VoidResult>() {
                         @Override
                         public void onFailure(Throwable caught) {
-                            //To change body of implemented methods use File | Settings | File Templates.
+                            view.setStatusText("Could not grant access to group: " + info.getName() +
+                                    " due to a server error");
                         }
 
                         @Override
@@ -144,17 +141,13 @@ public class TagApprovalPresenterImpl extends AbstractActivity implements TagApp
         refreshTagNode(tagId);
     }
 
-    @Override
-    public void dashboard() {
-        placeGoTo.goTo(new TagPlace(tagId));
-    }
-
     private void refreshTagNode(String tagId) {
+        view.setStatusText("Loading information on category id=" + tagId);
         dispatch.execute(new GetTagNodeAction(tagId),
                 new AsyncCallback<TagNodeResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
+                        view.setStatusText("Loading information failed due to a server error");
                     }
 
                     @Override
@@ -162,7 +155,7 @@ public class TagApprovalPresenterImpl extends AbstractActivity implements TagApp
                         tagNode = result.getInfo();
                         view.setTagName(tagNode.getTagName());
 
-                        final Set<UserGroupInfo> others = getOthers(allGroups,
+                        final Set<UserGroupInfo> others = getNotGrantedGroups(allGroups,
                                 tagNode.getApprovedUserGroups());
                         view.setOtherGroups(others);
 
@@ -171,7 +164,23 @@ public class TagApprovalPresenterImpl extends AbstractActivity implements TagApp
 
                         Set<UserGroupInfo> approved = copyOfAll;
                         view.setApprovedGroups(approved);
+                        view.setStatusText("Updated UI with server data");
                     }
                 });
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        if (groupActions.revokeGroup.getId().equals(actionId)) {
+            revokeGroup();
+        }   else if (groupActions.grantGroup.getId().equals(actionId)) {
+            grantGroup();
+        } else if (groupActions.focusGrantedTable.getId().equals(actionId)) {
+            view.focusGrantedTable();
+        } else if (groupActions.focusRevokedTable.getId().equals(actionId)) {
+            view.focusRevokedTable();
+        }
+
+
     }
 }

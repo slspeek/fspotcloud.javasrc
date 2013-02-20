@@ -88,7 +88,7 @@ public class EditUserGroupPresenterImpl extends AbstractActivity implements Edit
                         view.setStatusText("A save was successfully performed on the server, redirecting");
                         log.info(
                                 "Successfull return from save user group server call");
-                        eventBus.fireEvent(new KeyboardActionEvent(dashboardActions.manageUserGroups.getId()));
+                        eventBus.fireEvent(new KeyboardActionEvent(dashboardActions.manageGroups.getId()));
                     }
                 });
     }

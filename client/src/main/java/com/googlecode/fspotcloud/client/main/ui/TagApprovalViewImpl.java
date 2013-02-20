@@ -25,20 +25,23 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
+import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.List;
@@ -49,32 +52,48 @@ import java.util.logging.Logger;
 public class TagApprovalViewImpl extends Composite implements TagApprovalView {
     private final Logger log = Logger.getLogger(TagApprovalViewImpl.class.getName());
     private static final TagApprovalViewImplUiBinder uiBinder = GWT.create(TagApprovalViewImplUiBinder.class);
-    private TagApprovalPresenter presenter;
-    private final ListDataProvider<UserGroupInfo> approvedDataProvider;
-    private final ListDataProvider<UserGroupInfo> otherDataProvider;
-    private final SingleSelectionModel<UserGroupInfo> approvedSelectionModel = new SingleSelectionModel<UserGroupInfo>();
-    private final SingleSelectionModel<UserGroupInfo> otherSelectionModel = new SingleSelectionModel<UserGroupInfo>();
-    @UiField
-    CellTable<UserGroupInfo> approved;
-    @UiField
-    CellTable<UserGroupInfo> other;
-    @UiField
-    PushButton removeButton;
-    @UiField
-    PushButton approveButton;
-    @UiField
-    PushButton dashboardButton;
+    private final ListDataProvider<UserGroupInfo> grantedDataProvider;
+    private final ListDataProvider<UserGroupInfo> revokedDataProvider;
+    private final SingleSelectionModel<UserGroupInfo> grantedSelectionModel = new SingleSelectionModel<UserGroupInfo>();
+    private final SingleSelectionModel<UserGroupInfo> revokedSelectionModel = new SingleSelectionModel<UserGroupInfo>();
+    @UiField(provided = true)
+    CellTable<UserGroupInfo> grantedTable;
+    @UiField(provided = true)
+    CellTable<UserGroupInfo> revokedTable;
+    @UiField(provided = true)
+    ActionButton revokeButton;
+    @UiField(provided = true)
+    ActionButton grantButton;
+    @UiField(provided = true)
+    ActionButton dashboardButton;
+    @UiField(provided = true)
+    ActionButton manageGroupsButton;
+    @UiField(provided = true)
+    StatusViewImpl statusView;
     @UiField
     Label tagName;
 
     @Inject
-    public TagApprovalViewImpl() {
+    public TagApprovalViewImpl(GroupActions groupActions,
+                               ApplicationActions applicationActions,
+                               DashboardActions dashboardActions,
+                               AdminButtonFactory factory,
+                               StatusView statusView,
+                               CellTableResources cellTableResources
+
+    ) {
+        this.grantedTable = new CellTable<UserGroupInfo>(15, cellTableResources);
+        this.revokedTable = new CellTable<UserGroupInfo>(15, cellTableResources);
+        this.statusView = (StatusViewImpl) statusView;
+        revokeButton = factory.getButton(groupActions.revokeGroup);
+        grantButton = factory.getButton(groupActions.grantGroup);
+        dashboardButton = factory.getButton(applicationActions.dashboard);
+        manageGroupsButton = factory.getButton(dashboardActions.manageGroups);
         initWidget(uiBinder.createAndBindUi(this));
         tagName.ensureDebugId("tag-name");
-        removeButton.ensureDebugId("remove-button");
-        approveButton.ensureDebugId("approve-button");
+        revokeButton.ensureDebugId("remove-button");
+        grantButton.ensureDebugId("approve-button");
 
-        // Create name column.
         TextColumn<UserGroupInfo> column;
         column = new TextColumn<UserGroupInfo>() {
             @Override
@@ -82,86 +101,72 @@ public class TagApprovalViewImpl extends Composite implements TagApprovalView {
                 return info.getName();
             }
         };
-        approved.addColumn(column, "Name");
-        // Create address column.
+        grantedTable.addColumn(column, "Name");
         column = new TextColumn<UserGroupInfo>() {
             @Override
             public String getValue(UserGroupInfo info) {
                 return info.getDescription();
             }
         };
-        // Add the columns.
-        approved.addColumn(column, "Description");
-        // Create a data provider.
-        approvedDataProvider = new ListDataProvider<UserGroupInfo>();
+        grantedTable.addColumn(column, "Description");
+        grantedDataProvider = new ListDataProvider<UserGroupInfo>();
 
-        // Connect the table to the data provider.
-        approvedDataProvider.addDataDisplay(approved);
-        approved.setSelectionModel(approvedSelectionModel);
+        grantedDataProvider.addDataDisplay(grantedTable);
+        grantedTable.setSelectionModel(grantedSelectionModel);
         column = new TextColumn<UserGroupInfo>() {
             @Override
             public String getValue(UserGroupInfo info) {
                 return info.getName();
             }
         };
-        other.addColumn(column, "Name");
-        // Create address column.
+        revokedTable.addColumn(column, "Name");
         column = new TextColumn<UserGroupInfo>() {
             @Override
             public String getValue(UserGroupInfo info) {
                 return info.getDescription();
             }
         };
-        // Add the columns.
-        other.addColumn(column, "Description");
-        // Create a data provider.
-        otherDataProvider = new ListDataProvider<UserGroupInfo>();
+        revokedTable.addColumn(column, "Description");
+        revokedDataProvider = new ListDataProvider<UserGroupInfo>();
 
-        // Connect the table to the data provider.
-        otherDataProvider.addDataDisplay(other);
-        other.setSelectionModel(otherSelectionModel);
+        revokedDataProvider.addDataDisplay(revokedTable);
+        revokedTable.setSelectionModel(revokedSelectionModel);
 
         log.info("Created. ");
     }
-
-    @UiHandler("approveButton")
-    public void approveButton(ClickEvent event) {
-        presenter.approve();
-    }
-
-    @UiHandler("removeButton")
-    public void removeButton(ClickEvent event) {
-        presenter.remove();
-    }
-
-    @UiHandler("dashboardButton")
-    public void dashboardButton(ClickEvent event) {
-        presenter.dashboard();
-    }
-
-    @Override
-    public void setPresenter(TagApprovalPresenter presenter) {
-        this.presenter = presenter;
-    }
-
     @Override
     public UserGroupInfo getApprovedSelected() {
-        return approvedSelectionModel.getSelectedObject();
+        return grantedSelectionModel.getSelectedObject();
     }
 
     @Override
     public UserGroupInfo getOtherSelected() {
-        return otherSelectionModel.getSelectedObject();
+        return revokedSelectionModel.getSelectedObject();
+    }
+
+    @Override
+    public void focusGrantedTable() {
+        grantedTable.setFocus(true);
+    }
+
+    @Override
+    public void focusRevokedTable() {
+        revokedTable.setFocus(true);
+    }
+
+    @Override
+    public void setStatusText(String status) {
+        statusView.setStatusText(status);
     }
 
     @Override
     public void setApprovedGroups(Set<UserGroupInfo> approvedGroups) {
-        setGroups(approvedGroups, approvedDataProvider);
+        setGroups(approvedGroups, grantedDataProvider);
     }
 
     @Override
     public void setOtherGroups(Set<UserGroupInfo> approvedGroups) {
-        setGroups(approvedGroups, otherDataProvider);
+        setGroups(approvedGroups, revokedDataProvider);
     }
 
     private void setGroups(Set<UserGroupInfo> approvedGroups,
