@@ -39,7 +39,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
-import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
+import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     private ManageUsersView.ManageUsersPresenter presenter;
     private final ListDataProvider<String> dataProvider;
     private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
-    @UiField
+    @UiField(provided = true)
     CellTable<String> table;
     @UiField(provided = true)
     ActionButton addButton;
@@ -73,16 +73,19 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     @Inject
     public ManageUsersViewImpl(AdminButtonFactory factory,
                                DashboardActions dashboardActions,
-                               UsergroupActions usergroupActions,
+                               GroupActions groupActions,
                                ApplicationActions applicationActions,
-                               @ManageUsers StatusView statusView
+                               @ManageUsers StatusView statusView,
+                               CellTableResources resources
+
 
 
     ) {
+        this.table = new CellTable<String>(15, resources);
         this.status = (StatusViewImpl) statusView;
-        myUsergroupsButton = factory.getButton(dashboardActions.manageUserGroups);
-        addButton = factory.getButton(usergroupActions.addUser);
-        removeButton = factory.getButton(usergroupActions.removeUser);
+        myUsergroupsButton = factory.getButton(dashboardActions.manageGroups);
+        addButton = factory.getButton(groupActions.addUser);
+        removeButton = factory.getButton(groupActions.removeUser);
         dashboardButton = factory.getButton(applicationActions.dashboard);
         initWidget(uiBinder.createAndBindUi(this));
         addButton.ensureDebugId("new-button");

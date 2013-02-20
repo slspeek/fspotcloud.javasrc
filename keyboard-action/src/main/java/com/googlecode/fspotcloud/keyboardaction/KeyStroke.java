@@ -30,12 +30,26 @@ import com.google.gwt.event.dom.client.KeyCodes;
 
 @GwtCompatible
 public class KeyStroke {
-    private final Modifiers modifiers;
-    private final int keyCode;
+
     public static final int KEY_NUM_PAD_PLUS = 107;
     public static final int KEY_NUM_PAD_MINUS = 109;
     public static final int KEY_FORWARD_SLASH = 191;
     public static final int KEY_SPACE = 32;
+    public static final int KEY_PAUSE = 19;
+    public static final int KEY_INSERT = 45;
+    public static final KeyStroke DELETE = new KeyStroke(KeyCodes.KEY_DELETE);
+    public static final KeyStroke H = new KeyStroke('H');
+    public static final KeyStroke I = new KeyStroke('I');
+    public static final KeyStroke J = new KeyStroke('J');
+    public static final KeyStroke K = new KeyStroke('K');
+    public static final KeyStroke R = new KeyStroke('R');
+    public static KeyStroke ESC = new KeyStroke(KeyCodes.KEY_ESCAPE);
+    public static KeyStroke INSERT = new KeyStroke(KEY_INSERT);
+    public static KeyStroke PAUSE = new KeyStroke(KEY_PAUSE);
+
+    private final Modifiers modifiers;
+    private final int keyCode;
+    public static final KeyStroke X = new KeyStroke('X');
 
     public static KeyStroke shift(int keyCode) {
         return new KeyStroke(Modifiers.SHIFT, keyCode);
@@ -123,12 +137,12 @@ public class KeyStroke {
 
                 break;
 
-            case 32:
+            case KEY_SPACE:
                 result = "Space";
 
                 break;
 
-            case 19:
+            case KEY_PAUSE:
                 result = "Pause";
 
                 break;
@@ -153,6 +167,10 @@ public class KeyStroke {
                 break;
             case KeyCodes.KEY_DELETE:
                 result = "Delete";
+
+                break;
+            case KEY_INSERT:
+                result = "Insert";
 
                 break;
             default:

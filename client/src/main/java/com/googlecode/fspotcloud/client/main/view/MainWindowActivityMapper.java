@@ -107,7 +107,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         Activity activity = null;
         if (place instanceof TagApprovalPlace) {
             approvalPresenter.setTagId(((TagApprovalPlace) place).getTagId());
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.TAG_ACCESS);
             return approvalPresenter;
         } else if (place instanceof MailFullsizePlace) {
             activity = mailFullsizeActivityFactory.get((MailFullsizePlace) place);

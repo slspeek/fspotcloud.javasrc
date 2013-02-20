@@ -10,49 +10,55 @@
             <g:LayoutPanel styleName="{res.style.myUsergroups}">
                 <g:layer top="0%" height="10%" left="0%" width="50%">
                     <g:Label styleName="{res.style.titleLabel}">
-                        Granting to tag:
+                        Granting access to category:
                     </g:Label>
                 </g:layer>
                 <g:layer top="0%" height="10%" left="50%" width="50%">
                     <g:Label ui:field="tagName" styleName="{res.style.titleLabel}"></g:Label>
                 </g:layer>
-                <g:layer top="15%" height="80%" left="0%" width="50%">
-                    <g:LayoutPanel styleName="{res.style.propertyValue}">
+                <g:layer top="15%" height="75%" left="0%" width="48%">
+                    <g:LayoutPanel styleName="{res.style.tableLayoutLayer}">
                         <g:layer height="10%" top="0%">
                             <g:HTMLPanel>
-                                <div class="{res.style.tableHeader}">
-                                    Approved usergroups
+                                <div class="{res.style.propertyLabel}">
+                                    Granted groups
                                 </div>
                             </g:HTMLPanel>
                         </g:layer>
                         <g:layer top="10%" height="80%">
-                            <c:CellTable ui:field="approved" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                            <c:CellTable ui:field="grantedTable" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
-                        <g:layer bottom="2%" height="40px" left="0%" width="25%">
-                            <main:PushButtonExt ui:field="removeButton">Remove</main:PushButtonExt>
+                        <g:layer bottom="40px" height="50px" left="0%" width="35%">
+                            <ka:ActionButton ui:field="revokeButton"></ka:ActionButton>
                         </g:layer>
                     </g:LayoutPanel>
                 </g:layer>
-                <g:layer top="15%" height="80%" right="0%" width="50%">
-                    <g:LayoutPanel styleName="{res.style.propertyValue}">
+                <g:layer top="15%" height="75%" right="0%" width="48%">
+                    <g:LayoutPanel styleName="{res.style.tableLayoutLayer}">
                         <g:layer height="10%" top="0%" right="0%" width="100%">
                             <g:HTMLPanel>
-                                <div class="{res.style.tableHeader}">
-                                    Denied usergroups
+                                <div class="{res.style.propertyLabel}">
+                                    Candidates for granting
                                 </div>
                             </g:HTMLPanel>
                         </g:layer>
                         <g:layer top="10%" height="80%">
-                            <c:CellTable ui:field="other" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                            <c:CellTable ui:field="revokedTable" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
-                        <g:layer bottom="2%" height="40px" left="0%" width="25%">
-                            <main:PushButtonExt ui:field="approveButton">Approve</main:PushButtonExt>
+                        <g:layer bottom="40px" height="50px" left="0%" width="35%">
+                            <ka:ActionButton ui:field="grantButton"></ka:ActionButton>
                         </g:layer>
 
                     </g:LayoutPanel>
                 </g:layer>
-                <g:layer bottom="0%" height="40px" left="0%" width="25%">
-                    <main:PushButtonExt ui:field="dashboardButton">Dashboard</main:PushButtonExt>
+                <g:layer bottom="90px" height="22px">
+                    <main:StatusViewImpl ui:field="statusView"></main:StatusViewImpl>
+                </g:layer>
+                <g:layer bottom="0%" height="60px" left="0%" width="25%">
+                    <ka:ActionButton ui:field="dashboardButton"></ka:ActionButton>
+                </g:layer>
+                <g:layer bottom="0%" height="40px" left="30%" width="25%">
+                    <ka:ActionButton ui:field="manageGroupsButton"></ka:ActionButton>
                 </g:layer>
 
             </g:LayoutPanel>

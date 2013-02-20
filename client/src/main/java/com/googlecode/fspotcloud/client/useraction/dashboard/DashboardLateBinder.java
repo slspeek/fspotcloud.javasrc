@@ -23,7 +23,7 @@ public class DashboardLateBinder {
                         DashboardActions actions) {
         this.actions = actions;
         configBuilder.bindHandler(actions.reloadTree, reloadTree);
-        configBuilder.bindHandler(actions.manageUserGroups, manageUserGroupsHandler);
+        configBuilder.bindHandler(actions.manageGroups, manageUserGroupsHandler);
         configBuilder.bindHandler(actions.toPhotos, toPhotos);
         configBuilder.bindHandler(actions.deleteCommands, removeAllCommandsHandler);
         configBuilder.bindHandler(actions.synchronize, synchronizeHandler);

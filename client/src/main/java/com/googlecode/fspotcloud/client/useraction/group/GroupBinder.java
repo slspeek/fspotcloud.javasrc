@@ -12,18 +12,17 @@ import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 
 @GwtCompatible
-public class UsergroupBinder extends AbstractBinder {
+public class GroupBinder extends AbstractBinder {
 
-    private final UsergroupActions actions;
+    private final GroupActions actions;
 
 
     @Inject
-    public UsergroupBinder(CategoryDef categoryDef,
-                           UsergroupActions actions) {
+    public GroupBinder(CategoryDef categoryDef,
+                       GroupActions actions) {
         super(categoryDef.USERGROUP);
         this.actions = actions;
     }
-
 
     @Override
     public void build() {
@@ -34,7 +33,6 @@ public class UsergroupBinder extends AbstractBinder {
         configBuilder.register(category, actions.focusGroupTable, get(KeyCodes.KEY_ENTER));
         KeyboardBinding binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.EDIT_GROUP);
         configBuilder.register(category, actions.saveGroup, binding);
-
         binding = KeyboardBinding.bind(alt('S'), alt('A'))
                 .withDefaultModes(Modes.MANAGE_USERS);
         configBuilder.register(category, actions.addUser, binding);
@@ -44,9 +42,18 @@ public class UsergroupBinder extends AbstractBinder {
         configBuilder.register(category, actions.focusUserTable, binding);
         binding = KeyboardBinding.bind(alt('Z')).withDefaultModes(Modes.MANAGE_USERS);
         configBuilder.register(category, actions.focusEmailField, binding);
+
+        binding = KeyboardBinding.bind(KeyStroke.J).withDefaultModes(Modes.TAG_ACCESS);
+        configBuilder.register(category, actions.focusGrantedTable, binding);
+        binding = KeyboardBinding.bind(KeyStroke.K).withDefaultModes(Modes.TAG_ACCESS);
+        configBuilder.register(category, actions.focusRevokedTable, binding);
+        binding = KeyboardBinding.bind(KeyStroke.I, KeyStroke.INSERT).withDefaultModes(Modes.TAG_ACCESS);
+        configBuilder.register(category, actions.grantGroup, binding);
+        binding = KeyboardBinding.bind(KeyStroke.DELETE, KeyStroke.X).withDefaultModes(Modes.TAG_ACCESS);
+        configBuilder.register(category, actions.revokeGroup, binding);
+
+
     }
-
-
 
     private KeyboardBinding get(int characterCode) {
         return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.MANAGE_GROUPS);

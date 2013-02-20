@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
 @GwtCompatible
-public class UsergroupActions {
+public class GroupActions {
     public final ActionUIDef editUsergroup;
     public final ActionUIDef newUsergroup;
     public final ActionUIDef deleteUsergroup;
@@ -15,10 +15,14 @@ public class UsergroupActions {
     public final ActionUIDef addUser;
     public final ActionUIDef removeUser;
     public final ActionUIDef focusEmailField;
+    public final ActionUIDef focusGrantedTable;
+    public final ActionUIDef focusRevokedTable;
     public final ActionUIDef focusUserTable;
+    public final ActionUIDef revokeGroup;
+    public final ActionUIDef grantGroup;
 
     @Inject
-    public UsergroupActions() {
+    public GroupActions() {
         editUsergroup = new ActionUIDef("edit-usergroup", "Edit", "Edit usergroup", null);
         newUsergroup = new ActionUIDef("new-usergroup", "New usergroup", "Create new usergroup", null);
         deleteUsergroup = new ActionUIDef("delete-usergroup", "Delete", "Delete usergroup", null);
@@ -29,5 +33,9 @@ public class UsergroupActions {
         removeUser = new ActionUIDef("remove-user", "Remove user", "Remove selected user from group", null);
         focusEmailField = new ActionUIDef("focus-email", "Focus email field", "Focus the email field", null);
         focusUserTable = new ActionUIDef("focus-user-table", "Focus user table", "Focus user table", null);
+        revokeGroup = new ActionUIDef("revoke-group", "Revoke group", "Revoke access from group", null);
+        grantGroup = new ActionUIDef("grant-group", "Grant group", "Grant access to group", null);
+        focusGrantedTable = new ActionUIDef("focus-granteds", "Focus granted groups", "Focus granted groups", null);
+        focusRevokedTable = new ActionUIDef("focus-revokeds", "Focus revoked groups", "Focus revoked groups", null);
     }
 }
