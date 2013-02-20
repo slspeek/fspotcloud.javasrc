@@ -16,7 +16,7 @@ public class KeyboardActionFactory {
     private final ActionUIRegistry actionUIRegistry;
     private final NativePreviewHandler nativePreviewHandler;
     private final HelpActionsFactory helpActionsFactory;
-    private final ActionButtonFactory actionButtonFactory;
+    private final ButtonFactory buttonFactory;
     private final KeyboardActionResources keyboardActionResources;
 
     private IModeController modeController;
@@ -31,13 +31,13 @@ public class KeyboardActionFactory {
                                  IModeController modeController,
                                  ActionUIRegistry actionUIRegistry,
                                  List<ActionCategory> actionCategoryList,
-                                 ActionButtonFactory actionButtonFactory,
+                                 ButtonFactory buttonFactory,
                                  KeyboardActionResources keyboardActionResources,
                                  ActionMenuResources menuResources,
                                  ActionButtonResources buttonResources) {
         this.keyboardActionResources = keyboardActionResources;
         builder.build();
-        this.actionButtonFactory = actionButtonFactory;
+        this.buttonFactory = buttonFactory;
         this.keyboardActionResources.style().ensureInjected();
         menuResources.style().ensureInjected();
         buttonResources.style().ensureInjected();
@@ -60,18 +60,18 @@ public class KeyboardActionFactory {
     }
 
     public ActionButton getButton(String actionId) {
-        return actionButtonFactory.getButton(actionId);
+        return buttonFactory.getButton(actionId);
     }
 
     public ActionButton getButton(ActionUIDef actionUIDef) {
-        return actionButtonFactory.getButton(actionUIDef);
+        return buttonFactory.getButton(actionUIDef);
     }
 
     public ActionToolbar getToolBar() {
-        return new ActionToolbar(keyboardActionResources, actionButtonFactory);
+        return new ActionToolbar(keyboardActionResources, buttonFactory);
     }
 
     public ActionMenu getMenu(String caption) {
-        return actionButtonFactory.getMenu(caption);
+        return buttonFactory.getMenu(caption);
     }
 }

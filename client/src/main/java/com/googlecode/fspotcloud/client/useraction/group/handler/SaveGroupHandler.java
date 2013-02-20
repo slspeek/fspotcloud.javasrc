@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.client.useraction.usergroup.handler;
+package com.googlecode.fspotcloud.client.useraction.group.handler;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;

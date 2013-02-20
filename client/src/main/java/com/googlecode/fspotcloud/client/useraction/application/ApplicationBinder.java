@@ -8,6 +8,8 @@ import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.useraction.application.handler.*;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
+import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
+
 public class ApplicationBinder extends AbstractBinder {
 
 
@@ -55,10 +57,13 @@ public class ApplicationBinder extends AbstractBinder {
         KeyboardBinding aboutBinding = KeyboardBinding.bind(new KeyStroke('A')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
         bind(actions.about, aboutHandlerFactory.getAboutHandler(), aboutBinding);
 
-        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('D')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.MANAGE_GROUPS, Modes.MANAGE_USERS);
+        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('D'))
+                .withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW)
+                .override(Modes.MANAGE_GROUPS, alt('D'), new KeyStroke(KeyCodes.KEY_ESCAPE))
+                .override(Modes.MANAGE_USERS, alt('D'));
         bind(actions.dashboard, dashboardHandler, binding);
         bind(actions.login, loginHandler, get('N'));
-        binding = KeyboardBinding.bind(KeyStroke.alt('O')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
+        binding = KeyboardBinding.bind(alt('O')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
         bind(actions.logout, logoutHandler, binding);
         bind(actions.zoom_in, zoomInHandler, get(KeyStroke.KEY_NUM_PAD_PLUS));
         bind(actions.zoom_out, zoomOutHandler, get(KeyStroke.KEY_NUM_PAD_MINUS));
@@ -69,7 +74,7 @@ public class ApplicationBinder extends AbstractBinder {
         configBuilder.register(category, actions.demo, get('7'));
         configBuilder.register(category, actions.tree_focus, get(KeyCodes.KEY_ENTER));
         configBuilder.register(category, actions.reloadTree, get('R'));
-        binding = KeyboardBinding.bind(KeyStroke.alt('L')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
+        binding = KeyboardBinding.bind(alt('L')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
         configBuilder.register(category, actions.goToLatest, binding);
 
 

@@ -63,7 +63,7 @@ tomcatRun.dependsOn copyWar
 [tomcatRun, tomcatStop]*.stopPort = 8060
 [tomcatRun, tomcatStop]*.stopKey = 'STOP'
 [tomcatRun, tomcatStop]*.daemon = Boolean.parseBoolean(server_daemon)
-[tomcatRun, tomcatStop]*.httpPort = 8050
+[tomcatRun, tomcatStop]*.httpPort = 9050
 
 tomcatRun {
     webAppSourceDirectory = file("build/exploded")
@@ -73,7 +73,7 @@ test {
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
     systemProperties['bot.secret'] = bot_secret
-    systemProperties['endpoint'] = "localhost:8050/j2ee-e2e"
+    systemProperties['endpoint'] = "localhost:9050/j2ee-e2e"
     systemProperties['stop.port'] = "5555"
     systemProperties['pause.time'] = "${test_pause_time}"
     systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"

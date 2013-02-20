@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.client.useraction.usergroup;
+package com.googlecode.fspotcloud.client.useraction.group;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -8,6 +8,8 @@ import com.googlecode.fspotcloud.client.useraction.CategoryDef;
 import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+
+import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 
 @GwtCompatible
 public class UsergroupBinder extends AbstractBinder {
@@ -25,13 +27,23 @@ public class UsergroupBinder extends AbstractBinder {
 
     @Override
     public void build() {
-        configBuilder.register(category, actions.manageUsers, get('U'));
+        configBuilder.register(category, actions.manageUsers, get('M'));
         configBuilder.register(category, actions.newUsergroup, get('C'));
         configBuilder.register(category, actions.deleteUsergroup, get(KeyCodes.KEY_DELETE));
         configBuilder.register(category, actions.editUsergroup, get('E'));
-        configBuilder.register(category, actions.usergroupTableFocus, get(KeyCodes.KEY_ENTER));
-        KeyboardBinding binding = KeyboardBinding.bind(KeyStroke.alt('S')).withDefaultModes(Modes.EDIT_GROUP);
-        configBuilder.register(category, actions.saveUsergoup, binding);
+        configBuilder.register(category, actions.focusGroupTable, get(KeyCodes.KEY_ENTER));
+        KeyboardBinding binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.EDIT_GROUP);
+        configBuilder.register(category, actions.saveGroup, binding);
+
+        binding = KeyboardBinding.bind(alt('S'), alt('A'))
+                .withDefaultModes(Modes.MANAGE_USERS);
+        configBuilder.register(category, actions.addUser, binding);
+        binding = KeyboardBinding.bind(alt('R'), alt(KeyCodes.KEY_DELETE)).withDefaultModes(Modes.MANAGE_USERS);
+        configBuilder.register(category, actions.removeUser, binding);
+        binding = KeyboardBinding.bind(alt(KeyCodes.KEY_ENTER)).withDefaultModes(Modes.MANAGE_USERS);
+        configBuilder.register(category, actions.focusUserTable, binding);
+        binding = KeyboardBinding.bind(alt('Z')).withDefaultModes(Modes.MANAGE_USERS);
+        configBuilder.register(category, actions.focusEmailField, binding);
     }
 
 

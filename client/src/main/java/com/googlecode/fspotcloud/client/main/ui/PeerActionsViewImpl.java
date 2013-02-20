@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
+import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
 
 
 public class PeerActionsViewImpl extends Composite
@@ -59,7 +59,7 @@ public class PeerActionsViewImpl extends Composite
 
     @Inject
     public PeerActionsViewImpl(DashboardActions actions,
-                               ActionButtonFactory buttonFactory,
+                               ButtonFactory buttonFactory,
                                AdminActionButtonResources resources) {
         buttonFactory.setButtonResources(resources);
         updateButton = buttonFactory.getButton(actions.synchronize);

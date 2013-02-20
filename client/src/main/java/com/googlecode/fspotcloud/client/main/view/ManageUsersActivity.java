@@ -29,9 +29,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
-import com.googlecode.fspotcloud.client.place.ManageUserGroupsPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
+import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;
@@ -39,57 +40,65 @@ import com.googlecode.fspotcloud.shared.main.GrantUserAction;
 import com.googlecode.fspotcloud.shared.main.RevokeUserAction;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 
-public class ManageUsersPresenterImpl extends AbstractActivity implements ManageUsersView.ManageUsersPresenter {
-    private final Logger log = Logger.getLogger(ManageUsersPresenterImpl.class.getName());
+public class ManageUsersActivity extends AbstractActivity implements ManageUsersView.ManageUsersPresenter {
+    private final Logger log = Logger.getLogger(ManageUsersActivity.class.getName());
     private final ManageUsersView view;
+    private final StatusView statusView;
     private final DispatchAsync dispatch;
+    private final UsergroupActions usergroupActions;
     private Long userGroupId;
-    private final PlaceGoTo placeGoTo;
 
     @Inject
-    public ManageUsersPresenterImpl(ManageUsersView view,
-                                    DispatchAsync dispatch, PlaceGoTo placeGoTo) {
+    public ManageUsersActivity(
+            ManageUsersView view,
+            @ManageUsers StatusView statusView,
+            DispatchAsync dispatch,
+            UsergroupActions usergroupActions) {
         this.view = view;
+        this.statusView = statusView;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
+        this.usergroupActions = usergroupActions;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         this.view.setPresenter(this);
         panel.setWidget(view);
+        refreshData();
     }
 
-    @Override
-    public void newUser() {
-        String newEmail = view.getNewEmail();
+   private void addUser() {
+        final String newEmail = view.getNewEmail();
+        statusView.setStatusText("Requesting to add " + newEmail + " to the group");
         dispatch.execute(new GrantUserAction(newEmail, userGroupId),
                 new AsyncCallback<VoidResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
+                       statusView.setStatusText("Adding " + newEmail + " failed due to a server error");
                     }
 
                     @Override
                     public void onSuccess(VoidResult result) {
                         refreshData();
+                        view.clearEmail();
                     }
                 });
     }
 
-    @Override
-    public void delete() {
-        String selectedRow = view.getSelected();
+    private void removeUser() {
+        final String selectedRow = view.getSelected();
 
         if (selectedRow != null) {
+            statusView.setStatusText("Requesting the server to remove " + selectedRow);
             dispatch.execute(new RevokeUserAction(selectedRow, userGroupId),
                     new AsyncCallback<VoidResult>() {
                         @Override
                         public void onFailure(Throwable caught) {
-                            //To change body of implemented methods use File | Settings | File Templates.
+                            statusView.setStatusText(selectedRow + " could not be removed due to a server error");
                         }
 
                         @Override
@@ -97,34 +106,52 @@ public class ManageUsersPresenterImpl extends AbstractActivity implements Manage
                             refreshData();
                         }
                     });
+        } else {
+            statusView.setStatusText("Please make a selection before attempting to remove an user from the group");
         }
     }
 
     @Override
     public void setId(Long id) {
         userGroupId = id;
-
         refreshData();
     }
 
-    @Override
-    public void myUsergroupsButton() {
-        placeGoTo.goTo(new ManageUserGroupsPlace());
-    }
 
     private void refreshData() {
+        statusView.setStatusText("Retrieving users from the server");
         dispatch.execute(new GetUserGroupAction(userGroupId),
                 new AsyncCallback<GetUserGroupResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
+                        statusView.setStatusText("Data for group with id=" + userGroupId + " could not be loaded due to a server error");
                     }
 
                     @Override
                     public void onSuccess(GetUserGroupResult result) {
-                        view.setData(result.getInfo().getGrantedUsers());
-                        view.setUserGroupName(result.getInfo().getName());
+                        final Set<String> grantedUsers = result.getInfo().getGrantedUsers();
+                        int rowCount = grantedUsers.size();
+                        statusView.setStatusText("Loaded " + rowCount + " rows");
+                        view.setData(grantedUsers);
+                        view.setGroupName(result.getInfo().getName());
+                        if (rowCount == 0) {
+                            view.focusEmail();
+                        }
                     }
                 });
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        if (usergroupActions.addUser.getId().equals(actionId)) {
+           addUser();
+        }   else if(usergroupActions.removeUser.getId().equals(actionId)) {
+            removeUser();
+        } else if (usergroupActions.focusUserTable.getId().equals(actionId)) {
+            view.focusUsers();
+        } else if (usergroupActions.focusEmailField.getId().equals(actionId)) {
+            view.focusEmail();
+        }
+
     }
 }

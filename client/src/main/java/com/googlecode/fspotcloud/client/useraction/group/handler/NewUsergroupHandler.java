@@ -1,10 +1,10 @@
-package com.googlecode.fspotcloud.client.useraction.usergroup.handler;
+package com.googlecode.fspotcloud.client.useraction.group.handler;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.ManageGroups;
-import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
+import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;
@@ -15,12 +15,12 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 public class NewUsergroupHandler implements IActionHandler {
 
     private final DispatchAsync dispatch;
-    private final ManageUserGroupsView.ManageUserGroupsPresenter presenter;
+    private final ManageGroupsView.ManageGroupsPresenter presenter;
     private final StatusView statusView;
 
     @Inject
     public NewUsergroupHandler(DispatchAsync dispatch,
-                               ManageUserGroupsView.ManageUserGroupsPresenter presenter,
+                               ManageGroupsView.ManageGroupsPresenter presenter,
                                @ManageGroups StatusView statusView) {
         this.dispatch = dispatch;
         this.presenter = presenter;

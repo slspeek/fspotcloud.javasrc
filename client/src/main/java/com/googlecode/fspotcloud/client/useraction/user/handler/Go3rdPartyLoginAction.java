@@ -7,13 +7,13 @@ import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
-public class To3rdPartyLoginAction implements IActionHandler {
+public class Go3rdPartyLoginAction implements IActionHandler {
 
     private final IClientLoginManager clientLoginManager;
     private final PlaceWhere placeWhere;
 
     @Inject
-    public To3rdPartyLoginAction(IClientLoginManager clientLoginManager,
+    public Go3rdPartyLoginAction(IClientLoginManager clientLoginManager,
                                  PlaceWhere placeWhere
     ) {
         this.clientLoginManager = clientLoginManager;

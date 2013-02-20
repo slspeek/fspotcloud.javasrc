@@ -37,25 +37,22 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
-import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.gin.ManageGroups;
-import com.googlecode.fspotcloud.client.main.view.api.ManageUserGroupsView;
+import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
-import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
-import com.googlecode.fspotcloud.client.useraction.usergroup.UsergroupActions;
+import com.googlecode.fspotcloud.client.useraction.group.UsergroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ActionButtonFactory;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ManageUserGroupsViewImpl extends Composite implements ManageUserGroupsView {
-    private final Logger log = Logger.getLogger(ManageUserGroupsViewImpl.class.getName());
-    private static final ManageUserGroupsViewImplUiBinder uiBinder = GWT.create(ManageUserGroupsViewImplUiBinder.class);
-    private ManageUserGroupsPresenter presenter;
+public class ManageGroupsViewImpl extends Composite implements ManageGroupsView {
+    private final Logger log = Logger.getLogger(ManageGroupsViewImpl.class.getName());
+    private static final ManageGroupsViewImplUiBinder uiBinder = GWT.create(ManageGroupsViewImplUiBinder.class);
+    private ManageGroupsPresenter presenter;
     private final ListDataProvider<UserGroupInfo> dataProvider;
     private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
 
@@ -76,11 +73,11 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
 
 
     @Inject
-    public ManageUserGroupsViewImpl(@ManageGroups StatusView statusView,
-                                    UsergroupActions actions,
-                                    ApplicationActions applicationActions,
-                                    AdminButtonFactory buttonFactory
-                                    ) {
+    public ManageGroupsViewImpl(@ManageGroups StatusView statusView,
+                                UsergroupActions actions,
+                                ApplicationActions applicationActions,
+                                AdminButtonFactory buttonFactory
+    ) {
         this.statusView = (StatusViewImpl) statusView;
 
         newButton = buttonFactory.getButton(actions.newUsergroup);
@@ -134,7 +131,7 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
     }
 
     @Override
-    public void setPresenter(ManageUserGroupsPresenter presenter) {
+    public void setPresenter(ManageGroupsPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -162,6 +159,6 @@ public class ManageUserGroupsViewImpl extends Composite implements ManageUserGro
         statusView.setStatusText(status);
     }
 
-    interface ManageUserGroupsViewImplUiBinder extends UiBinder<Widget, ManageUserGroupsViewImpl> {
+    interface ManageGroupsViewImplUiBinder extends UiBinder<Widget, ManageGroupsViewImpl> {
     }
 }
