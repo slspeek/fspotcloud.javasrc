@@ -136,6 +136,8 @@ public class ManageUsersActivity extends AbstractActivity implements ManageUsers
                         view.setGroupName(result.getInfo().getName());
                         if (rowCount == 0) {
                             view.focusEmail();
+                        } else {
+                            view.setSelected(grantedUsers.iterator().next(), true);
                         }
                     }
                 });

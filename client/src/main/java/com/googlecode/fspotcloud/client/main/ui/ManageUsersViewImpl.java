@@ -25,8 +25,11 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.*;
@@ -37,13 +40,16 @@ import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
+import com.googlecode.fspotcloud.client.useraction.Modes;
 import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -53,6 +59,7 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     private ManageUsersView.ManageUsersPresenter presenter;
     private final ListDataProvider<String> dataProvider;
     private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
+    private final IModeController modeController;
     @UiField(provided = true)
     CellTable<String> table;
     @UiField(provided = true)
@@ -76,11 +83,9 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
                                GroupActions groupActions,
                                ApplicationActions applicationActions,
                                @ManageUsers StatusView statusView,
-                               CellTableResources resources
-
-
-
-    ) {
+                               CellTableResources resources,
+                               IModeController modeController) {
+        this.modeController = modeController;
         this.table = new CellTable<String>(15, resources);
         this.status = (StatusViewImpl) statusView;
         myUsergroupsButton = factory.getButton(dashboardActions.manageGroups);
@@ -92,7 +97,6 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
         emailTextBox.ensureDebugId("email");
         removeButton.ensureDebugId("delete-button");
 
-        // Create name column.
         TextColumn<String> nameColumn = new TextColumn<String>() {
             @Override
             public String getValue(String info) {
@@ -103,10 +107,8 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
 
         table.addColumn(nameColumn, "Email");
         table.setWidth("100%");
-        // Create a data provider.
         dataProvider = new ListDataProvider<String>();
 
-        // Connect the table to the data provider.
         dataProvider.addDataDisplay(table);
         table.setSelectionModel(selectionModel);
         table.setPageSize(25);
@@ -126,6 +128,18 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
         for (String contact : data) {
             list.add(contact);
         }
+    }
+
+    @UiHandler("emailTextBox")
+    public void onFocus(FocusEvent e) {
+        log.log(Level.FINEST, "email field focused");
+        modeController.setMode(Modes.MANAGE_USERS);
+    }
+
+    @UiHandler("emailTextBox")
+    public void onBlur(BlurEvent e) {
+        log.log(Level.FINEST, "email field focus was lost");
+        modeController.setMode(Modes.MANAGE_USERS_NO_INPUT);
     }
 
     @Override
@@ -156,6 +170,11 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     @Override
     public void focusUsers() {
         table.setFocus(true);
+    }
+
+    @Override
+    public void setSelected(String item, boolean state) {
+        selectionModel.setSelected(item, state);
     }
 
     interface ManageUsersViewImplUiBinder extends UiBinder<Widget, ManageUsersViewImpl> {
