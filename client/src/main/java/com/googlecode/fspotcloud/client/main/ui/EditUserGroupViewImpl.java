@@ -106,6 +106,11 @@ public class EditUserGroupViewImpl extends Composite
     }
 
     @Override
+    public void focusNameField() {
+        nameTextBox.setFocus(true);
+    }
+
+    @Override
     public void setStatusText(String status) {
         statusLabel.setText(status);
     }

@@ -40,6 +40,8 @@ public interface ManageGroupsView extends IsWidget, StatusView {
 
     void focusTable();
 
+    void setSelected(UserGroupInfo userGroupInfo);
+
     interface ManageGroupsPresenter extends Activity {
         UserGroupInfo getSelected();
 

@@ -30,6 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
@@ -43,29 +44,38 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class EditUserGroupPresenterImpl extends AbstractActivity implements EditUserGroupView.EditUserGroupPresenter {
-    private final Logger log = Logger.getLogger(EditUserGroupPresenterImpl.class.getName());
+public class EditUserGroupActivity extends AbstractActivity implements EditUserGroupView.EditUserGroupPresenter {
+    private final Logger log = Logger.getLogger(EditUserGroupActivity.class.getName());
     private final EditUserGroupView view;
     private final DispatchAsync dispatch;
     private UserGroupInfo userGroupInfo;
     private final EventBus eventBus;
     private final DashboardActions dashboardActions;
+    private final IScheduler scheduler;
 
     @Inject
-    public EditUserGroupPresenterImpl(EditUserGroupView view,
-                                      DispatchAsync dispatch,
-                                      DashboardActions dashboardActions,
-                                      EventBus eventBus) {
+    public EditUserGroupActivity(EditUserGroupView view,
+                                 DispatchAsync dispatch,
+                                 DashboardActions dashboardActions,
+                                 EventBus eventBus,
+                                 IScheduler scheduler) {
         this.view = view;
         this.dispatch = dispatch;
         this.eventBus = eventBus;
         this.dashboardActions = dashboardActions;
+        this.scheduler = scheduler;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         this.view.setPresenter(this);
         panel.setWidget(view);
+        scheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                view.focusNameField();
+            }
+        });
     }
 
     @Override

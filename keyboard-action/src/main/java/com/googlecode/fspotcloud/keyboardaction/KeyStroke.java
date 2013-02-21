@@ -50,6 +50,9 @@ public class KeyStroke {
     private final Modifiers modifiers;
     private final int keyCode;
     public static final KeyStroke X = new KeyStroke('X');
+    public static final KeyStroke A = new KeyStroke('A');
+    public static final KeyStroke ENTER = new KeyStroke(KeyCodes.KEY_ENTER);
+    public static final KeyStroke M = new KeyStroke('M');
 
     public static KeyStroke shift(int keyCode) {
         return new KeyStroke(Modifiers.SHIFT, keyCode);

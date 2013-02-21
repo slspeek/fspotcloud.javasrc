@@ -94,10 +94,10 @@ public class AppModule extends AbstractGinModule {
                 .to(UserAccountPresenterImpl.class);
         bind(ManageGroupsView.class).to(ManageGroupsViewImpl.class).in(Singleton.class);
         bind(ManageGroupsView.ManageGroupsPresenter.class)
-                .to(ManageGroupsPresenterImpl.class).in(Singleton.class);
+                .to(ManageGroupsActivity.class).in(Singleton.class);
         bind(EditUserGroupView.class).to(EditUserGroupViewImpl.class).in(Singleton.class);
         bind(EditUserGroupView.EditUserGroupPresenter.class)
-                .to(EditUserGroupPresenterImpl.class).in(Singleton.class);
+                .to(EditUserGroupActivity.class).in(Singleton.class);
         bind(ManageUsersView.class).to(ManageUsersViewImpl.class).in(Singleton.class);
         bind(ManageUsersView.ManageUsersPresenter.class)
                 .to(ManageUsersActivity.class).in(Singleton.class);

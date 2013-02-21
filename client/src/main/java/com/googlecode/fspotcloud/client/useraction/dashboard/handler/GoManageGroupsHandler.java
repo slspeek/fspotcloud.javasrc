@@ -5,7 +5,7 @@ import com.googlecode.fspotcloud.client.place.ManageUserGroupsPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
-public class ManageUserGroupsHandler implements IActionHandler {
+public class GoManageGroupsHandler implements IActionHandler {
 
     @Inject
     private PlaceGoTo placeGoTo;
