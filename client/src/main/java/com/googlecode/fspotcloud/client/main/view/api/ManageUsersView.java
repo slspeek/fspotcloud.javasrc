@@ -48,6 +48,8 @@ public interface ManageUsersView extends IsWidget {
 
     void focusUsers();
 
+    void setSelected(String item, boolean state);
+
     interface ManageUsersPresenter extends Activity, IActionHandler {
         void setId(Long id);
     }

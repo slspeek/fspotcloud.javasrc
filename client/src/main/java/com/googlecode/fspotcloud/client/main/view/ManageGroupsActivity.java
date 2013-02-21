@@ -30,26 +30,32 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsAction;
 import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsResult;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ManageGroupsPresenterImpl extends AbstractActivity implements ManageGroupsView.ManageGroupsPresenter {
-    private final Logger log = Logger.getLogger(ManageGroupsPresenterImpl.class.getName());
+public class ManageGroupsActivity extends AbstractActivity implements ManageGroupsView.ManageGroupsPresenter {
+    private final Logger log = Logger.getLogger(ManageGroupsActivity.class.getName());
     private final ManageGroupsView view;
     private final DispatchAsync dispatch;
+    private final IScheduler scheduler;
+    private List<UserGroupInfo> data;
 
     @Inject
-    public ManageGroupsPresenterImpl(ManageGroupsView view,
-                                     DispatchAsync dispatch
-    ) {
+    public ManageGroupsActivity(ManageGroupsView view,
+                                DispatchAsync dispatch,
+                                IScheduler scheduler) {
         this.view = view;
         this.dispatch = dispatch;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -57,6 +63,12 @@ public class ManageGroupsPresenterImpl extends AbstractActivity implements Manag
         this.view.setPresenter(this);
         panel.setWidget(view);
         refreshData();
+        scheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                view.focusTable();
+            }
+        });
     }
 
     @Override
@@ -71,9 +83,11 @@ public class ManageGroupsPresenterImpl extends AbstractActivity implements Manag
 
                     @Override
                     public void onSuccess(GetMyUserGroupsResult result) {
-                        if (result.getData() != null) {
+                        data = result.getData();
+                        if (data != null) {
                             view.setData(result.getData());
                             view.setStatusText("Reloaded the table from server data");
+                            selectFirstGroup();
                         }
                     }
                 });
@@ -82,5 +96,13 @@ public class ManageGroupsPresenterImpl extends AbstractActivity implements Manag
     @Override
     public UserGroupInfo getSelected() {
         return view.getSelected();
+    }
+
+    private void selectFirstGroup() {
+        UserGroupInfo info = getSelected();
+        if (data.size() > 0) {
+            view.setSelected(data.get(0));
+            log.log(Level.FINE, "set selected row 0");
+        }
     }
 }

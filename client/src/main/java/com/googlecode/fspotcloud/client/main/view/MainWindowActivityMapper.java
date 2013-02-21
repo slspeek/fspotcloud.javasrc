@@ -136,7 +136,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         } else if (place instanceof ManageUsersPlace) {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
-            modeController.setMode(Modes.MANAGE_USERS);
+            modeController.setMode(Modes.MANAGE_USERS_NO_INPUT);
         } else if (place instanceof ManageUserGroupsPlace) {
             activity = myUserGroupsPresenter;
             modeController.setMode(Modes.MANAGE_GROUPS);

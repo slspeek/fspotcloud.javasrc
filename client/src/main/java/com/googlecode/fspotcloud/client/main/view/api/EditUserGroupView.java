@@ -43,6 +43,8 @@ public interface EditUserGroupView extends IsWidget, StatusView {
 
     boolean getIsPublic();
 
+    void focusNameField();
+
 
     interface EditUserGroupPresenter extends Activity {
         void save();

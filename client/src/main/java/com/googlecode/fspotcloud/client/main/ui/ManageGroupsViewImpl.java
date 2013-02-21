@@ -157,6 +157,11 @@ public class ManageGroupsViewImpl extends Composite implements ManageGroupsView 
     }
 
     @Override
+    public void setSelected(UserGroupInfo userGroupInfo) {
+        selectionModel.setSelected(userGroupInfo, true);
+    }
+
+    @Override
     public void setStatusText(String status) {
         statusView.setStatusText(status);
     }
