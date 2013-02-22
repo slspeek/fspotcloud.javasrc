@@ -35,6 +35,7 @@ public class MainBuilder implements UIRegistrationBuilder {
     final KeyStroke KEY_G = new KeyStroke('G');
     final KeyStroke KEY_3 = new KeyStroke('3');
     final KeyStroke KEY_7 = new KeyStroke('7');
+    final KeyStroke KEY_8 = new KeyStroke('8');
     final KeyStroke ALT_M = new KeyStroke(Modifiers.ALT, 'M');
     final KeyStroke CTRL_M = new KeyStroke(Modifiers.CTRL, 'M');
     final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
@@ -99,10 +100,12 @@ public class MainBuilder implements UIRegistrationBuilder {
             }
         }, THREE_BINDING);
         ActionUIDef showHelpDef = new ActionUIDef(SINGLE_COLUMN_HELP, "Help", "Show a help popup.");
+        ActionUIDef shortcutsDef = new ActionUIDef("shortcuts", "Shortcuts", "Show a shortcuts popup.");
         ActionUIDef show2cHelpDef = new ActionUIDef(TWO_COLUMN_HELP, "Help 2c", "Show a help 2-column popup.");
         ActionUIDef hideHelpDef = new ActionUIDef("hide-help", "Hide help", "Hide the help popup.");
         KeyboardBinding showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(MODES);
         KeyboardBinding show2cHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 'H')).withDefaultModes(MODES);
+        KeyboardBinding scBinding = KeyboardBinding.bind(new KeyStroke('9')).withDefaultModes(MODES);
         KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(MODES);
 
         configBuilder.addBinding(helpCategory, hideHelpDef, helpActionsFactory.getCloseHelp(), hideHelpBinding);
@@ -114,6 +117,7 @@ public class MainBuilder implements UIRegistrationBuilder {
         configBuilder.addBinding(helpCategory, showHelpDef, helpActionsFactory.getHelpAction(helpConfig), showHelpBinding);
         configBuilder.addBinding(helpCategory, show2cHelpDef, helpActionsFactory.getHelpAction(help2cConfig), show2cHelpBinding);
         configBuilder.addBinding(helpCategory, stopDemoDef, demoBuilderFactory.getStopDemoHandler(), Q_BINDING);
+        configBuilder.addBinding(helpCategory, shortcutsDef, helpActionsFactory.getShortcutsAction(), scBinding);
 
         DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);
         demoBuilder.addStep(OK, 3000);
