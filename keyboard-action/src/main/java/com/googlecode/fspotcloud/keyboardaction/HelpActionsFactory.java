@@ -1,7 +1,10 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
+
+import java.util.Set;
 
 public class HelpActionsFactory {
 
@@ -12,9 +15,12 @@ public class HelpActionsFactory {
     private final ConfigBuilder configBuilder;
     private final TwoColumnHelpPopup twoColumnHelpPopup;
     private final SingleColumnHelpPopup singleColumnHelpPopup;
+    private final ShortCutsPopup shortCutsPopup;
 
     private final HelpContentGenerator helpContentGenerator;
     private final KeyboardActionResources keyboardActionResources;
+    private final IModeController modeController;
+    private final KeyboardPreferences keyboardPreferences;
 
     @Inject
     private HelpActionsFactory(ModesProvider allModes,
@@ -22,9 +28,15 @@ public class HelpActionsFactory {
                                HelpContentGenerator helpContentGenerator,
                                TwoColumnHelpPopup twoColumnHelpPopup,
                                SingleColumnHelpPopup singleColumnHelpPopup,
-                               KeyboardActionResources keyboardActionResources) {
+                               ShortCutsPopup shortCutsPopup,
+                               KeyboardActionResources keyboardActionResources,
+                               IModeController modeController,
+                               KeyboardPreferences keyboardPreferences) {
         this.singleColumnHelpPopup = singleColumnHelpPopup;
+        this.shortCutsPopup = shortCutsPopup;
         this.keyboardActionResources = keyboardActionResources;
+        this.modeController = modeController;
+        this.keyboardPreferences = keyboardPreferences;
         this.allModes = allModes.getModes();
         this.configBuilder = configBuilder;
         this.helpContentGenerator = helpContentGenerator;
@@ -61,12 +73,34 @@ public class HelpActionsFactory {
         return result;
     }
 
+    public IActionHandler getShortcutsAction() {
+        IActionHandler result = new IActionHandler() {
+            @Override
+            public void performAction(String actionId) {
+                String mode = modeController.getMode();
+                Set<String> actions = keyboardPreferences.allRelevantActions(mode);
+
+                SafeHtml content = helpContentGenerator.getShortcuts(actions, mode);
+                shortCutsPopup.setSafeHtml(content);
+                shortCutsPopup.show();
+                int width = shortCutsPopup.getOffsetWidth();
+                int height = shortCutsPopup.getOffsetHeight();
+                int wWidth= Window.getClientWidth();
+                int wHeight = Window.getClientHeight();
+                shortCutsPopup.setPopupPosition(wWidth-width, wHeight - height);
+
+            }
+        };
+        return result;
+    }
+
     public IActionHandler getCloseHelp() {
         return new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 twoColumnHelpPopup.hide();
                 singleColumnHelpPopup.hide();
+                shortCutsPopup.hide();
             }
         };
     }
