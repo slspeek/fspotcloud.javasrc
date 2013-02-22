@@ -3,12 +3,14 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.newHashSet;
 
 @GwtCompatible
 public class KeyboardPreferences {
@@ -58,5 +60,15 @@ public class KeyboardPreferences {
     public KeyStroke[] getDefaultKeysForAction(String id) {
         return bindingsMap.get(id).getDefaultKeys();
 
+    }
+
+    Set<String> allRelevantActions(String mode) {
+        HashSet result = newHashSet();
+        for (String actionId: allActions()) {
+            if (isRelevant(actionId, mode)) {
+                result.add(actionId);
+            }
+        }
+        return result;
     }
 }

@@ -32,23 +32,30 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.inject.Inject;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 
 public class HelpContentGenerator {
+    private final Logger log = Logger.getLogger(HelpContentGenerator.class.getName());
     private final KeyboardActionResources.Style style;
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
+    private final ActionUIRegistry actionUIRegistry;
 
     @Inject
-    private HelpContentGenerator(KeyboardActionResources res, KeyboardPreferences keyboardPreferences) {
+    private HelpContentGenerator(KeyboardActionResources res,
+                                 KeyboardPreferences keyboardPreferences,
+                                 ActionUIRegistry actionUIRegistry) {
         super();
         this.keyboardPreferences = keyboardPreferences;
+        this.actionUIRegistry = actionUIRegistry;
         this.style = res.style();
     }
+
 
     public interface MyTemplates extends SafeHtmlTemplates {
 
@@ -173,5 +180,50 @@ public class HelpContentGenerator {
         }
         return TEMPLATES.table(safeHtmlBuilder.toSafeHtml());
     }
+
+    public SafeHtml getShortcuts(Set<String> actions, String mode) {
+        log.log(Level.FINEST, "mode: " + mode + " actionIds: " + actions);
+        SafeHtmlBuilder builder = new SafeHtmlBuilder();
+        List<ActionUIDef> actionUIDefs = newArrayList();
+
+
+        for (String actionId: actions)  {
+            actionUIDefs.add(actionUIRegistry.getAction(actionId));
+        }
+        Collections.sort(actionUIDefs, new Comparator<ActionUIDef>() {
+            @Override
+            public int compare(ActionUIDef o1, ActionUIDef o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+
+        for (ActionUIDef actionUIDef: actionUIDefs) {
+            KeyStroke[] keys = keyboardPreferences.getKeysForAction(mode, actionUIDef.getId());
+            builder.append(getShortcut(keys, actionUIDef));
+        }
+        return TEMPLATES.table(builder.toSafeHtml());
+    }
+
+    private SafeHtml getShortcut(KeyStroke[] keys, ActionUIDef actionUIDef) {
+        SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
+        List<String> list = newArrayList();
+        for (KeyStroke k : keys) {
+            list.add(k.toString());
+        }
+        Iterator<String> it = list.iterator();
+        SafeHtmlBuilder keysBuilder = new SafeHtmlBuilder();
+        while (it.hasNext()) {
+            String aKey = it.next();
+            keysBuilder.append(getKey(aKey));
+            if (it.hasNext()) {
+                keysBuilder.appendEscaped(" or ");
+            }
+        }
+        safeHtmlBuilder.append(TEMPLATES.td(keysBuilder.toSafeHtml(), style.helpKeys()));
+        safeHtmlBuilder.append(TEMPLATES.td(" : ", style.helpSeparator()));
+        safeHtmlBuilder.append(getDescription(actionUIDef.getName()));
+        return TEMPLATES.tr(safeHtmlBuilder.toSafeHtml(), style.helpRow());
+    }
+
 }
 
