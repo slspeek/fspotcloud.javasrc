@@ -31,6 +31,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -41,13 +42,13 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class HelpContentGenerator {
     private final Logger log = Logger.getLogger(HelpContentGenerator.class.getName());
-    private final KeyboardActionResources.Style style;
+    private final HelpResources.Style style;
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
     private final ActionUIRegistry actionUIRegistry;
 
     @Inject
-    private HelpContentGenerator(KeyboardActionResources res,
+    private HelpContentGenerator(@Assisted HelpResources res,
                                  KeyboardPreferences keyboardPreferences,
                                  ActionUIRegistry actionUIRegistry) {
         super();

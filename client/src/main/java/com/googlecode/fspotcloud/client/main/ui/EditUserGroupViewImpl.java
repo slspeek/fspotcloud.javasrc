@@ -31,8 +31,8 @@ import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
-import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
-import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;

@@ -1,0 +1,138 @@
+@def ligherColor #080808;
+@def thirdColor #000000;
+@def borderColor #303030;
+@def hoverTransform translate(0,-7px) scale(1);
+@def hoverMenuTransform scale(1);
+@def focusTransform scale(1);
+@def upTransform scale(0.8);
+@def helpIconTransform scale(1);
+@def hoverTransition all 0.2s ease-in-out;
+
+
+.demoPopup
+{
+   -moz-border-radius:15px;
+   border-radius:15px;
+   background-color:rgba(0,0,0,0.3);
+   color:#FFF;
+   padding:5px;
+}
+
+.helpTitleRow
+{
+
+}
+
+.helpClose
+{
+    float: right;
+}
+
+.helpOptionalContent
+{
+    text-align: center;
+}
+
+.helpPopup
+{
+  -moz-border-radius:15px;
+  border-radius:15px;
+  background-color:rgba(0,0,0,0.8);
+  color:#FFF;
+  padding:10px;
+}
+
+.helpBody
+{
+}
+
+.helpRightBody
+{
+    float: right;
+    width: 49%;
+}
+.helpLeftBody
+{
+    width: 49%;
+    float: left;
+}
+
+.helpBigBody
+{
+}
+
+
+.helpTitle
+{
+  font-size:large;
+  text-align:center;
+  font-style:bold;
+  display: inline;
+
+}
+
+.helpActionIcon
+{
+  display: inline;
+  height: 30px;
+
+}
+
+.helpName
+{
+
+  text-align:left;
+  font-weight:700;
+  -webkit-column-break-after:avoid;
+}
+
+.helpCategory
+{
+  -webkit-column-break-after:auto;
+}
+
+.helpCategoryTitle
+{
+  font-size:large;
+  -webkit-column-break-after:avoid;
+}
+
+.helpSeparator
+{
+  font-weight:700;
+  -webkit-column-break-after:avoid;
+}
+
+.helpKey
+{
+  color:#FF0;
+  font-weight:700;
+  -webkit-column-break-after:avoid;
+}
+
+.helpKeys
+{
+
+}
+
+.helpRow
+{
+  -webkit-column-break-after:avoid;
+}
+
+.helpDescription
+{
+  text-align:left;
+}
+
+.shortcutsPopup
+{
+   background-color:rgba(0,0,0,0.8);
+   color:#FFF;
+   padding: 2px;
+}
+
+.shortcutsBody
+{
+    font-size: 90%;
+}

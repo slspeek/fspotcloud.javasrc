@@ -150,12 +150,12 @@ public class KeyStroke {
 
                 break;
 
-            case 108:
+            case KEY_NUM_PAD_MINUS:
                 result = "Numpad -";
 
                 break;
 
-            case 107:
+            case KEY_NUM_PAD_PLUS:
                 result = "Numpad +";
 
                 break;

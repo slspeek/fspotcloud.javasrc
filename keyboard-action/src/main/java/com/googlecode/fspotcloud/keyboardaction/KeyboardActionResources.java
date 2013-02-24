@@ -39,44 +39,7 @@ public interface KeyboardActionResources extends ClientBundle {
 
     public interface Style extends CssResource {
 
-        String demoPopup();
-
-        String helpTitleRow();
-
-        String helpKey();
-
-        String helpBody();
-
-        String helpLeftBody();
-
-        String helpRightBody();
-
-        String helpBigBody();
-
-        String helpClose();
-
-        String helpPopup();
-
-        String helpOptionalContent();
-
-        String helpSeparator();
-
-        String helpTitle();
-
         String buttonPanelBlock();
 
-        String helpRow();
-
-        String helpDescription();
-
-        String helpCategory();
-
-        String helpCategoryTitle();
-
-        String helpName();
-
-        String helpKeys();
-
-        String helpActionIcon();
     }
 }

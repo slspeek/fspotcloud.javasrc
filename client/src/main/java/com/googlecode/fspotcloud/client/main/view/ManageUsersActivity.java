@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
-import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;

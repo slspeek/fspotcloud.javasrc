@@ -33,8 +33,8 @@ import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
-import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
-import com.googlecode.fspotcloud.client.useraction.user.UserActions;
+import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
 
