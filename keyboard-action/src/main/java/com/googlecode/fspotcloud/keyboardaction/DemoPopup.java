@@ -50,16 +50,16 @@ public class DemoPopup extends PopupPanel {
     DivElement helpBodyDiv;
     @UiField
     DivElement titleDiv;
-    private final KeyboardActionResources keyboardActionResources;
+    private final HelpResources helpResources;
 
     private Demo demo;
 
     @Inject
-    private DemoPopup(KeyboardActionResources keyboardActionResources) {
+    private DemoPopup(HelpResources helpResources) {
         super(true);
-        this.keyboardActionResources = keyboardActionResources;
+        this.helpResources = helpResources;
         setWidget(uiBinder.createAndBindUi(this));
-        addStyleName(keyboardActionResources.style().demoPopup());
+        addStyleName(helpResources.style().demoPopup());
     }
 
     public void setDemo(Demo demo) {

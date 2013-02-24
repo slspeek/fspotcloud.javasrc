@@ -51,15 +51,15 @@ public class TwoColumnHelpPopup extends PopupPanel {
     SpanElement helpBodyRight;
     @UiField
     Label titleLabel;
-    private final KeyboardActionResources keyboardActionResources;
+    private final HelpResources helpResources;
     private HelpConfig helpConfig;
 
     @Inject
-    private TwoColumnHelpPopup(KeyboardActionResources keyboardActionResources) {
+    private TwoColumnHelpPopup(HelpResources helpResources) {
         super(true);
-        this.keyboardActionResources = keyboardActionResources;
+        this.helpResources = helpResources;
         setWidget(uiBinder.createAndBindUi(this));
-        addStyleName(keyboardActionResources.style().helpPopup());
+        addStyleName(helpResources.style().helpPopup());
     }
 
     public void setHelpConfig(HelpConfig helpConfig) {

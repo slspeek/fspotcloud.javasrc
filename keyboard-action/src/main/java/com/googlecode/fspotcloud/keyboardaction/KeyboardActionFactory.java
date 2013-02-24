@@ -18,6 +18,7 @@ public class KeyboardActionFactory {
     private final HelpActionsFactory helpActionsFactory;
     private final ButtonFactory buttonFactory;
     private final KeyboardActionResources keyboardActionResources;
+    private final ResourcesSetup resourcesSetup;
 
     private IModeController modeController;
 
@@ -33,14 +34,12 @@ public class KeyboardActionFactory {
                                  List<ActionCategory> actionCategoryList,
                                  ButtonFactory buttonFactory,
                                  KeyboardActionResources keyboardActionResources,
-                                 ActionMenuResources menuResources,
-                                 ActionButtonResources buttonResources) {
+                                 ResourcesSetup resourcesSetup) {
         this.keyboardActionResources = keyboardActionResources;
+        this.resourcesSetup = resourcesSetup;
+        resourcesSetup.ensureInjected();
         builder.build();
         this.buttonFactory = buttonFactory;
-        this.keyboardActionResources.style().ensureInjected();
-        menuResources.style().ensureInjected();
-        buttonResources.style().ensureInjected();
         this.actionHandlerRegistry = actionHandlerRegistry;
         this.actionManager = actionManager;
         this.helpActionsFactory = helpActionsFactory;

@@ -30,7 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
-import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.*;
 import net.customware.gwt.dispatch.client.DispatchAsync;

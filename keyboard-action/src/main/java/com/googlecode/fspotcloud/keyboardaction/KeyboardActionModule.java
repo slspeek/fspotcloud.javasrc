@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
@@ -24,6 +25,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(DemoBuilderFactory.class).in(Singleton.class);
         bind(TwoColumnHelpPopup.class);
         bind(HelpActionsFactory.class).in(Singleton.class);
+        install(new GinFactoryModuleBuilder().build(HelpContentGeneratorFactory.class));
     }
 
     @Provides

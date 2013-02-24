@@ -29,7 +29,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
-import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataAction;
 import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataResult;

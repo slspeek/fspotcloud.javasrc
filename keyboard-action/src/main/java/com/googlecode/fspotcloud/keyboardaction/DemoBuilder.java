@@ -12,18 +12,27 @@ public class DemoBuilder {
     private Demo demo;
     private final ActionUIRegistry actionUIRegistry;
     private final EventBus eventBus;
-    private final HelpContentGenerator helpContentGenerator;
     private final KeyboardPreferences keyboardPreferences;
+    private final HelpContentGeneratorFactory helpContentGeneratorFactory;
+    private HelpContentGenerator helpContentGenerator;
+    private HelpResources helpResources;
 
     @Inject
     private DemoBuilder(ActionUIRegistry actionUIRegistry,
                         EventBus eventBus,
-                        HelpContentGenerator helpContentGenerator,
-                        KeyboardPreferences keyboardPreferences) {
+                        KeyboardPreferences keyboardPreferences,
+                        HelpContentGeneratorFactory helpContentGeneratorFactory,
+                        HelpResources helpResources) {
+        this.helpContentGeneratorFactory = helpContentGeneratorFactory;
+        setHelpResources(helpResources);
         this.actionUIRegistry = actionUIRegistry;
         this.eventBus = eventBus;
-        this.helpContentGenerator = helpContentGenerator;
         this.keyboardPreferences = keyboardPreferences;
+    }
+
+    public void setHelpResources(HelpResources helpResources) {
+        this.helpResources = helpResources;
+        helpContentGenerator = helpContentGeneratorFactory.get(helpResources);
     }
 
     public Demo getDemo() {

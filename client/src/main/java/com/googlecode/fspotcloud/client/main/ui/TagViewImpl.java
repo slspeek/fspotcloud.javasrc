@@ -44,7 +44,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.useraction.MainToolbar;
+import com.googlecode.fspotcloud.client.enduseraction.MainToolbar;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 import java.util.logging.Level;
