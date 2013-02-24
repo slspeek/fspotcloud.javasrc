@@ -38,9 +38,9 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
-import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
-import com.googlecode.fspotcloud.client.useraction.dashboard.DashboardActions;
-import com.googlecode.fspotcloud.client.useraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 

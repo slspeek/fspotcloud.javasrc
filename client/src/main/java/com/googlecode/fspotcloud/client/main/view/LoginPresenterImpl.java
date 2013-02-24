@@ -35,7 +35,7 @@ import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.UserAccountPlace;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
-import com.googlecode.fspotcloud.client.useraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;

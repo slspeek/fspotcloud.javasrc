@@ -30,8 +30,7 @@ import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEventHandlerImpl;
-import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
-import com.googlecode.fspotcloud.client.useraction.UserActionLateBinder;
+import com.googlecode.fspotcloud.client.enduseraction.UserActionLateBinder;
 
 import java.util.logging.Logger;
 

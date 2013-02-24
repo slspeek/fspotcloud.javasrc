@@ -51,17 +51,17 @@ public class SingleColumnHelpPopup extends PopupPanel {
     DivElement optionalContentDiv;
     @UiField
     Label titleLabel;
-    private final KeyboardActionResources keyboardActionResources;
+    private final HelpResources helpResources;
     private HelpConfig helpConfig;
 
     @Inject
-    private SingleColumnHelpPopup(KeyboardActionResources keyboardActionResources) {
+    private SingleColumnHelpPopup(HelpResources helpResources) {
         super(true);
-        this.keyboardActionResources = keyboardActionResources;
+        this.helpResources = helpResources;
 
         setWidget(uiBinder.createAndBindUi(this));
 
-        addStyleName(keyboardActionResources.style().helpPopup());
+        addStyleName(helpResources.style().helpPopup());
     }
 
     public void setHelpConfig(HelpConfig helpConfig) {

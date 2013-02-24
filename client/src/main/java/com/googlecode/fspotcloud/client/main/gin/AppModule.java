@@ -47,7 +47,7 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
 import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.client.useraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.enduseraction.UserActionFactory;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
 public class AppModule extends AbstractGinModule {

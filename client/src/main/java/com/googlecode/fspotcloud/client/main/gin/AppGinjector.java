@@ -28,7 +28,7 @@ import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
-import com.googlecode.fspotcloud.client.useraction.UserActionModule;
+import com.googlecode.fspotcloud.client.enduseraction.UserActionModule;
 import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
 
 
