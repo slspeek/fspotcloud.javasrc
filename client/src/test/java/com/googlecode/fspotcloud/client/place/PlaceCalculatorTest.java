@@ -32,9 +32,11 @@ public class PlaceCalculatorTest extends TestCase {
     public static final String TAG_ID1 = "1";
     public static final String PHOTO_ID = "10";
     final PlaceCalculator placeCalculator = new PlaceCalculator();
+    final boolean autoHide =false;
+
 
     public void testUnslideshow() {
-        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1);
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1, autoHide);
         BasePlace newPlace = (BasePlace) placeCalculator.unslideshow(tagViewingPlace);
         assertEquals(newPlace, tagViewingPlace);
 
@@ -45,7 +47,7 @@ public class PlaceCalculatorTest extends TestCase {
     }
 
     public void testToggleRasterView() {
-        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1);
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1, autoHide);
         BasePlace newPlace = (BasePlace) placeCalculator.toggleRasterView(tagViewingPlace);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
@@ -54,7 +56,7 @@ public class PlaceCalculatorTest extends TestCase {
     }
 
     public void testZoomViewOut() {
-        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 1, 1);
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 1, 1, autoHide);
         BasePlace newPlace = (BasePlace) placeCalculator.toggleZoomView(tagViewingPlace,
                 TAG_ID1, PHOTO_ID);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
@@ -66,7 +68,7 @@ public class PlaceCalculatorTest extends TestCase {
     }
 
     public void testGetFullscreen() {
-        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 13, 41);
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 13, 41, autoHide);
         BasePlace newPlace = placeCalculator.getFullscreen(tagViewingPlace);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
@@ -75,7 +77,7 @@ public class PlaceCalculatorTest extends TestCase {
     }
 
     public void testZoomIn() {
-        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 3, 3);
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 3, 3, autoHide);
         BasePlace newPlace = placeCalculator.zoom(tagViewingPlace, Zoom.IN);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
@@ -97,7 +99,7 @@ public class PlaceCalculatorTest extends TestCase {
     }
 
     public void testZoomOut() {
-        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 2);
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 2, autoHide);
         BasePlace newPlace = placeCalculator.zoom(tagViewingPlace, Zoom.OUT);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());

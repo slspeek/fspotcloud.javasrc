@@ -19,15 +19,14 @@ public class DashboardActions {
     public DashboardActions() {
         reloadTree = new ActionUIDef("reload-admin-tree",
                 "Reload tree",
-                "Reload tree data from the server",
-                null);
-        toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen", null);
-        manageGroups = new ActionUIDef("manage-usergroups", "Manage groups", "Manage groups", null);
-        synchronize = new ActionUIDef("synchronize", "Synchronize", "Synchronize with the peer", null);
-        deleteCommands = new ActionUIDef("clear-queue", "Clear queue", "Delete all pending commands", null);
-        deleteAll = new ActionUIDef("remove-all", "Remove all", "Remove all imported data", null);
-        importTag = new ActionUIDef("import-tag", "Import tag", "Import this tag", null);
-        manageAccess = new ActionUIDef("manage-access", "Manage access", "Grant or revoke access ", null);
-        focusTree = new ActionUIDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree", null);
+                "Reload tree data from the server");
+        toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen");
+        manageGroups = new ActionUIDef("manage-usergroups", "Manage groups", "Manage groups");
+        synchronize = new ActionUIDef("synchronize", "Synchronize", "Synchronize with the peer");
+        deleteCommands = new ActionUIDef("clear-queue", "Clear queue", "Delete all pending commands");
+        deleteAll = new ActionUIDef("remove-all", "Remove all", "Remove all imported data");
+        importTag = new ActionUIDef("import-tag", "Import tag", "Import this tag");
+        manageAccess = new ActionUIDef("manage-access", "Manage access", "Grant or revoke access ");
+        focusTree = new ActionUIDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree");
     }
 }

@@ -53,7 +53,7 @@ public class IntersectionDeleteITest {
         dashboardPage.toggleImportForTagId("4"); //import pc
         dashboardPage.toggleImportForTagId("2"); //remove computers
         sleepShort(3);
-        selenium.open("/#BasePlace:4:11:1:1");
+        selenium.open("/#BasePlace:4:11:1:1:false");
         selenium.waitForPageToLoad("30000");
         sleepShort(4);
 

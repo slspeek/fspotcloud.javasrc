@@ -25,25 +25,18 @@
 package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.fspotcloud.client.main.ui.ImageViewImpl;
+import com.googlecode.fspotcloud.client.place.MailFullsizePlace;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
-public interface MailFullsizeView extends IsWidget {
-    void setPresenter(MailFullsizePresenter presenter);
-
-    void setStatusText(String text);
-
-    void setImageUrl(String url);
-
-    @UiFactory
+public interface MailFullsizeView extends IsWidget, StatusView {
     ImageViewImpl getImageView();
 
-    interface MailFullsizePresenter extends Activity {
-
-        void mailImage();
-
-        void cancel();
+    interface MailFullsizePresenter extends Activity, IActionHandler {
+        MailFullsizePresenter withPlace(MailFullsizePlace place);
     }
 }

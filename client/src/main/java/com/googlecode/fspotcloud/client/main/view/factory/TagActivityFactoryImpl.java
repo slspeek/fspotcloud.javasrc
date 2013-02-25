@@ -59,7 +59,7 @@ public class TagActivityFactoryImpl implements TagActivityFactory {
     public TagPresenter get(BasePlace place) {
         final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory.get(place,
                 tagView.getImageRasterView());
-        TagPresenter presenter = new TagActivity(tagView, rasterPresenter, scheduler);
+        TagPresenter presenter = new TagActivity(tagView, rasterPresenter, scheduler, place);
         treePresenter.setPlace(place);
         return presenter;
     }

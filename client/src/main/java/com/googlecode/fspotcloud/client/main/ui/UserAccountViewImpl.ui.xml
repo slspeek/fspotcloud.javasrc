@@ -52,10 +52,10 @@
                     </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="16%" left="0%" width="40%">
-                    <main:BigPushButton ui:field="save">Change password</main:BigPushButton>
+                    <ka:ActionButton ui:field="save"></ka:ActionButton>
                 </g:layer>
                 <g:layer bottom="0%" height="16%" right="0%" width="35%">
-                    <main:BigPushButton ui:field="cancel">Main Page</main:BigPushButton>
+                    <ka:ActionButton ui:field="cancel">Main Page</ka:ActionButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>

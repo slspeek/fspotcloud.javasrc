@@ -30,8 +30,7 @@ import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.IndexingUtil;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -46,21 +45,19 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class NavigatorImpl implements Navigator {
     private final Logger log = Logger.getLogger(NavigatorImpl.class.getName());
-    private final PlaceGoTo placeGoTo;
-    private final PlaceWhere placeWhere;
+    private final IPlaceController placeController;
     private final DataManager dataManager;
     private final PlaceCalculator placeCalculator;
     private final IClientLoginManager IClientLoginManager;
 
 
     @Inject
-    public NavigatorImpl(PlaceWhere placeWhere,
-                         PlaceGoTo placeGoTo,
+    public NavigatorImpl(
+                         IPlaceController placeController,
                          PlaceCalculator placeCalculator,
                          DataManager dataManager,
                          IClientLoginManager IClientLoginManager) {
-        this.placeGoTo = placeGoTo;
-        this.placeWhere = placeWhere;
+        this.placeController = placeController;
         this.placeCalculator = placeCalculator;
         this.dataManager = dataManager;
         this.IClientLoginManager = IClientLoginManager;
@@ -68,13 +65,13 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void goAsync(Direction direction, Unit step) {
-        goAsync(direction, step, placeWhere.where());
+        goAsync(direction, step, placeController.where());
     }
 
     @Override
     public void canGoAsync(final Direction direction, final Unit step,
                            final AsyncCallback<Boolean> callback) {
-        final BasePlace place = placeWhere.where();
+        final BasePlace place = placeController.where();
         dataManager.getTagNode(place.getTagId(),
                 new AsyncCallback<TagNode>() {
                     @Override
@@ -199,12 +196,12 @@ public class NavigatorImpl implements Navigator {
             newPlace = new SlideshowPlace(tagId, photoId, 0f);
         } else {
             newPlace = new BasePlace(tagId, photoId, place.getColumnCount(),
-                    place.getRowCount());
+                    place.getRowCount(), place.isAutoHide());
         }
 
         log.info("About to go to: " + this + " : " + newPlace + " from: " +
                 place);
-        placeGoTo.goTo(newPlace);
+        placeController.goTo(newPlace);
     }
 
     @Override
@@ -311,9 +308,9 @@ public class NavigatorImpl implements Navigator {
                         if (index == -1) {
                             if (!store.isEmpty()) {
                                 PhotoInfo info = store.get(0);
-                                BasePlace lastBasePlace = placeWhere.where();
-                                placeGoTo.goTo(new BasePlace(lastBasePlace.getTagId(), info.getId(),
-                                        lastBasePlace.getColumnCount(), lastBasePlace.getRowCount()));
+                                BasePlace lastBasePlace = placeController.where();
+                                placeController.goTo(new BasePlace(lastBasePlace.getTagId(), info.getId(),
+                                        lastBasePlace.getColumnCount(), lastBasePlace.getRowCount(), lastBasePlace.isAutoHide()));
 
                             }
 
@@ -327,16 +324,16 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void toggleZoomViewAsync(String tagId, String photoId) {
-        BasePlace newPlace = placeCalculator.toggleZoomView(placeWhere.where(),
+        BasePlace newPlace = placeCalculator.toggleZoomView(placeController.where(),
                 tagId, photoId);
-        placeGoTo.goTo(newPlace);
+        placeController.goTo(newPlace);
     }
 
     @Override
     public void goToTag(String otherTagId, PhotoInfoStore store) {
         go(Direction.BACKWARD, Unit.BORDER,
                 new BasePlace(otherTagId, null, placeCalculator.getRasterWidth(),
-                        placeCalculator.getRasterHeight()), store);
+                        placeCalculator.getRasterHeight(), placeCalculator.isAutoHide()), store);
     }
 
     @Override
@@ -407,7 +404,7 @@ public class NavigatorImpl implements Navigator {
             @Override
             public void onSuccess(UserInfo result) {
                 if (result.isAdmin()) {
-                    placeGoTo.goTo(TagPlace.DEFAULT);
+                    placeController.goTo(TagPlace.DEFAULT);
                     report.onSuccess("To dashboard");
                 } else if (!result.isLoggedIn()) {
                     IClientLoginManager.redirectToLogin();
@@ -451,16 +448,16 @@ public class NavigatorImpl implements Navigator {
     }
 
     private void reloadCurrentPlaceOnNewSize() {
-        BasePlace now = placeWhere.where();
+        BasePlace now = placeController.where();
         BasePlace destination = placeCalculator.getTabularPlace(now);
-        placeGoTo.goTo(destination);
+        placeController.goTo(destination);
     }
 
     @Override
     public void toggleRasterView() {
-        BasePlace now = placeWhere.where();
+        BasePlace now = placeController.where();
         BasePlace destination = placeCalculator.toggleRasterView(now);
-        placeGoTo.goTo(destination);
+        placeController.goTo(destination);
     }
 
     @Override
@@ -471,31 +468,36 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void fullscreen() {
-        BasePlace now = placeWhere.where();
+        BasePlace now = placeController.where();
         BasePlace destination = placeCalculator.getFullscreen(now);
-        placeGoTo.goTo(destination);
+        placeController.goTo(destination);
     }
 
     @Override
     public void zoom(Zoom direction) {
-        BasePlace now = placeWhere.where();
+        BasePlace now = placeController.where();
         BasePlace destination = placeCalculator.zoom(now, direction);
-        placeGoTo.goTo(destination);
+        placeController.goTo(destination);
     }
 
     @Override
     public void slideshow() {
-        BasePlace now = placeWhere.where();
+        BasePlace now = placeController.where();
         SlideshowPlace destination = new SlideshowPlace(now.getTagId(),
                 now.getPhotoId(), 0f);
-        placeGoTo.goTo(destination);
+        placeController.goTo(destination);
     }
 
     @Override
     public void unslideshow() {
-        BasePlace now = placeWhere.where();
+        BasePlace now = placeController.where();
         BasePlace destination = placeCalculator.unslideshow(now);
-        placeGoTo.goTo(destination);
+        placeController.goTo(destination);
+    }
+
+    @Override
+    public void setAutoHide(boolean autoHide) {
+        placeCalculator.setAutoHide(autoHide);
     }
 
     @Override

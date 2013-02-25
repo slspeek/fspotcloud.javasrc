@@ -45,7 +45,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final SlideshowActivityFactory slideshowActivityFactory;
     private final Navigator navigator;
     private final IModeController modeController;
-    private final MailFullsizeActivityFactory mailFullsizeActivityFactory;
+    private final MailFullsizeView.MailFullsizePresenter mailFullsizeActivity;
     private final ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity;
     private final ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter;
     private final ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter;
@@ -64,7 +64,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     public MainWindowActivityMapper(TagActivityFactory tagActivityFactory,
                                     SlideshowActivityFactory slideshowActivityFactory,
                                     Navigator navigator, IModeController modeController,
-                                    MailFullsizeActivityFactory mailFullsizeActivityFactory,
+                                    MailFullsizeView.MailFullsizePresenter mailFullsizeActivity,
                                     ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity,
                                     ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
                                     ActivityAsyncProxy<SignUpView.SignUpPresenter> signUpPresenter,
@@ -83,7 +83,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.tagActivityFactory = tagActivityFactory;
         this.navigator = navigator;
         this.modeController = modeController;
-        this.mailFullsizeActivityFactory = mailFullsizeActivityFactory;
+        this.mailFullsizeActivity = mailFullsizeActivity;
         this.confirmationPresenterActivity = confirmationPresenterActivity;
         this.loginPresenter = loginPresenter;
         this.signUpPresenter = signUpPresenter;
@@ -110,8 +110,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.TAG_ACCESS);
             return approvalPresenter;
         } else if (place instanceof MailFullsizePlace) {
-            activity = mailFullsizeActivityFactory.get((MailFullsizePlace) place);
-            modeController.setMode(Modes.LOGIN);
+            activity = mailFullsizeActivity.withPlace((MailFullsizePlace) place);
+            modeController.setMode(Modes.MAIL_FULLSIZE);
         } else if (place instanceof SendConfirmationPlace) {
             activity = confirmationPresenterActivity;
             modeController.setMode(Modes.LOGIN);
@@ -126,7 +126,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.PROFILE);
         } else if (place instanceof EmailConfirmationPlace) {
             activity = emailConfirmationPresenter;
             modeController.setMode(Modes.TAG_VIEW);
@@ -175,6 +175,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
                 navigator.setRasterWidth(width);
                 navigator.setRasterHeight(height);
             }
+            navigator.setAutoHide(basePlace.isAutoHide());
         }
     }
 }

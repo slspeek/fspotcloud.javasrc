@@ -52,9 +52,8 @@ public class RasterBinder extends AbstractBinder {
         bind(actions.remove_row, removeRowHandler, getKey('V'));
         bind(actions.mail_fullsize, mailFullSizeHandler, getKey('M'));
         bind(actions.set_default_raster, resetRasterHandler, getKey('0'));
-        bind(actions.toggle_tabular_view, toggleTabularViewHandler, getKey('1'));
-
-
+        KeyboardBinding binding = KeyboardBinding.bind(KeyStroke.SPACE, new KeyStroke('1')).withDefaultModes(Modes.VIEWING_MODES);
+        bind(actions.toggle_tabular_view, toggleTabularViewHandler, binding);
         bind(actions.set_raster_2x2, setRasterHandlerFactory.get(2), getKey('2'));
         bind(actions.set_raster_3x3, setRasterHandlerFactory.get(3), getKey('3'));
         bind(actions.set_raster_4x4, setRasterHandlerFactory.get(4), getKey('4'));

@@ -3,7 +3,7 @@ package com.googlecode.fspotcloud.client.enduseraction.dashboard.handler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.place.TagApprovalPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class ManageAccessHandler implements IActionHandler {
 
     @Inject
-    private PlaceGoTo placeGoTo;
+    private IPlaceController IPlaceController;
     @Inject
     private CurrentTagNodeAsync nodeAsync;
     private Logger log = Logger.getLogger(ManageAccessHandler.class.getName());
@@ -27,7 +27,7 @@ public class ManageAccessHandler implements IActionHandler {
             @Override
             public void onSuccess(TagNode tagNode) {
                 log.info("Go to manage access " + tagNode);
-                placeGoTo.goTo(new TagApprovalPlace(tagNode.getId()));
+                IPlaceController.goTo(new TagApprovalPlace(tagNode.getId()));
             }
         });
 

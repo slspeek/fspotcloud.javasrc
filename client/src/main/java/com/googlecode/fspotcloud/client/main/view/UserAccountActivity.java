@@ -31,10 +31,11 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
 import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
@@ -44,35 +45,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class UserAccountPresenterImpl extends AbstractActivity implements UserAccountView.UserAccountPresenter {
-    private final Logger log = Logger.getLogger(UserAccountPresenterImpl.class.getName());
+public class UserAccountActivity extends AbstractActivity implements UserAccountView.UserAccountPresenter {
+    private final Logger log = Logger.getLogger(UserAccountActivity.class.getName());
     private final UserAccountView view;
-    private final IClientLoginManager IClientLoginManager;
+    private final IClientLoginManager clientLoginManager;
     private final DispatchAsync dispatch;
-    private final PlaceGoTo placeGoTo;
+    private final UserActions userActions;
 
     private static final String YOUR_PASSWORD_WAS_CHANGED = "Your password was changed";
 
     @Inject
-    public UserAccountPresenterImpl(UserAccountView view,
-                                    IClientLoginManager IClientLoginManager,
-                                    DispatchAsync dispatch,
-                                    PlaceGoTo placeGoTo) {
+    public UserAccountActivity(UserAccountView view,
+                               IClientLoginManager clientLoginManager,
+                               DispatchAsync dispatch,
+                               UserActions userActions) {
         this.view = view;
-        this.IClientLoginManager = IClientLoginManager;
+        this.clientLoginManager = clientLoginManager;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
+        this.userActions = userActions;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        this.view.setPresenter(this);
         panel.setWidget(view);
-        IClientLoginManager.getUserInfoAsync(
+        clientLoginManager.getUserInfoAsync(
                 new AsyncCallback<UserInfo>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
                     }
 
                     @Override
@@ -86,8 +85,8 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
                 });
     }
 
-    @Override
-    public void updateAccount() {
+
+    private void updateAccount() {
         String oldPw = view.getOldPasswordField();
         String password = verifyPasswords();
 
@@ -108,7 +107,7 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
                     @Override
                     public void onFailure(Throwable caught) {
                         view.setStatusText(AN_ERROR_PROHIBITED_CHANGING_PASSWORDS);
-                        log.log(Level.WARNING, "SignUp failed ", caught);
+                        log.log(Level.WARNING, "Changing password failed ", caught);
                     }
 
                     @Override
@@ -120,11 +119,6 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
                 });
     }
 
-    @Override
-    public void cancel() {
-        placeGoTo.goTo(new BasePlace("latest", "latest"));
-    }
-
 
     private String verifyPasswords() {
         String password = view.getPasswordField();
@@ -133,6 +127,13 @@ public class UserAccountPresenterImpl extends AbstractActivity implements UserAc
             return password;
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        if(userActions.doCangePassword.getId().equals(actionId)) {
+            updateAccount();
         }
     }
 }

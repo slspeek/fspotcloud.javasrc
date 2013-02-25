@@ -35,7 +35,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.view.api.ChangePasswordView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.ChangePasswordPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -49,7 +49,7 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
     public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
     private final Logger log = Logger.getLogger(ChangePasswordActivity.class.getName());
     private final ChangePasswordView view;
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
     private final DispatchAsync dispatchAsync;
     private final ChangePasswordPlace place;
 
@@ -57,10 +57,10 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
     @Inject
     public ChangePasswordActivity(@Assisted ChangePasswordPlace place,
                                   ChangePasswordView view,
-                                  PlaceGoTo placeGoTo,
+                                  IPlaceController IPlaceController,
                                   DispatchAsync dispatchAsync) {
         this.view = view;
-        this.placeGoTo = placeGoTo;
+        this.IPlaceController = IPlaceController;
         this.dispatchAsync = dispatchAsync;
         this.place = place;
     }
@@ -119,7 +119,7 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
     @Override
     public void cancel() {
         view.clearFields();
-        placeGoTo.goTo(new BasePlace("latest", "latest"));
+        IPlaceController.goTo(new BasePlace("latest", "latest"));
     }
 
 

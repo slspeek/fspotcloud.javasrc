@@ -33,8 +33,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
 import com.googlecode.fspotcloud.shared.main.LogoutAction;
@@ -53,8 +52,7 @@ import java.util.logging.Logger;
 public class ClientLoginManager implements IClientLoginManager {
     private final Logger log = Logger.getLogger(ClientLoginManager.class.getName());
     private final DispatchAsync dispatch;
-    private final PlaceWhere placeWhere;
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController placeController;
     private UserInfo currentUser;
     private final DataManager dataManager;
     private final GetUserInfoMemoProc getUserInfoMemoProc;
@@ -62,14 +60,12 @@ public class ClientLoginManager implements IClientLoginManager {
 
     @Inject
     public ClientLoginManager(DispatchAsync dispatch,
-                              PlaceWhere placeWhere,
-                              PlaceGoTo placeGoTo,
+                              IPlaceController placeController,
                               DataManager dataManager,
                               GetUserInfoMemoProc getUserInfoMemoProc,
                               LoadNewLocation loadNewLocation) {
         this.dispatch = dispatch;
-        this.placeWhere = placeWhere;
-        this.placeGoTo = placeGoTo;
+        this.placeController = placeController;
         this.dataManager = dataManager;
         this.getUserInfoMemoProc = getUserInfoMemoProc;
         this.loadNewLocation = loadNewLocation;
@@ -114,8 +110,8 @@ public class ClientLoginManager implements IClientLoginManager {
             @Override
             public void onSuccess(UserInfo result) {
                 if (!result.isLoggedIn()) {
-                    String nextUrl = placeWhere.whereToken();
-                    placeGoTo.goTo(new LoginPlace(nextUrl));
+                    String nextUrl = placeController.whereToken();
+                    placeController.goTo(new LoginPlace(nextUrl));
                 } else {
                     log.log(Level.FINE, "No redirect to login because user is allready logged in.");
                 }

@@ -25,9 +25,18 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 import com.google.gwt.place.shared.Place;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 
 
-public interface PlaceGoTo {
+public interface IPlaceController {
+    BasePlace where();
+
+    String whereToken();
+
+    String getLastTagId();
+
+    Place getRawWhere();
+
     void goTo(Place place);
 
     void goTo(String token);

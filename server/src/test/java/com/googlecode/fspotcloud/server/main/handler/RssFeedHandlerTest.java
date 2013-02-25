@@ -35,7 +35,7 @@ public class RssFeedHandlerTest {
         TagTreeResult tagTreeResult = new TagTreeResult(node);
         when(dispatch.execute(tagTreeAction)).thenReturn(tagTreeResult);
         String rss = handler.execute(action, null).get();
-        assertTrue(rss.contains("/#BasePlace:1:42:1:1"));
+        assertTrue(rss.contains("/#BasePlace:1:42:1:1:false"));
     }
 
     @Test

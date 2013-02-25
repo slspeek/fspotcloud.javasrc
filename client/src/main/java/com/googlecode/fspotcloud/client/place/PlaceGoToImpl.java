@@ -27,13 +27,18 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-public class PlaceGoToImpl implements PlaceGoTo {
+public class PlaceGoToImpl implements IPlaceController {
+
+    private final Logger log = Logger.getLogger(PlaceGoToImpl.class.getName());
     protected final PlaceController placeController;
     protected final MainPlaceHistoryMapper mainPlaceHistoryMapper;
-    protected BasePlace lastBasePlace = new BasePlace("latest", "");
+    private BasePlace lastBasePlace = null;
     protected String activeTagId;
 
     @Inject
@@ -49,6 +54,7 @@ public class PlaceGoToImpl implements PlaceGoTo {
             activeTagId = ((TagPlace) place).getTagId();
         } else if (place instanceof BasePlace) {
             activeTagId = ((BasePlace) place).getTagId();
+            setLastBasePlace((BasePlace) place);
         }
         placeController.goTo(place);
     }
@@ -60,5 +66,38 @@ public class PlaceGoToImpl implements PlaceGoTo {
 
     public String getLastTagId() {
         return activeTagId;
+    }
+
+    protected BasePlace getLastBasePlace() {
+        log.log(Level.FINE, "returning last base place:" + lastBasePlace);
+        return lastBasePlace;
+    }
+
+    protected void setLastBasePlace(BasePlace lastBasePlace) {
+        log.log(Level.FINE, "last base place set to " + lastBasePlace);
+        this.lastBasePlace = lastBasePlace;
+    }
+
+
+    @Override
+    public BasePlace where() {
+        Place place = placeController.getWhere();
+        //FIXME: We should listen to PlaceController events
+        if (place instanceof BasePlace) {
+            setLastBasePlace((BasePlace) place);
+        }
+
+        return getLastBasePlace();
+    }
+
+    @Override
+    public String whereToken() {
+        return "#" + mainPlaceHistoryMapper.getToken(getRawWhere());
+    }
+
+    @Override
+    public Place getRawWhere() {
+        Place place = placeController.getWhere();
+        return place;
     }
 }

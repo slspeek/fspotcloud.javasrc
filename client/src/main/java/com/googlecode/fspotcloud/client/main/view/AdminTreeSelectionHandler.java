@@ -30,7 +30,7 @@ import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Level;
@@ -40,13 +40,13 @@ import java.util.logging.Logger;
 public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
     private final Logger log = Logger.getLogger(AdminTreeSelectionHandler.class.getName());
     private SingleSelectionModelExt selectionModel;
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
     private boolean ignoreNext = false;
     private final StatusView statusView;
 
     @Inject
-    public AdminTreeSelectionHandler(PlaceGoTo placeGoTo, @Dashboard StatusView statusView) {
-        this.placeGoTo = placeGoTo;
+    public AdminTreeSelectionHandler(IPlaceController IPlaceController, @Dashboard StatusView statusView) {
+        this.IPlaceController = IPlaceController;
         this.statusView = statusView;
     }
 
@@ -75,7 +75,7 @@ public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
         if (node != null) {
             String tagId = node.getId();
             statusView.setStatusText("Category: " + node.getTagName() + " selected");
-            placeGoTo.goTo(new TagPlace(tagId));
+            IPlaceController.goTo(new TagPlace(tagId));
         } else {
             statusView.setStatusText("Nothing selected");
         }

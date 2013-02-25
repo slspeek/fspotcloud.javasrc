@@ -47,4 +47,8 @@ public class TokenizerUtil {
         return Integer.parseInt(tokens[3]);
     }
 
+    public boolean isAutoHide() {
+        return Boolean.parseBoolean(tokens[4]);
+    }
+
 }

@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.SignUpAction;
 import com.googlecode.fspotcloud.shared.main.SignUpResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -48,14 +48,14 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
     public static final String SIGN_UP_FAILED = "Sign up failed.";
     private final SignUpView view;
     private final DispatchAsync dispatch;
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
 
     @Inject
     public SignUpPresenterImpl(SignUpView view, DispatchAsync dispatch,
-                               PlaceGoTo placeGoTo) {
+                               IPlaceController IPlaceController) {
         this.view = view;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
+        this.IPlaceController = IPlaceController;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
     @Override
     public void cancel() {
         view.clearFields();
-        placeGoTo.goTo(new BasePlace("latest", "latest"));
+        IPlaceController.goTo(new BasePlace("latest", "latest"));
     }
 
     private void send(SignUpAction action) {

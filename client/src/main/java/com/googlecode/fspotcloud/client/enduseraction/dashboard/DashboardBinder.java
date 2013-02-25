@@ -25,8 +25,12 @@ public class DashboardBinder extends AbstractBinder {
     @Override
     public void build() {
         configBuilder.register(category, actions.reloadTree, get('R'));
-        configBuilder.register(category, actions.toPhotos, get('F'));
-        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('M'))
+        KeyboardBinding binding=KeyboardBinding.bind(KeyStroke.F).withDefaultModes(Modes.DASHBOARD)
+                .override(Modes.MAIL_FULLSIZE, KeyStroke.ESC)
+                .override(Modes.LOGIN, KeyStroke.ESC)
+                .override(Modes.PROFILE, KeyStroke.ESC);
+        configBuilder.register(category, actions.toPhotos, binding);
+        binding = KeyboardBinding.bind(new KeyStroke('M'))
                 .withDefaultModes(Modes.DASHBOARD, Modes.TAG_ACCESS)
                 .override(Modes.EDIT_GROUP, KeyStroke.ESC)
                 .override(Modes.MANAGE_USERS, new KeyStroke(KeyCodes.KEY_ESCAPE), KeyStroke.alt('M'))

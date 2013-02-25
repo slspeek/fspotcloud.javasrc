@@ -43,6 +43,7 @@ public class PlaceCalculator {
     public static final int MINIMUM_RASTER_HEIGHT = 2;
     private int rasterWidth = DEFAULT_RASTER_WIDTH;
     private int rasterHeight = DEFAULT_RASTER_HEIGHT;
+    private boolean autoHide = true;
 
     public PlaceCalculator() {
         log.info("Created");
@@ -126,7 +127,7 @@ public class PlaceCalculator {
         PlaceConverter converter = new PlaceConverter(place);
         converter.setColumnCount(getRasterWidth());
         converter.setRowCount(getRasterHeight());
-
+        converter.setAutoHide(place.isAutoHide());
         return converter.getNewPlace();
     }
 
@@ -145,10 +146,10 @@ public class PlaceCalculator {
 
                 if ((width - 1) != getRasterWidth()) {
                     // switch to 1x1
-                    dest = new BasePlace(now.getTagId(), now.getPhotoId(), 1, 1);
+                    dest = new BasePlace(now.getTagId(), now.getPhotoId(), 1, 1, autoHide);
                 } else {
                     dest = new BasePlace(now.getTagId(), now.getPhotoId(),
-                            getRasterWidth(), getRasterHeight());
+                            getRasterWidth(), getRasterHeight(), autoHide);
                 }
             }
         } else {
@@ -157,7 +158,7 @@ public class PlaceCalculator {
             setRasterWidth(width + 1);
             setRasterHeight(height + 1);
             dest = new BasePlace(now.getTagId(), now.getPhotoId(),
-                    getRasterWidth(), getRasterHeight());
+                    getRasterWidth(), getRasterHeight(), autoHide);
         }
 
         return dest;
@@ -168,11 +169,19 @@ public class PlaceCalculator {
 
         if (tagViewingPlace instanceof SlideshowPlace) {
             result = new BasePlace(tagViewingPlace.getTagId(),
-                    tagViewingPlace.getPhotoId(), 1, 1);
+                    tagViewingPlace.getPhotoId(), 1, 1, autoHide);
         } else {
             result = tagViewingPlace;
         }
 
         return result;
+    }
+
+    public void setAutoHide(boolean autoHide) {
+        this.autoHide = autoHide;
+    }
+
+    public boolean isAutoHide() {
+        return autoHide;
     }
 }

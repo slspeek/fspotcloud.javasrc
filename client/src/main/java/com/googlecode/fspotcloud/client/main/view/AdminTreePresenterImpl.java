@@ -36,7 +36,7 @@ import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Level;
@@ -46,18 +46,18 @@ import java.util.logging.Logger;
 public class AdminTreePresenterImpl extends TreePresenterBase implements TreeView.TreePresenter {
 
     private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
     private final StatusView statusView;
 
     @Inject
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
                                   DataManager dataManager,
                                   SingleSelectionModelExt selectionModel,
-                                  PlaceGoTo placeGoTo,
+                                  IPlaceController IPlaceController,
                                   @AdminTreeView ITreeSelectionHandler treeSelectionHandler,
                                   @Dashboard StatusView statusView) {
         super(treeView, dataManager, selectionModel, treeSelectionHandler);
-        this.placeGoTo = placeGoTo;
+        this.IPlaceController = IPlaceController;
         this.statusView = statusView;
     }
 
@@ -70,7 +70,7 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
         if (node != null) {
             String tagId = node.getId();
             log.log(Level.FINEST, "About to go");
-            placeGoTo.goTo(new TagPlace(tagId));
+            IPlaceController.goTo(new TagPlace(tagId));
         }
     }
 
