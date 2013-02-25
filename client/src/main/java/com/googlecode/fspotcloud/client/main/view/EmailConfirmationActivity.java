@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.EmailConfirmationView;
 import com.googlecode.fspotcloud.client.place.EmailConfirmationPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.EmailConfirmationAction;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -16,22 +16,22 @@ public class EmailConfirmationActivity extends AbstractActivity implements Email
 
     private final EmailConfirmationView emailConfirmationView;
     private final DispatchAsync dispatchAsync;
-    private final PlaceWhere placeWhere;
+    private final IPlaceController placeController;
 
 
     @Inject
     public EmailConfirmationActivity(EmailConfirmationView emailConfirmationView,
                                      DispatchAsync dispatchAsync,
-                                     PlaceWhere placeWhere) {
+                                     IPlaceController placeController) {
         this.emailConfirmationView = emailConfirmationView;
         this.dispatchAsync = dispatchAsync;
-        this.placeWhere = placeWhere;
+        this.placeController = placeController;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
         panel.setWidget(emailConfirmationView);
-        EmailConfirmationPlace place = (EmailConfirmationPlace) placeWhere.getRawWhere();
+        EmailConfirmationPlace place = (EmailConfirmationPlace) placeController.getRawWhere();
         String email = place.getEmail();
         String secret = place.getSecret();
         emailConfirmationView.setStatusText("Verifying for: " + email);

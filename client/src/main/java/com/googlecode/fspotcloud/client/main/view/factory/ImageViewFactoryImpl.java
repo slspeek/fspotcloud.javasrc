@@ -50,7 +50,7 @@ public class ImageViewFactoryImpl implements ImageViewFactory {
             view = factory.get(location);
             imageViewCache.put(location, view);
         }
-
+        view.setImageUrl("");
         return view;
     }
 }

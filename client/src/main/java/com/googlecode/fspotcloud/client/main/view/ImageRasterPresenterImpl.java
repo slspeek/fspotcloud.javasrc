@@ -33,7 +33,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
     protected final ImageRasterView imageRasterView;
     private final Navigator navigator;
     private final ImagePresenterFactory imagePresenterFactory;
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
     List<ImageView> imageViewList;
     final List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
 
@@ -65,9 +65,9 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
                                     Navigator navigator,
                                     ImagePresenterFactory imagePresenterFactory,
                                     IScheduler scheduler,
-                                    PlaceGoTo placeGoTo) {
+                                    IPlaceController IPlaceController) {
         this.scheduler = scheduler;
-        this.placeGoTo = placeGoTo;
+        this.IPlaceController = IPlaceController;
         tagId = place.getTagId();
         photoId = place.getPhotoId();
         columnCount = place.getColumnCount();

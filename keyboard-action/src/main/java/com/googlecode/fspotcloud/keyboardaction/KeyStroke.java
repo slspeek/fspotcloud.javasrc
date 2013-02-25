@@ -53,6 +53,8 @@ public class KeyStroke {
     public static final KeyStroke A = new KeyStroke('A');
     public static final KeyStroke ENTER = new KeyStroke(KeyCodes.KEY_ENTER);
     public static final KeyStroke M = new KeyStroke('M');
+    public static final KeyStroke F = new KeyStroke('F');
+    public static final KeyStroke SPACE = new KeyStroke(KEY_SPACE);
 
     public static KeyStroke shift(int keyCode) {
         return new KeyStroke(Modifiers.SHIFT, keyCode);

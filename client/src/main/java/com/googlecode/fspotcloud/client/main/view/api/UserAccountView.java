@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
 public interface UserAccountView extends IsWidget {
@@ -41,12 +42,6 @@ public interface UserAccountView extends IsWidget {
 
     void setStatusText(String text);
 
-    void setPresenter(UserAccountPresenter presenter);
-
-    interface UserAccountPresenter extends Activity {
-        void updateAccount();
-
-        void cancel();
-
+    interface UserAccountPresenter extends Activity, IActionHandler {
     }
 }

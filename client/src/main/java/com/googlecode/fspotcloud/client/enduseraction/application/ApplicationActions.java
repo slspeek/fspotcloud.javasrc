@@ -21,6 +21,7 @@ public class ApplicationActions {
     public final ActionUIDef demo;
     public final ActionUIDef reloadTree;
     public final ActionUIDef goToLatest;
+    public final ActionUIDef toggleAutoHide;
 
     @Inject
     public ApplicationActions(Resources RESOURCES) {
@@ -58,11 +59,12 @@ public class ApplicationActions {
                 "Logout",
                 RESOURCES.logoutIcon());
         show_help = new ActionUIDef("help", "Help", "Show the keyboard help", RESOURCES.helpIcon());
-        show_shortcuts = new ActionUIDef("shortcuts", "Shortcuts", "Show the shortcuts popup", null);
+        show_shortcuts = new ActionUIDef("shortcuts", "Shortcuts", "Show the shortcuts popup");
         hide_help = new ActionUIDef("hide-help", "Hide help", "Hide the help popup.");
         demo = new ActionUIDef("demo", "Demo", "Play a demo.", RESOURCES.demoIcon());
-        reloadTree = new ActionUIDef("reload-tree", "Reload tree", "Reload the category tree", null);
-        goToLatest = new ActionUIDef("goto-latest", "Latest", "Go to category with latest image", null);
+        reloadTree = new ActionUIDef("reload-tree", "Reload tree", "Reload the category tree");
+        goToLatest = new ActionUIDef("goto-latest", "Latest", "Go to category with latest image");
+        toggleAutoHide = new ActionUIDef("auto-hide", "Auto hide", "Toggle auto hiding");
     }
 
 }

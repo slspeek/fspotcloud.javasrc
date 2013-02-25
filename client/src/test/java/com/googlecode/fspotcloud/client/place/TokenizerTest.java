@@ -31,15 +31,15 @@ public class TokenizerTest extends TestCase {
     final BasePlace.Tokenizer tokenizer = new BasePlace.Tokenizer();
 
     public void testGetPlace() {
-        BasePlace expected = new BasePlace("1", "2", 1, 1);
-        String first = "1:2:1:1";
+        BasePlace expected = new BasePlace("1", "2", 1, 1, true);
+        String first = "1:2:1:1:true";
         BasePlace actual = tokenizer.getPlace(first);
         assertEquals(actual, expected);
     }
 
     public void testGetToken() {
-        BasePlace first = new BasePlace("1", "2", 1, 1);
-        String expected = "1:2:1:1";
+        BasePlace first = new BasePlace("1", "2", 1, 1, false);
+        String expected = "1:2:1:1:false";
         String actual = tokenizer.getToken(first);
         assertEquals(actual, expected);
     }

@@ -29,16 +29,18 @@ public class PlaceConverter {
     private String photoId;
     private int columnCount;
     private int rowCount;
+    private boolean autoHide;
 
     public PlaceConverter(BasePlace delegate) {
         this.tagId = delegate.getTagId();
         this.photoId = delegate.getPhotoId();
         this.columnCount = delegate.getColumnCount();
         this.rowCount = delegate.getRowCount();
+        this.autoHide = delegate.isAutoHide();
     }
 
     public BasePlace getNewPlace() {
-        return new BasePlace(tagId, photoId, columnCount, rowCount);
+        return new BasePlace(tagId, photoId, columnCount, rowCount, autoHide);
     }
 
     void setTagId(String tagId) {
@@ -55,5 +57,9 @@ public class PlaceConverter {
 
     public void setRowCount(int rowCount) {
         this.rowCount = rowCount;
+    }
+
+    public void setAutoHide(boolean autoHide) {
+        this.autoHide = autoHide;
     }
 }

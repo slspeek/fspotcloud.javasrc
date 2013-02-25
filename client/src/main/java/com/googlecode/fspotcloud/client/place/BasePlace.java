@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 import com.googlecode.fspotcloud.client.place.api.PhotoInTag;
@@ -35,20 +36,26 @@ public class BasePlace extends Place implements PhotoInTag, Raster {
     private final String photoId;
     private final int columnCount;
     private final int rowCount;
+    private final boolean autoHide;
 
     public BasePlace() {
         this("latest", "latest");
     }
 
     public BasePlace(String tagId, String photoId) {
-        this(tagId, photoId, 1, 1);
+        this(tagId, photoId, 1, 1, true);
     }
 
-    public BasePlace(String tagId, String photoId, int columnCount, int rowCount) {
+    public BasePlace(String tagId, String photoId, int columnCount, int rowCount, boolean autoHide) {
         this.tagId = tagId;
         this.photoId = photoId;
         this.columnCount = columnCount;
         this.rowCount = rowCount;
+        this.autoHide = autoHide;
+    }
+
+    public boolean isAutoHide() {
+        return autoHide;
     }
 
     public String getTagId() {
@@ -69,20 +76,7 @@ public class BasePlace extends Place implements PhotoInTag, Raster {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-
-        if (tagId != null) {
-            hash += tagId.hashCode();
-        }
-
-        if (photoId != null) {
-            hash += photoId.hashCode();
-        }
-
-        hash += Integer.valueOf(columnCount).hashCode();
-        hash += Integer.valueOf(rowCount).hashCode();
-
-        return hash;
+        return Objects.hashCode(tagId, photoId, rowCount, columnCount, autoHide);
     }
 
     @Override
@@ -93,9 +87,12 @@ public class BasePlace extends Place implements PhotoInTag, Raster {
             String photoId = basePlace.getPhotoId();
             int columnCount = basePlace.getColumnCount();
             int rowCount = basePlace.getRowCount();
+            boolean autoHide = basePlace.isAutoHide();
+
 
             return equal(this.tagId, tagId) && equal(this.photoId, photoId) &&
                     equal(this.rowCount, rowCount) &&
+                    equal(this.autoHide, autoHide) &&
                     equal(this.columnCount, columnCount);
         } else {
             return false;
@@ -103,10 +100,10 @@ public class BasePlace extends Place implements PhotoInTag, Raster {
     }
 
     public String toString() {
-        String result = "<<Place tagId: " + tagId + " photoId: " + photoId +
-                "(" + columnCount + "x" + rowCount + ")>>";
-
-        return result;
+        return Objects.toStringHelper(this).add("tagId", tagId)
+                .add("photoId", photoId)
+                .add("rows", rowCount)
+                .add("colums", columnCount).add("autoHide", autoHide).toString();
     }
 
     public static boolean equal(Object a, Object b) {
@@ -127,13 +124,16 @@ public class BasePlace extends Place implements PhotoInTag, Raster {
             TokenizerUtil util = new TokenizerUtil(token);
 
             return new BasePlace(util.getTagId(), util.getPhotoId(),
-                    util.getColumnCount(), util.getRowCount());
+                    util.getColumnCount(), util.getRowCount(), util.isAutoHide());
         }
 
         @Override
         public String getToken(BasePlace place) {
-            return place.getTagId() + ":" + place.getPhotoId() + ":" +
-                    place.getColumnCount() + ":" + place.getRowCount();
+            return place.getTagId() + ":" +
+                    place.getPhotoId() + ":" +
+                    place.getColumnCount() + ":" +
+                    place.getRowCount() + ":" +
+                    place.isAutoHide();
         }
     }
 }

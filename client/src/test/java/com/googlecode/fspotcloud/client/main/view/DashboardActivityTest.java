@@ -8,7 +8,7 @@ import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.HomePlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class DashboardActivityTest {
     @Inject
     private IClientLoginManager clientLoginManager;
     @Inject
-    private PlaceGoTo placeGoTo;
+    private IPlaceController IPlaceController;
 
     @Inject
     private ArgumentCaptor<AsyncCallback<UserInfo>> asyncCallbackArgumentCaptor;
@@ -54,7 +54,7 @@ public class DashboardActivityTest {
         callback.onSuccess(userInfo);
         verify(peerActionsPresenter).init();
         verify(treePresenter).init();
-        verifyNoMoreInteractions(placeGoTo, clientLoginManager, treePresenter, peerActionsPresenter);
+        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class DashboardActivityTest {
         AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor.getValue();
         userInfo = new UserInfo("sls", false, true, "", "", new Date(0), null);
         callback.onSuccess(userInfo);
-        verify(placeGoTo).goTo(new HomePlace());
-        verifyNoMoreInteractions(placeGoTo, clientLoginManager, treePresenter, peerActionsPresenter);
+        verify(IPlaceController).goTo(new HomePlace());
+        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class DashboardActivityTest {
         userInfo = new UserInfo("sls", false, false, "", "", new Date(0), null);
         callback.onSuccess(userInfo);
         verify(clientLoginManager).redirectToLogin();
-        verifyNoMoreInteractions(placeGoTo, clientLoginManager, treePresenter, peerActionsPresenter);
+        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
     }
 
     @Test
@@ -85,14 +85,14 @@ public class DashboardActivityTest {
         verify(clientLoginManager).getUserInfoAsync(asyncCallbackArgumentCaptor.capture());
         AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor.getValue();
         callback.onFailure(new RuntimeException());
-        verify(placeGoTo).goTo(new HomePlace());
-        verifyNoMoreInteractions(placeGoTo, clientLoginManager, treePresenter, peerActionsPresenter);
+        verify(IPlaceController).goTo(new HomePlace());
+        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
     }
 
     @Test
     public void testOnStop() throws Exception {
         dashboardPresenter.onStop();
         verify(peerActionsPresenter).stop();
-        verifyNoMoreInteractions(peerActionsPresenter, placeGoTo, clientLoginManager, treePresenter);
+        verifyNoMoreInteractions(peerActionsPresenter, IPlaceController, clientLoginManager, treePresenter);
     }
 }

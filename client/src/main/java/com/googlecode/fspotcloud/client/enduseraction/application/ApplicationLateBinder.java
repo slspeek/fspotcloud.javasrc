@@ -18,6 +18,7 @@ public class ApplicationLateBinder {
                           HelpActionsFactory helpActionsFactory,
                           ReloadTreeHandler reloadTreeHandler,
                           GoToLatestHandler goToLatestHandler,
+                          ToggleAutoHideHandler toggleAutoHideHandler,
                           ApplicationActions actions) {
         this.applicationActions = actions;
         configBuilder.bindHandler(applicationActions.hide_controls, hideControlsHandler);
@@ -26,5 +27,6 @@ public class ApplicationLateBinder {
         configBuilder.bindHandler(applicationActions.reloadTree, reloadTreeHandler);
         configBuilder.bindHandler(applicationActions.goToLatest, goToLatestHandler);
         configBuilder.bindHandler(applicationActions.show_shortcuts, helpActionsFactory.getShortcutsAction());
+        configBuilder.bindHandler(applicationActions.toggleAutoHide, toggleAutoHideHandler);
     }
 }

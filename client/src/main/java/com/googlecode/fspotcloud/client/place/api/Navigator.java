@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 
@@ -78,6 +79,8 @@ public interface Navigator {
     void zoom(Zoom direction);
 
     void unslideshow();
+
+    void setAutoHide(boolean autoHide);
 
     enum Direction {
         BACKWARD, FORWARD;

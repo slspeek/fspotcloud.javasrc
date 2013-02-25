@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 
 import java.util.logging.Logger;
 
@@ -40,13 +41,16 @@ public class TagActivity extends AbstractActivity implements TagView.TagPresente
     private final TagView tagView;
     private final ImageRasterView.ImageRasterPresenter imageRasterPresenter;
     private final IScheduler scheduler;
+    private final BasePlace place;
+
 
     public TagActivity(TagView tagView,
                        ImageRasterView.ImageRasterPresenter imageRasterPresenter,
-                       IScheduler scheduler) {
+                       IScheduler scheduler, BasePlace place) {
         this.tagView = tagView;
         this.imageRasterPresenter = imageRasterPresenter;
         this.scheduler = scheduler;
+        this.place = place;
     }
 
     @Override
@@ -60,6 +64,9 @@ public class TagActivity extends AbstractActivity implements TagView.TagPresente
                 imageRasterPresenter.init();
             }
         });
-        tagView.hideLabelLater(10000);
+        if (place.isAutoHide()) {
+            tagView.hideControlsLater(10000);
+        }
+        tagView.setAutoHide(place.isAutoHide());
     }
 }

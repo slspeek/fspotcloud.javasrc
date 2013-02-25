@@ -28,7 +28,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
@@ -54,7 +54,7 @@ public class LoginPresenterImplTest {
     LoginPresenterImpl presenter;
 
     @Before
-    public void train(LoginView loginView, PlaceWhere placeWhere) throws Exception {
+    public void train(LoginView loginView, IPlaceController placeWhere) throws Exception {
         when(placeWhere.getRawWhere()).thenReturn(new LoginPlace(""));
         when(loginView.getPasswordField()).thenReturn(SECRET);
         when(loginView.getUserNameField()).thenReturn(ADMIN);

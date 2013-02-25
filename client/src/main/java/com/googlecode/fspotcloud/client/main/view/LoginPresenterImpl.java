@@ -33,8 +33,7 @@ import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.UserAccountPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
@@ -53,8 +52,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     public static final String NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION = "Not a valid username and password combination";
     private final LoginView view;
     private final DispatchAsync dispatch;
-    private final PlaceGoTo placeGoTo;
-    private final PlaceWhere placeWhere;
+    private final IPlaceController placeController;
     private final IClientLoginManager IClientLoginManager;
     private final EventBus eventBus;
     private final ApplicationActions applicationActions;
@@ -63,15 +61,13 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     @Inject
     public LoginPresenterImpl(LoginView loginView,
                               DispatchAsync dispatch,
-                              PlaceGoTo placeGoTo,
-                              PlaceWhere placeWhere,
+                              IPlaceController placeController,
                               IClientLoginManager IClientLoginManager,
                               EventBus eventBus,
                               ApplicationActions applicationActions) {
         this.view = loginView;
         this.dispatch = dispatch;
-        this.placeGoTo = placeGoTo;
-        this.placeWhere = placeWhere;
+        this.placeController = placeController;
         this.IClientLoginManager = IClientLoginManager;
         this.eventBus = eventBus;
         this.applicationActions = applicationActions;
@@ -85,7 +81,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     }
 
     private String getNextUrl() {
-        return ((LoginPlace) placeWhere.getRawWhere()).getNextUrl();
+        return ((LoginPlace) placeController.getRawWhere()).getNextUrl();
     }
 
     @Override
@@ -131,9 +127,9 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                             IClientLoginManager.resetApplicationData();
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {
-                                placeGoTo.goTo(nextUrl);
+                                placeController.goTo(nextUrl);
                             } else {
-                                placeGoTo.goTo(new UserAccountPlace());
+                                placeController.goTo(new UserAccountPlace());
                             }
                             eventBus.fireEvent(new KeyboardActionEvent(applicationActions.reloadTree.getId()));
                             log.log(Level.FINE, "Reached end of login");
