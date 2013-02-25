@@ -1,15 +1,15 @@
 package com.googlecode.fspotcloud.client.enduseraction;
 
 import com.google.gwt.place.shared.Place;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public abstract class PlaceMoverBase implements IActionHandler {
 
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
 
-    protected PlaceMoverBase(PlaceGoTo placeGoTo) {
-        this.placeGoTo = placeGoTo;
+    protected PlaceMoverBase(IPlaceController IPlaceController) {
+        this.IPlaceController = IPlaceController;
     }
 
     public abstract Place getPlace();
@@ -18,7 +18,7 @@ public abstract class PlaceMoverBase implements IActionHandler {
     public void performAction(String actionId) {
         final Place place = getPlace();
         if (place != null) {
-            placeGoTo.goTo(place);
+            IPlaceController.goTo(place);
         }
     }
 }

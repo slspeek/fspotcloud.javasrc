@@ -66,7 +66,7 @@ public class FeedBuilder {
         title.setContent(new Text(info.getDate().toString()));
         Element description = new Element("description");
         description.setText(info.getDescription());
-        String linkText = serverAddressProvider.get() + "/#BasePlace:" + tagId + ":" + info.getId() + ":1:1";
+        String linkText = serverAddressProvider.get() + "/#BasePlace:" + tagId + ":" + info.getId() + ":1:1:false";
         Element link = new Element("link");
         link.setText(linkText);
         result.addContent(title);

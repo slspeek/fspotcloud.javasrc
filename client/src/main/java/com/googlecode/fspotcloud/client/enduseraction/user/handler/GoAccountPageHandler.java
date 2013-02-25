@@ -2,19 +2,19 @@ package com.googlecode.fspotcloud.client.enduseraction.user.handler;
 
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.place.SendResetPasswordPlace;
-import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.enduseraction.PlaceMoverBase;
+import com.googlecode.fspotcloud.client.place.UserAccountPlace;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 
-public class GoResetPasswordHandler extends PlaceMoverBase {
+public class GoAccountPageHandler extends PlaceMoverBase {
 
     @Inject
-    public GoResetPasswordHandler(IPlaceController IPlaceController) {
+    public GoAccountPageHandler(IPlaceController IPlaceController) {
         super(IPlaceController);
     }
 
     @Override
     public Place getPlace() {
-        return new SendResetPasswordPlace();
+        return new UserAccountPlace();
     }
 }

@@ -31,12 +31,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
-import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
+import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
+import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,12 +68,9 @@ public class LoginViewImpl extends Composite implements LoginView {
 
     @Inject
     public LoginViewImpl(IScheduler scheduler, UserActions actions,
-                         ButtonFactory factory,
-                         BigActionButtonResources resources,
-                         ApplicationActions applicationActions) {
+                         ApplicationActions applicationActions,
+                         BigButtonFactory factory) {
         this.scheduler = scheduler;
-        log.log(Level.FINE, "bigactionbuttonresources.button " + resources.style().button() );
-        factory.setButtonResources(resources);
         otherLogin = factory.getButton(actions.otherLogin);
         cancel = factory.getButton(applicationActions.goToLatest);
         signUp = factory.getButton(actions.goSignUp);

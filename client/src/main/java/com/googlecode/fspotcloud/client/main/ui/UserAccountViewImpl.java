@@ -34,7 +34,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
 
@@ -42,7 +46,7 @@ import java.util.logging.Logger;
 public class UserAccountViewImpl extends Composite implements UserAccountView {
     private final Logger log = Logger.getLogger(UserAccountViewImpl.class.getName());
     private static final UserAccountViewImplUiBinder uiBinder = GWT.create(UserAccountViewImplUiBinder.class);
-    private UserAccountView.UserAccountPresenter presenter;
+    
     @UiField
     Label emailValueLabel;
     @UiField
@@ -56,13 +60,18 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
     PasswordTextBox passwordAgainTextBox;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton save;
-    @UiField
-    BigPushButton cancel;
+    @UiField(provided = true)
+    ActionButton save;
+    @UiField(provided = true)
+    ActionButton cancel;
 
     @Inject
-    public UserAccountViewImpl() {
+    public UserAccountViewImpl(UserActions userActions,
+                               DashboardActions dashboardActions,
+                               BigButtonFactory buttonFactory
+    ) {
+        save = buttonFactory.getButton(userActions.doCangePassword);
+        cancel =  buttonFactory.getButton(dashboardActions.toPhotos);
         initWidget(uiBinder.createAndBindUi(this));
         emailValueLabel.ensureDebugId("email");
         lastLoginValueLabel.ensureDebugId("last-login");
@@ -99,22 +108,7 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
         statusLabel.setText(text);
     }
 
-    @UiHandler("save")
-    public void onPush(ClickEvent e) {
-        presenter.updateAccount();
-    }
-
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
-    }
-
-
-    @Override
-    public void setPresenter(UserAccountView.UserAccountPresenter presenter) {
-        this.presenter = presenter;
-    }
-
+    
     interface UserAccountViewImplUiBinder extends UiBinder<Widget, UserAccountViewImpl> {
     }
 }

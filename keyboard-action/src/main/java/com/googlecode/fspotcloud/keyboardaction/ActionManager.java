@@ -43,7 +43,6 @@ public class ActionManager implements IKeyboardActionHandler {
     @Override
     public void onEvent(KeyboardActionEvent event) {
         log.log(Level.FINEST, "onEvent for: " + event.getActionId());
-        log.log(Level.INFO, "onEvent for: " + event.getActionId());
         String actionId = event.getActionId();
         IActionHandler handler = actionHandlerRegistry.getAction(actionId);
         handler.performAction(actionId);

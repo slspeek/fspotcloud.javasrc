@@ -37,7 +37,7 @@ import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.HomePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.logging.Logger;
@@ -51,7 +51,7 @@ public class DashboardActivity extends AbstractActivity
     private final PeerActionsView.PeerActionsPresenter peerActionsPresenter;
     private TagDetailsView.TagDetailsPresenter activity;
     private final IClientLoginManager clientLoginManager;
-    private final PlaceGoTo placeGoTo;
+    private final IPlaceController IPlaceController;
 
 
     @Inject
@@ -60,13 +60,13 @@ public class DashboardActivity extends AbstractActivity
                              PeerActionsView.PeerActionsPresenter peerActionsPresenter,
                              TagDetailsActivity tagDetailsActivity,
                              IClientLoginManager IClientLoginManager,
-                             PlaceGoTo placeGoTo) {
+                             IPlaceController IPlaceController) {
         this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
         this.peerActionsPresenter = peerActionsPresenter;
         this.activity = tagDetailsActivity;
         this.clientLoginManager = IClientLoginManager;
-        this.placeGoTo = placeGoTo;
+        this.IPlaceController = IPlaceController;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class DashboardActivity extends AbstractActivity
         clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
-                placeGoTo.goTo(new HomePlace());
+                IPlaceController.goTo(new HomePlace());
             }
 
             @Override
@@ -83,7 +83,7 @@ public class DashboardActivity extends AbstractActivity
                     treePresenter.init();
                     peerActionsPresenter.init();
                 } else if (result.isLoggedIn()) {
-                    placeGoTo.goTo(new HomePlace());
+                    IPlaceController.goTo(new HomePlace());
                 } else {
                     clientLoginManager.redirectToLogin();
                 }

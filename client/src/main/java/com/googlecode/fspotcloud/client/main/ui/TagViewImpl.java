@@ -75,6 +75,7 @@ public class TagViewImpl extends Composite implements TagView,
     private TagPresenter presenter;
     int id = ++ID;
     private final ActionToolbar actionToolbar;
+    private boolean autoHide;
 
     @Inject
     public TagViewImpl(@BasicTreeView TreeView treeView,
@@ -111,6 +112,9 @@ public class TagViewImpl extends Composite implements TagView,
     }
 
     public void animateControlsIn(int duration) {
+        if(!autoHide) {
+            duration = 0;
+        }
         cancelHiding();
         mainPanel.setWidgetBottomHeight(actionToolbar, 0, Unit.CM,
                 BUTTON_PANEL_HEIGHT_PCT, Unit.PCT);
@@ -122,12 +126,10 @@ public class TagViewImpl extends Composite implements TagView,
                 TREE_VIEW_WIDTH_PCT, Unit.PCT);
         mainPanel.setWidgetTopHeight(treeView, 0, Unit.PCT,
                 IMAGEPANEL_HEIGHT_PCT, Unit.PCT);
-
         mainPanel.setWidgetBottomHeight(horizontalFocusPanel, 0, Unit.PCT, 0,
                 Unit.PCT);
         mainPanel.setWidgetLeftWidth(verticalFocusPanel, 0, Unit.PCT, 0,
                 Unit.PCT);
-
         mainPanel.animate(duration);
     }
 
@@ -143,12 +145,11 @@ public class TagViewImpl extends Composite implements TagView,
                 Unit.PCT);
         mainPanel.setWidgetLeftWidth(verticalFocusPanel, 0, Unit.PCT, 10,
                 Unit.PCT);
-
         mainPanel.animate(duration);
     }
 
     @Override
-    public void hideLabelLater(final int duration) {
+    public void hideControlsLater(final int duration) {
         timer.setRunnable(new Runnable() {
             @Override
             public void run() {
@@ -181,12 +182,17 @@ public class TagViewImpl extends Composite implements TagView,
     public void onMouseOver(MouseOverEvent event) {
         log.log(Level.FINER, "On mouse over");
         cancelHiding();
-        hideLabelLater(1000);
+        hideControlsLater(1000);
     }
 
     @Override
     public void cancelHiding() {
         timer.cancel();
+    }
+
+    @Override
+    public void setAutoHide(boolean autoHide) {
+        this.autoHide = autoHide;
     }
 
     @Override

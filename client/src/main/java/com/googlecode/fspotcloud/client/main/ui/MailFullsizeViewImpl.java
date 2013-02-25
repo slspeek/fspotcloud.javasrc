@@ -25,18 +25,18 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.ImageView;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.MailFullsizeView;
 import com.googlecode.fspotcloud.client.main.view.factory.ImageViewFactoryImpl;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
 
@@ -44,31 +44,29 @@ import java.util.logging.Logger;
 public class MailFullsizeViewImpl extends Composite implements MailFullsizeView {
     private final Logger log = Logger.getLogger(MailFullsizeViewImpl.class.getName());
     private static final MailFullsizeImplUiBinder uiBinder = GWT.create(MailFullsizeImplUiBinder.class);
-    private final ImageView imageView;
-    private MailFullsizePresenter presenter;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton mail;
-    @UiField
-    BigPushButton cancel;
+    @UiField(provided = true)
+    ActionButton mail;
+    @UiField(provided = true)
+    ActionButton cancel;
+    @UiField(provided = true)
+    ImageViewImpl imageView;
 
     @Inject
-    public MailFullsizeViewImpl(ImageViewFactoryImpl imageViewFactory) {
-        this.imageView = imageViewFactory.get("0x0");
+    public MailFullsizeViewImpl(UserActions userActions,
+                                DashboardActions dashboardActions,
+                                BigButtonFactory factory,
+                                ImageViewFactoryImpl imageViewFactory) {
+        mail = factory.getButton(userActions.doMailFullsize);
+        cancel = factory.getButton(dashboardActions.toPhotos);
+        this.imageView = (ImageViewImpl) imageViewFactory.get("0x0");
         initWidget(uiBinder.createAndBindUi(this));
         statusLabel.ensureDebugId("status");
     }
 
-    @Override
-    @UiFactory
     public ImageViewImpl getImageView() {
-        return (ImageViewImpl) imageView;
-    }
-
-    @Override
-    public void setPresenter(MailFullsizePresenter presenter) {
-        this.presenter = presenter;
+        return imageView;
     }
 
     @Override
@@ -76,20 +74,6 @@ public class MailFullsizeViewImpl extends Composite implements MailFullsizeView 
         statusLabel.setText(text);
     }
 
-    @Override
-    public void setImageUrl(String url) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @UiHandler("mail")
-    public void onPush(ClickEvent e) {
-        presenter.mailImage();
-    }
-
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
-    }
 
     interface MailFullsizeImplUiBinder extends UiBinder<Widget, MailFullsizeViewImpl> {
     }

@@ -6,6 +6,7 @@ import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
 import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.Modifiers;
 
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.ctrl;
@@ -35,8 +36,12 @@ public class UserBinder extends AbstractBinder {
         configBuilder.register(category, actions.goResendConfirmation, binding);
         binding = KeyboardBinding.bind(KeyStroke.alt('Z')).withDefaultModes(Modes.LOGIN);
         configBuilder.register(category, actions.doLogin, binding);
-
-
+        binding = KeyboardBinding.bind(KeyStroke.M).withDefaultModes(Modes.MAIL_FULLSIZE);
+        configBuilder.register(category, actions.doMailFullsize, binding);
+        binding = KeyboardBinding.bind(alt('P')).withDefaultModes(Modes.ALL_MODES);
+        configBuilder.register(category, actions.goAccountPage, binding);
+        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.PROFILE);
+        configBuilder.register(category, actions.doCangePassword, binding);
     }
 
 

@@ -34,7 +34,7 @@ import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Level;
@@ -45,19 +45,19 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
     private final Logger log = Logger.getLogger(TagDetailsActivity.class.getName());
     private final TagDetailsView tagDetailsView;
     private final DataManager dataManager;
-    private final PlaceWhere placeWhere;
+    private final IPlaceController placeController;
     private final StatusView statusView;
 
 
     @Inject
     public TagDetailsActivity(TagDetailsView tagDetailsView,
                               DataManager dataManager,
-                              PlaceWhere placeWhere,
+                              IPlaceController placeController,
                               @Dashboard StatusView statusView) {
         super();
         this.tagDetailsView = tagDetailsView;
         this.dataManager = dataManager;
-        this.placeWhere = placeWhere;
+        this.placeController = placeController;
         this.statusView = statusView;
     }
 
@@ -75,7 +75,7 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
     public void populateView() {
         statusView.setStatusText("Retrieving category data");
-        TagPlace tagPlace = (TagPlace) placeWhere.getRawWhere();
+        TagPlace tagPlace = (TagPlace) placeController.getRawWhere();
 
         dataManager.getAdminTagNode(tagPlace.getTagId(),
                 new AsyncCallback<TagNode>() {

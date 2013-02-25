@@ -2,6 +2,7 @@ package com.googlecode.fspotcloud.client.enduseraction.user;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.user.handler.*;
+import com.googlecode.fspotcloud.client.main.view.api.MailFullsizeView;
 import com.googlecode.fspotcloud.keyboardaction.ConfigBuilder;
 
 public class UserLateBinder {
@@ -15,6 +16,8 @@ public class UserLateBinder {
                    GoResendConfirmationHandler goResendConfirmationHandler,
                    DoLoginHandler doLoginHandler,
                    GoSignUpHandler goSignUpHandler,
+                   GoAccountPageHandler goAccountPageHandler,
+                   MailFullsizeView.MailFullsizePresenter mailFullsizePresenter,
                    UserActions actions) {
         this.actions = actions;
         configBuilder.bindHandler(actions.otherLogin, go3rdPartyLoginAction);
@@ -22,5 +25,7 @@ public class UserLateBinder {
         configBuilder.bindHandler(actions.goResetPassword, goResetPasswordHandler);
         configBuilder.bindHandler(actions.goResendConfirmation, goResendConfirmationHandler);
         configBuilder.bindHandler(actions.doLogin, doLoginHandler);
+        configBuilder.bindHandler(actions.goAccountPage, goAccountPageHandler);
+        configBuilder.bindHandler(actions.doMailFullsize, mailFullsizePresenter);
     }
 }

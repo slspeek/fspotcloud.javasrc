@@ -44,8 +44,7 @@ import com.googlecode.fspotcloud.client.main.view.factory.SlideshowDelayPresente
 import com.googlecode.fspotcloud.client.main.view.factory.TagActivityFactoryImpl;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
 import com.googlecode.fspotcloud.client.enduseraction.UserActionFactory;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
@@ -69,8 +68,7 @@ public class AppModule extends AbstractGinModule {
         bind(SendConfirmationView.class).to(SendConfirmationViewImpl.class).in(Singleton.class);
         bind(SendConfirmationView.SendConfirmationPresenter.class).to(SendConfirmationActivity.class);
         bind(MailFullsizeView.class).to(MailFullsizeViewImpl.class).in(Singleton.class);
-        install(new GinFactoryModuleBuilder().implement(MailFullsizeView.MailFullsizePresenter.class,
-                MailFullsizeActivity.class).build(MailFullsizeActivityFactory.class));
+        bind(MailFullsizeView.MailFullsizePresenter.class).to(MailFullsizeActivity.class).in(Singleton.class);
         bind(ChangePasswordView.class).to(ChangePasswordViewImpl.class).in(Singleton.class);
         install(new GinFactoryModuleBuilder().implement(ChangePasswordView.ChangePasswordPresenter.class,
                 ChangePasswordActivity.class).build(ChangePasswordActivityFactory.class));
@@ -91,7 +89,7 @@ public class AppModule extends AbstractGinModule {
         bind(SignUpView.SignUpPresenter.class).to(SignUpPresenterImpl.class);
         bind(UserAccountView.class).to(UserAccountViewImpl.class);
         bind(UserAccountView.UserAccountPresenter.class)
-                .to(UserAccountPresenterImpl.class);
+                .to(UserAccountActivity.class);
         bind(ManageGroupsView.class).to(ManageGroupsViewImpl.class).in(Singleton.class);
         bind(ManageGroupsView.ManageGroupsPresenter.class)
                 .to(ManageGroupsActivity.class).in(Singleton.class);
@@ -104,9 +102,8 @@ public class AppModule extends AbstractGinModule {
         bind(EmailConfirmationView.class).to(EmailConfirmationViewImpl.class);
         bind(EmailConfirmationView.EmailConfirmationPresenter.class)
                 .to(EmailConfirmationActivity.class);
-        bind(PlaceCalculator.class);
-        bind(PlaceGoTo.class).to(PlaceGoToImpl.class);
-        bind(PlaceWhere.class).to(PlaceWhereImpl.class);
+        bind(PlaceCalculator.class).in(Singleton.class);
+        bind(IPlaceController.class).to(PlaceGoToImpl.class).in(Singleton.class);
         bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(SlideshowDelayView.class).to(SlideshowDelayViewImpl.class).in(Singleton.class);
@@ -115,8 +112,6 @@ public class AppModule extends AbstractGinModule {
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
         bind(TagActivityFactory.class).to(TagActivityFactoryImpl.class);
 
-//        bind(SelectionChangeEvent.Handler.class).to(AdminTreeSelectionHandler.class)
-//                .in(Singleton.class);
         bind(SlideshowDelayView.SlideshowPresenter.class)
                 .toProvider(SlideshowDelayPresenterFactoryImpl.class);
         install(new GinFactoryModuleBuilder().implement(

@@ -4,31 +4,30 @@ import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceWhere;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class Go3rdPartyLoginAction implements IActionHandler {
 
     private final IClientLoginManager clientLoginManager;
-    private final PlaceWhere placeWhere;
+    private final IPlaceController placeController;
 
     @Inject
     public Go3rdPartyLoginAction(IClientLoginManager clientLoginManager,
-                                 PlaceWhere placeWhere
-    ) {
+                                 IPlaceController placeController) {
         this.clientLoginManager = clientLoginManager;
-        this.placeWhere = placeWhere;
+        this.placeController = placeController;
     }
 
 
     @Override
     public void performAction(String actionId) {
         String url = null;
-        Place place = placeWhere.getRawWhere();
+        Place place = placeController.getRawWhere();
         if (place instanceof LoginPlace) {
             url = ((LoginPlace) place).getNextUrl();
         } else {
-            url = placeWhere.whereToken();
+            url = placeController.whereToken();
         }
         clientLoginManager.goTo3rdPartyLogin(url);
     }

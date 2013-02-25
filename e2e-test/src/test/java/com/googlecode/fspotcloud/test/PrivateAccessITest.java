@@ -31,10 +31,13 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import java.util.logging.Logger;
+
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class PrivateAccessITest {
     public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+    public static final Logger log = Logger.getLogger(PrivateAccessITest.class.getName());
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
@@ -81,7 +84,7 @@ public class PrivateAccessITest {
         photoPage.open();
         photoPage.logout();
         photoPage.open();
-        photoPage.open("#BasePlace:1:7:2:2");
+        photoPage.open("#BasePlace:1:7:2:2:false");
         sleepShort();
         //loginPage.open();
         loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
@@ -100,7 +103,10 @@ public class PrivateAccessITest {
         userAccountPage.open();
         photoPage.open();
         sleepShort();
+        log.info("Before click 0,0");
         photoPage.clickImage(0, 0);
+        log.info("After click 0,0");
+        sleepShort();
         photoPage.assertPagingLabelSays(1, 9);
     }
 }

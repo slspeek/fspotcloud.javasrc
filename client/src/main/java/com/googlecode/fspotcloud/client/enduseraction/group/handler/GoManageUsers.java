@@ -7,7 +7,7 @@ import com.googlecode.fspotcloud.client.main.gin.ManageGroups;
 import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.place.ManageUsersPlace;
-import com.googlecode.fspotcloud.client.place.api.PlaceGoTo;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.enduseraction.PlaceMoverBase;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
@@ -18,12 +18,12 @@ public class GoManageUsers extends PlaceMoverBase {
     private final StatusView statusView;
 
     @Inject
-    protected GoManageUsers(PlaceGoTo placeGoTo,
+    protected GoManageUsers(IPlaceController IPlaceController,
                             ManageGroupsView.ManageGroupsPresenter presenter,
                             @ManageGroups StatusView statusView)
 
     {
-        super(placeGoTo);
+        super(IPlaceController);
         this.presenter = presenter;
         this.statusView = statusView;
     }

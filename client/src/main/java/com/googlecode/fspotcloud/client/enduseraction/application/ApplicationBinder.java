@@ -81,6 +81,7 @@ public class ApplicationBinder extends AbstractBinder {
         configBuilder.register(category, actions.goToLatest, binding);
         binding = KeyboardBinding.bind(alt(KeyStroke.KEY_FORWARD_SLASH)).withDefaultModes(Modes.ALL_MODES);
         configBuilder.register(category, actions.show_shortcuts, binding);
+        configBuilder.register(category, actions.toggleAutoHide, get('9'));
     }
 
     private IActionHandler getHelpHandler() {
