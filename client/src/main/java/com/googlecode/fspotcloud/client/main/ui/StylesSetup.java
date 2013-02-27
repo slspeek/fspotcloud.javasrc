@@ -14,7 +14,6 @@ public class StylesSetup {
     private final FadeAnimationResources fadeAnimationResources;
     private final AdminResources adminResources;
     private final HomeResources homeResources;
-    private final BigPushButtonResources bigPushButtonResources;
     private final AdminTreeResources adminTreeResources;
     private final BasicTreeResources basicTreeResources;
     private final BigActionButtonResources bigActionButtonResources;
@@ -27,7 +26,6 @@ public class StylesSetup {
                        FadeAnimationResources fadeAnimationResources,
                        AdminResources adminResources,
                        HomeResources homeResources,
-                       BigPushButtonResources bigPushButtonResources,
                        AdminTreeResources adminTreeResources,
                        BasicTreeResources basicTreeResources,
                        BigActionButtonResources bigActionButtonResources,
@@ -38,7 +36,6 @@ public class StylesSetup {
         this.fadeAnimationResources = fadeAnimationResources;
         this.adminResources = adminResources;
         this.homeResources = homeResources;
-        this.bigPushButtonResources = bigPushButtonResources;
         this.adminTreeResources = adminTreeResources;
         this.basicTreeResources = basicTreeResources;
         this.bigActionButtonResources = bigActionButtonResources;
@@ -52,10 +49,8 @@ public class StylesSetup {
         fadeAnimationResources.style().ensureInjected();
         adminResources.style().ensureInjected();
         homeResources.style().ensureInjected();
-        bigPushButtonResources.style().ensureInjected();
         adminTreeResources.cellTreeStyle().ensureInjected();
         basicTreeResources.cellTreeStyle().ensureInjected();
-        bigPushButtonResources.style().ensureInjected();
         bigActionButtonResources.style().ensureInjected();
         adminActionButtonResources.style().ensureInjected();
         cellTableResources.cellTableStyle().ensureInjected();

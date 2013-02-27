@@ -25,45 +25,47 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.SendConfirmationView;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class SendConfirmationViewImpl extends Composite implements SendConfirmationView {
     private final Logger log = Logger.getLogger(SendConfirmationViewImpl.class.getName());
     private static final SendConfirmationViewImplUiBinder uiBinder = GWT.create(SendConfirmationViewImplUiBinder.class);
-    private SendConfirmationPresenter presenter;
     @UiField
     TextBox emailTextBox;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton send;
-    @UiField
-    BigPushButton cancel;
+    @UiField(provided = true)
+    ActionButton send;
+    @UiField(provided = true)
+    ActionButton cancel;
 
     @Inject
-    public SendConfirmationViewImpl() {
+    public SendConfirmationViewImpl(UserActions userActions,
+                                    DashboardActions dashboardActions,
+                                    BigButtonFactory buttonFactory) {
+        send = buttonFactory.getButton(userActions.doSendEmailConfirmation);
+        cancel = buttonFactory.getButton(dashboardActions.toPhotos);
         initWidget(uiBinder.createAndBindUi(this));
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
-        log.info("Created ");
+        log.log(Level.FINE, "Created ");
     }
 
-    @Override
-    public void setPresenter(SendConfirmationPresenter presenter) {
-        this.presenter = presenter;
-    }
 
     @Override
     public String getEmailField() {
@@ -78,16 +80,6 @@ public class SendConfirmationViewImpl extends Composite implements SendConfirmat
     @Override
     public void clearEmailField() {
         emailTextBox.setText("");
-    }
-
-    @UiHandler("send")
-    public void sendClicked(ClickEvent e) {
-        presenter.send();
-    }
-
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
     }
 
     interface SendConfirmationViewImplUiBinder extends UiBinder<Widget, SendConfirmationViewImpl> {

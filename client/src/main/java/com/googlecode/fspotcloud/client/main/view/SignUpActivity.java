@@ -30,8 +30,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
-import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.SignUpAction;
 import com.googlecode.fspotcloud.shared.main.SignUpResult;
@@ -41,32 +41,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.SignUpPresenter {
-    private final Logger log = Logger.getLogger(SignUpPresenterImpl.class.getName());
+public class SignUpActivity extends AbstractActivity implements SignUpView.SignUpPresenter {
+    private final Logger log = Logger.getLogger(SignUpActivity.class.getName());
     public static final String AN_ERROR_PROHIBITED_YOUR_SIGN_UP = "An error prohibited your sign-up.";
     public static final String SIGNED_UP_SUCCESSFULLY = "Signed up successfully, please check your email for the account-confirmation mail.";
     public static final String SIGN_UP_FAILED = "Sign up failed.";
     private final SignUpView view;
     private final DispatchAsync dispatch;
-    private final IPlaceController IPlaceController;
+    private final UserActions userActions;
 
     @Inject
-    public SignUpPresenterImpl(SignUpView view, DispatchAsync dispatch,
-                               IPlaceController IPlaceController) {
+    public SignUpActivity(SignUpView view,
+                          DispatchAsync dispatch,
+                          UserActions userActions) {
         this.view = view;
         this.dispatch = dispatch;
-        this.IPlaceController = IPlaceController;
+        this.userActions = userActions;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        this.view.setPresenter(this);
         panel.setWidget(view);
         view.focusEmailField();
     }
 
-    @Override
-    public void signUp() {
+    void signUp() {
         String password = verifyPasswords();
 
         if (password == null) {
@@ -77,17 +76,15 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
             SignUpAction action = new SignUpAction(email, password, nickname);
             send(action);
         }
-
-        log.info("Sign-up!");
     }
-
     @Override
-    public void cancel() {
+    public void onStop() {
         view.clearFields();
-        IPlaceController.goTo(new BasePlace("latest", "latest"));
+        super.onStop();
     }
 
     private void send(SignUpAction action) {
+        view.setStatusText("Requesting sign up");
         dispatch.execute(action,
                 new AsyncCallback<SignUpResult>() {
                     @Override
@@ -114,6 +111,13 @@ public class SignUpPresenterImpl extends AbstractActivity implements SignUpView.
             return password;
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        if (userActions.doSignUp.getId().equals(actionId)) {
+            signUp();
         }
     }
 }

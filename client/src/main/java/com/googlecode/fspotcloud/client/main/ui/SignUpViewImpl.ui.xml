@@ -35,10 +35,10 @@
                     </g:Label>
                 </g:layer>
                 <g:layer bottom="0%" height="12%" left="0%" width="20%">
-                    <main:BigPushButton ui:field="signUp">SignUp</main:BigPushButton>
+                    <ka:ActionButton ui:field="signUp">SignUp</ka:ActionButton>
                 </g:layer>
                 <g:layer bottom="0%" height="12%" right="0%" width="20%">
-                    <main:BigPushButton ui:field="cancel">Cancel</main:BigPushButton>
+                    <ka:ActionButton ui:field="cancel">Cancel</ka:ActionButton>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>

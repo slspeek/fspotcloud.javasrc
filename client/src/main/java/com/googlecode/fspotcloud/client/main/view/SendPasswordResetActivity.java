@@ -29,7 +29,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.SendResetPasswordView;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.view.api.SendPasswordResetView;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
@@ -38,31 +39,29 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Logger;
 
 
-public class SendPasswordResetActivity extends AbstractActivity implements SendResetPasswordView.ResetPasswordPresenter {
+public class SendPasswordResetActivity extends AbstractActivity implements SendPasswordResetView.SendPasswordResetPresenter {
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(SendPasswordResetActivity.class.getName());
-    private final SendResetPasswordView view;
+    private final SendPasswordResetView view;
     private final DispatchAsync dispatchAsync;
-    private final Navigator navigator;
+    private final UserActions userActions;
 
 
     @Inject
-    public SendPasswordResetActivity(SendResetPasswordView view,
+    public SendPasswordResetActivity(SendPasswordResetView view,
                                      DispatchAsync dispatchAsync,
-                                     Navigator navigator) {
+                                     UserActions userActions) {
         this.view = view;
         this.dispatchAsync = dispatchAsync;
-        this.navigator = navigator;
+        this.userActions = userActions;
     }
 
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        view.setPresenter(this);
         containerWidget.setWidget(view);
     }
 
-    @Override
-    public void resetPassword() {
+    private void resetPassword() {
         String email = view.getEmailField();
         SendPasswordResetAction action = new SendPasswordResetAction(email);
         dispatchAsync.execute(action, new AsyncCallback<SendPasswordResetResult>() {
@@ -90,8 +89,16 @@ public class SendPasswordResetActivity extends AbstractActivity implements SendR
     }
 
     @Override
-    public void cancel() {
+    public void onStop() {
+        super.onStop();
         view.clearEmailField();
-        navigator.goToLatestTag();
+    }
+
+
+    @Override
+    public void performAction(String actionId) {
+        if(userActions.doRequestPasswordReset.getId().equals(actionId)) {
+            resetPassword();
+        }
     }
 }

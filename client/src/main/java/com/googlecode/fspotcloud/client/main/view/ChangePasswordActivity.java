@@ -32,10 +32,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.ChangePasswordView;
-import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.ChangePasswordPlace;
-import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
 import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -49,31 +48,26 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
     public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
     private final Logger log = Logger.getLogger(ChangePasswordActivity.class.getName());
     private final ChangePasswordView view;
-    private final IPlaceController IPlaceController;
+    private final UserActions userActions;
     private final DispatchAsync dispatchAsync;
-    private final ChangePasswordPlace place;
-
+    private ChangePasswordPlace place;
 
     @Inject
-    public ChangePasswordActivity(@Assisted ChangePasswordPlace place,
-                                  ChangePasswordView view,
-                                  IPlaceController IPlaceController,
+    public ChangePasswordActivity(ChangePasswordView view,
+                                  UserActions userActions,
                                   DispatchAsync dispatchAsync) {
         this.view = view;
-        this.IPlaceController = IPlaceController;
+        this.userActions = userActions;
         this.dispatchAsync = dispatchAsync;
-        this.place = place;
     }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        view.setPresenter(this);
         panel.setWidget(view);
     }
 
     private void updateAccount() {
         String password = verifyPasswords();
-
         if (password == null) {
             view.setStatusText("Passwords do not match");
         } else {
@@ -96,6 +90,7 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
                     public void onSuccess(ResetPasswordResult result) {
                         switch (result.getCode()) {
                             case SUCCESS:
+                                view.setStatusText(YOUR_PASSWORD_WAS_CHANGED);
                                 break;
                             case NOT_REGISTERED:
                                 view.setStatusText("Failed. Please register first.");
@@ -111,17 +106,12 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
                 });
     }
 
-    @Override
-    public void changePassword() {
-        updateAccount();
-    }
 
     @Override
-    public void cancel() {
+    public void onStop() {
+        super.onStop();
         view.clearFields();
-        IPlaceController.goTo(new BasePlace("latest", "latest"));
     }
-
 
     private String verifyPasswords() {
         String password = view.getPasswordField();
@@ -131,5 +121,18 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        if(userActions.doChangePassword.getId().equals(actionId)) {
+            updateAccount();
+        }
+    }
+
+    @Override
+    public ChangePasswordView.ChangePasswordPresenter withPlace(ChangePasswordPlace place) {
+        this.place = place;
+        return this;
     }
 }

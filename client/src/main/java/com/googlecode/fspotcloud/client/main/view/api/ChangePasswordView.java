@@ -26,11 +26,11 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.client.place.ChangePasswordPlace;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
 public interface ChangePasswordView extends IsWidget {
-    void setPresenter(ChangePasswordPresenter presenter);
-
     public String getPasswordField();
 
     public String getPasswordAgainField();
@@ -39,10 +39,7 @@ public interface ChangePasswordView extends IsWidget {
 
     void clearFields();
 
-    interface ChangePasswordPresenter extends Activity {
-
-        void changePassword();
-
-        void cancel();
+    interface ChangePasswordPresenter extends Activity, IActionHandler {
+        ChangePasswordPresenter withPlace(ChangePasswordPlace place);
     }
 }
