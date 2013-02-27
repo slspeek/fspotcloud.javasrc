@@ -25,44 +25,45 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.SendResetPasswordView;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
+import com.googlecode.fspotcloud.client.main.view.api.SendPasswordResetView;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
 
 
-public class SendResetPasswordViewImpl extends Composite implements SendResetPasswordView {
-    private final Logger log = Logger.getLogger(SendResetPasswordViewImpl.class.getName());
+public class SendPasswordResetViewImpl extends Composite implements SendPasswordResetView {
+    private final Logger log = Logger.getLogger(SendPasswordResetViewImpl.class.getName());
     private static final SendResetPasswordViewImplUiBinder uiBinder = GWT.create(SendResetPasswordViewImplUiBinder.class);
-    private ResetPasswordPresenter presenter;
+
     @UiField
     TextBox emailTextBox;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton send;
-    @UiField
-    BigPushButton cancel;
+    @UiField(provided = true)
+    ActionButton send;
+    @UiField(provided = true)
+    ActionButton cancel;
 
     @Inject
-    public SendResetPasswordViewImpl() {
+    public SendPasswordResetViewImpl(DashboardActions dashboardActions,
+                                     UserActions userActions,
+                                     BigButtonFactory buttonFactory) {
+        cancel = buttonFactory.getButton(dashboardActions.toPhotos);
+        send = buttonFactory.getButton(userActions.doRequestPasswordReset);
         initWidget(uiBinder.createAndBindUi(this));
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
         log.info("Created ");
-    }
-
-    @Override
-    public void setPresenter(ResetPasswordPresenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override
@@ -80,16 +81,7 @@ public class SendResetPasswordViewImpl extends Composite implements SendResetPas
         emailTextBox.setText("");
     }
 
-    @UiHandler("send")
-    public void sendClicked(ClickEvent e) {
-        presenter.resetPassword();
-    }
 
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
-    }
-
-    interface SendResetPasswordViewImplUiBinder extends UiBinder<Widget, SendResetPasswordViewImpl> {
+    interface SendResetPasswordViewImplUiBinder extends UiBinder<Widget, SendPasswordResetViewImpl> {
     }
 }

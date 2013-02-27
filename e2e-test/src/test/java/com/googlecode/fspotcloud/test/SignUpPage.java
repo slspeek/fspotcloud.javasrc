@@ -28,7 +28,7 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.googlecode.fspotcloud.client.main.view.SignUpPresenterImpl;
+import com.googlecode.fspotcloud.client.main.view.SignUpActivity;
 import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
@@ -62,7 +62,7 @@ public class SignUpPage {
     }
 
     public void verifySuccess() {
-        assertEquals(SignUpPresenterImpl.SIGNED_UP_SUCCESSFULLY, getStatusText());
+        assertEquals(SignUpActivity.SIGNED_UP_SUCCESSFULLY, getStatusText());
     }
 
     private String getStatusText() {
@@ -70,11 +70,11 @@ public class SignUpPage {
     }
 
     public void verifyFailure() {
-        assertEquals(SignUpPresenterImpl.SIGN_UP_FAILED, getStatusText());
+        assertEquals(SignUpActivity.SIGN_UP_FAILED, getStatusText());
     }
 
     public void verifyError() {
-        assertEquals(SignUpPresenterImpl.AN_ERROR_PROHIBITED_YOUR_SIGN_UP,
+        assertEquals(SignUpActivity.AN_ERROR_PROHIBITED_YOUR_SIGN_UP,
                 getStatusText());
     }
 }

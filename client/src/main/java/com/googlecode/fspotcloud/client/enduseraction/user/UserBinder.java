@@ -6,7 +6,6 @@ import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
 import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
-import com.googlecode.fspotcloud.keyboardaction.Modifiers;
 
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.ctrl;
@@ -15,14 +14,12 @@ public class UserBinder extends AbstractBinder {
 
     private final UserActions actions;
 
-
     @Inject
     public UserBinder(CategoryDef categoryDef,
                       UserActions actions) {
         super(categoryDef.USER);
         this.actions = actions;
     }
-
 
     @Override
     public void build() {
@@ -41,9 +38,16 @@ public class UserBinder extends AbstractBinder {
         binding = KeyboardBinding.bind(alt('P')).withDefaultModes(Modes.ALL_MODES);
         configBuilder.register(category, actions.goAccountPage, binding);
         binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.PROFILE);
-        configBuilder.register(category, actions.doCangePassword, binding);
+        configBuilder.register(category, actions.doChangePassword, binding);
+        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.RESEND_EMAIL);
+        configBuilder.register(category, actions.doSendEmailConfirmation, binding);
+        binding = KeyboardBinding.bind(alt('S'), alt('R')).withDefaultModes(Modes.SEND_RESET);
+        configBuilder.register(category, actions.doRequestPasswordReset, binding);
+        binding = KeyboardBinding.bind(alt('S'), alt('R')).withDefaultModes(Modes.PASSWORD_RESET);
+        configBuilder.register(category, actions.doPasswordReset, binding);
+        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.SIGN_UP);
+        configBuilder.register(category, actions.doSignUp, binding);
     }
-
 
     private KeyboardBinding get(int characterCode) {
         return KeyboardBinding.bind(ctrl(characterCode)).withDefaultModes(Modes.LOGIN, Modes.TAG_VIEW);
@@ -52,6 +56,4 @@ public class UserBinder extends AbstractBinder {
     private KeyboardBinding get(char characterCode) {
         return KeyboardBinding.bind(ctrl(characterCode)).withDefaultModes(Modes.LOGIN, Modes.TAG_VIEW);
     }
-
-
 }

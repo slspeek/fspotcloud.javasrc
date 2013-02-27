@@ -54,8 +54,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter;
     private final ManageUsersView.ManageUsersPresenter manageUsersPresenter;
     private final ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter;
-    private final ChangePasswordActivityFactory changePasswordActivityFactory;
-    private final ActivityAsyncProxy<SendResetPasswordView.ResetPasswordPresenter> sendResetPasswordPresenter;
+    private final ChangePasswordView.ChangePasswordPresenter changePasswordPresenter;
+    private final ActivityAsyncProxy<SendPasswordResetView.SendPasswordResetPresenter> sendResetPasswordPresenter;
     private final HomeView.HomePresenter homePresenter;
     private final TagApprovalView.TagApprovalPresenter approvalPresenter;
     private final DashboardView.DashboardPresenter dashboardPresenter;
@@ -73,8 +73,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
                                     EditUserGroupView.EditUserGroupPresenter editUserGroupPresenter,
                                     ManageUsersView.ManageUsersPresenter manageUsersPresenter,
                                     ActivityAsyncProxy<EmailConfirmationView.EmailConfirmationPresenter> emailConfirmationPresenter,
-                                    ChangePasswordActivityFactory changePasswordActivityFactory,
-                                    ActivityAsyncProxy<SendResetPasswordView.ResetPasswordPresenter> sendResetPasswordPresenter,
+                                    ChangePasswordView.ChangePasswordPresenter changePasswordPresenter, ActivityAsyncProxy<SendPasswordResetView.SendPasswordResetPresenter> sendResetPasswordPresenter,
                                     HomeView.HomePresenter homePresenter,
                                     TagApprovalView.TagApprovalPresenter approvalPresenter,
                                     DashboardView.DashboardPresenter dashboardPresenter) {
@@ -92,7 +91,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         this.editUserGroupPresenter = editUserGroupPresenter;
         this.manageUsersPresenter = manageUsersPresenter;
         this.emailConfirmationPresenter = emailConfirmationPresenter;
-        this.changePasswordActivityFactory = changePasswordActivityFactory;
+        this.changePasswordPresenter = changePasswordPresenter;
         this.sendResetPasswordPresenter = sendResetPasswordPresenter;
         this.homePresenter = homePresenter;
         this.approvalPresenter = approvalPresenter;
@@ -114,16 +113,16 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.MAIL_FULLSIZE);
         } else if (place instanceof SendConfirmationPlace) {
             activity = confirmationPresenterActivity;
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.RESEND_EMAIL);
         } else if (place instanceof HomePlace) {
             activity = homePresenter;
             modeController.setMode(Modes.LOGIN);
         } else if (place instanceof ChangePasswordPlace) {
-            activity = changePasswordActivityFactory.get((ChangePasswordPlace) place);
-            modeController.setMode(Modes.LOGIN);
+            activity = changePasswordPresenter.withPlace((ChangePasswordPlace) place);
+            modeController.setMode(Modes.PASSWORD_RESET);
         } else if (place instanceof SendResetPasswordPlace) {
             activity = sendResetPasswordPresenter;
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.SEND_RESET);
         } else if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;
             modeController.setMode(Modes.PROFILE);
@@ -132,7 +131,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
             modeController.setMode(Modes.TAG_VIEW);
         } else if (place instanceof SignUpPlace) {
             activity = signUpPresenter;
-            modeController.setMode(Modes.LOGIN);
+            modeController.setMode(Modes.SIGN_UP);
         } else if (place instanceof ManageUsersPlace) {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
@@ -161,7 +160,6 @@ public class MainWindowActivityMapper implements ActivityMapper {
         } else {
             log.warning("getActivity will return null for:" + place);
         }
-
         return activity;
     }
 
@@ -170,7 +168,6 @@ public class MainWindowActivityMapper implements ActivityMapper {
             BasePlace basePlace = (BasePlace) place;
             int width = basePlace.getColumnCount();
             int height = basePlace.getRowCount();
-
             if ((height * width) > 1) {
                 navigator.setRasterWidth(width);
                 navigator.setRasterHeight(height);

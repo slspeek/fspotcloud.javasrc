@@ -1,10 +1,11 @@
 @def mainBackground #84DBFF;
 @def notBlack #505050;
 @def verticalPropertyPadding 6px;
+@def horizontalPropertyPadding 3px;
 
 @external  .gwt-SplitLayoutPanel-HDragger;
 
-.gwt-SplitLayoutPanel-HDragger { color: red;
+.gwt-SplitLayoutPanel-HDragger {
     background-color: #5CB3FF;
  }
 
@@ -57,8 +58,9 @@
     font-weight: normal;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
+    padding-right: horizontalPropertyPadding;
+    padding-left:  horizontalPropertyPadding;
 }
-
 .publicCheckbox:focus {
     background: #FFFFDE;
 }
@@ -70,6 +72,8 @@
     font-weight: normal;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
+        padding-right: horizontalPropertyPadding;
+        padding-left:  horizontalPropertyPadding;
 }
 
 .propertyInput {
@@ -78,6 +82,8 @@
     font-weight: normal;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
+        padding-right: horizontalPropertyPadding;
+        padding-left:  horizontalPropertyPadding;
 }
 
 .propertyInput:focus {
@@ -93,6 +99,8 @@
     font-weight: normal;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
+        padding-right: horizontalPropertyPadding;
+        padding-left:  horizontalPropertyPadding;
 }
 
 .propertyNumberValue {
@@ -102,6 +110,8 @@
     text-align: right;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
+        padding-right: horizontalPropertyPadding;
+        padding-left:  horizontalPropertyPadding;
 }
 
 .labelDetails {
@@ -158,7 +168,6 @@
 
 .tableLayoutLayer {
     background: #66BDFF;
-
 }
 
 .tableHeader {

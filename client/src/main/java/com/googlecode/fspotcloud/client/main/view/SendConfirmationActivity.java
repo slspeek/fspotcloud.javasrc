@@ -29,6 +29,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.SendConfirmationView;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
@@ -44,31 +45,33 @@ public class SendConfirmationActivity extends AbstractActivity implements SendCo
     private final SendConfirmationView view;
     private final DispatchAsync dispatchAsync;
     private final Navigator navigator;
+    private final UserActions userActions;
 
 
     @Inject
     public SendConfirmationActivity(SendConfirmationView view,
                                     DispatchAsync dispatchAsync,
-                                    Navigator navigator) {
+                                    Navigator navigator, UserActions userActions) {
         this.view = view;
         this.dispatchAsync = dispatchAsync;
         this.navigator = navigator;
+        this.userActions = userActions;
     }
 
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        view.setPresenter(this);
         containerWidget.setWidget(view);
     }
 
-    @Override
-    public void send() {
+
+    private void send() {
         String email = view.getEmailField();
+        view.setStatusText("Requesting a confirmation email");
         SendConfirmationEmailAction action = new SendConfirmationEmailAction(email);
         dispatchAsync.execute(action, new AsyncCallback<SendConfirmationEmailResult>() {
             @Override
             public void onFailure(Throwable caught) {
-                view.setStatusText("Failed. Maybe you should sign-up first.");
+                view.setStatusText("Failed due to a server error");
             }
 
             @Override
@@ -81,15 +84,21 @@ public class SendConfirmationActivity extends AbstractActivity implements SendCo
                         view.setStatusText("Failed. Please register first.");
                         break;
                 }
-
             }
         });
-
     }
 
     @Override
-    public void cancel() {
+    public void onStop() {
         view.clearEmailField();
-        navigator.goToLatestTag();
+        super.onStop();
+    }
+
+
+    @Override
+    public void performAction(String actionId) {
+        if (userActions.doSendEmailConfirmation.getId().equals(actionId)) {
+            send();
+        }
     }
 }

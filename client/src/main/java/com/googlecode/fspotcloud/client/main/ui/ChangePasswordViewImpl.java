@@ -34,7 +34,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
+import com.googlecode.fspotcloud.client.main.gin.BigToPhotos;
 import com.googlecode.fspotcloud.client.main.view.api.ChangePasswordView;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
 
@@ -42,20 +47,24 @@ import java.util.logging.Logger;
 public class ChangePasswordViewImpl extends Composite implements ChangePasswordView {
     private final Logger log = Logger.getLogger(ChangePasswordViewImpl.class.getName());
     private static final ChangePasswordViewImplUiBinder uiBinder = GWT.create(ChangePasswordViewImplUiBinder.class);
-    private ChangePasswordPresenter presenter;
     @UiField
     PasswordTextBox passwordTextBox;
     @UiField
     PasswordTextBox passwordAgainTextBox;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton change;
-    @UiField
-    BigPushButton cancel;
+    @UiField(provided = true)
+    ActionButton change;
+    @UiField(provided = true)
+    ActionButton cancel;
 
     @Inject
-    public ChangePasswordViewImpl() {
+    public ChangePasswordViewImpl(BigButtonFactory buttonFactory,
+                                  @BigToPhotos ActionButton cancel,
+                                  UserActions userActions)
+    {
+        change = buttonFactory.getButton(userActions.doPasswordReset);
+        this.cancel = cancel;
         initWidget(uiBinder.createAndBindUi(this));
         passwordAgainTextBox.ensureDebugId("password-again");
         passwordTextBox.ensureDebugId("password");
@@ -64,10 +73,7 @@ public class ChangePasswordViewImpl extends Composite implements ChangePasswordV
         statusLabel.ensureDebugId("status");
     }
 
-    @Override
-    public void setPresenter(ChangePasswordPresenter presenter) {
-        this.presenter = presenter;
-    }
+
 
     @Override
     public String getPasswordField() {
@@ -83,17 +89,6 @@ public class ChangePasswordViewImpl extends Composite implements ChangePasswordV
     public void setStatusText(String text) {
         statusLabel.setText(text);
     }
-
-    @UiHandler("change")
-    public void onPush(ClickEvent e) {
-        presenter.changePassword();
-    }
-
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
-    }
-
 
     @Override
     public void clearFields() {

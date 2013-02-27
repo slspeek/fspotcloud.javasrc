@@ -48,7 +48,7 @@ public class NavigatorImpl implements Navigator {
     private final IPlaceController placeController;
     private final DataManager dataManager;
     private final PlaceCalculator placeCalculator;
-    private final IClientLoginManager IClientLoginManager;
+    private final IClientLoginManager clientLoginManager;
 
 
     @Inject
@@ -56,11 +56,11 @@ public class NavigatorImpl implements Navigator {
                          IPlaceController placeController,
                          PlaceCalculator placeCalculator,
                          DataManager dataManager,
-                         IClientLoginManager IClientLoginManager) {
+                         IClientLoginManager clientLoginManager) {
         this.placeController = placeController;
         this.placeCalculator = placeCalculator;
         this.dataManager = dataManager;
-        this.IClientLoginManager = IClientLoginManager;
+        this.clientLoginManager = clientLoginManager;
     }
 
     @Override
@@ -199,7 +199,7 @@ public class NavigatorImpl implements Navigator {
                     place.getRowCount(), place.isAutoHide());
         }
 
-        log.info("About to go to: " + this + " : " + newPlace + " from: " +
+        log.log(Level.FINE, "About to go to: " + this + " : " + newPlace + " from: " +
                 place);
         placeController.goTo(newPlace);
     }
@@ -331,11 +331,15 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void goToTag(String otherTagId, PhotoInfoStore store) {
-        go(Direction.BACKWARD, Unit.BORDER,
+        goToTag(otherTagId, store, Direction.BACKWARD);
+    }
+
+    @Override
+    public void goToTag(String otherTagId, PhotoInfoStore store, Direction direction) {
+        go(direction, Unit.BORDER,
                 new BasePlace(otherTagId, null, placeCalculator.getRasterWidth(),
                         placeCalculator.getRasterHeight(), placeCalculator.isAutoHide()), store);
     }
-
     @Override
     public void goToLatestTag() {
         goToLatestTag(new AsyncCallback<String>() {
@@ -383,9 +387,8 @@ public class NavigatorImpl implements Navigator {
                     }
                 }
                 if (latestNode != null) {
-                    goToTag(latestNode.getId(), latestNode.getCachedPhotoList());
+                    goToTag(latestNode.getId(), latestNode.getCachedPhotoList(), Direction.FORWARD);
                     report.onSuccess("Success");
-
                 } else {
                     handleNoTagsPublic(report);
                 }
@@ -394,7 +397,7 @@ public class NavigatorImpl implements Navigator {
     }
 
     private void handleNoTagsPublic(final AsyncCallback<String> report) {
-        IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+        clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
                 log.log(Level.WARNING, "No user info because: ", caught);
@@ -407,7 +410,7 @@ public class NavigatorImpl implements Navigator {
                     placeController.goTo(TagPlace.DEFAULT);
                     report.onSuccess("To dashboard");
                 } else if (!result.isLoggedIn()) {
-                    IClientLoginManager.redirectToLogin();
+                    clientLoginManager.redirectToLogin();
                     report.onSuccess("Redirect to login");
                 } else {
                     report.onSuccess("Sorry no public labels to view yet");
@@ -525,7 +528,7 @@ public class NavigatorImpl implements Navigator {
                         } else {
                             callback.onFailure(new RuntimeException(
                                     "label not found."));
-                            IClientLoginManager.redirectToLogin();
+                            clientLoginManager.redirectToLogin();
                         }
                     }
                 });

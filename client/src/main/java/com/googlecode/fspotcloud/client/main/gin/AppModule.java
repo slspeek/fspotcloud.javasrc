@@ -32,6 +32,7 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
+import com.googlecode.fspotcloud.client.enduseraction.UserActionFactory;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
@@ -43,10 +44,10 @@ import com.googlecode.fspotcloud.client.main.view.factory.SlideshowActivityFacto
 import com.googlecode.fspotcloud.client.main.view.factory.SlideshowDelayPresenterFactoryImpl;
 import com.googlecode.fspotcloud.client.main.view.factory.TagActivityFactoryImpl;
 import com.googlecode.fspotcloud.client.place.*;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.client.enduseraction.UserActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
 public class AppModule extends AbstractGinModule {
@@ -66,15 +67,15 @@ public class AppModule extends AbstractGinModule {
         bind(DoubleImageView.class).to(DoubleImageViewImpl.class).in(Singleton.class);
         bind(MainWindowActivityMapper.class).in(Singleton.class);
         bind(SendConfirmationView.class).to(SendConfirmationViewImpl.class).in(Singleton.class);
-        bind(SendConfirmationView.SendConfirmationPresenter.class).to(SendConfirmationActivity.class);
+        bind(SendConfirmationView.SendConfirmationPresenter.class).to(SendConfirmationActivity.class).in(Singleton.class);
         bind(MailFullsizeView.class).to(MailFullsizeViewImpl.class).in(Singleton.class);
         bind(MailFullsizeView.MailFullsizePresenter.class).to(MailFullsizeActivity.class).in(Singleton.class);
         bind(ChangePasswordView.class).to(ChangePasswordViewImpl.class).in(Singleton.class);
-        install(new GinFactoryModuleBuilder().implement(ChangePasswordView.ChangePasswordPresenter.class,
-                ChangePasswordActivity.class).build(ChangePasswordActivityFactory.class));
-        bind(SendResetPasswordView.class).to(SendResetPasswordViewImpl.class);
-        bind(SendResetPasswordView.ResetPasswordPresenter.class).to(SendPasswordResetActivity.class);
+        bind(ChangePasswordView.ChangePasswordPresenter.class).to(ChangePasswordActivity.class).in(Singleton.class);
+        bind(SendPasswordResetView.class).to(SendPasswordResetViewImpl.class).in(Singleton.class);
+        bind(SendPasswordResetView.SendPasswordResetPresenter.class).to(SendPasswordResetActivity.class).in(Singleton.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
+        bind(ActionButton.class).annotatedWith(BigToPhotos.class).toProvider(BigToPhotosButtonProvider.class);
         bind(MVPSetup.class).in(Singleton.class);
         bind(TagCell.class);
         bind(TagView.class).to(TagViewImpl.class).in(Singleton.class);
@@ -83,10 +84,10 @@ public class AppModule extends AbstractGinModule {
         bind(SlideshowActivityFactory.class)
                 .to(SlideshowActivityFactoryImpl.class);
         bind(SlideshowView.class).to(SlideshowViewImpl.class);
-        bind(LoginView.class).to(LoginViewImpl.class);
+        bind(LoginView.class).to(LoginViewImpl.class).in(Singleton.class);
         bind(LoginView.LoginPresenter.class).to(LoginPresenterImpl.class).in(Singleton.class);
-        bind(SignUpView.class).to(SignUpViewImpl.class);
-        bind(SignUpView.SignUpPresenter.class).to(SignUpPresenterImpl.class);
+        bind(SignUpView.class).to(SignUpViewImpl.class).in(Singleton.class);
+        bind(SignUpView.SignUpPresenter.class).to(SignUpActivity.class).in(Singleton.class);
         bind(UserAccountView.class).to(UserAccountViewImpl.class);
         bind(UserAccountView.UserAccountPresenter.class)
                 .to(UserAccountActivity.class);

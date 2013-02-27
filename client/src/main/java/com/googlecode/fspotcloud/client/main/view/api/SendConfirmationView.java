@@ -26,10 +26,10 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
 public interface SendConfirmationView extends IsWidget {
-    void setPresenter(SendConfirmationPresenter presenter);
 
     public String getEmailField();
 
@@ -37,10 +37,8 @@ public interface SendConfirmationView extends IsWidget {
 
     void clearEmailField();
 
-    interface SendConfirmationPresenter extends Activity {
+    interface SendConfirmationPresenter extends Activity, IActionHandler {
 
-        void send();
 
-        void cancel();
     }
 }
