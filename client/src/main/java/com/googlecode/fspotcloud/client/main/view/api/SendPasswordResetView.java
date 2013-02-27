@@ -26,21 +26,16 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
-public interface SendResetPasswordView extends IsWidget {
-    void setPresenter(ResetPasswordPresenter presenter);
-
+public interface SendPasswordResetView extends IsWidget {
     public String getEmailField();
 
     public void setStatusText(String text);
 
     void clearEmailField();
 
-    interface ResetPasswordPresenter extends Activity {
-
-        void resetPassword();
-
-        void cancel();
+    interface SendPasswordResetPresenter extends Activity, IActionHandler {
     }
 }

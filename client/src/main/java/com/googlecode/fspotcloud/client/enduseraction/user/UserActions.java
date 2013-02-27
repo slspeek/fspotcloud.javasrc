@@ -11,8 +11,11 @@ public class UserActions {
     public final ActionUIDef goResendConfirmation;
     public final ActionUIDef doLogin;
     public final ActionUIDef doMailFullsize;
-    public final ActionUIDef doCangePassword;
-
+    public final ActionUIDef doChangePassword;
+    public final ActionUIDef doPasswordReset;
+    public final ActionUIDef doSendEmailConfirmation;
+    public final ActionUIDef doRequestPasswordReset;
+    public final ActionUIDef doSignUp;
 
 
     @Inject
@@ -24,6 +27,10 @@ public class UserActions {
         doLogin = new ActionUIDef("do-login", "Login", "Let the server decide whether you can go further");
         goAccountPage = new ActionUIDef("go-account-page", "Profile", "Go to the profile page to change your password");
         doMailFullsize = new ActionUIDef("do-mail-fullsize", "Mail image", "Request the full size image per email");
-        doCangePassword = new ActionUIDef("do-change-password", "Change password", "Change password");
+        doChangePassword = new ActionUIDef("do-change-password", "Change password", "Change password");
+        doPasswordReset = new ActionUIDef("do-password-reset", "Change password", "Change password");
+        doSendEmailConfirmation = new ActionUIDef("do-send-confirmation", "Send", "Resend a confirmation email");
+        doRequestPasswordReset = new ActionUIDef("request-password-reset", "Reset password", "Request a password reset email");
+        doSignUp = new ActionUIDef("do-sign-up", "Sign up", "Sign up for a user account");
     }
 }

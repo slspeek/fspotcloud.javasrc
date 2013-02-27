@@ -42,12 +42,12 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
-public class SignUpPresenterImplTest {
+public class SignUpActivityTest {
     public static final String SECRET = "Secret";
     public static final String ADMIN = "Admin";
     public static final String RMS_FSF_ORG = "rms@example.com";
     @Inject
-    SignUpPresenterImpl presenter;
+    SignUpActivity presenter;
 
     @Before
     public void train(SignUpView signUpView) throws Exception {
@@ -60,7 +60,6 @@ public class SignUpPresenterImplTest {
     public void testStart(SignUpView signUpView, DispatchAsync dispatch,
                           AcceptsOneWidget panel) throws Exception {
         presenter.start(panel, null);
-        verify(signUpView).setPresenter(presenter);
         verify(signUpView).focusEmailField();
         verify(panel).setWidget(signUpView);
         verifyNoMoreInteractions(panel, signUpView, dispatch);

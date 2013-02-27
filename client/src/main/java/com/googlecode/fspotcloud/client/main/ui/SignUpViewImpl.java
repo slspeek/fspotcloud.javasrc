@@ -31,8 +31,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
+import com.googlecode.fspotcloud.client.main.gin.BigToPhotos;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
+import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
 
@@ -41,7 +45,6 @@ public class SignUpViewImpl extends Composite implements SignUpView {
     private final Logger log = Logger.getLogger(SignUpViewImpl.class.getName());
     private static final SignUpViewImplUiBinder uiBinder = GWT.create(SignUpViewImplUiBinder.class);
     private final IScheduler scheduler;
-    private SignUpPresenter presenter;
     @UiField
     TextBox emailTextBox;
     @UiField
@@ -50,13 +53,18 @@ public class SignUpViewImpl extends Composite implements SignUpView {
     PasswordTextBox passwordAgainTextBox;
     @UiField
     Label statusLabel;
-    @UiField
-    BigPushButton signUp;
-    @UiField
-    BigPushButton cancel;
+    @UiField(provided = true)
+    ActionButton signUp;
+    @UiField(provided = true)
+    ActionButton cancel;
 
     @Inject
-    public SignUpViewImpl(IScheduler scheduler) {
+    public SignUpViewImpl(IScheduler scheduler, @BigToPhotos ActionButton cancel,
+                          UserActions userActions,
+                          BigButtonFactory buttonFactory
+    ) {
+        this.cancel = cancel;
+        this.signUp = buttonFactory.getButton(userActions.doSignUp);
         this.scheduler = scheduler;
         initWidget(uiBinder.createAndBindUi(this));
         emailTextBox.ensureDebugId("email");
@@ -65,11 +73,6 @@ public class SignUpViewImpl extends Composite implements SignUpView {
         signUp.ensureDebugId("sign-up");
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
-    }
-
-    @Override
-    public void setPresenter(SignUpPresenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override
@@ -92,15 +95,6 @@ public class SignUpViewImpl extends Composite implements SignUpView {
         statusLabel.setText(text);
     }
 
-    @UiHandler("signUp")
-    public void onPush(ClickEvent e) {
-        presenter.signUp();
-    }
-
-    @UiHandler("cancel")
-    public void onCancel(ClickEvent e) {
-        presenter.cancel();
-    }
 
     @Override
     public void focusEmailField() {

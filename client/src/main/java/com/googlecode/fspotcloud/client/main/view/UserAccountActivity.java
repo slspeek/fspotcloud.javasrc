@@ -34,8 +34,6 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
-import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
 import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
@@ -132,7 +130,7 @@ public class UserAccountActivity extends AbstractActivity implements UserAccount
 
     @Override
     public void performAction(String actionId) {
-        if(userActions.doCangePassword.getId().equals(actionId)) {
+        if(userActions.doChangePassword.getId().equals(actionId)) {
             updateAccount();
         }
     }

@@ -82,6 +82,8 @@ public interface Navigator {
 
     void setAutoHide(boolean autoHide);
 
+    void goToTag(String otherTagId, PhotoInfoStore store, Direction direction);
+
     enum Direction {
         BACKWARD, FORWARD;
     }

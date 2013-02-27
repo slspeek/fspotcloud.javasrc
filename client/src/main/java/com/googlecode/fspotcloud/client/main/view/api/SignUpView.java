@@ -26,11 +26,10 @@ package com.googlecode.fspotcloud.client.main.view.api;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
 public interface SignUpView extends IsWidget {
-    void setPresenter(SignUpPresenter presenter);
-
     public String getEmailField();
 
     public String getPasswordField();
@@ -43,9 +42,6 @@ public interface SignUpView extends IsWidget {
 
     void clearFields();
 
-    interface SignUpPresenter extends Activity {
-        void signUp();
-
-        void cancel();
+    interface SignUpPresenter extends Activity, IActionHandler {
     }
 }
