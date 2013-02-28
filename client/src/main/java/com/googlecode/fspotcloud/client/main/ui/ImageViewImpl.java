@@ -50,6 +50,8 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
     private static final ImageViewImplUiBinder uiBinder = GWT.create(ImageViewImplUiBinder.class);
     private final TimerInterface timer;
     private final String location;
+    private static final int PADDING_Y = 2;
+    private static final int PADDING_X = 2;
     @UiField
     Label info;
     @UiField
@@ -127,14 +129,14 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @Override
     public void onResize() {
-        image.setMaxSize(getOffsetWidth(), getOffsetHeight());
         super.onResize();
+        adjustSize();
     }
 
     @Override
     public void adjustSize() {
         log.log(Level.FINE, "Called adjust size");
-        onResize();
+        image.setMaxSize(getOffsetWidth() - PADDING_X, getOffsetHeight() - PADDING_Y);
     }
 
     interface ImageViewImplUiBinder extends UiBinder<LayoutPanel, ImageViewImpl> {

@@ -5,7 +5,7 @@
              xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction">
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
     <g:LayoutPanel ui:field="mainPanel" styleName="{res.style.tagView}">
-        <g:layer top="0%" height="92%" right="0%" width="78%">
+        <g:layer top="4px" height="92%" right="0%" width="78%">
             <my:ImageRasterViewImpl styleName="{res.style.imagePanelBlock}"></my:ImageRasterViewImpl>
         </g:layer>
         <g:layer top="0%" height="92%" left="0%" width="22%">

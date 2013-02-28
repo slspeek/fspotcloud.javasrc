@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.ImagePresenterFactory;
@@ -50,24 +51,24 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
     private final int rowCount;
     private final int pageSize;
     private final boolean thumb;
-    private final IScheduler scheduler;
+    private final Provider<IScheduler> schedulerProvider;
     protected final ImageRasterView imageRasterView;
     private final Navigator navigator;
     private final ImagePresenterFactory imagePresenterFactory;
-    private final IPlaceController IPlaceController;
+    private final IPlaceController placeController;
     List<ImageView> imageViewList;
     final List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
 
     @Inject
     public ImageRasterPresenterImpl(@Assisted
-                                    BasePlace place, @Assisted
-                                    ImageRasterView imageRasterView,
+                                        BasePlace place, @Assisted
+                                        ImageRasterView imageRasterView,
                                     Navigator navigator,
                                     ImagePresenterFactory imagePresenterFactory,
-                                    IScheduler scheduler,
-                                    IPlaceController IPlaceController) {
-        this.scheduler = scheduler;
-        this.IPlaceController = IPlaceController;
+                                    Provider<IScheduler> schedulerProvider,
+                                    IPlaceController placeController) {
+        this.schedulerProvider = schedulerProvider;
+        this.placeController = placeController;
         tagId = place.getTagId();
         photoId = place.getPhotoId();
         columnCount = place.getColumnCount();
@@ -120,6 +121,21 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
         log.log(Level.FINEST, "setImages public exiting");
     }
 
+    @Override
+    public void adjustSizes() {
+        for (ImageView.ImagePresenter presenter: imagePresenterList) {
+              adjustSize(presenter);
+        }
+    }
+
+    private void adjustSize(final ImageView.ImagePresenter presenter) {
+        schedulerProvider.get().schedule(new Runnable() {
+            @Override
+            public void run() {
+                presenter.adjustSize();
+            }
+        });
+    }
     private void setImages(List<PhotoInfo> result) {
         imagePresenterList.clear();
         int i = 0;
@@ -138,7 +154,7 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
             }
 
             imagePresenterList.add(presenter);
-            scheduler.schedule(new Runnable() {
+            schedulerProvider.get().schedule(new Runnable() {
                 @Override
                 public void run() {
                     presenter.init();
