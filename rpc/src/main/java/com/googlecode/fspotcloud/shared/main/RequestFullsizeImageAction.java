@@ -30,7 +30,7 @@ import net.customware.gwt.dispatch.shared.Action;
 
 
 @GwtCompatible
-public class RequestFullsizeImageAction implements Action<VoidResult> {
+public class RequestFullsizeImageAction implements Action<FullsizeImageResult> {
     String imageId;
 
     public RequestFullsizeImageAction(String imageId) {

@@ -13,6 +13,7 @@ import com.googlecode.fspotcloud.client.main.view.api.MailFullsizeView;
 import com.googlecode.fspotcloud.client.place.MailFullsizePlace;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -102,15 +103,15 @@ public class MailFullsizeActivity extends AbstractActivity implements MailFullsi
         final String id = mailFullsizePlace.getPhotoId();
         mailFullsizeView.setStatusText("Requesting full size scheduling");
         dispatchAsync.execute(new RequestFullsizeImageAction(id),
-                new AsyncCallback<VoidResult>() {
+                new AsyncCallback<FullsizeImageResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        mailFullsizeView.setStatusText("Full size failed on server");
+                        mailFullsizeView.setStatusText("Full size failed on server due to a server error");
                     }
 
                     @Override
-                    public void onSuccess(VoidResult result) {
-                        mailFullsizeView.setStatusText("Full size succeed on server, you can await the image. It may take a couple of days.");
+                    public void onSuccess(FullsizeImageResult result) {
+                        mailFullsizeView.setStatusText(result.getMessage());
                     }
                 });
     }
