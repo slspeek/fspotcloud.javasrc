@@ -31,7 +31,9 @@ import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
+import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
+import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import com.googlecode.fspotcloud.shared.peer.GetFullsizePhotoAction;
 import com.googlecode.fspotcloud.user.UserService;
@@ -39,8 +41,15 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+import static com.google.common.collect.Sets.newHashSet;
 
-public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFullsizeImageAction, VoidResult> {
+
+public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFullsizeImageAction, FullsizeImageResult> {
+    public static final String SUCCESSFULLY_MAILED = "Successfully mailed the image, you can check your mail";
+    public static final String SUCCESSFULLY_SCHEDULED = "Successfully scheduled your request, it may take a couple of days";
+    public static final String NOT_ALLOWED = "You are not allowed to view this image";
+    public static final String IMAGE_NOT_FOUND = "Image was not found";
+    public static final String LOGON_FIRST = "Failed, you have to logon first";
     @Inject
     private ControllerDispatchAsync controllerAsyc;
     @Inject
@@ -51,30 +60,44 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
     private UserService userService;
     @Inject
     private IMail mailer;
+    @Inject
+    private IUserGroupHelper userGroupHelper;
 
     @Override
-    public VoidResult execute(RequestFullsizeImageAction action,
+    public FullsizeImageResult execute(RequestFullsizeImageAction action,
                               ExecutionContext context) throws DispatchException {
+        String message = "";
         if (userService.isUserLoggedIn()) {
             final String caller = userService.getEmail();
             final String imageId = action.getImageId();
             final Photo photo = photoDao.find(imageId);
 
             if (photo != null) {
-                byte[] fsImage = imageHelper.getImage(photo,
-                        ImageHelper.Type.FULLSIZE);
+                if (userService.isUserAdmin() ||
+                        userGroupHelper.containsOneOf(newHashSet(photo.getTagList()))) {
+                    byte[] fsImage = imageHelper.getImage(photo,
+                            ImageHelper.Type.FULLSIZE);
 
-                if (fsImage != null) {
-                    mailer.send(caller, "Your requested image: " + imageId,
-                            "Dear " + caller + ",\nYour requested image: " +
-                                    imageId + " is in the attachment", fsImage);
+                    if (fsImage != null) {
+                        mailer.send(caller, "Your requested image: " + imageId,
+                                "Dear " + caller + ",\nYour requested image: " +
+                                        imageId + " is in the attachment", fsImage);
+                        message = SUCCESSFULLY_MAILED;
+                    } else {
+                        controllerAsyc.execute(new GetFullsizePhotoAction(imageId),
+                                new FullsizePhotoCallback(caller, null, null));
+                        message = SUCCESSFULLY_SCHEDULED;
+                    }
                 } else {
-                    controllerAsyc.execute(new GetFullsizePhotoAction(imageId),
-                            new FullsizePhotoCallback(caller, null, null));
+                    message = NOT_ALLOWED;
                 }
+            } else {
+                message = IMAGE_NOT_FOUND;
             }
+        }  else {
+            message = LOGON_FIRST;
         }
 
-        return new VoidResult();
+        return new FullsizeImageResult(message);
     }
 }
