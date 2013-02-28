@@ -39,12 +39,12 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.MainToolbar;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.enduseraction.MainToolbar;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
 import java.util.logging.Level;
@@ -57,8 +57,7 @@ public class TagViewImpl extends Composite implements TagView,
     private static final int TREE_VIEW_WIDTH_PCT = 22;
     private static final int IMAGE_PANEL_WIDTH_PCT = 100 - TREE_VIEW_WIDTH_PCT;
     private static final int BUTTON_PANEL_HEIGHT_PCT = 6;
-    private static final int IMAGEPANEL_HEIGHT_PCT = 100 -
-            BUTTON_PANEL_HEIGHT_PCT;
+    private static final int IMAGEPANEL_HEIGHT_PCT = 100 - BUTTON_PANEL_HEIGHT_PCT;
     private final Logger log = Logger.getLogger(TagViewImpl.class.getName());
     private static final TagViewImplUiBinder uiBinder = GWT.create(TagViewImplUiBinder.class);
     static int ID;
@@ -71,6 +70,7 @@ public class TagViewImpl extends Composite implements TagView,
     final TreeView treeView;
     final ImageRasterView imageRasterView;
     private final TimerInterface timer;
+    private final TimerInterface adjustSizesTimer;
     @SuppressWarnings("unused")
     private TagPresenter presenter;
     int id = ++ID;
@@ -81,9 +81,10 @@ public class TagViewImpl extends Composite implements TagView,
     public TagViewImpl(@BasicTreeView TreeView treeView,
                        ImageRasterView imageRasterView,
                        TimerInterface timer,
-                       @MainToolbar ActionToolbar actionToolbar) {
+                       TimerInterface adjustSizesTimer, @MainToolbar ActionToolbar actionToolbar) {
         this.timer = timer;
         this.treeView = treeView;
+        this.adjustSizesTimer = adjustSizesTimer;
         this.actionToolbar = actionToolbar;
         imageRasterView.asWidget().addDomHandler(this, MouseOverEvent.getType());
         imageRasterView.asWidget().addDomHandler(this, MouseOutEvent.getType());
@@ -112,7 +113,7 @@ public class TagViewImpl extends Composite implements TagView,
     }
 
     public void animateControlsIn(int duration) {
-        if(!autoHide) {
+        if (!autoHide) {
             duration = 0;
         }
         cancelHiding();
@@ -131,6 +132,18 @@ public class TagViewImpl extends Composite implements TagView,
         mainPanel.setWidgetLeftWidth(verticalFocusPanel, 0, Unit.PCT, 0,
                 Unit.PCT);
         mainPanel.animate(duration);
+        updateImageSizes(duration);
+    }
+
+    private void updateImageSizes(int duration) {
+        final ImageRasterView.ImageRasterPresenter imageRasterPresenter = imageRasterView.getPresenter();
+        adjustSizesTimer.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                imageRasterPresenter.adjustSizes();
+            }
+        });
+        adjustSizesTimer.schedule(duration);
     }
 
     public void animateControlsOut(int duration) {
@@ -146,6 +159,7 @@ public class TagViewImpl extends Composite implements TagView,
         mainPanel.setWidgetLeftWidth(verticalFocusPanel, 0, Unit.PCT, 10,
                 Unit.PCT);
         mainPanel.animate(duration);
+        updateImageSizes(duration);
     }
 
     @Override
@@ -182,7 +196,9 @@ public class TagViewImpl extends Composite implements TagView,
     public void onMouseOver(MouseOverEvent event) {
         log.log(Level.FINER, "On mouse over");
         cancelHiding();
-        hideControlsLater(1000);
+        if (autoHide) {
+            hideControlsLater(1000);
+        }
     }
 
     @Override

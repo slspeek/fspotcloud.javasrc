@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  */
 public class PlaceCalculator {
     private final Logger log = Logger.getLogger(PlaceCalculator.class.getName());
-    public static final int DEFAULT_RASTER_WIDTH = 5;
+    public static final int DEFAULT_RASTER_WIDTH = 4;
     public static final int DEFAULT_RASTER_HEIGHT = 4;
     public static final int MINIMUM_RASTER_WIDTH = 2;
     public static final int MINIMUM_RASTER_HEIGHT = 2;

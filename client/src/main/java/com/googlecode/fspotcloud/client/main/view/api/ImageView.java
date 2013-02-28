@@ -45,5 +45,7 @@ public interface ImageView extends IsWidget {
         void imageClicked();
 
         void setSelected(boolean selected);
+
+        void adjustSize();
     }
 }
