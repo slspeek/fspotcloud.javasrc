@@ -6,6 +6,7 @@ configurations {
 
 dependencies {
     testCompile project(':test-util')
+    testCompile project(':server')
     testCompile project(':client')
     testCompile "org.seleniumhq.selenium:selenium:${selenium_version}"
     testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:${selenium_client_version}"

@@ -29,7 +29,7 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.googlecode.fspotcloud.server.main.PropertiesLoader;
-import com.googlecode.fspotcloud.test.Fixture;
+import com.googlecode.fspotcloud.test.TwoUsersFixture;
 
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -42,7 +42,7 @@ public class GaeFixtureServletConfig extends GuiceServletContextListener {
 
     public GaeFixtureServletConfig() {
         injector = Guice.createInjector(new GaeTotalModule(100, "", ""), new FixtureServletModulde());
-        Fixture fixture = new Fixture(injector);
+        TwoUsersFixture fixture = new TwoUsersFixture(injector);
         fixture.run();
         Logger.getAnonymousLogger().info("We are called!");
     }

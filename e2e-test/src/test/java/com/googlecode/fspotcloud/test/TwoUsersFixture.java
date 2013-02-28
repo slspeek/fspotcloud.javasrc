@@ -7,12 +7,14 @@ import com.googlecode.fspotcloud.server.model.api.UserDao;
 
 import java.util.logging.Logger;
 
-public class Fixture implements Runnable {
+import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+
+public class TwoUsersFixture implements Runnable {
 
     UserDao userDao;
 
     @Inject
-    public Fixture(Injector injector) {
+    public TwoUsersFixture(Injector injector) {
         userDao = injector.getInstance(UserDao.class);
     }
 
@@ -24,7 +26,7 @@ public class Fixture implements Runnable {
 
     private void createSLS() {
         User rms = userDao.findOrNew(ILogin.SLS);
-        rms.setCredentials(ILogin.SLS_CRED);
+        rms.setCredentials(hash(ILogin.SLS, ILogin.SLS_CRED));
         rms.setRegistered(true);
         rms.setEnabled(true);
         userDao.save(rms);
@@ -33,7 +35,7 @@ public class Fixture implements Runnable {
 
     private void createRMS() {
         User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
-        rms.setCredentials(ILogin.CREDENTIALS);
+        rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.CREDENTIALS));
         rms.setRegistered(true);
         rms.setEnabled(true);
         userDao.save(rms);
