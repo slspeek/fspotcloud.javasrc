@@ -14,4 +14,8 @@ public class DigestTool {
         return hash;
     }
 
+    public static String hash(String username, String plainPassword) {
+        return DigestUtils.md5Hex(username + plainPassword);
+    }
+
 }

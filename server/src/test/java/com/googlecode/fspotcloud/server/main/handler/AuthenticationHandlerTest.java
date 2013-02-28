@@ -31,12 +31,14 @@ import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
 import com.googlecode.fspotcloud.user.ILoginMetaDataUpdater;
 import com.googlecode.fspotcloud.user.LoginMetaData;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
+import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -60,7 +62,7 @@ public class AuthenticationHandlerTest {
     public void testExecuteFailureWrongPassword(UserDao userDao)
             throws Exception {
         User user = new UserEntity("foo");
-        user.setCredentials("Set");
+        user.setCredentials(hash("foo","Set"));
         when(userDao.find("foo")).thenReturn(user);
 
         AuthenticationAction action = new AuthenticationAction("foo", "secret");
@@ -85,8 +87,9 @@ public class AuthenticationHandlerTest {
     public void success(UserDao userDao, ILoginMetaDataUpdater updater)
             throws Exception {
         User user = new UserEntity("foo");
-        user.setCredentials("secret");
         user.setEnabled(true);
+        String newHashedPassword = hash("foo", "secret");
+        user.setCredentials(newHashedPassword);
         when(userDao.find("foo")).thenReturn(user);
 
         AuthenticationAction action = new AuthenticationAction("foo", "secret");

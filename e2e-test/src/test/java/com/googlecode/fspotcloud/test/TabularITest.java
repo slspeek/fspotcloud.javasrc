@@ -46,7 +46,7 @@ public class TabularITest {
     public void testTabular() throws Exception {
         login.login();
         photoPage.open();
-        photoPage.clickImage(4, 0);
+        photoPage.clickImage(3, 0);
         photoPage.clickImage(0, 0);
 
         selenium.open("/#BasePlace:1:12:2:2:false");

@@ -6,6 +6,7 @@ configurations {
 
 dependencies {
     testCompile project(':test-util')
+    testCompile project(':server')
     testCompile project(':client')
     testCompile project(':model-api')
     testCompile "org.seleniumhq.selenium:selenium:2.0b3"

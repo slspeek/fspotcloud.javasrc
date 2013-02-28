@@ -31,8 +31,11 @@ import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.inject.Inject;
+
+import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 
 
 public class ResetPasswordHandler extends SimpleActionHandler<ResetPasswordAction, ResetPasswordResult> {
@@ -46,7 +49,8 @@ public class ResetPasswordHandler extends SimpleActionHandler<ResetPasswordActio
         if (user != null && user.hasRegistered()) {
             if (user.getEnabled()) {
                 if (action.getSecret().equals(user.emailVerificationSecret())) {
-                    user.setCredentials(action.getNewPassword());
+                    String newHashedPassword = hash(user.getEmail(), action.getNewPassword());
+                    user.setCredentials(newHashedPassword);
                     user.setEmailVerificationSecret(null);
                     userDao.save(user);
                     return new ResetPasswordResult(ResetPasswordResult.Code.SUCCESS);
