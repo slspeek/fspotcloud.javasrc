@@ -1,21 +1,3 @@
-@def darkColor #8BB381  ;/**Dark Sea Green */
-@def ligherColor 	#C3FDB8;/**  Dark Sea Green1	 */ 
-@def treeColor #B5EAAA  ;
-	/**  Dark Sea Green2	 */ 
-@def borderRadius   7px  ;
-@def foregroundColor #595454; /** Grey40 */
-
-@def darkColor #66BDFF;
-@def ligherColor 	#98EFFF; 
-@def treeColor #98EFFF; 
-@def borderRadius   14px  ;
-@def foregroundColor white;
-@def ligherColor #B38481;
-@def ligherColor  #DEFFF1;
-@def treeColor #B38481;
-@def treeColor #FFF1DE;
-@def thirdColor #F1DEFF;
-
 /** Dark theme */
 @def ligherColor  #495674;
 @def treeColor #9B8C8C;
@@ -69,7 +51,7 @@
 }
 
 .selectedImage {
-	padding: 4px;
+	/*padding: 4px;*/
 	margin: auto;
 	border-style: solid;
 	border-color: borderColor;
@@ -79,7 +61,8 @@
 
 
 .imagePanelBlock {
-	padding: 2px;
+
+	padding-top: 100px;
 	background-color: ligherColor;
 	margin: auto;
     border-style: solid;
@@ -121,72 +104,6 @@
 
 
 .image {
-	padding: 4px;
+	/*padding: 4px;*/
 	margin: auto;
 }
-
-/**.imageIn {
-  -webkit-animation: fade_in slideshowAnimationTime;
-  -moz-animation: fade_in slideshowAnimationTime;
-  -o-animation: fade_in slideshowAnimationTime;
-   animation: fade_in slideshowAnimationTime;
-   margin: auto;
-   padding: 4px;
-}
-
-
-
-@-webkit-keyframes fade_in {
-   0%   { opacity: 0.0;  }
-   50%  { opacity: 0.5; }
-   100% { opacity: 1.0; }
-}
-@-moz-keyframes fade_in {
-  0%   { opacity: 0.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
-}
-@-o-keyframes fade_in {
-  0%   { opacity: 0.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
-}
-@keyframes fade_in {
-  0%   { opacity: 0.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
-}
-
-.imageOut {
-    margin: auto;
- 	padding: 4px;
-    opacity: 0;
-  -webkit-animation: fade_out slideshowAnimationTime;
-     -moz-animation: fade_out slideshowAnimationTime;
-       -o-animation: fade_out slideshowAnimationTime;
-          animation: fade_out slideshowAnimationTime;
-}
-
-@-webkit-keyframes fade_out {
-  0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
-}
-@-moz-keyframes fade_out {
-  0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
-}
-@-o-keyframes fade_out {
-  0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
-}
-@keyframes fade_out {
-  0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.0; }
-
-}
-
-*/

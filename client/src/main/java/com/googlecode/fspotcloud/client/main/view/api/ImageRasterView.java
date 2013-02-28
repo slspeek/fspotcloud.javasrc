@@ -37,9 +37,13 @@ public interface ImageRasterView extends IsWidget {
 
     void setPagingText(String text);
 
+    ImageRasterPresenter getPresenter();
+
     interface ImageRasterPresenter extends Initializable {
         public void onMouseWheelNorth();
 
         public void onMouseWheelSouth();
+
+        void adjustSizes();
     }
 }

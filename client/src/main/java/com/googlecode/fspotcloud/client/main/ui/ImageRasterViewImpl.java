@@ -74,6 +74,10 @@ public class ImageRasterViewImpl extends ResizeComposite
         pagingLabel.setStyleName(resources.style().pagerLabel());
     }
 
+    public ImageRasterPresenter getPresenter() {
+        return presenter;
+    }
+
     @Override
     public List<ImageView> buildRaster(int rowCount, int columnCount) {
         if ((rowCount == storedRowCount) && (columnCount == storedColumnCount)) {
@@ -88,12 +92,17 @@ public class ImageRasterViewImpl extends ResizeComposite
                     ImageView view = imageViewFactory.get(column + "x" + row);
                     Widget asWidget = view.asWidget();
                     layoutPanel.add(asWidget);
+                    final float height =  (100.0f / rowCount);
+                    final float width = (100.0f / columnCount);
+                    final float top = row * height;
+                    final float left = column * width;
+
                     layoutPanel.setWidgetTopHeight(asWidget,
-                            row * (100 / (float) rowCount), Unit.PCT,
-                            100 / rowCount, Unit.PCT);
+                            top, Unit.PCT,
+                            height, Unit.PCT);
                     layoutPanel.setWidgetLeftWidth(asWidget,
-                            column * (100 / (float) columnCount), Unit.PCT,
-                            100 / rowCount, Unit.PCT);
+                            left, Unit.PCT,
+                            width, Unit.PCT);
                     result.add(view);
                 }
             }
