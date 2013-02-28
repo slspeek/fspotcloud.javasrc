@@ -30,6 +30,7 @@ import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
 import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
 import com.googlecode.fspotcloud.user.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +38,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
+import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -53,7 +55,7 @@ public class UpdateUserHandlerTest {
     @Before
     public void setUp(UserDao userDao, UserService userService) throws Exception {
         user = new UserEntity(RMS_FSF_ORG);
-        user.setCredentials(OLD_PASSWORD);
+        user.setCredentials(hash(RMS_FSF_ORG,OLD_PASSWORD));
         user.setRegistered(true);
         user.setEnabled(true);
         when(userDao.find(RMS_FSF_ORG)).thenReturn(user);
@@ -66,7 +68,7 @@ public class UpdateUserHandlerTest {
         UpdateUserAction action = new UpdateUserAction(NEW_PASSWORD, OLD_PASSWORD);
         UpdateUserResult result = handler.execute(action, null);
         assertTrue(result.getSuccess());
-        assertEquals(user.getCredentials(), NEW_PASSWORD);
+        assertEquals(user.getCredentials(), hash(RMS_FSF_ORG, NEW_PASSWORD));
         verify(userDao).save(user);
         verify(userDao).find(RMS_FSF_ORG);
         verify(userService).isUserLoggedIn();

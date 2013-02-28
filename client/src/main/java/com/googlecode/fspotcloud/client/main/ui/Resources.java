@@ -178,8 +178,6 @@ public interface Resources extends ClientBundle {
 
         String tagView();
 
-        String button();
-
         String imagePanelBlock();
 
         String photoInfoLabel();

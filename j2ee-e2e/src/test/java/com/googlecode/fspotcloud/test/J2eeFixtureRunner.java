@@ -7,7 +7,7 @@ import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 public class J2eeFixtureRunner {
     public static void main(String[] args) {
         Injector injector = Guice.createInjector(new J2eeModelModule(100, "derby"));
-        Fixture fixture = new Fixture(injector);
-        fixture.run();
+        TwoUsersFixture twoUsersFixture = new TwoUsersFixture(injector);
+        twoUsersFixture.run();
     }
 }
