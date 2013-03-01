@@ -156,7 +156,7 @@ subprojects {
 
     if ("${cobertura}" == "true") {
         buildscript {
-            apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
+            apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.2.1/coberturainit.gradle'
         }
 
     }
