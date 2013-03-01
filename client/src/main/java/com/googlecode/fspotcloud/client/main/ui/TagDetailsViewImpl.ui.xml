@@ -45,7 +45,7 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of photos in this label</g:Label>
                     </td>
                     <td>
-                        <g:Label styleName="{res.style.propertyValue}" ui:field="tagCountValueLabel"></g:Label>
+                        <g:Label styleName="{res.style.propertyNumberValue}" ui:field="tagCountValueLabel"></g:Label>
                     </td>
                 </tr>
                 <tr>
@@ -53,12 +53,12 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of photos loaded</g:Label>
                     </td>
                     <td>
-                        <g:Label styleName="{res.style.propertyValue}" ui:field="tagLoadedCountValueLabel"></g:Label>
+                        <g:Label styleName="{res.style.propertyNumberValue}" ui:field="tagLoadedCountValueLabel"></g:Label>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <g:Label styleName="{res.style.propertyLabel}">Request import of this label</g:Label>
+                        <g:Label styleName="{res.style.propertyLabel}">Toggle import of this label</g:Label>
                     </td>
                     <td>
                         <ka:ActionButton ui:field="importTagButton">Import label</ka:ActionButton>
@@ -66,7 +66,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <g:Label styleName="{res.style.propertyLabel}">Approve usergroups</g:Label>
+                        <g:Label styleName="{res.style.propertyLabel}">Approve groups</g:Label>
                     </td>
                     <td>
                         <ka:ActionButton ui:field="manageAccessButton">Manage access</ka:ActionButton>

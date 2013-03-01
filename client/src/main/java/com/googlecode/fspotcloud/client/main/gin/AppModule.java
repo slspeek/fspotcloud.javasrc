@@ -32,7 +32,7 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
-import com.googlecode.fspotcloud.client.enduseraction.UserActionFactory;
+import com.googlecode.fspotcloud.client.enduseraction.EndUserActionFactory;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
@@ -54,11 +54,12 @@ public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+        bind(ReplaceLocation.class).to(ReplaceLocationImpl.class);
         bind(StatusView.class).to(StatusViewImpl.class);
         bind(StatusView.class).annotatedWith(Dashboard.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(StatusView.class).annotatedWith(ManageGroups.class).to(StatusViewImpl.class).in(Singleton.class);
         bind(StatusView.class).annotatedWith(ManageUsers.class).to(StatusViewImpl.class).in(Singleton.class);
-        bind(UIRegistrationBuilder.class).to(UserActionFactory.class);
+        bind(UIRegistrationBuilder.class).to(EndUserActionFactory.class);
         bind(IScheduler.class).to(SchedulerImpl.class);
         install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
         bind(HomeView.class).to(HomeViewImpl.class);
@@ -127,7 +128,7 @@ public class AppModule extends AbstractGinModule {
 
         bind(ITreeSelectionHandler.class).annotatedWith(AdminTreeView.class).to(AdminTreeSelectionHandler.class);
         bind(ITreeSelectionHandler.class).annotatedWith(BasicTreeView.class).to(TreeSelectionHandler.class);
-        bind(LoadNewLocation.class).to(LoadNewLocationImpl.class);
+        bind(OpenNewTab.class).to(OpenNewTabImpl.class);
 
         //admin
         bind(TagDetailsView.TagDetailsPresenter.class)
