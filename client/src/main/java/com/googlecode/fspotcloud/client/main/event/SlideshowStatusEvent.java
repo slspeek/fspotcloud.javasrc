@@ -24,12 +24,12 @@
 
 package com.googlecode.fspotcloud.client.main.event;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
-
-public class SlideshowStatusEvent extends GwtEvent<SlideshowStatusEvent.Handler>
-        implements SlideshowStatus {
+@GwtCompatible
+public class SlideshowStatusEvent extends GwtEvent<SlideshowStatusEvent.Handler> {
     public static final Type<SlideshowStatusEvent.Handler> TYPE = new Type<SlideshowStatusEvent.Handler>();
     private final float delay;
     private final boolean running;

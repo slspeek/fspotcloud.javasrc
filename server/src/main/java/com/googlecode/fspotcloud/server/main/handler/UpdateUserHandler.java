@@ -32,7 +32,6 @@ import com.googlecode.fspotcloud.user.UserService;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.inject.Inject;
 
@@ -53,10 +52,10 @@ public class UpdateUserHandler extends SimpleActionHandler<UpdateUserAction, Upd
             String userName = userService.getEmail();
             User user = userDao.find(userName);
             if (user.hasRegistered()) {
-               if (user.getEnabled()) {
-                    String oldHashedPassword = hash(userName,action.getOldPassword());
+                if (user.getEnabled()) {
+                    String oldHashedPassword = hash(userName, action.getOldPassword());
                     if (oldHashedPassword.equals(user.getCredentials())) {
-                        String newHashedPassword = hash(userName,action.getNewPassword());
+                        String newHashedPassword = hash(userName, action.getNewPassword());
                         user.setCredentials(newHashedPassword);
                         userDao.save(user);
                         return new UpdateUserResult(true);

@@ -25,10 +25,8 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;

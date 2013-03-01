@@ -29,8 +29,8 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.IndexingUtil;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -53,10 +53,10 @@ public class NavigatorImpl implements Navigator {
 
     @Inject
     public NavigatorImpl(
-                         IPlaceController placeController,
-                         PlaceCalculator placeCalculator,
-                         DataManager dataManager,
-                         IClientLoginManager clientLoginManager) {
+            IPlaceController placeController,
+            PlaceCalculator placeCalculator,
+            DataManager dataManager,
+            IClientLoginManager clientLoginManager) {
         this.placeController = placeController;
         this.placeCalculator = placeCalculator;
         this.dataManager = dataManager;
@@ -340,6 +340,7 @@ public class NavigatorImpl implements Navigator {
                 new BasePlace(otherTagId, null, placeCalculator.getRasterWidth(),
                         placeCalculator.getRasterHeight(), placeCalculator.isAutoHide()), store);
     }
+
     @Override
     public void goToLatestTag() {
         goToLatestTag(new AsyncCallback<String>() {

@@ -25,16 +25,13 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
 import com.googlecode.fspotcloud.client.main.gin.BigToPhotos;
@@ -61,8 +58,7 @@ public class ChangePasswordViewImpl extends Composite implements ChangePasswordV
     @Inject
     public ChangePasswordViewImpl(BigButtonFactory buttonFactory,
                                   @BigToPhotos ActionButton cancel,
-                                  UserActions userActions)
-    {
+                                  UserActions userActions) {
         change = buttonFactory.getButton(userActions.doPasswordReset);
         this.cancel = cancel;
         initWidget(uiBinder.createAndBindUi(this));
@@ -72,7 +68,6 @@ public class ChangePasswordViewImpl extends Composite implements ChangePasswordV
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
     }
-
 
 
     @Override

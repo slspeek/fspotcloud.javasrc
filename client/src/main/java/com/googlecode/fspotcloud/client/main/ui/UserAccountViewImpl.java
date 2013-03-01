@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 public class UserAccountViewImpl extends Composite implements UserAccountView {
     private final Logger log = Logger.getLogger(UserAccountViewImpl.class.getName());
     private static final UserAccountViewImplUiBinder uiBinder = GWT.create(UserAccountViewImplUiBinder.class);
-    
+
     @UiField
     Label emailValueLabel;
     @UiField
@@ -69,7 +69,7 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
                                BigButtonFactory buttonFactory
     ) {
         save = buttonFactory.getButton(userActions.doChangePassword);
-        cancel =  buttonFactory.getButton(dashboardActions.toPhotos);
+        cancel = buttonFactory.getButton(dashboardActions.toPhotos);
         initWidget(uiBinder.createAndBindUi(this));
         emailValueLabel.ensureDebugId("email");
         lastLoginValueLabel.ensureDebugId("last-login");
@@ -106,7 +106,7 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
         statusLabel.setText(text);
     }
 
-    
+
     interface UserAccountViewImplUiBinder extends UiBinder<Widget, UserAccountViewImpl> {
     }
 }

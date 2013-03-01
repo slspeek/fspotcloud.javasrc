@@ -29,10 +29,10 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Level;

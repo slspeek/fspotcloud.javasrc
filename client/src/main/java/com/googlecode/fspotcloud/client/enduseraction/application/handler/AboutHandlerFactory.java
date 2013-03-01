@@ -26,8 +26,8 @@ package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
+import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
 import com.googlecode.fspotcloud.keyboardaction.HelpConfig;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;

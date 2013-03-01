@@ -101,7 +101,7 @@ public class HelpActionsFactory {
                 shortcutsPopup.setSafeHtml(content);
                 if (shortcutsPopup.isShowing()) {
                     shortcutsPopup.hide();
-                }   else {
+                } else {
                     shortcutsPopup.show();
 
                     int width = shortcutsPopup.getOffsetWidth();

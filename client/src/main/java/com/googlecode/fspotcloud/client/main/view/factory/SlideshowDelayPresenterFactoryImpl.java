@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view.factory;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -33,7 +34,7 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView.SlideshowPresenter;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
 
-
+@GwtCompatible
 public class SlideshowDelayPresenterFactoryImpl implements Provider<SlideshowPresenter> {
     private final SlideshowDelayView delayView;
     private final Slideshow slideshow;
@@ -53,7 +54,6 @@ public class SlideshowDelayPresenterFactoryImpl implements Provider<SlideshowPre
         SlideshowDelayPresenterImpl delayPresenter = new SlideshowDelayPresenterImpl(delayView);
         eventBus.addHandler(SlideshowStatusEvent.TYPE, delayPresenter);
         delayPresenter.redraw(slideshow.delay(), slideshow.isRunning());
-
         return delayPresenter;
     }
 }

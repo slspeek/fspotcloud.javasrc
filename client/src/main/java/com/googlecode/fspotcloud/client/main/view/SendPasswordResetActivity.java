@@ -31,7 +31,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.SendPasswordResetView;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
 import com.googlecode.fspotcloud.shared.main.SendPasswordResetResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -97,7 +96,7 @@ public class SendPasswordResetActivity extends AbstractActivity implements SendP
 
     @Override
     public void performAction(String actionId) {
-        if(userActions.doRequestPasswordReset.getId().equals(actionId)) {
+        if (userActions.doRequestPasswordReset.getId().equals(actionId)) {
             resetPassword();
         }
     }

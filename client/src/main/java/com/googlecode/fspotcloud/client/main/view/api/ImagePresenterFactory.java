@@ -24,10 +24,11 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 
-
+@GwtCompatible
 public interface ImagePresenterFactory {
     ImageView.ImagePresenter get(@Assisted
                                  String tagId, @Assisted

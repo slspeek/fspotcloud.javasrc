@@ -31,7 +31,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.ChangePasswordView;
 import com.googlecode.fspotcloud.client.place.ChangePasswordPlace;
@@ -115,7 +114,6 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
 
     private String verifyPasswords() {
         String password = view.getPasswordField();
-
         if (Objects.equal(password, view.getPasswordAgainField())) {
             return password;
         } else {
@@ -125,7 +123,7 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
 
     @Override
     public void performAction(String actionId) {
-        if(userActions.doChangePassword.getId().equals(actionId)) {
+        if (userActions.doChangePassword.getId().equals(actionId)) {
             updateAccount();
         }
     }

@@ -32,7 +32,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.SignUpView;
-import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.SignUpAction;
 import com.googlecode.fspotcloud.shared.main.SignUpResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -77,6 +76,7 @@ public class SignUpActivity extends AbstractActivity implements SignUpView.SignU
             send(action);
         }
     }
+
     @Override
     public void onStop() {
         view.clearFields();

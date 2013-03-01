@@ -26,7 +26,8 @@
                             </g:HTMLPanel>
                         </g:layer>
                         <g:layer top="10%" height="80%">
-                            <c:CellTable ui:field="grantedTable" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                            <c:CellTable ui:field="grantedTable"
+                                         styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
                         <g:layer bottom="40px" height="50px" left="0%" width="35%">
                             <ka:ActionButton ui:field="revokeButton"></ka:ActionButton>
@@ -43,7 +44,8 @@
                             </g:HTMLPanel>
                         </g:layer>
                         <g:layer top="10%" height="80%">
-                            <c:CellTable ui:field="revokedTable" styleName="{res.style.myUsergroupsTable}"></c:CellTable>
+                            <c:CellTable ui:field="revokedTable"
+                                         styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
                         <g:layer bottom="40px" height="50px" left="0%" width="35%">
                             <ka:ActionButton ui:field="grantButton"></ka:ActionButton>
