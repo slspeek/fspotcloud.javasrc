@@ -31,7 +31,6 @@ import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
 import com.googlecode.fspotcloud.user.ILoginMetaDataUpdater;
 import com.googlecode.fspotcloud.user.LoginMetaData;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,7 +61,7 @@ public class AuthenticationHandlerTest {
     public void testExecuteFailureWrongPassword(UserDao userDao)
             throws Exception {
         User user = new UserEntity("foo");
-        user.setCredentials(hash("foo","Set"));
+        user.setCredentials(hash("foo", "Set"));
         when(userDao.find("foo")).thenReturn(user);
 
         AuthenticationAction action = new AuthenticationAction("foo", "secret");

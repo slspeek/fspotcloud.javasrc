@@ -24,14 +24,13 @@
 
 package com.googlecode.fspotcloud.client.main.event;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.api.Initializable;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 
-
-public class ZoomViewEventHandlerImpl implements ZoomViewEvent.Handler,
-        Initializable {
+@GwtCompatible
+public class ZoomViewEventHandlerImpl implements ZoomViewEvent.Handler {
     private final Navigator navigator;
     private final EventBus eventBus;
 

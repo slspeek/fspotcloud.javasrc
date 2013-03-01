@@ -24,12 +24,13 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
-
+@GwtCompatible
 public interface EditUserGroupView extends IsWidget, StatusView {
-    void setPresenter(EditUserGroupPresenter presenter);
 
     void setName(String name);
 
@@ -46,9 +47,7 @@ public interface EditUserGroupView extends IsWidget, StatusView {
     void focusNameField();
 
 
-    interface EditUserGroupPresenter extends Activity {
-        void save();
-
+    interface EditUserGroupPresenter extends Activity, IActionHandler {
         void setId(Long id);
     }
 }

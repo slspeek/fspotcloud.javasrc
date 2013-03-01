@@ -64,7 +64,7 @@ public class KeyboardPreferences {
 
     Set<String> allRelevantActions(String mode) {
         HashSet result = newHashSet();
-        for (String actionId: allActions()) {
+        for (String actionId : allActions()) {
             if (isRelevant(actionId, mode)) {
                 result.add(actionId);
             }

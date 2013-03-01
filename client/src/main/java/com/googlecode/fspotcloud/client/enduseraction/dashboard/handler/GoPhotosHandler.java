@@ -24,9 +24,9 @@ public class GoPhotosHandler implements IActionHandler {
 
     @Inject
     public GoPhotosHandler(
-                           DataManager dataManager,
-                           IPlaceController placeController,
-                           IClientLoginManager clientLoginManager) {
+            DataManager dataManager,
+            IPlaceController placeController,
+            IClientLoginManager clientLoginManager) {
         this.dataManager = dataManager;
         this.placeController = placeController;
         this.clientLoginManager = clientLoginManager;

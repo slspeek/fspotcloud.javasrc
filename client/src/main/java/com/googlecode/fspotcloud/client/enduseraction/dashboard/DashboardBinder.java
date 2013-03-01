@@ -25,7 +25,7 @@ public class DashboardBinder extends AbstractBinder {
     @Override
     public void build() {
         configBuilder.register(category, actions.reloadTree, get('R'));
-        KeyboardBinding binding=KeyboardBinding.bind(KeyStroke.F).withDefaultModes(Modes.DASHBOARD)
+        KeyboardBinding binding = KeyboardBinding.bind(KeyStroke.F).withDefaultModes(Modes.DASHBOARD)
                 .override(Modes.MAIL_FULLSIZE, KeyStroke.ESC)
                 .override(Modes.LOGIN, KeyStroke.ESC)
                 .override(Modes.PROFILE, KeyStroke.ESC)

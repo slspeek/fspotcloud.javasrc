@@ -24,10 +24,11 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.client.main.view.api.TagView.TagPresenter;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 
-
+@GwtCompatible
 public interface TagActivityFactory {
     TagPresenter get(BasePlace place);
 }

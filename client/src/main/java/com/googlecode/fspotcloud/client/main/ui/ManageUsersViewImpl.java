@@ -36,14 +36,14 @@ import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
-import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
-import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
-import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
+import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
+import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
+import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 

@@ -92,7 +92,7 @@ public class ImageRasterViewImpl extends ResizeComposite
                     ImageView view = imageViewFactory.get(column + "x" + row);
                     Widget asWidget = view.asWidget();
                     layoutPanel.add(asWidget);
-                    final float height =  (100.0f / rowCount);
+                    final float height = (100.0f / rowCount);
                     final float width = (100.0f / columnCount);
                     final float top = row * height;
                     final float left = column * width;

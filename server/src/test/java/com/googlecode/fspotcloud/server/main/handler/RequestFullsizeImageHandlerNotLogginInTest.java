@@ -5,7 +5,6 @@ import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.model.jpa.photo.PhotoEntity;
 import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
-import com.googlecode.fspotcloud.server.main.handler.RequestFullsizeImageHandler;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;

@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view.factory;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.DoubleImagePresenterImpl;
 import com.googlecode.fspotcloud.client.main.view.SlideshowActivity;
@@ -31,7 +32,7 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowActivityFactory;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
-
+@GwtCompatible
 public class SlideshowActivityFactoryImpl
         implements SlideshowActivityFactory {
     private final DoubleImagePresenterImpl doubleImagePresenter;

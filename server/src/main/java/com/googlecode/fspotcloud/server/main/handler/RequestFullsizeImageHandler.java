@@ -32,7 +32,6 @@ import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import com.googlecode.fspotcloud.shared.peer.GetFullsizePhotoAction;
@@ -65,7 +64,7 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
 
     @Override
     public FullsizeImageResult execute(RequestFullsizeImageAction action,
-                              ExecutionContext context) throws DispatchException {
+                                       ExecutionContext context) throws DispatchException {
         String message = "";
         if (userService.isUserLoggedIn()) {
             final String caller = userService.getEmail();
@@ -94,7 +93,7 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
             } else {
                 message = IMAGE_NOT_FOUND;
             }
-        }  else {
+        } else {
             message = LOGON_FIRST;
         }
 

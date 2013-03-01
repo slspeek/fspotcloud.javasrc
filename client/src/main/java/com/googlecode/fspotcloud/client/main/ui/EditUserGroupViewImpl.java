@@ -29,10 +29,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
-import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
+import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
 import java.util.logging.Logger;
@@ -42,7 +42,6 @@ public class EditUserGroupViewImpl extends Composite
         implements EditUserGroupView {
     private final Logger log = Logger.getLogger(EditUserGroupViewImpl.class.getName());
     private static final EditUserGroupBinder uiBinder = GWT.create(EditUserGroupBinder.class);
-    private EditUserGroupPresenter presenter;
     @UiField
     TextBox nameTextBox;
     @UiField
@@ -70,10 +69,6 @@ public class EditUserGroupViewImpl extends Composite
         log.info("Created ");
     }
 
-    @Override
-    public void setPresenter(EditUserGroupPresenter presenter) {
-        this.presenter = presenter;
-    }
 
     @Override
     public void setName(String name) {

@@ -53,7 +53,8 @@
                         <g:Label styleName="{res.style.propertyLabel}">Number of photos loaded</g:Label>
                     </td>
                     <td>
-                        <g:Label styleName="{res.style.propertyNumberValue}" ui:field="tagLoadedCountValueLabel"></g:Label>
+                        <g:Label styleName="{res.style.propertyNumberValue}"
+                                 ui:field="tagLoadedCountValueLabel"></g:Label>
                     </td>
                 </tr>
                 <tr>

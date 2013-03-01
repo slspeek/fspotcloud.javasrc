@@ -30,7 +30,6 @@ import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
 import com.googlecode.fspotcloud.shared.main.UpdateUserResult;
 import com.googlecode.fspotcloud.user.UserService;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class UpdateUserHandlerTest {
     @Before
     public void setUp(UserDao userDao, UserService userService) throws Exception {
         user = new UserEntity(RMS_FSF_ORG);
-        user.setCredentials(hash(RMS_FSF_ORG,OLD_PASSWORD));
+        user.setCredentials(hash(RMS_FSF_ORG, OLD_PASSWORD));
         user.setRegistered(true);
         user.setEnabled(true);
         when(userDao.find(RMS_FSF_ORG)).thenReturn(user);

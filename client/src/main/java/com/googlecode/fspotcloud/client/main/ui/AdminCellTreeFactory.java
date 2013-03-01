@@ -1,9 +1,11 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.inject.Inject;
 
+@GwtCompatible
 public class AdminCellTreeFactory implements CellTreeFactory {
 
     private final AdminTreeResources resources;

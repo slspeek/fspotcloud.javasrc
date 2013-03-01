@@ -36,12 +36,12 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
+import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.gin.ManageGroups;
 import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
-import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
-import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
@@ -56,7 +56,7 @@ public class ManageGroupsViewImpl extends Composite implements ManageGroupsView 
     private final ListDataProvider<UserGroupInfo> dataProvider;
     private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
 
-    @UiField (provided = true)
+    @UiField(provided = true)
     CellTable<UserGroupInfo> table;
     @UiField(provided = true)
     ActionButton newButton;

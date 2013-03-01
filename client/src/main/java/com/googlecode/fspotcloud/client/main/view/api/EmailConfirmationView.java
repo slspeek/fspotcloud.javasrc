@@ -24,10 +24,11 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
 
-
+@GwtCompatible
 public interface EmailConfirmationView extends IsWidget {
 
     void setStatusText(String text);

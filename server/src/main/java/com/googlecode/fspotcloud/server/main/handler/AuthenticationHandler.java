@@ -35,7 +35,6 @@ import com.googlecode.fspotcloud.user.UserService;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 
@@ -72,7 +71,7 @@ public class AuthenticationHandler extends SimpleActionHandler<AuthenticationAct
 
     private boolean checkCredentials(User user, AuthenticationAction action) {
         String plainPassword = action.getPassword();
-        String hashedPassword = hash(user.getEmail(),plainPassword);
+        String hashedPassword = hash(user.getEmail(), plainPassword);
         return user.getEnabled() && user.getCredentials().equals(hashedPassword);
     }
 }

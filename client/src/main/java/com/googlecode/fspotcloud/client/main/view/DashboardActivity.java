@@ -51,22 +51,21 @@ public class DashboardActivity extends AbstractActivity
     private final PeerActionsView.PeerActionsPresenter peerActionsPresenter;
     private TagDetailsView.TagDetailsPresenter activity;
     private final IClientLoginManager clientLoginManager;
-    private final IPlaceController IPlaceController;
-
+    private final IPlaceController placeController;
 
     @Inject
     public DashboardActivity(DashboardView dashboardView,
                              @AdminTreeView TreeView.TreePresenter treePresenter,
                              PeerActionsView.PeerActionsPresenter peerActionsPresenter,
-                             TagDetailsActivity tagDetailsActivity,
-                             IClientLoginManager IClientLoginManager,
-                             IPlaceController IPlaceController) {
+                             TagDetailsView.TagDetailsPresenter tagDetailsActivity,
+                             IClientLoginManager clientLoginManager,
+                             IPlaceController placeController) {
         this.dashboardView = dashboardView;
         this.treePresenter = treePresenter;
         this.peerActionsPresenter = peerActionsPresenter;
         this.activity = tagDetailsActivity;
-        this.clientLoginManager = IClientLoginManager;
-        this.IPlaceController = IPlaceController;
+        this.clientLoginManager = clientLoginManager;
+        this.placeController = placeController;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class DashboardActivity extends AbstractActivity
         clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
-                IPlaceController.goTo(new HomePlace());
+                placeController.goTo(new HomePlace());
             }
 
             @Override
@@ -83,7 +82,7 @@ public class DashboardActivity extends AbstractActivity
                     treePresenter.init();
                     peerActionsPresenter.init();
                 } else if (result.isLoggedIn()) {
-                    IPlaceController.goTo(new HomePlace());
+                    placeController.goTo(new HomePlace());
                 } else {
                     clientLoginManager.redirectToLogin();
                 }
@@ -94,7 +93,6 @@ public class DashboardActivity extends AbstractActivity
     @Override
     public DashboardView.DashboardPresenter withPlace(TagPlace place) {
         ((AdminTreePresenterImpl) treePresenter).setPlace(place);
-
         activity.init();
         return this;
     }

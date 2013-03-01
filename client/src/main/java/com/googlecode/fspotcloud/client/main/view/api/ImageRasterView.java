@@ -24,12 +24,12 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.client.main.api.Initializable;
 
 import java.util.List;
 
-
+@GwtCompatible
 public interface ImageRasterView extends IsWidget {
     List<ImageView> buildRaster(int rowCount, int columnCount);
 
@@ -39,10 +39,12 @@ public interface ImageRasterView extends IsWidget {
 
     ImageRasterPresenter getPresenter();
 
-    interface ImageRasterPresenter extends Initializable {
-        public void onMouseWheelNorth();
+    interface ImageRasterPresenter {
+        void init();
 
-        public void onMouseWheelSouth();
+        void onMouseWheelNorth();
+
+        void onMouseWheelSouth();
 
         void adjustSizes();
     }

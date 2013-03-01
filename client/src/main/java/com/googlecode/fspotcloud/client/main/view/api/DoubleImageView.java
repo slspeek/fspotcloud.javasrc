@@ -24,10 +24,10 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.client.main.api.Initializable;
 
-
+@GwtCompatible
 public interface DoubleImageView extends IsWidget {
 
     void setImageUrl(String url);
@@ -48,7 +48,9 @@ public interface DoubleImageView extends IsWidget {
 
     void setPreviousImageVisible(boolean visible);
 
-    interface ImagePresenter extends Initializable {
+    interface ImagePresenter {
         void imageClicked();
+
+        void init();
     }
 }

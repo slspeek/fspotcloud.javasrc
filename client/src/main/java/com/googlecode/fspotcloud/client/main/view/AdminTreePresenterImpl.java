@@ -24,9 +24,9 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
@@ -36,43 +36,27 @@ import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.TagPlace;
-import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class AdminTreePresenterImpl extends TreePresenterBase implements TreeView.TreePresenter {
 
     private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
-    private final IPlaceController IPlaceController;
     private final StatusView statusView;
 
     @Inject
     public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
                                   DataManager dataManager,
                                   SingleSelectionModelExt selectionModel,
-                                  IPlaceController IPlaceController,
                                   @AdminTreeView ITreeSelectionHandler treeSelectionHandler,
                                   @Dashboard StatusView statusView) {
         super(treeView, dataManager, selectionModel, treeSelectionHandler);
-        this.IPlaceController = IPlaceController;
         this.statusView = statusView;
     }
 
-
-    public void onSelectionChange2(SelectionChangeEvent event) {
-        log.log(Level.FINE, "Selection event from admin tree" + event);
-
-        TagNode node = selectionModel.getSelectedObject();
-
-        if (node != null) {
-            String tagId = node.getId();
-            log.log(Level.FINEST, "About to go");
-            IPlaceController.goTo(new TagPlace(tagId));
-        }
-    }
 
     public void setPlace(TagPlace place) {
         log.log(Level.FINE, "Set place with place " + place);

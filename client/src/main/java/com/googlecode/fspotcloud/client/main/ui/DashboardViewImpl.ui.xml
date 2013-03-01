@@ -24,7 +24,6 @@
                 </g:west>
                 <g:center>
                     <g:LayoutPanel>
-
                         <g:layer left="0%" width="50%">
                             <main:TagDetailsViewImpl styleName="{res.style.labelDetails}" width="400px"
                                                      height="100%"></main:TagDetailsViewImpl>

@@ -2,7 +2,6 @@ package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.PlaceCalculator;
 import com.googlecode.fspotcloud.client.place.PlaceConverter;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;

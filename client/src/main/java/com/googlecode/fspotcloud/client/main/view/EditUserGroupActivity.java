@@ -24,14 +24,15 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
-import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
@@ -43,15 +44,15 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class EditUserGroupActivity extends AbstractActivity implements EditUserGroupView.EditUserGroupPresenter {
     private final Logger log = Logger.getLogger(EditUserGroupActivity.class.getName());
     private final EditUserGroupView view;
     private final DispatchAsync dispatch;
-    private UserGroupInfo userGroupInfo;
     private final EventBus eventBus;
     private final DashboardActions dashboardActions;
     private final IScheduler scheduler;
+    private UserGroupInfo userGroupInfo;
 
     @Inject
     public EditUserGroupActivity(EditUserGroupView view,
@@ -68,7 +69,6 @@ public class EditUserGroupActivity extends AbstractActivity implements EditUserG
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        this.view.setPresenter(this);
         panel.setWidget(view);
         scheduler.schedule(new Runnable() {
             @Override
@@ -78,10 +78,8 @@ public class EditUserGroupActivity extends AbstractActivity implements EditUserG
         });
     }
 
-    @Override
-    public void save() {
+    private void save() {
         log.log(Level.FINE, "Saved called.");
-
         userGroupInfo.setName(view.getName());
         userGroupInfo.setDescription(view.getDescription());
         userGroupInfo.setPublic(view.getIsPublic());
@@ -97,7 +95,7 @@ public class EditUserGroupActivity extends AbstractActivity implements EditUserG
                     public void onSuccess(VoidResult result) {
                         view.setStatusText("A save was successfully performed on the server, redirecting");
                         log.info(
-                                "Successfull return from save user group server call");
+                                "Successfully returned from save user group server call");
                         eventBus.fireEvent(new KeyboardActionEvent(dashboardActions.manageGroups.getId()));
                     }
                 });
@@ -105,7 +103,7 @@ public class EditUserGroupActivity extends AbstractActivity implements EditUserG
 
     @Override
     public void setId(final Long id) {
-        log.info("Set id: " + id);
+        log.log(Level.FINE, "Set id: " + id);
         view.setStatusText("Requesting data for group with id=" + id);
         dispatch.execute(new GetUserGroupAction(id),
                 new AsyncCallback<GetUserGroupResult>() {
@@ -125,5 +123,8 @@ public class EditUserGroupActivity extends AbstractActivity implements EditUserG
                 });
     }
 
-
+    @Override
+    public void performAction(String actionId) {
+        save();
+    }
 }

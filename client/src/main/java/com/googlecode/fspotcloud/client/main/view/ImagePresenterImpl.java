@@ -98,6 +98,7 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
     public void adjustSize() {
         imageView.adjustSize();
     }
+
     @Override
     public void imageClicked() {
         log.log(Level.FINEST, "about to fire zoom event");

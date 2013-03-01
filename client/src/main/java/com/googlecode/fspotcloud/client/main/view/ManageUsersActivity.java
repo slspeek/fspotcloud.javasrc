@@ -29,10 +29,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
-import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;
@@ -71,14 +71,14 @@ public class ManageUsersActivity extends AbstractActivity implements ManageUsers
         refreshData();
     }
 
-   private void addUser() {
+    private void addUser() {
         final String newEmail = view.getNewEmail();
         statusView.setStatusText("Requesting to add " + newEmail + " to the group");
         dispatch.execute(new GrantUserAction(newEmail, userGroupId),
                 new AsyncCallback<VoidResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                       statusView.setStatusText("Adding " + newEmail + " failed due to a server error");
+                        statusView.setStatusText("Adding " + newEmail + " failed due to a server error");
                     }
 
                     @Override
@@ -146,8 +146,8 @@ public class ManageUsersActivity extends AbstractActivity implements ManageUsers
     @Override
     public void performAction(String actionId) {
         if (groupActions.addUser.getId().equals(actionId)) {
-           addUser();
-        }   else if(groupActions.removeUser.getId().equals(actionId)) {
+            addUser();
+        } else if (groupActions.removeUser.getId().equals(actionId)) {
             removeUser();
         } else if (groupActions.focusUserTable.getId().equals(actionId)) {
             view.focusUsers();

@@ -41,7 +41,8 @@ public class ActionButton extends PushButton implements IActionEnableHandler, IA
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionUIDef actionUIDef;
     private final EventBus eventBus;
-    private final ActionButtonResources resources;            ;
+    private final ActionButtonResources resources;
+    ;
 
     ActionButton(ActionUIDef actionUIDef,
                  EventBus eventBus,
