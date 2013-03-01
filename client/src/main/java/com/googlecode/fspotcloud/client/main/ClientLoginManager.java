@@ -31,7 +31,8 @@ package com.googlecode.fspotcloud.client.main;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
+import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
+import com.googlecode.fspotcloud.client.main.view.api.ReplaceLocation;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
@@ -56,19 +57,19 @@ public class ClientLoginManager implements IClientLoginManager {
     private UserInfo currentUser;
     private final DataManager dataManager;
     private final GetUserInfoMemoProc getUserInfoMemoProc;
-    private final LoadNewLocation loadNewLocation;
+    private final ReplaceLocation replaceLocation;
 
     @Inject
     public ClientLoginManager(DispatchAsync dispatch,
                               IPlaceController placeController,
                               DataManager dataManager,
                               GetUserInfoMemoProc getUserInfoMemoProc,
-                              LoadNewLocation loadNewLocation) {
+                              ReplaceLocation replaceLocation) {
         this.dispatch = dispatch;
         this.placeController = placeController;
         this.dataManager = dataManager;
         this.getUserInfoMemoProc = getUserInfoMemoProc;
-        this.loadNewLocation = loadNewLocation;
+        this.replaceLocation = replaceLocation;
     }
 
     @Override
@@ -94,7 +95,7 @@ public class ClientLoginManager implements IClientLoginManager {
                     public void onSuccess(UserInfo result) {
                         String loginUrl = result.getLoginUrl();
                         log.info("LoginURL: " + loginUrl);
-                        loadNewLocation.setLocation(loginUrl);
+                        replaceLocation.setLocation(loginUrl);
                     }
                 });
     }

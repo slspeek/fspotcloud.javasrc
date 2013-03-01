@@ -26,17 +26,17 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
+import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 
 public class LoadNewLocationAction implements Runnable, IActionHandler {
 
-    private final LoadNewLocation loader;
+    private final OpenNewTab loader;
     private final String newLocation;
 
     @Inject
-    protected LoadNewLocationAction(LoadNewLocation loader,
+    protected LoadNewLocationAction(OpenNewTab loader,
                                     @Assisted String newLocation) {
         super();
         this.loader = loader;

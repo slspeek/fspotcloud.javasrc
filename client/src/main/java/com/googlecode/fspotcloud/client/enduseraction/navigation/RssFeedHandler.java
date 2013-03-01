@@ -1,7 +1,7 @@
 package com.googlecode.fspotcloud.client.enduseraction.navigation;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
+import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
@@ -14,7 +14,7 @@ public class RssFeedHandler implements IActionHandler {
     @Inject
     private IPlaceController placeController;
     @Inject
-    private LoadNewLocation loader;
+    private OpenNewTab loader;
 
     @Override
     public void performAction(String actionId) {

@@ -136,7 +136,9 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
     @Override
     public void adjustSize() {
         log.log(Level.FINE, "Called adjust size");
-        image.setMaxSize(getOffsetWidth() - PADDING_X, getOffsetHeight() - PADDING_Y);
+        int width = Math.max(0, getOffsetWidth() - PADDING_X);
+        int height = Math.max(0, getOffsetHeight() - PADDING_Y);
+        image.setMaxSize(width, height);
     }
 
     interface ImageViewImplUiBinder extends UiBinder<LayoutPanel, ImageViewImpl> {
