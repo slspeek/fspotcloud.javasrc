@@ -22,34 +22,8 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.view;
+package com.googlecode.fspotcloud.client.main.view.api;
 
-import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
-import junit.framework.TestCase;
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-
-
-public class LoadNewLocationActionTest extends TestCase {
-    final Mockery context = new Mockery();
-    OpenNewTab loader;
-    LoadNewLocationAction action;
-
-    public void testLoadNewLocationAction() {
-        loader = context.mock(OpenNewTab.class);
-        action = new LoadNewLocationAction(loader, "#");
-        assertNotNull(action);
-    }
-
-    public void testRun() {
-        testLoadNewLocationAction();
-        context.checking(new Expectations() {
-
-            {
-                oneOf(loader).setLocation(with("#"));
-            }
-        });
-        action.run();
-        context.assertIsSatisfied();
-    }
+public interface ReplaceLocation {
+    void setLocation(String url);
 }

@@ -25,12 +25,12 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.user.client.Window;
-import com.googlecode.fspotcloud.client.main.view.api.LoadNewLocation;
+import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 
 
-public class LoadNewLocationImpl implements LoadNewLocation {
+public class OpenNewTabImpl implements OpenNewTab {
     @Override
     public void setLocation(String url) {
-        Window.Location.replace(url);
+        Window.open(url, "", "");
     }
 }

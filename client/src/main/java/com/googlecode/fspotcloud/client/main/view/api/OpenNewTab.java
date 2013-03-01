@@ -24,6 +24,6 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
-public interface LoadNewLocation {
+public interface OpenNewTab {
     void setLocation(String url);
 }
