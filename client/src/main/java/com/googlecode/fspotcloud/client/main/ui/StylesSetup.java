@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 
 import java.util.logging.Level;

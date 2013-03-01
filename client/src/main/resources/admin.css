@@ -110,8 +110,8 @@
     text-align: right;
     padding-top: verticalPropertyPadding;
     padding-bottom: verticalPropertyPadding;
-        padding-right: horizontalPropertyPadding;
-        padding-left:  horizontalPropertyPadding;
+    padding-right: horizontalPropertyPadding;
+    padding-left:  horizontalPropertyPadding;
 }
 
 .labelDetails {
@@ -132,7 +132,6 @@
      width: 100%;
      font-size: 13.5pt;
      color: notBlack;
-
      text-align: center;
      background: #66BDFF;
 }

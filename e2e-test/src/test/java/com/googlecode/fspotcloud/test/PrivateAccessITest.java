@@ -30,7 +30,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import javax.inject.Inject;
-
 import java.util.logging.Logger;
 
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;

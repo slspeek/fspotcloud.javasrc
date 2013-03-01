@@ -33,7 +33,6 @@ import net.customware.gwt.dispatch.server.Dispatch;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.inject.Inject;
 
@@ -54,7 +53,7 @@ public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResul
 
         if (!mayBeExisted.hasRegistered()) {
             final User newUser = mayBeExisted;
-            String newHashedPassword = hash(email,action.getPassword());
+            String newHashedPassword = hash(email, action.getPassword());
             newUser.setNickname(action.getNickname());
             newUser.setCredentials(newHashedPassword);
             newUser.setRegistered(true);

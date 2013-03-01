@@ -24,14 +24,15 @@
 
 package com.googlecode.fspotcloud.client.main.gin;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
+import com.googlecode.fspotcloud.client.enduseraction.UserActionModule;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
 import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
-import com.googlecode.fspotcloud.client.enduseraction.UserActionModule;
 import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
 
-
+@GwtCompatible
 @GinModules({AppModule.class, UserActionModule.class, StandardDispatchModule.class})
 public interface AppGinjector extends Ginjector {
     MVPSetup getMVPSetup();

@@ -24,13 +24,14 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.Set;
 
-
+@GwtCompatible
 public interface ManageUsersView extends IsWidget {
     void setPresenter(ManageUsersPresenter presenter);
 

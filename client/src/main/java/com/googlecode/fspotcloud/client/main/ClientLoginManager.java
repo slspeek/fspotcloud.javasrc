@@ -28,10 +28,10 @@
 */
 package com.googlecode.fspotcloud.client.main;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.client.main.view.api.ReplaceLocation;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
@@ -44,17 +44,11 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author steven
- */
+@GwtCompatible
 public class ClientLoginManager implements IClientLoginManager {
     private final Logger log = Logger.getLogger(ClientLoginManager.class.getName());
     private final DispatchAsync dispatch;
     private final IPlaceController placeController;
-    private UserInfo currentUser;
     private final DataManager dataManager;
     private final GetUserInfoMemoProc getUserInfoMemoProc;
     private final ReplaceLocation replaceLocation;
@@ -83,18 +77,22 @@ public class ClientLoginManager implements IClientLoginManager {
         dispatch.execute(new LogoutAction(), resultAsyncCallback);
     }
 
+    private abstract class CallbackUserInfo implements AsyncCallback<UserInfo> {
+        @Override
+        public void onFailure(Throwable caught) {
+            log.log(Level.WARNING, "Get user info failed ", caught);
+
+        }
+    }
+
     @Override
     public void goTo3rdPartyLogin(String nextUrl) {
         dispatch.execute(new GetUserInfo("post-login?next=" + nextUrl),
-                new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                    }
-
+                new CallbackUserInfo() {
                     @Override
                     public void onSuccess(UserInfo result) {
                         String loginUrl = result.getLoginUrl();
-                        log.info("LoginURL: " + loginUrl);
+                        log.log(Level.FINEST, "Going to loginURL: " + loginUrl);
                         replaceLocation.setLocation(loginUrl);
                     }
                 });
@@ -102,19 +100,14 @@ public class ClientLoginManager implements IClientLoginManager {
 
     @Override
     public void redirectToLogin() {
-        getUserInfoAsync(new AsyncCallback<UserInfo>() {
-            @Override
-            public void onFailure(Throwable caught) {
-
-            }
-
+        getUserInfoAsync(new CallbackUserInfo() {
             @Override
             public void onSuccess(UserInfo result) {
                 if (!result.isLoggedIn()) {
                     String nextUrl = placeController.whereToken();
                     placeController.goTo(new LoginPlace(nextUrl));
                 } else {
-                    log.log(Level.FINE, "No redirect to login because user is allready logged in.");
+                    log.log(Level.INFO, "No redirect to login because the user is already logged as: " + result.getEmail());
                 }
             }
         });

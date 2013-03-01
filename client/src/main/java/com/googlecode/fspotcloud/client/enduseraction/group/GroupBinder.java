@@ -44,10 +44,10 @@ public class GroupBinder extends AbstractBinder {
                 .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.DELETE, KeyStroke.X);
         configBuilder.register(category, actions.removeUser, binding);
         binding = KeyboardBinding.bind(alt(KeyCodes.KEY_ENTER)).withDefaultModes(Modes.MANAGE_USERS)
-        .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.ENTER);
+                .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.ENTER);
         configBuilder.register(category, actions.focusUserTable, binding);
         binding = KeyboardBinding.bind(alt('Z')).withDefaultModes(Modes.MANAGE_USERS)
-        .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.I);
+                .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.I);
         configBuilder.register(category, actions.focusEmailField, binding);
 
         binding = KeyboardBinding.bind(KeyStroke.J).withDefaultModes(Modes.TAG_ACCESS);

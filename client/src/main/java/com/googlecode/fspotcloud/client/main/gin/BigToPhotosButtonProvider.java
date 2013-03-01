@@ -5,9 +5,7 @@ import com.google.inject.Provider;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
-public class BigToPhotosButtonProvider implements Provider<ActionButton>
-{
-
+public class BigToPhotosButtonProvider implements Provider<ActionButton> {
     @Inject
     BigButtonFactory buttonFactory;
     @Inject

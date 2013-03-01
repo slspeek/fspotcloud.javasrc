@@ -24,15 +24,14 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.place.shared.Place;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.fspotcloud.client.main.ui.ImageViewImpl;
 import com.googlecode.fspotcloud.client.place.MailFullsizePlace;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
-
+@GwtCompatible
 public interface MailFullsizeView extends IsWidget, StatusView {
     ImageViewImpl getImageView();
 

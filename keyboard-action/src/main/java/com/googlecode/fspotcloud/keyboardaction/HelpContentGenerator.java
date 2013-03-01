@@ -188,7 +188,7 @@ public class HelpContentGenerator {
         List<ActionUIDef> actionUIDefs = newArrayList();
 
 
-        for (String actionId: actions)  {
+        for (String actionId : actions) {
             actionUIDefs.add(actionUIRegistry.getAction(actionId));
         }
         Collections.sort(actionUIDefs, new Comparator<ActionUIDef>() {
@@ -198,7 +198,7 @@ public class HelpContentGenerator {
             }
         });
 
-        for (ActionUIDef actionUIDef: actionUIDefs) {
+        for (ActionUIDef actionUIDef : actionUIDefs) {
             KeyStroke[] keys = keyboardPreferences.getKeysForAction(mode, actionUIDef.getId());
             builder.append(getShortcut(keys, actionUIDef));
         }

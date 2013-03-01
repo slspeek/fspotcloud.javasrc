@@ -24,9 +24,10 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.client.main.view.SingleSelectionModelExt;
 
-
+@GwtCompatible
 public interface ITreeSelectionHandler extends com.google.gwt.view.client.SelectionChangeEvent.Handler {
     void setSelectionModel(SingleSelectionModelExt selectionModel);
 

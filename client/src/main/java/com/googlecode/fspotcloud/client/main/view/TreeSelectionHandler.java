@@ -48,7 +48,6 @@ public class TreeSelectionHandler implements ITreeSelectionHandler {
 
     @Override
     public void setIgnoreNext(boolean ignoreNext) {
-
         log.log(Level.FINE, "setting ignoreNext: " + ignoreNext);
         this.ignoreNext = ignoreNext;
     }
@@ -65,19 +64,17 @@ public class TreeSelectionHandler implements ITreeSelectionHandler {
 
     @Override
     public void onSelectionChange(SelectionChangeEvent event) {
-        log.log(Level.FINE, "Selection event from tree" + selectionModel);
+        log.log(Level.FINEST, "Selection event from tree" + selectionModel);
         if (ignoreNext) {
-            log.log(Level.FINE, "Ignoring: " + ignoreNext);
+            log.log(Level.FINE, "Ignoring: " + event);
             ignoreNext = false;
-
             return;
-        }
-
-        TagNode node = selectionModel.getSelectedObject();
-
-        if (node != null) {
-            String tagId = node.getId();
-            goToPhoto(tagId, node.getCachedPhotoList());
+        } else {
+            TagNode node = selectionModel.getSelectedObject();
+            if (node != null) {
+                String tagId = node.getId();
+                goToPhoto(tagId, node.getCachedPhotoList());
+            }
         }
     }
 

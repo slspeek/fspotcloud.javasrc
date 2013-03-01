@@ -24,7 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
-import com.google.gwt.event.shared.EventBus;
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -40,12 +40,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter, AsyncCallback<List<PhotoInfo>> {
     private final Logger log = Logger.getLogger(DoubleImagePresenterImpl.class.getName());
     private final DoubleImageView imageView;
     private final Navigator navigator;
-    private final EventBus eventBus;
     private final Slideshow slideshow;
     private final IScheduler scheduler;
     private PhotoInfo info;
@@ -55,12 +54,10 @@ public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     @Inject
     public DoubleImagePresenterImpl(DoubleImageView imageView,
                                     Navigator navigator,
-                                    EventBus eventBus,
                                     Slideshow slideshow,
                                     IScheduler scheduler) {
         this.imageView = imageView;
         this.navigator = navigator;
-        this.eventBus = eventBus;
         this.slideshow = slideshow;
         this.scheduler = scheduler;
     }
@@ -113,7 +110,7 @@ public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter,
 
     @Override
     public void onFailure(Throwable caught) {
-        log.log(Level.WARNING, "error during information for photo lookup", caught);
+        log.log(Level.WARNING, "Error during information for photo lookup", caught);
     }
 
     @Override

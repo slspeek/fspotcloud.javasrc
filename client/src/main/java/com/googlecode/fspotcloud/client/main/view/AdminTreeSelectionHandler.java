@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.Dashboard;
@@ -36,17 +37,18 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
     private final Logger log = Logger.getLogger(AdminTreeSelectionHandler.class.getName());
     private SingleSelectionModelExt selectionModel;
-    private final IPlaceController IPlaceController;
+    private final IPlaceController placeController;
     private boolean ignoreNext = false;
     private final StatusView statusView;
 
     @Inject
-    public AdminTreeSelectionHandler(IPlaceController IPlaceController, @Dashboard StatusView statusView) {
-        this.IPlaceController = IPlaceController;
+    public AdminTreeSelectionHandler(IPlaceController placeController,
+                                     @Dashboard StatusView statusView) {
+        this.placeController = placeController;
         this.statusView = statusView;
     }
 
@@ -59,7 +61,6 @@ public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
     public void setIgnoreNext(boolean ignoreNext) {
         this.ignoreNext = ignoreNext;
     }
-
 
     public void setSelectionModel(SingleSelectionModelExt selectionModel) {
         this.selectionModel = selectionModel;
@@ -75,11 +76,9 @@ public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
         if (node != null) {
             String tagId = node.getId();
             statusView.setStatusText("Category: " + node.getTagName() + " selected");
-            IPlaceController.goTo(new TagPlace(tagId));
+            placeController.goTo(new TagPlace(tagId));
         } else {
             statusView.setStatusText("Nothing selected");
         }
     }
-
-
 }

@@ -2,8 +2,8 @@ package com.googlecode.fspotcloud.client.enduseraction;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowActions;
+import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 

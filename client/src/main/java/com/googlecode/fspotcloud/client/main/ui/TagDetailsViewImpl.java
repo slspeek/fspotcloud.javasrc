@@ -27,10 +27,13 @@ package com.googlecode.fspotcloud.client.main.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
+import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
 
@@ -100,11 +103,6 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
     @Override
     public void setPresenter(TagDetailsPresenter presenter) {
         this.presenter = presenter;
-    }
-
-    @Override
-    public HasEnabled getImportButton() {
-        return importTagButton;
     }
 
     @Override

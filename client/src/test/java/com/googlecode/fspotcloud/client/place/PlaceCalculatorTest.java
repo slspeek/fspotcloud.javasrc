@@ -32,7 +32,7 @@ public class PlaceCalculatorTest extends TestCase {
     public static final String TAG_ID1 = "1";
     public static final String PHOTO_ID = "10";
     final PlaceCalculator placeCalculator = new PlaceCalculator();
-    final boolean autoHide =false;
+    final boolean autoHide = false;
 
 
     public void testUnslideshow() {

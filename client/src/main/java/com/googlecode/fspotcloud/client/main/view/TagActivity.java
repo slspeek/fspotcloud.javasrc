@@ -46,7 +46,8 @@ public class TagActivity extends AbstractActivity implements TagView.TagPresente
 
     public TagActivity(TagView tagView,
                        ImageRasterView.ImageRasterPresenter imageRasterPresenter,
-                       IScheduler scheduler, BasePlace place) {
+                       IScheduler scheduler,
+                       BasePlace place) {
         this.tagView = tagView;
         this.imageRasterPresenter = imageRasterPresenter;
         this.scheduler = scheduler;
@@ -68,5 +69,11 @@ public class TagActivity extends AbstractActivity implements TagView.TagPresente
             tagView.hideControlsLater(10000);
         }
         tagView.setAutoHide(place.isAutoHide());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        tagView.cancelHiding();
     }
 }

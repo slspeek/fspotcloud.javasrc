@@ -24,9 +24,10 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.ui.IsWidget;
 
-
+@GwtCompatible
 public interface SlideshowDelayView extends IsWidget {
     void setLabelText(String text);
 

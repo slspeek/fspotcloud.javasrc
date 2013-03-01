@@ -130,7 +130,7 @@ public class UserAccountActivity extends AbstractActivity implements UserAccount
 
     @Override
     public void performAction(String actionId) {
-        if(userActions.doChangePassword.getId().equals(actionId)) {
+        if (userActions.doChangePassword.getId().equals(actionId)) {
             updateAccount();
         }
     }

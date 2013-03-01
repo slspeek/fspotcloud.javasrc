@@ -15,21 +15,21 @@ import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserActionFactory implements UIRegistrationBuilder {
+public class EndUserActionFactory implements UIRegistrationBuilder {
 
     private final IModeController modeController;
-    private final Logger log = Logger.getLogger(UserActionFactory.class.getName());
+    private final Logger log = Logger.getLogger(EndUserActionFactory.class.getName());
 
     @Inject
-    public UserActionFactory(AboutBinder aboutBinder,
-                             ApplicationBinder applicationBinder,
-                             NavigationBinder navigationBinder,
-                             RasterBinder rasterBinder,
-                             SlideshowBinder slideshowBinder,
-                             DashboardBinder dashboardBinder,
-                             UserBinder userBinder,
-                             GroupBinder groupBinder,
-                             IModeController modeController) {
+    public EndUserActionFactory(AboutBinder aboutBinder,
+                                ApplicationBinder applicationBinder,
+                                NavigationBinder navigationBinder,
+                                RasterBinder rasterBinder,
+                                SlideshowBinder slideshowBinder,
+                                DashboardBinder dashboardBinder,
+                                UserBinder userBinder,
+                                GroupBinder groupBinder,
+                                IModeController modeController) {
         log.log(Level.FINEST, "In constructor before doing anything");
         this.modeController = modeController;
         modeController.setMode(Modes.TAG_VIEW);

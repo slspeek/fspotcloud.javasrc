@@ -29,8 +29,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
 import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
+import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.*;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -118,7 +118,7 @@ public class TagApprovalActivity extends AbstractActivity implements TagApproval
     private void grantGroup() {
         final UserGroupInfo info = view.getOtherSelected();
         if (info != null) {
-            view.setStatusText("Requesting the server to grant access to group: "+ info.getName());
+            view.setStatusText("Requesting the server to grant access to group: " + info.getName());
             dispatch.execute(new ApproveTagAction(tagId, info.getId()),
                     new AsyncCallback<VoidResult>() {
                         @Override
@@ -173,7 +173,7 @@ public class TagApprovalActivity extends AbstractActivity implements TagApproval
     public void performAction(String actionId) {
         if (groupActions.revokeGroup.getId().equals(actionId)) {
             revokeGroup();
-        }   else if (groupActions.grantGroup.getId().equals(actionId)) {
+        } else if (groupActions.grantGroup.getId().equals(actionId)) {
             grantGroup();
         } else if (groupActions.focusGrantedTable.getId().equals(actionId)) {
             view.focusGrantedTable();

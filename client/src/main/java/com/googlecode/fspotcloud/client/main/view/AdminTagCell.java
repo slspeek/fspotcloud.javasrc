@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
@@ -34,7 +35,7 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class AdminTagCell extends AbstractCell<TagNode> {
     private final Logger log = Logger.getLogger(TagCell.class.getName());
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);

@@ -31,7 +31,6 @@ import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.inject.Inject;
 

@@ -24,6 +24,9 @@
 
 package com.googlecode.fspotcloud.client.main.view.api;
 
+import com.google.common.annotations.GwtCompatible;
+
+@GwtCompatible
 public interface OpenNewTab {
     void setLocation(String url);
 }
