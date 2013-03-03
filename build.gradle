@@ -24,7 +24,7 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'com.googlecode.fspotcloud'
-    version = "0.9b7-${build_number}"
+    version = "0.9b8-${build_number}"
     project.ext {
         libs = [
                 bot_dispatch_bot: "com.googlecode.bot-dispatch:bot:${bot_dispatch_version}",
@@ -49,7 +49,7 @@ allprojects {
                 guava_gwt: "com.google.guava:guava-gwt:${guava_version}",
                 gwt_dispatch: "net.customware.gwt.dispatch:gwt-dispatch:1.2.0",
                 gwt_servlet: "com.google.gwt:gwt-servlet:${gwt_version}",
-                gwt_test_utils: "com.googlecode.gwt-test-utils:gwt-test-utils:0.38",
+                gwt_test_utils: "com.googlecode.gwt-test-utils:gwt-test-utils:0.43",
                 hibernate_all: ["org.hibernate:hibernate-core:${hibernate_version}",
                         "javassist:javassist:3.12.0.GA",
                         "org.hibernate:hibernate-validator-annotation-processor:4.1.0.Final",
@@ -214,6 +214,31 @@ if ("${cobertura}" == "true") {
             ':keyboard-action:cobertura'
     ]) << {
         println "Done unit test coverage."
+    }
+
+    task clientUnittestCoverage(dependsOn: [
+            ':client:cobertura'
+    ]) << {
+        println "Done client unit test coverage."
+    }
+
+    task serverUnittestCoverage(dependsOn: [
+            ':server:cobertura'
+    ]) << {
+        println "Done server unit test coverage."
+    }
+
+    task keyboardactionUnittestCoverage(dependsOn: [
+            ':keyboard-action:cobertura'
+    ]) << {
+        println "Done keyboard-action unit test coverage."
+    }
+
+    task rpcsUnittestCoverage(dependsOn: [
+            ':rpc:cobertura',
+            ':peer-rpc:cobertura'
+    ]) << {
+        println "Done rpc structs unit test coverage."
     }
 }
 
