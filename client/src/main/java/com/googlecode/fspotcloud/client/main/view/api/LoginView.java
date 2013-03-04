@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.client.main.view.api;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface LoginView extends IsWidget, StatusView {
@@ -42,11 +43,9 @@ public interface LoginView extends IsWidget, StatusView {
 
     void clearFields();
 
-    interface LoginPresenter extends Activity {
+    interface LoginPresenter extends Activity, IActionHandler {
         public void onUserFieldKeyUp(int keyCode);
 
         public void onPasswordFieldKeyUp(int keyCode);
-
-        void login();
     }
 }

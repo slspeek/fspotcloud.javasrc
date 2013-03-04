@@ -25,10 +25,10 @@
 package com.googlecode.fspotcloud.client.place;
 
 import com.googlecode.fspotcloud.client.place.api.Raster;
-import com.googlecode.fspotcloud.client.place.api.RasterSetter;
+import com.googlecode.fspotcloud.client.place.api.RasterAware;
 
 
-public class RasterState implements Raster, RasterSetter {
+public class RasterState implements Raster, RasterAware {
     private int width;
     private int height;
 

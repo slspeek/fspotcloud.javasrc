@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.client.place;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Zoom;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -46,36 +47,25 @@ public class PlaceCalculator {
     private boolean autoHide = true;
 
     public PlaceCalculator() {
-        log.info("Created");
+        log.log(Level.FINE, "Created");
     }
 
-    public BasePlace getFullscreen(BasePlace place) {
+    public BasePlace getOneByOne(BasePlace place) {
         PlaceConverter converter = new PlaceConverter(place);
         converter.setRowCount(1);
         converter.setColumnCount(1);
-
         BasePlace dest = converter.getNewPlace();
-
         return dest;
     }
 
     public BasePlace toggleRasterView(BasePlace place) {
-        PlaceConverter converter = new PlaceConverter(place);
         int width = place.getColumnCount();
         int height = place.getRowCount();
-
         if ((width * height) > 1) {
-            width = 1;
-            height = 1;
+            return getOneByOne(place);
         } else {
-            width = getRasterWidth();
-            height = getRasterHeight();
+            return getResizedPlace(place, getRasterWidth(),getRasterHeight());
         }
-
-        converter.setColumnCount(width);
-        converter.setRowCount(height);
-
-        return converter.getNewPlace();
     }
 
     public BasePlace toggleZoomView(BasePlace place, String tagId,
@@ -83,10 +73,8 @@ public class PlaceCalculator {
         PlaceConverter converter = new PlaceConverter(place);
         converter.setTagId(tagId);
         converter.setPhotoId(photoId);
-
         int width = place.getColumnCount();
         int height = place.getRowCount();
-
         if ((width * height) > 1) {
             // Zoom in
             width = 1;
@@ -96,10 +84,8 @@ public class PlaceCalculator {
             width = getRasterWidth();
             height = getRasterHeight();
         }
-
         converter.setColumnCount(width);
         converter.setRowCount(height);
-
         return converter.getNewPlace();
     }
 
@@ -124,13 +110,15 @@ public class PlaceCalculator {
     }
 
     public BasePlace getTabularPlace(BasePlace place) {
-        PlaceConverter converter = new PlaceConverter(place);
-        converter.setColumnCount(getRasterWidth());
-        converter.setRowCount(getRasterHeight());
-        converter.setAutoHide(place.isAutoHide());
-        return converter.getNewPlace();
+        return getResizedPlace(place, getRasterWidth(), getRasterHeight());
     }
 
+    private BasePlace getResizedPlace(BasePlace place, int width, int height) {
+        PlaceConverter converter = new PlaceConverter(place);
+        converter.setColumnCount(width);
+        converter.setRowCount(height);
+        return converter.getNewPlace();
+    }
     public BasePlace zoom(BasePlace now, Navigator.Zoom direction) {
         BasePlace dest;
 
@@ -146,10 +134,9 @@ public class PlaceCalculator {
 
                 if ((width - 1) != getRasterWidth()) {
                     // switch to 1x1
-                    dest = new BasePlace(now.getTagId(), now.getPhotoId(), 1, 1, autoHide);
+                    dest = getOneByOne(now);
                 } else {
-                    dest = new BasePlace(now.getTagId(), now.getPhotoId(),
-                            getRasterWidth(), getRasterHeight(), autoHide);
+                    dest = getTabularPlace(now);
                 }
             }
         } else {
@@ -157,21 +144,18 @@ public class PlaceCalculator {
             int height = now.getRowCount();
             setRasterWidth(width + 1);
             setRasterHeight(height + 1);
-            dest = new BasePlace(now.getTagId(), now.getPhotoId(),
-                    getRasterWidth(), getRasterHeight(), autoHide);
+            dest = getResizedPlace(now, getRasterWidth(), getRasterHeight());
         }
-
         return dest;
     }
 
-    public BasePlace unslideshow(BasePlace tagViewingPlace) {
+    public BasePlace unslideshow(BasePlace fromPlace) {
         BasePlace result;
 
-        if (tagViewingPlace instanceof SlideshowPlace) {
-            result = new BasePlace(tagViewingPlace.getTagId(),
-                    tagViewingPlace.getPhotoId(), 1, 1, autoHide);
+        if (fromPlace instanceof SlideshowPlace) {
+            result = getOneByOne(fromPlace);
         } else {
-            result = tagViewingPlace;
+            result = fromPlace;
         }
 
         return result;

@@ -40,7 +40,7 @@ public class PlaceCalculatorTest extends TestCase {
         BasePlace newPlace = (BasePlace) placeCalculator.unslideshow(tagViewingPlace);
         assertEquals(newPlace, tagViewingPlace);
 
-        SlideshowPlace place = new SlideshowPlace(TAG_ID1, "2", 0f);
+        SlideshowPlace place = new SlideshowPlace(TAG_ID1, "2");
         newPlace = placeCalculator.unslideshow(place);
 
         assertFalse(newPlace instanceof SlideshowPlace);
@@ -69,7 +69,7 @@ public class PlaceCalculatorTest extends TestCase {
 
     public void testGetFullscreen() {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 13, 41, autoHide);
-        BasePlace newPlace = placeCalculator.getFullscreen(tagViewingPlace);
+        BasePlace newPlace = placeCalculator.getOneByOne(tagViewingPlace);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
         assertEquals(1, newPlace.getColumnCount());

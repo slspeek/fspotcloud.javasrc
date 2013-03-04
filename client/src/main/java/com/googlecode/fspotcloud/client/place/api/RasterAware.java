@@ -24,7 +24,7 @@
 
 package com.googlecode.fspotcloud.client.place.api;
 
-public interface RasterSetter {
+public interface RasterAware {
     void setColumnCount(int width);
 
     void setRowCount(int height);

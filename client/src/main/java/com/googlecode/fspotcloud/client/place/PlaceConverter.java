@@ -31,12 +31,12 @@ public class PlaceConverter {
     private int rowCount;
     private boolean autoHide;
 
-    public PlaceConverter(BasePlace delegate) {
-        this.tagId = delegate.getTagId();
-        this.photoId = delegate.getPhotoId();
-        this.columnCount = delegate.getColumnCount();
-        this.rowCount = delegate.getRowCount();
-        this.autoHide = delegate.isAutoHide();
+    public PlaceConverter(BasePlace fromPlace) {
+        this.tagId = fromPlace.getTagId();
+        this.photoId = fromPlace.getPhotoId();
+        this.columnCount = fromPlace.getColumnCount();
+        this.rowCount = fromPlace.getRowCount();
+        this.autoHide = fromPlace.isAutoHide();
     }
 
     public BasePlace getNewPlace() {

@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class HomeActivity extends AbstractActivity implements HomeView.HomePresenter {
+    public static final String SERVER_ERROR = "Could not navigate from this page due to a server error: ";
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(HomeActivity.class.getName());
     private final HomeView homeView;
@@ -55,7 +56,7 @@ public class HomeActivity extends AbstractActivity implements HomeView.HomePrese
         navigator.goToLatestTag(new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                homeView.setStatusText(SERVER_ERROR + caught.getLocalizedMessage());
             }
 
             @Override
