@@ -6,11 +6,12 @@ import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RssFeedHandler implements IActionHandler {
+public class GoRssFeedHandler implements IActionHandler {
 
-    private final Logger log = Logger.getLogger(RssFeedHandler.class.getName());
+    private final Logger log = Logger.getLogger(GoRssFeedHandler.class.getName());
     @Inject
     private IPlaceController placeController;
     @Inject
@@ -19,10 +20,8 @@ public class RssFeedHandler implements IActionHandler {
     @Override
     public void performAction(String actionId) {
         BasePlace basePlace = placeController.where();
-        log.info("Rss: " + basePlace);
+        log.log(Level.FINE, "Rss for place: " + basePlace);
         String tagId = basePlace.getTagId();
-        if (tagId != null) {
-            loader.setLocation("/rss?tag=" + tagId);
-        }
+        loader.setLocation("/rss?tag=" + tagId);
     }
 }

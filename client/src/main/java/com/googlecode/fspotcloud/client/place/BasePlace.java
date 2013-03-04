@@ -27,11 +27,11 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
-import com.googlecode.fspotcloud.client.place.api.PhotoInTag;
+import com.googlecode.fspotcloud.client.place.api.HasImage;
 import com.googlecode.fspotcloud.client.place.api.Raster;
 
 
-public class BasePlace extends Place implements PhotoInTag, Raster {
+public class BasePlace extends Place implements HasImage, Raster {
     private final String tagId;
     private final String photoId;
     private final int columnCount;

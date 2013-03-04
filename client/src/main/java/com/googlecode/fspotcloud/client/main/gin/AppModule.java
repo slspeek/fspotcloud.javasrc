@@ -60,7 +60,6 @@ public class AppModule extends AbstractGinModule {
         bind(IPlaceController.class).to(PlaceGoToImpl.class).in(Singleton.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
-        //bind(PlaceControllerProvider.class).in(Singleton.class);
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(OpenNewTab.class).to(OpenNewTabImpl.class);
         bind(ReplaceLocation.class).to(ReplaceLocationImpl.class);

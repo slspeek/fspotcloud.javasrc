@@ -11,11 +11,11 @@ public class UserLateBinder {
 
     @Inject
     UserLateBinder(ConfigBuilder configBuilder,
-                   Go3rdPartyLoginAction go3rdPartyLoginAction,
+                   Go3rdPartyLoginHandler go3rdPartyLoginHandler,
                    GoResetPasswordHandler goResetPasswordHandler,
                    GoResendConfirmationHandler goResendConfirmationHandler,
-                   DoLoginHandler doLoginHandler,
                    GoSignUpHandler goSignUpHandler,
+                   LoginView.LoginPresenter loginPresenter,
                    GoAccountPageHandler goAccountPageHandler,
                    MailFullsizeView.MailFullsizePresenter mailFullsizePresenter,
                    SendConfirmationView.SendConfirmationPresenter sendConfirmationPresenter,
@@ -24,11 +24,11 @@ public class UserLateBinder {
                    SignUpView.SignUpPresenter signUpPresenter,
                    UserActions actions) {
         this.actions = actions;
-        configBuilder.bindHandler(actions.otherLogin, go3rdPartyLoginAction);
+        configBuilder.bindHandler(actions.otherLogin, go3rdPartyLoginHandler);
         configBuilder.bindHandler(actions.goSignUp, goSignUpHandler);
         configBuilder.bindHandler(actions.goResetPassword, goResetPasswordHandler);
         configBuilder.bindHandler(actions.goResendConfirmation, goResendConfirmationHandler);
-        configBuilder.bindHandler(actions.doLogin, doLoginHandler);
+        configBuilder.bindHandler(actions.doLogin, loginPresenter);
         configBuilder.bindHandler(actions.goAccountPage, goAccountPageHandler);
         configBuilder.bindHandler(actions.doMailFullsize, mailFullsizePresenter);
         configBuilder.bindHandler(actions.doSendEmailConfirmation, sendConfirmationPresenter);

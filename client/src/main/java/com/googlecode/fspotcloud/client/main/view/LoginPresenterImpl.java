@@ -53,7 +53,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final LoginView view;
     private final DispatchAsync dispatch;
     private final IPlaceController placeController;
-    private final IClientLoginManager IClientLoginManager;
+    private final IClientLoginManager clientLoginManager;
     private final EventBus eventBus;
     private final ApplicationActions applicationActions;
 
@@ -62,13 +62,13 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     public LoginPresenterImpl(LoginView loginView,
                               DispatchAsync dispatch,
                               IPlaceController placeController,
-                              IClientLoginManager IClientLoginManager,
+                              IClientLoginManager clientLoginManager,
                               EventBus eventBus,
                               ApplicationActions applicationActions) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeController = placeController;
-        this.IClientLoginManager = IClientLoginManager;
+        this.clientLoginManager = clientLoginManager;
         this.eventBus = eventBus;
         this.applicationActions = applicationActions;
     }
@@ -99,11 +99,6 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
         }
     }
 
-    @Override
-    public void login() {
-        submitToServer();
-    }
-
     private void submitToServer() {
         String userName = view.getUserNameField();
         String password = view.getPasswordField();
@@ -124,7 +119,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                         if (result.getSuccess()) {
                             view.setStatusText(LOGGED_IN);
                             view.clearFields();
-                            IClientLoginManager.resetApplicationData();
+                            clientLoginManager.resetApplicationData();
                             String nextUrl = getNextUrl();
                             if (!nextUrl.equals("")) {
                                 placeController.goTo(nextUrl);
@@ -138,5 +133,10 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                         }
                     }
                 });
+    }
+
+    @Override
+    public void performAction(String actionId) {
+        submitToServer();
     }
 }

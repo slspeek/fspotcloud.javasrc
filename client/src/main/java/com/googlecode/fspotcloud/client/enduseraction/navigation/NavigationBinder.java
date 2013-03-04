@@ -13,16 +13,16 @@ public class NavigationBinder extends AbstractBinder {
 
     private final NavigationActionHandler navigationActionHandler;
     private final NavigationActions navigationActions;
-    private final RssFeedHandler rssFeedHandler;
+    private final GoRssFeedHandler goRssFeedHandler;
 
     @Inject
     public NavigationBinder(
             CategoryDef categoryDef, NavigationActionHandler navigationActionHandler,
-            NavigationActions navigationActions, RssFeedHandler rssFeedHandler) {
+            NavigationActions navigationActions, GoRssFeedHandler goRssFeedHandler) {
         super(categoryDef.NAVIGATION);
         this.navigationActionHandler = navigationActionHandler;
         this.navigationActions = navigationActions;
-        this.rssFeedHandler = rssFeedHandler;
+        this.goRssFeedHandler = goRssFeedHandler;
     }
 
 
@@ -36,7 +36,7 @@ public class NavigationBinder extends AbstractBinder {
         bind(navigationActions.row_down, get(KeyCodes.KEY_DOWN));
         bind(navigationActions.page_down, get(KeyCodes.KEY_PAGEDOWN));
         bind(navigationActions.end, get(KeyCodes.KEY_END));
-        bind(navigationActions.rss_feed, rssFeedHandler, get(KeyCodes.KEY_DELETE));
+        bind(navigationActions.rss_feed, goRssFeedHandler, get(KeyCodes.KEY_DELETE));
     }
 
     public void bind(ActionUIDef actionUIDef, KeyboardBinding keyBinding) {

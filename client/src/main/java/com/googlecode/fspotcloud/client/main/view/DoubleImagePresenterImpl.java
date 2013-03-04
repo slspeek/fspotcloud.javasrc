@@ -79,7 +79,11 @@ public class DoubleImagePresenterImpl implements DoubleImageView.ImagePresenter,
     }
 
     private String getUrl(SlideshowPlace place) {
-        return "image?id=" + place.getPhotoId();
+        if (place != null) {
+            return "image?id=" + place.getPhotoId();
+        } else {
+            return "";
+        }
     }
 
     private void setInformation() {

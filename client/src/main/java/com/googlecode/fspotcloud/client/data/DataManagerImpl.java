@@ -44,7 +44,6 @@ public class DataManagerImpl implements DataManager {
     private final Logger log = Logger.getLogger(DataManagerImpl.class.getName());
     private final IndexingUtil indexingUtil = new IndexingUtil();
     private final Map<String, TagNode> tagNodeIndex = newHashMap();
-    private final Map<String, TagNode> adminTagNodeIndex = newHashMap();
     private final DispatchAsync dispatchAsync;
     private final GetTagTreeMemoProc getTagTreeMemoProc;
 
@@ -118,8 +117,6 @@ public class DataManagerImpl implements DataManager {
                     }
 
                     public void onSuccess(TagTreeResult result) {
-                        indexingUtil.rebuildTagNodeIndex(adminTagNodeIndex,
-                                result.getTree());
                         callback.onSuccess(result.getTree());
                     }
                 });
