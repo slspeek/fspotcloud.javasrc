@@ -24,6 +24,6 @@
 
 package com.googlecode.fspotcloud.client.place.api;
 
-public interface PhotoId {
+public interface HasPhotoId {
     String getPhotoId();
 }

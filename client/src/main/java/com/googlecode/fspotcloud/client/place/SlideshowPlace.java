@@ -28,15 +28,9 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class SlideshowPlace extends BasePlace {
-    private final float interval;
 
-    public SlideshowPlace(String tagId, String photoId, float interval) {
+    public SlideshowPlace(String tagId, String photoId) {
         super(tagId, photoId);
-        this.interval = interval;
-    }
-
-    public float getInterval() {
-        return interval;
     }
 
     @Override
@@ -62,7 +56,7 @@ public class SlideshowPlace extends BasePlace {
         public SlideshowPlace getPlace(String token) {
             TokenizerUtil util = new TokenizerUtil(token);
 
-            return new SlideshowPlace(util.getTagId(), util.getPhotoId(), 0f);
+            return new SlideshowPlace(util.getTagId(), util.getPhotoId());
         }
 
         @Override
