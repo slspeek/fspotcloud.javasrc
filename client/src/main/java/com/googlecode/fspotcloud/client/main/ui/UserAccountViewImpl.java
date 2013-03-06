@@ -32,12 +32,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.UserAccountView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -61,19 +63,26 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
     @UiField(provided = true)
     ActionButton save;
     @UiField(provided = true)
+    ActionButton logout;
+    @UiField(provided = true)
     ActionButton cancel;
 
     @Inject
     public UserAccountViewImpl(UserActions userActions,
                                DashboardActions dashboardActions,
+                               ApplicationActions applicationActions,
                                BigButtonFactory buttonFactory
     ) {
         save = buttonFactory.getButton(userActions.doChangePassword);
         cancel = buttonFactory.getButton(dashboardActions.toPhotos);
+        logout = buttonFactory.getButton(applicationActions.logout);
         initWidget(uiBinder.createAndBindUi(this));
         emailValueLabel.ensureDebugId("email");
         lastLoginValueLabel.ensureDebugId("last-login");
-        log.info("Created ");
+        oldPasswordTextBox.ensureDebugId("old-password");
+        passwordTextBox.ensureDebugId("new-password");
+        passwordAgainTextBox.ensureDebugId("new-password-again");
+        log.log(Level.FINE, "Created ");
     }
 
     @Override
@@ -104,6 +113,13 @@ public class UserAccountViewImpl extends Composite implements UserAccountView {
     @Override
     public void setStatusText(String text) {
         statusLabel.setText(text);
+    }
+
+    @Override
+    public void clearFields() {
+        oldPasswordTextBox.setText("");
+        passwordAgainTextBox.setText("");
+        passwordTextBox.setText("");
     }
 
 

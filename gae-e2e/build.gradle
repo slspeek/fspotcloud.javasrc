@@ -18,8 +18,7 @@ dependencies {
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
     testCompile ext.libs.gae_testing
     testCompile project(':model-jpa-gae')
-    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
-    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
+    testCompile ext.libs.selenium
     testCompile ext.libs.guiceberry
     testCompile ext.libs.guava_testlib
     testCompile ext.libs.junit

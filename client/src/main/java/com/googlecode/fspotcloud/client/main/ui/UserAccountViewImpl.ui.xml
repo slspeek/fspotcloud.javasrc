@@ -54,6 +54,9 @@
                 <g:layer bottom="0%" height="16%" left="0%" width="40%">
                     <ka:ActionButton ui:field="save"></ka:ActionButton>
                 </g:layer>
+                <g:layer bottom="0%" height="16%" left="45%" width="20%">
+                    <ka:ActionButton ui:field="logout"></ka:ActionButton>
+                </g:layer>
                 <g:layer bottom="0%" height="16%" right="0%" width="35%">
                     <ka:ActionButton ui:field="cancel">Main Page</ka:ActionButton>
                 </g:layer>
