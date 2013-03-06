@@ -22,6 +22,7 @@ public class UserLateBinder {
                    SendPasswordResetView.SendPasswordResetPresenter sendPasswordResetPresenter,
                    ChangePasswordView.ChangePasswordPresenter changePasswordPresenter,
                    SignUpView.SignUpPresenter signUpPresenter,
+                   UserAccountView.UserAccountPresenter userAccountPresenter,
                    UserActions actions) {
         this.actions = actions;
         configBuilder.bindHandler(actions.otherLogin, go3rdPartyLoginHandler);
@@ -35,5 +36,6 @@ public class UserLateBinder {
         configBuilder.bindHandler(actions.doRequestPasswordReset, sendPasswordResetPresenter);
         configBuilder.bindHandler(actions.doPasswordReset, changePasswordPresenter);
         configBuilder.bindHandler(actions.doSignUp, signUpPresenter);
+        configBuilder.bindHandler(actions.doChangePassword, userAccountPresenter);
     }
 }

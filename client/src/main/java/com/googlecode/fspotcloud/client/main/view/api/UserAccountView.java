@@ -43,6 +43,8 @@ public interface UserAccountView extends IsWidget {
 
     void setStatusText(String text);
 
+    void clearFields();
+
     interface UserAccountPresenter extends Activity, IActionHandler {
     }
 }

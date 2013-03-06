@@ -64,7 +64,7 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
 
     @Provides
     @Singleton
-    FscServer buildPetStoreServer(@PortNumber int portNumber) {
+    FscServer buildServer(@PortNumber int portNumber) {
         FscServer result = null;
         try {
             result = new FscServer(portNumber) {
@@ -75,14 +75,13 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
                             new TestIdServerModule(),
                             super.getFscModule());
 
-                    return module; //super.getFscModule();
-                    //return super.getFscModule();
+                    return module;
                 }
             };
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (URISyntaxException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         return result;
     }
@@ -92,6 +91,7 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
         install(new GuiceBerryModule());
         bind(GuiceBerryEnvMain.class).to(ServerStarter.class);
         bind(TestWrapper.class).to(SeleniumTestWrapper.class);
+        bind(ILogin.class).to(RegularLoginBot.class);
         // !!!! HERE !!!!
         icMaster = new IcMaster()
                 .thatControls(StaticMapInjectionController.strategy(),

@@ -9,8 +9,8 @@ dependencies {
     testCompile project(':server')
     testCompile project(':client')
     testCompile project(':model-api')
-    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
-    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
+    testCompile project(path:':keyboard-action', configuration:'testCompile')
+    testCompile ext.libs.selenium
     testCompile ext.libs.guava_testlib
     testCompile ext.libs.junit
     testCompile ext.libs.guiceberry
