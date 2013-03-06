@@ -30,13 +30,13 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ChangePasswordITest.class,
-        ChangePasswordResetITest.class,
         SimpleSignUpITest.class,
         UserGroupITest.class,
         DashboardITest.class,
         TabularITest.class,
         PrivateAccessITest.class,
+        ChangePasswordITest.class,
+        ChangePasswordResetITest.class,
         IntersectionDeleteITest.class,
         DeleteITest.class,
         TagRenamingITest.class,
