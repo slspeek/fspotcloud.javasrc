@@ -24,17 +24,34 @@
 
 package com.googlecode.fspotcloud.test;
 
+import com.google.guiceberry.junit4.GuiceBerryRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 import javax.inject.Inject;
 
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
-public class RegularLoginBot implements ILogin {
+public class ChangePasswordITest {
+    public static final String GNU_RULES = "GNU Rules!";
+    @Rule
+    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
     private LoginPage loginPage;
-
-    @Override
-    public void login() throws Exception {
+    @Inject
+    private UserAccountPage userAccountPage;
+    @Test
+    public void testChangePassword() throws Exception {
         loginPage.open();
-        loginPage.fillForm(RMS_FSF_ORG, RMS_CRED);
+        loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
         loginPage.login();
+        userAccountPage.verifyEmail(ILogin.SLS);
+        userAccountPage.fillForm(ILogin.SLS_CRED, GNU_RULES);
+        userAccountPage.save();
+        userAccountPage.logout();
+        loginPage.open();
+        loginPage.fillForm(ILogin.SLS, GNU_RULES);
+        loginPage.login();
+        userAccountPage.verifyEmail(ILogin.SLS);
     }
 }

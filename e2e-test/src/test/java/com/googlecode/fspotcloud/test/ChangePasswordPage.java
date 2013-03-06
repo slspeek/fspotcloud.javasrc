@@ -28,48 +28,36 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
+import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
+import com.googlecode.fspotcloud.client.main.view.SignUpActivity;
+import com.googlecode.fspotcloud.keyboardaction.SeleniumPerformer;
 import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
-import java.util.Date;
 
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 import static org.junit.Assert.assertEquals;
 
 /**
  * @author steven
  */
-public class UserAccountPage {
+public class ChangePasswordPage {
     @Inject
     Selenium selenium;
+    @Inject
+    UserActions userActions;
+    @Inject
+    SeleniumPerformer performer;
 
-    public UserAccountPage open() {
-        selenium.open("/#UserAccountPlace:");
+    public void open() {
+        selenium.open("/#ChangePasswordPlace:"+ILogin.SLS + ":" + ILogin.SLS_EMAIL_VERIFICATION_SECRET);
         selenium.waitForPageToLoad("30000");
-        return this;
     }
 
-    public void verifyEmail(String email) {
-        assertEquals(email, selenium.getText("gwt-debug-email"));
+    public void changePassword(String credentials)
+            throws InterruptedException {
+        selenium.type("id=gwt-debug-password", credentials);
+        selenium.type("id=gwt-debug-password-again", credentials);
+        performer.performAction(userActions.doPasswordReset);
     }
-
-    public Date getLastLogin() {
-        return DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_LONG)
-                .parse(selenium.getText("gwt-debug-last-login"));
-    }
-
-    public void fillForm(String oldPassword, String newPassword) {
-        selenium.type("id=gwt-debug-old-password", oldPassword);
-        selenium.type("id=gwt-debug-new-password", newPassword);
-        selenium.type("id=gwt-debug-new-password-again", newPassword);
-    }
-
-    public void save() {
-        selenium.click("gwt-debug-do-change-password");
-    }
-
-    public void logout() {
-        selenium.click("gwt-debug-logout");
-    }
-
 }

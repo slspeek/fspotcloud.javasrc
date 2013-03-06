@@ -64,11 +64,8 @@ public class ChangePasswordViewImpl extends Composite implements ChangePasswordV
         initWidget(uiBinder.createAndBindUi(this));
         passwordAgainTextBox.ensureDebugId("password-again");
         passwordTextBox.ensureDebugId("password");
-        change.ensureDebugId("change");
-        cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
     }
-
 
     @Override
     public String getPasswordField() {

@@ -22,9 +22,7 @@ dependencies {
     tomcat libs.tomcat
 
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
-    testCompile "org.seleniumhq.selenium:selenium:${selenium_version}"
-    testCompile "org.seleniumhq.selenium:selenium-firefox-driver:${selenium_firefox_version}"
-    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:${selenium_client_version}"
+    testCompile libs.selenium
     testCompile libs.guiceberry
     testCompile libs.guava_testlib
     testCompile libs.junit

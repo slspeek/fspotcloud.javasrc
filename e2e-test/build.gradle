@@ -8,8 +8,9 @@ dependencies {
     testCompile project(':test-util')
     testCompile project(':server')
     testCompile project(':client')
-    testCompile "org.seleniumhq.selenium:selenium:${selenium_version}"
-    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:${selenium_client_version}"
+    testCompile project(':model-api')
+    testCompile project(path:':keyboard-action', configuration:'testCompile')
+    testCompile libs.selenium
     testCompile libs.guava_testlib
     testCompile libs.junit
     testCompile libs.guiceberry

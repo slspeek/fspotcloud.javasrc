@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-public class MyFirstControlledInjectITest {
+public class EmailConfirmationITest {
 
     public static final String CONTROLLED_INJECT = "ControlledInject";
     public static final String RMS_FSF_ORG = "rms@example.com";
@@ -52,7 +52,7 @@ public class MyFirstControlledInjectITest {
 
 
     @Test
-    public void testImportFurniture() throws Exception {
+    public void testEmailConfirmation() throws Exception {
         secretGeneratorInjectionController.setOverride(new SecretGenerator() {
             @Override
             public String getSecret(String user) {

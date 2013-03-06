@@ -15,8 +15,8 @@ public class GaeFixtureRunner {
                 new LocalServiceTestHelper(testConfig);
         helper.setUp();
         Injector injector = Guice.createInjector(new GaeCachedModelModule(100, "gae"));
-        TwoUsersFixture twoUsersFixture = new TwoUsersFixture(injector);
-        twoUsersFixture.run();
+        ThreeUsersFixture threeUsersFixture = new ThreeUsersFixture(injector);
+        threeUsersFixture.run();
         //helper.tearDown();
     }
 }

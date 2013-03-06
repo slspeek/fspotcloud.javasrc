@@ -123,7 +123,7 @@ public class ChangePasswordActivity extends AbstractActivity implements ChangePa
 
     @Override
     public void performAction(String actionId) {
-        if (userActions.doChangePassword.getId().equals(actionId)) {
+        if (userActions.doPasswordReset.getId().equals(actionId)) {
             updateAccount();
         }
     }

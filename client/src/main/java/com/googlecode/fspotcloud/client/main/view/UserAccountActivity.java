@@ -134,4 +134,10 @@ public class UserAccountActivity extends AbstractActivity implements UserAccount
             updateAccount();
         }
     }
+
+    @Override
+    public void onStop() {
+        view.clearFields();
+        super.onStop();
+    }
 }

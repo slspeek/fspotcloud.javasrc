@@ -24,23 +24,30 @@
 
 package com.googlecode.fspotcloud.test;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import com.google.guiceberry.junit4.GuiceBerryRule;
+import org.junit.Rule;
+import org.junit.Test;
 
+import javax.inject.Inject;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        ChangePasswordITest.class,
-        ChangePasswordResetITest.class,
-        SimpleSignUpITest.class,
-        UserGroupITest.class,
-        DashboardITest.class,
-        TabularITest.class,
-        PrivateAccessITest.class,
-        IntersectionDeleteITest.class,
-        DeleteITest.class,
-        TagRenamingITest.class,
-        DeleteITest.class,
-        ThreeFaseITest.class})
-public class LocalSuite {
+public class ChangePasswordResetITest {
+    public static final String GNU_RULES = "GNU Rules!";
+    @Rule
+    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
+    @Inject
+    private LoginPage loginPage;
+   @Inject
+    private UserAccountPage userAccountPage;
+    @Inject
+    private ChangePasswordPage changePasswordPage;
+
+    @Test
+    public void testChangePassword() throws Exception {
+        changePasswordPage.open();
+        changePasswordPage.changePassword(GNU_RULES);
+        loginPage.open();
+        loginPage.fillForm(ILogin.SLS, GNU_RULES);
+        loginPage.login();
+        userAccountPage.verifyEmail(ILogin.SLS);
+    }
 }
