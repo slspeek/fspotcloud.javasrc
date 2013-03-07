@@ -120,7 +120,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         } else if (place instanceof ChangePasswordPlace) {
             activity = changePasswordPresenter.withPlace((ChangePasswordPlace) place);
             modeController.setMode(Modes.PASSWORD_RESET);
-        } else if (place instanceof SendResetPasswordPlace) {
+        } else if (place instanceof SendPasswordResetPlace) {
             activity = sendResetPasswordPresenter;
             modeController.setMode(Modes.SEND_RESET);
         } else if (place instanceof UserAccountPlace) {

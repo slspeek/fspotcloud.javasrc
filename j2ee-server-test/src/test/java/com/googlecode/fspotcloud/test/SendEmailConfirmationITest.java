@@ -24,34 +24,55 @@
 
 package com.googlecode.fspotcloud.test;
 
+import com.google.guiceberry.controllable.InjectionController;
 import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-public class EmailConfirmationITest {
+public class SendEmailConfirmationITest {
 
-    public static final String SECRET = "ControlledInject";
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    private EmailConfirmationPage emailConfirmationPage;
+    private SendEmailConfirmationPage sendEmailConfirmationPage;
+    @Inject
+    private InjectionController<IMail> mailInjectionController;
     @Inject
     private UserDao userDao;
 
+
+
+    private ArgumentCaptor<String> recipient = ArgumentCaptor.forClass(String.class);
+    private ArgumentCaptor<String> subject = ArgumentCaptor.forClass(String.class);
+    private ArgumentCaptor<String> body = ArgumentCaptor.forClass(String.class);
+
     @Test
     public void testEmailConfirmation() throws Exception {
-        User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
-        rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
+        User rms = userDao.findOrNew(ILogin.NEEDS_CONFIRMATION);
+        rms.setCredentials(hash(ILogin.NEEDS_CONFIRMATION, ILogin.NEEDS_CRED));
         rms.setRegistered(true);
-        rms.setEmailVerificationSecret(SECRET);
         rms.setEnabled(false);
         userDao.save(rms);
-        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET).success();
+
+
+        IMail mailerMock = mock(IMail.class);
+        mailInjectionController.setOverride(mailerMock);
+
+        sendEmailConfirmationPage.open();
+        sendEmailConfirmationPage.submitEmail(ILogin.NEEDS_CONFIRMATION);
+
+        verify(mailerMock).send(recipient.capture(), subject.capture(), body.capture());
+        Assert.assertEquals(ILogin.NEEDS_CONFIRMATION, recipient.getValue());
     }
 }
