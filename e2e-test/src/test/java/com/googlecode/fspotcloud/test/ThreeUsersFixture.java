@@ -51,7 +51,7 @@ public class ThreeUsersFixture implements Runnable {
         user.setEnabled(false);
         user.setEmailVerificationSecret(ILogin.NEEDS_SECRET);
         userDao.save(user);
-        Logger.getAnonymousLogger().info(ILogin.RMS_FSF_ORG + " saved.");
+        Logger.getAnonymousLogger().info(ILogin.NEEDS_CONFIRMATION + " saved.");
     }
 
 }
