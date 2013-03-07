@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.server.control.callback;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
 import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
@@ -40,7 +41,7 @@ public class FullsizePhotoCallback implements SerializableAsyncCallback<Fullsize
     @Inject
     private transient ImageHelper imageHelper;
     @Inject
-    private transient IMail mailer;
+    private transient Provider<IMail> mailerProvider;
     private String caller;
 
     public FullsizePhotoCallback(String caller, PhotoDao photoManager,
@@ -61,7 +62,7 @@ public class FullsizePhotoCallback implements SerializableAsyncCallback<Fullsize
         byte[] image = fullsizePhotoResult.getFullsizeImageData();
         imageHelper.saveImage(photo, ImageHelper.Type.FULLSIZE, image);
         photoManager.save(photo);
-        mailer.send(caller, "Your requested image: " + imageId,
+        mailerProvider.get().send(caller, "Your requested image: " + imageId,
                 "Dear " + caller + ",\nYour requested image: " + imageId +
                         " is in the attachment", image);
     }

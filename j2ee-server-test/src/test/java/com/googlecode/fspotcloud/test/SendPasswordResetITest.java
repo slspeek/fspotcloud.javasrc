@@ -24,34 +24,55 @@
 
 package com.googlecode.fspotcloud.test;
 
+import com.google.guiceberry.controllable.InjectionController;
 import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.google.inject.Injector;
+import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
+import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-public class EmailConfirmationITest {
+public class SendPasswordResetITest {
 
-    public static final String SECRET = "ControlledInject";
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    private EmailConfirmationPage emailConfirmationPage;
+    private SendPasswordResetPage sendPasswordResetPage;
+    @Inject
+    private InjectionController<IMail> mailInjectionController;
+
     @Inject
     private UserDao userDao;
 
+    private ArgumentCaptor<String> recipient = ArgumentCaptor.forClass(String.class);
+    private ArgumentCaptor<String> subject = ArgumentCaptor.forClass(String.class);
+    private ArgumentCaptor<String> body = ArgumentCaptor.forClass(String.class);
+
+
     @Test
-    public void testEmailConfirmation() throws Exception {
+    public void testReset() throws Exception {
+        //emailConfirmationITest.testEmailConfirmation();
         User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
         rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
         rms.setRegistered(true);
-        rms.setEmailVerificationSecret(SECRET);
-        rms.setEnabled(false);
+        rms.setEnabled(true);
         userDao.save(rms);
-        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET).success();
+        IMail mailerMock = mock(IMail.class);
+        mailInjectionController.setOverride(mailerMock);
+        sendPasswordResetPage.open();
+        sendPasswordResetPage.submitEmail(ILogin.RMS_FSF_ORG);
+
+        verify(mailerMock).send(recipient.capture(), subject.capture(), body.capture());
+        Assert.assertEquals(ILogin.RMS_FSF_ORG, recipient.getValue());
     }
 }

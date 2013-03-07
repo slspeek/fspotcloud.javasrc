@@ -38,6 +38,7 @@ import com.googlecode.fspotcloud.client.main.gin.BigButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.SendPasswordResetView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -63,7 +64,8 @@ public class SendPasswordResetViewImpl extends Composite implements SendPassword
         initWidget(uiBinder.createAndBindUi(this));
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
-        log.info("Created ");
+        emailTextBox.ensureDebugId("email");
+        log.log(Level.FINE, "Created ");
     }
 
     @Override

@@ -25,7 +25,7 @@ public class ThreeUsersFixture implements Runnable {
         createNeedsConfirmation();
     }
 
-    private void createSLS() {
+    public void createSLS() {
         User sls = userDao.findOrNew(ILogin.SLS);
         sls.setCredentials(hash(ILogin.SLS, ILogin.SLS_CRED));
         sls.setRegistered(true);
@@ -35,7 +35,7 @@ public class ThreeUsersFixture implements Runnable {
         Logger.getAnonymousLogger().info(ILogin.SLS + " saved.");
     }
 
-    private void createRMS() {
+    public void createRMS() {
         User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
         rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
         rms.setRegistered(true);
@@ -44,7 +44,7 @@ public class ThreeUsersFixture implements Runnable {
         Logger.getAnonymousLogger().info(ILogin.RMS_FSF_ORG + " saved.");
     }
 
-    private void createNeedsConfirmation() {
+    public void createNeedsConfirmation() {
         User user = userDao.findOrNew(ILogin.NEEDS_CONFIRMATION);
         user.setCredentials(hash(ILogin.NEEDS_CONFIRMATION, ILogin.NEEDS_CRED));
         user.setRegistered(true);

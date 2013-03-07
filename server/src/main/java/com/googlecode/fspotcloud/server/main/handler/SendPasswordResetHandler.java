@@ -43,7 +43,7 @@ public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordRe
     @Inject
     private UserDao userDao;
     @Inject
-    private IMail mailer;
+    private Provider<IMail> mailerProvider;
     @Inject
     private MailGenerator mailGenerator;
     @Inject
@@ -62,7 +62,7 @@ public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordRe
 
                 String confirmationMail = mailGenerator.getPasswordResetMailBody(email,
                         emailConfirmationSecret);
-                mailer.send(email, "F-Spot Cloud reset password link",
+                mailerProvider.get().send(email, "F-Spot Cloud reset password link",
                         confirmationMail);
                 return new SendPasswordResetResult(SendPasswordResetResult.Code.SUCCESS);
             } else {
