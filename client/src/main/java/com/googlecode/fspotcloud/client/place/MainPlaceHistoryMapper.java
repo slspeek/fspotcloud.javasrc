@@ -40,7 +40,7 @@ import com.google.gwt.place.shared.WithTokenizers;
         UserAccountPlace.Tokenizer.class,
         MailFullsizePlace.Tokenizer.class,
         SendConfirmationPlace.Tokenizer.class,
-        SendResetPasswordPlace.Tokenizer.class,
+        SendPasswordResetPlace.Tokenizer.class,
         ChangePasswordPlace.Tokenizer.class,
         TagApprovalPlace.Tokenizer.class,
         TagPlace.Tokenizer.class})

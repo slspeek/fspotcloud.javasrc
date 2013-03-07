@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.server.control.callback.FullsizePhotoCallback;
 import com.googlecode.fspotcloud.server.image.ImageHelper;
@@ -58,7 +59,7 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
     @Inject
     private UserService userService;
     @Inject
-    private IMail mailer;
+    private Provider<IMail> mailerProvider;
     @Inject
     private IUserGroupHelper userGroupHelper;
 
@@ -78,7 +79,7 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
                             ImageHelper.Type.FULLSIZE);
 
                     if (fsImage != null) {
-                        mailer.send(caller, "Your requested image: " + imageId,
+                        mailerProvider.get().send(caller, "Your requested image: " + imageId,
                                 "Dear " + caller + ",\nYour requested image: " +
                                         imageId + " is in the attachment", fsImage);
                         message = SUCCESSFULLY_MAILED;

@@ -66,13 +66,16 @@ public class FscServer {
                 "smtp.xs4all.nl");
     }
 
-    public Injector start() {
+    public void start() {
         try {
             TestServerGuiceServletConfig.MODULE = getFscModule();
             server.start();
-            return TestServerGuiceServletConfig.INJECTOR;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Injector getInjector() {
+        return TestServerGuiceServletConfig.INJECTOR;
     }
 }

@@ -28,9 +28,9 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 
-public class SendResetPasswordPlace extends Place {
+public class SendPasswordResetPlace extends Place {
 
-    public SendResetPasswordPlace() {
+    public SendPasswordResetPlace() {
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SendResetPasswordPlace extends Place {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof SendResetPasswordPlace) {
+        if (obj instanceof SendPasswordResetPlace) {
             return true;
         } else {
             return false;
@@ -48,14 +48,14 @@ public class SendResetPasswordPlace extends Place {
 
     }
 
-    public static class Tokenizer implements PlaceTokenizer<SendResetPasswordPlace> {
+    public static class Tokenizer implements PlaceTokenizer<SendPasswordResetPlace> {
         @Override
-        public SendResetPasswordPlace getPlace(String token) {
-            return new SendResetPasswordPlace();
+        public SendPasswordResetPlace getPlace(String token) {
+            return new SendPasswordResetPlace();
         }
 
         @Override
-        public String getToken(SendResetPasswordPlace place) {
+        public String getToken(SendPasswordResetPlace place) {
             return "";
         }
     }

@@ -8,6 +8,7 @@ dependencies {
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
     testCompile libs.guava_testlib
     testCompile libs.guiceberry
+    testCompile libs.mockito
     testCompile libs.junit
     testCompile libs.jetty
     testCompile 'org.slf4j:slf4j-jdk14:1.7.2'
@@ -51,8 +52,8 @@ test {
     systemProperties['endpoint'] = "localhost:8000"
     systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
     testLogging.showStandardStreams = true
-    include "com/googlecode/fspotcloud/test/MyFirstControlledInjectITest.class"
-    ignoreFailures = true
+    include "com/googlecode/fspotcloud/test/TotalSuite.class"
+    //ignoreFailures = true
     //exclude  "*"
 }
 

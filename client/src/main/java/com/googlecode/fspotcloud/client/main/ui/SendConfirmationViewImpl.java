@@ -24,6 +24,7 @@
 
 package com.googlecode.fspotcloud.client.main.ui;
 
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -41,7 +42,7 @@ import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+@GwtCompatible
 public class SendConfirmationViewImpl extends Composite implements SendConfirmationView {
     private final Logger log = Logger.getLogger(SendConfirmationViewImpl.class.getName());
     private static final SendConfirmationViewImplUiBinder uiBinder = GWT.create(SendConfirmationViewImplUiBinder.class);
@@ -63,6 +64,7 @@ public class SendConfirmationViewImpl extends Composite implements SendConfirmat
         initWidget(uiBinder.createAndBindUi(this));
         cancel.ensureDebugId("cancel");
         statusLabel.ensureDebugId("status");
+        emailTextBox.ensureDebugId("email");
         log.log(Level.FINE, "Created ");
     }
 

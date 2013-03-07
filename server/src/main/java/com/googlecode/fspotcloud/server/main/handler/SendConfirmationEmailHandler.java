@@ -43,7 +43,7 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
     @Inject
     private UserDao userDao;
     @Inject
-    private IMail mailer;
+    private Provider<IMail> mailerProvider;
     @Inject
     private MailGenerator mailGenerator;
     @Inject
@@ -62,7 +62,7 @@ public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfir
 
             String confirmationMail = mailGenerator.getConfirmationMailBody(email,
                     emailConfirmationSecret);
-            mailer.send(email, "F-Spot Cloud email confirmation",
+            mailerProvider.get().send(email, "F-Spot Cloud email confirmation",
                     confirmationMail);
             return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.SUCCESS);
         } else {

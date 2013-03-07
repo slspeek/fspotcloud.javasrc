@@ -29,6 +29,8 @@ import com.google.guiceberry.controllable.IcMaster;
 import com.google.guiceberry.controllable.StaticMapInjectionController;
 import com.google.guiceberry.controllable.TestIdServerModule;
 import com.google.inject.*;
+import com.googlecode.fspotcloud.server.mail.IMail;
+import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.Cookie;
@@ -42,6 +44,10 @@ import java.net.URISyntaxException;
 
 public class IntegrationGuiceBerryEnv extends AbstractModule {
     public static final int PORT = 8000;
+
+    private Injector injector;
+
+
 
     @Provides
     @Singleton
@@ -59,6 +65,7 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
         driver.manage().addCookie(new Cookie(TestId.COOKIE_NAME, testId.toString()));
         return new WebDriverBackedSelenium(driver, baseUrl);
     }
+
 
     private IcMaster icMaster;
 
@@ -92,10 +99,13 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
         bind(GuiceBerryEnvMain.class).to(ServerStarter.class);
         bind(TestWrapper.class).to(SeleniumTestWrapper.class);
         bind(ILogin.class).to(RegularLoginBot.class);
+        bind(UserDao.class).toProvider(UserDaoProvider.class);
         // !!!! HERE !!!!
         icMaster = new IcMaster()
                 .thatControls(StaticMapInjectionController.strategy(),
-                        Key.get(SecretGenerator.class));
+                        Key.get(SecretGenerator.class))
+                .thatControls(StaticMapInjectionController.strategy(),
+                        Key.get(IMail.class));
         install(icMaster.buildClientModule());
     }
 
