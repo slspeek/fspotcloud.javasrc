@@ -53,7 +53,7 @@ allprojects {
                 hibernate_all: ["org.hibernate:hibernate-core:${hibernate_version}",
                         "javassist:javassist:3.12.0.GA",
                         "org.hibernate:hibernate-validator-annotation-processor:4.1.0.Final",
-                        "org.slf4j:slf4j-log4j12:1.5.2",
+                        "org.slf4j:slf4j-log4j12:1.7.2",
                         "org.hibernate:hibernate-entitymanager:${hibernate_version}"],
                 servlet_spec: dependencies.create("org.apache.geronimo.specs:geronimo-servlet_2.5_spec:1.2") {
                     transitive = false
