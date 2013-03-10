@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.testharness;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
@@ -16,14 +17,14 @@ public class MainBuilder implements UIRegistrationBuilder {
     public static final String[] MODES = {MODE_ONE, MODE_TWO, MODE_THREE};
 
     public static final String OK = "OK";
-    public static final String CANCEL = "CANCEL";
-    public static final String TRY = "TRY";
+    public static final String HOME = "HOME";
+    public static final String GO_OUT = "GO_OUT";
     public static final String THREE = "THREE";
     public static final String DEMO = "DEMO";
 
     public static final ActionUIDef OK_DEF = new ActionUIDef(OK, "Ok", "Okey");
-    public static final ActionUIDef CANCEL_DEF = new ActionUIDef(CANCEL, "Cancel", "Cancel this");
-    public static final ActionUIDef TRY_DEF = new ActionUIDef(TRY, "Try it", "Please try this");
+    public static final ActionUIDef HOME_DEF = new ActionUIDef(HOME, "Home", "Go home");
+    public static final ActionUIDef GO_OUT_DEF = new ActionUIDef(GO_OUT, "Go out", "Go out place");
     public static final ActionUIDef THREE_DEF = new ActionUIDef(THREE, "3", "3 this");
     public static final ActionUIDef DEMO_DEF = new ActionUIDef(DEMO, "Demo", "Play a demo");
 
@@ -59,6 +60,9 @@ public class MainBuilder implements UIRegistrationBuilder {
     HelpActionsFactory helpActionsFactory;
     @Inject
     DemoBuilderFactory demoBuilderFactory;
+    @Inject
+    PlaceController placeController;
+
 
     @Override
     public void build() {
@@ -76,19 +80,21 @@ public class MainBuilder implements UIRegistrationBuilder {
 
             }
         }, ALLWAYS_SHIFT_A);
-        configBuilder.addBinding(otherModeSetters, CANCEL_DEF, new IActionHandler() {
+        configBuilder.addBinding(otherModeSetters, HOME_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_ONE);
-                String msg = "Running CANCEL.";
+                String msg = "Running HOME.";
+                placeController.goTo(new HomePlace());
                 outputMesg(msg);
             }
         }, C_BINDING);
-        configBuilder.addBinding(modeTwoSetters, TRY_DEF, new IActionHandler() {
+        configBuilder.addBinding(modeTwoSetters, GO_OUT_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
                 modeController.setMode(MODE_TWO);
-                String msg = "Running TRY action. ";
+                String msg = "Running GO_OUT action. ";
+                placeController.goTo(new OutPlace());
                 outputMesg(msg);
             }
         }, G_BINDING);
@@ -121,7 +127,7 @@ public class MainBuilder implements UIRegistrationBuilder {
 
         DemoBuilder demoBuilder = demoBuilderFactory.get(DEMO_DEF);
         demoBuilder.addStep(OK, 3000);
-        demoBuilder.addStep(CANCEL, 2000);
+        demoBuilder.addStep(HOME, 2000);
         demoBuilder.addStep(HelpActionsFactory.SHOW_HELP_ACTION, 2000);
         demoBuilder.addStep(HelpActionsFactory.HIDE_HELP_ACTION, 1000);
 

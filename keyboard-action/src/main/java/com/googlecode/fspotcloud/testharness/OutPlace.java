@@ -24,27 +24,39 @@
 
 package com.googlecode.fspotcloud.testharness;
 
-import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceTokenizer;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@GwtCompatible
+public class OutPlace extends Place {
 
-public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
+    public OutPlace() {
+    }
 
     @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-           MVPSetup mvpSetup = injector.getSetup();
-           mvpSetup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof OutPlace) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static class Tokenizer implements PlaceTokenizer<OutPlace> {
+        @Override
+        public OutPlace getPlace(String token) {
+            return new OutPlace();
+        }
+
+        @Override
+        public String getToken(OutPlace place) {
+            return "";
         }
     }
 }

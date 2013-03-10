@@ -24,27 +24,36 @@
 
 package com.googlecode.fspotcloud.testharness;
 
-import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.activity.shared.ActivityMapper;
+import com.google.gwt.place.shared.Place;
+import com.google.inject.Inject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@GwtCompatible
 
-public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
+public class HarnessActivityMapper implements ActivityMapper {
+    private final Logger log = Logger.getLogger(HarnessActivityMapper.class.getName());
+
+    private final HomeView.HomePresenter homePresenter;
+    private final OutView.OutPresenter outPresenter;
+
+    @Inject
+    public HarnessActivityMapper(HomeView.HomePresenter homePresenter, OutView.OutPresenter outPresenter) {
+        super();
+
+        this.homePresenter = homePresenter;
+        this.outPresenter = outPresenter;
+    }
 
     @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-           MVPSetup mvpSetup = injector.getSetup();
-           mvpSetup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
+    public Activity getActivity(Place place) {
+        log.log(Level.FINE, "getActivity : " + place);
+        if (place instanceof HomePlace) {
+            return homePresenter;
+        } else {
+            return outPresenter;
         }
     }
 }

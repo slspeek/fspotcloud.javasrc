@@ -30,5 +30,5 @@ import com.google.gwt.inject.client.Ginjector;
 
 @GinModules(value = {TestharnessModule.class})
 public interface TestharnessGInjector extends Ginjector {
-    MainFactory getFactory();
+    MVPSetup getSetup();
 }
