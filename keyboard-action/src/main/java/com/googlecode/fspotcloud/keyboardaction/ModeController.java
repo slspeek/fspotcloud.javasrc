@@ -4,53 +4,68 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.google.common.collect.Sets.newHashSet;
 
 public class ModeController implements IModeController {
 
     private final Logger log = Logger.getLogger(ModeController.class.getName());
-    private final String defaultMode;
-    private String mode;
     private final KeyboardPreferences keyboardPreferences;
     private final EventBus eventBus;
+    private final Set<String> flags = newHashSet();
+    private final PlaceController placeController;
 
     @Inject
-    private ModeController(ModesProvider modesProvider, KeyboardPreferences keyboardPreferences, EventBus eventBus) {
+    private ModeController(
+            KeyboardPreferences keyboardPreferences,
+            EventBus eventBus, PlaceController placeController) {
         this.eventBus = eventBus;
         this.keyboardPreferences = keyboardPreferences;
-        this.defaultMode = modesProvider.getModes()[0];
+        this.placeController = placeController;
     }
 
     @Override
     public void initButtonEnableStates() {
-        setMode(defaultMode);
+
+    }
+
+
+    @Override
+    public Set<String> getFlags() {
+        return flags;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public void setMode(String mode) {
-        if (!Objects.equal(this.mode, mode)) {
-            this.mode = mode;
-            log.log(Level.FINEST, "Set mode to: " + mode);
-            fireEnabledStateEvens();
-        }
+    public void setFlag(String flag) {
+        flags.add(flag);
     }
 
     @Override
-    public String getMode() {
-        return mode;
+    public void unsetFlag(String flag) {
+        flags.remove(flag);
+    }
+
+    @Override
+    public void clearFlags() {
+        flags.clear();
     }
 
     private void fireEnabledStateEvens() {
+        PlaceContext placeContext = new PlaceContext(placeController.getWhere().getClass(), getFlags());
         for (String actionId : keyboardPreferences.allActions()) {
-            boolean relevant = keyboardPreferences.isRelevant(actionId, mode);
+            boolean relevant = keyboardPreferences.isRelevant(actionId, placeContext);
             ActionStateEvent event;
             if (relevant) {
                 String acceleratorString;
                 StringBuffer sb = new StringBuffer();
-                KeyStroke[] keys = keyboardPreferences.getKeysForAction(mode, actionId);
+                List<KeyStroke> keys = keyboardPreferences.getKeysForAction(placeContext, actionId);
                 acceleratorString = Joiner.on(" or ").join(keys);
                 event = new ActionStateEvent(actionId, relevant, acceleratorString);
             } else {

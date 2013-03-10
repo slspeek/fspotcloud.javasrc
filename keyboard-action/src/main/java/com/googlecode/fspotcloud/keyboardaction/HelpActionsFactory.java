@@ -1,8 +1,10 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import java.util.Set;
 
@@ -11,7 +13,6 @@ public class HelpActionsFactory {
     public static final String SHOW_HELP_ACTION = "help";
     public static final String HIDE_HELP_ACTION = "hide-help";
 
-    private final String[] allModes;
     private final ConfigBuilder configBuilder;
     private final TwoColumnHelpPopup twoColumnHelpPopup;
     private final SingleColumnHelpPopup singleColumnHelpPopup;
@@ -24,24 +25,26 @@ public class HelpActionsFactory {
     private final IModeController modeController;
     private final KeyboardPreferences keyboardPreferences;
     private HelpContentGenerator helpContentGenerator;
+    private final Provider<PlaceContext> placeContextProvider;
 
     @Inject
-    private HelpActionsFactory(ModesProvider allModes,
-                               ConfigBuilder configBuilder,
-                               HelpContentGeneratorFactory helpContentGeneratorFactory,
-                               TwoColumnHelpPopup twoColumnHelpPopup,
-                               SingleColumnHelpPopup singleColumnHelpPopup,
-                               ShortcutsPopup shortcutsPopup,
-                               HelpResources helpResources,
-                               IModeController modeController,
-                               KeyboardPreferences keyboardPreferences) {
+    private HelpActionsFactory(
+            ConfigBuilder configBuilder,
+            HelpContentGeneratorFactory helpContentGeneratorFactory,
+            TwoColumnHelpPopup twoColumnHelpPopup,
+            SingleColumnHelpPopup singleColumnHelpPopup,
+            ShortcutsPopup shortcutsPopup,
+            HelpResources helpResources,
+            IModeController modeController,
+            KeyboardPreferences keyboardPreferences,
+            Provider<PlaceContext> placeContextProvider) {
         this.helpContentGeneratorFactory = helpContentGeneratorFactory;
+        this.placeContextProvider = placeContextProvider;
         setHelpResources(helpResources);
         this.singleColumnHelpPopup = singleColumnHelpPopup;
         this.shortcutsPopup = shortcutsPopup;
         this.modeController = modeController;
         this.keyboardPreferences = keyboardPreferences;
-        this.allModes = allModes.getModes();
         this.configBuilder = configBuilder;
         this.twoColumnHelpPopup = twoColumnHelpPopup;
     }
@@ -94,10 +97,9 @@ public class HelpActionsFactory {
         IActionHandler result = new IActionHandler() {
             @Override
             public void performAction(String actionId) {
-                String mode = modeController.getMode();
-                Set<String> actions = keyboardPreferences.allRelevantActions(mode);
-
-                SafeHtml content = helpContentGenerator.getShortcuts(actions, mode);
+                PlaceContext placeContext = placeContextProvider.get();
+                Set<String> actions = keyboardPreferences.allRelevantActions(placeContext);
+                 SafeHtml content = helpContentGenerator.getShortcuts(actions, placeContext);
                 shortcutsPopup.setSafeHtml(content);
                 if (shortcutsPopup.isShowing()) {
                     shortcutsPopup.hide();

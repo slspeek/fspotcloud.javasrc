@@ -103,17 +103,17 @@ public class HelpContentGenerator {
         return TEMPLATES.img(url, style.helpActionIcon());
     }
 
-    public SafeHtml getDemoContent(ActionUIDef actionUIDef, KeyStroke[] keys) {
+    public SafeHtml getDemoContent(ActionUIDef actionUIDef, List<KeyStroke> keys) {
         SafeHtml helpRow = getHelpText(actionUIDef, keys);
         return TEMPLATES.table(helpRow);
     }
 
-    public SafeHtml getDemoContent(ActionUIDef actionUIDef, KeyStroke[] keys, String description) {
+    public SafeHtml getDemoContent(ActionUIDef actionUIDef, List<KeyStroke> keys, String description) {
         SafeHtml helpRow = getHelpText(actionUIDef, keys, description);
         return TEMPLATES.table(helpRow);
     }
 
-    public SafeHtml getHelpRow(String[] keys, ActionUIDef actionUIDef, String description) {
+    public SafeHtml getHelpRow(List<String> keys, ActionUIDef actionUIDef, String description) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         ImageResource icon = actionUIDef.getIcon();
         if (icon != null) {
@@ -145,7 +145,7 @@ public class HelpContentGenerator {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         safeHtmlBuilder.append(TEMPLATES.trspan5(category.getName(), style.helpCategoryTitle()));
         for (ActionUIDef actionUIDef : category.getActions()) {
-            KeyStroke[] keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
+            List<KeyStroke> keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
             safeHtmlBuilder.append(getHelpText(actionUIDef, keysForAction));
 
         }
@@ -153,18 +153,15 @@ public class HelpContentGenerator {
     }
 
 
-    public SafeHtml getHelpText(ActionUIDef shortcut, KeyStroke[] keys, String description) {
-
+    public SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys, String description) {
         List<String> list = newArrayList();
         for (KeyStroke k : keys) {
             list.add(k.toString());
         }
-        String[] keyStrings = new String[list.size()];
-        keyStrings = list.toArray(keyStrings);
-        return getHelpRow(keyStrings, shortcut, description);
+        return getHelpRow(list, shortcut, description);
     }
 
-    public SafeHtml getHelpText(ActionUIDef shortcut, KeyStroke[] keys) {
+    public SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys) {
         return getHelpText(shortcut, keys, shortcut.getDescription());
     }
 
@@ -182,8 +179,8 @@ public class HelpContentGenerator {
         return TEMPLATES.table(safeHtmlBuilder.toSafeHtml());
     }
 
-    public SafeHtml getShortcuts(Set<String> actions, String mode) {
-        log.log(Level.FINEST, "mode: " + mode + " actionIds: " + actions);
+    public SafeHtml getShortcuts(Set<String> actions, PlaceContext placeContext) {
+        log.log(Level.FINEST, "mode: " + placeContext + " actionIds: " + actions);
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
         List<ActionUIDef> actionUIDefs = newArrayList();
 
@@ -199,13 +196,15 @@ public class HelpContentGenerator {
         });
 
         for (ActionUIDef actionUIDef : actionUIDefs) {
-            KeyStroke[] keys = keyboardPreferences.getKeysForAction(mode, actionUIDef.getId());
+
+
+            List<KeyStroke> keys = keyboardPreferences.getKeysForAction(placeContext, actionUIDef.getId());
             builder.append(getShortcut(keys, actionUIDef));
         }
         return TEMPLATES.table(builder.toSafeHtml());
     }
 
-    private SafeHtml getShortcut(KeyStroke[] keys, ActionUIDef actionUIDef) {
+    private SafeHtml getShortcut(List<KeyStroke> keys, ActionUIDef actionUIDef) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         List<String> list = newArrayList();
         for (KeyStroke k : keys) {

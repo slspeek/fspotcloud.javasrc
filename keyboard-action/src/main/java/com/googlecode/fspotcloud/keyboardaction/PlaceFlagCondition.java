@@ -4,10 +4,10 @@ import com.google.gwt.place.shared.Place;
 
 public class PlaceFlagCondition {
 
-    private final Place place;
+    private final Class<? extends Place> place;
     private final FlagCondition condition;
 
-    public PlaceFlagCondition(Place place, FlagCondition condition) {
+    public PlaceFlagCondition(Class<? extends Place> place, FlagCondition condition) {
         this.place = place;
         this.condition = condition;
     }

@@ -8,6 +8,8 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 public class ActionMenuItemSafeHtml {
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
@@ -31,7 +33,7 @@ public class ActionMenuItemSafeHtml {
     SafeHtml get(ActionUIDef actionUIDef, ActionMenuResources resources) {
         ActionMenuResources.Style style = resources.style();
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
-        KeyStroke[] keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
+        List<KeyStroke> keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
         Joiner joiner = Joiner.on(" or ");
         String keyboardShortcuts = "(" + joiner.join(keysForAction) + ")";
 
