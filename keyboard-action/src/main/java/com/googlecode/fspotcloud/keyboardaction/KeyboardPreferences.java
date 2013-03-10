@@ -4,9 +4,9 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Maps.newHashMap;
@@ -16,56 +16,50 @@ import static com.google.common.collect.Sets.newHashSet;
 public class KeyboardPreferences {
 
     private final Logger logger = Logger.getLogger(KeyboardPreferences.class.getName());
-    private final String[] allModes;
     private final Map<ActionKey, String> keyStringMap = newHashMap();
-    private final Map<String, KeyboardBinding> bindingsMap = newHashMap();
-
+    private final Map<String, Relevance> bindingsMap = newHashMap();
+    private final Map<Relevance, String> relevanceMap = newHashMap();
     @Inject
-    KeyboardPreferences(ModesProvider allModes) {
-        this.allModes = allModes.getModes();
+    KeyboardPreferences() {
+
     }
 
-    String get(String mode, KeyStroke keyStroke) {
-        String result = keyStringMap.get(new ActionKey(mode, keyStroke));
-        return result;
+    void bind(String id, Relevance relevance) {
+        relevanceMap.put(relevance, id);
+        bindingsMap.put(id, relevance);
     }
 
-    void bind(String id, KeyboardBinding binding) {
-        bindingsMap.put(id, binding);
-        for (String mode : allModes) {
-            KeyStroke[] keys = binding.getKeys(mode);
-            for (KeyStroke keyStroke : keys) {
-                ActionKey key = new ActionKey(mode, keyStroke);
-                logger.log(Level.FINEST, "In mode: " + mode + " mapping keystroke: " + key + " to action: " + id);
-                String action = keyStringMap.put(key, id);
-                if (action != null) {
-                    throw new IllegalStateException("Key " + key + " was already bound to " + action);
-                }
+    String get(PlaceContext placeContext, KeyStroke stroke) {
+        for (Relevance relevance : relevanceMap.keySet()) {
+            List<KeyStroke> list = relevance.getKeys(placeContext);
+            if (list.contains(stroke)) {
+                return relevanceMap.get(relevance);
             }
         }
+        return null;
     }
 
-    boolean isRelevant(String actionId, String mode) {
-        return !(bindingsMap.get(actionId).getKeys(mode).length == 0);
+    boolean isRelevant(String actionId, PlaceContext placeContext) {
+        return !(bindingsMap.get(actionId).getKeys(placeContext).size() == 0);
     }
 
-    KeyStroke[] getKeysForAction(String mode, String actionId) {
-        return bindingsMap.get(actionId).getKeys(mode);
+    List<KeyStroke> getKeysForAction(PlaceContext placeContext, String actionId) {
+        return bindingsMap.get(actionId).getKeys(placeContext);
     }
 
     Set<String> allActions() {
         return bindingsMap.keySet();
     }
 
-    public KeyStroke[] getDefaultKeysForAction(String id) {
+    public List<KeyStroke> getDefaultKeysForAction(String id) {
         return bindingsMap.get(id).getDefaultKeys();
 
     }
 
-    Set<String> allRelevantActions(String mode) {
+    Set<String> allRelevantActions(PlaceContext placeContext    ) {
         HashSet result = newHashSet();
         for (String actionId : allActions()) {
-            if (isRelevant(actionId, mode)) {
+            if (isRelevant(actionId, placeContext)) {
                 result.add(actionId);
             }
         }

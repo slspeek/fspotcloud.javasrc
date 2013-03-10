@@ -24,19 +24,21 @@ public class ConfigBuilder {
         this.categoryList = categoryList;
     }
 
-    public ConfigBuilder register(ActionCategory actionCategory, ActionUIDef actionUIDef, KeyboardBinding keyboardBinding) {
-        actionUIRegistry.putAction(actionUIDef);
-        keyboardPreferences.bind(actionUIDef.getId(), keyboardBinding);
-        actionCategory.add(actionUIDef);
-        return this;
-    }
 
     public ConfigBuilder addBinding(ActionCategory actionCategory,
                                     ActionUIDef actionUIDef,
                                     IActionHandler handler,
-                                    KeyboardBinding binding) {
+                                    Relevance relevance
+    ) {
         bindHandler(actionUIDef, handler);
-        register(actionCategory, actionUIDef, binding);
+        register(actionCategory, actionUIDef, relevance);
+        return this;
+    }
+
+    public ConfigBuilder register(ActionCategory actionCategory, ActionUIDef actionUIDef, Relevance relevance) {
+        actionUIRegistry.putAction(actionUIDef);
+        keyboardPreferences.bind(actionUIDef.getId(), relevance);
+        actionCategory.add(actionUIDef);
         return this;
     }
 

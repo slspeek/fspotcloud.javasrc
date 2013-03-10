@@ -6,15 +6,15 @@ import java.util.Set;
 
 public class PlaceContext {
 
-    private final Place place;
+    private final Class<? extends Place> place;
     private final Set<String> flags;
 
-    public PlaceContext(Place place, Set<String> flags) {
+    PlaceContext(Class<? extends Place> place, Set<String> flags) {
         this.place = place;
         this.flags = flags;
     }
 
-    public Place getPlace() {
+    public Class<? extends Place> getPlace() {
         return place;
     }
 

@@ -2,12 +2,18 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 
+import java.util.Set;
+
 @GwtCompatible
 public interface IModeController {
 
-    String getMode();
+    Set<String>  getFlags();
 
-    void setMode(String mode);
+    void setFlag(String flag);
 
-    void initButtonEnableStates();
+    void unsetFlag(String flag);
+
+    void clearFlags();
+
+     void initButtonEnableStates();
 }

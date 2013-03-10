@@ -42,12 +42,11 @@ public class MainBuilder implements UIRegistrationBuilder {
     final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
 
 
-    final KeyboardBinding ALLWAYS_SHIFT_A = KeyboardBinding.bind(SHIFT_A, KEY_D).withDefaultModes(MODES).override(MODE_TWO);
-    final KeyboardBinding C_BINDING = KeyboardBinding.bind(KEY_C).override(MODE_TWO, KEY_B).withDefaultModes(MODE_ONE);
-    final KeyboardBinding Q_BINDING = KeyboardBinding.bind(KEY_Q).withDefaultModes(MODES);
-    final KeyboardBinding G_BINDING = KeyboardBinding.bind(KEY_G, CTRL_M).withDefaultModes(MODES);
-    final KeyboardBinding THREE_BINDING = KeyboardBinding.bind(KEY_3, ALT_M).withDefaultModes(MODES).override(MODE_THREE).override(MODE_ONE, SHIFT_CTRL_ALT_R);
-    final KeyboardBinding DEMO_BINDING = KeyboardBinding.bind(KEY_7).withDefaultModes(MODES);
+    Relevance ALLWAYS_SHIFT_A;
+    Relevance C_BINDING;
+    Relevance Q_BINDING;
+    Relevance THREE_BINDING;
+    Relevance DEMO_BINDING;
 
     private ActionUIDef stopDemoDef = new ActionUIDef("quit-demo", "Quit demo", "Stops all demos");
     ;
@@ -66,7 +65,25 @@ public class MainBuilder implements UIRegistrationBuilder {
 
     @Override
     public void build() {
+        Relevance HOME_ONLY_G = new Relevance(HomePlace.class);
+        HOME_ONLY_G.addDefaultKeys(KEY_G);
 
+        C_BINDING = new Relevance(HomePlace.class);
+        C_BINDING.addDefaultKeys(KEY_C);
+        C_BINDING.override(OutPlace.class, KeyStroke.K);
+
+
+        ALLWAYS_SHIFT_A = new Relevance(HomePlace.class, OutPlace.class);
+        ALLWAYS_SHIFT_A.addDefaultKeys(SHIFT_A);
+
+        DEMO_BINDING = new Relevance(HomePlace.class, OutPlace.class);
+        DEMO_BINDING.addDefaultKeys(KEY_7);
+
+        Q_BINDING = new Relevance(OutPlace.class);
+        Q_BINDING.addDefaultKeys(KEY_Q, KEY_G);
+
+        THREE_BINDING = new Relevance(OutPlace.class);
+        THREE_BINDING.addDefaultKeys(KEY_3);
 
         ActionCategory modeTwoSetters = configBuilder.createActionCategory("Mode 2 setters");
         ActionCategory otherModeSetters = configBuilder.createActionCategory("Other mode setters");
@@ -74,7 +91,7 @@ public class MainBuilder implements UIRegistrationBuilder {
         configBuilder.addBinding(modeTwoSetters, OK_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
-                modeController.setMode(MODE_TWO);
+
                 String msg = "Running OK.";
                 outputMesg(msg);
 
@@ -83,7 +100,7 @@ public class MainBuilder implements UIRegistrationBuilder {
         configBuilder.addBinding(otherModeSetters, HOME_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
-                modeController.setMode(MODE_ONE);
+
                 String msg = "Running HOME.";
                 placeController.goTo(new HomePlace());
                 outputMesg(msg);
@@ -92,16 +109,16 @@ public class MainBuilder implements UIRegistrationBuilder {
         configBuilder.addBinding(modeTwoSetters, GO_OUT_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
-                modeController.setMode(MODE_TWO);
+
                 String msg = "Running GO_OUT action. ";
                 placeController.goTo(new OutPlace());
                 outputMesg(msg);
             }
-        }, G_BINDING);
+        }, HOME_ONLY_G);
         configBuilder.addBinding(otherModeSetters, THREE_DEF, new IActionHandler() {
             @Override
             public void performAction(String actionId) {
-                modeController.setMode(MODE_THREE);
+
                 outputMesg("Running 3-action. ");
             }
         }, THREE_BINDING);
@@ -109,10 +126,10 @@ public class MainBuilder implements UIRegistrationBuilder {
         ActionUIDef shortcutsDef = new ActionUIDef("shortcuts", "Shortcuts", "Show a shortcuts popup.");
         ActionUIDef show2cHelpDef = new ActionUIDef(TWO_COLUMN_HELP, "Help 2c", "Show a help 2-column popup.");
         ActionUIDef hideHelpDef = new ActionUIDef("hide-help", "Hide help", "Hide the help popup.");
-        KeyboardBinding showHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H')).withDefaultModes(MODES);
-        KeyboardBinding show2cHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.SHIFT, 'H')).withDefaultModes(MODES);
-        KeyboardBinding scBinding = KeyboardBinding.bind(new KeyStroke('9')).withDefaultModes(MODES);
-        KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE)).withDefaultModes(MODES);
+        Relevance showHelpBinding = new Relevance(HomePlace.class).addDefaultKeys(new KeyStroke(Modifiers.SHIFT, 191), new KeyStroke(Modifiers.NONE, 'H'));
+        Relevance show2cHelpBinding = new Relevance(HomePlace.class).addDefaultKeys(new KeyStroke(Modifiers.SHIFT, 'H'));
+        Relevance scBinding = new Relevance(HomePlace.class, OutPlace.class).addDefaultKeys(new KeyStroke('9'));
+        Relevance hideHelpBinding = new Relevance(HomePlace.class, OutPlace.class).addDefaultKeys(new KeyStroke(Modifiers.NONE, KeyCodes.KEY_ESCAPE));
 
         configBuilder.addBinding(helpCategory, hideHelpDef, helpActionsFactory.getCloseHelp(), hideHelpBinding);
         HelpConfig helpConfig = new HelpConfig("Shortcuts");
