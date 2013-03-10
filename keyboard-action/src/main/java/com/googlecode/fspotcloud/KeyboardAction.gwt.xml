@@ -13,7 +13,7 @@
     <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->
     <!-- GWT dispatch -->
 
-    <inherits name="com.google.gwt.inject.Inject"/>
+    <inherits name='com.google.code.ginmvp.GinMvp'/>
     <inherits name="com.google.gwt.junit.JUnit"/>
 
     <source path="keyboardaction"/>

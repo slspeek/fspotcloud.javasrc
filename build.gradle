@@ -45,6 +45,7 @@ allprojects {
                 gae_testing: ["com.google.appengine:appengine-local-runtime:${gae_version}",
                         "com.google.appengine:appengine-api-stubs:${gae_version}",
                         "com.google.appengine:appengine-testing:${gae_version}"],
+                ginmvp: "com.google.code.ginmvp:ginmvp-core:1.1",
                 guava: "com.google.guava:guava:${guava_version}",
                 guava_gwt: "com.google.guava:guava-gwt:${guava_version}",
                 gwt_dispatch: "net.customware.gwt.dispatch:gwt-dispatch:1.2.0",

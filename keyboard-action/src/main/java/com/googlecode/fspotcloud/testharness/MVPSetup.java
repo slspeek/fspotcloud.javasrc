@@ -24,27 +24,33 @@
 
 package com.googlecode.fspotcloud.testharness;
 
+import com.google.code.ginmvp.client.GinMvpDisplay;
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.inject.Inject;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
+public class MVPSetup {
+    private final Logger log = Logger.getLogger(MVPSetup.class.getName());
+    private final GinMvpDisplay appWidget;
+    private final PlaceHistoryHandler placeHistoryHandler;
 
-public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
+    @Inject
+    public MVPSetup(GinMvpDisplay appWidget,
+                    PlaceHistoryHandler placeHistoryHandler,
+                    MainFactory mainFactory
+    ) {
+        this.appWidget = appWidget;
+        this.placeHistoryHandler = placeHistoryHandler;
+    }
 
-    @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-           MVPSetup mvpSetup = injector.getSetup();
-           mvpSetup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
-        }
+    public void setup() {
+        log.info("Starting MVP setup");
+        RootLayoutPanel.get().add(appWidget);
+        placeHistoryHandler.handleCurrentHistory();
+        log.info("MVP setup finished");
     }
 }

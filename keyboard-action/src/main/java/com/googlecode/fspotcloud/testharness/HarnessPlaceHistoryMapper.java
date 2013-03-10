@@ -22,12 +22,13 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.place;
+package com.googlecode.fspotcloud.testharness;
 
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
 
 
-@WithTokenizers({TagApprovalPlace.Tokenizer.class, TagPlace.Tokenizer.class})
-public interface AdminPlaceHistoryMapper extends PlaceHistoryMapper {
+@WithTokenizers({HomePlace.Tokenizer.class,
+        OutPlace.Tokenizer.class})
+public interface HarnessPlaceHistoryMapper extends PlaceHistoryMapper {
 }

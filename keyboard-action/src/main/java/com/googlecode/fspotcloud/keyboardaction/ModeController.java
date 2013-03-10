@@ -6,6 +6,7 @@ import com.google.common.base.Objects;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ModeController implements IModeController {
@@ -32,7 +33,7 @@ public class ModeController implements IModeController {
     public void setMode(String mode) {
         if (!Objects.equal(this.mode, mode)) {
             this.mode = mode;
-            //log.log(Level.FINEST, "Set mode to: " + mode);
+            log.log(Level.FINEST, "Set mode to: " + mode);
             fireEnabledStateEvens();
         }
     }

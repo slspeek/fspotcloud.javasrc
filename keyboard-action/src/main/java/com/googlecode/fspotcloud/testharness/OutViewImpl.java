@@ -24,27 +24,35 @@
 
 package com.googlecode.fspotcloud.testharness;
 
-import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@GwtCompatible
+public class OutViewImpl extends Composite implements OutView {
 
-public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
+
+    private static final OutViewImplUiBinder uiBinder = GWT.create(OutViewImplUiBinder.class);
+
+
+    @UiField(provided = true)
+    ActionToolbar toolbar;
+
+    @Inject
+    public OutViewImpl(ActionToolbar actionToolbar) {
+        toolbar = actionToolbar;
+        initWidget(uiBinder.createAndBindUi(this));
+    }
 
     @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-           MVPSetup mvpSetup = injector.getSetup();
-           mvpSetup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
-        }
+    public void setStatusText(String result) {
+    }
+
+    interface OutViewImplUiBinder extends UiBinder<Widget, OutViewImpl> {
     }
 }

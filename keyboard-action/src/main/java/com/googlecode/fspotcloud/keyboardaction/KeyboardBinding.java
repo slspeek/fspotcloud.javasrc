@@ -14,7 +14,6 @@ public class KeyboardBinding {
 
     private final KeyStroke[] defaultKeys;
     private final Map<String, KeyStroke[]> overridesMap = newHashMap();
-    private String[] modes;
     private List<String> modeList;
 
     public KeyboardBinding(KeyStroke[] defaultKeys) {
@@ -37,7 +36,6 @@ public class KeyboardBinding {
     }
 
     public KeyboardBinding withDefaultModes(String... modes) {
-        this.modes = modes;
         modeList = newArrayList(modes);
         return this;
     }
@@ -52,10 +50,6 @@ public class KeyboardBinding {
             result = override;
         }
         return result;
-    }
-
-    public String[] getModes() {
-        return modes;
     }
 
     @Override

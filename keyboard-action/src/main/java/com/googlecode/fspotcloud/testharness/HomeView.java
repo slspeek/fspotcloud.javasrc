@@ -25,26 +25,14 @@
 package com.googlecode.fspotcloud.testharness;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.user.client.ui.IsWidget;
 
 @GwtCompatible
+public interface HomeView extends IsWidget {
 
-public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
+    void setStatusText(String result);
 
-    @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-           MVPSetup mvpSetup = injector.getSetup();
-           mvpSetup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
-        }
+    interface HomePresenter extends Activity {
     }
 }

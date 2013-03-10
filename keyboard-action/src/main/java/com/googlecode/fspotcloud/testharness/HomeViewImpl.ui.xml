@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction"
+        >
+    <g:LayoutPanel>
+        <g:layer top="10%" height="12%" left="22%" width="78%">
+            <g:Label >Welcome to Keyboard Action</g:Label>
+        </g:layer>
+        <g:layer top="30%" height="40%" left="22%" width="60%">
+            <g:TextArea ui:field="messageBox"></g:TextArea>
+        </g:layer>
+        <g:layer top="80%" height="20%" left="22%" width="60%">
+            <ka:ActionToolbar ui:field="toolbar"></ka:ActionToolbar>
+        </g:layer>
+    </g:LayoutPanel>
+</ui:UiBinder>
