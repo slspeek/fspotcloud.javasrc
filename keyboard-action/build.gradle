@@ -19,6 +19,7 @@ dependencies {
     compile libs.guice_assisted_inject
     compile libs.guava
     compile libs.guava_gwt
+    compile libs.ginmvp
     compile "com.google.gwt:gwt-user:${gwt_version}"
     compile "com.google.gwt:gwt-dev:${gwt_version}"
 

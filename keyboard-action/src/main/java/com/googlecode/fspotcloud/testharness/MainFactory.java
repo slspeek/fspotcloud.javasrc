@@ -36,23 +36,6 @@ public class MainFactory {
         this.modeController = keyboardActionFactory.getModeController();
         MainFactory.messageBoard.setVisibleLines(20);
         MainFactory.messageBoard.setCharacterWidth(100);
-
-
-        ActionMenu menu = keyboardActionFactory.getMenu("First menu!");
-        menu.add(HelpActionsFactory.SHOW_HELP_ACTION);
-        menu.add(MainBuilder.OK);
-        menu.add(MainBuilder.CANCEL);
-        ActionToolbar toolbar = keyboardActionFactory.getToolBar();
-        toolbar.add(MainBuilder.OK);
-        toolbar.add(MainBuilder.TRY);
-        toolbar.add(menu);
-
-        toolbar.add(MainBuilder.CANCEL);
-        toolbar.add(MainBuilder.THREE);
-        toolbar.add(keyboardActionFactory.getButton(HelpActionsFactory.SHOW_HELP_ACTION));
-        toolbar.add(keyboardActionFactory.getButton(MainBuilder.DEMO));
-        RootPanel.get().add(messageBoard);
-        RootPanel.get().add(toolbar);
         modeController.initButtonEnableStates();
     }
 
