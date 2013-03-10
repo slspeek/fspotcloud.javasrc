@@ -6,6 +6,8 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 @GwtCompatible
 public class DemoBuilder {
 
@@ -72,7 +74,8 @@ public class DemoBuilder {
     }
 
     private SafeHtml getContent(ActionUIDef actionUIDef) {
-        KeyStroke[] keyStrokes = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
+        List<KeyStroke> keyStrokes = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
+
         SafeHtml result = helpContentGenerator.getHelpText(actionUIDef, keyStrokes);
         return result;
     }

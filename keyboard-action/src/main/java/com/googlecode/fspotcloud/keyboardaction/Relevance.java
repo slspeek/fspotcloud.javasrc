@@ -15,37 +15,52 @@ import static com.google.common.collect.Sets.newHashSet;
 @GwtCompatible
 public class Relevance {
 
-    private final List<KeyStroke> defaultKeys;
+    private final List<KeyStroke> defaultKeys = newArrayList();
     private final Map<Place, Set<FlagCondition>> placeConditions = newHashMap();
     private final Map<PlaceFlagCondition, KeyStroke[]> overridesMap = newHashMap();
-    private final List<Place> defaultPlaces;
+    private final List<Class<? extends Place>> defaultPlaces = newArrayList();
 
-    public Relevance(List<KeyStroke> defaultKeys, List<Place> defaultPlaces) {
-        this.defaultPlaces = defaultPlaces;
-        this.defaultKeys = defaultKeys;
+    public Relevance(Class<? extends Place>... defaultPlaces) {
+        for (Class<? extends Place> place : defaultPlaces) {
+            this.defaultPlaces.add(place);
+        }
     }
 
-    public Relevance override(Place place, FlagCondition condition, KeyStroke... keyStrokes) {
+    public Relevance addDefaultKeys(KeyStroke... keyStroke) {
+        for (KeyStroke key: keyStroke) {
+            defaultKeys.add(key);
+        }
+        return this;
+    }
+
+    public Relevance override(Class<? extends Place> place, FlagCondition condition, KeyStroke... keyStrokes) {
         addPlaceCondition(place, condition);
         PlaceFlagCondition placeFlagCondition = new PlaceFlagCondition(place, condition);
         overridesMap.put(placeFlagCondition, keyStrokes);
         return this;
     }
 
-    public Relevance override(Place place, KeyStroke... keyStrokes) {
+    public Relevance override(Class<? extends Place> place, KeyStroke... keyStrokes) {
         return override(place, FlagCondition.EMPTY, keyStrokes);
+    }
+
+    public List<Class<? extends Place>> getDefaultPlaces() {
+        return defaultPlaces;
     }
 
     public List<KeyStroke> getKeys(PlaceContext placeContext) {
         List<KeyStroke> result = newArrayList();
-        final Place place = placeContext.getPlace();
+        final Class<? extends Place> place = placeContext.getPlace();
         if (defaultPlaces.contains(place)) {
             result = defaultKeys;
         }
         List<KeyStroke> overrides = newArrayList();
-        for (FlagCondition condition : placeConditions.get(place)) {
-            if (condition.holds(placeContext.getFlags())) {
-                overrides.addAll(getKeyStrokes(place, condition));
+        final Set<FlagCondition> conditionSet = placeConditions.get(place);
+        if (conditionSet != null) {
+            for (FlagCondition condition : conditionSet) {
+                if (condition.holds(placeContext.getFlags())) {
+                    overrides.addAll(getKeyStrokes(place, condition));
+                }
             }
         }
         if (!overrides.isEmpty()) {
@@ -65,7 +80,7 @@ public class Relevance {
         return defaultKeys;
     }
 
-    private void addPlaceCondition(Place place, FlagCondition condition) {
+    private void addPlaceCondition(Class<? extends Place> place, FlagCondition condition) {
         Set<FlagCondition> conditionSet = placeConditions.get(place);
         if (conditionSet == null) {
             conditionSet = newHashSet();
@@ -73,7 +88,7 @@ public class Relevance {
         conditionSet.add(condition);
     }
 
-    private List<KeyStroke> getKeyStrokes(Place place, FlagCondition condition) {
+    private List<KeyStroke> getKeyStrokes(Class<? extends Place> place, FlagCondition condition) {
         final KeyStroke[] elements = overridesMap.get(new PlaceFlagCondition(place, condition));
         if (elements != null) {
             return newArrayList(elements);
@@ -83,5 +98,27 @@ public class Relevance {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Relevance relevance = (Relevance) o;
+
+        if (!defaultKeys.equals(relevance.defaultKeys)) return false;
+        if (!defaultPlaces.equals(relevance.defaultPlaces)) return false;
+        if (!overridesMap.equals(relevance.overridesMap)) return false;
+        if (!placeConditions.equals(relevance.placeConditions)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = defaultKeys.hashCode();
+        result = 31 * result + placeConditions.hashCode();
+        result = 31 * result + overridesMap.hashCode();
+        result = 31 * result + defaultPlaces.hashCode();
+        return result;
+    }
 }

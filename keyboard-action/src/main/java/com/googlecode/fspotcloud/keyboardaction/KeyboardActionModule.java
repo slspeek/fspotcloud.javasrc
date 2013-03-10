@@ -25,6 +25,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(DemoBuilderFactory.class).in(Singleton.class);
         bind(TwoColumnHelpPopup.class);
         bind(HelpActionsFactory.class).in(Singleton.class);
+        bind(PlaceContext.class).toProvider(PlaceContextProvider.class);
         install(new GinFactoryModuleBuilder().build(HelpContentGeneratorFactory.class));
     }
 
