@@ -5,9 +5,9 @@ import com.google.gwt.place.shared.Place;
 public class PlaceFlagCondition {
 
     private final Class<? extends Place> place;
-    private final FlagCondition condition;
+    private final FlagsRule condition;
 
-    public PlaceFlagCondition(Class<? extends Place> place, FlagCondition condition) {
+    public PlaceFlagCondition(Class<? extends Place> place, FlagsRule condition) {
         this.place = place;
         this.condition = condition;
     }

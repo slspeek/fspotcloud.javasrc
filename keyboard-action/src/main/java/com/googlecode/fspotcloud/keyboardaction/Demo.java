@@ -1,8 +1,9 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
+import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -15,21 +16,26 @@ public class Demo implements IActionHandler {
 
     private final Logger log = Logger.getLogger(Demo.class.getName());
     private final DemoPopup demoPopup;
-    private final ActionUIDef actionUIDef;
     private List<DemoStep> stepList = newArrayList();
     private int currentDemoStep = 0;
     private DemoStep currentStep;
     private Timer actionTimer;
     private Timer nextCalltimer;
     private final EventBus eventBus;
+    private final IModeController modeController;
 
-
-    Demo(DemoPopup demoPopup, ActionUIDef actionUIDef, EventBus eventBus) {
+    @Inject
+    Demo(DemoPopup demoPopup, EventBus eventBus, IModeController modeController) {
         this.demoPopup = demoPopup;
-        this.actionUIDef = actionUIDef;
         this.eventBus = eventBus;
+        this.modeController = modeController;
         demoPopup.setTitle("Demo");
         demoPopup.setDemo(this);
+    }
+
+    public Demo withActionUIDef(ActionUIDef actionUIDef) {
+        demoPopup.setTitle(actionUIDef.getName());
+        return this;
     }
 
     public List<DemoStep> getStepList() {
@@ -38,6 +44,7 @@ public class Demo implements IActionHandler {
 
     @Override
     public void performAction(final String actionId) {
+        modeController.setFlag(BuiltinFlags.DEMOING);
         //check for the end
         if (currentDemoStep < stepList.size()) {
             currentStep = stepList.get(currentDemoStep);
@@ -68,6 +75,7 @@ public class Demo implements IActionHandler {
     }
 
     private void cleanUp() {
+        modeController.unsetFlag(BuiltinFlags.DEMOING);
         demoPopup.hide();
         currentDemoStep = 0;
     }

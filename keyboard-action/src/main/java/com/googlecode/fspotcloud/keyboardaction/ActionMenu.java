@@ -2,13 +2,13 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.*;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.web.bindery.event.shared.EventBus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

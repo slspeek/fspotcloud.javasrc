@@ -17,7 +17,6 @@ public class MvpDisplay implements GinMvpDisplay {
 
     @Override
     public void setWidget(IsWidget w) {
-        log.log(Level.FINEST, "set widget starting");
         adapter.setWidget(w);
         log.log(Level.FINEST, "set widget ending");
     }

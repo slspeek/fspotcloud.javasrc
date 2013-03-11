@@ -52,7 +52,7 @@ public class ConfigBuilder {
         return categoryList;
     }
 
-    public ActionCategory createActionCategory(String name) {
+    public ActionCategory createCategory(String name) {
         ActionCategory actionCategory = new ActionCategory(name);
         categoryList.add(actionCategory);
         return actionCategory;
