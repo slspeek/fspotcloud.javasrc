@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gwt.place.shared.Place;
 import com.googlecode.fspotcloud.testharness.HomePlace;
@@ -16,11 +15,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class RelevanceDefaultPlacesTest {
 
-    Relevance relevance = new Relevance(newArrayList(KeyStroke.K),
-            Lists.<Class<? extends Place>>newArrayList(HomePlace.class));
-
-    PlaceContext placeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet());
-
+    Relevance relevance = (new Relevance(HomePlace.class)).addDefaultKeys(KeyStroke.K);
     @Test
     public void testGetKeys() throws Exception {
         List<Class<? extends Place>> places = relevance.getDefaultPlaces();

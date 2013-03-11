@@ -2,11 +2,12 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Event;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.web.bindery.event.shared.EventBus;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,21 +39,21 @@ public class NativePreviewHandler implements Event.NativePreviewHandler {
         final NativeEvent event = preview.getNativeEvent();
         int keycode = event.getKeyCode();
 
-        if (!event.getType().equalsIgnoreCase("keydown")
-
-                ) {
+        if (!event.getType().equalsIgnoreCase("keydown")) {
             return;
         }
         final Modifiers modifiers = getModifiers(event);
-        log.log(Level.FINEST, "Event preview in keypress code: " + keycode + " mods: " + modifiers);
+
+        log.log(Level.FINEST, "Event preview in keydown-event  " + (new KeyStroke(modifiers, keycode)).toString() + " keycode: " + keycode);
 
         final PlaceContext placeContext = placeContextProvider.get();
-        String actionId = keyboardPreferences.get(placeContext, new KeyStroke(modifiers, keycode));
-
-        if (actionId != null) {
+        List<String> actionIdList = keyboardPreferences.get(placeContext, new KeyStroke(modifiers, keycode));
+        if (!actionIdList.isEmpty()) {
+            preview.cancel();
+        }
+        for (String actionId : actionIdList) {
             log.log(Level.FINEST, "ActionId found proceeding for: " + actionId);
             eventBus.fireEvent(new KeyboardActionEvent(actionId));
-            preview.cancel();
         }
     }
 

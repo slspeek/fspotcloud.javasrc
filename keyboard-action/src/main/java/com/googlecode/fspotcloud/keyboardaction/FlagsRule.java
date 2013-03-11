@@ -1,31 +1,40 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.gwt.place.shared.Place;
-
 import java.util.Set;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 
-public class FlagCondition {
+public class FlagsRule {
 
-    public static final FlagCondition EMPTY = new FlagCondition();
+    public static final FlagsRule EMPTY = new FlagsRule();
     private final Set<String> excludedFlags;
     private final Set<String> necessaryFlags;
 
+    public static FlagsRule needing(String ... flags) {
+        FlagsRule rule = new FlagsRule();
+        rule.needs(flags);
+        return rule;
+    }
 
-
-    public FlagCondition() {
+    public static FlagsRule excluding(String... flags) {
+        FlagsRule rule = new FlagsRule();
+        rule.excludes(flags);
+        return rule;
+    }
+    public FlagsRule() {
         this.excludedFlags = newHashSet();
         this.necessaryFlags = newHashSet();
     }
 
-    public void exclude(String ... flags) {
+    public FlagsRule excludes(String... flags) {
         excludedFlags.addAll(newArrayList(flags));
+        return this;
     }
 
-    public void needs(String... flags) {
+    public FlagsRule needs(String... flags) {
         necessaryFlags.addAll(newArrayList(flags));
+        return this;
     }
 
     public boolean holds(Set<String> flags) {
@@ -48,7 +57,7 @@ public class FlagCondition {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FlagCondition that = (FlagCondition) o;
+        FlagsRule that = (FlagsRule) o;
 
         if (!excludedFlags.equals(that.excludedFlags)) return false;
         if (!necessaryFlags.equals(that.necessaryFlags)) return false;
