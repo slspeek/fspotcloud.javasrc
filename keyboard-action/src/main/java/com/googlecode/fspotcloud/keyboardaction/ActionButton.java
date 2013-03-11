@@ -27,10 +27,10 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.web.bindery.event.shared.EventBus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -38,23 +38,32 @@ public class KeyStroke {
     public static final int KEY_PAUSE = 19;
     public static final int KEY_INSERT = 45;
     public static final KeyStroke DELETE = new KeyStroke(KeyCodes.KEY_DELETE);
+    public static final KeyStroke A = new KeyStroke('A');
+    public static final KeyStroke F = new KeyStroke('F');
     public static final KeyStroke H = new KeyStroke('H');
     public static final KeyStroke I = new KeyStroke('I');
     public static final KeyStroke J = new KeyStroke('J');
     public static final KeyStroke K = new KeyStroke('K');
+    public static final KeyStroke L = new KeyStroke('L');
+    public static final KeyStroke M = new KeyStroke('M');
     public static final KeyStroke R = new KeyStroke('R');
-    public static KeyStroke ESC = new KeyStroke(KeyCodes.KEY_ESCAPE);
-    public static KeyStroke INSERT = new KeyStroke(KEY_INSERT);
-    public static KeyStroke PAUSE = new KeyStroke(KEY_PAUSE);
+    public static final KeyStroke X = new KeyStroke('X');
+    public static final KeyStroke FORWARD_SLASH = new KeyStroke(KEY_FORWARD_SLASH);
+    public static final KeyStroke NUM_PAD_PLUS = new KeyStroke(KEY_NUM_PAD_PLUS);
+    public static final KeyStroke NUM_PAD_MINUS = new KeyStroke(KEY_NUM_PAD_MINUS);
+    public static final KeyStroke ESC = new KeyStroke(KeyCodes.KEY_ESCAPE);
+    public static final KeyStroke INSERT = new KeyStroke(KEY_INSERT);
+    public static final KeyStroke PAUSE = new KeyStroke(KEY_PAUSE);
+    public static final KeyStroke ENTER = new KeyStroke(KeyCodes.KEY_ENTER);
+    public static final KeyStroke HOME = new KeyStroke(KeyCodes.KEY_HOME);
+    public static final KeyStroke LEFT = new KeyStroke(KeyCodes.KEY_LEFT);
+    public static final KeyStroke RIGHT = new KeyStroke(KeyCodes.KEY_RIGHT);
+    public static final KeyStroke UP = new KeyStroke(KeyCodes.KEY_UP);
+    public static final KeyStroke DOWN = new KeyStroke(KeyCodes.KEY_DOWN);
+    public static final KeyStroke SPACE = new KeyStroke(KEY_SPACE);
 
     private final Modifiers modifiers;
     private final int keyCode;
-    public static final KeyStroke X = new KeyStroke('X');
-    public static final KeyStroke A = new KeyStroke('A');
-    public static final KeyStroke ENTER = new KeyStroke(KeyCodes.KEY_ENTER);
-    public static final KeyStroke M = new KeyStroke('M');
-    public static final KeyStroke F = new KeyStroke('F');
-    public static final KeyStroke SPACE = new KeyStroke(KEY_SPACE);
 
     public static KeyStroke shift(int keyCode) {
         return new KeyStroke(Modifiers.SHIFT, keyCode);

@@ -7,6 +7,7 @@ import com.google.gwt.place.shared.Place;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
@@ -15,33 +16,50 @@ import static com.google.common.collect.Sets.newHashSet;
 @GwtCompatible
 public class Relevance {
 
+    private final Logger log = Logger.getLogger(Relevance.class.getName());
     private final List<KeyStroke> defaultKeys = newArrayList();
-    private final Map<Place, Set<FlagCondition>> placeConditions = newHashMap();
+    private final Map<Class<? extends Place>, Set<FlagsRule>> placeConditions = newHashMap();
     private final Map<PlaceFlagCondition, KeyStroke[]> overridesMap = newHashMap();
     private final List<Class<? extends Place>> defaultPlaces = newArrayList();
+    private final FlagsRule defaultRule;
+
+    public Relevance(FlagsRule defaultRule, Class<? extends Place>... defaultPlaces) {
+        this.defaultRule = defaultRule;
+        for (Class<? extends Place> place : defaultPlaces) {
+            this.defaultPlaces.add(place);
+        }
+    }
 
     public Relevance(Class<? extends Place>... defaultPlaces) {
+        this.defaultRule = FlagsRule.EMPTY;
         for (Class<? extends Place> place : defaultPlaces) {
             this.defaultPlaces.add(place);
         }
     }
 
     public Relevance addDefaultKeys(KeyStroke... keyStroke) {
-        for (KeyStroke key: keyStroke) {
+        for (KeyStroke key : keyStroke) {
             defaultKeys.add(key);
         }
         return this;
     }
 
-    public Relevance override(Class<? extends Place> place, FlagCondition condition, KeyStroke... keyStrokes) {
+    public Relevance addRule(Class<? extends Place> place, FlagsRule condition, KeyStroke... keyStrokes) {
         addPlaceCondition(place, condition);
         PlaceFlagCondition placeFlagCondition = new PlaceFlagCondition(place, condition);
         overridesMap.put(placeFlagCondition, keyStrokes);
         return this;
     }
 
-    public Relevance override(Class<? extends Place> place, KeyStroke... keyStrokes) {
-        return override(place, FlagCondition.EMPTY, keyStrokes);
+    public Relevance addRule(List<Class<? extends Place>> placeList, FlagsRule condition, KeyStroke... keyStrokes) {
+        for (Class<? extends Place> place : placeList) {
+            addRule(place, condition, keyStrokes);
+        }
+        return this;
+    }
+
+    public Relevance addRule(Class<? extends Place> place, KeyStroke... keyStrokes) {
+        return addRule(place, FlagsRule.EMPTY, keyStrokes);
     }
 
     public List<Class<? extends Place>> getDefaultPlaces() {
@@ -51,14 +69,15 @@ public class Relevance {
     public List<KeyStroke> getKeys(PlaceContext placeContext) {
         List<KeyStroke> result = newArrayList();
         final Class<? extends Place> place = placeContext.getPlace();
-        if (defaultPlaces.contains(place)) {
+        final Set<String> flags = placeContext.getFlags();
+        if ((defaultPlaces.isEmpty() || defaultPlaces.contains(place)) && defaultRule.holds(flags)) {
             result = defaultKeys;
         }
         List<KeyStroke> overrides = newArrayList();
-        final Set<FlagCondition> conditionSet = placeConditions.get(place);
+        final Set<FlagsRule> conditionSet = placeConditions.get(place);
         if (conditionSet != null) {
-            for (FlagCondition condition : conditionSet) {
-                if (condition.holds(placeContext.getFlags())) {
+            for (FlagsRule condition : conditionSet) {
+                if (condition.holds(flags)) {
                     overrides.addAll(getKeyStrokes(place, condition));
                 }
             }
@@ -80,15 +99,16 @@ public class Relevance {
         return defaultKeys;
     }
 
-    private void addPlaceCondition(Class<? extends Place> place, FlagCondition condition) {
-        Set<FlagCondition> conditionSet = placeConditions.get(place);
+    private void addPlaceCondition(Class<? extends Place> place, FlagsRule condition) {
+        Set<FlagsRule> conditionSet = placeConditions.get(place);
         if (conditionSet == null) {
             conditionSet = newHashSet();
         }
         conditionSet.add(condition);
+        placeConditions.put(place, conditionSet);
     }
 
-    private List<KeyStroke> getKeyStrokes(Class<? extends Place> place, FlagCondition condition) {
+    private List<KeyStroke> getKeyStrokes(Class<? extends Place> place, FlagsRule condition) {
         final KeyStroke[] elements = overridesMap.get(new PlaceFlagCondition(place, condition));
         if (elements != null) {
             return newArrayList(elements);

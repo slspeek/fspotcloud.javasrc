@@ -17,13 +17,13 @@ public class CategoryDef {
 
     @Inject
     public CategoryDef(ConfigBuilder configBuilder) {
-        APPLICATION = configBuilder.createActionCategory("Application");
-        NAVIGATION = configBuilder.createActionCategory("Navigation");
-        SLIDESHOW = configBuilder.createActionCategory("Slideshow");
-        RASTER = configBuilder.createActionCategory("Viewing raster");
-        ABOUT = configBuilder.createActionCategory("About");
-        DASHBOARD = configBuilder.createActionCategory("Dashboard");
-        USER = configBuilder.createActionCategory("User");
-        USERGROUP = configBuilder.createActionCategory("Usergroup");
+        APPLICATION = configBuilder.createCategory("Application");
+        NAVIGATION = configBuilder.createCategory("Navigation");
+        SLIDESHOW = configBuilder.createCategory("Slideshow");
+        RASTER = configBuilder.createCategory("Viewing raster");
+        ABOUT = configBuilder.createCategory("About");
+        DASHBOARD = configBuilder.createCategory("Dashboard");
+        USER = configBuilder.createCategory("User");
+        USERGROUP = configBuilder.createCategory("Usergroup");
     }
 }

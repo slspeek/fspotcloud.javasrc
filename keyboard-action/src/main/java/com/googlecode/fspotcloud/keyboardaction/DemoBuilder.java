@@ -1,10 +1,10 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 
 import java.util.List;
 

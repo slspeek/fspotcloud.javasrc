@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 
@@ -16,12 +17,10 @@ import static com.google.common.collect.Sets.newHashSet;
 public class KeyboardPreferences {
 
     private final Logger logger = Logger.getLogger(KeyboardPreferences.class.getName());
-    private final Map<ActionKey, String> keyStringMap = newHashMap();
     private final Map<String, Relevance> bindingsMap = newHashMap();
     private final Map<Relevance, String> relevanceMap = newHashMap();
     @Inject
     KeyboardPreferences() {
-
     }
 
     void bind(String id, Relevance relevance) {
@@ -29,34 +28,44 @@ public class KeyboardPreferences {
         bindingsMap.put(id, relevance);
     }
 
-    String get(PlaceContext placeContext, KeyStroke stroke) {
+    List<String> get(PlaceContext placeContext, KeyStroke stroke) {
+        List<String> result = newArrayList();
         for (Relevance relevance : relevanceMap.keySet()) {
             List<KeyStroke> list = relevance.getKeys(placeContext);
             if (list.contains(stroke)) {
-                return relevanceMap.get(relevance);
+                result.add(relevanceMap.get(relevance));
             }
         }
-        return null;
+        return result;
     }
 
     boolean isRelevant(String actionId, PlaceContext placeContext) {
-        return !(bindingsMap.get(actionId).getKeys(placeContext).size() == 0);
+        return !(getKeysForAction(placeContext, actionId).size() == 0);
     }
 
     List<KeyStroke> getKeysForAction(PlaceContext placeContext, String actionId) {
-        return bindingsMap.get(actionId).getKeys(placeContext);
+        List<KeyStroke> keyStrokes = newArrayList();
+        final Relevance relevance = bindingsMap.get(actionId);
+        if (relevance != null) {
+            keyStrokes.addAll(relevance.getKeys(placeContext));
+        }
+        return keyStrokes;
     }
 
     Set<String> allActions() {
         return bindingsMap.keySet();
     }
 
-    public List<KeyStroke> getDefaultKeysForAction(String id) {
-        return bindingsMap.get(id).getDefaultKeys();
-
+    public List<KeyStroke> getDefaultKeysForAction(String actionId) {
+        List<KeyStroke> keyStrokes = newArrayList();
+        final Relevance relevance = bindingsMap.get(actionId);
+        if (relevance != null) {
+            keyStrokes.addAll(relevance.getDefaultKeys());
+        }
+        return keyStrokes;
     }
 
-    Set<String> allRelevantActions(PlaceContext placeContext    ) {
+    Set<String> allRelevantActions(PlaceContext placeContext) {
         HashSet result = newHashSet();
         for (String actionId : allActions()) {
             if (isRelevant(actionId, placeContext)) {
