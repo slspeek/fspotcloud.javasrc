@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
+import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
 
 
 public class PeerActionsViewImpl extends Composite
@@ -59,12 +59,12 @@ public class PeerActionsViewImpl extends Composite
 
     @Inject
     public PeerActionsViewImpl(DashboardActions actions,
-                               ButtonFactory buttonFactory,
+                               WidgetFactory widgetFactory,
                                AdminActionButtonResources resources) {
-        buttonFactory.setButtonResources(resources);
-        updateButton = buttonFactory.getButton(actions.synchronize);
-        deleteAllTagsButton = buttonFactory.getButton(actions.deleteAll);
-        deleteAllCommandsButton = buttonFactory.getButton(actions.deleteCommands);
+        widgetFactory.setButtonResources(resources);
+        updateButton = widgetFactory.getButton(actions.synchronize);
+        deleteAllTagsButton = widgetFactory.getButton(actions.deleteAll);
+        deleteAllCommandsButton = widgetFactory.getButton(actions.deleteCommands);
         initWidget(uiBinder.createAndBindUi(this));
         deleteAllTagsButton.ensureDebugId("delete-all-tags-button");
         tagCountOnPeerValueLabel.ensureDebugId("tag-count-on-peer-label");

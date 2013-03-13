@@ -3,25 +3,28 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
-public class ButtonFactory {
+public class WidgetFactory {
 
     private final EventBus eventBus;
     private final ActionUIRegistry actionUIRegistry;
-    private ActionButtonResources buttonResources;
     private final ActionMenuResources menuResources;
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
+    private final WidgetRegistry widgetRegistry;
+    private ActionButtonResources buttonResources;
 
     @Inject
-    private ButtonFactory(EventBus eventBus,
+    private WidgetFactory(EventBus eventBus,
                           ActionUIRegistry actionUIRegistry,
                           ActionButtonResources buttonResources,
                           ActionMenuResources menuResources,
-                          ActionMenuItemSafeHtml actionMenuItemSafeHtml) {
+                          ActionMenuItemSafeHtml actionMenuItemSafeHtml,
+                          WidgetRegistry widgetRegistry) {
         this.eventBus = eventBus;
         this.actionUIRegistry = actionUIRegistry;
         this.buttonResources = buttonResources;
         this.menuResources = menuResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
+        this.widgetRegistry = widgetRegistry;
         menuResources.style().ensureInjected();
         buttonResources.style().ensureInjected();
     }
@@ -36,7 +39,9 @@ public class ButtonFactory {
 
     public ActionButton getButton(ActionUIDef actionUIDef, ActionButtonResources buttonResources
     ) {
-        return new ActionButton(actionUIDef, eventBus, buttonResources);
+        final ActionButton actionButton = new ActionButton(actionUIDef, eventBus, buttonResources);
+        widgetRegistry.add(actionUIDef.getId(), actionButton);
+        return actionButton;
     }
 
     public ActionButton getButton(String actionId) {
@@ -45,7 +50,8 @@ public class ButtonFactory {
     }
 
     public ActionMenu getMenu(String caption) {
-        return new ActionMenu(caption, actionUIRegistry, eventBus, menuResources, actionMenuItemSafeHtml);
+        final ActionMenu actionMenu = new ActionMenu(caption, actionUIRegistry, eventBus, menuResources, actionMenuItemSafeHtml);
+        return actionMenu;
     }
 
 }

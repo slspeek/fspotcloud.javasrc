@@ -9,7 +9,7 @@ public class PlaceContextProvider implements Provider<PlaceContext> {
     @Inject
     private IModeController modeController;
     @Inject
-    private PlaceController placeController;
+    private IPlaceController placeController;
 
 
     @Override

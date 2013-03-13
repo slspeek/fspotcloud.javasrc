@@ -5,15 +5,15 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.BigActionButtonResources;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
-import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
+import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
 
 @GwtCompatible
 public class BigButtonFactory {
 
-    private final ButtonFactory factory;
+    private final WidgetFactory factory;
 
     @Inject
-    public BigButtonFactory(ButtonFactory factory, BigActionButtonResources resources) {
+    public BigButtonFactory(WidgetFactory factory, BigActionButtonResources resources) {
         this.factory = factory;
         factory.setButtonResources(resources);
     }
