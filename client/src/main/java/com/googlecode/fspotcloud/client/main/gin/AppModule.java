@@ -25,8 +25,6 @@
 package com.googlecode.fspotcloud.client.main.gin;
 
 import com.google.code.ginmvp.client.GinMvpModule;
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
@@ -60,7 +58,7 @@ public class AppModule extends AbstractGinModule {
         bind(IPlaceController.class).to(PlaceGoToImpl.class).in(Singleton.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
-        bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+        //bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(OpenNewTab.class).to(OpenNewTabImpl.class);
         bind(ReplaceLocation.class).to(ReplaceLocationImpl.class);
 

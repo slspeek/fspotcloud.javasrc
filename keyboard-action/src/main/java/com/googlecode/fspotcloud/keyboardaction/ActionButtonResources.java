@@ -37,6 +37,6 @@ public interface ActionButtonResources extends ClientBundle {
     public interface Style extends CssResource {
         String button();
 
-        String in_demo();
+        String demoing();
     }
 }

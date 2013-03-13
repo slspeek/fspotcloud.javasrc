@@ -3,12 +3,11 @@ package com.googlecode.fspotcloud.client.enduseraction.user;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
+import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
-import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.ctrl;
 
 public class UserBinder extends AbstractBinder {
 
@@ -23,37 +22,29 @@ public class UserBinder extends AbstractBinder {
 
     @Override
     public void build() {
-        KeyboardBinding binding = KeyboardBinding.bind(alt('N'), alt('G')).withDefaultModes(Modes.LOGIN, Modes.TAG_VIEW);
+        Relevance binding = new Relevance(LoginPlace.class, BasePlace.class).addDefaultKeys(alt('N'), alt('G'));
         configBuilder.register(category, actions.otherLogin, binding);
-        binding = KeyboardBinding.bind(KeyStroke.alt('S')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN);
+        binding = new Relevance(BasePlace.class, LoginPlace.class).addDefaultKeys(KeyStroke.alt('S'));
         configBuilder.register(category, actions.goSignUp, binding);
-        binding = KeyboardBinding.bind(KeyStroke.alt('R')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN);
+        binding = new Relevance(BasePlace.class, LoginPlace.class).addDefaultKeys(KeyStroke.alt('R'));
         configBuilder.register(category, actions.goResetPassword, binding);
-        binding = KeyboardBinding.bind(KeyStroke.alt('C')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN);
+        binding = new Relevance(BasePlace.class, LoginPlace.class).addDefaultKeys(KeyStroke.alt('C'));
         configBuilder.register(category, actions.goResendConfirmation, binding);
-        binding = KeyboardBinding.bind(KeyStroke.alt('Z')).withDefaultModes(Modes.LOGIN);
+        binding = new Relevance(LoginPlace.class).addDefaultKeys(KeyStroke.alt('Z'), KeyStroke.alt('S'));
         configBuilder.register(category, actions.doLogin, binding);
-        binding = KeyboardBinding.bind(KeyStroke.M).withDefaultModes(Modes.MAIL_FULLSIZE);
+        binding = new Relevance(MailFullsizePlace.class).addDefaultKeys(KeyStroke.M);
         configBuilder.register(category, actions.doMailFullsize, binding);
-        binding = KeyboardBinding.bind(alt('P')).withDefaultModes(Modes.ALL_MODES);
+        binding = new Relevance().addDefaultKeys(alt('P'));
         configBuilder.register(category, actions.goAccountPage, binding);
-        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.PROFILE);
+        binding = new Relevance(UserAccountPlace.class).addDefaultKeys(alt('S'));
         configBuilder.register(category, actions.doChangePassword, binding);
-        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.RESEND_EMAIL);
+        binding = new Relevance(SendConfirmationPlace.class).addDefaultKeys(alt('S'));
         configBuilder.register(category, actions.doSendEmailConfirmation, binding);
-        binding = KeyboardBinding.bind(alt('S'), alt('R')).withDefaultModes(Modes.SEND_RESET);
+        binding = new Relevance(SendPasswordResetPlace.class).addDefaultKeys(alt('S'), alt('R'));
         configBuilder.register(category, actions.doRequestPasswordReset, binding);
-        binding = KeyboardBinding.bind(alt('S'), alt('R')).withDefaultModes(Modes.PASSWORD_RESET);
+        binding = new Relevance(ChangePasswordPlace.class).addDefaultKeys(alt('S'), alt('R'));
         configBuilder.register(category, actions.doPasswordReset, binding);
-        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.SIGN_UP);
+        binding = new Relevance(SignUpPlace.class).addDefaultKeys(alt('S'));
         configBuilder.register(category, actions.doSignUp, binding);
-    }
-
-    private KeyboardBinding get(int characterCode) {
-        return KeyboardBinding.bind(ctrl(characterCode)).withDefaultModes(Modes.LOGIN, Modes.TAG_VIEW);
-    }
-
-    private KeyboardBinding get(char characterCode) {
-        return KeyboardBinding.bind(ctrl(characterCode)).withDefaultModes(Modes.LOGIN, Modes.TAG_VIEW);
     }
 }

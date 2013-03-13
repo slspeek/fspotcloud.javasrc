@@ -3,12 +3,14 @@ package com.googlecode.fspotcloud.client.enduseraction.navigation;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
-import com.googlecode.fspotcloud.keyboardaction.*;
+import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardPreferences;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,10 +23,7 @@ public class NavigationBinderTest {
 
         }
 
-        @Provides
-        ModesProvider get() {
-            return new SimpleModesProvider(Modes.ALL_MODES);
-        }
+
     }
 
     @Inject
@@ -36,8 +35,8 @@ public class NavigationBinderTest {
     @Test
     public void testBuild() throws Exception {
         binder.build();
-        KeyStroke[] keys = keyboardPreferences.getDefaultKeysForAction(NavigationActions.HOME_ID);
-        assertEquals(1, keys.length);
-        assertEquals(KeyCodes.KEY_HOME, keys[0].getKeyCode());
+        List<KeyStroke> keys = keyboardPreferences.getDefaultKeysForAction(NavigationActions.HOME_ID);
+        assertEquals(1, keys.size());
+        assertEquals(KeyCodes.KEY_HOME, keys.get(0).getKeyCode());
     }
 }

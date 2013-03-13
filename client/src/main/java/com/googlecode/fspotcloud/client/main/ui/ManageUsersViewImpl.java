@@ -36,7 +36,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
@@ -133,13 +133,13 @@ public class ManageUsersViewImpl extends Composite implements ManageUsersView {
     @UiHandler("emailTextBox")
     public void onFocus(FocusEvent e) {
         log.log(Level.FINEST, "email field focused");
-        modeController.setMode(Modes.MANAGE_USERS);
+        modeController.setFlag(Flags.TEXT_INPUT.name());
     }
 
     @UiHandler("emailTextBox")
     public void onBlur(BlurEvent e) {
         log.log(Level.FINEST, "email field focus was lost");
-        modeController.setMode(Modes.MANAGE_USERS_NO_INPUT);
+        modeController.unsetFlag(Flags.TEXT_INPUT.name());
     }
 
     @Override

@@ -24,9 +24,9 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;

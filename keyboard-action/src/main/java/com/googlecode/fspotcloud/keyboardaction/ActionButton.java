@@ -55,8 +55,8 @@ public class ActionButton extends PushButton implements ActionWidget {
     }
 
     private void initialize() {
-        eventBus.addHandler(ActionStateEvent.TYPE, this);
-        eventBus.addHandler(ActionDemoEvent.TYPE, this);
+        /*eventBus.addHandler(ActionStateEvent.TYPE, this);
+        eventBus.addHandler(ActionDemoEvent.TYPE, this);*/
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " pressed.");
@@ -90,24 +90,20 @@ public class ActionButton extends PushButton implements ActionWidget {
 
     @Override
     public void onEvent(ActionStateEvent event) {
-        if (event.getActionId().equals(actionUIDef.getId())) {
-            setEnabled(event.getState());
-            if (event.getState()) {
-                String keys = event.getAcceleratorString();
-                setTooltip(actionUIDef.getDescription() + " (" + keys + ")");
-            }
-            //setVisible(event.getState());
+        setEnabled(event.getState());
+        if (event.getState()) {
+            String keys = event.getAcceleratorString();
+            setTooltip(actionUIDef.getDescription() + " (" + keys + ")");
         }
     }
 
     @Override
     public void onEvent(ActionDemoEvent event) {
         if (event.getActionId().equals(actionUIDef.getId())) {
-
             if (event.getState()) {
-                addStyleName(resources.style().in_demo());
+                addStyleName(resources.style().demoing());
             } else {
-                removeStyleName(resources.style().in_demo());
+                removeStyleName(resources.style().demoing());
             }
         }
 

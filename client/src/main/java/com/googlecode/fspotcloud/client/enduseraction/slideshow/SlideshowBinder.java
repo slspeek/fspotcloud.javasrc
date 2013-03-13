@@ -3,10 +3,11 @@ package com.googlecode.fspotcloud.client.enduseraction.slideshow;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.handler.*;
+import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 public class SlideshowBinder extends AbstractBinder {
 
@@ -37,17 +38,17 @@ public class SlideshowBinder extends AbstractBinder {
 
     @Override
     public void build() {
-        KeyboardBinding binding;
+        Relevance binding;
         bind(actions.slideshow_stop, stopHandler, get('Q'));
         bind(actions.slideshow_faster, fasterHandler, get('M'));
         bind(actions.slideshow_slower, slowerHandler, get('N'));
-        binding = KeyboardBinding.bind(new KeyStroke('S')).withDefaultModes(Modes.SLIDESHOW, Modes.TAG_VIEW, Modes.TREE_VIEW);
+        binding = new Relevance(SlideshowPlace.class, BasePlace.class).addDefaultKeys(new KeyStroke('S'));
         bind(actions.slideshow_start, startHandler, binding);
         bind(actions.slideshow_pause, pauseHandler, get(KeyStroke.KEY_SPACE));
     }
 
-    private KeyboardBinding get(int code) {
-        return KeyboardBinding.bind(new KeyStroke(code)).withDefaultModes(Modes.SLIDESHOW);
+    private Relevance get(int code) {
+        return new Relevance(SlideshowPlace.class).addDefaultKeys(new KeyStroke(code));
     }
 
 }
