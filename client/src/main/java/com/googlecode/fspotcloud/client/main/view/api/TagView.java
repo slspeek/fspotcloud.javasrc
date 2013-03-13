@@ -30,8 +30,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 @GwtCompatible
 public interface TagView extends IsWidget {
-    void setPresenter(TagPresenter presenter);
-
     void hideControlsLater(int duration);
 
     void cancelHiding();

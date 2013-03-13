@@ -3,10 +3,10 @@ package com.googlecode.fspotcloud.client.enduseraction.about;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.client.enduseraction.about.handler.*;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 public class AboutBinder extends AbstractBinder {
 
@@ -46,8 +46,8 @@ public class AboutBinder extends AbstractBinder {
         bind(aboutActions.proton, protonHandler, get('P'));
     }
 
-    private KeyboardBinding get(char c) {
-        return KeyboardBinding.bind(new KeyStroke(c)).withDefaultModes(Modes.ABOUT, Modes.TAG_VIEW, Modes.TREE_VIEW);
+    private Relevance get(char code) {
+        return new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke(code));
     }
 
 }

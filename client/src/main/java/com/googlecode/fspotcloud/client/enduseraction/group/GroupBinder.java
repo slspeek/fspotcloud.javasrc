@@ -5,9 +5,12 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
+import com.googlecode.fspotcloud.client.place.EditUserGroupPlace;
+import com.googlecode.fspotcloud.client.place.ManageUserGroupsPlace;
+import com.googlecode.fspotcloud.client.place.ManageUsersPlace;
+import com.googlecode.fspotcloud.client.place.TagApprovalPlace;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 
@@ -28,46 +31,46 @@ public class GroupBinder extends AbstractBinder {
     public void build() {
         configBuilder.register(category, actions.manageUsers, get('M'));
         configBuilder.register(category, actions.newUsergroup, get('C'));
-
-        KeyboardBinding binding = KeyboardBinding.bind(KeyStroke.X, KeyStroke.DELETE).withDefaultModes(Modes.MANAGE_GROUPS);
+        Relevance binding = new Relevance(ManageUserGroupsPlace.class)
+                .addDefaultKeys(KeyStroke.X, KeyStroke.DELETE);
         configBuilder.register(category, actions.deleteUsergroup, binding);
         configBuilder.register(category, actions.editUsergroup, get('E'));
         configBuilder.register(category, actions.focusGroupTable, get(KeyCodes.KEY_ENTER));
-        binding = KeyboardBinding.bind(alt('S')).withDefaultModes(Modes.EDIT_GROUP);
+        binding = new Relevance(EditUserGroupPlace.class).addDefaultKeys(alt('S'));
         configBuilder.register(category, actions.saveGroup, binding);
-        binding = KeyboardBinding.bind(alt('S'), alt('A'), KeyStroke.ENTER)
-                .withDefaultModes(Modes.MANAGE_USERS)
-                .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.A, KeyStroke.INSERT);
+        binding = new Relevance(ManageUsersPlace.class).addDefaultKeys(alt('S'), alt('A'), KeyStroke.ENTER);
+
+        //.addRule(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.A, KeyStroke.INSERT);
         configBuilder.register(category, actions.addUser, binding);
-        binding = KeyboardBinding.bind(alt('X'), alt(KeyCodes.KEY_DELETE))
-                .withDefaultModes(Modes.MANAGE_USERS)
-                .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.DELETE, KeyStroke.X);
+        binding = new Relevance(ManageUsersPlace.class).addDefaultKeys(alt('X'), alt(KeyCodes.KEY_DELETE));
+
+        //.addRule(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.DELETE, KeyStroke.X);
         configBuilder.register(category, actions.removeUser, binding);
-        binding = KeyboardBinding.bind(alt(KeyCodes.KEY_ENTER)).withDefaultModes(Modes.MANAGE_USERS)
-                .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.ENTER);
+        binding = new Relevance(ManageUsersPlace.class).addDefaultKeys(alt(KeyCodes.KEY_ENTER));
+        //.addRule(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.ENTER);
         configBuilder.register(category, actions.focusUserTable, binding);
-        binding = KeyboardBinding.bind(alt('Z')).withDefaultModes(Modes.MANAGE_USERS)
-                .override(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.I);
+        binding = new Relevance(ManageUsersPlace.class).addDefaultKeys(alt('Z'));
+        //.addRule(Modes.MANAGE_USERS_NO_INPUT, KeyStroke.I);
         configBuilder.register(category, actions.focusEmailField, binding);
 
-        binding = KeyboardBinding.bind(KeyStroke.J).withDefaultModes(Modes.TAG_ACCESS);
+        binding = new Relevance(TagApprovalPlace.class).addDefaultKeys(KeyStroke.J);
         configBuilder.register(category, actions.focusGrantedTable, binding);
-        binding = KeyboardBinding.bind(KeyStroke.K).withDefaultModes(Modes.TAG_ACCESS);
+        binding = new Relevance(TagApprovalPlace.class).addDefaultKeys(KeyStroke.K);
         configBuilder.register(category, actions.focusRevokedTable, binding);
-        binding = KeyboardBinding.bind(KeyStroke.I, KeyStroke.INSERT).withDefaultModes(Modes.TAG_ACCESS);
+        binding = new Relevance(TagApprovalPlace.class).addDefaultKeys(KeyStroke.I, KeyStroke.INSERT);
         configBuilder.register(category, actions.grantGroup, binding);
-        binding = KeyboardBinding.bind(KeyStroke.DELETE, KeyStroke.X).withDefaultModes(Modes.TAG_ACCESS);
+        binding = new Relevance(TagApprovalPlace.class).addDefaultKeys(KeyStroke.DELETE, KeyStroke.X);
         configBuilder.register(category, actions.revokeGroup, binding);
 
 
     }
 
-    private KeyboardBinding get(int characterCode) {
-        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.MANAGE_GROUPS);
+    private Relevance get(int characterCode) {
+        return new Relevance(ManageUserGroupsPlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
-    private KeyboardBinding get(char characterCode) {
-        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.MANAGE_GROUPS);
+    private Relevance get(char characterCode) {
+        return new Relevance(ManageUserGroupsPlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
 }

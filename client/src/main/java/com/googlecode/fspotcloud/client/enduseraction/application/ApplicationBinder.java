@@ -4,12 +4,11 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.client.enduseraction.application.handler.*;
+import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
-import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.ESC;
-import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
+import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.*;
 
 public class ApplicationBinder extends AbstractBinder {
 
@@ -49,24 +48,24 @@ public class ApplicationBinder extends AbstractBinder {
 
     @Override
     public void build() {
-        KeyboardBinding helpBinding = KeyboardBinding.bind(new KeyStroke('H')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
+        Relevance helpBinding = new Relevance(BasePlace.class, SlideshowPlace.class)
+                .addDefaultKeys(new KeyStroke('H'));
         bind(actions.show_help, getHelpHandler(), helpBinding);
 
-        KeyboardBinding hideHelpBinding = KeyboardBinding.bind(new KeyStroke(KeyCodes.KEY_ESCAPE)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
+        Relevance hideHelpBinding = new Relevance().addDefaultKeys(new KeyStroke(KeyCodes.KEY_ESCAPE));
         bind(actions.hide_help, helpActionsFactory.getCloseHelp(), hideHelpBinding);
 
-        KeyboardBinding aboutBinding = KeyboardBinding.bind(new KeyStroke('A')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.SLIDESHOW);
+        Relevance aboutBinding = new Relevance().addDefaultKeys(new KeyStroke('A'));
         bind(actions.about, aboutHandlerFactory.getAboutHandler(), aboutBinding);
 
-        KeyboardBinding binding = KeyboardBinding.bind(new KeyStroke('D'))
-                .withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW)
-                .override(Modes.MANAGE_GROUPS, alt('D'), new KeyStroke(KeyCodes.KEY_ESCAPE))
-                .override(Modes.MANAGE_USERS, alt('D'))
-                .override(Modes.TAG_ACCESS, ESC);
+        Relevance binding = new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke('D'))
+                .addRule(ManageUserGroupsPlace.class, alt('D'), new KeyStroke(KeyCodes.KEY_ESCAPE))
+                .addRule(ManageUsersPlace.class, alt('D'))
+                .addRule(TagApprovalPlace.class, ESC);
 
         bind(actions.dashboard, dashboardHandler, binding);
         bind(actions.login, loginHandler, get('N'));
-        binding = KeyboardBinding.bind(alt('O')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
+        binding = new Relevance(BasePlace.class, LoginPlace.class, TagPlace.class).addDefaultKeys(new KeyStroke('O'));
         bind(actions.logout, logoutHandler, binding);
         bind(actions.zoom_in, zoomInHandler, get(KeyStroke.KEY_NUM_PAD_PLUS));
         bind(actions.zoom_out, zoomOutHandler, get(KeyStroke.KEY_NUM_PAD_MINUS));
@@ -77,9 +76,10 @@ public class ApplicationBinder extends AbstractBinder {
         configBuilder.register(category, actions.demo, get('7'));
         configBuilder.register(category, actions.tree_focus, get(KeyCodes.KEY_ENTER));
         configBuilder.register(category, actions.reloadTree, get('R'));
-        binding = KeyboardBinding.bind(alt('L')).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW, Modes.LOGIN, Modes.DASHBOARD);
+        binding = new Relevance(BasePlace.class, LoginPlace.class, TagPlace.class).addDefaultKeys(alt('L'));
+
         configBuilder.register(category, actions.goToLatest, binding);
-        binding = KeyboardBinding.bind(alt(KeyStroke.KEY_FORWARD_SLASH)).withDefaultModes(Modes.ALL_MODES);
+        binding = new Relevance().addDefaultKeys(alt(KEY_FORWARD_SLASH));
         configBuilder.register(category, actions.show_shortcuts, binding);
         configBuilder.register(category, actions.toggleAutoHide, get('9'));
     }
@@ -91,12 +91,12 @@ public class ApplicationBinder extends AbstractBinder {
         return helpActionsFactory.getHelpAction(helpConfig);
     }
 
-    private KeyboardBinding get(int characterCode) {
-        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
+    private Relevance get(int characterCode) {
+        return new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
-    private KeyboardBinding get(char characterCode) {
-        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.TAG_VIEW, Modes.TREE_VIEW);
+    private Relevance get(char characterCode) {
+        return new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
 

@@ -25,10 +25,10 @@
 package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
@@ -74,7 +74,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     }
 
     @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+    public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBus) {
         this.view.setPresenter(this);
         panel.setWidget(view);
         view.focusUserNameField();

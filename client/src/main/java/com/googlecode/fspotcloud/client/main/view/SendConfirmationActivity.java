@@ -31,7 +31,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.client.main.view.api.SendConfirmationView;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailResult;
 import net.customware.gwt.dispatch.client.DispatchAsync;
@@ -44,17 +43,15 @@ public class SendConfirmationActivity extends AbstractActivity implements SendCo
     private final Logger log = Logger.getLogger(SendConfirmationActivity.class.getName());
     private final SendConfirmationView view;
     private final DispatchAsync dispatchAsync;
-    private final Navigator navigator;
     private final UserActions userActions;
 
 
     @Inject
     public SendConfirmationActivity(SendConfirmationView view,
                                     DispatchAsync dispatchAsync,
-                                    Navigator navigator, UserActions userActions) {
+                                    UserActions userActions) {
         this.view = view;
         this.dispatchAsync = dispatchAsync;
-        this.navigator = navigator;
         this.userActions = userActions;
     }
 

@@ -4,10 +4,10 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
+import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
 import com.googlecode.fspotcloud.keyboardaction.Modifiers;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 public class DashboardBinder extends AbstractBinder {
 
@@ -25,28 +25,28 @@ public class DashboardBinder extends AbstractBinder {
     @Override
     public void build() {
         configBuilder.register(category, actions.reloadTree, get('R'));
-        KeyboardBinding binding = KeyboardBinding.bind(KeyStroke.F).withDefaultModes(Modes.DASHBOARD)
-                .override(Modes.MAIL_FULLSIZE, KeyStroke.ESC)
-                .override(Modes.LOGIN, KeyStroke.ESC)
-                .override(Modes.PROFILE, KeyStroke.ESC)
-                .override(Modes.RESEND_EMAIL, KeyStroke.ESC)
-                .override(Modes.PASSWORD_RESET, KeyStroke.ESC)
-                .override(Modes.SIGN_UP, KeyStroke.ESC)
-                .override(Modes.SEND_RESET, KeyStroke.ESC);
+        Relevance binding = new Relevance(TagPlace.class).addDefaultKeys(KeyStroke.F)
+                .addRule(MailFullsizePlace.class, KeyStroke.ESC)
+                .addRule(LoginPlace.class, KeyStroke.ESC)
+                .addRule(UserAccountPlace.class, KeyStroke.ESC)
+                .addRule(SendPasswordResetPlace.class, KeyStroke.ESC)
+                .addRule(SendConfirmationPlace.class, KeyStroke.ESC)
+                .addRule(SignUpPlace.class, KeyStroke.ESC)
+                .addRule(ChangePasswordPlace.class, KeyStroke.ESC);
         configBuilder.register(category, actions.toPhotos, binding);
-        binding = KeyboardBinding.bind(new KeyStroke('M'))
-                .withDefaultModes(Modes.DASHBOARD, Modes.TAG_ACCESS)
-                .override(Modes.EDIT_GROUP, KeyStroke.ESC)
-                .override(Modes.MANAGE_USERS, new KeyStroke(KeyCodes.KEY_ESCAPE), KeyStroke.alt('M'))
-                .override(Modes.MANAGE_USERS_NO_INPUT, new KeyStroke(KeyCodes.KEY_ESCAPE), KeyStroke.M);
+        binding = new Relevance(TagPlace.class, TagApprovalPlace.class).addDefaultKeys(new KeyStroke('M'))
+
+                .addRule(EditUserGroupPlace.class, KeyStroke.ESC)
+                .addRule(ManageUsersPlace.class, new KeyStroke(KeyCodes.KEY_ESCAPE), KeyStroke.alt('M'));
+        //.addRule(Modes.MANAGE_USERS_NO_INPUT, new KeyStroke(KeyCodes.KEY_ESCAPE), KeyStroke.M);
         configBuilder.register(category, actions.manageGroups, binding);
         final KeyStroke SHIFT_CTRL_ALT_R = new KeyStroke(new Modifiers(true, true, true), 'R');
-        binding = KeyboardBinding.bind(SHIFT_CTRL_ALT_R).withDefaultModes(Modes.DASHBOARD);
+        binding = new Relevance(TagPlace.class).addDefaultKeys(SHIFT_CTRL_ALT_R);
         configBuilder.register(category, actions.deleteAll, binding);
         configBuilder.register(category, actions.synchronize, get('S'));
 
         configBuilder.register(category, actions.deleteCommands,
-                KeyboardBinding.bind(new KeyStroke(Modifiers.CTRL, 'C')).withDefaultModes(Modes.DASHBOARD));
+                new Relevance(TagPlace.class).addDefaultKeys(new KeyStroke(Modifiers.CTRL, 'C')));
 
         configBuilder.register(category, actions.importTag, get('I'));
         configBuilder.register(category, actions.manageAccess, get('A'));
@@ -54,12 +54,12 @@ public class DashboardBinder extends AbstractBinder {
     }
 
 
-    private KeyboardBinding get(int characterCode) {
-        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.DASHBOARD);
+    private Relevance get(int characterCode) {
+        return new Relevance(TagPlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
-    private KeyboardBinding get(char characterCode) {
-        return KeyboardBinding.bind(new KeyStroke(characterCode)).withDefaultModes(Modes.DASHBOARD);
+    private Relevance get(char characterCode) {
+        return new Relevance(TagPlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
 }

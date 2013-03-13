@@ -45,6 +45,7 @@
 }
 
 .imagePanelBlock {
+    top: 0px
 	background-color: ligherColor;
 	margin: auto;
     border-style: solid;

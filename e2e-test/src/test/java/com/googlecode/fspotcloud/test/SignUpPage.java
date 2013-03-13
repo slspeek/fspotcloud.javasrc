@@ -58,7 +58,7 @@ public class SignUpPage {
     public void signUp() throws InterruptedException {
         selenium.click("gwt-debug-sign-up");
         selenium.waitForPageToLoad("30000");
-        sleepShort();
+        sleepShort(2);
     }
 
     public void verifySuccess() {

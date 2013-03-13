@@ -24,11 +24,11 @@
 
 package com.googlecode.fspotcloud.client.main.view;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.fspotcloud.client.main.event.ZoomViewEvent;
 import com.googlecode.fspotcloud.client.main.view.api.ImageView;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
