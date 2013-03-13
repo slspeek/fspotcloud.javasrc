@@ -69,7 +69,7 @@ public class TagViewImpl extends Composite implements TagView,
     LayoutPanel mainPanel;
 
     @UiField(provided = true)
-    TreeView treeView;
+    TreeViewImpl treeView;
     @UiField(provided = true)
     ImageRasterViewImpl imageRasterView;
     @UiField(provided = true)
@@ -85,7 +85,7 @@ public class TagViewImpl extends Composite implements TagView,
                        TimerInterface timer,
                        @MainToolbar ActionToolbar actionToolbar) {
         this.timer = timer;
-        this.treeView = treeView;
+        this.treeView = (TreeViewImpl) treeView;
         this.imageRasterView = (ImageRasterViewImpl) imageRasterView;
         this.actionToolbar = actionToolbar;
         initWidget(uiBinder.createAndBindUi(this));
