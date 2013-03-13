@@ -2,13 +2,9 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
 import com.google.gwt.place.shared.PlaceChangeEvent;
-import com.google.gwt.place.shared.PlaceChangeRequestEvent;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.EventBus;
 
 import java.util.List;
 import java.util.Set;
@@ -17,33 +13,32 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-public class ModeController implements IModeController{
+public class ModeController implements IModeController {
 
     private final Logger log = Logger.getLogger(ModeController.class.getName());
     private final KeyboardPreferences keyboardPreferences;
-    private final EventBus eventBus;
     private final Set<String> flags = newHashSet();
-    private final PlaceController placeController;
+    private final IPlaceController placeController;
+    private final WidgetRegistry widgetRegistry;
 
     @Inject
     private ModeController(
             KeyboardPreferences keyboardPreferences,
-            EventBus eventBus, PlaceController placeController) {
-        this.eventBus = eventBus;
+            IPlaceController placeController,
+            WidgetRegistry widgetRegistry) {
         this.keyboardPreferences = keyboardPreferences;
         this.placeController = placeController;
-        eventBus.addHandler(PlaceChangeEvent.TYPE, this);
+        this.widgetRegistry = widgetRegistry;
     }
 
     @Override
     public void initButtonEnableStates() {
-
+        fireEnabledStateEvens();
     }
-
 
     @Override
     public Set<String> getFlags() {
-        return flags;  //To change body of implemented methods use File | Settings | File Templates.
+        return flags;
     }
 
     @Override
@@ -78,12 +73,15 @@ public class ModeController implements IModeController{
                 event = new ActionStateEvent(actionId, relevant);
             }
             log.log(Level.FINEST, "Firing: " + event);
-            eventBus.fireEvent(event);
+            Set<ActionWidget> widgetSet = widgetRegistry.get(actionId);
+            for (ActionWidget widget : widgetSet) {
+                widget.onEvent(event);
+            }
         }
     }
 
     @Override
     public void onPlaceChange(PlaceChangeEvent event) {
-      fireEnabledStateEvens();
+        fireEnabledStateEvens();
     }
 }

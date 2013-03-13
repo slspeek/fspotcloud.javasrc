@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.ButtonFactory;
+import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
 
 import java.util.logging.Logger;
 
@@ -64,11 +64,11 @@ public class TagDetailsViewImpl extends Composite implements TagDetailsView {
 
     @Inject
     public TagDetailsViewImpl(DashboardActions dashboard,
-                              ButtonFactory buttonFactory,
+                              WidgetFactory widgetFactory,
                               AdminActionButtonResources resources) {
-        buttonFactory.setButtonResources(resources);
-        importTagButton = buttonFactory.getButton(dashboard.importTag);
-        manageAccessButton = buttonFactory.getButton(dashboard.manageAccess);
+        widgetFactory.setButtonResources(resources);
+        importTagButton = widgetFactory.getButton(dashboard.importTag);
+        manageAccessButton = widgetFactory.getButton(dashboard.manageAccess);
         initWidget(uiBinder.createAndBindUi(this));
         importTagButton.ensureDebugId("import-tag-button");
         manageAccessButton.ensureDebugId("manage-access-button");

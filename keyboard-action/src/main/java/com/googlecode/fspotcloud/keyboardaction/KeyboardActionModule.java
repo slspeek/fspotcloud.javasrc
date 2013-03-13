@@ -13,7 +13,8 @@ public class KeyboardActionModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
-        bind(IModeController.class).to(ModeController.class).in(Singleton.class);
+        bind(IPlaceController.class).to(PlaceControllerImpl.class);
+        bind(IModeController.class).toProvider(ModeControllerProvider.class).in(Singleton.class);
         bind(ActionManager.class).toProvider(ActionManagerFactory.class).in(Singleton.class);
         bind(ConfigBuilder.class).in(Singleton.class);
         bind(KeyboardActionFactory.class).asEagerSingleton();
@@ -23,6 +24,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(ActionHandlerRegistry.class).in(Singleton.class);
         bind(DemoBuilder.class);
         bind(DemoBuilderFactory.class).in(Singleton.class);
+        bind(WidgetRegistry.class).in(Singleton.class);
         bind(TwoColumnHelpPopup.class);
         bind(HelpActionsFactory.class).in(Singleton.class);
         bind(PlaceContext.class).toProvider(PlaceContextProvider.class);

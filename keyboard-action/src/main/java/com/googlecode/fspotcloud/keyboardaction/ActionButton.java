@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ActionButton extends PushButton implements IActionEnableHandler, IActionDemoHandler {
+public class ActionButton extends PushButton implements ActionWidget {
 
     private final Logger log = Logger.getLogger(ActionButton.class.getName());
     private final ActionUIDef actionUIDef;

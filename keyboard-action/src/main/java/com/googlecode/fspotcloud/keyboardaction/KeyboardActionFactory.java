@@ -16,7 +16,7 @@ public class KeyboardActionFactory {
     private final ActionUIRegistry actionUIRegistry;
     private final NativePreviewHandler nativePreviewHandler;
     private final HelpActionsFactory helpActionsFactory;
-    private final ButtonFactory buttonFactory;
+    private final WidgetFactory widgetFactory;
     private final KeyboardActionResources keyboardActionResources;
     private final ResourcesSetup resourcesSetup;
 
@@ -32,14 +32,14 @@ public class KeyboardActionFactory {
                                  IModeController modeController,
                                  ActionUIRegistry actionUIRegistry,
                                  List<ActionCategory> actionCategoryList,
-                                 ButtonFactory buttonFactory,
+                                 WidgetFactory widgetFactory,
                                  KeyboardActionResources keyboardActionResources,
                                  ResourcesSetup resourcesSetup) {
         this.keyboardActionResources = keyboardActionResources;
         this.resourcesSetup = resourcesSetup;
         resourcesSetup.ensureInjected();
         builder.build();
-        this.buttonFactory = buttonFactory;
+        this.widgetFactory = widgetFactory;
         this.actionHandlerRegistry = actionHandlerRegistry;
         this.actionManager = actionManager;
         this.helpActionsFactory = helpActionsFactory;
@@ -59,18 +59,18 @@ public class KeyboardActionFactory {
     }
 
     public ActionButton getButton(String actionId) {
-        return buttonFactory.getButton(actionId);
+        return widgetFactory.getButton(actionId);
     }
 
     public ActionButton getButton(ActionUIDef actionUIDef) {
-        return buttonFactory.getButton(actionUIDef);
+        return widgetFactory.getButton(actionUIDef);
     }
 
     public ActionToolbar getToolBar() {
-        return new ActionToolbar(keyboardActionResources, buttonFactory);
+        return new ActionToolbar(keyboardActionResources, widgetFactory);
     }
 
     public ActionMenu getMenu(String caption) {
-        return buttonFactory.getMenu(caption);
+        return widgetFactory.getMenu(caption);
     }
 }
