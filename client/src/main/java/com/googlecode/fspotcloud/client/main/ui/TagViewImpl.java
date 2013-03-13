@@ -67,30 +67,32 @@ public class TagViewImpl extends Composite implements TagView,
     HTML verticalFocusPanel;
     @UiField
     LayoutPanel mainPanel;
-    final TreeView treeView;
-    final ImageRasterView imageRasterView;
+
+    @UiField(provided = true)
+    TreeView treeView;
+    @UiField(provided = true)
+    ImageRasterViewImpl imageRasterView;
+    @UiField(provided = true)
+    ActionToolbar actionToolbar;
     private final TimerInterface timer;
-    private final TimerInterface adjustSizesTimer;
-    @SuppressWarnings("unused")
-    private TagPresenter presenter;
+
     int id = ++ID;
-    private final ActionToolbar actionToolbar;
     private boolean autoHide;
 
     @Inject
     public TagViewImpl(@BasicTreeView TreeView treeView,
                        ImageRasterView imageRasterView,
                        TimerInterface timer,
-                       TimerInterface adjustSizesTimer, @MainToolbar ActionToolbar actionToolbar) {
+                       @MainToolbar ActionToolbar actionToolbar) {
         this.timer = timer;
         this.treeView = treeView;
-        this.adjustSizesTimer = adjustSizesTimer;
+        this.imageRasterView = (ImageRasterViewImpl) imageRasterView;
         this.actionToolbar = actionToolbar;
+        initWidget(uiBinder.createAndBindUi(this));
+
         imageRasterView.asWidget().addDomHandler(this, MouseOverEvent.getType());
         imageRasterView.asWidget().addDomHandler(this, MouseOutEvent.getType());
-        this.imageRasterView = imageRasterView;
-        initWidget(uiBinder.createAndBindUi(this));
-        log.info("Created: " + id);
+        log.log(Level.FINE, "Created: " + id);
     }
 
     @UiHandler("horizontalFocusPanel")
@@ -98,11 +100,6 @@ public class TagViewImpl extends Composite implements TagView,
         log.log(Level.FINER, "horizontal mouse over");
         cancelHiding();
         animateControlsIn(600);
-    }
-
-    @UiFactory
-    ActionToolbar getActionToolbar() {
-        return actionToolbar;
     }
 
     @UiHandler("verticalFocusPanel")
@@ -132,19 +129,8 @@ public class TagViewImpl extends Composite implements TagView,
         mainPanel.setWidgetLeftWidth(verticalFocusPanel, 0, Unit.PCT, 0,
                 Unit.PCT);
         mainPanel.animate(duration);
-        updateImageSizes(duration);
     }
 
-    private void updateImageSizes(int duration) {
-        final ImageRasterView.ImageRasterPresenter imageRasterPresenter = imageRasterView.getPresenter();
-        adjustSizesTimer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                imageRasterPresenter.adjustSizes();
-            }
-        });
-        adjustSizesTimer.schedule(duration);
-    }
 
     public void animateControlsOut(int duration) {
         cancelHiding();
@@ -159,7 +145,6 @@ public class TagViewImpl extends Composite implements TagView,
         mainPanel.setWidgetLeftWidth(verticalFocusPanel, 0, Unit.PCT, 10,
                 Unit.PCT);
         mainPanel.animate(duration);
-        updateImageSizes(duration);
     }
 
     @Override
@@ -171,21 +156,6 @@ public class TagViewImpl extends Composite implements TagView,
             }
         });
         timer.schedule(duration);
-    }
-
-    @UiFactory
-    public TreeViewImpl getView() {
-        return (TreeViewImpl) treeView;
-    }
-
-    @UiFactory
-    public ImageRasterViewImpl getImageRasterView() {
-        return (ImageRasterViewImpl) imageRasterView;
-    }
-
-    @Override
-    public void setPresenter(TagPresenter presenter) {
-        this.presenter = presenter;
     }
 
     public String toString() {

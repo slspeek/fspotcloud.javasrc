@@ -25,8 +25,8 @@
 package com.googlecode.fspotcloud.client.main.event;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 
 @GwtCompatible

@@ -32,28 +32,18 @@ import javax.inject.Inject;
 
 
 public class SimpleSignUpITest {
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    public static final String CREDENTIALS = "ihp";
+
     public static final String MOOG_BB_ORG = "moog@example.com";
     public static final String NSA = "nsa";
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
     SignUpPage signUpPage;
-    @Inject
-    LoginPage loginPage;
-    @Inject
-    UserAccountPage userAccountPage;
-    @Inject
-    PhotoPage photoPage;
-    @Inject
-    EmailConfirmationPage emailConfirmationPage;
-
 
     @Test
     public void signUp() throws Exception {
         signUpPage.open();
-        signUpPage.fillForm(RMS_FSF_ORG, CREDENTIALS);
+        signUpPage.fillForm(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED);
         signUpPage.signUp();
         signUpPage.verifyFailure();
         signUpPage.open();

@@ -36,7 +36,6 @@ import com.googlecode.fspotcloud.client.enduseraction.raster.handler.SetRasterHa
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
-import com.googlecode.fspotcloud.keyboardaction.ModesProvider;
 
 
 public class UserActionModule extends AbstractGinModule {
@@ -44,7 +43,6 @@ public class UserActionModule extends AbstractGinModule {
     protected void configure() {
         install(new KeyboardActionModule());
         bind(CategoryDef.class).in(Singleton.class);
-        bind(ModesProvider.class).to(Modes.class);
 
         bind(DashboardHandler.class);
         bind(HideControlsHandler.class);

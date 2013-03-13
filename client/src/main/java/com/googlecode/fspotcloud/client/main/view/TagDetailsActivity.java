@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
 public class TagDetailsActivity extends AbstractActivity implements TagDetailsView.TagDetailsPresenter {
     private final Logger log = Logger.getLogger(TagDetailsActivity.class.getName());
     private final TagDetailsView tagDetailsView;

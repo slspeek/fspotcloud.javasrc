@@ -9,7 +9,6 @@ import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationBinde
 import com.googlecode.fspotcloud.client.enduseraction.raster.RasterBinder;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.client.enduseraction.user.UserBinder;
-import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 
 import java.util.logging.Level;
@@ -17,7 +16,6 @@ import java.util.logging.Logger;
 
 public class EndUserActionFactory implements UIRegistrationBuilder {
 
-    private final IModeController modeController;
     private final Logger log = Logger.getLogger(EndUserActionFactory.class.getName());
 
     @Inject
@@ -28,11 +26,7 @@ public class EndUserActionFactory implements UIRegistrationBuilder {
                                 SlideshowBinder slideshowBinder,
                                 DashboardBinder dashboardBinder,
                                 UserBinder userBinder,
-                                GroupBinder groupBinder,
-                                IModeController modeController) {
-        log.log(Level.FINEST, "In constructor before doing anything");
-        this.modeController = modeController;
-        modeController.setMode(Modes.TAG_VIEW);
+                                GroupBinder groupBinder) {
         aboutBinder.build();
         applicationBinder.build();
         navigationBinder.build();
@@ -41,6 +35,7 @@ public class EndUserActionFactory implements UIRegistrationBuilder {
         dashboardBinder.build();
         userBinder.build();
         groupBinder.build();
+        log.log(Level.FINEST, "Done executing Keyboard Actions early bindings");
     }
 
     @Override

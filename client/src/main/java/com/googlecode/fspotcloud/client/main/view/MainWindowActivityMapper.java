@@ -29,7 +29,6 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -106,56 +105,40 @@ public class MainWindowActivityMapper implements ActivityMapper {
         Activity activity = null;
         if (place instanceof TagApprovalPlace) {
             approvalPresenter.setTagId(((TagApprovalPlace) place).getTagId());
-            modeController.setMode(Modes.TAG_ACCESS);
             return approvalPresenter;
         } else if (place instanceof MailFullsizePlace) {
             activity = mailFullsizeActivity.withPlace((MailFullsizePlace) place);
-            modeController.setMode(Modes.MAIL_FULLSIZE);
         } else if (place instanceof SendConfirmationPlace) {
             activity = confirmationPresenterActivity;
-            modeController.setMode(Modes.RESEND_EMAIL);
         } else if (place instanceof HomePlace) {
             activity = homePresenter;
-            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof ChangePasswordPlace) {
             activity = changePasswordPresenter.withPlace((ChangePasswordPlace) place);
-            modeController.setMode(Modes.PASSWORD_RESET);
         } else if (place instanceof SendPasswordResetPlace) {
             activity = sendResetPasswordPresenter;
-            modeController.setMode(Modes.SEND_RESET);
         } else if (place instanceof UserAccountPlace) {
             activity = userAccountActivity;
-            modeController.setMode(Modes.PROFILE);
         } else if (place instanceof EmailConfirmationPlace) {
             activity = emailConfirmationPresenter;
-            modeController.setMode(Modes.TAG_VIEW);
         } else if (place instanceof SignUpPlace) {
             activity = signUpPresenter;
-            modeController.setMode(Modes.SIGN_UP);
         } else if (place instanceof ManageUsersPlace) {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
-            modeController.setMode(Modes.MANAGE_USERS_NO_INPUT);
         } else if (place instanceof ManageUserGroupsPlace) {
             activity = myUserGroupsPresenter;
-            modeController.setMode(Modes.MANAGE_GROUPS);
         } else if (place instanceof EditUserGroupPlace) {
             activity = editUserGroupPresenter;
             editUserGroupPresenter.setId(((EditUserGroupPlace) place).getUserGroupId());
-            modeController.setMode(Modes.EDIT_GROUP);
         } else if (place instanceof LoginPlace) {
             activity = loginPresenter;
-            modeController.setMode(Modes.LOGIN);
         } else if (place instanceof SlideshowPlace) {
             SlideshowPlace slideshowPlace = (SlideshowPlace) place;
             activity = slideshowActivityFactory.get(slideshowPlace);
-            modeController.setMode(Modes.SLIDESHOW);
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;
             activity = tagActivityFactory.get(basePlace);
-            modeController.setMode(Modes.TAG_VIEW);
         } else if (place instanceof TagPlace) {
-            modeController.setMode(Modes.DASHBOARD);
             return dashboardPresenter.withPlace((TagPlace) place);
         } else {
             log.warning("getActivity will return null for:" + place);

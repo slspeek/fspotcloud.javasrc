@@ -4,10 +4,10 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
+import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardBinding;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 public class NavigationBinder extends AbstractBinder {
 
@@ -39,12 +39,12 @@ public class NavigationBinder extends AbstractBinder {
         bind(navigationActions.rss_feed, goRssFeedHandler, get(KeyCodes.KEY_DELETE));
     }
 
-    public void bind(ActionUIDef actionUIDef, KeyboardBinding keyBinding) {
+    public void bind(ActionUIDef actionUIDef, Relevance keyBinding) {
         super.bind(actionUIDef, navigationActionHandler, keyBinding);
     }
 
-    private KeyboardBinding get(int character) {
-        return KeyboardBinding.bind(new KeyStroke(character)).withDefaultModes(Modes.TAG_VIEW);
+    private Relevance get(int character) {
+        return new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke(character));
     }
 
 }

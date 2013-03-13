@@ -25,7 +25,7 @@
 package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.enduseraction.Modes;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
@@ -61,6 +61,6 @@ public class TreeFocusHandler implements IActionHandler {
         tagView.cancelHiding();
         tagView.animateControlsIn(100);
         treeView.requestFocus();
-        modeController.setMode(Modes.TREE_VIEW);
+        modeController.setFlag(Flags.TREE_FOCUS.name());
     }
 }
