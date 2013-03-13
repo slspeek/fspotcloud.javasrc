@@ -95,6 +95,11 @@ public class TagViewImpl extends Composite implements TagView,
         log.log(Level.FINE, "Created: " + id);
     }
 
+
+    public ImageRasterViewImpl getImageRasterView() {
+        return (ImageRasterViewImpl) imageRasterView;
+    }
+
     @UiHandler("horizontalFocusPanel")
     public void infoHover(MouseOverEvent event) {
         log.log(Level.FINER, "horizontal mouse over");
