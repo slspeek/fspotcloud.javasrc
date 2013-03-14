@@ -39,6 +39,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.MainToolbar;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
@@ -46,6 +47,7 @@ import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +63,8 @@ public class TagViewImpl extends Composite implements TagView,
     private final Logger log = Logger.getLogger(TagViewImpl.class.getName());
     private static final TagViewImplUiBinder uiBinder = GWT.create(TagViewImplUiBinder.class);
     static int ID;
+
+    private final IModeController modeController;
     @UiField
     HTML horizontalFocusPanel;
     @UiField
@@ -82,8 +86,10 @@ public class TagViewImpl extends Composite implements TagView,
     @Inject
     public TagViewImpl(@BasicTreeView TreeView treeView,
                        ImageRasterView imageRasterView,
+                       IModeController modeController,
                        TimerInterface timer,
                        @MainToolbar ActionToolbar actionToolbar) {
+        this.modeController = modeController;
         this.timer = timer;
         this.treeView = (TreeViewImpl) treeView;
         this.imageRasterView = (ImageRasterViewImpl) imageRasterView;
@@ -115,6 +121,7 @@ public class TagViewImpl extends Composite implements TagView,
     }
 
     public void animateControlsIn(int duration) {
+        modeController.setFlag(Flags.TREE_FOCUS.name());
         if (!autoHide) {
             duration = 0;
         }
@@ -138,6 +145,7 @@ public class TagViewImpl extends Composite implements TagView,
 
 
     public void animateControlsOut(int duration) {
+        modeController.unsetFlag(Flags.TREE_FOCUS.name());
         cancelHiding();
         mainPanel.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 0, Unit.PX);
         mainPanel.setWidgetTopHeight(imageRasterView, 0, Unit.CM, 100, Unit.PCT);

@@ -64,6 +64,9 @@ public class KeyStroke {
 
     private final Modifiers modifiers;
     private final int keyCode;
+    public static final KeyStroke END = new KeyStroke(KeyCodes.KEY_END);
+    public static final KeyStroke PAGEDOWN = new KeyStroke(KeyCodes.KEY_PAGEDOWN);
+    public static final KeyStroke PAGEUP = new KeyStroke(KeyCodes.KEY_PAGEUP);
 
     public static KeyStroke shift(int keyCode) {
         return new KeyStroke(Modifiers.SHIFT, keyCode);

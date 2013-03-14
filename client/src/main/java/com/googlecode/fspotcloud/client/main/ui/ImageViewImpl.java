@@ -82,7 +82,7 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @UiHandler("image")
     public void imageClicked(ClickEvent event) {
-        log.info("image clicked " + location);
+        log.log(Level.FINER, "image clicked " + location);
         this.presenter.imageClicked();
     }
 
@@ -135,7 +135,7 @@ public class ImageViewImpl extends ResizeComposite implements ImageView {
 
     @Override
     public void adjustSize() {
-        log.log(Level.FINE, "Called adjust size");
+        log.log(Level.FINEST, "Called adjust size");
         int width = Math.max(0, getOffsetWidth() - PADDING_X);
         int height = Math.max(0, getOffsetHeight() - PADDING_Y);
         image.setMaxSize(width, height);

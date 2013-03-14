@@ -37,10 +37,13 @@ import java.util.logging.Logger;
 public class NavigationActionHandler implements IActionHandler {
     private final Logger log = Logger.getLogger(NavigationActionHandler.class.getName());
     private final Navigator navigator;
+    private final NavigationActions navigationActions;
 
     @Inject
-    public NavigationActionHandler(Navigator navigator) {
+    public NavigationActionHandler(Navigator navigator,
+                                   NavigationActions navigationActions) {
         this.navigator = navigator;
+        this.navigationActions = navigationActions;
     }
 
     @Override
@@ -62,6 +65,8 @@ public class NavigationActionHandler implements IActionHandler {
             navigator.goAsync(Direction.FORWARD, Unit.ROW);
         } else if (actionId.equals(NavigationActions.ROW_UP_ID)) {
             navigator.goAsync(Direction.BACKWARD, Unit.ROW);
+        } else if (actionId.equals(navigationActions.all_photos.getId())) {
+            navigator.goToAllPhotos();
         }
     }
 }

@@ -83,6 +83,8 @@ public interface Navigator {
 
     void goToTag(String otherTagId, PhotoInfoStore store, Direction direction);
 
+    void goToAllPhotos();
+
     enum Direction {
         BACKWARD, FORWARD;
     }
