@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.application.handler.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.keyboardaction.*;
@@ -20,6 +21,7 @@ public class ApplicationBinder extends AbstractBinder {
     private final ZoomInHandler zoomInHandler;
     private final ZoomOutHandler zoomOutHandler;
     private final HelpActionsFactory helpActionsFactory;
+    private final UsersHelpHandler usersHelpHandler;
     private final CategoryDef categoryDef;
     private final ApplicationActions actions;
 
@@ -32,6 +34,7 @@ public class ApplicationBinder extends AbstractBinder {
                              ZoomOutHandler zoomOutHandler,
                              CategoryDef categoryDef,
                              HelpActionsFactory helpActionsFactory,
+                             UsersHelpHandler usersHelpHandler,
                              ApplicationActions actions) {
         super(categoryDef.APPLICATION);
         this.aboutHandlerFactory = handlerFactory;
@@ -42,6 +45,7 @@ public class ApplicationBinder extends AbstractBinder {
         this.zoomOutHandler = zoomOutHandler;
         this.categoryDef = categoryDef;
         this.helpActionsFactory = helpActionsFactory;
+        this.usersHelpHandler = usersHelpHandler;
         this.actions = actions;
     }
 
@@ -49,8 +53,8 @@ public class ApplicationBinder extends AbstractBinder {
     @Override
     public void build() {
         Relevance helpBinding = new Relevance(BasePlace.class, SlideshowPlace.class)
-                .addDefaultKeys(new KeyStroke('H'));
-        bind(actions.show_help, getHelpHandler(), helpBinding);
+                .addDefaultKeys(new KeyStroke('H'), shift(KeyStroke.KEY_FORWARD_SLASH));
+        bind(actions.show_help, usersHelpHandler, helpBinding);
 
         Relevance hideHelpBinding = new Relevance().addDefaultKeys(new KeyStroke(KeyCodes.KEY_ESCAPE));
         bind(actions.hide_help, helpActionsFactory.getCloseHelp(), hideHelpBinding);
@@ -72,9 +76,14 @@ public class ApplicationBinder extends AbstractBinder {
 
         //these action's handlers have such heavy dependencies, they are bound later,
         //in UserActionFactoryBinder (out of good names ..)
-        configBuilder.register(category, actions.hide_controls, get('F'));
+        binding = new Relevance(FlagsRule.needing(Flags.TREE_FOCUS.name()),
+                BasePlace.class).addDefaultKeys(KeyStroke.F, KeyStroke.ENTER, KeyStroke.ESC);
+
+        configBuilder.register(category, actions.hide_controls, binding);
         configBuilder.register(category, actions.demo, get('7'));
-        configBuilder.register(category, actions.tree_focus, get(KeyCodes.KEY_ENTER));
+        binding = new Relevance(FlagsRule.excluding(Flags.TREE_FOCUS.name()),
+                BasePlace.class).addDefaultKeys(KeyStroke.ENTER, KeyStroke.F, KeyStroke.ESC);
+        configBuilder.register(category, actions.tree_focus, binding);
         configBuilder.register(category, actions.reloadTree, get('R'));
         binding = new Relevance(BasePlace.class, LoginPlace.class, TagPlace.class).addDefaultKeys(alt('L'));
 
@@ -84,12 +93,7 @@ public class ApplicationBinder extends AbstractBinder {
         configBuilder.register(category, actions.toggleAutoHide, get('9'));
     }
 
-    private IActionHandler getHelpHandler() {
-        final HelpConfig helpConfig = new HelpConfig("Keyboard help");
-        helpConfig.addToFirstColumn(categoryDef.NAVIGATION, categoryDef.RASTER);
-        helpConfig.addToSecondColumn(categoryDef.APPLICATION, categoryDef.SLIDESHOW);
-        return helpActionsFactory.getHelpAction(helpConfig);
-    }
+
 
     private Relevance get(int characterCode) {
         return new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke(characterCode));

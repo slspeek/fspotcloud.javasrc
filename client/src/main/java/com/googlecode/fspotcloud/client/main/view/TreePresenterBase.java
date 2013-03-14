@@ -81,13 +81,24 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter, Provi
             TagNode selectedNode = model.findByTagId(place.getTagId());
             TreeNode root = treeView.getRootNode();
             log.log(Level.FINE, "tree model root and selected node " + root + " " + selectedNode);
-            if (root != null && selectedNode != null) {
-                openSelectedTreeNode(root, selectedNode);
-                if (firstRun) {
-                    firstRun = false;
-                    treeSelectionHandler.setIgnoreNext(true);
+            if (root != null) {
+                if (selectedNode != null) {
+                    openSelectedTreeNode(root, selectedNode);
+                    if (firstRun) {
+                        firstRun = false;
+                        treeSelectionHandler.setIgnoreNext(true);
+                    }
+                    selectionModel.setSelected(selectedNode, true);
+                } else {
+                    if (place.getTagId().equals("all")) {
+                        TagNode selected = selectionModel.getSelectedObject();
+                        log.log(Level.FINE, "all " + selected);
+                        if (selected != null) {
+                            selectionModel.setSelected(selected, false);
+                        }
+
+                    }
                 }
-                selectionModel.setSelected(selectedNode, true);
             }
         } else {
             log.log(Level.FINE, "place or model is null");

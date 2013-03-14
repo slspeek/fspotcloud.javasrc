@@ -24,6 +24,7 @@ public class NavigationActions {
     public final ActionUIDef page_down;
     public final static String END_ID = "end";
     public final ActionUIDef end;
+    public final ActionUIDef all_photos;
     public final ActionUIDef rss_feed;
 
     @Inject
@@ -65,5 +66,6 @@ public class NavigationActions {
                 "RSS-feed",
                 "The RSS-feed for this category",
                 RESOURCES.rssReedIcon());
+        all_photos = new ActionUIDef("all-photos", "All", "View all images");
     }
 }

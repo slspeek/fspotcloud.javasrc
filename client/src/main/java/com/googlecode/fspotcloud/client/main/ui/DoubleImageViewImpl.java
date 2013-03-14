@@ -151,7 +151,7 @@ public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageV
 
     @Override
     public void adjustSize() {
-        log.log(Level.FINE, "Called adjust size");
+        log.log(Level.FINEST, "Called adjust size");
         onResize();
     }
 

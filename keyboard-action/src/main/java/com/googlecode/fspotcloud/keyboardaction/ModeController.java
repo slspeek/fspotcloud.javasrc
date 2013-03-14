@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.base.Joiner;
 import com.google.gwt.place.shared.PlaceChangeEvent;
-import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 
 import java.util.List;
@@ -43,14 +42,18 @@ public class ModeController implements IModeController {
 
     @Override
     public void setFlag(String flag) {
-        flags.add(flag);
-        fireEnabledStateEvens();
+        final boolean add = flags.add(flag);
+        if (add) {
+            fireEnabledStateEvens();
+        }
     }
 
     @Override
     public void unsetFlag(String flag) {
-        flags.remove(flag);
-        fireEnabledStateEvens();
+        final boolean remove = flags.remove(flag);
+        if (remove) {
+            fireEnabledStateEvens();
+        }
     }
 
     @Override

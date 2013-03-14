@@ -4,7 +4,9 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.place.*;
+import com.googlecode.fspotcloud.keyboardaction.FlagsRule;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.Modifiers;
 import com.googlecode.fspotcloud.keyboardaction.Relevance;
@@ -51,6 +53,12 @@ public class DashboardBinder extends AbstractBinder {
         configBuilder.register(category, actions.importTag, get('I'));
         configBuilder.register(category, actions.manageAccess, get('A'));
         configBuilder.register(category, actions.focusTree, get(KeyCodes.KEY_ENTER));
+        binding = new Relevance(FlagsRule.excluding(Flags.TEXT_INPUT.name()),
+                TagPlace.class,
+                TagApprovalPlace.class,
+                ManageUsersPlace.class,
+                ManageUserGroupsPlace.class).addDefaultKeys(KeyStroke.H);
+        configBuilder.register(category, actions.adminHelp, binding);
     }
 
 

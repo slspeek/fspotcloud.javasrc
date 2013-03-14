@@ -38,19 +38,16 @@ public class HideControlsHandler implements IActionHandler {
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(HideControlsHandler.class.getName());
     private final TagViewImpl tagView;
-    private final IModeController modeController;
 
     @Inject
-    public HideControlsHandler(TagView tagView,
-                               IModeController modeController) {
+    public HideControlsHandler(TagView tagView
+                               ) {
         super();
         this.tagView = (TagViewImpl) tagView;
-        this.modeController = modeController;
     }
 
     @Override
     public void performAction(String actionId) {
         tagView.animateControlsOut(0);
-        modeController.unsetFlag(Flags.TREE_FOCUS.name());
     }
 }
