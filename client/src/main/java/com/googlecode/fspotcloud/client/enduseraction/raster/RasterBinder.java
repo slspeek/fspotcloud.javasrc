@@ -3,10 +3,13 @@ package com.googlecode.fspotcloud.client.enduseraction.raster;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.raster.handler.*;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.Relevance;
+
+import static com.googlecode.fspotcloud.keyboardaction.FlagsRule.excluding;
 
 public class RasterBinder extends AbstractBinder {
 
@@ -52,7 +55,8 @@ public class RasterBinder extends AbstractBinder {
         bind(actions.remove_row, removeRowHandler, getKey('V'));
         bind(actions.mail_fullsize, mailFullSizeHandler, getKey('M'));
         bind(actions.set_default_raster, resetRasterHandler, getKey('0'));
-        Relevance binding = new Relevance(BasePlace.class).addDefaultKeys(KeyStroke.SPACE, new KeyStroke('1'));
+        Relevance binding = new Relevance(excluding(Flags.TREE_FOCUS.name()), BasePlace.class).addDefaultKeys(KeyStroke.SPACE, new KeyStroke('1'))
+                .addRule(BasePlace.class, new KeyStroke('1'));
         bind(actions.toggle_tabular_view, toggleTabularViewHandler, binding);
         bind(actions.set_raster_2x2, setRasterHandlerFactory.get(2), getKey('2'));
         bind(actions.set_raster_3x3, setRasterHandlerFactory.get(3), getKey('3'));

@@ -74,6 +74,8 @@ public class TreeSelectionHandler implements ITreeSelectionHandler {
             if (node != null) {
                 String tagId = node.getId();
                 goToPhoto(tagId, node.getCachedPhotoList());
+            }  else {
+                navigator.goToAllPhotos();
             }
         }
     }

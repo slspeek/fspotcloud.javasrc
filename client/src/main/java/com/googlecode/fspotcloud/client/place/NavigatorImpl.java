@@ -192,6 +192,7 @@ public class NavigatorImpl implements Navigator {
     @Override
     public void getPageCountAsync(String tagId, final int pageSize,
                                   final AsyncCallback<Integer> callback) {
+        log.log(Level.FINE, "getPageCountAsync for: " + tagId);
         dataManager.getTagNode(tagId,
                 new AsyncCallback<TagNode>() {
                     @Override
@@ -324,6 +325,25 @@ public class NavigatorImpl implements Navigator {
         go(direction, Unit.BORDER,
                 new BasePlace(otherTagId, null, placeCalculator.getRasterWidth(),
                         placeCalculator.getRasterHeight(), placeCalculator.isAutoHide()), store);
+    }
+
+    @Override
+    public void goToAllPhotos() {
+        BasePlace basePlace = placeController.where();
+        BasePlace newPlace;
+        if (basePlace != null) {
+            PlaceConverter converter = new PlaceConverter(basePlace);
+            converter.setTagId("all");
+            newPlace = converter.getNewPlace();
+        }
+        else {
+            newPlace = new BasePlace("all", null, PlaceCalculator.DEFAULT_RASTER_WIDTH, PlaceCalculator.DEFAULT_RASTER_HEIGHT, true);
+
+        }
+        placeController.goTo(newPlace);
+
+
+
     }
 
     @Override

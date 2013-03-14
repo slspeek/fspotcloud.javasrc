@@ -45,7 +45,7 @@ public class ImageViewingMVPModule extends AbstractGinModule {
         bind(TreeView.class).annotatedWith(BasicTreeView.class).toProvider(BasicTreeViewProvider.class).in(Singleton.class);
         bind(TreeView.TreePresenter.class).annotatedWith(BasicTreeView.class).to(TreePresenterImpl.class)
                 .in(Singleton.class);
-        bind(ITreeSelectionHandler.class).annotatedWith(BasicTreeView.class).to(TreeSelectionHandler.class);
+        bind(ITreeSelectionHandler.class).annotatedWith(BasicTreeView.class).to(TreeSelectionHandler.class).in(Singleton.class);
 
     }
 }

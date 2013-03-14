@@ -25,6 +25,10 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTree;
@@ -35,13 +39,15 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class TreeViewImpl extends ResizeComposite implements TreeView {
+public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHandler, BlurHandler {
     private final Logger log = Logger.getLogger(TreeViewImpl.class.getName());
     private static final TreeViewImplUiBinder uiBinder = GWT.create(TreeViewImplUiBinder.class);
     private CellTree cellTree;
@@ -52,10 +58,14 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
     Label userInfoLabel;
 
     private static int counter;
+    private final IModeController modeController;
+
 
     @Inject
-    public TreeViewImpl(CellTreeFactory cellTreeFactory) {
+    public TreeViewImpl(CellTreeFactory cellTreeFactory,
+                        IModeController modeController) {
         this.cellTreeFactory = cellTreeFactory;
+        this.modeController = modeController;
         initWidget(uiBinder.createAndBindUi(this));
         userInfoLabel.ensureDebugId("user-info-label");
         log.log(Level.FINE, "Treeview created: " + ++counter);
@@ -65,6 +75,8 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
     public void setTreeModel(TreeViewModel model) {
         log.log(Level.FINE, "setTreeModel on " + this);
         cellTree = cellTreeFactory.get(model);
+        cellTree.addHandler(this, FocusEvent.getType());
+        cellTree.addHandler(this, BlurEvent.getType());
         tagTreeViewPanel.setWidget(cellTree);
     }
 
@@ -93,6 +105,17 @@ public class TreeViewImpl extends ResizeComposite implements TreeView {
     @Override
     public void setUserInfo(String info) {
         userInfoLabel.setText(info);
+    }
+
+    @Override
+    public void onBlur(BlurEvent event) {
+         modeController.unsetFlag(Flags.TREE_FOCUS.name());
+    }
+
+    @Override
+    public void onFocus(FocusEvent event) {
+         modeController.setFlag(Flags.TREE_FOCUS.name());
+
     }
 
     interface TreeViewImplUiBinder extends UiBinder<Widget, TreeViewImpl> {

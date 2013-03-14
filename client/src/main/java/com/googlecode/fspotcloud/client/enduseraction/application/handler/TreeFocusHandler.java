@@ -43,15 +43,13 @@ public class TreeFocusHandler implements IActionHandler {
     private final TreeView treeView;
     private final TagViewImpl tagView;
     private final Slideshow slideshow;
-    private final IModeController modeController;
 
     @Inject
     public TreeFocusHandler(@BasicTreeView TreeView treeView, TagView tagView,
-                            Slideshow slideshow, IModeController modeController) {
+                            Slideshow slideshow) {
         super();
         this.slideshow = slideshow;
         this.treeView = treeView;
-        this.modeController = modeController;
         this.tagView = (TagViewImpl) tagView;
     }
 
@@ -61,6 +59,5 @@ public class TreeFocusHandler implements IActionHandler {
         tagView.cancelHiding();
         tagView.animateControlsIn(100);
         treeView.requestFocus();
-        modeController.setFlag(Flags.TREE_FOCUS.name());
     }
 }

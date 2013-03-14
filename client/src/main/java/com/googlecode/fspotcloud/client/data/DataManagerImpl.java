@@ -27,10 +27,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.shared.dashboard.GetAdminTagTreeAction;
-import com.googlecode.fspotcloud.shared.main.GetTagNodeAction;
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.TagNodeResult;
-import com.googlecode.fspotcloud.shared.main.TagTreeResult;
+import com.googlecode.fspotcloud.shared.main.*;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.Map;
@@ -43,6 +40,7 @@ import static com.google.common.collect.Maps.newHashMap;
 public class DataManagerImpl implements DataManager {
     private final Logger log = Logger.getLogger(DataManagerImpl.class.getName());
     private final IndexingUtil indexingUtil = new IndexingUtil();
+    private final AllPhotosHelper allPhotosHelper = new AllPhotosHelper();
     private final Map<String, TagNode> tagNodeIndex = newHashMap();
     private final DispatchAsync dispatchAsync;
     private final GetTagTreeMemoProc getTagTreeMemoProc;
@@ -80,8 +78,25 @@ public class DataManagerImpl implements DataManager {
 
             @Override
             public void onSuccess(TagNode result) {
-                indexingUtil.rebuildTagNodeIndex(tagNodeIndex, result);
-                callback.onSuccess(tagNodeIndex.get(id));
+                if (id.equals("all")) {
+                    getAllPhotos(new AsyncCallback<PhotoInfoStore>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            callback.onFailure(caught);
+                        }
+
+                        @Override
+                        public void onSuccess(PhotoInfoStore result) {
+                            TagNode virtualNode = new TagNode("all");
+                            virtualNode.setCachedPhotoList(result);
+                            virtualNode.setCount(result.size());
+                            callback.onSuccess(virtualNode);
+                        }
+                    });
+                } else {
+                    indexingUtil.rebuildTagNodeIndex(tagNodeIndex, result);
+                    callback.onSuccess(tagNodeIndex.get(id));
+                }
             }
         });
 
@@ -106,6 +121,22 @@ public class DataManagerImpl implements DataManager {
     public void reset() {
         getTagTreeMemoProc.reset();
         tagNodeIndex.clear();
+    }
+
+
+    public void getAllPhotos(final AsyncCallback<PhotoInfoStore> storeAsyncCallback) {
+        getTagTree(new AsyncCallback<TagNode>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                storeAsyncCallback.onFailure(caught);
+            }
+
+            @Override
+            public void onSuccess(TagNode result) {
+                final PhotoInfoStore allPhotos = allPhotosHelper.getAllPhotos(result);
+                storeAsyncCallback.onSuccess(allPhotos);
+            }
+        });
     }
 
 

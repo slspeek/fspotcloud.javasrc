@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
 public class DashboardActions {
+    public final ActionUIDef adminHelp;
     public final ActionUIDef reloadTree;
     public final ActionUIDef focusTree;
     public final ActionUIDef toPhotos;
@@ -28,5 +29,6 @@ public class DashboardActions {
         importTag = new ActionUIDef("import-tag", "Import tag", "Import this tag");
         manageAccess = new ActionUIDef("manage-access", "Manage access", "Grant or revoke access ");
         focusTree = new ActionUIDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree");
+        adminHelp = new ActionUIDef("admin-help", "Help", "Dashboard help");
     }
 }
