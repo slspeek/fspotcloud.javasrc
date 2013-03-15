@@ -24,88 +24,135 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.gwt.place.shared.Place;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.googlecode.fspotcloud.client.main.gin.RasterHeight;
+import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Zoom;
 import junit.framework.TestCase;
+import org.jukito.JukitoModule;
+import org.jukito.JukitoRunner;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class PlaceCalculatorTest extends TestCase {
+@RunWith(JukitoRunner.class)
+public class PlaceManagerTest {
     public static final String TAG_ID1 = "1";
     public static final String PHOTO_ID = "10";
-    final PlaceCalculator placeCalculator = new PlaceCalculator();
     final boolean autoHide = false;
+    @Inject
+    private PlaceManager placeManager;
+    @Inject
+    private RasterState rasterState;
+    @Inject
+    private IPlaceController placeController;
 
+    public static class Module extends JukitoModule {
+        @Override
+        protected void configureTest() {
+            bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(3);
+            bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(2);
+        }
+    }
 
-    public void testUnslideshow() {
+    @Test
+    public void testUnslideshowNoop() {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1, autoHide);
-        BasePlace newPlace = (BasePlace) placeCalculator.unslideshow(tagViewingPlace);
-        assertEquals(newPlace, tagViewingPlace);
+        when(placeController.where()).thenReturn(tagViewingPlace);
+        placeManager.unslideshow();
+        verify(placeController).goTo(tagViewingPlace);
+    }
 
+    @Test
+    public void testUnslideshow(ArgumentCaptor<Place> captor) {
         SlideshowPlace place = new SlideshowPlace(TAG_ID1, "2");
-        newPlace = placeCalculator.unslideshow(place);
-
+        when(placeController.where()).thenReturn(place);
+        placeManager.unslideshow();
+        verify(placeController).goTo(captor.capture());
+        Place newPlace = captor.getValue();
         assertFalse(newPlace instanceof SlideshowPlace);
     }
 
-    public void testToggleRasterView() {
+    @Test
+    public void testToggleRasterView(ArgumentCaptor<Place> captor) {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1, autoHide);
-        BasePlace newPlace = (BasePlace) placeCalculator.toggleRasterView(tagViewingPlace);
-        assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
-        assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
+        when(placeController.where()).thenReturn(tagViewingPlace);
+        placeManager.toggleRasterView();
+        verify(placeController).goTo(captor.capture());
+        BasePlace newPlace = (BasePlace) captor.getValue();
+        assertEquals(TAG_ID1, newPlace.getTagId());
+        assertEquals(PHOTO_ID, newPlace.getPhotoId());
         assertEquals(1, newPlace.getColumnCount());
         assertEquals(1, newPlace.getRowCount());
     }
 
+    @Test
     public void testZoomViewOut() {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 1, 1, autoHide);
-        BasePlace newPlace = (BasePlace) placeCalculator.toggleZoomView(tagViewingPlace,
+        BasePlace newPlace = (BasePlace) placeManager.toggleZoomView(tagViewingPlace,
                 TAG_ID1, PHOTO_ID);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
-        assertEquals(PlaceCalculator.DEFAULT_RASTER_WIDTH,
+        assertEquals(rasterState.rasterWidth,
                 newPlace.getColumnCount());
-        assertEquals(PlaceCalculator.DEFAULT_RASTER_HEIGHT,
+        assertEquals(rasterState.rasterHeight,
                 newPlace.getRowCount());
     }
 
-    public void testGetFullscreen() {
+    @Test
+    public void testGetFullscreen(ArgumentCaptor<Place> captor) {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 13, 41, autoHide);
-        BasePlace newPlace = placeCalculator.getOneByOne(tagViewingPlace);
+        when(placeController.where()).thenReturn(tagViewingPlace);
+        placeManager.goOneByOne();
+        verify(placeController).goTo(captor.capture());
+        BasePlace newPlace = (BasePlace) captor.getValue();
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
         assertEquals(1, newPlace.getColumnCount());
         assertEquals(1, newPlace.getRowCount());
     }
 
+    @Test
     public void testZoomIn() {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 3, 3, autoHide);
-        BasePlace newPlace = placeCalculator.zoom(tagViewingPlace, Zoom.IN);
+        BasePlace newPlace = placeManager.zoom(tagViewingPlace, Zoom.IN);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
         assertEquals(2, newPlace.getColumnCount());
         assertEquals(2, newPlace.getRowCount());
-        newPlace = placeCalculator.zoom(newPlace, Zoom.IN);
+        newPlace = placeManager.zoom(newPlace, Zoom.IN);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
         assertEquals(1, newPlace.getColumnCount());
         assertEquals(1, newPlace.getRowCount());
 
-        newPlace = placeCalculator.zoom(newPlace, Zoom.IN);
+        newPlace = placeManager.zoom(newPlace, Zoom.IN);
         assertEquals(1, newPlace.getColumnCount());
         assertEquals(1, newPlace.getRowCount());
 
-        newPlace = placeCalculator.zoom(newPlace, Zoom.IN);
+        newPlace = placeManager.zoom(newPlace, Zoom.IN);
         assertEquals(1, newPlace.getColumnCount());
         assertEquals(1, newPlace.getRowCount());
     }
 
+    @Test
     public void testZoomOut() {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 2, autoHide);
-        BasePlace newPlace = placeCalculator.zoom(tagViewingPlace, Zoom.OUT);
+
+        BasePlace newPlace = placeManager.zoom(tagViewingPlace, Zoom.OUT);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
         assertEquals(3, newPlace.getColumnCount());
         assertEquals(3, newPlace.getRowCount());
-        newPlace = placeCalculator.zoom(newPlace, Zoom.OUT);
+        newPlace = placeManager.zoom(newPlace, Zoom.OUT);
         assertEquals(TAG_ID1, ((BasePlace) newPlace).getTagId());
         assertEquals(PHOTO_ID, ((BasePlace) newPlace).getPhotoId());
         assertEquals(4, newPlace.getColumnCount());

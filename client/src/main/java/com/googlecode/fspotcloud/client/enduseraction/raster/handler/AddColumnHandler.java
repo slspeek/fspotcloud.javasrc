@@ -1,20 +1,21 @@
 package com.googlecode.fspotcloud.client.enduseraction.raster.handler;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class AddColumnHandler implements IActionHandler {
 
-    private final Navigator navigator;
+    private final IRasterer rasterer;
 
     @Inject
-    public AddColumnHandler(Navigator navigator) {
-        this.navigator = navigator;
+    public AddColumnHandler(IRasterer rasterer) {
+        this.rasterer = rasterer;
     }
 
     @Override
     public void performAction(String actionId) {
-        navigator.increaseRasterWidth(1);
+        rasterer.increaseRasterWidth(1);
     }
 }

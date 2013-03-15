@@ -42,7 +42,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final Logger log = Logger.getLogger(MainWindowActivityMapper.class.getName());
     private final TagActivityFactory tagActivityFactory;
     private final SlideshowActivityFactory slideshowActivityFactory;
-    private final Navigator navigator;
+    private final PlaceManager placeManager;
+    private final RasterState rasterState;
     private final IModeController modeController;
     private final MailFullsizeView.MailFullsizePresenter mailFullsizeActivity;
     private final ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity;
@@ -62,7 +63,9 @@ public class MainWindowActivityMapper implements ActivityMapper {
     @Inject
     public MainWindowActivityMapper(TagActivityFactory tagActivityFactory,
                                     SlideshowActivityFactory slideshowActivityFactory,
-                                    Navigator navigator, IModeController modeController,
+                                    PlaceManager placeManager,
+                                    RasterState rasterState,
+                                    IModeController modeController,
                                     MailFullsizeView.MailFullsizePresenter mailFullsizeActivity,
                                     ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity,
                                     ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
@@ -79,7 +82,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagActivityFactory = tagActivityFactory;
-        this.navigator = navigator;
+        this.placeManager = placeManager;
+        this.rasterState = rasterState;
         this.modeController = modeController;
         this.mailFullsizeActivity = mailFullsizeActivity;
         this.confirmationPresenterActivity = confirmationPresenterActivity;
@@ -152,10 +156,10 @@ public class MainWindowActivityMapper implements ActivityMapper {
             int width = basePlace.getColumnCount();
             int height = basePlace.getRowCount();
             if ((height * width) > 1) {
-                navigator.setRasterWidth(width);
-                navigator.setRasterHeight(height);
+                rasterState.setColumnCount(width);
+                rasterState.setRowCount(height);
             }
-            navigator.setAutoHide(basePlace.isAutoHide());
+            placeManager.setAutoHide(basePlace.isAutoHide());
         }
     }
 }
