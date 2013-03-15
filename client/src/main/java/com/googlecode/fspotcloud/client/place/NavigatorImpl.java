@@ -78,12 +78,7 @@ public class NavigatorImpl implements Navigator {
                            final AsyncCallback<Boolean> callback) {
         final BasePlace place = placeController.where();
         dataManager.getTagNode(place.getTagId(),
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.warning("getTagNode failed " + caught);
-                    }
-
+                new TagNodeCallback(callback) {
                     @Override
                     public void onSuccess(TagNode result) {
                         PhotoInfoStore store = result.getCachedPhotoList();
@@ -99,12 +94,7 @@ public class NavigatorImpl implements Navigator {
     private void goAsyncImpl(final Direction direction, final Unit step,
                              final BasePlace place) {
         dataManager.getTagNode(place.getTagId(),
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.warning("getTagNode failed " + caught);
-                    }
-
+                new TagNodeCallback() {
                     @Override
                     public void onSuccess(TagNode result) {
                         PhotoInfoStore store = result.getCachedPhotoList();
@@ -138,19 +128,16 @@ public class NavigatorImpl implements Navigator {
         if (step == Unit.BORDER) {
             if (!store.isEmpty()) {
                 String photoId;
-
                 if (direction == Direction.BACKWARD) {
                     photoId = store.get(0).getId();
                 } else {
                     photoId = store.last().getId();
                 }
-
                 goToPhoto(place, place.getTagId(), photoId);
             }
         } else {
             int position = indexOf(place, store);
             int stepSize = stepSize(step, place);
-
             if (canGo(direction, step, place, store)) {
                 int nextIndex = position +
                         (stepSize * ((direction == Direction.FORWARD) ? 1 : (-1)));
@@ -162,11 +149,24 @@ public class NavigatorImpl implements Navigator {
 
     private boolean canGo(final Direction direction, final Unit step,
                           BasePlace fromPlace, PhotoInfoStore store) {
+        int position = indexOf(fromPlace, store);
         if (step == Unit.BORDER) {
-            return true;
+            if (direction == Direction.FORWARD) {
+                if (position != store.lastIndex()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                if (position == 0) {
+                    return false;
+                }  else {
+                    return true;
+                }
+            }
+
         }
 
-        int position = indexOf(fromPlace, store);
         int stepSize = stepSize(step, fromPlace);
 
         if (direction == Direction.FORWARD) {
@@ -196,13 +196,7 @@ public class NavigatorImpl implements Navigator {
                                   final AsyncCallback<Integer> callback) {
         log.log(Level.FINE, "getPageCountAsync for: " + tagId);
         dataManager.getTagNode(tagId,
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.WARNING, "getTagNode on datamanager failed",
-                                caught);
-                    }
-
+                new TagNodeCallback(callback) {
                     @Override
                     public void onSuccess(TagNode result) {
                         getPageCount(result, pageSize, callback);
@@ -222,19 +216,39 @@ public class NavigatorImpl implements Navigator {
         callback.onSuccess(result);
     }
 
+    private abstract class TagNodeCallback implements AsyncCallback<TagNode> {
+
+        private final AsyncCallback<?> callback;
+
+        public TagNodeCallback(AsyncCallback<?> callback) {
+            this.callback = callback;
+
+        }
+
+        public TagNodeCallback() {
+            this(new AsyncCallback<Object>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                }
+
+                @Override
+                public void onSuccess(Object result) {
+                }
+            });
+        }
+
+        @Override
+        public void onFailure(Throwable caught) {
+            callback.onFailure(caught);
+        }
+    }
+
     @Override
     public void getPageAsync(String tagId, final int pageSize,
                              final int pageNumber, final AsyncCallback<List<PhotoInfo>> callback) {
-        log.info("getPageAsync: " + tagId + " " + pageSize + " " + pageNumber);
+        log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " " + pageNumber);
         dataManager.getTagNode(tagId,
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.WARNING, "getTagNode on datamanager failed",
-                                caught);
-                        callback.onFailure(caught);
-                    }
-
+                new TagNodeCallback(callback) {
                     @Override
                     public void onSuccess(TagNode result) {
                         getPage(result, pageSize, pageNumber, callback);
@@ -278,16 +292,9 @@ public class NavigatorImpl implements Navigator {
     @Override
     public void getPageAsync(String tagId, final String photoId,
                              final int pageSize, final AsyncCallback<List<PhotoInfo>> callback) {
-        log.info("getPageAsync: " + tagId + " " + pageSize + " photoId: " + photoId);
+        log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " photoId: " + photoId);
         dataManager.getTagNode(tagId,
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.WARNING, "getTagNode on datamanager failed",
-                                caught);
-                        callback.onFailure(caught);
-                    }
-
+                new TagNodeCallback(callback) {
                     @Override
                     public void onSuccess(TagNode result) {
                         PhotoInfoStore store = getSafePhotoInfoStore(result);
@@ -436,14 +443,7 @@ public class NavigatorImpl implements Navigator {
                                              final String photoId, final int pageSize,
                                              final AsyncCallback<Integer[]> callback) {
         dataManager.getTagNode(tagId,
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.WARNING, "getTagNode on datamanager failed",
-                                caught);
-                        callback.onFailure(caught);
-                    }
-
+                new TagNodeCallback(callback) {
                     @Override
                     public void onSuccess(TagNode result) {
                         if (result != null) {

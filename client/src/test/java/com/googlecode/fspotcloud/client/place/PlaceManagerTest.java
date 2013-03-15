@@ -41,6 +41,7 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
@@ -68,7 +69,17 @@ public class PlaceManagerTest {
         BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1, autoHide);
         when(placeController.where()).thenReturn(tagViewingPlace);
         placeManager.unslideshow();
-        verify(placeController).goTo(tagViewingPlace);
+        verify(placeController).where();
+        verifyNoMoreInteractions(placeController);
+    }
+
+    @Test
+    public void testUnslideshowNoBasePlace() {
+        BasePlace tagViewingPlace = new BasePlace(TAG_ID1, PHOTO_ID, 2, 1, autoHide);
+        placeManager.unslideshow();
+
+        verify(placeController).where();
+        verifyNoMoreInteractions(placeController);
     }
 
     @Test
