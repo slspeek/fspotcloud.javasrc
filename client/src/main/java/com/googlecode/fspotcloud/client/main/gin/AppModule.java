@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.client.main.gin;
 
 import com.google.code.ginmvp.client.GinMvpModule;
 import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.data.DataManagerImpl;
@@ -41,6 +42,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ReplaceLocation;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
 import com.googlecode.fspotcloud.keyboardaction.ActionButton;
@@ -50,11 +52,14 @@ public class AppModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+
         bind(TimerInterface.class).to(TimerImpl.class);
         bind(IScheduler.class).to(SchedulerImpl.class);
         bind(IClientLoginManager.class).to(ClientLoginManager.class).in(Singleton.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
-        bind(PlaceCalculator.class).in(Singleton.class);
+        bind(PlaceManager.class).in(Singleton.class);
+        bind(RasterState.class).in(Singleton.class);
+        bind(IRasterer.class).to(Rasterer.class).in(Singleton.class);
         bind(IPlaceController.class).to(PlaceGoToImpl.class).in(Singleton.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
@@ -72,4 +77,17 @@ public class AppModule extends AbstractGinModule {
         install(new DashboardMVPModule());
         install(new UserMVPModule());
     }
+
+    @Provides
+    @RasterWidth
+    public int getRasterWidth() {
+        return 5;
+    }
+
+    @Provides
+    @RasterHeight
+    public int getRasterHeight() {
+        return 4;
+    }
+
 }

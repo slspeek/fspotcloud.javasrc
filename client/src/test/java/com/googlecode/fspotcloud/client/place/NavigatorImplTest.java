@@ -18,7 +18,7 @@ public class NavigatorImplTest {
     @Inject
     private  DataManager dataManager;
     @Inject
-    private  PlaceCalculator placeCalculator;
+    private PlaceManager placeManager;
     @Inject
     private  IClientLoginManager clientLoginManager;
 

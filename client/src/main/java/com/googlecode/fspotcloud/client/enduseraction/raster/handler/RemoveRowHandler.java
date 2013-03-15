@@ -1,20 +1,20 @@
 package com.googlecode.fspotcloud.client.enduseraction.raster.handler;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class RemoveRowHandler implements IActionHandler {
 
-    private final Navigator navigator;
+    private final IRasterer rasterer;
 
     @Inject
-    public RemoveRowHandler(Navigator navigator) {
-        this.navigator = navigator;
+    public RemoveRowHandler(IRasterer rasterer) {
+        this.rasterer = rasterer;
     }
 
     @Override
     public void performAction(String actionId) {
-        navigator.increaseRasterHeight(-1);
+        rasterer.increaseRasterHeight(-1);
     }
 }

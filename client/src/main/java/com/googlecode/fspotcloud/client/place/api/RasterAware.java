@@ -28,4 +28,10 @@ public interface RasterAware {
     void setColumnCount(int width);
 
     void setRowCount(int height);
+
+    void reset();
+
+    void increaseColumnCount(int amount);
+
+    void increaseRowCount(int amount);
 }

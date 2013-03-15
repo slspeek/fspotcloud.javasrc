@@ -49,27 +49,13 @@ public interface Navigator {
     void getPageRelativePositionAsync(String tagId, String photoId,
                                       int pageSize, AsyncCallback<Integer[]> callback);
 
-    void toggleZoomViewAsync(String tagId, String photoId);
-
     void goToTag(String otherTagId, PhotoInfoStore store);
 
     void goToLatestTag();
 
     void goToLatestTag(AsyncCallback<String> report);
 
-    void setRasterWidth(int width);
 
-    void setRasterHeight(int height);
-
-    void increaseRasterWidth(int amount);
-
-    void increaseRasterHeight(int amount);
-
-    void toggleRasterView();
-
-    void setRasterDimension(int i, int j);
-
-    void resetRasterSize();
 
     void fullscreen();
 

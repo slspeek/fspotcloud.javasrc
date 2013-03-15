@@ -24,14 +24,14 @@
 
 package com.googlecode.fspotcloud.client.place;
 
-public class PlaceConverter {
+public class PlaceBuilder {
     private String tagId;
     private String photoId;
     private int columnCount;
     private int rowCount;
     private boolean autoHide;
 
-    public PlaceConverter(BasePlace fromPlace) {
+    public PlaceBuilder(BasePlace fromPlace) {
         this.tagId = fromPlace.getTagId();
         this.photoId = fromPlace.getPhotoId();
         this.columnCount = fromPlace.getColumnCount();
@@ -39,27 +39,32 @@ public class PlaceConverter {
         this.autoHide = fromPlace.isAutoHide();
     }
 
-    public BasePlace getNewPlace() {
+    public BasePlace place() {
         return new BasePlace(tagId, photoId, columnCount, rowCount, autoHide);
     }
 
-    void setTagId(String tagId) {
+    public PlaceBuilder setTagId(String tagId) {
         this.tagId = tagId;
+        return this;
     }
 
-    public void setPhotoId(String photoId) {
+    public PlaceBuilder setPhotoId(String photoId) {
         this.photoId = photoId;
+        return this;
     }
 
-    public void setColumnCount(int columnCount) {
+    public PlaceBuilder setColumnCount(int columnCount) {
         this.columnCount = columnCount;
+        return this;
     }
 
-    public void setRowCount(int rowCount) {
+    public PlaceBuilder setRowCount(int rowCount) {
         this.rowCount = rowCount;
+        return this;
     }
 
-    public void setAutoHide(boolean autoHide) {
+    public PlaceBuilder setAutoHide(boolean autoHide) {
         this.autoHide = autoHide;
+        return this;
     }
 }
