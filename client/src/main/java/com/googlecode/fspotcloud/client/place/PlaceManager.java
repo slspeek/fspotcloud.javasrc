@@ -162,10 +162,8 @@ public class PlaceManager {
         BasePlace result;
         if (fromPlace instanceof SlideshowPlace) {
             result = getOneByOne(fromPlace);
-        } else {
-            result = fromPlace;
+            placeController.goTo(result);
         }
-        placeController.goTo(result);
     }
 
     public void setAutoHide(boolean autoHide) {

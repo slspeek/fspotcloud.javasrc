@@ -6,15 +6,17 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class TagNodeTestFactory {
 
-    private final Date date = new Date(100);
-    private final Date laterDate = new Date(100000);
+    private final static Date date = new Date(100);
+    private final static Date laterDate = new Date(100000);
+    public final static PhotoInfo FIRST_PICTURE_INFO = new PhotoInfo("42", "Me", date, 2);
+    public final static PhotoInfo SECOND_PICTURE_INFO = new PhotoInfo("102", "You", laterDate, 1);
 
     public TagNode getSingleNodeWithOnePicture() {
-        PhotoInfo info = new PhotoInfo("42", "Me", date, 2);
         TagNode node = new TagNode("1", "0");
         node.setTagName("Self portraits");
         node.setDescription("Images of myself");
-        node.setCachedPhotoList(new PhotoInfoStore(newArrayList(info)));
+        node.setCachedPhotoList(new PhotoInfoStore(newArrayList(FIRST_PICTURE_INFO)));
+        node.setCount(1);
         return node;
     }
 
@@ -50,6 +52,7 @@ public class TagNodeTestFactory {
         node.setCachedPhotoList(new PhotoInfoStore(newArrayList(info)));
         root.addChild(node);
         node.setParent(root);
+        node.setCount(1);
 
         info = new PhotoInfo("43", "Myself", laterDate, 2);
         node = new TagNode("2", "0");
@@ -58,6 +61,17 @@ public class TagNodeTestFactory {
         node.setCachedPhotoList(new PhotoInfoStore(newArrayList(info)));
         root.addChild(node);
         node.setParent(root);
+        node.setCount(1);
         return root;
+    }
+
+    public TagNode getSingleNodeWithTwoPictures() {
+        TagNode node = new TagNode("1", "0");
+        node.setTagName("Self portraits");
+        node.setDescription("Images of myself");
+        node.setCachedPhotoList(new PhotoInfoStore(newArrayList(FIRST_PICTURE_INFO, SECOND_PICTURE_INFO)));
+        node.setCount(2);
+        return node;
+
     }
 }

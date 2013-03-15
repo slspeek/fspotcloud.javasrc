@@ -24,19 +24,37 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 
 public class EditUserGroupPlace extends Place {
-    private final Long userGroupId;
+    private final long userGroupId;
 
-    public EditUserGroupPlace(Long userGroupId) {
+    public EditUserGroupPlace(long userGroupId) {
         this.userGroupId = userGroupId;
     }
 
-    public Long getUserGroupId() {
+    public long getUserGroupId() {
         return userGroupId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(userGroupId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EditUserGroupPlace)) return false;
+
+        EditUserGroupPlace that = (EditUserGroupPlace) o;
+
+        if (userGroupId != that.userGroupId) return false;
+
+        return true;
     }
 
     public static class Tokenizer implements PlaceTokenizer<EditUserGroupPlace> {
@@ -47,7 +65,7 @@ public class EditUserGroupPlace extends Place {
 
         @Override
         public String getToken(EditUserGroupPlace place) {
-            return place.getUserGroupId().toString();
+            return String.valueOf(place.getUserGroupId());
         }
     }
 }
