@@ -27,7 +27,7 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.data.IndexingUtil;
+import com.googlecode.fspotcloud.client.data.LatestTagHelper;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -47,20 +47,22 @@ public class NavigatorImpl implements Navigator {
     private final Logger log = Logger.getLogger(NavigatorImpl.class.getName());
     private final IPlaceController placeController;
     private final DataManager dataManager;
-    private final PlaceCalculator placeCalculator;
+    private final PlaceManager placeManager;
     private final IClientLoginManager clientLoginManager;
-
+    private final LatestTagHelper latestTagHelper;
 
     @Inject
     public NavigatorImpl(
             IPlaceController placeController,
-            PlaceCalculator placeCalculator,
+            PlaceManager placeManager,
             DataManager dataManager,
-            IClientLoginManager clientLoginManager) {
+            IClientLoginManager clientLoginManager,
+            LatestTagHelper latestTagHelper) {
         this.placeController = placeController;
-        this.placeCalculator = placeCalculator;
+        this.placeManager = placeManager;
         this.dataManager = dataManager;
         this.clientLoginManager = clientLoginManager;
+        this.latestTagHelper = latestTagHelper;
     }
 
     @Override
@@ -293,6 +295,7 @@ public class NavigatorImpl implements Navigator {
                         int index = store.indexOf(photoId);
                         if (index == -1) {
                             if (!store.isEmpty()) {
+                                //FIXME too heavy side effect of getting info
                                 PhotoInfo info = store.get(0);
                                 BasePlace lastBasePlace = placeController.where();
                                 placeController.goTo(new BasePlace(lastBasePlace.getTagId(), info.getId(),
@@ -309,13 +312,6 @@ public class NavigatorImpl implements Navigator {
     }
 
     @Override
-    public void toggleZoomViewAsync(String tagId, String photoId) {
-        BasePlace newPlace = placeCalculator.toggleZoomView(placeController.where(),
-                tagId, photoId);
-        placeController.goTo(newPlace);
-    }
-
-    @Override
     public void goToTag(String otherTagId, PhotoInfoStore store) {
         goToTag(otherTagId, store, Direction.BACKWARD);
     }
@@ -323,27 +319,25 @@ public class NavigatorImpl implements Navigator {
     @Override
     public void goToTag(String otherTagId, PhotoInfoStore store, Direction direction) {
         go(direction, Unit.BORDER,
-                new BasePlace(otherTagId, null, placeCalculator.getRasterWidth(),
-                        placeCalculator.getRasterHeight(), placeCalculator.isAutoHide()), store);
+                new BasePlace(otherTagId, null, placeManager.getRasterWidth(),
+                        placeManager.getRasterHeight(), placeManager.isAutoHide()), store);
     }
 
     @Override
     public void goToAllPhotos() {
         BasePlace basePlace = placeController.where();
-        BasePlace newPlace;
+        BasePlace destPlace;
         if (basePlace != null) {
-            PlaceConverter converter = new PlaceConverter(basePlace);
+            PlaceBuilder converter = new PlaceBuilder(basePlace);
             converter.setTagId("all");
-            newPlace = converter.getNewPlace();
+            destPlace = converter.place();
         }
         else {
-            newPlace = new BasePlace("all", null, PlaceCalculator.DEFAULT_RASTER_WIDTH, PlaceCalculator.DEFAULT_RASTER_HEIGHT, true);
+            destPlace = new BasePlace("all", null);
+            destPlace = placeManager.getTabularPlace(destPlace);
 
         }
-        placeController.goTo(newPlace);
-
-
-
+        placeController.goTo(destPlace);
     }
 
     @Override
@@ -372,26 +366,7 @@ public class NavigatorImpl implements Navigator {
 
             @Override
             public void onSuccess(TagNode result) {
-                Date latest = new Date(0);
-                TagNode latestNode = null;
-                IndexingUtil util = new IndexingUtil();
-                Map<String, TagNode> tagNodeIndex = new HashMap<String, TagNode>();
-                util.rebuildTagNodeIndex(tagNodeIndex, result);
-
-                for (String tagId : tagNodeIndex.keySet()) {
-                    TagNode node = tagNodeIndex.get(tagId);
-                    PhotoInfoStore store = node.getCachedPhotoList();
-
-                    if ((store != null) && !store.isEmpty()) {
-                        PhotoInfo info = store.last();
-                        Date lastDate = info.getDate();
-
-                        if (lastDate.after(latest)) {
-                            latest = lastDate;
-                            latestNode = node;
-                        }
-                    }
-                }
+                TagNode latestNode = latestTagHelper.getLatestNode(result);
                 if (latestNode != null) {
                     goToTag(latestNode.getId(), latestNode.getCachedPhotoList(), Direction.FORWARD);
                     report.onSuccess("Success");
@@ -426,66 +401,15 @@ public class NavigatorImpl implements Navigator {
     }
 
     @Override
-    public void setRasterWidth(int width) {
-        placeCalculator.setRasterWidth(width);
-    }
-
-    @Override
-    public void setRasterHeight(int height) {
-        placeCalculator.setRasterHeight(height);
-    }
-
-    @Override
-    public void increaseRasterWidth(int amount) {
-        placeCalculator.setRasterWidth(placeCalculator.getRasterWidth() +
-                amount);
-        reloadCurrentPlaceOnNewSize();
-    }
-
-    @Override
-    public void increaseRasterHeight(int amount) {
-        placeCalculator.setRasterHeight(placeCalculator.getRasterHeight() +
-                amount);
-        reloadCurrentPlaceOnNewSize();
-    }
-
-    @Override
-    public void setRasterDimension(int i, int j) {
-        placeCalculator.setRasterWidth(i);
-        placeCalculator.setRasterHeight(j);
-        reloadCurrentPlaceOnNewSize();
-    }
-
-    private void reloadCurrentPlaceOnNewSize() {
-        BasePlace now = placeController.where();
-        BasePlace destination = placeCalculator.getTabularPlace(now);
-        placeController.goTo(destination);
-    }
-
-    @Override
-    public void toggleRasterView() {
-        BasePlace now = placeController.where();
-        BasePlace destination = placeCalculator.toggleRasterView(now);
-        placeController.goTo(destination);
-    }
-
-    @Override
-    public void resetRasterSize() {
-        setRasterDimension(PlaceCalculator.DEFAULT_RASTER_WIDTH,
-                PlaceCalculator.DEFAULT_RASTER_HEIGHT);
-    }
-
-    @Override
     public void fullscreen() {
-        BasePlace now = placeController.where();
-        BasePlace destination = placeCalculator.getOneByOne(now);
+        BasePlace destination = placeManager.getOneByOne();
         placeController.goTo(destination);
     }
 
     @Override
     public void zoom(Zoom direction) {
         BasePlace now = placeController.where();
-        BasePlace destination = placeCalculator.zoom(now, direction);
+        BasePlace destination = placeManager.zoom(now, direction);
         placeController.goTo(destination);
     }
 
@@ -499,14 +423,12 @@ public class NavigatorImpl implements Navigator {
 
     @Override
     public void unslideshow() {
-        BasePlace now = placeController.where();
-        BasePlace destination = placeCalculator.unslideshow(now);
-        placeController.goTo(destination);
+        placeManager.unslideshow();
     }
 
     @Override
     public void setAutoHide(boolean autoHide) {
-        placeCalculator.setAutoHide(autoHide);
+        placeManager.setAutoHide(autoHide);
     }
 
     @Override

@@ -24,6 +24,8 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Zoom;
 
@@ -36,41 +38,51 @@ import java.util.logging.Logger;
  *
  * @author steven
  */
-public class PlaceCalculator {
-    private final Logger log = Logger.getLogger(PlaceCalculator.class.getName());
-    public static final int DEFAULT_RASTER_WIDTH = 4;
-    public static final int DEFAULT_RASTER_HEIGHT = 4;
-    public static final int MINIMUM_RASTER_WIDTH = 2;
-    public static final int MINIMUM_RASTER_HEIGHT = 2;
-    private int rasterWidth = DEFAULT_RASTER_WIDTH;
-    private int rasterHeight = DEFAULT_RASTER_HEIGHT;
+public class PlaceManager {
+    private final Logger log = Logger.getLogger(PlaceManager.class.getName());
     private boolean autoHide = true;
 
-    public PlaceCalculator() {
+    private final RasterState rasterState;
+    private final IPlaceController placeController;
+
+    @Inject
+    public PlaceManager(RasterState rasterState,
+                        IPlaceController placeController) {
+        this.rasterState = rasterState;
+        this.placeController = placeController;
         log.log(Level.FINE, "Created");
     }
 
-    public BasePlace getOneByOne(BasePlace place) {
-        PlaceConverter converter = new PlaceConverter(place);
-        converter.setRowCount(1);
-        converter.setColumnCount(1);
-        BasePlace dest = converter.getNewPlace();
-        return dest;
+    public void goOneByOne() {
+        placeController.goTo(getOneByOne());
     }
 
-    public BasePlace toggleRasterView(BasePlace place) {
+    public BasePlace getOneByOne() {
+        return getOneByOne(placeController.where());
+    }
+
+    private BasePlace getOneByOne(BasePlace place) {
+        PlaceBuilder converter = new PlaceBuilder(place);
+        return converter.setRowCount(1).setColumnCount(1).place();
+    }
+
+    public void toggleRasterView() {
+        placeController.goTo(toggleRasterView(placeController.where()));
+    }
+
+    private BasePlace toggleRasterView(BasePlace place) {
         int width = place.getColumnCount();
         int height = place.getRowCount();
         if ((width * height) > 1) {
             return getOneByOne(place);
         } else {
-            return getResizedPlace(place, getRasterWidth(),getRasterHeight());
+            return getTabularPlace(place);
         }
     }
 
     public BasePlace toggleZoomView(BasePlace place, String tagId,
                                     String photoId) {
-        PlaceConverter converter = new PlaceConverter(place);
+        PlaceBuilder converter = new PlaceBuilder(place);
         converter.setTagId(tagId);
         converter.setPhotoId(photoId);
         int width = place.getColumnCount();
@@ -86,53 +98,48 @@ public class PlaceCalculator {
         }
         converter.setColumnCount(width);
         converter.setRowCount(height);
-        return converter.getNewPlace();
+        return converter.place();
     }
 
-    public void setRasterHeight(int rasterHeight) {
-        if (rasterHeight >= MINIMUM_RASTER_HEIGHT) {
-            this.rasterHeight = rasterHeight;
-        }
+    int getRasterHeight() {
+        return rasterState.getRowCount();
     }
 
-    public int getRasterHeight() {
-        return rasterHeight;
-    }
+    int getRasterWidth() {
 
-    public void setRasterWidth(int rasterWidth) {
-        if (rasterWidth >= MINIMUM_RASTER_WIDTH) {
-            this.rasterWidth = rasterWidth;
-        }
-    }
-
-    public int getRasterWidth() {
-        return rasterWidth;
+        return rasterState.getColumnCount();
     }
 
     public BasePlace getTabularPlace(BasePlace place) {
-        return getResizedPlace(place, getRasterWidth(), getRasterHeight());
+        return getResizedPlace(place,
+                rasterState.getColumnCount(),
+                rasterState.getRowCount());
     }
 
     private BasePlace getResizedPlace(BasePlace place, int width, int height) {
-        PlaceConverter converter = new PlaceConverter(place);
+        PlaceBuilder converter = new PlaceBuilder(place);
         converter.setColumnCount(width);
         converter.setRowCount(height);
-        return converter.getNewPlace();
+        return converter.place();
     }
     public BasePlace zoom(BasePlace now, Navigator.Zoom direction) {
         BasePlace dest;
-
         if (direction == Zoom.IN) {
             int width = now.getColumnCount();
             int height = now.getRowCount();
 
             if ((width * height) == 1) {
+                //cannot zoom further IN
                 dest = now;
             } else {
-                setRasterWidth(width - 1);
-                setRasterHeight(height - 1);
+                //try decreasing both width and height
+                final int newWidth = width - 1;
+                rasterState.setRowCount(height - 1);
+                rasterState.setColumnCount(newWidth);
 
-                if ((width - 1) != getRasterWidth()) {
+
+                if (newWidth != rasterState.getColumnCount()) {
+                    //width was not decreased
                     // switch to 1x1
                     dest = getOneByOne(now);
                 } else {
@@ -140,25 +147,25 @@ public class PlaceCalculator {
                 }
             }
         } else {
+            //Zooming OUT
             int width = now.getColumnCount();
             int height = now.getRowCount();
-            setRasterWidth(width + 1);
-            setRasterHeight(height + 1);
-            dest = getResizedPlace(now, getRasterWidth(), getRasterHeight());
+            rasterState.setColumnCount(width + 1);
+            rasterState.setRowCount(height + 1);
+            dest = getTabularPlace(now);
         }
         return dest;
     }
 
-    public BasePlace unslideshow(BasePlace fromPlace) {
+    public void unslideshow() {
+        BasePlace fromPlace = placeController.where();
         BasePlace result;
-
         if (fromPlace instanceof SlideshowPlace) {
             result = getOneByOne(fromPlace);
         } else {
             result = fromPlace;
         }
-
-        return result;
+        placeController.goTo(result);
     }
 
     public void setAutoHide(boolean autoHide) {

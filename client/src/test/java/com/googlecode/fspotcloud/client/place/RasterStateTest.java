@@ -24,27 +24,73 @@
 
 package com.googlecode.fspotcloud.client.place;
 
-import junit.framework.TestCase;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.RasterHeight;
+import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
+import org.jukito.JukitoModule;
+import org.jukito.JukitoRunner;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertEquals;
 
 
-public class RasterStateTest extends TestCase {
-    RasterState state;
+@RunWith(JukitoRunner.class)
+public class RasterStateTest {
+
+    @Inject
+    private RasterState state;
     final int WIDTH = 3;
     final int HEIGHT = 2;
 
-    @Override
-    protected void setUp() throws Exception {
-        state = new RasterState();
-        super.setUp();
+    public static class Module extends JukitoModule {
+
+        @Override
+        protected void configureTest() {
+            bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(5);
+            bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(4);
+        }
     }
 
+    @Test
     public void testSetWidth() {
         state.setColumnCount(WIDTH);
         assertEquals(WIDTH, state.getColumnCount());
     }
 
+    @Test
     public void testSetHeight() {
         state.setRowCount(HEIGHT);
         assertEquals(HEIGHT, state.getRowCount());
+    }
+
+    @Test
+    public void testResetHeightOne() {
+        testSetHeight();
+        testSetWidth();
+        state.setRowCount(1);
+        assertEquals(1, state.getRowCount());
+    }
+
+    @Test
+    public void testResetWidthOne() {
+        testSetHeight();
+        testSetWidth();
+        state.setColumnCount(1);
+        assertEquals(1, state.getColumnCount());
+    }
+
+    @Test
+    public void testSetWidthOne() {
+        state.setColumnCount(1);
+        assertEquals(1, state.getColumnCount());
+    }
+
+    @Test
+    public void testTryOneByOne() {
+        state.setColumnCount(1);
+        assertEquals(1, state.getColumnCount());
+        state.setRowCount(1);
+        assertEquals(state.rasterHeight, state.getRowCount());
     }
 }

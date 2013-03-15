@@ -29,6 +29,7 @@ dependencies {
     compile ext.libs.ginmvp
 
     testCompile "junit:junit:3.8.1"
+    testCompile project(path:':rpc', configuration: 'testCompile')
     testCompile ext.libs.junit
     testCompile ext.libs.jukito
     testCompile ext.libs.mockito
