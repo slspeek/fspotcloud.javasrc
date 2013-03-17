@@ -17,6 +17,7 @@ public class StylesSetup {
     private final BasicTreeResources basicTreeResources;
     private final BigActionButtonResources bigActionButtonResources;
     private final AdminActionButtonResources adminActionButtonResources;
+    private final ToolbarButtonResources toolbarButtonResources;
     private final CellTableResources cellTableResources;
 
     @Inject
@@ -29,7 +30,7 @@ public class StylesSetup {
                        BasicTreeResources basicTreeResources,
                        BigActionButtonResources bigActionButtonResources,
                        AdminActionButtonResources adminActionButtonResources,
-                       CellTableResources cellTableResources) {
+                       ToolbarButtonResources toolbarButtonResources, CellTableResources cellTableResources) {
         this.resources = resources;
         this.userPagesResources = userPagesResources;
         this.fadeAnimationResources = fadeAnimationResources;
@@ -39,6 +40,7 @@ public class StylesSetup {
         this.basicTreeResources = basicTreeResources;
         this.bigActionButtonResources = bigActionButtonResources;
         this.adminActionButtonResources = adminActionButtonResources;
+        this.toolbarButtonResources = toolbarButtonResources;
         this.cellTableResources = cellTableResources;
     }
 
@@ -52,6 +54,7 @@ public class StylesSetup {
         basicTreeResources.cellTreeStyle().ensureInjected();
         bigActionButtonResources.style().ensureInjected();
         adminActionButtonResources.style().ensureInjected();
+        toolbarButtonResources.style().ensureInjected();
         cellTableResources.cellTableStyle().ensureInjected();
         log.log(Level.FINE, "all styles were injected");
     }
