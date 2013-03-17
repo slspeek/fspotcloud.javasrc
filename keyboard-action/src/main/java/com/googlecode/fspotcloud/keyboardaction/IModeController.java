@@ -17,4 +17,6 @@ public interface IModeController extends PlaceChangeEvent.Handler {
     void clearFlags();
 
      void initButtonEnableStates();
+
+    void setFlag(String name, boolean set);
 }

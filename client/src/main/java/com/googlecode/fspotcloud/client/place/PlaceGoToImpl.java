@@ -69,12 +69,12 @@ public class PlaceGoToImpl implements IPlaceController {
     }
 
     protected BasePlace getLastBasePlace() {
-        log.log(Level.FINE, "returning last base place:" + lastBasePlace);
+        log.log(Level.FINEST, "returning last base place:" + lastBasePlace);
         return lastBasePlace;
     }
 
     protected void setLastBasePlace(BasePlace lastBasePlace) {
-        log.log(Level.FINE, "last base place set to " + lastBasePlace);
+        log.log(Level.FINEST, "last base place set to " + lastBasePlace);
         this.lastBasePlace = lastBasePlace;
     }
 

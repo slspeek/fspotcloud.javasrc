@@ -2,6 +2,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class KeyboardActionFactory {
     private final WidgetFactory widgetFactory;
     private final KeyboardActionResources keyboardActionResources;
     private final ResourcesSetup resourcesSetup;
+    private final Provider<ActionToolbar> actionToolbarProvider;
 
     private IModeController modeController;
 
@@ -34,9 +36,11 @@ public class KeyboardActionFactory {
                                  List<ActionCategory> actionCategoryList,
                                  WidgetFactory widgetFactory,
                                  KeyboardActionResources keyboardActionResources,
-                                 ResourcesSetup resourcesSetup) {
+                                 ResourcesSetup resourcesSetup,
+                                 Provider<ActionToolbar> actionToolbarProvider) {
         this.keyboardActionResources = keyboardActionResources;
         this.resourcesSetup = resourcesSetup;
+        this.actionToolbarProvider = actionToolbarProvider;
         resourcesSetup.ensureInjected();
         builder.build();
         this.widgetFactory = widgetFactory;
@@ -67,7 +71,7 @@ public class KeyboardActionFactory {
     }
 
     public ActionToolbar getToolBar() {
-        return new ActionToolbar(keyboardActionResources, widgetFactory);
+        return actionToolbarProvider.get();
     }
 
     public ActionMenu getMenu(String caption) {

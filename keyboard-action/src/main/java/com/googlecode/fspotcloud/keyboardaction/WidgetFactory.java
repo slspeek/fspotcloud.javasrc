@@ -10,7 +10,9 @@ public class WidgetFactory {
     private final ActionMenuResources menuResources;
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
     private final WidgetRegistry widgetRegistry;
+    private final KeyboardActionResources keyboardActionResources;
     private ActionButtonResources buttonResources;
+
 
     @Inject
     private WidgetFactory(EventBus eventBus,
@@ -18,13 +20,16 @@ public class WidgetFactory {
                           ActionButtonResources buttonResources,
                           ActionMenuResources menuResources,
                           ActionMenuItemSafeHtml actionMenuItemSafeHtml,
-                          WidgetRegistry widgetRegistry) {
+                          WidgetRegistry widgetRegistry,
+                          KeyboardActionResources keyboardActionResources
+    ) {
         this.eventBus = eventBus;
         this.actionUIRegistry = actionUIRegistry;
         this.buttonResources = buttonResources;
         this.menuResources = menuResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
         this.widgetRegistry = widgetRegistry;
+        this.keyboardActionResources = keyboardActionResources;
         menuResources.style().ensureInjected();
         buttonResources.style().ensureInjected();
     }
@@ -45,8 +50,7 @@ public class WidgetFactory {
     }
 
     public ActionButton getButton(String actionId) {
-        ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
-        return getButton(actionUIDef);
+        return getButton(actionId, buttonResources);
     }
 
     public ActionMenu getMenu(String caption) {
@@ -54,4 +58,8 @@ public class WidgetFactory {
         return actionMenu;
     }
 
+    public ActionButton getButton(String actionId, ActionButtonResources actionButtonResources) {
+        ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
+        return getButton(actionUIDef, actionButtonResources);
+    }
 }

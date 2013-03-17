@@ -32,9 +32,11 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.main.view.api.ReplaceLocation;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
 import com.googlecode.fspotcloud.shared.main.LogoutAction;
@@ -52,23 +54,34 @@ public class ClientLoginManager implements IClientLoginManager {
     private final DataManager dataManager;
     private final GetUserInfoMemoProc getUserInfoMemoProc;
     private final ReplaceLocation replaceLocation;
+    private final IModeController modeController;
 
     @Inject
     public ClientLoginManager(DispatchAsync dispatch,
                               IPlaceController placeController,
                               DataManager dataManager,
                               GetUserInfoMemoProc getUserInfoMemoProc,
-                              ReplaceLocation replaceLocation) {
+                              ReplaceLocation replaceLocation,
+                              IModeController modeController) {
         this.dispatch = dispatch;
         this.placeController = placeController;
         this.dataManager = dataManager;
         this.getUserInfoMemoProc = getUserInfoMemoProc;
         this.replaceLocation = replaceLocation;
+        this.modeController = modeController;
     }
 
     @Override
     public void getUserInfoAsync(final AsyncCallback<UserInfo> callback) {
-        getUserInfoMemoProc.getAsync(callback);
+        getUserInfoMemoProc.getAsync(new CallbackUserInfo(callback) {
+            @Override
+            public void onSuccess(UserInfo result) {
+                modeController.setFlag(Flags.LOGGED_ON.name(), result.isLoggedIn());
+                modeController.setFlag(Flags.ADMIN.name(), result.isAdmin());
+                log.log(Level.FINER, "just set the flags");
+                callback.onSuccess(result);
+            }
+        });
     }
 
 
@@ -78,6 +91,25 @@ public class ClientLoginManager implements IClientLoginManager {
     }
 
     private abstract class CallbackUserInfo implements AsyncCallback<UserInfo> {
+        private AsyncCallback<UserInfo> delegate = new AsyncCallback<UserInfo>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+
+            @Override
+            public void onSuccess(UserInfo result) {
+
+            }
+        };
+        public CallbackUserInfo() {
+
+        }
+
+        protected CallbackUserInfo(AsyncCallback<UserInfo> delegate) {
+            this.delegate = delegate;
+        }
+
         @Override
         public void onFailure(Throwable caught) {
             log.log(Level.WARNING, "Get user info failed ", caught);
@@ -123,5 +155,6 @@ public class ClientLoginManager implements IClientLoginManager {
     public void resetApplicationData() {
         reset();
         dataManager.reset();
+        modeController.clearFlags();
     }
 }

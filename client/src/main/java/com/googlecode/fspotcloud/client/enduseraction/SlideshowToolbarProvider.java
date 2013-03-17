@@ -11,20 +11,21 @@ public class SlideshowToolbarProvider implements Provider<ActionToolbar> {
     private final KeyboardActionFactory keyboardActionFactory;
     private final SlideshowDelayView.SlideshowPresenter slideshowPresenter;
     private final SlideshowActions actions;
+    private final ActionToolbar toolbar;
 
     @Inject
     public SlideshowToolbarProvider(KeyboardActionFactory keyboardActionFactory,
                                     SlideshowDelayView.SlideshowPresenter slideshowPresenter,
-                                    SlideshowActions actions) {
+                                    SlideshowActions actions, ActionToolbar toolbar) {
         this.keyboardActionFactory = keyboardActionFactory;
         this.slideshowPresenter = slideshowPresenter;
         this.actions = actions;
+        this.toolbar = toolbar;
     }
 
 
     @Override
     public ActionToolbar get() {
-        ActionToolbar toolbar = keyboardActionFactory.getToolBar();
 
         toolbar.add(actions.slideshow_start);
         toolbar.add(actions.slideshow_pause);

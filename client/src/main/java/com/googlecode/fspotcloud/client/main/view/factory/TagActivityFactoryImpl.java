@@ -32,6 +32,7 @@ import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.main.view.api.TagView.TagPresenter;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView.TreePresenter;
 import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.NavigationFlagsHelper;
 
 import java.util.logging.Logger;
 
@@ -42,13 +43,17 @@ public class TagActivityFactoryImpl implements TagActivityFactory {
     private final TreePresenter treePresenter;
     private final ImageRasterPresenterFactory rasterFactory;
     private final IScheduler scheduler;
+    private final NavigationFlagsHelper navigationFlagsHelper;
 
     @Inject
     public TagActivityFactoryImpl(TagView tagView,
                                   @BasicTreeView TreePresenter treePresenter,
-                                  ImageRasterPresenterFactory rasterFactory, IScheduler scheduler) {
+                                  ImageRasterPresenterFactory rasterFactory,
+                                  IScheduler scheduler,
+                                  NavigationFlagsHelper navigationFlagsHelper) {
         super();
         this.scheduler = scheduler;
+        this.navigationFlagsHelper = navigationFlagsHelper;
         this.tagView = (TagViewImpl) tagView;
         this.treePresenter = treePresenter;
         this.rasterFactory = rasterFactory;
@@ -59,7 +64,7 @@ public class TagActivityFactoryImpl implements TagActivityFactory {
     public TagPresenter get(BasePlace place) {
         final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory.get(place,
                 tagView.getImageRasterView());
-        TagPresenter presenter = new TagActivity(tagView, rasterPresenter, scheduler, place);
+        TagPresenter presenter = new TagActivity(tagView, rasterPresenter, scheduler, place, navigationFlagsHelper);
         treePresenter.setPlace(place);
         return presenter;
     }

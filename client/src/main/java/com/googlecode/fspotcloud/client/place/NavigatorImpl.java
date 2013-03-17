@@ -186,7 +186,7 @@ public class NavigatorImpl implements Navigator {
                     oldPlace.getRowCount(), oldPlace.isAutoHide());
         }
 
-        log.log(Level.FINE, "About to go to: " + this + " : " + newPlace + " from: " +
+        log.log(Level.FINE, "About to go to: " + newPlace + " from: " +
                 oldPlace);
         placeController.goTo(newPlace);
     }

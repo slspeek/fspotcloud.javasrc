@@ -31,6 +31,7 @@ import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
+import com.googlecode.fspotcloud.client.place.NavigationFlagsHelper;
 
 import java.util.logging.Logger;
 
@@ -42,22 +43,23 @@ public class TagActivity extends AbstractActivity implements TagView.TagPresente
     private final ImageRasterView.ImageRasterPresenter imageRasterPresenter;
     private final IScheduler scheduler;
     private final BasePlace place;
-
+    private final NavigationFlagsHelper navigationFlagsHelper;
 
     public TagActivity(TagView tagView,
                        ImageRasterView.ImageRasterPresenter imageRasterPresenter,
                        IScheduler scheduler,
-                       BasePlace place) {
+                       BasePlace place, NavigationFlagsHelper navigationFlagsHelper) {
         this.tagView = tagView;
         this.imageRasterPresenter = imageRasterPresenter;
         this.scheduler = scheduler;
         this.place = place;
+        this.navigationFlagsHelper = navigationFlagsHelper;
     }
 
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
         containerWidget.setWidget(tagView);
-
+        navigationFlagsHelper.update();
 
         scheduler.schedule(new Runnable() {
             @Override

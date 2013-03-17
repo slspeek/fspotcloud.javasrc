@@ -29,12 +29,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.view.api.LoginView;
 import com.googlecode.fspotcloud.client.place.LoginPlace;
 import com.googlecode.fspotcloud.client.place.UserAccountPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
 import com.googlecode.fspotcloud.shared.main.AuthenticationResult;
@@ -44,8 +46,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class LoginPresenterImpl extends AbstractActivity implements LoginView.LoginPresenter {
-    private final Logger log = Logger.getLogger(LoginPresenterImpl.class.getName());
+public class LoginActivity extends AbstractActivity implements LoginView.LoginPresenter {
+    private final Logger log = Logger.getLogger(LoginActivity.class.getName());
     public static final String AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST =
             "An error occurred making the authentication request";
     public static final String LOGGED_IN = "Logged in";
@@ -56,21 +58,24 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
     private final IClientLoginManager clientLoginManager;
     private final EventBus eventBus;
     private final ApplicationActions applicationActions;
+    private final IModeController modeController;
 
 
     @Inject
-    public LoginPresenterImpl(LoginView loginView,
-                              DispatchAsync dispatch,
-                              IPlaceController placeController,
-                              IClientLoginManager clientLoginManager,
-                              EventBus eventBus,
-                              ApplicationActions applicationActions) {
+    public LoginActivity(LoginView loginView,
+                         DispatchAsync dispatch,
+                         IPlaceController placeController,
+                         IClientLoginManager clientLoginManager,
+                         EventBus eventBus,
+                         ApplicationActions applicationActions,
+                         IModeController modeController) {
         this.view = loginView;
         this.dispatch = dispatch;
         this.placeController = placeController;
         this.clientLoginManager = clientLoginManager;
         this.eventBus = eventBus;
         this.applicationActions = applicationActions;
+        this.modeController = modeController;
     }
 
     @Override
@@ -117,6 +122,8 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                         log.log(Level.FINE, "Server replied to auth request: " + result.getSuccess());
 
                         if (result.getSuccess()) {
+                            //modeController.setFlag(Flags.LOGGED_ON.name());
+
                             view.setStatusText(LOGGED_IN);
                             view.clearFields();
                             clientLoginManager.resetApplicationData();
@@ -127,7 +134,7 @@ public class LoginPresenterImpl extends AbstractActivity implements LoginView.Lo
                                 placeController.goTo(new UserAccountPlace());
                             }
                             eventBus.fireEvent(new KeyboardActionEvent(applicationActions.reloadTree.getId()));
-                            log.log(Level.FINE, "Reached end of login");
+                            log.log(Level.FINEST, "Reached end of login");
                         } else {
                             view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
                         }

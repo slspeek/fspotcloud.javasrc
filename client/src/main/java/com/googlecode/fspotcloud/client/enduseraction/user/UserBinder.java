@@ -3,10 +3,13 @@ package com.googlecode.fspotcloud.client.enduseraction.user;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.place.*;
+import com.googlecode.fspotcloud.keyboardaction.FlagsRule;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
+import static com.googlecode.fspotcloud.keyboardaction.FlagsRule.excluding;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.alt;
 
 public class UserBinder extends AbstractBinder {
@@ -22,7 +25,8 @@ public class UserBinder extends AbstractBinder {
 
     @Override
     public void build() {
-        Relevance binding = new Relevance(LoginPlace.class, BasePlace.class).addDefaultKeys(alt('N'), alt('G'));
+        Relevance binding = new Relevance(excluding(Flags.LOGGED_ON.name()),
+                LoginPlace.class, BasePlace.class).addDefaultKeys(alt('N'), alt('G'));
         configBuilder.register(category, actions.otherLogin, binding);
         binding = new Relevance(BasePlace.class, LoginPlace.class).addDefaultKeys(KeyStroke.alt('S'));
         configBuilder.register(category, actions.goSignUp, binding);

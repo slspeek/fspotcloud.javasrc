@@ -4,10 +4,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
@@ -20,15 +22,16 @@ public class LogoutHandler implements IActionHandler
     private final Logger log = Logger.getLogger(LogoutHandler.class.getName());
     private final IClientLoginManager IClientLoginManager;
     private final TreeView.TreePresenter treePresenter;
-    private final DataManager dataManager;
+    private final IModeController modeController;
+
 
     @Inject
     public LogoutHandler(IClientLoginManager IClientLoginManager,
                          @BasicTreeView TreeView.TreePresenter treePresenter,
-                         DataManager dataManager) {
+                         IModeController modeController) {
         this.IClientLoginManager = IClientLoginManager;
         this.treePresenter = treePresenter;
-        this.dataManager = dataManager;
+        this.modeController = modeController;
     }
 
     @Override
@@ -56,6 +59,8 @@ public class LogoutHandler implements IActionHandler
                                         result.getLoginType())) {
                                     Window.Location.replace(result.getLogoutUrl());
                                 }
+                                modeController.unsetFlag(Flags.ADMIN.name());
+                                modeController.unsetFlag(Flags.LOGGED_ON.name());
                             }
                         });
                         IClientLoginManager.resetApplicationData();

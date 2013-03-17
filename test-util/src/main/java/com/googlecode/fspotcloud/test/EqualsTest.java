@@ -52,7 +52,9 @@ public abstract class EqualsTest<T> {
 
     protected abstract T getOne();
 
-    protected abstract T getTheOther();
+    protected  T getTheOther() {
+      return getOne();
+    }
 
     protected abstract T getDifferentOne();
 

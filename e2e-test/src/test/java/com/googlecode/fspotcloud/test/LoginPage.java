@@ -28,7 +28,7 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.googlecode.fspotcloud.client.main.view.LoginPresenterImpl;
+import com.googlecode.fspotcloud.client.main.view.LoginActivity;
 import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
@@ -68,12 +68,12 @@ public class LoginPage {
     }
 
     public void verifyFailure() {
-        assertEquals(LoginPresenterImpl.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION,
+        assertEquals(LoginActivity.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION,
                 getStatusText());
     }
 
     public void verifyError() {
-        assertEquals(LoginPresenterImpl.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST,
+        assertEquals(LoginActivity.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST,
                 getStatusText());
     }
 }
