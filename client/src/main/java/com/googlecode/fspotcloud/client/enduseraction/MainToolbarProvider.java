@@ -7,6 +7,7 @@ import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationAct
 import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationActions;
 import com.googlecode.fspotcloud.client.enduseraction.raster.RasterActions;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowActions;
+import com.googlecode.fspotcloud.client.main.ui.AdminActionButtonResources;
 import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 
@@ -14,6 +15,7 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
 
 
     private final KeyboardActionFactory keyboardActionFactory;
+    private final AdminActionButtonResources adminActionButtonResources;
     private final AboutActions aboutActions;
     private final ApplicationActions applicationActions;
     private final NavigationActions navigationActions;
@@ -23,12 +25,14 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
 
     @Inject
     public MainToolbarProvider(KeyboardActionFactory keyboardActionFactory,
+                               AdminActionButtonResources adminActionButtonResources,
                                AboutActions aboutActions,
                                ApplicationActions applicationActions,
                                NavigationActions navigationActions,
                                SlideshowActions slideshowActions,
                                RasterActions rasterActions) {
         this.keyboardActionFactory = keyboardActionFactory;
+        this.adminActionButtonResources = adminActionButtonResources;
         this.aboutActions = aboutActions;
         this.applicationActions = applicationActions;
         this.navigationActions = navigationActions;
@@ -40,7 +44,7 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
     @Override
     public ActionToolbar get() {
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
-
+        toolbar.setActionButtonResources(adminActionButtonResources);
         toolbar.add(applicationActions.show_help);
         toolbar.add(applicationActions.demo);
         toolbar.add(navigationActions.home);

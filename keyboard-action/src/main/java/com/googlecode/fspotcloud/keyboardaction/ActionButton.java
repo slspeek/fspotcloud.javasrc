@@ -68,7 +68,7 @@ public class ActionButton extends PushButton implements ActionWidget {
         final ImageResource imageResource = actionUIDef.getIcon();
         if (imageResource != null) {
             getUpFace().setImage(new Image(imageResource));
-            setStyleName(resources.style().button());
+            addStyleName(resources.style().button());
         } else {
             addStyleName(resources.style().button());
             setCaption(actionUIDef.getName());
@@ -90,7 +90,9 @@ public class ActionButton extends PushButton implements ActionWidget {
 
     @Override
     public void onEvent(ActionStateEvent event) {
+        log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " onEvent:" + event);
         setEnabled(event.getState());
+        //setVisible(event.getState());
         if (event.getState()) {
             String keys = event.getAcceleratorString();
             setTooltip(actionUIDef.getDescription() + " (" + keys + ")");

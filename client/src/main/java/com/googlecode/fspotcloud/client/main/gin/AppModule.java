@@ -57,13 +57,13 @@ public class AppModule extends AbstractGinModule {
         bind(IScheduler.class).to(SchedulerImpl.class);
         bind(IClientLoginManager.class).to(ClientLoginManager.class).in(Singleton.class);
         bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
+        bind(NavigationFlagsHelper.class).in(Singleton.class);
         bind(PlaceManager.class).in(Singleton.class);
         bind(RasterState.class).in(Singleton.class);
         bind(IRasterer.class).to(Rasterer.class).in(Singleton.class);
         bind(IPlaceController.class).to(PlaceGoToImpl.class).in(Singleton.class);
         bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
         bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
-        //bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(OpenNewTab.class).to(OpenNewTabImpl.class);
         bind(ReplaceLocation.class).to(ReplaceLocationImpl.class);
 

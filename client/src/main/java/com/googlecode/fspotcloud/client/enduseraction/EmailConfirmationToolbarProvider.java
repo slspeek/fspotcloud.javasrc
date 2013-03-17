@@ -12,6 +12,7 @@ public class EmailConfirmationToolbarProvider implements Provider<ActionToolbar>
     private final KeyboardActionFactory keyboardActionFactory;
     private final ApplicationActions actions;
 
+
     @Inject
     public EmailConfirmationToolbarProvider(KeyboardActionFactory keyboardActionFactory,
                                             ApplicationActions actions) {

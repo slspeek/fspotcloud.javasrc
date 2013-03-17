@@ -10,16 +10,16 @@ public class LoginHandler implements IActionHandler
 
 {
     private final Logger log = Logger.getLogger(LoginHandler.class.getName());
-    private final IClientLoginManager IClientLoginManager;
+    private final IClientLoginManager clientLoginManager;
 
 
     @Inject
-    public LoginHandler(IClientLoginManager IClientLoginManager) {
-        this.IClientLoginManager = IClientLoginManager;
+    public LoginHandler(IClientLoginManager clientLoginManager) {
+        this.clientLoginManager = clientLoginManager;
     }
 
     @Override
     public void performAction(String actionId) {
-        IClientLoginManager.redirectToLogin();
+        clientLoginManager.redirectToLogin();
     }
 }

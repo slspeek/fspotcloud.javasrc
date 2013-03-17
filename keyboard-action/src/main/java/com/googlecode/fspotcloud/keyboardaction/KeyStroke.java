@@ -32,44 +32,55 @@ import com.google.gwt.event.dom.client.KeyCodes;
 public class KeyStroke {
 
     public static final int KEY_NUM_PAD_PLUS = 107;
+    private static final int KEY_NUM_PAD_TIMES = 106;
     public static final int KEY_NUM_PAD_MINUS = 109;
     public static final int KEY_FORWARD_SLASH = 191;
     public static final int KEY_SPACE = 32;
     public static final int KEY_PAUSE = 19;
     public static final int KEY_INSERT = 45;
-    public static final KeyStroke DELETE = new KeyStroke(KeyCodes.KEY_DELETE);
-    public static final KeyStroke A = new KeyStroke('A');
-    public static final KeyStroke F = new KeyStroke('F');
-    public static final KeyStroke H = new KeyStroke('H');
-    public static final KeyStroke I = new KeyStroke('I');
-    public static final KeyStroke J = new KeyStroke('J');
-    public static final KeyStroke K = new KeyStroke('K');
-    public static final KeyStroke L = new KeyStroke('L');
-    public static final KeyStroke M = new KeyStroke('M');
-    public static final KeyStroke R = new KeyStroke('R');
-    public static final KeyStroke X = new KeyStroke('X');
-    public static final KeyStroke FORWARD_SLASH = new KeyStroke(KEY_FORWARD_SLASH);
-    public static final KeyStroke NUM_PAD_PLUS = new KeyStroke(KEY_NUM_PAD_PLUS);
-    public static final KeyStroke NUM_PAD_MINUS = new KeyStroke(KEY_NUM_PAD_MINUS);
-    public static final KeyStroke ESC = new KeyStroke(KeyCodes.KEY_ESCAPE);
-    public static final KeyStroke INSERT = new KeyStroke(KEY_INSERT);
-    public static final KeyStroke PAUSE = new KeyStroke(KEY_PAUSE);
-    public static final KeyStroke ENTER = new KeyStroke(KeyCodes.KEY_ENTER);
-    public static final KeyStroke HOME = new KeyStroke(KeyCodes.KEY_HOME);
-    public static final KeyStroke LEFT = new KeyStroke(KeyCodes.KEY_LEFT);
-    public static final KeyStroke RIGHT = new KeyStroke(KeyCodes.KEY_RIGHT);
-    public static final KeyStroke UP = new KeyStroke(KeyCodes.KEY_UP);
-    public static final KeyStroke DOWN = new KeyStroke(KeyCodes.KEY_DOWN);
-    public static final KeyStroke SPACE = new KeyStroke(KEY_SPACE);
+    
+    public static final KeyStroke DELETE = plain(KeyCodes.KEY_DELETE);
+    public static final KeyStroke A = plain('A');
+    public static final KeyStroke F = plain('F');
+    public static final KeyStroke H = plain('H');
+    public static final KeyStroke I = plain('I');
+    public static final KeyStroke J = plain('J');
+    public static final KeyStroke K = plain('K');
+    public static final KeyStroke L = plain('L');
+    public static final KeyStroke M = plain('M');
+    public static final KeyStroke R = plain('R');
+    public static final KeyStroke X = plain('X');
+    public static final KeyStroke FORWARD_SLASH = plain(KEY_FORWARD_SLASH);
+    public static final KeyStroke NUM_PAD_TIMES = plain(KEY_NUM_PAD_TIMES);
+    public static final KeyStroke NUM_PAD_PLUS = plain(KEY_NUM_PAD_PLUS);
+    public static final KeyStroke NUM_PAD_MINUS = plain(KEY_NUM_PAD_MINUS);
+    public static final KeyStroke ESC = plain(KeyCodes.KEY_ESCAPE);
+    public static final KeyStroke INSERT = plain(KEY_INSERT);
+    public static final KeyStroke PAUSE = plain(KEY_PAUSE);
+    public static final KeyStroke ENTER = plain(KeyCodes.KEY_ENTER);
+    public static final KeyStroke HOME = plain(KeyCodes.KEY_HOME);
+    public static final KeyStroke LEFT = plain(KeyCodes.KEY_LEFT);
+    public static final KeyStroke RIGHT = plain(KeyCodes.KEY_RIGHT);
+    public static final KeyStroke UP = plain(KeyCodes.KEY_UP);
+    public static final KeyStroke DOWN = plain(KeyCodes.KEY_DOWN);
+    public static final KeyStroke SPACE = plain(KEY_SPACE);
 
     private final Modifiers modifiers;
     private final int keyCode;
-    public static final KeyStroke END = new KeyStroke(KeyCodes.KEY_END);
-    public static final KeyStroke PAGEDOWN = new KeyStroke(KeyCodes.KEY_PAGEDOWN);
-    public static final KeyStroke PAGEUP = new KeyStroke(KeyCodes.KEY_PAGEUP);
+    public static final KeyStroke END = plain(KeyCodes.KEY_END);
+    public static final KeyStroke PAGEDOWN = plain(KeyCodes.KEY_PAGEDOWN);
+    public static final KeyStroke PAGEUP = plain(KeyCodes.KEY_PAGEUP);
+    public static final KeyStroke N = plain('N');
+    public static final KeyStroke P = plain('P');
+    public static final KeyStroke U = plain('U');
+    public static final KeyStroke B = plain('B');
 
     public static KeyStroke shift(int keyCode) {
         return new KeyStroke(Modifiers.SHIFT, keyCode);
+    }
+
+    public static KeyStroke plain(int keyCode) {
+        return new KeyStroke(keyCode);
     }
 
     public static KeyStroke ctrl(int keyCode) {
@@ -79,6 +90,11 @@ public class KeyStroke {
     public static KeyStroke alt(int keyCode) {
         return new KeyStroke(Modifiers.ALT, keyCode);
     }
+
+    public static KeyStroke alt(KeyStroke stroke) {
+        return new KeyStroke(Modifiers.ALT, stroke.getKeyCode());
+    }
+
 
     public KeyStroke(Modifiers modifiers, int keyCode) {
         this.modifiers = modifiers;
@@ -171,6 +187,11 @@ public class KeyStroke {
 
             case KEY_NUM_PAD_PLUS:
                 result = "Numpad +";
+
+                break;
+
+            case KEY_NUM_PAD_TIMES:
+                result = "Numpad *";
 
                 break;
 

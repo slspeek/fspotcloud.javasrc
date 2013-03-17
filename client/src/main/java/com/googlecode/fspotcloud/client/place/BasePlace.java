@@ -43,7 +43,7 @@ public class BasePlace extends Place implements HasImage, Raster {
     }
 
     public BasePlace(String tagId, String photoId) {
-        this(tagId, photoId, 1, 1, true);
+        this(tagId, photoId, 1, 1, false);
     }
 
     public BasePlace(String tagId, String photoId, int columnCount, int rowCount, boolean autoHide) {

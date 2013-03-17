@@ -55,8 +55,10 @@ public class RasterBinder extends AbstractBinder {
         bind(actions.remove_row, removeRowHandler, getKey('V'));
         bind(actions.mail_fullsize, mailFullSizeHandler, getKey('M'));
         bind(actions.set_default_raster, resetRasterHandler, getKey('0'));
-        Relevance binding = new Relevance(excluding(Flags.TREE_FOCUS.name()), BasePlace.class).addDefaultKeys(KeyStroke.SPACE, new KeyStroke('1'))
-                .addRule(BasePlace.class, new KeyStroke('1'));
+        Relevance binding = new Relevance(BasePlace.class)
+                .addDefaultKeys(new KeyStroke('1'), KeyStroke.NUM_PAD_TIMES)
+                .addRule( BasePlace.class, excluding(Flags.TREE_FOCUS.name()),
+                        new KeyStroke('1'), KeyStroke.SPACE, KeyStroke.NUM_PAD_TIMES);
         bind(actions.toggle_tabular_view, toggleTabularViewHandler, binding);
         bind(actions.set_raster_2x2, setRasterHandlerFactory.get(2), getKey('2'));
         bind(actions.set_raster_3x3, setRasterHandlerFactory.get(3), getKey('3'));

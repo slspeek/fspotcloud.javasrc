@@ -12,7 +12,7 @@ public class UserMVPModule extends AbstractGinModule {
     @Override
     protected void configure() {
         bind(LoginView.class).to(LoginViewImpl.class).in(Singleton.class);
-        bind(LoginView.LoginPresenter.class).to(LoginPresenterImpl.class).in(Singleton.class);
+        bind(LoginView.LoginPresenter.class).to(LoginActivity.class).in(Singleton.class);
         bind(SignUpView.class).to(SignUpViewImpl.class).in(Singleton.class);
         bind(SignUpView.SignUpPresenter.class).to(SignUpActivity.class).in(Singleton.class);
         bind(UserAccountView.class).to(UserAccountViewImpl.class).in(Singleton.class);

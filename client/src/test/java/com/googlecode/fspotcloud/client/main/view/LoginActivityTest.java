@@ -47,11 +47,11 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
-public class LoginPresenterImplTest {
+public class LoginActivityTest {
     public static final String SECRET = "Secret";
     public static final String ADMIN = "Admin";
     @Inject
-    LoginPresenterImpl presenter;
+    LoginActivity presenter;
 
     @Before
     public void train(LoginView loginView, IPlaceController placeWhere) throws Exception {
@@ -109,7 +109,7 @@ public class LoginPresenterImplTest {
         AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
         callback.onFailure(new RuntimeException("Boom"));
         verify(loginView)
-                .setStatusText(LoginPresenterImpl.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST);
+                .setStatusText(LoginActivity.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST);
 
         verifyNoMoreInteractions(loginView, dispatch);
     }
@@ -136,7 +136,7 @@ public class LoginPresenterImplTest {
         AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
         callback.onSuccess(new AuthenticationResult(false));
         verify(loginView)
-                .setStatusText(LoginPresenterImpl.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
+                .setStatusText(LoginActivity.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
 
         verifyNoMoreInteractions(loginView, dispatch);
     }
@@ -156,7 +156,7 @@ public class LoginPresenterImplTest {
 
         AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
         callback.onSuccess(new AuthenticationResult(true));
-        verify(loginView).setStatusText(LoginPresenterImpl.LOGGED_IN);
+        verify(loginView).setStatusText(LoginActivity.LOGGED_IN);
         verify(loginView).clearFields();
         verifyNoMoreInteractions(loginView, dispatch);
     }

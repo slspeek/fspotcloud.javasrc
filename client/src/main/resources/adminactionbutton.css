@@ -7,6 +7,30 @@
 @def upTransform scale(0.8);
 @def helpIconTransform scale(1);
 @def hoverTransition all 0.2s ease-in-out;
+@def disabledGreyScale 75%;
+
+@external gwt-PushButton-up-disabled;
+@external gwt-PushButton;
+@external gwt-PushButton-up;
+
+.gwt-PushButton-up-disabled
+{
+    filter: grayscale(disabledGreyScale);
+    -webkit-filter: grayscale(disabledGreyScale);
+    -moz-filter: grayscale(disabledGreyScale);
+    -ms-filter: grayscale(disabledGreyScale);
+    -o-filter: grayscale(disabledGreyScale);
+}
+
+.gwt-PushButton
+{
+    background: none;
+}
+.gwt-PushButton-up
+{
+    background: none;
+}
+
 
 
 .button
@@ -20,6 +44,7 @@
    -moz-border-radius:15px;
    border-radius:15px;
 }
+
 
 .demoing
 {
