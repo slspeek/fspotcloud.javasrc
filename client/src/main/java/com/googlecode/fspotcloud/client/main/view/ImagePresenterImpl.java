@@ -69,7 +69,7 @@ public class ImagePresenterImpl implements ImageView.ImagePresenter {
     }
 
     public void setImage() {
-        log.log(Level.FINE, "setImage imageId: " + photoId);
+        log.log(Level.FINEST, "setImage imageId: " + photoId);
         if (photoId != null) {
             String date;
 

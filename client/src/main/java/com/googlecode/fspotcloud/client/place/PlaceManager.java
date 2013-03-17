@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  */
 public class PlaceManager {
     private final Logger log = Logger.getLogger(PlaceManager.class.getName());
-    private boolean autoHide = true;
+    private boolean autoHide = false;
 
     private final RasterState rasterState;
     private final IPlaceController placeController;

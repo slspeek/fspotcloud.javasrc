@@ -22,6 +22,12 @@ public class FlagsRule {
         rule.excludes(flags);
         return rule;
     }
+
+    public FlagsRule(FlagsRule old) {
+        excludedFlags = old.excludedFlags;
+        necessaryFlags = old.necessaryFlags;
+    }
+
     public FlagsRule() {
         this.excludedFlags = newHashSet();
         this.necessaryFlags = newHashSet();

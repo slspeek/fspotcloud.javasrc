@@ -28,6 +28,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 import java.util.List;
 
@@ -37,13 +38,20 @@ import static com.google.common.collect.Lists.newArrayList;
 public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
     private final WidgetFactory widgetFactory;
+    private ActionButtonResources actionButtonResources;
 
+    @Inject
     ActionToolbar(KeyboardActionResources keyboardActionResources,
+                  ActionButtonResources actionButtonResources,
                   WidgetFactory widgetFactory) {
         this.widgetFactory = widgetFactory;
+        this.actionButtonResources = actionButtonResources;
         addStyleName(keyboardActionResources.style().buttonPanelBlock());
     }
 
+    public void setActionButtonResources(ActionButtonResources actionButtonResources) {
+        this.actionButtonResources = actionButtonResources;
+    }
 
     @Override
     public void add(Widget w) {
@@ -69,10 +77,10 @@ public class ActionToolbar extends LayoutPanel {
     }
 
     public void add(ActionUIDef actionUIDef) {
-        add(widgetFactory.getButton(actionUIDef));
+        add(widgetFactory.getButton(actionUIDef, actionButtonResources));
     }
 
     public void add(String actionId) {
-        add(widgetFactory.getButton(actionId));
+        add(widgetFactory.getButton(actionId, actionButtonResources));
     }
 }

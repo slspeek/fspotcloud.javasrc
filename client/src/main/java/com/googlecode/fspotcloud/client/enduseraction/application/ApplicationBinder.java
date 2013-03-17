@@ -9,6 +9,7 @@ import com.googlecode.fspotcloud.client.enduseraction.application.handler.*;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
+import static com.googlecode.fspotcloud.keyboardaction.FlagsRule.needing;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.*;
 
 public class ApplicationBinder extends AbstractBinder {
@@ -22,7 +23,6 @@ public class ApplicationBinder extends AbstractBinder {
     private final ZoomOutHandler zoomOutHandler;
     private final HelpActionsFactory helpActionsFactory;
     private final UsersHelpHandler usersHelpHandler;
-    private final CategoryDef categoryDef;
     private final ApplicationActions actions;
 
     @Inject
@@ -43,7 +43,6 @@ public class ApplicationBinder extends AbstractBinder {
         this.logoutHandler = logoutHandler;
         this.zoomInHandler = zoomInHandler;
         this.zoomOutHandler = zoomOutHandler;
-        this.categoryDef = categoryDef;
         this.helpActionsFactory = helpActionsFactory;
         this.usersHelpHandler = usersHelpHandler;
         this.actions = actions;
@@ -62,27 +61,34 @@ public class ApplicationBinder extends AbstractBinder {
         Relevance aboutBinding = new Relevance().addDefaultKeys(new KeyStroke('A'));
         bind(actions.about, aboutHandlerFactory.getAboutHandler(), aboutBinding);
 
-        Relevance binding = new Relevance(BasePlace.class).addDefaultKeys(new KeyStroke('D'))
-                .addRule(ManageUserGroupsPlace.class, alt('D'), new KeyStroke(KeyCodes.KEY_ESCAPE))
-                .addRule(ManageUsersPlace.class, alt('D'))
-                .addRule(TagApprovalPlace.class, ESC);
+        FlagsRule admin = new FlagsRule().needs(Flags.ADMIN.name());
+        Relevance binding = new Relevance(admin, BasePlace.class).addDefaultKeys(new KeyStroke('D'))
+                .addRule(ManageUserGroupsPlace.class, admin, alt('D'), ESC)
+                .addRule(ManageUsersPlace.class, admin, alt('D'))
+                .addRule(TagApprovalPlace.class, admin,  ESC);
 
         bind(actions.dashboard, dashboardHandler, binding);
-        bind(actions.login, loginHandler, get('N'));
-        binding = new Relevance(BasePlace.class, LoginPlace.class, TagPlace.class).addDefaultKeys(new KeyStroke('O'));
+        binding = new Relevance(FlagsRule.excluding(Flags.LOGGED_ON.name()), BasePlace.class)
+                .addDefaultKeys(KeyStroke.N);
+        bind(actions.login, loginHandler, binding);
+        binding = new Relevance(needing(Flags.LOGGED_ON.name()),
+                BasePlace.class,
+                LoginPlace.class,
+                TagPlace.class,
+                UserAccountPlace.class).addDefaultKeys(new KeyStroke('O'));
         bind(actions.logout, logoutHandler, binding);
         bind(actions.zoom_in, zoomInHandler, get(KeyStroke.KEY_NUM_PAD_PLUS));
         bind(actions.zoom_out, zoomOutHandler, get(KeyStroke.KEY_NUM_PAD_MINUS));
 
         //these action's handlers have such heavy dependencies, they are bound later,
         //in UserActionFactoryBinder (out of good names ..)
-        binding = new Relevance(FlagsRule.needing(Flags.TREE_FOCUS.name()),
-                BasePlace.class).addDefaultKeys(KeyStroke.F, KeyStroke.ENTER, KeyStroke.ESC);
+        binding = new Relevance(needing(Flags.TREE_FOCUS.name()),
+                BasePlace.class).addDefaultKeys(KeyStroke.F, KeyStroke.ESC);
 
         configBuilder.register(category, actions.hide_controls, binding);
         configBuilder.register(category, actions.demo, get('7'));
         binding = new Relevance(FlagsRule.excluding(Flags.TREE_FOCUS.name()),
-                BasePlace.class).addDefaultKeys(KeyStroke.ENTER, KeyStroke.F, KeyStroke.ESC);
+                BasePlace.class).addDefaultKeys(KeyStroke.ENTER, KeyStroke.ESC);
         configBuilder.register(category, actions.tree_focus, binding);
         configBuilder.register(category, actions.reloadTree, get('R'));
         binding = new Relevance(BasePlace.class, LoginPlace.class, TagPlace.class).addDefaultKeys(alt('L'));
