@@ -56,7 +56,7 @@ public class GoPhotosHandler implements IActionHandler {
                         @Override
                         public void onSuccess(TagNode result) {
                             if (result != null && result.isImportIssued()) {
-                                placeController.goTo(new BasePlace(tagId, "", 5, 4, true));
+                                placeController.goTo(new BasePlace(tagId, "", 5, 4, false));
                             } else {
                                 placeController.goTo(new HomePlace());
                             }
