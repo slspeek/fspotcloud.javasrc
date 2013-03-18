@@ -58,12 +58,13 @@ public class ApplicationBinder extends AbstractBinder {
         Relevance hideHelpBinding = new Relevance().addDefaultKeys(new KeyStroke(KeyCodes.KEY_ESCAPE));
         bind(actions.hide_help, helpActionsFactory.getCloseHelp(), hideHelpBinding);
 
-        Relevance aboutBinding = new Relevance().addDefaultKeys(new KeyStroke('A'));
+        Relevance aboutBinding = new Relevance(BasePlace.class, HomePlace
+                .class).addDefaultKeys(new KeyStroke('A'));
         bind(actions.about, aboutHandlerFactory.getAboutHandler(), aboutBinding);
 
         FlagsRule admin = new FlagsRule().needs(Flags.ADMIN.name());
         Relevance binding = new Relevance(admin, BasePlace.class).addDefaultKeys(new KeyStroke('D'))
-                .addRule(ManageUserGroupsPlace.class, admin, alt('D'), ESC)
+                .addRule(ManageGroupsPlace.class, admin, alt('D'), ESC)
                 .addRule(ManageUsersPlace.class, admin, alt('D'))
                 .addRule(TagApprovalPlace.class, admin,  ESC);
 

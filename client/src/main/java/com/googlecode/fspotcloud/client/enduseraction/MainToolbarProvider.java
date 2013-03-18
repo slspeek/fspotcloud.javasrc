@@ -46,6 +46,7 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
     public ActionToolbar get() {
         ActionToolbar toolbar = keyboardActionFactory.getToolBar();
         toolbar.setActionButtonResources(toolbarButtonResources);
+        toolbar.setButtonStylePrimaryName("toolbar-button");
         toolbar.add(applicationActions.show_help);
         toolbar.add(applicationActions.demo);
         toolbar.add(navigationActions.home);

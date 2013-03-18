@@ -22,4 +22,6 @@ public class RelevanceTest {
         List<KeyStroke> keys = relevance.getKeys(placeContext);
         assertEquals(1, keys.size());
     }
+
+
 }

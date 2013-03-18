@@ -6,7 +6,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
 import com.googlecode.fspotcloud.client.place.EditUserGroupPlace;
-import com.googlecode.fspotcloud.client.place.ManageUserGroupsPlace;
+import com.googlecode.fspotcloud.client.place.ManageGroupsPlace;
 import com.googlecode.fspotcloud.client.place.ManageUsersPlace;
 import com.googlecode.fspotcloud.client.place.TagApprovalPlace;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
@@ -31,7 +31,7 @@ public class GroupBinder extends AbstractBinder {
     public void build() {
         configBuilder.register(category, actions.manageUsers, get('M'));
         configBuilder.register(category, actions.newUsergroup, get('C'));
-        Relevance binding = new Relevance(ManageUserGroupsPlace.class)
+        Relevance binding = new Relevance(ManageGroupsPlace.class)
                 .addDefaultKeys(KeyStroke.X, KeyStroke.DELETE);
         configBuilder.register(category, actions.deleteUsergroup, binding);
         configBuilder.register(category, actions.editUsergroup, get('E'));
@@ -66,11 +66,11 @@ public class GroupBinder extends AbstractBinder {
     }
 
     private Relevance get(int characterCode) {
-        return new Relevance(ManageUserGroupsPlace.class).addDefaultKeys(new KeyStroke(characterCode));
+        return new Relevance(ManageGroupsPlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
     private Relevance get(char characterCode) {
-        return new Relevance(ManageUserGroupsPlace.class).addDefaultKeys(new KeyStroke(characterCode));
+        return new Relevance(ManageGroupsPlace.class).addDefaultKeys(new KeyStroke(characterCode));
     }
 
 }

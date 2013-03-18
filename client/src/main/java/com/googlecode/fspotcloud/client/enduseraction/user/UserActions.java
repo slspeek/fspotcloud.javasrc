@@ -20,7 +20,7 @@ public class UserActions {
 
     @Inject
     public UserActions() {
-        otherLogin = new ActionUIDef("go-other-login", "Google Login", "Login using Google account");
+        otherLogin = new ActionUIDef("go-other-login", "Login using your Google account", "Login using Google account");
         goSignUp = new ActionUIDef("go-sign-up", "Sign up", "Create an account");
         goResetPassword = new ActionUIDef("go-reset-password", "Reset password", "Reset your password in case you lost it");
         goResendConfirmation = new ActionUIDef("go-resend-confirmation", "Resend confirmation", "Resend a confirmation email");

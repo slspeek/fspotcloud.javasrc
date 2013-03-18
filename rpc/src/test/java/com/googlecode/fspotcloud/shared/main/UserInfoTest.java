@@ -43,7 +43,7 @@ public class UserInfoTest {
     /**
      * Test of isLoggedIn method, of class UserInfo.
      */
-    final UserInfo instance = new UserInfo("foo@bar.com", true, true,
+    public static final UserInfo instance = new UserInfo("foo@bar.com", true, true,
             "index.jsp?dest=", "index.jsp?action=logout&dest=",
             new Date(1234567), "GAE_LOGIN");
 

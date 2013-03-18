@@ -39,6 +39,7 @@ public class ActionToolbar extends LayoutPanel {
     private List<Widget> widgetList = newArrayList();
     private final WidgetFactory widgetFactory;
     private ActionButtonResources actionButtonResources;
+    private String buttonStylePrimaryName = "gwt-PushButton";
 
     @Inject
     ActionToolbar(KeyboardActionResources keyboardActionResources,
@@ -47,6 +48,10 @@ public class ActionToolbar extends LayoutPanel {
         this.widgetFactory = widgetFactory;
         this.actionButtonResources = actionButtonResources;
         addStyleName(keyboardActionResources.style().buttonPanelBlock());
+    }
+
+    public void setButtonStylePrimaryName(String buttonStylePrimaryName) {
+        this.buttonStylePrimaryName = buttonStylePrimaryName;
     }
 
     public void setActionButtonResources(ActionButtonResources actionButtonResources) {
@@ -77,10 +82,10 @@ public class ActionToolbar extends LayoutPanel {
     }
 
     public void add(ActionUIDef actionUIDef) {
-        add(widgetFactory.getButton(actionUIDef, actionButtonResources));
+        add(widgetFactory.getButton(actionUIDef, actionButtonResources, buttonStylePrimaryName));
     }
 
     public void add(String actionId) {
-        add(widgetFactory.getButton(actionId, actionButtonResources));
+        add(widgetFactory.getButton(actionId, actionButtonResources, buttonStylePrimaryName));
     }
 }

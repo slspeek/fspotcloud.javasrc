@@ -57,7 +57,7 @@ public class DashboardBinder extends AbstractBinder {
                 TagPlace.class,
                 TagApprovalPlace.class,
                 ManageUsersPlace.class,
-                ManageUserGroupsPlace.class).addDefaultKeys(KeyStroke.H);
+                ManageGroupsPlace.class).addDefaultKeys(KeyStroke.H);
         configBuilder.register(category, actions.adminHelp, binding);
     }
 
