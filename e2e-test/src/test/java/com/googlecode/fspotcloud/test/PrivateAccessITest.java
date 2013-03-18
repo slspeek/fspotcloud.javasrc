@@ -46,7 +46,7 @@ public class PrivateAccessITest {
     @Inject
     TagApprovalPage tagApprovalPage;
     @Inject
-    ManageUserGroupsPage manageUserGroupsPage;
+    ManageGroupsPage manageGroupsPage;
     @Inject
     EditUserGroupPage editUserGroupPage;
     @Inject
@@ -68,16 +68,16 @@ public class PrivateAccessITest {
     public void testAccess() throws Exception {
         dashboardPage.loginAndOpen();
         dashboardPage.manageUsergroups();
-        manageUserGroupsPage.open();
-        manageUserGroupsPage.newUserGroup();
-        manageUserGroupsPage.selectFirstRow();
-        manageUserGroupsPage.editUserGroup();
+        manageGroupsPage.open();
+        manageGroupsPage.newUserGroup();
+        manageGroupsPage.selectFirstRow();
+        manageGroupsPage.editUserGroup();
         editUserGroupPage.fill("GNU Friends",
                 "My friends from all over the world");
         editUserGroupPage.save();
-        manageUserGroupsPage.open();
-        manageUserGroupsPage.selectFirstRow();
-        manageUserGroupsPage.manageUserGroup();
+        manageGroupsPage.open();
+        manageGroupsPage.selectFirstRow();
+        manageGroupsPage.manageUserGroup();
         manageUsersPage.newUser(ILogin.SLS);
         dashboardPage.manageApprovalForTag("1");
         sleepShort();
@@ -97,9 +97,9 @@ public class PrivateAccessITest {
         photoPage.assertPagingLabelSays(1, 3);
         photoPage.logout();
         dashboardPage.loginAndOpen();
-        manageUserGroupsPage.open();
-        manageUserGroupsPage.selectFirstRow();
-        manageUserGroupsPage.editUserGroup();
+        manageGroupsPage.open();
+        manageGroupsPage.selectFirstRow();
+        manageGroupsPage.editUserGroup();
         editUserGroupPage.togglePublic();
         editUserGroupPage.save();
         photoPage.open();
