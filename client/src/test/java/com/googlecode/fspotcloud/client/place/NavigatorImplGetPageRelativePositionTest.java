@@ -54,6 +54,18 @@ public class NavigatorImplGetPageRelativePositionTest {
     }
 
     @Test
+    public void testPageRelativeNullNode() throws Exception {
+        navigator.getPageRelativePositionAsync(TAG_ID, "42", 1, answerCallback);
+        verify(dataManager).getTagNode(any(String.class), nodeCaptor.capture());
+        AsyncCallback<TagNode> callback = nodeCaptor.getValue();
+
+        callback.onSuccess(null);
+
+        verify(answerCallback).onFailure(any(RuntimeException.class));
+
+    }
+
+    @Test
     public void testPageRelativeTwoImages() throws Exception {
         navigator.getPageRelativePositionAsync(TAG_ID, "42", 1, answerCallback);
         verify(dataManager).getTagNode(any(String.class), nodeCaptor.capture());

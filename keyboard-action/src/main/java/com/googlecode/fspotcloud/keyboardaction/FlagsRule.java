@@ -24,8 +24,8 @@ public class FlagsRule {
     }
 
     public FlagsRule(FlagsRule old) {
-        excludedFlags = old.excludedFlags;
-        necessaryFlags = old.necessaryFlags;
+        excludedFlags = newHashSet(old.excludedFlags);
+        necessaryFlags = newHashSet(old.necessaryFlags);
     }
 
     public FlagsRule() {

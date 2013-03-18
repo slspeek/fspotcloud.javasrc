@@ -56,8 +56,11 @@ public class NavigationBinder extends AbstractBinder {
     }
 
     private Relevance get(KeyStroke stroke, FlagsRule rule, KeyStroke nonConflicting) {
-        FlagsRule focusRule = new FlagsRule(rule).excludes(Flags.TREE_FOCUS.name());
+        FlagsRule focusRule = new FlagsRule(rule).needs(Flags.TREE_FOCUS.name());
+        FlagsRule nonFocusRule = new FlagsRule(rule).excludes(Flags.TREE_FOCUS.name());
+        //return new Relevance(rule, BasePlace.class).addDefaultKeys(stroke, nonConflicting);
         return new Relevance(rule, BasePlace.class).addDefaultKeys(stroke, nonConflicting)
+                .addRule(BasePlace.class, nonFocusRule, stroke, nonConflicting)
                 .addRule(BasePlace.class, focusRule, nonConflicting);
     }
 

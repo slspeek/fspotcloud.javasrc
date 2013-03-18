@@ -28,7 +28,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 
-public class ManageUserGroupsPlace extends Place {
+public class ManageGroupsPlace extends Place {
 
     @Override
     public int hashCode() {
@@ -37,21 +37,21 @@ public class ManageUserGroupsPlace extends Place {
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof ManageUserGroupsPlace) {
+        if (other instanceof ManageGroupsPlace) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static class Tokenizer implements PlaceTokenizer<ManageUserGroupsPlace> {
+    public static class Tokenizer implements PlaceTokenizer<ManageGroupsPlace> {
         @Override
-        public ManageUserGroupsPlace getPlace(String token) {
-            return new ManageUserGroupsPlace();
+        public ManageGroupsPlace getPlace(String token) {
+            return new ManageGroupsPlace();
         }
 
         @Override
-        public String getToken(ManageUserGroupsPlace place) {
+        public String getToken(ManageGroupsPlace place) {
             return "";
         }
     }

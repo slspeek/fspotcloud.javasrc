@@ -55,17 +55,11 @@ public interface Navigator {
 
     void goToLatestTag(AsyncCallback<String> report);
 
-
-
-    void fullscreen();
-
     void slideshow();
 
     void zoom(Zoom direction);
 
     void unslideshow();
-
-    void setAutoHide(boolean autoHide);
 
     void goToTag(String otherTagId, PhotoInfoStore store, Direction direction);
 

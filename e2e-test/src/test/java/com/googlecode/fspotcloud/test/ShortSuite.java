@@ -29,7 +29,6 @@ import org.junit.runners.Suite;
 
 
 @RunWith(Suite.class)
-//@Suite.SuiteClasses({DashboardITest.class, PrivateAccessITest.class})
-@Suite.SuiteClasses({ChangePasswordResetITest.class})
+@Suite.SuiteClasses({DashboardITest.class, PrivateAccessITest.class})
 public class ShortSuite {
 }

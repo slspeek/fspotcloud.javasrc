@@ -1,5 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
@@ -12,6 +13,7 @@ public class WidgetFactory {
     private final WidgetRegistry widgetRegistry;
     private final KeyboardActionResources keyboardActionResources;
     private ActionButtonResources buttonResources;
+    private String primaryStyleName = "gwt-PushButton";
 
 
     @Inject
@@ -34,6 +36,10 @@ public class WidgetFactory {
         buttonResources.style().ensureInjected();
     }
 
+    public void setButtonPrimaryStyleName(String primaryStyleName) {
+        this.primaryStyleName = primaryStyleName;
+    }
+
     public void setButtonResources(ActionButtonResources buttonResources) {
         this.buttonResources = buttonResources;
     }
@@ -42,9 +48,15 @@ public class WidgetFactory {
         return getButton(actionUIDef, buttonResources);
     }
 
-    public ActionButton getButton(ActionUIDef actionUIDef, ActionButtonResources buttonResources
+    public ActionButton getButton(ActionUIDef actionUIDef, ActionButtonResources buttonResources, String primaryStyleName
     ) {
-        final ActionButton actionButton = new ActionButton(actionUIDef, eventBus, buttonResources);
+        final ActionButton actionButton = new ActionButton(actionUIDef, eventBus, buttonResources, primaryStyleName);
+        widgetRegistry.add(actionUIDef.getId(), actionButton);
+        return actionButton;
+    }
+
+    public ActionButton getButton(ActionUIDef actionUIDef, ActionButtonResources buttonResources) {
+        final ActionButton actionButton = new ActionButton(actionUIDef, eventBus, buttonResources, primaryStyleName);
         widgetRegistry.add(actionUIDef.getId(), actionButton);
         return actionButton;
     }
@@ -59,6 +71,10 @@ public class WidgetFactory {
     }
 
     public ActionButton getButton(String actionId, ActionButtonResources actionButtonResources) {
+            return getButton(actionId, actionButtonResources, primaryStyleName);
+    }
+
+    public ActionButton getButton(String actionId, ActionButtonResources actionButtonResources, String buttonStylePrimaryName) {
         ActionUIDef actionUIDef = actionUIRegistry.getAction(actionId);
         return getButton(actionUIDef, actionButtonResources);
     }

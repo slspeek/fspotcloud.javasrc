@@ -32,7 +32,7 @@ import com.google.gwt.place.shared.WithTokenizers;
         EmailConfirmationPlace.Tokenizer.class,
         ManageUsersPlace.Tokenizer.class,
         EditUserGroupPlace.Tokenizer.class,
-        ManageUserGroupsPlace.Tokenizer.class,
+        ManageGroupsPlace.Tokenizer.class,
         SlideshowPlace.Tokenizer.class,
         BasePlace.Tokenizer.class,
         LoginPlace.Tokenizer.class,

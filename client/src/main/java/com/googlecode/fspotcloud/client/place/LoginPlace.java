@@ -45,17 +45,20 @@ public class LoginPlace extends Place {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other instanceof LoginPlace) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LoginPlace)) return false;
+
+        LoginPlace that = (LoginPlace) o;
+
+        if (!nextUrl.equals(that.nextUrl)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return 1;
+        return nextUrl.hashCode();
     }
 
     public static class Tokenizer implements PlaceTokenizer<LoginPlace> {
