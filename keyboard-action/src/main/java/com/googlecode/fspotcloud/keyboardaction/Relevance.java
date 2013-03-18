@@ -7,6 +7,7 @@ import com.google.gwt.place.shared.Place;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -85,6 +86,7 @@ public class Relevance {
         if (!overrides.isEmpty()) {
             result = overrides;
         }
+        //log.log(Level.SEVERE, "getKeys for: " + placeContext + " returns: " + result);
         return result;
     }
 

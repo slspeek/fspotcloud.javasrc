@@ -42,21 +42,30 @@ public class ActionButton extends PushButton implements ActionWidget {
     private final ActionUIDef actionUIDef;
     private final EventBus eventBus;
     private final ActionButtonResources resources;
-    ;
+
+    ActionButton(ActionUIDef actionUIDef,
+                 EventBus eventBus,
+                 ActionButtonResources resources,
+                 String primaryStyleName) {
+        this.actionUIDef = actionUIDef;
+        this.eventBus = eventBus;
+        this.resources = resources;
+        log.log(Level.FINEST, "set style name " + primaryStyleName);
+        setStylePrimaryName(primaryStyleName);
+        initialize();
+    }
 
     ActionButton(ActionUIDef actionUIDef,
                  EventBus eventBus,
                  ActionButtonResources resources) {
-        this.actionUIDef = actionUIDef;
-        this.eventBus = eventBus;
-        this.resources = resources;
+        this(actionUIDef,
+                eventBus,
+                resources,
+                "gwt-PushButton");
 
-        initialize();
     }
 
     private void initialize() {
-        /*eventBus.addHandler(ActionStateEvent.TYPE, this);
-        eventBus.addHandler(ActionDemoEvent.TYPE, this);*/
         addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " pressed.");

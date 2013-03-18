@@ -31,7 +31,6 @@ import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Level;
@@ -129,7 +128,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         } else if (place instanceof ManageUsersPlace) {
             activity = manageUsersPresenter;
             manageUsersPresenter.setId(((ManageUsersPlace) place).getUserGroupId());
-        } else if (place instanceof ManageUserGroupsPlace) {
+        } else if (place instanceof ManageGroupsPlace) {
             activity = myUserGroupsPresenter;
         } else if (place instanceof EditUserGroupPlace) {
             activity = editUserGroupPresenter;

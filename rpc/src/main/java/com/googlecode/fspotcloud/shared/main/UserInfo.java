@@ -45,17 +45,27 @@ import java.util.Date;
 public class UserInfo implements Result, IsSerializable, Serializable {
     private String email;
     private boolean isAdmin;
-    private boolean isLoggedId;
+    private boolean isLoggedIn;
     private String logoutUrl;
     private String loginUrl;
     private Date lastLoginTime;
     private String loginType;
 
-    public UserInfo(String email, boolean isAdmin, boolean isLoggedId,
-                    String loginUrl, String logoutUrl, Date loginTime, String loginType) {
+
+    public UserInfo(String email,
+                    boolean isAdmin,
+                    boolean isLoggedIn) {
+        this(email, isAdmin, isLoggedIn, "", "", new Date(), "GAE");
+    }
+
+    public UserInfo(String email,
+                    boolean isAdmin,
+                    boolean isLoggedIn,
+                    String loginUrl, String logoutUrl,
+                    Date loginTime, String loginType) {
         this.email = email;
         this.isAdmin = isAdmin;
-        this.isLoggedId = isLoggedId;
+        this.isLoggedIn = isLoggedIn;
         this.loginUrl = loginUrl;
         this.logoutUrl = logoutUrl;
         lastLoginTime = loginTime;
@@ -78,7 +88,7 @@ public class UserInfo implements Result, IsSerializable, Serializable {
     }
 
     public boolean isLoggedIn() {
-        return isLoggedId;
+        return isLoggedIn;
     }
 
     public String getLogoutUrl() {
@@ -99,7 +109,7 @@ public class UserInfo implements Result, IsSerializable, Serializable {
         sb.append("UserInfo");
         sb.append("{email='").append(email).append('\'');
         sb.append(", isAdmin=").append(isAdmin);
-        sb.append(", isLoggedId=").append(isLoggedId);
+        sb.append(", isLoggedIn=").append(isLoggedIn);
         sb.append(", logoutUrl='").append(logoutUrl).append('\'');
         sb.append(", loginUrl='").append(loginUrl).append('\'');
         sb.append(", lastLoginTime=").append(lastLoginTime);

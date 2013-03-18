@@ -290,7 +290,7 @@ public class NavigatorImpl implements Navigator {
     }
 
     @Override
-    public void getPageAsync(String tagId, final String photoId,
+    public void getPageAsync(final String tagId, final String photoId,
                              final int pageSize, final AsyncCallback<List<PhotoInfo>> callback) {
         log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " photoId: " + photoId);
         dataManager.getTagNode(tagId,
@@ -301,15 +301,7 @@ public class NavigatorImpl implements Navigator {
                         int pageNumber = 0;
                         int index = store.indexOf(photoId);
                         if (index == -1) {
-                            if (!store.isEmpty()) {
-                                //FIXME too heavy side effect of getting info
-                                PhotoInfo info = store.get(0);
-                                BasePlace lastBasePlace = placeController.where();
-                                placeController.goTo(new BasePlace(lastBasePlace.getTagId(), info.getId(),
-                                        lastBasePlace.getColumnCount(), lastBasePlace.getRowCount(), lastBasePlace.isAutoHide()));
-
-                            }
-
+                           callback.onFailure(new RuntimeException("photoId " + photoId + " could not be found in tag: " +tagId));
                         } else {
                             pageNumber = index / pageSize;
                         }
@@ -367,7 +359,6 @@ public class NavigatorImpl implements Navigator {
         dataManager.getTagTree(new AsyncCallback<TagNode>() {
             @Override
             public void onFailure(Throwable caught) {
-                log.log(Level.WARNING, "goToLatestTag failed because: ", caught);
                 report.onFailure(caught);
             }
 
@@ -408,12 +399,6 @@ public class NavigatorImpl implements Navigator {
     }
 
     @Override
-    public void fullscreen() {
-        BasePlace destination = placeManager.getOneByOne();
-        placeController.goTo(destination);
-    }
-
-    @Override
     public void zoom(Zoom direction) {
         BasePlace now = placeController.where();
         BasePlace destination = placeManager.zoom(now, direction);
@@ -431,11 +416,6 @@ public class NavigatorImpl implements Navigator {
     @Override
     public void unslideshow() {
         placeManager.unslideshow();
-    }
-
-    @Override
-    public void setAutoHide(boolean autoHide) {
-        placeManager.setAutoHide(autoHide);
     }
 
     @Override

@@ -58,6 +58,11 @@ public class PrivateAccessITest {
     @Inject
     private UserAccountPage userAccountPage;
 
+    public void runTests() throws Exception {
+        testAccess();
+        testRedirect();
+    }
+
 
     @Test
     public void testAccess() throws Exception {
@@ -67,10 +72,8 @@ public class PrivateAccessITest {
         manageUserGroupsPage.newUserGroup();
         manageUserGroupsPage.selectFirstRow();
         manageUserGroupsPage.editUserGroup();
-
         editUserGroupPage.fill("GNU Friends",
                 "My friends from all over the world");
-
         editUserGroupPage.save();
         manageUserGroupsPage.open();
         manageUserGroupsPage.selectFirstRow();
@@ -83,12 +86,14 @@ public class PrivateAccessITest {
         photoPage.open();
         photoPage.logout();
         photoPage.open();
+    }
+
+    @Test
+    public void testRedirect() throws Exception {
         photoPage.open("#BasePlace:1:7:2:2:false");
         sleepShort();
-        //loginPage.open();
         loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
         loginPage.login();
-        //photoPage.open();
         photoPage.assertPagingLabelSays(1, 3);
         photoPage.logout();
         dashboardPage.loginAndOpen();
@@ -108,4 +113,5 @@ public class PrivateAccessITest {
         sleepShort();
         photoPage.assertPagingLabelSays(1, 9);
     }
+
 }

@@ -13,12 +13,12 @@ public class PlaceContext {
     private final Class<? extends Place> place;
     private final Set<String> flags;
 
-    PlaceContext(Class<? extends Place> place, Set<String> flags) {
+    public PlaceContext(Class<? extends Place> place, Set<String> flags) {
         this.place = place;
         this.flags = flags;
     }
 
-    PlaceContext(Class<? extends Place> place) {
+    public PlaceContext(Class<? extends Place> place) {
         this(place, emptySet);
     }
 
