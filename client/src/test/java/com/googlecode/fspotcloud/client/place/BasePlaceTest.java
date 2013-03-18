@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 
 public class BasePlaceTest extends TestCase {
     public void testEquals() {
-        BasePlace first = new BasePlace("1", "2", 1, 1, true);
+        BasePlace first = new BasePlace("1", "2", 1, 1, false);
         BasePlace second = new BasePlace("1", "2");
         assertEquals(first, second);
     }
