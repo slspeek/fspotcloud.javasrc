@@ -60,6 +60,7 @@ task javascriptJar(type: Jar, dependsOn: compileGwt) {
 test {
     exclude '**/*GwtTest*'
     exclude 'com/googlecode/fspotcloud/client/main/gin/GinJectorTest*'
+    exclude 'com/googlecode/fspotcloud/client/place/TokenizerTest.*'
     jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
 }
 compileGwt.dependsOn convertIcons, writeVersion

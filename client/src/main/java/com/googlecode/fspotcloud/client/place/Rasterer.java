@@ -20,16 +20,6 @@ public class Rasterer implements IRasterer {
     }
 
     @Override
-    public void setRasterWidth(int width) {
-        rasterState.setColumnCount(width);
-    }
-
-    @Override
-    public void setRasterHeight(int height) {
-        rasterState.setRowCount(height);
-    }
-
-    @Override
     public void increaseRasterWidth(int amount) {
         rasterState.increaseColumnCount(amount);
         reloadCurrentPlaceOnNewSize();
@@ -52,11 +42,6 @@ public class Rasterer implements IRasterer {
         BasePlace now = placeController.where();
         BasePlace destination = placeManager.getTabularPlace(now);
         placeController.goTo(destination);
-    }
-
-    @Override
-    public void toggleRasterView() {
-        placeManager.toggleRasterView();
     }
 
     @Override
