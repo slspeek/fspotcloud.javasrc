@@ -24,7 +24,10 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.common.base.Objects;
 import com.google.gwt.place.shared.PlaceTokenizer;
+
+import static com.google.common.base.Objects.equal;
 
 
 public class SlideshowPlace extends BasePlace {
@@ -34,21 +37,23 @@ public class SlideshowPlace extends BasePlace {
     }
 
     @Override
-    public boolean equals(Object otherObject) {
-        if (otherObject instanceof SlideshowPlace) {
-            BasePlace basePlace = (BasePlace) otherObject;
-            String tagId = basePlace.getTagId();
-            String photoId = basePlace.getPhotoId();
-
-            return equal(getTagId(), tagId) && equal(getPhotoId(), photoId);
-        } else {
-            return false;
-        }
+    public int hashCode() {
+        return Objects.hashCode(
+                getTagId(),
+                getPhotoId()
+                );
     }
 
     @Override
-    public int hashCode() {
-        return 0;
+    public boolean equals(Object other) {
+        if (other.getClass().equals(SlideshowPlace.class)) {
+            SlideshowPlace basePlace = (SlideshowPlace) other;
+            return equal(getTagId(), basePlace.getTagId()) &&
+                    equal(getPhotoId(), basePlace.getPhotoId());
+
+        } else {
+            return false;
+        }
     }
 
     public static class Tokenizer implements PlaceTokenizer<SlideshowPlace> {

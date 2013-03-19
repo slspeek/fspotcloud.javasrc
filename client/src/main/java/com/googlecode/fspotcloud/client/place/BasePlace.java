@@ -29,7 +29,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 import com.googlecode.fspotcloud.client.place.api.HasImage;
 import com.googlecode.fspotcloud.client.place.api.Raster;
-
+import static com.google.common.base.Objects.equal;
 
 public class BasePlace extends Place implements HasImage, Raster {
     private final String tagId;
@@ -37,10 +37,6 @@ public class BasePlace extends Place implements HasImage, Raster {
     private final int columnCount;
     private final int rowCount;
     private final boolean autoHide;
-
-    public BasePlace() {
-        this("latest", "latest");
-    }
 
     public BasePlace(String tagId, String photoId) {
         this(tagId, photoId, 1, 1, false);
@@ -76,47 +72,37 @@ public class BasePlace extends Place implements HasImage, Raster {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(tagId, photoId, rowCount, columnCount, autoHide);
+        return Objects.hashCode(
+                tagId,
+                photoId,
+                rowCount,
+                columnCount,
+                autoHide);
     }
 
     @Override
     public boolean equals(Object other) {
         if (other.getClass().equals(BasePlace.class)) {
             BasePlace basePlace = (BasePlace) other;
-            String tagId = basePlace.getTagId();
-            String photoId = basePlace.getPhotoId();
-            int columnCount = basePlace.getColumnCount();
-            int rowCount = basePlace.getRowCount();
-            boolean autoHide = basePlace.isAutoHide();
-
-
-            return equal(this.tagId, tagId) && equal(this.photoId, photoId) &&
-                    equal(this.rowCount, rowCount) &&
-                    equal(this.autoHide, autoHide) &&
-                    equal(this.columnCount, columnCount);
+            return equal(this.tagId, basePlace.getTagId()) &&
+                    equal(this.photoId, basePlace.getPhotoId()) &&
+                    equal(this.rowCount, basePlace.getRowCount()) &&
+                    equal(this.autoHide, basePlace.isAutoHide()) &&
+                    equal(this.columnCount, basePlace.getColumnCount());
         } else {
             return false;
         }
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("tagId", tagId)
+        return Objects.toStringHelper(this)
+                .add("tagId", tagId)
                 .add("photoId", photoId)
                 .add("rows", rowCount)
-                .add("colums", columnCount).add("autoHide", autoHide).toString();
+                .add("colums", columnCount)
+                .add("autoHide", autoHide).toString();
     }
 
-    public static boolean equal(Object a, Object b) {
-        if (a == null) {
-            if (b == null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return a.equals(b);
-        }
-    }
 
     public static class Tokenizer implements PlaceTokenizer<BasePlace> {
         @Override

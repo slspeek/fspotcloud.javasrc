@@ -24,23 +24,35 @@
 
 package com.googlecode.fspotcloud.client.place;
 
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceTokenizer;
 import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
-public class TokenizerTest extends TestCase {
-    final BasePlace.Tokenizer tokenizer = new BasePlace.Tokenizer();
+public class TokenizerTest<P extends Place>  {
+    final private PlaceTokenizer<P> tokenizer;
+    final private P place;
+    final private String token;
 
-    public void testGetPlace() {
-        BasePlace expected = new BasePlace("1", "2", 1, 1, true);
-        String first = "1:2:1:1:true";
-        BasePlace actual = tokenizer.getPlace(first);
-        assertEquals(actual, expected);
+    public TokenizerTest(PlaceTokenizer<P> tokenizer, P place, String token) {
+        this.tokenizer = tokenizer;
+        this.place = place;
+        this.token = token;
     }
 
+    @Test
+    public void testGetPlace() {
+        P actualPlace = tokenizer.getPlace(token);
+        assertEquals(place, actualPlace);
+        
+    }
+
+    @Test
     public void testGetToken() {
-        BasePlace first = new BasePlace("1", "2", 1, 1, false);
-        String expected = "1:2:1:1:false";
-        String actual = tokenizer.getToken(first);
-        assertEquals(actual, expected);
+        String actualToken = tokenizer.getToken(place);
+        assertEquals(token, actualToken);
     }
 }
