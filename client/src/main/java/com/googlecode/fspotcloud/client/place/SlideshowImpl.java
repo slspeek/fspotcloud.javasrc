@@ -36,6 +36,9 @@ import com.googlecode.fspotcloud.client.place.api.Slideshow;
 
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.FINE;
+import static java.util.logging.Level.FINER;
+
 
 public class SlideshowImpl implements Slideshow {
     private final Logger log = Logger.getLogger(SlideshowImpl.class.getName());
@@ -47,13 +50,14 @@ public class SlideshowImpl implements Slideshow {
     private final EventBus eventBus;
 
     @Inject
-    public SlideshowImpl(Navigator navigator, TimerInterface timer,
+    public SlideshowImpl(Navigator navigator,
+                         TimerInterface timer,
                          EventBus eventBus) {
         this.eventBus = eventBus;
         this.navigator = navigator;
         this.timer = timer;
         initTimer();
-        log.info("Created");
+        log.log(FINER, "Created");
     }
 
     private void initTimer() {
@@ -81,20 +85,18 @@ public class SlideshowImpl implements Slideshow {
             navigator.goAsync(Direction.FORWARD, Unit.SINGLE);
         } else {
             stop();
-            log.info("Timer stopped, because the end was reached.");
+            log.log(FINE, "Timer stopped, because the end was reached.");
         }
     }
 
     private void reschedule() {
-        if (isRunning) {
-            timer.cancel();
-            timer.scheduleRepeating((int) (1000 * delay));
-        }
+        timer.cancel();
+        timer.scheduleRepeating((int) (1000 * delay));
     }
 
     @Override
     public void start() {
-        log.info("Starting slideshow");
+        log.log(FINE, "Starting slideshow");
         isRunning = true;
         navigator.slideshow();
         reschedule();
@@ -103,7 +105,7 @@ public class SlideshowImpl implements Slideshow {
 
     @Override
     public void stop() {
-        log.info("Stopping slideshow");
+        log.log(FINE, "Stopping slideshow");
         isRunning = false;
         timer.cancel();
         fireStatusChanged();
@@ -112,7 +114,7 @@ public class SlideshowImpl implements Slideshow {
 
     @Override
     public void pause() {
-        log.info("Pause slideshow");
+        log.log(FINE, "Pause slideshow");
         isRunning = false;
         timer.cancel();
         fireStatusChanged();
