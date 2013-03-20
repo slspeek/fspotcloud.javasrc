@@ -15,17 +15,15 @@ public class DemoBuilder {
     private final ActionUIRegistry actionUIRegistry;
     private final EventBus eventBus;
     private final KeyboardPreferences keyboardPreferences;
-    private final HelpContentGeneratorFactory helpContentGeneratorFactory;
-    private HelpContentGenerator helpContentGenerator;
-    private HelpResources helpResources;
+    private final HelpContentGenerator helpContentGenerator;
 
     @Inject
     private DemoBuilder(ActionUIRegistry actionUIRegistry,
                         EventBus eventBus,
                         KeyboardPreferences keyboardPreferences,
-                        HelpContentGeneratorFactory helpContentGeneratorFactory,
-                        HelpResources helpResources) {
-        this.helpContentGeneratorFactory = helpContentGeneratorFactory;
+                        HelpResources helpResources,
+                        HelpContentGenerator helpContentGenerator) {
+        this.helpContentGenerator = helpContentGenerator;
         setHelpResources(helpResources);
         this.actionUIRegistry = actionUIRegistry;
         this.eventBus = eventBus;
@@ -33,8 +31,7 @@ public class DemoBuilder {
     }
 
     public void setHelpResources(HelpResources helpResources) {
-        this.helpResources = helpResources;
-        helpContentGenerator = helpContentGeneratorFactory.get(helpResources);
+        helpContentGenerator.setStyle(helpResources.style());
     }
 
     public Demo getDemo() {
@@ -75,7 +72,6 @@ public class DemoBuilder {
 
     private SafeHtml getContent(ActionUIDef actionUIDef) {
         List<KeyStroke> keyStrokes = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
-
         SafeHtml result = helpContentGenerator.getHelpText(actionUIDef, keyStrokes);
         return result;
     }

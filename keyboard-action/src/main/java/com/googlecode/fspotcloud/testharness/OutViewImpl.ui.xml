@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction"
+             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction.gwt"
         >
     <g:LayoutPanel>
         <g:layer top="10%" height="12%" left="22%" width="78%">

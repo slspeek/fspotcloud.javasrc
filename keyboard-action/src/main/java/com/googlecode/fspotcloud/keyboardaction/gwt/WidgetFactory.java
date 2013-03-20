@@ -1,7 +1,8 @@
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.keyboardaction.*;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButtonResources;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionMenu;

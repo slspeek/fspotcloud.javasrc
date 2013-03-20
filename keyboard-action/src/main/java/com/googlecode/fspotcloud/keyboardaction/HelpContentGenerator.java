@@ -42,21 +42,24 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class HelpContentGenerator {
     private final Logger log = Logger.getLogger(HelpContentGenerator.class.getName());
-    private final HelpResources.Style style;
-    private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
+    private HelpResources.Style style;
+    private final MyTemplates TEMPLATES;// = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
     private final ActionUIRegistry actionUIRegistry;
 
     @Inject
-    private HelpContentGenerator(@Assisted HelpResources res,
-                                 KeyboardPreferences keyboardPreferences,
-                                 ActionUIRegistry actionUIRegistry) {
+    HelpContentGenerator(MyTemplates templates,
+                         KeyboardPreferences keyboardPreferences,
+                         ActionUIRegistry actionUIRegistry) {
         super();
+        TEMPLATES = templates;
         this.keyboardPreferences = keyboardPreferences;
         this.actionUIRegistry = actionUIRegistry;
-        this.style = res.style();
     }
 
+    public void setStyle(HelpResources.Style style) {
+        this.style = style;
+    }
 
     public interface MyTemplates extends SafeHtmlTemplates {
 

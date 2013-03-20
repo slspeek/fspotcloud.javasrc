@@ -20,27 +20,23 @@ public class HelpActionsFactory {
     private final SingleColumnHelpPopup singleColumnHelpPopup;
     private final ShortcutsPopup shortcutsPopup;
 
-    private final HelpContentGeneratorFactory helpContentGeneratorFactory;
-
-
-    private HelpResources helpResources;
     private final IModeController modeController;
     private final KeyboardPreferences keyboardPreferences;
-    private HelpContentGenerator helpContentGenerator;
+    private final HelpContentGenerator helpContentGenerator;
     private final Provider<PlaceContext> placeContextProvider;
 
     @Inject
     private HelpActionsFactory(
             ConfigBuilder configBuilder,
-            HelpContentGeneratorFactory helpContentGeneratorFactory,
             TwoColumnHelpPopup twoColumnHelpPopup,
             SingleColumnHelpPopup singleColumnHelpPopup,
             ShortcutsPopup shortcutsPopup,
             HelpResources helpResources,
             IModeController modeController,
             KeyboardPreferences keyboardPreferences,
+            HelpContentGenerator helpContentGenerator,
             Provider<PlaceContext> placeContextProvider) {
-        this.helpContentGeneratorFactory = helpContentGeneratorFactory;
+        this.helpContentGenerator = helpContentGenerator;
         this.placeContextProvider = placeContextProvider;
         setHelpResources(helpResources);
         this.singleColumnHelpPopup = singleColumnHelpPopup;
@@ -52,15 +48,13 @@ public class HelpActionsFactory {
     }
 
     public void setHelpResources(HelpResources helpResources) {
-        this.helpResources = helpResources;
-        this.helpContentGenerator = helpContentGeneratorFactory.get(helpResources);
+        helpContentGenerator.setStyle(helpResources.style());
     }
 
     public IActionHandler getHelpAction(final HelpConfig helpConfig) {
         IActionHandler result = new IActionHandler() {
             @Override
             public void performAction(String actionId) {
-
                 final SafeHtml firstColumn, secondColumn;
                 firstColumn = helpContentGenerator.getHelpText(helpConfig.getFirstColumn());
                 if (helpConfig.getSecondColumn().isEmpty()) {

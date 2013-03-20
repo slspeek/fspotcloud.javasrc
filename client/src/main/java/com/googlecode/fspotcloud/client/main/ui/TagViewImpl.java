@@ -43,7 +43,7 @@ import com.googlecode.fspotcloud.client.enduseraction.MainToolbar;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
-import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;

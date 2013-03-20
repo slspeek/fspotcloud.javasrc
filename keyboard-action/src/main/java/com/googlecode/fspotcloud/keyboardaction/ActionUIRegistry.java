@@ -23,6 +23,4 @@ public class ActionUIRegistry {
     public ActionUIDef getAction(String actionKey) {
         return registry.get(actionKey);
     }
-
-
 }

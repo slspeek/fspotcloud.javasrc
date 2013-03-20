@@ -36,7 +36,7 @@ public class ActionManager implements IActionManager {
     private final ActionHandlerRegistry actionHandlerRegistry;
 
     @Inject
-    public ActionManager(ActionHandlerRegistry actionHandlerRegistry
+    private ActionManager(ActionHandlerRegistry actionHandlerRegistry
     ) {
         this.actionHandlerRegistry = actionHandlerRegistry;
     }
@@ -47,6 +47,8 @@ public class ActionManager implements IActionManager {
         log.log(Level.FINEST, "onEvent for: " + event.getActionId());
         String actionId = event.getActionId();
         IActionHandler handler = actionHandlerRegistry.getAction(actionId);
-        handler.performAction(actionId);
+        if (handler != null) {
+            handler.performAction(actionId);
+        }
     }
 }

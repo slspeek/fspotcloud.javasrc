@@ -37,7 +37,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.SlideshowToolbar;
 import com.googlecode.fspotcloud.client.main.view.api.DoubleImageView;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
-import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 import java.util.logging.Logger;

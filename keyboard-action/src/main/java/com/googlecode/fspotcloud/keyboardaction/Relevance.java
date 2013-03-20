@@ -101,17 +101,17 @@ public class Relevance {
         return defaultKeys;
     }
 
-    private void addPlaceCondition(Class<? extends Place> place, FlagsRule condition) {
-        Set<FlagsRule> conditionSet = placeConditions.get(place);
+    private void addPlaceCondition(Class<? extends Place> placeClasses, FlagsRule condition) {
+        Set<FlagsRule> conditionSet = placeConditions.get(placeClasses);
         if (conditionSet == null) {
             conditionSet = newHashSet();
         }
         conditionSet.add(condition);
-        placeConditions.put(place, conditionSet);
+        placeConditions.put(placeClasses, conditionSet);
     }
 
-    private List<KeyStroke> getKeyStrokes(Class<? extends Place> place, FlagsRule condition) {
-        final KeyStroke[] elements = overridesMap.get(new PlaceFlagCondition(place, condition));
+    private List<KeyStroke> getKeyStrokes(Class<? extends Place> placeClasses, FlagsRule condition) {
+        final KeyStroke[] elements = overridesMap.get(new PlaceFlagCondition(placeClasses, condition));
         if (elements != null) {
             return newArrayList(elements);
 
@@ -142,5 +142,11 @@ public class Relevance {
         result = 31 * result + overridesMap.hashCode();
         result = 31 * result + defaultPlaces.hashCode();
         return result;
+    }
+
+    public void addRule(List<Class<? extends Place>> placeClasses, KeyStroke stroke) {
+        for (Class<? extends Place> place: placeClasses) {
+            addRule(place, stroke);
+        }
     }
 }

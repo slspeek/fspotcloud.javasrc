@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -35,11 +35,13 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.Demo;
+import com.googlecode.fspotcloud.keyboardaction.HelpResources;
 
 import java.util.logging.Logger;
 
 
-public class DemoPopup extends PopupPanel {
+public class DemoPopup extends PopupPanel implements DemoPopupView {
     private final Logger log = Logger.getLogger(DemoPopup.class.getName());
     private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
     @UiField
@@ -62,23 +64,22 @@ public class DemoPopup extends PopupPanel {
         addStyleName(helpResources.style().demoPopup());
     }
 
+    @Override
     public void setDemo(Demo demo) {
         this.demo = demo;
     }
 
+    @Override
     public void setSafeHtml(SafeHtml text) {
         helpBodyDiv.setInnerSafeHtml(text);
     }
 
+    @Override
     public void setTitle(String text) {
         titleDiv.setInnerHTML(text);
     }
 
-    public void focus() {
-        focusPanel.setFocus(true);
-    }
-
-    interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopup> {
+    interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopupView> {
     }
 
     @UiHandler("stopAnchor")

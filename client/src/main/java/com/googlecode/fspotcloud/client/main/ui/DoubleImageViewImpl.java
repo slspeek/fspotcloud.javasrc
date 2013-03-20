@@ -37,7 +37,7 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.DoubleImageView;
-import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.reveregroup.gwt.imagepreloader.FitImage;
 
 import java.util.logging.Level;

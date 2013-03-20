@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.WidgetFactory;
 
 import java.util.logging.Logger;
 

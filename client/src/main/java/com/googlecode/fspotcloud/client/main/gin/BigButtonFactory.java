@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.ui.BigActionButtonResources;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
-import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.WidgetFactory;
 
 @GwtCompatible
 public class BigButtonFactory {
