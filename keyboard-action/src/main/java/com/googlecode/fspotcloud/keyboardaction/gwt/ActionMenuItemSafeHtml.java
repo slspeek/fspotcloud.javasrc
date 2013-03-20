@@ -13,11 +13,16 @@ import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardPreferences;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.FINE;
 
 public class ActionMenuItemSafeHtml {
     private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
 
+    private final Logger log = Logger.getLogger(ActionMenuItemSafeHtml.class.getName());
     @Inject
     private ActionMenuItemSafeHtml(KeyboardPreferences keyboardPreferences) {
         super();
@@ -37,6 +42,8 @@ public class ActionMenuItemSafeHtml {
     SafeHtml get(ActionUIDef actionUIDef, ActionMenuResources resources) {
         ActionMenuResources.Style style = resources.style();
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
+
+        log.log(FINE, keyboardPreferences + " : " + actionUIDef);
         List<KeyStroke> keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
         Joiner joiner = Joiner.on(" or ");
         String keyboardShortcuts = "(" + joiner.join(keysForAction) + ")";

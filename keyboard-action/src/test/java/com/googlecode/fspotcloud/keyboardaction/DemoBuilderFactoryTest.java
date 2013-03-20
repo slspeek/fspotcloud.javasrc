@@ -3,10 +3,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.collect.Lists;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.googlecode.fspotcloud.testharness.MainBuilder;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
@@ -37,7 +34,7 @@ public class DemoBuilderFactoryTest {
     @Inject
     private HelpResources  helpResources;
     @Inject
-    private HelpContentGenerator generator;
+    private IHelpContentGenerator generator;
 
 
     @Before

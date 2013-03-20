@@ -70,6 +70,7 @@ public class WidgetFactory {
     }
 
     public ActionMenu getMenu(String caption) {
+
         final ActionMenu actionMenu = new ActionMenu(caption, actionUIRegistry, eventBus, menuResources, actionMenuItemSafeHtml);
         return actionMenu;
     }
