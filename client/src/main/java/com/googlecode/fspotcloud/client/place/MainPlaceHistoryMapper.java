@@ -43,6 +43,6 @@ import com.google.gwt.place.shared.WithTokenizers;
         SendPasswordResetPlace.Tokenizer.class,
         ChangePasswordPlace.Tokenizer.class,
         TagApprovalPlace.Tokenizer.class,
-        TagPlace.Tokenizer.class})
+        DashboardPlace.Tokenizer.class})
 public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
 }

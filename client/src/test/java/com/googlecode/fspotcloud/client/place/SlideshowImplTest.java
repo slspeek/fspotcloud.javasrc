@@ -16,7 +16,9 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(JukitoRunner.class)
 public class SlideshowImplTest {
@@ -71,11 +73,24 @@ public class SlideshowImplTest {
     }
 
     @Test
-    public void testTogglePause() throws Exception {
+    public void testTogglePauseNotRunning() throws Exception {
         slideshow.togglePause();
         assertTrue(slideshow.isRunning());
         verify(timer).cancel();
         verify(timer).scheduleRepeating(4000);
+
+    }
+
+    @Test
+    public void testTogglePauseRunning() throws Exception {
+        slideshow.start();
+
+        reset(timer);
+        slideshow.togglePause();
+        assertFalse(slideshow.isRunning());
+
+        verify(timer).cancel();
+        verifyNoMoreInteractions(timer);
 
     }
 

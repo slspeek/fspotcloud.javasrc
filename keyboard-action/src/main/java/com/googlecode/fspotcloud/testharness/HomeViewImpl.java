@@ -29,7 +29,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 
 public class HomeViewImpl extends Composite implements HomeView {

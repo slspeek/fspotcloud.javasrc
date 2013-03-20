@@ -25,16 +25,18 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.inject.Inject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ActionManager implements IKeyboardActionHandler {
+public class ActionManager implements IActionManager {
     private final Logger log = Logger.getLogger(ActionManager.class.getName());
     private final ActionHandlerRegistry actionHandlerRegistry;
 
-    ActionManager(ActionHandlerRegistry actionHandlerRegistry
+    @Inject
+    public ActionManager(ActionHandlerRegistry actionHandlerRegistry
     ) {
         this.actionHandlerRegistry = actionHandlerRegistry;
     }

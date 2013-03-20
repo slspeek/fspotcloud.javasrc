@@ -386,7 +386,7 @@ public class NavigatorImpl implements Navigator {
             @Override
             public void onSuccess(UserInfo result) {
                 if (result.isAdmin()) {
-                    placeController.goTo(TagPlace.DEFAULT);
+                    placeController.goTo(DashboardPlace.DEFAULT);
                     report.onSuccess("To dashboard");
                 } else if (!result.isLoggedIn()) {
                     clientLoginManager.redirectToLogin();

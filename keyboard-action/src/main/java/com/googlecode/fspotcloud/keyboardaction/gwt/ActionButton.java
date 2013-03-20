@@ -22,7 +22,7 @@
  *
  */
 
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,6 +31,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.keyboardaction.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,10 +44,10 @@ public class ActionButton extends PushButton implements ActionWidget {
     private final EventBus eventBus;
     private final ActionButtonResources resources;
 
-    ActionButton(ActionUIDef actionUIDef,
-                 EventBus eventBus,
-                 ActionButtonResources resources,
-                 String primaryStyleName) {
+    public ActionButton(ActionUIDef actionUIDef,
+                        EventBus eventBus,
+                        ActionButtonResources resources,
+                        String primaryStyleName) {
         this.actionUIDef = actionUIDef;
         this.eventBus = eventBus;
         this.resources = resources;
@@ -55,9 +56,9 @@ public class ActionButton extends PushButton implements ActionWidget {
         initialize();
     }
 
-    ActionButton(ActionUIDef actionUIDef,
-                 EventBus eventBus,
-                 ActionButtonResources resources) {
+    public ActionButton(ActionUIDef actionUIDef,
+                        EventBus eventBus,
+                        ActionButtonResources resources) {
         this(actionUIDef,
                 eventBus,
                 resources,

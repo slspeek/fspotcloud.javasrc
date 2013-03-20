@@ -33,7 +33,7 @@ import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions
 import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.EditUserGroupView;
-import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 
 import java.util.logging.Logger;
 

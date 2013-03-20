@@ -22,10 +22,10 @@
  *
  */
 
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -36,31 +36,31 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.HelpConfig;
+import com.googlecode.fspotcloud.keyboardaction.HelpResources;
 
 import java.util.logging.Logger;
 
 
-public class SingleColumnHelpPopup extends PopupPanel {
-    private final Logger log = Logger.getLogger(SingleColumnHelpPopup.class.getName());
+public class TwoColumnHelpPopup extends PopupPanel {
+    private final Logger log = Logger.getLogger(TwoColumnHelpPopup.class.getName());
     private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
     @UiField
     Anchor closeAnchor;
     @UiField
-    DivElement helpBodyLeft;
+    SpanElement helpBodyLeft;
     @UiField
-    DivElement optionalContentDiv;
+    SpanElement helpBodyRight;
     @UiField
     Label titleLabel;
     private final HelpResources helpResources;
     private HelpConfig helpConfig;
 
     @Inject
-    private SingleColumnHelpPopup(HelpResources helpResources) {
+    private TwoColumnHelpPopup(HelpResources helpResources) {
         super(true);
         this.helpResources = helpResources;
-
         setWidget(uiBinder.createAndBindUi(this));
-
         addStyleName(helpResources.style().helpPopup());
     }
 
@@ -73,15 +73,15 @@ public class SingleColumnHelpPopup extends PopupPanel {
         helpBodyLeft.setInnerSafeHtml(text);
     }
 
+    public void setRight(SafeHtml text) {
+        helpBodyRight.setInnerSafeHtml(text);
+    }
+
     public void setTitle(String text) {
         titleLabel.setText(text);
     }
 
-    public void setOptionalContentDiv(SafeHtml optionalContentDiv) {
-        this.optionalContentDiv.setInnerSafeHtml(optionalContentDiv);
-    }
-
-    interface HelpPopupUiBinder extends UiBinder<HTMLPanel, SingleColumnHelpPopup> {
+    interface HelpPopupUiBinder extends UiBinder<HTMLPanel, TwoColumnHelpPopup> {
     }
 
     @UiHandler("closeAnchor")

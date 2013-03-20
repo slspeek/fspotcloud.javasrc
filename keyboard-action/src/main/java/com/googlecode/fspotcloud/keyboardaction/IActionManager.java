@@ -28,6 +28,6 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.event.shared.EventHandler;
 
 @GwtCompatible
-interface IKeyboardActionHandler extends EventHandler {
+public interface IActionManager extends EventHandler {
     void onEvent(KeyboardActionEvent event);
 }

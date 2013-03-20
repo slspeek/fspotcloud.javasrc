@@ -29,13 +29,13 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 
-public class TagPlace extends Place {
+public class DashboardPlace extends Place {
 
-    public static TagPlace DEFAULT = new TagPlace("");
+    public static DashboardPlace DEFAULT = new DashboardPlace("");
 
     private final String tagId;
 
-    public TagPlace(String tagId) {
+    public DashboardPlace(String tagId) {
         this.tagId = tagId;
     }
 
@@ -45,8 +45,8 @@ public class TagPlace extends Place {
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof TagPlace) {
-            TagPlace basePlace = (TagPlace) other;
+        if (other instanceof DashboardPlace) {
+            DashboardPlace basePlace = (DashboardPlace) other;
             String tagId = basePlace.getTagId();
             return Objects.equal(this.tagId, tagId);
         } else {
@@ -63,14 +63,14 @@ public class TagPlace extends Place {
         return Objects.toStringHelper(this).add("tagId", tagId).toString();
     }
 
-    public static class Tokenizer implements PlaceTokenizer<TagPlace> {
+    public static class Tokenizer implements PlaceTokenizer<DashboardPlace> {
         @Override
-        public TagPlace getPlace(String token) {
-            return new TagPlace(token);
+        public DashboardPlace getPlace(String token) {
+            return new DashboardPlace(token);
         }
 
         @Override
-        public String getToken(TagPlace place) {
+        public String getToken(DashboardPlace place) {
             return place.getTagId();
         }
     }

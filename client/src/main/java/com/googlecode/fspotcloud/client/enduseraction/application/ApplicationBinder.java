@@ -75,7 +75,7 @@ public class ApplicationBinder extends AbstractBinder {
         binding = new Relevance(needing(Flags.LOGGED_ON.name()),
                 BasePlace.class,
                 LoginPlace.class,
-                TagPlace.class,
+                DashboardPlace.class,
                 UserAccountPlace.class).addDefaultKeys(new KeyStroke('O'));
         bind(actions.logout, logoutHandler, binding);
         bind(actions.zoom_in, zoomInHandler, get(KeyStroke.KEY_NUM_PAD_PLUS));
@@ -92,7 +92,7 @@ public class ApplicationBinder extends AbstractBinder {
                 BasePlace.class).addDefaultKeys(KeyStroke.ENTER, KeyStroke.ESC);
         configBuilder.register(category, actions.tree_focus, binding);
         configBuilder.register(category, actions.reloadTree, get('R'));
-        binding = new Relevance(BasePlace.class, LoginPlace.class, TagPlace.class).addDefaultKeys(alt('L'));
+        binding = new Relevance(BasePlace.class, LoginPlace.class, DashboardPlace.class).addDefaultKeys(alt('L'));
 
         configBuilder.register(category, actions.goToLatest, binding);
         binding = new Relevance().addDefaultKeys(alt(KEY_FORWARD_SLASH));

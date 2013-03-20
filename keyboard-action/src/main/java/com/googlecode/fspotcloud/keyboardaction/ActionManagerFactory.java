@@ -4,19 +4,18 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 
-public class ActionManagerFactory implements Provider<ActionManager> {
+public class ActionManagerFactory implements Provider<IActionManager> {
 
-    private final ActionHandlerRegistry actionHandlerRegistry;
     private final EventBus eventBus;
+    private final ActionManager actionManager;
 
     @Inject
-    private ActionManagerFactory(ActionHandlerRegistry actionHandlerRegistry, EventBus eventBus) {
-        this.actionHandlerRegistry = actionHandlerRegistry;
+    private ActionManagerFactory(EventBus eventBus, ActionManager actionManager) {
         this.eventBus = eventBus;
+        this.actionManager = actionManager;
     }
 
-    public ActionManager get() {
-        final ActionManager actionManager = new ActionManager(actionHandlerRegistry);
+    public IActionManager get() {
         eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
         return actionManager;
     }

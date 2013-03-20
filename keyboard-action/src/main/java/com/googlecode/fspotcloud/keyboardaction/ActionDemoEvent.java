@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  */
 
 @GwtCompatible
-class ActionDemoEvent extends Event<IActionDemoHandler> {
+public class ActionDemoEvent extends Event<IActionDemoHandler> {
     private final Logger log = Logger.getLogger(ActionDemoEvent.class.getName());
     public static final Type<IActionDemoHandler> TYPE = new Type<IActionDemoHandler>();
     private final String actionId;
@@ -58,7 +58,7 @@ class ActionDemoEvent extends Event<IActionDemoHandler> {
 
     @Override
     protected void dispatch(IActionDemoHandler handlerI) {
-        log.log(Level.OFF, "in dispatch for " + this);
+        log.log(Level.FINEST, "in dispatch for " + this);
         handlerI.onEvent(this);
     }
 

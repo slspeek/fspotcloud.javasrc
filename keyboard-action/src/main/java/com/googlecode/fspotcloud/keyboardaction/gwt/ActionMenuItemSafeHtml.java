@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.common.base.Joiner;
 import com.google.gwt.core.client.GWT;
@@ -7,6 +7,10 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.ActionMenuResources;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
+import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardPreferences;
 
 import java.util.List;
 

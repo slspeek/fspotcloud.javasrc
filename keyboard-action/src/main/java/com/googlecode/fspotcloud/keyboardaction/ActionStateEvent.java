@@ -31,7 +31,7 @@ import com.google.web.bindery.event.shared.Event;
 import java.util.logging.Logger;
 
 @GwtCompatible
-class ActionStateEvent extends Event<IActionEnableHandler> {
+public class ActionStateEvent extends Event<IActionEnableHandler> {
     private final Logger log = Logger.getLogger(ActionStateEvent.class.getName());
     public static final Type<IActionEnableHandler> TYPE = new Type<IActionEnableHandler>();
     private final String actionId;

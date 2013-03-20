@@ -22,13 +22,18 @@
  *
  */
 
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.ActionCategory;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionResources;
+import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButtonResources;
 
 import java.util.List;
 

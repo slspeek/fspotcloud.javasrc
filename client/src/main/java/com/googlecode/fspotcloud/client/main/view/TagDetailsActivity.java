@@ -33,7 +33,7 @@ import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
@@ -76,9 +76,9 @@ public class TagDetailsActivity extends AbstractActivity implements TagDetailsVi
 
     public void populateView() {
         statusView.setStatusText("Retrieving category data");
-        TagPlace tagPlace = (TagPlace) placeController.getRawWhere();
+        DashboardPlace dashboardPlace = (DashboardPlace) placeController.getRawWhere();
 
-        dataManager.getAdminTagNode(tagPlace.getTagId(),
+        dataManager.getAdminTagNode(dashboardPlace.getTagId(),
                 new AsyncCallback<TagNode>() {
                     @Override
                     public void onFailure(Throwable caught) {

@@ -3,7 +3,7 @@ package com.googlecode.fspotcloud.testharness;
 import com.google.code.ginmvp.client.GinMvpModule;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
-import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
 

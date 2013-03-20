@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.google.common.collect.Sets.newEnumSet;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class ModeController implements IModeController {
@@ -40,9 +39,9 @@ public class ModeController implements IModeController {
 
     @Override
     public void setFlag(String name, boolean set) {
-        if(set) {
+        if (set) {
             setFlag(name);
-        }  else {
+        } else {
             unsetFlag(name);
         }
     }
@@ -56,18 +55,14 @@ public class ModeController implements IModeController {
     public void setFlag(String flag) {
         log.log(Level.FINER, "set flag: " + flag);
         final boolean add = flags.add(flag);
-        if (add) {
-        }
-            fireEnabledStateEvens();
+        fireEnabledStateEvens();
     }
 
     @Override
     public void unsetFlag(String flag) {
         log.log(Level.FINER, "unset flag: " + flag);
         final boolean remove = flags.remove(flag);
-        if (remove) {
-        }
-            fireEnabledStateEvens();
+        fireEnabledStateEvens();
     }
 
     @Override
@@ -78,7 +73,7 @@ public class ModeController implements IModeController {
 
     private void fireEnabledStateEvens() {
         PlaceContext newPlaceContext = new PlaceContext(placeController.getWhere().getClass(), getFlags());
-        log.log(Level.FINEST, "firingEnabledStateEvents: old: " + placeContext + " new: " +newPlaceContext );
+        log.log(Level.FINEST, "firingEnabledStateEvents: old: " + placeContext + " new: " + newPlaceContext);
         if (!this.placeContext.equals(newPlaceContext)) {
             this.placeContext = newPlaceContext;
             log.log(Level.FINER, "New place context " + newPlaceContext + " All action buttons we be notified.");
