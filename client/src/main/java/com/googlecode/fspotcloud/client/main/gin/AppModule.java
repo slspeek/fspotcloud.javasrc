@@ -39,7 +39,7 @@ import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.client.main.view.api.ReplaceLocation;
-import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.IRasterer;
@@ -47,6 +47,7 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
+import com.googlecode.fspotcloud.keyboardaction.gwt.TimerImpl;
 
 public class AppModule extends AbstractGinModule {
 

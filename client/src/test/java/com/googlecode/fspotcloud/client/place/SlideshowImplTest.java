@@ -5,7 +5,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.googlecode.fspotcloud.client.main.gin.RasterHeight;
 import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
-import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;

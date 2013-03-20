@@ -23,5 +23,9 @@ public class RelevanceTest {
         assertEquals(1, keys.size());
     }
 
+    @Test
+    public void testToString() throws Exception {
+        assertEquals("Relevance{defaultKeys=[], defaultPlaces=[], overrides={}}", new Relevance().toString());
 
+    }
 }
