@@ -13,14 +13,14 @@ public class ToolbarProvider implements Provider<ActionToolbar> {
     private KeyboardActionFactory factory;
     @Override
     public ActionToolbar get() {
-        ActionMenu menu = factory.getMenu("First menu!");
-        menu.add(HelpActionsFactory.SHOW_HELP_ACTION);
-        menu.add(MainBuilder.LOGIN);
-        menu.add(MainBuilder.HOME);
+//        ActionMenu menu = factory.getMenu("First menu!");
+//        menu.add(HelpActionsFactory.SHOW_HELP_ACTION);
+//        menu.add(MainBuilder.LOGIN);
+//        menu.add(MainBuilder.HOME);
         ActionToolbar toolbar = factory.getToolBar();
         toolbar.add(MainBuilder.LOGIN);
         toolbar.add(MainBuilder.GO_OUT);
-        toolbar.add(menu);
+        //toolbar.add(menu);
 
         toolbar.add(MainBuilder.HOME);
         toolbar.add(MainBuilder.LOGOUT);
