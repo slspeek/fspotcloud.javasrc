@@ -13,10 +13,6 @@ import java.util.logging.Logger;
 public class MainFactory {
 
     public static final Logger log = Logger.getLogger(MainFactory.class.getName());
-    final KeyboardActionFactory keyboardActionFactory;
-    final IModeController modeController;
-    final DemoBuilderFactory demoBuilderFactory;
-    final HelpActionsFactory helpActionsFactory;
 
     static TextArea messageBoard = new TextArea();
 
@@ -27,16 +23,10 @@ public class MainFactory {
 
 
     @Inject
-    public MainFactory(KeyboardActionFactory keyboardActionFactory,
-                       DemoBuilderFactory demoBuilderFactory,
-                       HelpActionsFactory helpActionsFactory) {
-        this.keyboardActionFactory = keyboardActionFactory;
-        this.demoBuilderFactory = demoBuilderFactory;
-        this.helpActionsFactory = helpActionsFactory;
-        this.modeController = keyboardActionFactory.getModeController();
+    public MainFactory(){
         MainFactory.messageBoard.setVisibleLines(20);
         MainFactory.messageBoard.setCharacterWidth(100);
-        modeController.initButtonEnableStates();
+
     }
 
 

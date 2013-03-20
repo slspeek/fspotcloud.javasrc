@@ -15,36 +15,30 @@ public class HelpActionsFactory {
     public static final String SHOW_HELP_ACTION = "help";
     public static final String HIDE_HELP_ACTION = "hide-help";
 
-    private final ConfigBuilder configBuilder;
     private final TwoColumnHelpPopup twoColumnHelpPopup;
     private final SingleColumnHelpPopup singleColumnHelpPopup;
     private final ShortcutsPopup shortcutsPopup;
-
-    private final IModeController modeController;
     private final KeyboardPreferences keyboardPreferences;
-    private final HelpContentGenerator helpContentGenerator;
+    private final IHelpContentGenerator helpContentGenerator;
     private final Provider<PlaceContext> placeContextProvider;
 
     @Inject
     private HelpActionsFactory(
-            ConfigBuilder configBuilder,
             TwoColumnHelpPopup twoColumnHelpPopup,
             SingleColumnHelpPopup singleColumnHelpPopup,
             ShortcutsPopup shortcutsPopup,
             HelpResources helpResources,
-            IModeController modeController,
             KeyboardPreferences keyboardPreferences,
-            HelpContentGenerator helpContentGenerator,
+            IHelpContentGenerator helpContentGenerator,
             Provider<PlaceContext> placeContextProvider) {
         this.helpContentGenerator = helpContentGenerator;
         this.placeContextProvider = placeContextProvider;
-        setHelpResources(helpResources);
         this.singleColumnHelpPopup = singleColumnHelpPopup;
         this.shortcutsPopup = shortcutsPopup;
-        this.modeController = modeController;
         this.keyboardPreferences = keyboardPreferences;
-        this.configBuilder = configBuilder;
         this.twoColumnHelpPopup = twoColumnHelpPopup;
+        helpResources.style().ensureInjected();
+        setHelpResources(helpResources);
     }
 
     public void setHelpResources(HelpResources helpResources) {

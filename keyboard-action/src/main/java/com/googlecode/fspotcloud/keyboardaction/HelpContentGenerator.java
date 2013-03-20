@@ -31,7 +31,6 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -40,23 +39,26 @@ import java.util.logging.Logger;
 import static com.google.common.collect.Lists.newArrayList;
 
 
-public class HelpContentGenerator {
+public class HelpContentGenerator implements IHelpContentGenerator {
     private final Logger log = Logger.getLogger(HelpContentGenerator.class.getName());
     private HelpResources.Style style;
-    private final MyTemplates TEMPLATES;// = GWT.create(MyTemplates.class);
+    private static MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
     private final KeyboardPreferences keyboardPreferences;
     private final ActionUIRegistry actionUIRegistry;
 
     @Inject
-    HelpContentGenerator(MyTemplates templates,
-                         KeyboardPreferences keyboardPreferences,
-                         ActionUIRegistry actionUIRegistry) {
+    HelpContentGenerator(
+            KeyboardPreferences keyboardPreferences,
+            ActionUIRegistry actionUIRegistry,
+            HelpResources helpResources
+    ) {
         super();
-        TEMPLATES = templates;
         this.keyboardPreferences = keyboardPreferences;
         this.actionUIRegistry = actionUIRegistry;
+        setStyle(helpResources.style());
     }
 
+    @Override
     public void setStyle(HelpResources.Style style) {
         this.style = style;
     }
@@ -106,16 +108,7 @@ public class HelpContentGenerator {
         return TEMPLATES.img(url, style.helpActionIcon());
     }
 
-    public SafeHtml getDemoContent(ActionUIDef actionUIDef, List<KeyStroke> keys) {
-        SafeHtml helpRow = getHelpText(actionUIDef, keys);
-        return TEMPLATES.table(helpRow);
-    }
-
-    public SafeHtml getDemoContent(ActionUIDef actionUIDef, List<KeyStroke> keys, String description) {
-        SafeHtml helpRow = getHelpText(actionUIDef, keys, description);
-        return TEMPLATES.table(helpRow);
-    }
-
+    @Override
     public SafeHtml getHelpRow(List<String> keys, ActionUIDef actionUIDef, String description) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         ImageResource icon = actionUIDef.getIcon();
@@ -144,6 +137,7 @@ public class HelpContentGenerator {
         return row;
     }
 
+    @Override
     public SafeHtml getHelp(ActionCategory category) {
         SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
         safeHtmlBuilder.append(TEMPLATES.trspan5(category.getName(), style.helpCategoryTitle()));
@@ -156,6 +150,7 @@ public class HelpContentGenerator {
     }
 
 
+    @Override
     public SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys, String description) {
         List<String> list = newArrayList();
         for (KeyStroke k : keys) {
@@ -164,11 +159,12 @@ public class HelpContentGenerator {
         return getHelpRow(list, shortcut, description);
     }
 
+    @Override
     public SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys) {
         return getHelpText(shortcut, keys, shortcut.getDescription());
     }
 
-    SafeHtml getHelpText(List<ActionCategory> categoryList) {
+    public SafeHtml getHelpText(List<ActionCategory> categoryList) {
         List<ActionCategory> mCategoryList = newArrayList(categoryList);
         ActionCategory first = mCategoryList.get(0);
         final int lastIndex = mCategoryList.size() - 1;
@@ -182,6 +178,7 @@ public class HelpContentGenerator {
         return TEMPLATES.table(safeHtmlBuilder.toSafeHtml());
     }
 
+    @Override
     public SafeHtml getShortcuts(Set<String> actions, PlaceContext placeContext) {
         log.log(Level.FINEST, "mode: " + placeContext + " actionIds: " + actions);
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
