@@ -3,9 +3,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionMenu;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
+import com.googlecode.fspotcloud.keyboardaction.gwt.*;
 
 import java.util.List;
 

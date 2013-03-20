@@ -1,6 +1,9 @@
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.ActionMenuResources;
+import com.googlecode.fspotcloud.keyboardaction.HelpResources;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionResources;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButtonResources;
 
 public class ResourcesSetup {

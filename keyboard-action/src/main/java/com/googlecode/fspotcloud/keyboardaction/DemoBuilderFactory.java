@@ -1,25 +1,26 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 public class DemoBuilderFactory {
 
     private final Provider<DemoBuilder> demoBuilderProvider;
     private final Provider<Demo> demoProvider;
-    private final List<Demo> demoList;
+    private final List<Demo> demoList = newArrayList();
 
 
     @Inject
     private DemoBuilderFactory(Provider<DemoBuilder> demoBuilderProvider,
-                               Provider<Demo> demoProvider,
-                               List<Demo> demoList, EventBus eventBus) {
+                               Provider<Demo> demoProvider) {
         this.demoBuilderProvider = demoBuilderProvider;
         this.demoProvider = demoProvider;
-        this.demoList = demoList;
     }
 
     public DemoBuilder get(ActionUIDef actionUIDef) {

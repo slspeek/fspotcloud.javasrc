@@ -8,17 +8,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(JukitoRunner.class)
 public class ActionManagerTest {
-
-    public static class Module extends JukitoModule {
-        @Override
-        protected void configureTest() {
-            bind(ActionHandlerRegistry.class).in(Singleton.class);
-        }
-    }
-
 
     @Inject private ActionManager actionManager;
     @Inject private ActionHandlerRegistry registry;
@@ -29,6 +22,12 @@ public class ActionManagerTest {
         registry.putAction("1", handler);
         actionManager.onEvent(new KeyboardActionEvent("1"));
         verify(handler).performAction("1");
+    }
 
+    @Test
+    public void testOnEventNotFound() throws Exception {
+        //registry.putAction("1", handler);
+        actionManager.onEvent(new KeyboardActionEvent("1"));
+        verifyZeroInteractions(handler);
     }
 }

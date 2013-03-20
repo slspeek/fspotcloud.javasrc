@@ -30,6 +30,8 @@ import com.google.web.bindery.event.shared.Event;
 
 import java.util.logging.Logger;
 
+import static com.google.common.base.Objects.equal;
+
 @GwtCompatible
 public class ActionStateEvent extends Event<IActionEnableHandler> {
     private final Logger log = Logger.getLogger(ActionStateEvent.class.getName());
@@ -63,14 +65,15 @@ public class ActionStateEvent extends Event<IActionEnableHandler> {
 
     @Override
     protected void dispatch(IActionEnableHandler handlerI) {
-        //log.log(Level.OFF, "in dispatch for " + this);
         handlerI.onEvent(this);
     }
 
     public boolean equals(Object o) {
         if (o instanceof ActionStateEvent) {
             ActionStateEvent other = (ActionStateEvent) o;
-            return Objects.equal(other.actionId, actionId) && state == other.state;
+            return equal(other.actionId, actionId) &&
+                    equal(other.acceleratorString, acceleratorString) &&
+                    state == other.state;
         } else {
             return false;
         }

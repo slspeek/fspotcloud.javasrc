@@ -1,9 +1,9 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.keyboardaction.gwt.DemoPopupView;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -15,18 +15,24 @@ import static com.google.common.collect.Lists.newArrayList;
 public class Demo implements IActionHandler {
 
     private final Logger log = Logger.getLogger(Demo.class.getName());
-    private final DemoPopup demoPopup;
+    private final DemoPopupView demoPopup;
     private List<DemoStep> stepList = newArrayList();
     private int currentDemoStep = 0;
     private DemoStep currentStep;
-    private Timer actionTimer;
-    private Timer nextCalltimer;
+    private final TimerInterface actionTimer;
+    private final TimerInterface nextCalltimer;
     private final EventBus eventBus;
     private final IModeController modeController;
 
     @Inject
-    Demo(DemoPopup demoPopup, EventBus eventBus, IModeController modeController) {
+    Demo(DemoPopupView demoPopup,
+         @ActionTimer TimerInterface actionTimer,
+         @NextTimer TimerInterface nextCalltimer,
+         EventBus eventBus,
+         IModeController modeController) {
         this.demoPopup = demoPopup;
+        this.actionTimer = actionTimer;
+        this.nextCalltimer = nextCalltimer;
         this.eventBus = eventBus;
         this.modeController = modeController;
         demoPopup.setTitle("Demo");
@@ -52,23 +58,22 @@ public class Demo implements IActionHandler {
             demoPopup.setSafeHtml(currentStep.getContent());
             demoPopup.setPopupPosition(10, 10);
             demoPopup.show();
-            actionTimer = new Timer() {
+            actionTimer.setRunnable(new Runnable() {
                 @Override
                 public void run() {
                     currentStep.getAction().run();
                 }
-            };
+            });
             actionTimer.schedule(1000);
-            nextCalltimer = new Timer() {
+            nextCalltimer.setRunnable(new Runnable() {
                 @Override
                 public void run() {
                     eventBus.fireEvent(new ActionDemoEvent(currentStep.getActionId(), false));
                     performAction(actionId);
                 }
-            };
+            });
             currentDemoStep++;
             nextCalltimer.schedule(currentStep.pauseTime());
-
         } else {
             cleanUp();
         }

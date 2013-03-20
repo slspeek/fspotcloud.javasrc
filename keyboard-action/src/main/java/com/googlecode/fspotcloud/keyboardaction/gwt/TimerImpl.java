@@ -22,11 +22,11 @@
  *
  */
 
-package com.googlecode.fspotcloud.client.main.ui;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.Timer;
-import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 
 import java.util.logging.Logger;
 
