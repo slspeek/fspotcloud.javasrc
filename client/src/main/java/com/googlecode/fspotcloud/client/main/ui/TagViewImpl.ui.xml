@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:my="urn:import:com.googlecode.fspotcloud.client.main.ui"
-             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction">
+             xmlns:ka="urn:import:com.googlecode.fspotcloud.keyboardaction.gwt">
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
     <g:LayoutPanel ui:field="mainPanel" styleName="{res.style.tagView}">
         <g:layer top="4px" height="92%" right="0%" width="78%">

@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.*;
@@ -9,6 +9,10 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.keyboardaction.ActionMenuResources;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
+import com.googlecode.fspotcloud.keyboardaction.ActionUIRegistry;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +46,7 @@ public class ActionMenu extends PushButton implements ClickHandler, MouseOverHan
         addStyleName(menuResources.style().menuButton());
         popupPanel.setWidget(innerBar);
         setText(caption);
-        addClickHandler(this);//outerBar.setAutoOpen(true);
+        addClickHandler(this);
         addMouseOverHandler(this);
         addMouseOutHandler(this);
         popupPanel.addStyleName(menuResources.style().popUpMenu());

@@ -33,7 +33,7 @@ import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
@@ -105,7 +105,7 @@ public class TreePresenterImpl extends TreePresenterBase {
     }
 
     public void setPlace(BasePlace place) {
-        this.place = new TagPlace(place.getTagId());
+        this.place = new DashboardPlace(place.getTagId());
         updatePlace();
     }
 

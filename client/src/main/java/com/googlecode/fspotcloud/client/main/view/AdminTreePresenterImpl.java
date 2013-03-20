@@ -35,7 +35,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Level;
@@ -58,7 +58,7 @@ public class AdminTreePresenterImpl extends TreePresenterBase implements TreeVie
     }
 
 
-    public void setPlace(TagPlace place) {
+    public void setPlace(DashboardPlace place) {
         log.log(Level.FINE, "Set place with place " + place);
         this.place = place;
         updatePlace();

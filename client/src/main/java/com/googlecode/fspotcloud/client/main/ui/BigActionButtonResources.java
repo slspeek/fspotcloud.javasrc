@@ -1,6 +1,6 @@
 package com.googlecode.fspotcloud.client.main.ui;
 
-import com.googlecode.fspotcloud.keyboardaction.ActionButtonResources;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButtonResources;
 
 public interface BigActionButtonResources extends ActionButtonResources {
 

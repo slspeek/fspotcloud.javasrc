@@ -3,6 +3,9 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionMenu;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 import java.util.List;
 
@@ -12,7 +15,7 @@ public class KeyboardActionFactory {
 
     private final ActionHandlerRegistry actionHandlerRegistry;
     private final List<ActionCategory> actionCategoryList;
-    private final ActionManager actionManager;
+    private final IActionManager actionManager;
     private final ConfigBuilder configBuilder;
     private final ActionUIRegistry actionUIRegistry;
     private final NativePreviewHandler nativePreviewHandler;
@@ -27,7 +30,7 @@ public class KeyboardActionFactory {
     @Inject
     public KeyboardActionFactory(UIRegistrationBuilder builder,
                                  ActionHandlerRegistry actionHandlerRegistry,
-                                 ActionManager actionManager,
+                                 IActionManager actionManager,
                                  NativePreviewHandler nativePreviewHandler,
                                  HelpActionsFactory helpActionsFactory,
                                  ConfigBuilder configBuilder,

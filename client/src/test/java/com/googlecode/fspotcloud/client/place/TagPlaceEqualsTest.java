@@ -2,14 +2,14 @@ package com.googlecode.fspotcloud.client.place;
 
 import com.googlecode.fspotcloud.test.EqualsTest;
 
-public class TagPlaceEqualsTest extends EqualsTest<TagPlace> {
+public class TagPlaceEqualsTest extends EqualsTest<DashboardPlace> {
     @Override
-    protected TagPlace getOne() {
-        return new TagPlace("1");
+    protected DashboardPlace getOne() {
+        return new DashboardPlace("1");
     }
 
     @Override
-    protected TagPlace getDifferentOne() {
-        return new TagPlace("2");
+    protected DashboardPlace getDifferentOne() {
+        return new DashboardPlace("2");
     }
 }

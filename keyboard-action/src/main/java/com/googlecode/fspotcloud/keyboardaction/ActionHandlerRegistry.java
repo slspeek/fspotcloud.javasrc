@@ -13,7 +13,7 @@ public class ActionHandlerRegistry {
     private final Map<String, IActionHandler> registry = newHashMap();
 
     @Inject
-    private ActionHandlerRegistry() {
+    public ActionHandlerRegistry() {
     }
 
     void putAction(String actionId, IActionHandler handlerI) {

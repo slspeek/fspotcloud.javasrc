@@ -35,8 +35,8 @@ import com.googlecode.fspotcloud.client.main.view.api.DashboardView;
 import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.client.main.view.api.TagDetailsView;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 import com.googlecode.fspotcloud.client.place.HomePlace;
-import com.googlecode.fspotcloud.client.place.TagPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.shared.main.UserInfo;
 
@@ -91,7 +91,7 @@ public class DashboardActivity extends AbstractActivity
     }
 
     @Override
-    public DashboardView.DashboardPresenter withPlace(TagPlace place) {
+    public DashboardView.DashboardPresenter withPlace(DashboardPlace place) {
         ((AdminTreePresenterImpl) treePresenter).setPlace(place);
         activity.init();
         return this;

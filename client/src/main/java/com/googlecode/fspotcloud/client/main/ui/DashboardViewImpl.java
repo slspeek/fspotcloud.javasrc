@@ -35,7 +35,7 @@ import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions
 import com.googlecode.fspotcloud.client.main.gin.AdminTreeView;
 import com.googlecode.fspotcloud.client.main.gin.Dashboard;
 import com.googlecode.fspotcloud.client.main.view.api.*;
-import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.WidgetFactory;
 
 import java.util.logging.Logger;

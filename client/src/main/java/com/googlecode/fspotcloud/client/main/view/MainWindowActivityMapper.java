@@ -141,8 +141,8 @@ public class MainWindowActivityMapper implements ActivityMapper {
         } else if (place instanceof BasePlace) {
             BasePlace basePlace = (BasePlace) place;
             activity = tagActivityFactory.get(basePlace);
-        } else if (place instanceof TagPlace) {
-            return dashboardPresenter.withPlace((TagPlace) place);
+        } else if (place instanceof DashboardPlace) {
+            return dashboardPresenter.withPlace((DashboardPlace) place);
         } else {
             log.warning("getActivity will return null for:" + place);
         }

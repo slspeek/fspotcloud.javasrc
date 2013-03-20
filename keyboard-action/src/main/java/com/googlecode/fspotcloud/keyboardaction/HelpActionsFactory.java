@@ -1,10 +1,12 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ShortcutsPopup;
+import com.googlecode.fspotcloud.keyboardaction.gwt.SingleColumnHelpPopup;
+import com.googlecode.fspotcloud.keyboardaction.gwt.TwoColumnHelpPopup;
 
 import java.util.Set;
 

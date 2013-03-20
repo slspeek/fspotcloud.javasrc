@@ -20,7 +20,7 @@ public class ActionUIRegistry {
         registry.put(actionUIDef.getId(), actionUIDef);
     }
 
-    ActionUIDef getAction(String actionKey) {
+    public ActionUIDef getAction(String actionKey) {
         return registry.get(actionKey);
     }
 
