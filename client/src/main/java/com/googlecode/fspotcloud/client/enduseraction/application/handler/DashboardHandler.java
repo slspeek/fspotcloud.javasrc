@@ -2,7 +2,7 @@ package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
@@ -18,12 +18,12 @@ public class DashboardHandler implements IActionHandler {
     @Override
     public void performAction(String actionId) {
         BasePlace lastBasePlace = placeController.where();
-        TagPlace destTagPlace;
+        DashboardPlace destDashboardPlace;
         if (lastBasePlace != null) {
-            destTagPlace = new TagPlace(lastBasePlace.getTagId());
+            destDashboardPlace = new DashboardPlace(lastBasePlace.getTagId());
         } else {
-            destTagPlace = TagPlace.DEFAULT;
+            destDashboardPlace = DashboardPlace.DEFAULT;
         }
-        placeController.goTo(destTagPlace);
+        placeController.goTo(destDashboardPlace);
     }
 }

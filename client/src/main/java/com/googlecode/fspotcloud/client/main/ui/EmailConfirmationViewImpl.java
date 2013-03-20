@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.EmailConfirmationToolbar;
 import com.googlecode.fspotcloud.client.main.view.api.EmailConfirmationView;
-import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 import java.util.logging.Logger;
 

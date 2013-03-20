@@ -41,7 +41,7 @@ import com.googlecode.fspotcloud.client.enduseraction.group.GroupActions;
 import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.client.main.view.api.TagApprovalView;
-import com.googlecode.fspotcloud.keyboardaction.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 
 import java.util.List;

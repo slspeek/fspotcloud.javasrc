@@ -1,8 +1,11 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButtonResources;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionMenu;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionMenuItemSafeHtml;
 
 public class WidgetFactory {
 

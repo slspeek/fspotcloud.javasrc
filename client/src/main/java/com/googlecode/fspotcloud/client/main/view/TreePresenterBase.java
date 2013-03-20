@@ -5,7 +5,7 @@ import com.google.gwt.user.cellview.client.TreeNode;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import javax.inject.Provider;
@@ -21,7 +21,7 @@ public abstract class TreePresenterBase implements TreeView.TreePresenter, Provi
     protected final SingleSelectionModelExt selectionModel;
     protected final ITreeSelectionHandler treeSelectionHandler;
 
-    protected TagPlace place;
+    protected DashboardPlace place;
     protected TagTreeModel treeModel;
     protected TagNode model;
     protected boolean firstRun = true;

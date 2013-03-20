@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
-import java.util.List;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
@@ -48,7 +46,7 @@ public class NavigatorImplGoToLatestNoTagsPublicTest {
 
         AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
         userInfoAsyncCallback.onSuccess(new UserInfo("sls", true, true));
-        verify(placeController).goTo(TagPlace.DEFAULT);
+        verify(placeController).goTo(DashboardPlace.DEFAULT);
     }
     @Test
     public void testGoToLatestTagNoPublicTagsLoggedOn() throws Exception {

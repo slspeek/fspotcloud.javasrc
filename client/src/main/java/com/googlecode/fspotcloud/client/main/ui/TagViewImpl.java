@@ -31,7 +31,6 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -46,7 +45,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageRasterView;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.client.main.view.api.TimerInterface;
 import com.googlecode.fspotcloud.client.main.view.api.TreeView;
-import com.googlecode.fspotcloud.keyboardaction.ActionToolbar;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Level;

@@ -44,7 +44,7 @@ public class DashboardPage {
     ILogin login;
 
     public void open() {
-        selenium.open("/#TagPlace:1");
+        selenium.open("/#DashboardPlace:1");
         selenium.waitForPageToLoad("30000");
     }
 
@@ -65,7 +65,7 @@ public class DashboardPage {
     }
 
     public void toggleImportForTagId(String id) throws InterruptedException {
-        selenium.open("/#TagPlace:" + id);
+        selenium.open("/#DashboardPlace:" + id);
         selenium.refresh();
         selenium.waitForPageToLoad("30000");
         selenium.click("gwt-debug-import-tag-button");
@@ -73,7 +73,7 @@ public class DashboardPage {
     }
 
     public void manageApprovalForTag(String id) throws InterruptedException {
-        selenium.open("/#TagPlace:" + id);
+        selenium.open("/#DashboardPlace:" + id);
         selenium.waitForPageToLoad("30000");
         selenium.refresh();
         selenium.click("gwt-debug-manage-access-button");

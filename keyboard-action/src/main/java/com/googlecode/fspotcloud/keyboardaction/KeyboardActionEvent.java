@@ -32,9 +32,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
+public class KeyboardActionEvent extends Event<IActionManager> {
     private final Logger log = Logger.getLogger(KeyboardActionEvent.class.getName());
-    public static final Type<IKeyboardActionHandler> TYPE = new Type<IKeyboardActionHandler>();
+    public static final Type<IActionManager> TYPE = new Type<IActionManager>();
     private final String actionId;
 
     public KeyboardActionEvent(String actionId) {
@@ -46,12 +46,12 @@ public class KeyboardActionEvent extends Event<IKeyboardActionHandler> {
     }
 
     @Override
-    public Type<IKeyboardActionHandler> getAssociatedType() {
+    public Type<IActionManager> getAssociatedType() {
         return TYPE;
     }
 
     @Override
-    protected void dispatch(IKeyboardActionHandler handlerI) {
+    protected void dispatch(IActionManager handlerI) {
         log.log(Level.FINEST, "in dispatch for " + this);
         handlerI.onEvent(this);
     }

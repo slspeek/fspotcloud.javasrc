@@ -27,7 +27,7 @@ package com.googlecode.fspotcloud.client.main.view.api;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.googlecode.fspotcloud.client.place.TagPlace;
+import com.googlecode.fspotcloud.client.place.DashboardPlace;
 
 @GwtCompatible
 public interface DashboardView extends IsWidget {
@@ -40,6 +40,6 @@ public interface DashboardView extends IsWidget {
     interface DashboardPresenter extends Activity {
         void init();
 
-        DashboardPresenter withPlace(TagPlace place);
+        DashboardPresenter withPlace(DashboardPlace place);
     }
 }

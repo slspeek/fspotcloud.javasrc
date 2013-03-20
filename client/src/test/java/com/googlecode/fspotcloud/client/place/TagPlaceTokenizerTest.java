@@ -1,7 +1,7 @@
 package com.googlecode.fspotcloud.client.place;
 
-public class TagPlaceTokenizerTest extends TokenizerTest<TagPlace> {
+public class TagPlaceTokenizerTest extends TokenizerTest<DashboardPlace> {
     public TagPlaceTokenizerTest() {
-        super(new TagPlace.Tokenizer(), new TagPlace("1"), "1");
+        super(new DashboardPlace.Tokenizer(), new DashboardPlace("1"), "1");
     }
 }

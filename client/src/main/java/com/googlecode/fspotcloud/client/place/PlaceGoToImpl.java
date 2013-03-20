@@ -50,8 +50,8 @@ public class PlaceGoToImpl implements IPlaceController {
 
     @Override
     public void goTo(Place place) {
-        if (place instanceof TagPlace) {
-            activeTagId = ((TagPlace) place).getTagId();
+        if (place instanceof DashboardPlace) {
+            activeTagId = ((DashboardPlace) place).getTagId();
         } else if (place instanceof BasePlace) {
             activeTagId = ((BasePlace) place).getTagId();
             setLastBasePlace((BasePlace) place);

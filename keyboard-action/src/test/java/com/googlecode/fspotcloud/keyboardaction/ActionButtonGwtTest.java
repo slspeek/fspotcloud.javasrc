@@ -4,6 +4,8 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButtonResources;
 import com.googlecode.fspotcloud.testharness.MainBuilder;
 
 public class ActionButtonGwtTest extends GWTTestCase {

@@ -4,6 +4,7 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.googlecode.fspotcloud.keyboardaction.gwt.TwoColumnHelpPopup;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class KeyboardActionModule extends AbstractGinModule {
     protected void configure() {
         bind(IPlaceController.class).to(PlaceControllerImpl.class);
         bind(IModeController.class).toProvider(ModeControllerProvider.class).in(Singleton.class);
-        bind(ActionManager.class).toProvider(ActionManagerFactory.class).in(Singleton.class);
+        bind(IActionManager.class).toProvider(ActionManagerFactory.class).in(Singleton.class);
         bind(ConfigBuilder.class).in(Singleton.class);
         bind(KeyboardActionFactory.class).asEagerSingleton();
         bind(ActionUIRegistry.class).in(Singleton.class);
