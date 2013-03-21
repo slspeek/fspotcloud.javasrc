@@ -1,8 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;

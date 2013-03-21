@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.common.collect.Sets;
 import com.google.gwt.place.shared.Place;
 import com.googlecode.fspotcloud.testharness.HomePlace;
 import org.jukito.JukitoRunner;
@@ -9,7 +8,6 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)

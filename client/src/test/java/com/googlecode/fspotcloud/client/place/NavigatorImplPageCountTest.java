@@ -3,9 +3,6 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.client.main.IClientLoginManager;
-import com.googlecode.fspotcloud.client.place.api.IPlaceController;
-import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
 import org.jukito.JukitoRunner;
@@ -14,9 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class NavigatorImplPageCountTest {

@@ -1,5 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 
 public class PlaceFlagCondition {
@@ -30,5 +31,11 @@ public class PlaceFlagCondition {
         int result = place.hashCode();
         result = 31 * result + condition.hashCode();
         return result;
+    }
+
+    public String toString() {
+        return Objects.toStringHelper(this).
+                add("place", place).
+                add("condition", condition).toString();
     }
 }

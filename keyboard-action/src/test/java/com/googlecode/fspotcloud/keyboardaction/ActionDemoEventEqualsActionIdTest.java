@@ -1,10 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.googlecode.fspotcloud.test.EqualsTest;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class ActionDemoEventEqualsActionIdTest extends EqualsTest<ActionDemoEvent> {
 

@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -39,5 +38,11 @@ public class RelevanceNeedsFlagListConfigTest {
     public void testGetKeys() throws Exception {
         List<KeyStroke> keys = relevance.getKeys(placeContext);
         assertEquals(1, keys.size());
+    }
+
+    @Test
+    public void testGetKeysEmpty() throws Exception {
+        List<KeyStroke> keys = relevance.getKeys(new PlaceContext(Place.NOWHERE.getClass()));
+        assertEquals(0, keys.size());
     }
 }

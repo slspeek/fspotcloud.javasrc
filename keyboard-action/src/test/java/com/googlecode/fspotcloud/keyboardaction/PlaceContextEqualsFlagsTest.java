@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.place.shared.Place;
 import com.googlecode.fspotcloud.test.EqualsTest;
-import com.googlecode.fspotcloud.testharness.HomePlace;
 
 import static com.google.common.collect.Sets.newHashSet;
 

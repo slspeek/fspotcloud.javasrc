@@ -8,8 +8,8 @@ import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationActio
 import com.googlecode.fspotcloud.client.enduseraction.raster.RasterActions;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowActions;
 import com.googlecode.fspotcloud.client.main.ui.ToolbarButtonResources;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 public class MainToolbarProvider implements Provider<ActionToolbar> {
 

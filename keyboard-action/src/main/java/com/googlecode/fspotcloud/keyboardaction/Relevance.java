@@ -7,9 +7,9 @@ import com.google.gwt.place.shared.Place;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.google.common.base.Objects.equal;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
@@ -20,7 +20,7 @@ public class Relevance {
     private final Logger log = Logger.getLogger(Relevance.class.getName());
     private final List<KeyStroke> defaultKeys = newArrayList();
     private final Map<Class<? extends Place>, Set<FlagsRule>> placeConditions = newHashMap();
-    private final Map<PlaceFlagCondition, KeyStroke[]> overridesMap = newHashMap();
+    private final Map<PlaceFlagCondition, List<KeyStroke>> overridesMap = newHashMap();
     private final List<Class<? extends Place>> defaultPlaces = newArrayList();
     private final FlagsRule defaultRule;
 
@@ -48,7 +48,8 @@ public class Relevance {
     public Relevance addRule(Class<? extends Place> place, FlagsRule condition, KeyStroke... keyStrokes) {
         addPlaceCondition(place, condition);
         PlaceFlagCondition placeFlagCondition = new PlaceFlagCondition(place, condition);
-        overridesMap.put(placeFlagCondition, keyStrokes);
+        List<KeyStroke> keysList = newArrayList(keyStrokes);
+        overridesMap.put(placeFlagCondition, keysList);
         return this;
     }
 
@@ -111,10 +112,9 @@ public class Relevance {
     }
 
     private List<KeyStroke> getKeyStrokes(Class<? extends Place> placeClasses, FlagsRule condition) {
-        final KeyStroke[] elements = overridesMap.get(new PlaceFlagCondition(placeClasses, condition));
+        final List<KeyStroke> elements = overridesMap.get(new PlaceFlagCondition(placeClasses, condition));
         if (elements != null) {
-            return newArrayList(elements);
-
+            return elements;
         } else {
             return newArrayList();
         }
@@ -122,30 +122,31 @@ public class Relevance {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Relevance relevance = (Relevance) o;
-
-        if (!defaultKeys.equals(relevance.defaultKeys)) return false;
-        if (!defaultPlaces.equals(relevance.defaultPlaces)) return false;
-        if (!overridesMap.equals(relevance.overridesMap)) return false;
-        if (!placeConditions.equals(relevance.placeConditions)) return false;
-
-        return true;
+        if (o instanceof Relevance) {
+            Relevance relevance = (Relevance) o;
+            return equal(defaultRule, relevance.defaultRule) &&
+                    equal(defaultKeys, relevance.defaultKeys) &&
+                    equal(defaultPlaces, relevance.defaultPlaces) &&
+                    equal(overridesMap, relevance.overridesMap) &&
+                    equal(placeConditions, relevance.placeConditions);
+        } else {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        int result = defaultKeys.hashCode();
-        result = 31 * result + placeConditions.hashCode();
-        result = 31 * result + overridesMap.hashCode();
-        result = 31 * result + defaultPlaces.hashCode();
-        return result;
+        return Objects.hashCode(
+                defaultRule,
+                defaultKeys,
+                defaultPlaces,
+                overridesMap,
+                placeConditions
+                );
     }
 
     public void addRule(List<Class<? extends Place>> placeClasses, KeyStroke stroke) {
-        for (Class<? extends Place> place: placeClasses) {
+        for (Class<? extends Place> place : placeClasses) {
             addRule(place, stroke);
         }
     }

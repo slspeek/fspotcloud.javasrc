@@ -4,4 +4,6 @@ description = 'test-util'
 dependencies {
     compile libs.junit
     compile libs.commons_lang
+    compile libs.guice
+    compile libs.guava
 }

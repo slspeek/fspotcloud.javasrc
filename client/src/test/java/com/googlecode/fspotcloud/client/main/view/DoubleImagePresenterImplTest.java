@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)

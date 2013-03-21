@@ -3,8 +3,8 @@ package com.googlecode.fspotcloud.client.enduseraction;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationActions;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 public class EmailConfirmationToolbarProvider implements Provider<ActionToolbar> {
 

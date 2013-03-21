@@ -1,13 +1,9 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.googlecode.fspotcloud.keyboardaction.gwt.DemoPopup;
-import com.googlecode.fspotcloud.keyboardaction.gwt.DemoPopupView;
-import com.googlecode.fspotcloud.keyboardaction.gwt.TimerImpl;
-import com.googlecode.fspotcloud.keyboardaction.gwt.TwoColumnHelpPopup;
+import com.googlecode.fspotcloud.keyboardaction.gwt.*;
 
 import java.util.List;
 

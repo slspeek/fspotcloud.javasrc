@@ -1,7 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.collect.Sets;
-import com.google.gwt.place.shared.Place;
 import com.googlecode.fspotcloud.testharness.HomePlace;
 import com.googlecode.fspotcloud.testharness.MainBuilder;
 import com.googlecode.fspotcloud.testharness.OutPlace;

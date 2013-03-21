@@ -29,6 +29,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 import com.googlecode.fspotcloud.client.place.api.HasImage;
 import com.googlecode.fspotcloud.client.place.api.Raster;
+
 import static com.google.common.base.Objects.equal;
 
 public class BasePlace extends Place implements HasImage, Raster {

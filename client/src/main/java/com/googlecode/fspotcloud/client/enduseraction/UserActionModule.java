@@ -34,8 +34,8 @@ import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationActio
 import com.googlecode.fspotcloud.client.enduseraction.raster.RasterBinder;
 import com.googlecode.fspotcloud.client.enduseraction.raster.handler.SetRasterHandlerFactory;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowBinder;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 
 public class UserActionModule extends AbstractGinModule {

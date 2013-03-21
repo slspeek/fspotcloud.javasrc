@@ -26,11 +26,9 @@ package com.googlecode.fspotcloud.test;
 
 import com.google.guiceberry.controllable.InjectionController;
 import com.google.guiceberry.junit4.GuiceBerryRule;
-import com.google.inject.Injector;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
