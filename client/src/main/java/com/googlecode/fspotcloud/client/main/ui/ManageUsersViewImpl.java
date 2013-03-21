@@ -44,8 +44,8 @@ import com.googlecode.fspotcloud.client.main.gin.AdminButtonFactory;
 import com.googlecode.fspotcloud.client.main.gin.ManageUsers;
 import com.googlecode.fspotcloud.client.main.view.api.ManageUsersView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.IModeController;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 
 import java.util.List;
 import java.util.Set;

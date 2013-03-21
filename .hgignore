@@ -42,3 +42,7 @@ client/src/main/webapp/fspotcloud
 client/src/main/webapp/WEB-INF/
 client/src/main/webapp/com.googlecode.fspotcloud.dashboard
 
+keyboard-action/src/main/gwt-unitCache/*
+keyboard-action/src/main/webapp/testharness/
+keyboard-action/src/main/webapp/WEB-INF/
+keyboard-action/src/main/webapp/com.googlecode.fspotcloud.dashboard

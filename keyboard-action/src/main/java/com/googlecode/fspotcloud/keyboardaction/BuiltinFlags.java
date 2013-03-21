@@ -1,7 +1,5 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import java.lang.String;
-
 public interface BuiltinFlags {
 
     public static final String HELP_SHOWING = "HELP_SHOWING";

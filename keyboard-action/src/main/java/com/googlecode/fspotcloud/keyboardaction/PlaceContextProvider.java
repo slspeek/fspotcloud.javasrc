@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
-import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 

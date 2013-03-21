@@ -1,7 +1,6 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.googlecode.fspotcloud.test.EqualsTest;
-import com.googlecode.fspotcloud.testharness.MainBuilder;
 
 public class ActionCategoryEqualsNameTest extends EqualsTest<ActionCategory> {
     @Override

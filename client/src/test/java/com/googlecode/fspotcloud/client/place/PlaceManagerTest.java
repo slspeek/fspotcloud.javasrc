@@ -26,12 +26,10 @@ package com.googlecode.fspotcloud.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.main.gin.RasterHeight;
 import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Zoom;
-import junit.framework.TestCase;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
@@ -40,9 +38,7 @@ import org.mockito.ArgumentCaptor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class PlaceManagerTest {

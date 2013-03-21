@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;

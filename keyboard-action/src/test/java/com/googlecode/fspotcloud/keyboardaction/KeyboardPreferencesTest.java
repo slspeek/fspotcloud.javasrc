@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.common.collect.Sets;
+import com.google.inject.Inject;
 import com.googlecode.fspotcloud.testharness.HomePlace;
 import org.junit.Test;
 
@@ -9,10 +10,21 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import org.jukito.JukitoRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+
+@RunWith(JukitoRunner.class)
 public class KeyboardPreferencesTest {
 
     public static final String ACTION_ID = "ACTION";
-    private KeyboardPreferences preferences = new KeyboardPreferences();
+
+    @Inject
+    private KeyboardPreferences preferences;
 
     private PlaceContext homeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet());
 

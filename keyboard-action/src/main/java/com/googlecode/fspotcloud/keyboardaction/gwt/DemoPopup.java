@@ -79,7 +79,7 @@ public class DemoPopup extends PopupPanel implements DemoPopupView {
         titleDiv.setInnerHTML(text);
     }
 
-    interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopupView> {
+    interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopup> {
     }
 
     @UiHandler("stopAnchor")

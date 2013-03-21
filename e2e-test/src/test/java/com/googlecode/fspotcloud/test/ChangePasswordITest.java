@@ -30,8 +30,6 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
-
 public class ChangePasswordITest {
     public static final String GNU_RULES = "GNU Rules!";
     @Rule

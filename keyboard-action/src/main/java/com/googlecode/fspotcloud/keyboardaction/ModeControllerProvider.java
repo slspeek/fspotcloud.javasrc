@@ -11,7 +11,7 @@ public class ModeControllerProvider implements Provider<IModeController> {
     private EventBus eventBus;
 
     @Inject
-    ModeController modeController;
+    private ModeController modeController;
 
     @Override
     public IModeController get() {

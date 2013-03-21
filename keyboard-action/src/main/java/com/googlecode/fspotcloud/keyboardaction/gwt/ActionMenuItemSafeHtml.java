@@ -13,7 +13,6 @@ import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardPreferences;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.FINE;

@@ -30,7 +30,6 @@ import com.googlecode.fspotcloud.user.PostThirdPartyLoginServlet;
 import com.googlecode.fspotcloud.user.PostThirdPartyLoginWorker;
 import com.googlecode.fspotcloud.user.SessionEmail;
 import com.googlecode.fspotcloud.user.inject.AbstractUserModule;
-import javax.servlet.http.HttpServlet;
 
 public class OpenIdUserModule extends AbstractUserModule {
     private final String adminEmail;

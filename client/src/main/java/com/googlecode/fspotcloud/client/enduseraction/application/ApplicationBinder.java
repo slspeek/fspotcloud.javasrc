@@ -7,7 +7,10 @@ import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
 import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.application.handler.*;
 import com.googlecode.fspotcloud.client.place.*;
-import com.googlecode.fspotcloud.keyboardaction.*;
+import com.googlecode.fspotcloud.keyboardaction.FlagsRule;
+import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
+import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
+import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
 import static com.googlecode.fspotcloud.keyboardaction.FlagsRule.needing;
 import static com.googlecode.fspotcloud.keyboardaction.KeyStroke.*;

@@ -7,7 +7,7 @@
         <g:HTMLPanel>
             <div ui:field="titleDiv" class="{res.style.helpTitle}"></div>
             <div ui:field="helpBodyDiv" class="{res.style.helpBody}"></div>
-            <g:Anchor ui:field="stopAnchor" styleName="{res.style.helpClose">Stop demo</g:Anchor>
+            <g:Anchor ui:field="stopAnchor" styleName="{res.style.helpClose}">Stop demo</g:Anchor>
         </g:HTMLPanel>
     </g:FocusPanel>
 </ui:UiBinder>

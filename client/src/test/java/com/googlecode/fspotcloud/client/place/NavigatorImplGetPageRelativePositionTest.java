@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.client.place;
 
-import com.google.common.collect.Lists;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
@@ -15,7 +14,6 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)

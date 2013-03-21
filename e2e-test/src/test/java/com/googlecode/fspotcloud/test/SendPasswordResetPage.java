@@ -34,8 +34,6 @@ import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
 
-import static junit.framework.Assert.assertTrue;
-
 /**
  * @author steven
  */

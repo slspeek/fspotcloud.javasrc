@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.dom.client.NativeEvent;
@@ -6,6 +6,7 @@ import com.google.gwt.user.client.Event;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.keyboardaction.*;
 
 import java.util.List;
 import java.util.logging.Level;

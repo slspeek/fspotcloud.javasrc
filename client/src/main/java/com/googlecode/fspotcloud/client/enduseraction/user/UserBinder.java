@@ -5,7 +5,6 @@ import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
 import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.place.*;
-import com.googlecode.fspotcloud.keyboardaction.FlagsRule;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.Relevance;
 

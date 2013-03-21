@@ -1,9 +1,6 @@
 package com.googlecode.fspotcloud.client.place;
 
 import com.googlecode.fspotcloud.test.EqualsTest;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class ChangePasswordEqualsEmailTest extends EqualsTest<ChangePasswordPlace> {
 
