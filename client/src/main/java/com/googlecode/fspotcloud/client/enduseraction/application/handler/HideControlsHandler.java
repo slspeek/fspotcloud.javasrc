@@ -25,11 +25,9 @@
 package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
-import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Logger;
 

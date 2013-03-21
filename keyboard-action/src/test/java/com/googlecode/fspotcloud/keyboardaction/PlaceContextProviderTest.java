@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

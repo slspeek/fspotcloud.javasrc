@@ -29,14 +29,10 @@
 package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
-import com.googlecode.fspotcloud.client.main.view.SignUpActivity;
 import com.googlecode.fspotcloud.keyboardaction.SeleniumPerformer;
 import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
-
-import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author steven

@@ -73,12 +73,18 @@ public class ModeControllerTest {
     }
 
     @Test
-    public void testClearFlags() throws Exception {
-
+    public void testSetFlags() throws Exception {
+       modeController.setFlag(FOO, true);
+       modeController.setFlag(FOO, false);
+       assertEquals(0, modeController.getFlags().size());
     }
 
     @Test
-    public void testOnPlaceChange() throws Exception {
-
+    public void testClearFlags() throws Exception {
+        modeController.setFlag(FOO, true);
+        modeController.clearFlags();
+        assertEquals(0, modeController.getFlags().size());
     }
+
+
 }

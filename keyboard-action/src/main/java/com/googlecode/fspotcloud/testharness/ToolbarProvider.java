@@ -2,10 +2,9 @@ package com.googlecode.fspotcloud.testharness;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionMenu;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 public class ToolbarProvider implements Provider<ActionToolbar> {
 

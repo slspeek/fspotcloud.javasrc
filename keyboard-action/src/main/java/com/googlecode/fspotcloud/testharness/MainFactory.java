@@ -1,10 +1,8 @@
 package com.googlecode.fspotcloud.testharness;
 
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.keyboardaction.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

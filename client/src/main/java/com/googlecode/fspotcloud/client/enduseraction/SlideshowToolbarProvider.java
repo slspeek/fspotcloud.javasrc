@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowActions;
 import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 public class SlideshowToolbarProvider implements Provider<ActionToolbar> {
     private final KeyboardActionFactory keyboardActionFactory;

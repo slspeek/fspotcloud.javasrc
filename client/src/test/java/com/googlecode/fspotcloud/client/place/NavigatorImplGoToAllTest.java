@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.gin.RasterHeight;
 import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
-import com.googlecode.fspotcloud.test.EqualsTest;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;

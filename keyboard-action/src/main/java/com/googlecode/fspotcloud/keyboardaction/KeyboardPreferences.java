@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -20,8 +19,9 @@ public class KeyboardPreferences {
     private final Logger log = Logger.getLogger(KeyboardPreferences.class.getName());
     private final Map<String, Relevance> bindingsMap = newHashMap();
     private final Map<Relevance, String> relevanceMap = newHashMap();
+
     @Inject
-    KeyboardPreferences() {
+    private KeyboardPreferences() {
     }
 
     void bind(String id, Relevance relevance) {
@@ -50,7 +50,6 @@ public class KeyboardPreferences {
         if (relevance != null) {
             keyStrokes.addAll(relevance.getKeys(placeContext));
         }
-        //log.log(Level.SEVERE, "processed " + actionId + " to " + keyStrokes);
         return keyStrokes;
     }
 

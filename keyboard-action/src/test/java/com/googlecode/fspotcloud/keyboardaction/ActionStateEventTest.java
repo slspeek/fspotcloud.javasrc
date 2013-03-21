@@ -3,9 +3,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.googlecode.fspotcloud.test.EqualsTest;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ActionStateEventTest extends EqualsTest<ActionStateEvent> {
     @Test

@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.client.place;
 
-import com.googlecode.fspotcloud.test.EqualsTest;
 import org.junit.Test;
 
 public class SendPasswordResetPlaceTest  {

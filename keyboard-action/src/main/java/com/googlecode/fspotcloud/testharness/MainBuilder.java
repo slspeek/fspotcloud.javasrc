@@ -5,7 +5,6 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.*;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static com.googlecode.fspotcloud.keyboardaction.FlagsRule.excluding;
 import static com.googlecode.fspotcloud.keyboardaction.FlagsRule.needing;
 import static com.googlecode.fspotcloud.testharness.MainFactory.outputMesg;

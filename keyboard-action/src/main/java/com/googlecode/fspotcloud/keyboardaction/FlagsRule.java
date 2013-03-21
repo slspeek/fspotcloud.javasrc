@@ -1,5 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
+import com.google.common.base.Objects;
+
 import java.util.Set;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -76,5 +78,12 @@ public class FlagsRule {
         int result = excludedFlags.hashCode();
         result = 31 * result + necessaryFlags.hashCode();
         return result;
+    }
+
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("excludes", excludedFlags)
+                .add("needed", necessaryFlags)
+                .toString();
     }
 }

@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
-import com.googlecode.fspotcloud.testharness.MainBuilder;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -13,7 +12,6 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 @RunWith(JukitoRunner.class)
 public class ConfigBuilderCategoryTest {

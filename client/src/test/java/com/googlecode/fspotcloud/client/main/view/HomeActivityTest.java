@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.client.main.view;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.HomeView;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
@@ -13,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(JukitoRunner.class)
 public class HomeActivityTest {

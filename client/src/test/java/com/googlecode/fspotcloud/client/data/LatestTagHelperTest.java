@@ -1,7 +1,6 @@
 package com.googlecode.fspotcloud.client.data;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
 import org.jukito.JukitoRunner;

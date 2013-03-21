@@ -4,4 +4,6 @@ description = 'test-util'
 dependencies {
     compile ext.libs.junit
     compile ext.libs.commons_lang
+    compile ext.libs.guice
+    compile ext.libs.guava
 }

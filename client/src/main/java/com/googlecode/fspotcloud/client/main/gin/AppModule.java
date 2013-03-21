@@ -34,19 +34,22 @@ import com.googlecode.fspotcloud.client.enduseraction.EndUserActionFactory;
 import com.googlecode.fspotcloud.client.main.ClientLoginManager;
 import com.googlecode.fspotcloud.client.main.IClientLoginManager;
 import com.googlecode.fspotcloud.client.main.MVPSetup;
-import com.googlecode.fspotcloud.client.main.ui.*;
+import com.googlecode.fspotcloud.client.main.ui.MvpDisplay;
+import com.googlecode.fspotcloud.client.main.ui.OpenNewTabImpl;
+import com.googlecode.fspotcloud.client.main.ui.ReplaceLocationImpl;
+import com.googlecode.fspotcloud.client.main.ui.SchedulerImpl;
 import com.googlecode.fspotcloud.client.main.view.MainWindowActivityMapper;
 import com.googlecode.fspotcloud.client.main.view.api.IScheduler;
 import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.client.main.view.api.ReplaceLocation;
-import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.googlecode.fspotcloud.client.place.*;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
-import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
+import com.googlecode.fspotcloud.keyboardaction.TimerInterface;
 import com.googlecode.fspotcloud.keyboardaction.UIRegistrationBuilder;
+import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.gwt.TimerImpl;
 
 public class AppModule extends AbstractGinModule {
