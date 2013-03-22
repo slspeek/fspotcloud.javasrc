@@ -49,9 +49,9 @@ public class ModeController implements IModeController {
 
     private void setFlagImpl(String name, boolean set) {
         if (set) {
-            setFlagImpl(null);
+            setFlagImpl(name);
         } else {
-            unsetFlagImpl(null);
+            unsetFlagImpl(name);
         }
     }
 
