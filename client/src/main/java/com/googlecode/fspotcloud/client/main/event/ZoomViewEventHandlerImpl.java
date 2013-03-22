@@ -28,24 +28,22 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.fspotcloud.client.place.BasePlace;
-import com.googlecode.fspotcloud.client.place.PlaceManager;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 
 @GwtCompatible
 public class ZoomViewEventHandlerImpl implements ZoomViewEvent.Handler {
 
     private final EventBus eventBus;
-    private final PlaceManager placeManager;
-    private final IPlaceController placeController;
+    private final IRasterer rasterer;
 
     @Inject
     public ZoomViewEventHandlerImpl(EventBus eventBus,
-                                    PlaceManager placeManager,
-                                    IPlaceController placeController) {
+                                    IRasterer rasterer
+                                    ) {
         super();
         this.eventBus = eventBus;
-        this.placeManager = placeManager;
-        this.placeController = placeController;
+        this.rasterer = rasterer;
     }
 
     public void init() {
@@ -54,8 +52,7 @@ public class ZoomViewEventHandlerImpl implements ZoomViewEvent.Handler {
 
     @Override
     public void onEvent(ZoomViewEvent e) {
-        BasePlace newPlace = placeManager.toggleZoomView(placeController.where(),
-                e.getTagId(), e.getPhotoId());
-        placeController.goTo(newPlace);
+        rasterer.toggleZoomView(e.getTagId(), e.getPhotoId());
+
     }
 }

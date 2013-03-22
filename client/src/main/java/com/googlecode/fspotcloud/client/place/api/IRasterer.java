@@ -1,5 +1,7 @@
 package com.googlecode.fspotcloud.client.place.api;
 
+import com.googlecode.fspotcloud.client.place.BasePlace;
+
 public interface IRasterer {
 
     void increaseRasterWidth(int amount);
@@ -9,4 +11,12 @@ public interface IRasterer {
     void setRasterDimension(int i, int j);
 
     void resetRasterSize();
+
+    void zoom(Navigator.Zoom direction);
+
+    void goOneByOne();
+
+    void toggleRasterView();
+
+    void toggleZoomView(String tagId, String photoId);
 }

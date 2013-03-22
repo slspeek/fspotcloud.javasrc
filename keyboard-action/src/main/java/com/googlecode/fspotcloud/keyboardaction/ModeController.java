@@ -7,6 +7,7 @@ import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.inject.Inject;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,32 @@ public class ModeController implements IModeController {
         }
     }
 
+    private void setFlagImpl(String name, boolean set) {
+        if (set) {
+            setFlagImpl(null);
+        } else {
+            unsetFlagImpl(null);
+        }
+    }
+
+    private void setFlagImpl(String flag) {
+        flags.add(flag);
+    }
+
+    private void unsetFlagImpl(String flag) {
+        flags.remove(flag);
+    }
+
+
+    @Override
+    public void setFlags(Map<String, Boolean> flags) {
+        for (String flag : flags.keySet()) {
+            Boolean state = flags.get(flag);
+            setFlagImpl(flag, state);
+        }
+        fireEnabledStateEvens();
+    }
+
     @Override
     public Set<String> getFlags() {
         return newHashSet(flags);
@@ -54,14 +81,14 @@ public class ModeController implements IModeController {
     @Override
     public void setFlag(String flag) {
         log.log(Level.FINER, "set flag: " + flag);
-        final boolean add = flags.add(flag);
+        setFlagImpl(flag);
         fireEnabledStateEvens();
     }
 
     @Override
     public void unsetFlag(String flag) {
         log.log(Level.FINER, "unset flag: " + flag);
-        final boolean remove = flags.remove(flag);
+        unsetFlagImpl(flag);
         fireEnabledStateEvens();
     }
 

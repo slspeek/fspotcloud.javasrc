@@ -16,13 +16,11 @@
 
 .toolbar-button-up-disabled
 {
-    filter: grayscale(disabledGreyScale) blur(1px);
-
+    filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
     -webkit-filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
-
-    -moz-filter: grayscale(disabledGreyScale);
-    -ms-filter: grayscale(disabledGreyScale);
-    -o-filter: grayscale(disabledGreyScale);
+    -moz-filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
+    -ms-filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
+    -o-filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
 }
 
 .toolbar-button {

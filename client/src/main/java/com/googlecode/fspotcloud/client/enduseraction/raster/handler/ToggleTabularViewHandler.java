@@ -1,21 +1,21 @@
 package com.googlecode.fspotcloud.client.enduseraction.raster.handler;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.place.PlaceManager;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class ToggleTabularViewHandler implements IActionHandler {
 
-    private final PlaceManager placeManager;
+    private final IRasterer rasterer;
 
     @Inject
-    public ToggleTabularViewHandler(PlaceManager placeManager) {
-        this.placeManager = placeManager;
+    public ToggleTabularViewHandler(IRasterer rasterer) {
+        this.rasterer = rasterer;
     }
 
 
     @Override
     public void performAction(String actionId) {
-        placeManager.toggleRasterView();
+        rasterer.toggleRasterView();
     }
 }

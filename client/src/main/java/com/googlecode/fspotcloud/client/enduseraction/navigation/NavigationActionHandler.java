@@ -65,8 +65,6 @@ public class NavigationActionHandler implements IActionHandler {
             navigator.goAsync(Direction.FORWARD, Unit.ROW);
         } else if (actionId.equals(NavigationActions.ROW_UP_ID)) {
             navigator.goAsync(Direction.BACKWARD, Unit.ROW);
-        } else if (actionId.equals(navigationActions.all_photos.getId())) {
-            navigator.goToAllPhotos();
         }
     }
 }

@@ -39,8 +39,6 @@ public class NavigatorImplGetPageAsync {
 
     @Inject private ArgumentCaptor<Throwable> throwableArgumentCaptor;
 
-
-
     @Test
     public void testGetPage() throws Exception {
         navigator.getPageAsync(TAG_ID, "42", 1, photoInfoListCallback);
