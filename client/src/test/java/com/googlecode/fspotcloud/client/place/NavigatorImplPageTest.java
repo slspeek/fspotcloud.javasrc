@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(JukitoRunner.class)
 public class NavigatorImplPageTest {
@@ -37,6 +38,11 @@ public class NavigatorImplPageTest {
     private ArgumentCaptor<List<PhotoInfo>> listCaptor;
 
 
+    @Test
+    public void testNegativePageIsNoop() throws Exception {
+        navigator.getPageAsync(TAG_ID, 1, -4, photoInfoListCallback);
+        verifyZeroInteractions(dataManager, photoInfoListCallback);
+    }
 
     @Test
     public void testGetPage() throws Exception {

@@ -38,29 +38,30 @@ import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 
 
 public class NavigatorImpl implements Navigator {
     private final Logger log = Logger.getLogger(NavigatorImpl.class.getName());
     private final IPlaceController placeController;
     private final DataManager dataManager;
-    private final PlaceManager placeManager;
+    private final RasterState rasterState;
     private final IClientLoginManager clientLoginManager;
     private final LatestTagHelper latestTagHelper;
 
     @Inject
     public NavigatorImpl(
             IPlaceController placeController,
-            PlaceManager placeManager,
             DataManager dataManager,
-            IClientLoginManager clientLoginManager,
+            RasterState rasterState, IClientLoginManager clientLoginManager,
             LatestTagHelper latestTagHelper) {
         this.placeController = placeController;
-        this.placeManager = placeManager;
+        this.rasterState = rasterState;
         this.dataManager = dataManager;
         this.clientLoginManager = clientLoginManager;
         this.latestTagHelper = latestTagHelper;
@@ -86,6 +87,29 @@ public class NavigatorImpl implements Navigator {
                         callback.onSuccess(canGo(direction, step, place, store));
                     }
                 });
+    }
+
+    @Override
+    public void getPossibleMoves(final AsyncCallback<Map<Move, Boolean>> movesCallback) {
+        final BasePlace place = placeController.where();
+        dataManager.getTagNode(place.getTagId(),
+                new TagNodeCallback(movesCallback) {
+                    @Override
+                    public void onSuccess(TagNode result) {
+                        PhotoInfoStore store = result.getCachedPhotoList();
+                        movesCallback.onSuccess(getPossibleMoveImpl(place, store));
+                    }
+                });
+    }
+
+    private Map<Move, Boolean> getPossibleMoveImpl(BasePlace place, PhotoInfoStore store) {
+        Map<Move, Boolean> result = newHashMap();
+        for (Unit unit : Unit.values()) {
+            for (Direction direction : Direction.values()) {
+                result.put(new Move(direction, unit), canGo(direction, unit, place, store));
+            }
+        }
+        return result;
     }
 
     private int indexOf(BasePlace place, PhotoInfoStore store) {
@@ -151,6 +175,9 @@ public class NavigatorImpl implements Navigator {
     private boolean canGo(final Direction direction, final Unit step,
                           BasePlace fromPlace, PhotoInfoStore store) {
         int position = indexOf(fromPlace, store);
+        if (position < 0) {
+            return false;
+        }
         if (step == Unit.BORDER) {
             if (direction == Direction.FORWARD) {
                 if (position != store.lastIndex()) {
@@ -171,7 +198,7 @@ public class NavigatorImpl implements Navigator {
         int stepSize = stepSize(step, fromPlace);
 
         if (direction == Direction.FORWARD) {
-            return (position >= 0) && ((position + stepSize) < store.size());
+            return (position + stepSize) < store.size();
         } else {
             return (position - stepSize) >= 0;
         }
@@ -248,6 +275,9 @@ public class NavigatorImpl implements Navigator {
     public void getPageAsync(String tagId, final int pageSize,
                              final int pageNumber, final AsyncCallback<List<PhotoInfo>> callback) {
         log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " " + pageNumber);
+        if (pageNumber < 0) {
+            return;
+        }
         dataManager.getTagNode(tagId,
                 new TagNodeCallback(callback) {
                     @Override
@@ -260,9 +290,6 @@ public class NavigatorImpl implements Navigator {
     private void getPage(TagNode node, int pageSize, int pageNumber,
                          AsyncCallback<List<PhotoInfo>> callback) {
         PhotoInfoStore store = getSafePhotoInfoStore(node);
-        if (pageNumber < 0) {
-            return;
-        }
         int offset = pageNumber * pageSize;
         List<PhotoInfo> result = new ArrayList<PhotoInfo>();
 
@@ -319,26 +346,10 @@ public class NavigatorImpl implements Navigator {
     @Override
     public void goToTag(String otherTagId, PhotoInfoStore store, Direction direction) {
         go(direction, Unit.BORDER,
-                new BasePlace(otherTagId, null, placeManager.getRasterWidth(),
-                        placeManager.getRasterHeight(), placeManager.isAutoHide()), store);
+                new BasePlace(otherTagId, null, rasterState.getColumnCount(),
+                        rasterState.getRowCount(), rasterState.isAutoHide()), store);
     }
 
-    @Override
-    public void goToAllPhotos() {
-        BasePlace basePlace = placeController.where();
-        BasePlace destPlace;
-        if (basePlace != null) {
-            PlaceBuilder converter = new PlaceBuilder(basePlace);
-            converter.setTagId("all");
-            destPlace = converter.place();
-        }
-        else {
-            destPlace = new BasePlace("all", null);
-            destPlace = placeManager.getTabularPlace(destPlace);
-
-        }
-        placeController.goTo(destPlace);
-    }
 
     @Override
     public void goToLatestTag() {
@@ -399,25 +410,7 @@ public class NavigatorImpl implements Navigator {
         });
     }
 
-    @Override
-    public void zoom(Zoom direction) {
-        BasePlace now = placeController.where();
-        BasePlace destination = placeManager.zoom(now, direction);
-        placeController.goTo(destination);
-    }
 
-    @Override
-    public void slideshow() {
-        BasePlace now = placeController.where();
-        SlideshowPlace destination = new SlideshowPlace(now.getTagId(),
-                now.getPhotoId());
-        placeController.goTo(destination);
-    }
-
-    @Override
-    public void unslideshow() {
-        placeManager.unslideshow();
-    }
 
     @Override
     public void getPageRelativePositionAsync(String tagId,

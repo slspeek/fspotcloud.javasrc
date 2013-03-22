@@ -2,11 +2,14 @@ package com.googlecode.fspotcloud.client.main.event;
 
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.client.main.gin.RasterHeight;
 import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.RasterState;
+import com.googlecode.fspotcloud.client.place.Rasterer;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
@@ -25,7 +28,8 @@ public class ZoomViewEventHandlerImplTest {
     private IPlaceController placeController;
     @Inject
     private ArgumentCaptor<Place> placeCaptor;
-    @Inject private RasterState rasterState;
+    @Inject
+    private RasterState rasterState;
 
     public static class Module extends JukitoModule {
 
@@ -33,6 +37,8 @@ public class ZoomViewEventHandlerImplTest {
         protected void configureTest() {
             bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(3);
             bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(2);
+            bind(RasterState.class).in(Singleton.class);
+            bind(IRasterer.class).to(Rasterer.class);
         }
     }
 
@@ -49,7 +55,7 @@ public class ZoomViewEventHandlerImplTest {
         assertEquals("1", basePlace.getTagId());
         assertEquals(1, basePlace.getColumnCount());
         assertEquals(1, basePlace.getRowCount());
-     }
+    }
 
     @Test
     public void testToDefaultRasterSize() throws Exception {

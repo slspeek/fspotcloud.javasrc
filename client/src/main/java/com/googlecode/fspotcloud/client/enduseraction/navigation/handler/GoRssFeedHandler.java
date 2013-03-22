@@ -1,4 +1,4 @@
-package com.googlecode.fspotcloud.client.enduseraction.navigation;
+package com.googlecode.fspotcloud.client.enduseraction.navigation.handler;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;

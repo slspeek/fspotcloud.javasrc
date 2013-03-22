@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.client.enduseraction.navigation;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.enduseraction.navigation.handler.GoRssFeedHandler;
 import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;

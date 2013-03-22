@@ -25,29 +25,41 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.googlecode.fspotcloud.client.place.Move;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface Navigator {
     void goAsync(Direction direction, Unit step);
 
-    void canGoAsync(Direction direction, Unit step,
+    void canGoAsync(Direction direction,
+                    Unit step,
                     AsyncCallback<Boolean> callback);
 
-    void getPageCountAsync(String tagId, int pageSize,
+    void getPossibleMoves(AsyncCallback<Map<Move, Boolean>> movesCallback);
+
+    void getPageCountAsync(String tagId,
+                           int pageSize,
                            AsyncCallback<Integer> callback);
 
-    void getPageAsync(String tagId, int pageSize, int pageNumber,
+    void getPageAsync(String tagId,
+                      int pageSize,
+                      int pageNumber,
                       AsyncCallback<List<PhotoInfo>> callback);
 
-    void getPageAsync(String tagId, String photoId, int pageSize,
+    void getPageAsync(String tagId,
+                      String photoId,
+                      int pageSize,
                       AsyncCallback<List<PhotoInfo>> callback);
 
-    void getPageRelativePositionAsync(String tagId, String photoId,
-                                      int pageSize, AsyncCallback<Integer[]> callback);
+    void getPageRelativePositionAsync(String tagId,
+                                      String photoId,
+                                      int pageSize,
+                                      AsyncCallback<Integer[]> callback);
 
     void goToTag(String otherTagId, PhotoInfoStore store);
 
@@ -55,15 +67,8 @@ public interface Navigator {
 
     void goToLatestTag(AsyncCallback<String> report);
 
-    void slideshow();
-
-    void zoom(Zoom direction);
-
-    void unslideshow();
-
     void goToTag(String otherTagId, PhotoInfoStore store, Direction direction);
 
-    void goToAllPhotos();
 
     enum Direction {
         BACKWARD, FORWARD;
