@@ -26,8 +26,11 @@ package com.googlecode.fspotcloud.client.main.view;
 
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationActions;
 import com.googlecode.fspotcloud.client.main.view.api.ITreeSelectionHandler;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
+import com.googlecode.fspotcloud.keyboardaction.KeyboardActionEvent;
 import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
@@ -39,7 +42,18 @@ public class TreeSelectionHandler implements ITreeSelectionHandler {
     private final Logger log = Logger.getLogger(TreeSelectionHandler.class.getName());
     private SingleSelectionModelExt selectionModel;
     private final Navigator navigator;
+    private final EventBus eventBus;
+    private final NavigationActions navigationActions;
     private boolean ignoreNext = false;
+
+    @Inject
+    public TreeSelectionHandler(Navigator navigator,
+                                EventBus eventBus,
+                                NavigationActions navigationActions) {
+        this.navigator = navigator;
+        this.eventBus = eventBus;
+        this.navigationActions = navigationActions;
+    }
 
     @Override
     public boolean isIgnoreNext() {
@@ -52,10 +66,6 @@ public class TreeSelectionHandler implements ITreeSelectionHandler {
         this.ignoreNext = ignoreNext;
     }
 
-    @Inject
-    public TreeSelectionHandler(Navigator navigator) {
-        this.navigator = navigator;
-    }
 
     public void setSelectionModel(SingleSelectionModelExt selectionModel) {
         this.selectionModel = selectionModel;
@@ -74,8 +84,8 @@ public class TreeSelectionHandler implements ITreeSelectionHandler {
             if (node != null) {
                 String tagId = node.getId();
                 goToPhoto(tagId, node.getCachedPhotoList());
-            }  else {
-                navigator.goToAllPhotos();
+            } else {
+                eventBus.fireEvent(new KeyboardActionEvent(navigationActions.all_photos.getId()));
             }
         }
     }

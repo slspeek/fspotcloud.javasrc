@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.place.api.IRasterer;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
@@ -10,16 +11,14 @@ public class ZoomInHandler implements IActionHandler
 
 {
     private final Logger log = Logger.getLogger(ZoomInHandler.class.getName());
-    private final Navigator navigator;
 
     @Inject
-    public ZoomInHandler(Navigator navigator) {
-        this.navigator = navigator;
-    }
+    private IRasterer placeManager;
+
 
     @Override
     public void performAction(String actionId) {
-        navigator.zoom(Navigator.Zoom.IN);
+        placeManager.zoom(Navigator.Zoom.IN);
     }
 }
 

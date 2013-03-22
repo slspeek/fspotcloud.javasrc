@@ -51,6 +51,10 @@ public class BasePlace extends Place implements HasImage, Raster {
         this.autoHide = autoHide;
     }
 
+    public BasePlace(String tagId, String photoId, int columnCount, int rowCount) {
+        this(tagId, photoId, columnCount, rowCount, false);
+    }
+
     public boolean isAutoHide() {
         return autoHide;
     }
@@ -83,7 +87,7 @@ public class BasePlace extends Place implements HasImage, Raster {
 
     @Override
     public boolean equals(Object other) {
-        if (other.getClass().equals(BasePlace.class)) {
+        if (other != null && other.getClass().equals(BasePlace.class)) {
             BasePlace basePlace = (BasePlace) other;
             return equal(this.tagId, basePlace.getTagId()) &&
                     equal(this.photoId, basePlace.getPhotoId()) &&

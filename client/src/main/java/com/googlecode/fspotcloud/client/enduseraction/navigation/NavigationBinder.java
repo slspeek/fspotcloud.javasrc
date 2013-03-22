@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
 import com.googlecode.fspotcloud.client.enduseraction.Flags;
+import com.googlecode.fspotcloud.client.enduseraction.navigation.handler.AllPhotosHandler;
+import com.googlecode.fspotcloud.client.enduseraction.navigation.handler.GoRssFeedHandler;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 import com.googlecode.fspotcloud.keyboardaction.FlagsRule;
@@ -18,15 +20,20 @@ public class NavigationBinder extends AbstractBinder {
     private final NavigationActionHandler navigationActionHandler;
     private final NavigationActions navigationActions;
     private final GoRssFeedHandler goRssFeedHandler;
+    private final AllPhotosHandler allPhotosHandler;
 
     @Inject
     public NavigationBinder(
-            CategoryDef categoryDef, NavigationActionHandler navigationActionHandler,
-            NavigationActions navigationActions, GoRssFeedHandler goRssFeedHandler) {
+            CategoryDef categoryDef,
+            NavigationActionHandler navigationActionHandler,
+            NavigationActions navigationActions,
+            GoRssFeedHandler goRssFeedHandler,
+            AllPhotosHandler allPhotosHandler) {
         super(categoryDef.NAVIGATION);
         this.navigationActionHandler = navigationActionHandler;
         this.navigationActions = navigationActions;
         this.goRssFeedHandler = goRssFeedHandler;
+        this.allPhotosHandler = allPhotosHandler;
     }
 
 
@@ -41,7 +48,7 @@ public class NavigationBinder extends AbstractBinder {
         bind(navigationActions.page_down, get(PAGEDOWN, needing(Flags.CAN_GO_NEXT_PAGE.name()),alt(PAGEDOWN)));
         bind(navigationActions.end, get(END, needing(Flags.CAN_GO_END.name()), alt(END)));
         Relevance relevance = new Relevance(BasePlace.class).addDefaultKeys(alt('A'));
-        bind(navigationActions.all_photos, relevance);
+        bind(navigationActions.all_photos, allPhotosHandler, relevance);
         bind(navigationActions.rss_feed, goRssFeedHandler, get(KeyStroke.DELETE));
     }
 

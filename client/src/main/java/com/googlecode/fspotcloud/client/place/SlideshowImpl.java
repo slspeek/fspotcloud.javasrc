@@ -28,6 +28,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.fspotcloud.client.main.event.SlideshowStatusEvent;
+import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Direction;
 import com.googlecode.fspotcloud.client.place.api.Navigator.Unit;
@@ -48,14 +49,17 @@ public class SlideshowImpl implements Slideshow {
     private final float INCREASE_FACTOR = 4f / 3f;
     private float delay = 4f;
     private final EventBus eventBus;
+    private final IPlaceController placeController;
 
     @Inject
     public SlideshowImpl(Navigator navigator,
                          TimerInterface timer,
-                         EventBus eventBus) {
+                         EventBus eventBus,
+                         IPlaceController placeController) {
         this.eventBus = eventBus;
         this.navigator = navigator;
         this.timer = timer;
+        this.placeController = placeController;
         initTimer();
         log.log(FINER, "Created");
     }
@@ -98,7 +102,7 @@ public class SlideshowImpl implements Slideshow {
     public void start() {
         log.log(FINE, "Starting slideshow");
         isRunning = true;
-        navigator.slideshow();
+        slideshow();
         reschedule();
         fireStatusChanged();
     }
@@ -109,7 +113,7 @@ public class SlideshowImpl implements Slideshow {
         isRunning = false;
         timer.cancel();
         fireStatusChanged();
-        navigator.unslideshow();
+        unslideshow();
     }
 
     @Override
@@ -160,4 +164,26 @@ public class SlideshowImpl implements Slideshow {
     public boolean isRunning() {
         return isRunning;
     }
+
+
+    void slideshow() {
+        BasePlace now = placeController.where();
+        if (now != null) {
+            SlideshowPlace destination = new SlideshowPlace(now.getTagId(),
+                    now.getPhotoId());
+            placeController.goTo(destination);
+        }
+    }
+
+
+    void unslideshow() {
+        BasePlace fromPlace = placeController.where();
+        BasePlace result;
+        if (fromPlace instanceof SlideshowPlace) {
+            PlaceBuilder builder = new PlaceBuilder(fromPlace);
+            result = builder.place();
+            placeController.goTo(result);
+        }
+    }
+
 }

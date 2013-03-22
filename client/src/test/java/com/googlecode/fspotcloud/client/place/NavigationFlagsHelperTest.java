@@ -10,50 +10,52 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static com.google.common.collect.Maps.newHashMap;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(JukitoRunner.class)
 public class NavigationFlagsHelperTest {
 
     @Inject
-    private ArgumentCaptor<AsyncCallback<Boolean>> booleanCaptor;
+    private ArgumentCaptor<AsyncCallback<Map<Move, Boolean>>> captor;
     @Inject
     private NavigationFlagsHelper helper;
     @Inject
     private Navigator navigator;
     @Inject
     private IModeController modeController;
+    @Inject
+    private ArgumentCaptor<Map<String, Boolean>> flagsCaptor;
 
     @Test
     public void testUpdate() throws Exception {
         helper.update();
 
-        verify(navigator, times(8)).canGoAsync(
-                any(Navigator.Direction.class),
-                any(Navigator.Unit.class),
-                booleanCaptor.capture());
+        verify(navigator).getPossibleMoves(
+                captor.capture());
 
-        List<AsyncCallback<Boolean>> callbacks = booleanCaptor.getAllValues();
 
-        callbacks.get(0).onSuccess(true);
-        verify(modeController).setFlag(Flags.CAN_GO_NEXT_IMAGE.name(), true);
+        final HashMap<Move, Boolean> hashMap = newHashMap();
+        hashMap.put(new Move(Navigator.Direction.FORWARD, Navigator.Unit.SINGLE), true);
+        captor.getValue().onSuccess(hashMap);
+        verify(modeController).setFlags(flagsCaptor.capture());
+
+        final Map<String, Boolean> flagsCaptorValue = flagsCaptor.getValue();
+        assertTrue(flagsCaptorValue.get(Flags.CAN_GO_NEXT_IMAGE.name()));
     }
 
     @Test
     public void testUpdateFailure() throws Exception {
         helper.update();
 
-        verify(navigator, times(8)).canGoAsync(
-                any(Navigator.Direction.class),
-                any(Navigator.Unit.class),
-                booleanCaptor.capture());
+        verify(navigator).getPossibleMoves(captor.capture());
 
-        List<AsyncCallback<Boolean>> callbacks = booleanCaptor.getAllValues();
-
-        callbacks.get(0).onFailure(new RuntimeException());
+        captor.getValue().onFailure(new RuntimeException());
         verifyZeroInteractions(modeController);
     }
 }

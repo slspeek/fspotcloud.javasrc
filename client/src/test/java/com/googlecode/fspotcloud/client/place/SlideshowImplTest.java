@@ -30,11 +30,18 @@ public class SlideshowImplTest {
             bind(EventBus.class).to(SimpleEventBus.class);
         }
     }
-    @Inject private SlideshowImpl slideshow;
-    @Inject private Navigator navigator;
-    @Inject private EventBus eventBus;
-    @Inject private TimerInterface timer;
-    @Inject private ArgumentCaptor<Runnable> runnableCaptor;
+
+    @Inject
+    private SlideshowImpl slideshow;
+    @Inject
+    private Navigator navigator;
+
+    @Inject
+    private EventBus eventBus;
+    @Inject
+    private TimerInterface timer;
+    @Inject
+    private ArgumentCaptor<Runnable> runnableCaptor;
 
 
     private Runnable getRunnable() {
@@ -55,7 +62,6 @@ public class SlideshowImplTest {
         slideshow.stop();
         assertFalse(slideshow.isRunning());
         verify(timer).cancel();
-        verify(navigator).unslideshow();
 
 
     }

@@ -3,6 +3,7 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.place.shared.PlaceChangeEvent;
 
+import java.util.Map;
 import java.util.Set;
 
 @GwtCompatible
@@ -19,4 +20,6 @@ public interface IModeController extends PlaceChangeEvent.Handler {
      void initButtonEnableStates();
 
     void setFlag(String name, boolean set);
+
+    void setFlags(Map<String, Boolean> flags);
 }

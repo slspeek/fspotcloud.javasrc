@@ -37,6 +37,7 @@ public class RasterState implements Raster, RasterAware {
     public final int rasterHeight;
     private int width;
     private int height;
+    private boolean autoHide;
 
     @Inject
     public RasterState(@RasterWidth int rasterWidth,
@@ -85,5 +86,13 @@ public class RasterState implements Raster, RasterAware {
     @Override
     public int getColumnCount() {
         return width;
+    }
+
+    public void setAutoHide(boolean autoHide) {
+        this.autoHide = autoHide;
+    }
+
+    public boolean isAutoHide() {
+        return autoHide;
     }
 }

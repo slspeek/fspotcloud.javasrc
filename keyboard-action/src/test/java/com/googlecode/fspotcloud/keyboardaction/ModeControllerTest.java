@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Map;
+
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -64,7 +67,6 @@ public class ModeControllerTest {
         assertEquals(newHashSet(FOO), modeController.getFlags());
     }
 
-
     @Test
     public void testUnsetFlag() throws Exception {
         testGetFlags();
@@ -73,10 +75,10 @@ public class ModeControllerTest {
     }
 
     @Test
-    public void testSetFlags() throws Exception {
-       modeController.setFlag(FOO, true);
-       modeController.setFlag(FOO, false);
-       assertEquals(0, modeController.getFlags().size());
+    public void testSetFlag() throws Exception {
+        modeController.setFlag(FOO, true);
+        modeController.setFlag(FOO, false);
+        assertEquals(0, modeController.getFlags().size());
     }
 
     @Test
@@ -86,5 +88,13 @@ public class ModeControllerTest {
         assertEquals(0, modeController.getFlags().size());
     }
 
+    @Test
+    public void testSetFlags() throws Exception {
+        Map<String, Boolean> flags = newHashMap();
+        flags.put("Foo", true);
+        flags.put("Bar", true);
+        modeController.setFlags(flags);
+        assertEquals(2, modeController.getFlags().size());
+    }
 
 }

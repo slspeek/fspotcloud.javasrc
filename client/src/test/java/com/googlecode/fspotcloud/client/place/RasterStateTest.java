@@ -33,6 +33,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(JukitoRunner.class)
@@ -92,5 +94,14 @@ public class RasterStateTest {
         assertEquals(1, state.getColumnCount());
         state.setRowCount(1);
         assertEquals(state.rasterHeight, state.getRowCount());
+    }
+
+    @Test
+    public void testAutoHide() throws Exception {
+        state.setAutoHide(true);
+        assertTrue(state.isAutoHide());
+        state.setAutoHide(false);
+        assertFalse(state.isAutoHide());
+
     }
 }

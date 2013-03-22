@@ -31,7 +31,6 @@ import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.*;
 import com.googlecode.fspotcloud.client.place.*;
-import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,9 +40,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     private final Logger log = Logger.getLogger(MainWindowActivityMapper.class.getName());
     private final TagActivityFactory tagActivityFactory;
     private final SlideshowActivityFactory slideshowActivityFactory;
-    private final PlaceManager placeManager;
     private final RasterState rasterState;
-    private final IModeController modeController;
     private final MailFullsizeView.MailFullsizePresenter mailFullsizeActivity;
     private final ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity;
     private final ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter;
@@ -62,9 +59,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
     @Inject
     public MainWindowActivityMapper(TagActivityFactory tagActivityFactory,
                                     SlideshowActivityFactory slideshowActivityFactory,
-                                    PlaceManager placeManager,
                                     RasterState rasterState,
-                                    IModeController modeController,
                                     MailFullsizeView.MailFullsizePresenter mailFullsizeActivity,
                                     ActivityAsyncProxy<SendConfirmationView.SendConfirmationPresenter> confirmationPresenterActivity,
                                     ActivityAsyncProxy<LoginView.LoginPresenter> loginPresenter,
@@ -81,9 +76,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
         super();
         this.slideshowActivityFactory = slideshowActivityFactory;
         this.tagActivityFactory = tagActivityFactory;
-        this.placeManager = placeManager;
         this.rasterState = rasterState;
-        this.modeController = modeController;
         this.mailFullsizeActivity = mailFullsizeActivity;
         this.confirmationPresenterActivity = confirmationPresenterActivity;
         this.loginPresenter = loginPresenter;
@@ -158,7 +151,7 @@ public class MainWindowActivityMapper implements ActivityMapper {
                 rasterState.setColumnCount(width);
                 rasterState.setRowCount(height);
             }
-            placeManager.setAutoHide(basePlace.isAutoHide());
+            rasterState.setAutoHide(basePlace.isAutoHide());
         }
     }
 }
