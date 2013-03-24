@@ -76,9 +76,6 @@ compileGwt {
         style = 'PRETTY'
     }
     compileReport = Boolean.valueOf("${gwt_compile_report}")
-   options {
-        jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
-   }
 }
 
 gwtDevMode {
