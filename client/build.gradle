@@ -75,6 +75,8 @@ compileGwt {
     } else {
         style = 'PRETTY'
     }
+    logLevel = 'DEBUG'
+    localWorkers = 2
     compileReport = Boolean.valueOf("${gwt_compile_report}")
 }
 
