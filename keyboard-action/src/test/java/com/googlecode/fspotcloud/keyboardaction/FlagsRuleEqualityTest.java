@@ -2,8 +2,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.inject.Provider;
 import com.googlecode.fspotcloud.test.EqualityTest;
-import com.googlecode.fspotcloud.testharness.HomePlace;
-import com.googlecode.fspotcloud.testharness.OutPlace;
 
 import java.util.List;
 
