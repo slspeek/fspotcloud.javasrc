@@ -2,16 +2,12 @@ package com.googlecode.fspotcloud.client.place;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.Flags;
-import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationActions;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import org.junit.Test;
 import org.jukito.JukitoRunner;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 public class MoveActionMapTest {

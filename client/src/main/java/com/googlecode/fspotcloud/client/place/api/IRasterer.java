@@ -1,7 +1,5 @@
 package com.googlecode.fspotcloud.client.place.api;
 
-import com.googlecode.fspotcloud.client.place.BasePlace;
-
 public interface IRasterer {
 
     void increaseRasterWidth(int amount);

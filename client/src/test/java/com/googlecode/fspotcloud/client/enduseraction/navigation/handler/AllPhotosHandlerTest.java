@@ -6,11 +6,12 @@ import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import org.jukito.JukitoModule;
-import org.junit.Test;
 import org.jukito.JukitoRunner;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class AllPhotosHandlerTest  {
