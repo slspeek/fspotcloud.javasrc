@@ -78,6 +78,7 @@ compileGwt {
         style = 'PRETTY'
     }
     compileReport = Boolean.valueOf("${gwt_compile_report}")
+    localWorkers = 1
 }
 
 gwtDev {
