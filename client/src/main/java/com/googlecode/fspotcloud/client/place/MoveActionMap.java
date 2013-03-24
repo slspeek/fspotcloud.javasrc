@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.navigation.NavigationActions;
 import com.googlecode.fspotcloud.client.place.api.Navigator;
-import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
 import java.util.Map;
 

@@ -1,6 +1,7 @@
 description = 'GWT client'
 
 apply plugin: 'gwt2'
+
 if ("${analysis}" == "true") {
     [findbugsMain, findbugsTest]*.enabled = false
 }
@@ -29,8 +30,8 @@ dependencies {
     compile ext.libs.ginmvp
 
     testCompile "junit:junit:3.8.1"
-    testCompile project(path:':rpc', configuration: 'testCompile')
-    testCompile project(path:':test-util', configuration: 'testCompile')
+    testCompile project(path: ':rpc', configuration: 'testCompile')
+    testCompile project(path: ':test-util', configuration: 'testCompile')
     testCompile ext.libs.junit
     testCompile ext.libs.jukito
     testCompile ext.libs.mockito
@@ -75,7 +76,9 @@ compileGwt {
         style = 'PRETTY'
     }
     compileReport = Boolean.valueOf("${gwt_compile_report}")
-    localWorkers = 1
+   options {
+        jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
+   }
 }
 
 gwtDevMode {

@@ -16,9 +16,7 @@ import static com.googlecode.fspotcloud.client.place.api.Navigator.Direction.BAC
 import static com.googlecode.fspotcloud.client.place.api.Navigator.Direction.FORWARD;
 import static com.googlecode.fspotcloud.client.place.api.Navigator.Unit.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class NavigatorImplCanGoTest {
