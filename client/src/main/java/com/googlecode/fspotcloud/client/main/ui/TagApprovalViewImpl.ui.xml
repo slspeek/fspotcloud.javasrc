@@ -29,7 +29,7 @@
                             <c:CellTable ui:field="grantedTable"
                                          styleName="{res.style.myUsergroupsTable}"></c:CellTable>
                         </g:layer>
-                        <g:layer bottom="40px" height="50px" left="0%" width="35%">
+                        <g:layer bottom="40px" height="50px" left="0%" width="50%">
                             <ka:ActionButton ui:field="revokeButton"></ka:ActionButton>
                         </g:layer>
                     </g:LayoutPanel>

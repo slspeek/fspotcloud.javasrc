@@ -1,5 +1,6 @@
-package com.googlecode.fspotcloud.shared.main;
+package com.googlecode.fspotcloud.shared.main.test;
 
+import com.googlecode.fspotcloud.shared.main.GetTagNodeAction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

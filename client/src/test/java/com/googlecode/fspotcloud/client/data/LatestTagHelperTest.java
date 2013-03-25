@@ -2,7 +2,7 @@ package com.googlecode.fspotcloud.client.data;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
+import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;

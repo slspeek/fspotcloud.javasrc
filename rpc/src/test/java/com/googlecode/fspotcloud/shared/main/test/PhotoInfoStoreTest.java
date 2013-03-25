@@ -22,8 +22,10 @@
  *
  */
 
-package com.googlecode.fspotcloud.shared.main;
+package com.googlecode.fspotcloud.shared.main.test;
 
+import com.googlecode.fspotcloud.shared.main.PhotoInfo;
+import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import org.junit.Test;
 
 import java.util.Date;

@@ -22,10 +22,13 @@
  *
  */
 
-package com.googlecode.fspotcloud.shared.main;
+package com.googlecode.fspotcloud.shared.main.test;
 
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Maps;
+import com.googlecode.fspotcloud.shared.main.PhotoInfo;
+import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
+import com.googlecode.fspotcloud.shared.main.TagNode;
 import org.junit.Before;
 import org.junit.Test;
 

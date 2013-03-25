@@ -22,8 +22,9 @@
  *
  */
 
-package com.googlecode.fspotcloud.shared.main;
+package com.googlecode.fspotcloud.shared.main.test;
 
+import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import org.junit.Before;
 import org.junit.Test;
 

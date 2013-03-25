@@ -26,12 +26,18 @@
 * To change this template, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.googlecode.fspotcloud.shared.main;
+package com.googlecode.fspotcloud.shared.main.test;
 
+import com.google.inject.Provider;
+import com.googlecode.fspotcloud.shared.main.ApproveTagAction;
+import com.googlecode.fspotcloud.shared.main.UserInfo;
+import com.googlecode.fspotcloud.test.EqualityTest;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -49,8 +55,6 @@ public class UserInfoTest {
 
     @Test
     public void testIsLoggedIn() {
-        System.out.println("isLoggedIn");
-
         boolean expResult = true;
         boolean result = instance.isLoggedIn();
         assertEquals(expResult, result);
@@ -61,8 +65,6 @@ public class UserInfoTest {
      */
     @Test
     public void testCreateLogoutUrl() {
-        System.out.println("getLogoutUrl");
-
         String dest = "dest";
         String expResult = "index.jsp?action=logout&dest=";
         String result = instance.getLogoutUrl();
@@ -74,11 +76,15 @@ public class UserInfoTest {
      */
     @Test
     public void testCreateLoginUrl() {
-        System.out.println("getLoginUrl");
-
         String dest = "dest";
         String expResult = "index.jsp?dest=";
         String result = instance.getLoginUrl();
         assertEquals(expResult, result);
+    }
+
+
+    @Test
+    public void testToString() throws Exception {
+        assertEquals("UserInfo{email='null', isAdmin=false, isLoggedIn=false, logoutUrl='null', loginUrl='null', lastLoginTime=null, loginType='null'}", new UserInfo(null, false,false, null, null, null, null).toString());
     }
 }

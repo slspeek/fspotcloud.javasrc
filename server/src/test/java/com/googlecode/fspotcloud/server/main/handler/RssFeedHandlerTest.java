@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
 import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
+import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 import net.customware.gwt.dispatch.server.Dispatch;
 import org.jukito.JukitoRunner;

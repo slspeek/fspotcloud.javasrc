@@ -67,7 +67,7 @@ public class PeerActionsViewImpl extends Composite
         deleteAllCommandsButton = widgetFactory.getButton(actions.deleteCommands);
         initWidget(uiBinder.createAndBindUi(this));
         deleteAllTagsButton.ensureDebugId("delete-all-tags-button");
-        tagCountOnPeerValueLabel.ensureDebugId("tag-count-on-peer-label");
+        tagCountOnPeerValueLabel.ensureDebugId("peer-tag-count-label");
         peerPhotoCountValueLabel.ensureDebugId("peer-photo-count-label");
         updateButton.ensureDebugId("update-button");
         deleteAllCommandsButton.ensureDebugId("delete-all-photos-button");
