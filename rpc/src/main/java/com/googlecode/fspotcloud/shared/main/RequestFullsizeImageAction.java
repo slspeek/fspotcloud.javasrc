@@ -25,12 +25,15 @@
 package com.googlecode.fspotcloud.shared.main;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Action;
+
+import static com.google.common.base.Objects.equal;
 
 
 @GwtCompatible
 public class RequestFullsizeImageAction implements Action<FullsizeImageResult> {
-    String imageId;
+    private String imageId;
 
     public RequestFullsizeImageAction(String imageId) {
         this.imageId = imageId;
@@ -45,35 +48,24 @@ public class RequestFullsizeImageAction implements Action<FullsizeImageResult> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        if (o instanceof RequestFullsizeImageAction) {
+            RequestFullsizeImageAction that = (RequestFullsizeImageAction) o;
+            return equal(imageId, that.imageId);
         }
-
-        if (!(o instanceof RequestFullsizeImageAction)) {
+        else {
             return false;
         }
-
-        RequestFullsizeImageAction that = (RequestFullsizeImageAction) o;
-
-        if (imageId != null ? !imageId.equals(that.imageId) : that.imageId != null) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override
     public int hashCode() {
-        return imageId != null ? imageId.hashCode() : 0;
+        return Objects.hashCode(imageId);
     }
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("RequestFullsizeImageAction");
-        sb.append("{imageId='").append(imageId).append('\'');
-        sb.append('}');
-
-        return sb.toString();
+        return Objects.toStringHelper(this)
+                .add("imageId", imageId)
+                .toString();
     }
 }

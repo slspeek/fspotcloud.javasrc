@@ -22,14 +22,13 @@
  *
  */
 
-package com.googlecode.fspotcloud.shared.main;
+package com.googlecode.fspotcloud.shared.main.test;
 
+import com.googlecode.fspotcloud.shared.main.*;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
 import com.openpojo.validation.affirm.Affirm;
-import com.openpojo.validation.rule.impl.NoNestedClassRule;
-import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import org.junit.Before;
@@ -41,7 +40,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class PojoTest {
     // Configured for expectation, so we know when a class gets added or removed.
-    private static final int EXPECTED_CLASS_COUNT = 30;
+    private static final int EXPECTED_CLASS_COUNT = 40;
 
     // The package to test
     private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
@@ -51,7 +50,7 @@ public class PojoTest {
 
             AuthenticationAction.class,
             AuthenticationResult.class,
-            DeleteUserGroupAction.class,
+            DeleteGroupAction.class,
             EmailConfirmationAction.class,
             GetMyUserGroupsAction.class,
             GetMyUserGroupsResult.class,
@@ -83,20 +82,20 @@ public class PojoTest {
 
     @Before
     public void setup() {
-        pojoClasses = newArrayList();
+        pojoClasses = PojoClassFactory.getPojoClasses("com.googlecode.fspotcloud.shared.main");
 
-        for (Class pojo : POJO_CLASSES) {
-            pojoClasses.add(PojoClassFactory.getPojoClass(pojo));
-        }
+//        for (Class pojo : POJO_CLASSES) {
+//            pojoClasses.add(PojoClassFactory.getPojoClass(pojo));
+//        }
 
         pojoValidator = new PojoValidator();
         // Create Rules to validate structure for POJO_PACKAGE
-        pojoValidator.addRule(new NoPublicFieldsRule());
+        //pojoValidator.addRule(new NoPublicFieldsRule());
         //pojoValidator.addRule(new NoPrimitivesRule());
         //pojoValidator.addRule(new NoStaticExceptFinalRule());
         //pojoValidator.addRule(new GetterMustExistRule());
         //pojoValidator.addRule(new SetterMustExistRule());
-        pojoValidator.addRule(new NoNestedClassRule());
+        //pojoValidator.addRule(new NoNestedClassRule());
         //pojoValidator.addRule(new BusinessKeyMustExistRule());
 
         // Create Testers to validate behaviour for POJO_PACKAGE

@@ -25,6 +25,7 @@
 package com.googlecode.fspotcloud.shared.main;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Action;
 
 
@@ -47,5 +48,12 @@ public class AuthenticationAction implements Action<AuthenticationResult> {
 
     public String getPassword() {
         return password;
+    }
+
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("username", userName)
+                .add("password not null", password != null)
+                .toString();
     }
 }

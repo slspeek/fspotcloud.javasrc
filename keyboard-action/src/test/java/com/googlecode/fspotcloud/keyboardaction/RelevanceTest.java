@@ -31,7 +31,7 @@ public class RelevanceTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("Relevance{defaultKeys=[], defaultPlaces=[], overrides={}}", new Relevance().toString());
+        assertEquals("Relevance{defaultKeys=[], defaultRule=FlagsRule{excludes=[], needed=[]}, defaultPlaces=[], overrides={}}", new Relevance().toString());
 
     }
 }

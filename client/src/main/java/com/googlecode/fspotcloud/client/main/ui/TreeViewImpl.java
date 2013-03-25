@@ -69,6 +69,7 @@ public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHand
         initWidget(uiBinder.createAndBindUi(this));
         userInfoLabel.ensureDebugId("user-info-label");
         log.log(Level.FINE, "Treeview created: " + ++counter);
+        ensureDebugId("tree-view");
     }
 
     @Override

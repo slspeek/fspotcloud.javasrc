@@ -46,7 +46,8 @@ public class DeleteITest {
         dashboardPage.loginAndOpen();
         dashboardPage.removeAll();
         sleepShort();
-        dashboardPage.open();
         sleepShort();
+        dashboardPage.assertPhotoCountOnPeer(0);
+        dashboardPage.assertTagCountOnPeer(0);
     }
 }

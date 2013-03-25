@@ -33,6 +33,7 @@ import com.thoughtworks.selenium.Selenium;
 import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author steven
@@ -82,5 +83,17 @@ public class DashboardPage {
     void removeAll() throws InterruptedException {
         selenium.click("gwt-debug-delete-all-tags-button");
         sleepShort();
+        selenium.click("gwt-debug-confirm-ok");
+        sleepShort();
     }
+
+    void assertPhotoCountOnPeer(int count) {
+        assertEquals(count, Integer.parseInt(selenium.getText("gwt-debug-peer-photo-count-label"), 10));
+    }
+
+
+    void assertTagCountOnPeer(int count) {
+        assertEquals(count, Integer.parseInt(selenium.getText("gwt-debug-peer-tag-count-label"), 10));
+    }
+
 }

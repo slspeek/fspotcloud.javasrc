@@ -4,6 +4,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,22 +27,16 @@ public class Relevance {
 
     public Relevance(FlagsRule defaultRule, Class<? extends Place>... defaultPlaces) {
         this.defaultRule = defaultRule;
-        for (Class<? extends Place> place : defaultPlaces) {
-            this.defaultPlaces.add(place);
-        }
+        Collections.addAll(this.defaultPlaces, defaultPlaces);
     }
 
     public Relevance(Class<? extends Place>... defaultPlaces) {
         this.defaultRule = FlagsRule.EMPTY;
-        for (Class<? extends Place> place : defaultPlaces) {
-            this.defaultPlaces.add(place);
-        }
+        Collections.addAll(this.defaultPlaces, defaultPlaces);
     }
 
     public Relevance addDefaultKeys(KeyStroke... keyStroke) {
-        for (KeyStroke key : keyStroke) {
-            defaultKeys.add(key);
-        }
+        Collections.addAll(defaultKeys, keyStroke);
         return this;
     }
 
@@ -72,7 +67,7 @@ public class Relevance {
         List<KeyStroke> result = newArrayList();
         final Class<? extends Place> place = placeContext.getPlace();
         final Set<String> flags = placeContext.getFlags();
-        if ((defaultPlaces.isEmpty() || defaultPlaces.contains(place)) && defaultRule.holds(flags)) {
+        if ((defaultPlaces.isEmpty() || (defaultPlaces.contains(place)) && defaultRule.holds(flags))) {
             result = defaultKeys;
         }
         List<KeyStroke> overrides = newArrayList();
@@ -87,15 +82,17 @@ public class Relevance {
         if (!overrides.isEmpty()) {
             result = overrides;
         }
-        //log.log(Level.SEVERE, "getKeys for: " + placeContext + " returns: " + result);
         return result;
     }
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("defaultKeys",
-                newArrayList(defaultKeys)).add("defaultPlaces", defaultPlaces)
-                .add("overrides", overridesMap).toString();
+        return Objects.toStringHelper(this)
+                .add("defaultKeys", defaultKeys)
+                .add("defaultRule", defaultRule)
+                .add("defaultPlaces", defaultPlaces)
+                .add("overrides", overridesMap)
+                .toString();
     }
 
     public List<KeyStroke> getDefaultKeys() {
@@ -116,7 +113,7 @@ public class Relevance {
         if (elements != null) {
             return elements;
         } else {
-            return newArrayList();
+            return Collections.EMPTY_LIST;
         }
     }
 

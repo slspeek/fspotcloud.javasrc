@@ -58,4 +58,11 @@ public class FullsizeImageResult implements Result {
     public int hashCode() {
         return Objects.hashCode(message);
     }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("message", message)
+                .toString();
+    }
 }
