@@ -24,7 +24,7 @@ public class NavigationBinderTest {
     public void testBuild() throws Exception {
         binder.build();
         List<KeyStroke> keys = keyboardPreferences.getDefaultKeysForAction(NavigationActions.HOME_ID);
-        assertEquals(2, keys.size());
+        assertEquals(3, keys.size());
     }
 
 }

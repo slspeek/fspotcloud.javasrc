@@ -43,6 +43,8 @@ public class DashboardITest {
     public void testImportFurniture() throws Exception {
         peerRunner.startPeer("../peer/src/test/resources/photos.db");
         dashboardPage.loginAndOpen();
+        dashboardPage.assertPhotoCountOnPeer(0);
+        dashboardPage.assertTagCountOnPeer(0);
         dashboardPage.synchronize();
         dashboardPage.open();
         dashboardPage.toggleImportForTagId("1"); //Furniture

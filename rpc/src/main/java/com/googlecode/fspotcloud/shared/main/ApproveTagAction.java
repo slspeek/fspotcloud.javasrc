@@ -29,6 +29,8 @@ import com.google.common.base.Objects;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.shared.Action;
 
+import static com.google.common.base.Objects.equal;
+
 
 @GwtCompatible
 public class ApproveTagAction implements Action<VoidResult> {
@@ -69,7 +71,8 @@ public class ApproveTagAction implements Action<VoidResult> {
     public boolean equals(Object obj) {
         if (obj instanceof ApproveTagAction) {
             ApproveTagAction other = (ApproveTagAction) obj;
-            return Objects.equal(tagId, other.getTagId()) && Objects.equal(userGroupId, other.getUsergroupId());
+            return equal(tagId, other.getTagId())
+                    && equal(userGroupId, other.getUsergroupId());
         }
         return false;
     }

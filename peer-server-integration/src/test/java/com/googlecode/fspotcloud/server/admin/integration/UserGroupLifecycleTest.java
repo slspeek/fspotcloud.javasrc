@@ -79,7 +79,7 @@ public class UserGroupLifecycleTest extends PeerServerEnvironment {
         UserGroup userGroup = userGroupDao.find(id);
         assertTrue(userGroup.getApprovedTagIds().contains(TAG_ID_3));
 
-        dispatch.execute(new DeleteUserGroupAction(id));
+        dispatch.execute(new DeleteGroupAction(id));
 
         tag3 = tagDao.find(TAG_ID_3);
         assertFalse(tag3.getApprovedUserGroups().contains(id));
@@ -104,7 +104,7 @@ public class UserGroupLifecycleTest extends PeerServerEnvironment {
         UserGroup userGroup = userGroupDao.find(id);
         assertTrue(userGroup.getGrantedUsers().contains(RMS_EXAMPLE_COM));
 
-        dispatch.execute(new DeleteUserGroupAction(id));
+        dispatch.execute(new DeleteGroupAction(id));
 
         rms = userDao.find(RMS_EXAMPLE_COM);
         assertFalse(rms.getGrantedUserGroups().contains(id));

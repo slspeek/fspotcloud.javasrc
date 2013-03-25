@@ -27,7 +27,7 @@ package com.googlecode.fspotcloud.server.main.handler;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.model.api.*;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.DeleteUserGroupAction;
+import com.googlecode.fspotcloud.shared.main.DeleteGroupAction;
 import com.googlecode.fspotcloud.user.UserService;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
@@ -36,7 +36,7 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import java.util.Set;
 
 
-public class DeleteUserGroupHandler extends SimpleActionHandler<DeleteUserGroupAction, VoidResult> {
+public class DeleteUserGroupHandler extends SimpleActionHandler<DeleteGroupAction, VoidResult> {
     @Inject
     private UserGroupDao userGroupDao;
     @Inject
@@ -47,7 +47,7 @@ public class DeleteUserGroupHandler extends SimpleActionHandler<DeleteUserGroupA
     private TagDao tagDao;
 
     @Override
-    public VoidResult execute(DeleteUserGroupAction action,
+    public VoidResult execute(DeleteGroupAction action,
                               ExecutionContext context) throws DispatchException {
         if (userService.isUserLoggedIn()) {
             String userName = userService.getEmail();

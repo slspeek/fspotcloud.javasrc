@@ -8,7 +8,7 @@ import com.googlecode.fspotcloud.client.main.view.api.ManageGroupsView;
 import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.fspotcloud.shared.main.DeleteUserGroupAction;
+import com.googlecode.fspotcloud.shared.main.DeleteGroupAction;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
@@ -35,7 +35,7 @@ public class DeleteUsergroupHandler implements IActionHandler {
 
         if (info != null) {
             statusView.setStatusText("Sending request to delete group " + info.getName() + " to the server");
-            dispatch.execute(new DeleteUserGroupAction(info.getId()),
+            dispatch.execute(new DeleteGroupAction(info.getId()),
                     new AsyncCallback<VoidResult>() {
                         @Override
                         public void onFailure(Throwable caught) {

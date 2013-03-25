@@ -72,12 +72,15 @@ gwtModules = ['com.googlecode.fspotcloud.FSpotCloud']
 compileGwt {
     if (Boolean.valueOf("${release}")) {
         style = 'OBF'
+        localWorkers = 2
     } else {
         style = 'PRETTY'
     }
     logLevel = 'INFO'
-    localWorkers = 2
-    compileReport = Boolean.valueOf("${gwt_compile_report}")
+    if(Boolean.valueOf("${gwt_compile_report}")) {
+        localWorkers = 2
+        compileReport = true
+    }
 }
 
 gwtDevMode {

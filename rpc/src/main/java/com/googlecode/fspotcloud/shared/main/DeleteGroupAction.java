@@ -31,13 +31,13 @@ import net.customware.gwt.dispatch.shared.Action;
 
 
 @GwtCompatible
-public class DeleteUserGroupAction implements Action<VoidResult> {
+public class DeleteGroupAction implements Action<VoidResult> {
     private Long id;
 
-    public DeleteUserGroupAction() {
+    public DeleteGroupAction() {
     }
 
-    public DeleteUserGroupAction(Long id) {
+    public DeleteGroupAction(Long id) {
         this.id = id;
     }
 
@@ -47,24 +47,24 @@ public class DeleteUserGroupAction implements Action<VoidResult> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DeleteUserGroupAction that = (DeleteUserGroupAction) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-
-        return true;
+        if (o instanceof DeleteGroupAction) {
+            DeleteGroupAction that = (DeleteGroupAction) o;
+            return Objects.equal(id, that.id);
+        } else {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("userGroupId", id).toString();
+        return Objects.toStringHelper(this)
+                .add("groupId", id)
+                .toString();
     }
 }
 

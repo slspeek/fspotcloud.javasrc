@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
+import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
 import org.jukito.JukitoRunner;
 import org.junit.Assert;
 import org.junit.Test;

@@ -3,9 +3,11 @@ package com.googlecode.fspotcloud.client.enduseraction.slideshow;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.enduseraction.AbstractBinder;
 import com.googlecode.fspotcloud.client.enduseraction.CategoryDef;
+import com.googlecode.fspotcloud.client.enduseraction.Flags;
 import com.googlecode.fspotcloud.client.enduseraction.slideshow.handler.*;
 import com.googlecode.fspotcloud.client.place.BasePlace;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
+import com.googlecode.fspotcloud.keyboardaction.FlagsRule;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.Relevance;
 
@@ -42,7 +44,10 @@ public class SlideshowBinder extends AbstractBinder {
         bind(actions.slideshow_stop, stopHandler, get('Q'));
         bind(actions.slideshow_faster, fasterHandler, get('M'));
         bind(actions.slideshow_slower, slowerHandler, get('N'));
-        binding = new Relevance(SlideshowPlace.class, BasePlace.class).addDefaultKeys(new KeyStroke('S'));
+        binding = new Relevance(
+                FlagsRule.needing(Flags.CAN_GO_NEXT_IMAGE.name()),
+                SlideshowPlace.class, BasePlace.class)
+                .addDefaultKeys(new KeyStroke('S'));
         bind(actions.slideshow_start, startHandler, binding);
         bind(actions.slideshow_pause, pauseHandler, get(KeyStroke.KEY_SPACE));
     }

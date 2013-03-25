@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.data.DataManager;
 import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.TagNodeTestFactory;
+import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -28,6 +28,8 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Result;
 
+import static com.google.common.base.Objects.equal;
+
 
 @GwtCompatible
 public class AuthenticationResult implements Result {
@@ -40,23 +42,29 @@ public class AuthenticationResult implements Result {
         this.success = success;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof AuthenticationResult) {
-            AuthenticationResult other = (AuthenticationResult) obj;
-
-            return Objects.equal(other.success, getSuccess());
-        } else {
-            return false;
-        }
-    }
-
     public boolean getSuccess() {
         return success;
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AuthenticationResult) {
+            AuthenticationResult other = (AuthenticationResult) obj;
+
+            return equal(other.success, getSuccess());
+        } else {
+            return false;
+        }
+    }
+
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("success", success)
+                .toString();
+    }
+
+    @Override
     public int hashCode() {
-        return 1;
+        return Objects.hashCode(success);
     }
 }
