@@ -37,7 +37,7 @@ public interface Resources extends ClientBundle {
     @Source("client.css")
     Style style();
 
-    @Source("images/Play.png")
+    @Source("images/right_triangle.png")
     ImageResource playIcon();
 
     @Source("images/Pause.png")
@@ -46,7 +46,7 @@ public interface Resources extends ClientBundle {
     @Source("images/Stop.png")
     ImageResource stopIcon();
 
-    @Source("images/Dashboard.png")
+    @Source("images/gear.png")
     ImageResource dashboardIcon();
 
     @Source("images/Fullscreen.png")
@@ -58,13 +58,13 @@ public interface Resources extends ClientBundle {
     @Source("images/Faster.png")
     ImageResource fasterIcon();
 
-    @Source("images/Demo.png")
+    @Source("images/running.png")
     ImageResource demoIcon();
 
-    @Source("images/Next.png")
+    @Source("images/next.png")
     ImageResource nextIcon();
 
-    @Source("images/Back.png")
+    @Source("images/previous.png")
     ImageResource backIcon();
 
     @Source("images/License.png")
@@ -91,7 +91,7 @@ public interface Resources extends ClientBundle {
     @Source("images/ToggleTabular.png")
     ImageResource tabularIcon();
 
-    @Source("images/Help.png")
+    @Source("images/help.png")
     ImageResource helpIcon();
 
     @Source("images/ProjectSite.png")
@@ -103,10 +103,10 @@ public interface Resources extends ClientBundle {
     @Source("images/Proton.png")
     ImageResource protonIcon();
 
-    @Source("images/Home.png")
+    @Source("images/home.png")
     ImageResource homeIcon();
 
-    @Source("images/End.png")
+    @Source("images/end.png")
     ImageResource endIcon();
 
     @Source("images/AddColumn.png")
@@ -130,43 +130,43 @@ public interface Resources extends ClientBundle {
     @Source("images/ToggleButtons.png")
     ImageResource toggleButtonsIcon();
 
-    @Source("images/About.png")
+    @Source("images/info.png")
     ImageResource aboutIcon();
 
-    @Source("images/ZoomOut.png")
+    @Source("images/zoom_out.png")
     ImageResource zoomOutIcon();
 
-    @Source("images/ZoomIn.png")
+    @Source("images/zoom_in.png")
     ImageResource zoomInIcon();
 
     @Source("images/F-Spot.png")
     ImageResource fspotIcon();
 
-    @Source("images/PageDown.png")
+    @Source("images/fast_forward.png")
     ImageResource pageDownIcon();
 
-    @Source("images/PageUp.png")
+    @Source("images/rewind.png")
     ImageResource pageUpIcon();
 
-    @Source("images/RowDown.png")
+    @Source("images/stepDown.png")
     ImageResource rowDownIcon();
 
-    @Source("images/RowUp.png")
+    @Source("images/stepUp.png")
     ImageResource rowUpIcon();
 
     @Source("images/HideControls.png")
     ImageResource hideControlsIcon();
 
-    @Source("images/Login.png")
+    @Source("images/key.png")
     ImageResource loginIcon();
 
-    @Source("images/Logout.png")
+    @Source("images/leave.png")
     ImageResource logoutIcon();
 
-    @Source("images/Email.png")
+    @Source("images/mail.png")
     ImageResource emailIcon();
 
-    @Source("images/Rss.png")
+    @Source("images/rss.png")
     ImageResource rssReedIcon();
 
     public interface Style extends CssResource {
