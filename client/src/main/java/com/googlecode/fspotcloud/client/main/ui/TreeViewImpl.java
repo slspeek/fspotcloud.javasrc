@@ -99,6 +99,13 @@ public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHand
     }
 
     @Override
+    public void requestBlur() {
+        if (cellTree != null) {
+            cellTree.setFocus(false);
+        }
+    }
+
+    @Override
     public String toString() {
         return "TreeViewImpl: " + counter;
     }

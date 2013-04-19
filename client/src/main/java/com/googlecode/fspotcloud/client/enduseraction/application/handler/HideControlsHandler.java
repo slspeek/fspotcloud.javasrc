@@ -25,8 +25,10 @@
 package com.googlecode.fspotcloud.client.enduseraction.application.handler;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.gin.BasicTreeView;
 import com.googlecode.fspotcloud.client.main.ui.TagViewImpl;
 import com.googlecode.fspotcloud.client.main.view.api.TagView;
+import com.googlecode.fspotcloud.client.main.view.api.TreeView;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.logging.Logger;
@@ -36,16 +38,20 @@ public class HideControlsHandler implements IActionHandler {
     @SuppressWarnings("unused")
     private final Logger log = Logger.getLogger(HideControlsHandler.class.getName());
     private final TagViewImpl tagView;
+    private final TreeView treeView;
 
     @Inject
-    public HideControlsHandler(TagView tagView
-                               ) {
+    public HideControlsHandler(TagView tagView,
+                               @BasicTreeView TreeView treeView) {
         super();
+        this.treeView = treeView;
         this.tagView = (TagViewImpl) tagView;
     }
 
     @Override
     public void performAction(String actionId) {
         tagView.animateControlsOut(0);
+        treeView.requestBlur();
+
     }
 }
