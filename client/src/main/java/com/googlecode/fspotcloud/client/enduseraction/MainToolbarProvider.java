@@ -61,7 +61,7 @@ public class MainToolbarProvider implements Provider<ActionToolbar> {
         toolbar.add(applicationActions.login);
         toolbar.add(applicationActions.logout);
         toolbar.add(applicationActions.about);
-        toolbar.add(aboutActions.project_hosting);
+        //toolbar.add(aboutActions.project_hosting);
         toolbar.add(applicationActions.dashboard);
         toolbar.add(navigationActions.rss_feed);
         return toolbar;

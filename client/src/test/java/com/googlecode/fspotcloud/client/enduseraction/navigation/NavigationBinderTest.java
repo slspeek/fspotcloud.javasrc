@@ -1,8 +1,10 @@
 package com.googlecode.fspotcloud.client.enduseraction.navigation;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import com.googlecode.fspotcloud.keyboardaction.KeyStroke;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardPreferences;
+import com.googlecode.fspotcloud.keyboardaction.ModeController;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ public class NavigationBinderTest {
 
     @Inject
     KeyboardPreferences keyboardPreferences;
+
 
     @Test
     public void testBuild() throws Exception {

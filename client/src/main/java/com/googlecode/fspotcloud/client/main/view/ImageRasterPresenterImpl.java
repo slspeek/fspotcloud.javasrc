@@ -81,7 +81,6 @@ public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPres
     }
 
     public void init() {
-        log.info("init");
         imageRasterView.setPresenter(this);
         setImages();
     }
