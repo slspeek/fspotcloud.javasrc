@@ -60,7 +60,7 @@ public class TreeBuilder {
         }
     }
 
-    private void sortTree(TagNode node) {
+    public static void sortTree(TagNode node) {
         List<TagNode> childNodes = node.getChildren();
         for (TagNode child : childNodes) {
             sortTree(child);

@@ -32,6 +32,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TreeBuilderTest {
     List<TagNode> nodes;
@@ -41,9 +42,9 @@ public class TreeBuilderTest {
         TagNode root = new TagNode("1", "0");
         root.setTagName("Root node");
         TagNode level1_a = new TagNode("2", "1");
-        level1_a.setTagName("Abelian groups");
+        level1_a.setTagName("ZZAbelian groups");
         TagNode level2_b = new TagNode("3", "1");
-        level2_b.setTagName("Z as ring");
+        level2_b.setTagName("R as ring");
         level2_b.setImportIssued(true);
 
         TagNode secondRoot = new TagNode("4", "0");
@@ -62,6 +63,19 @@ public class TreeBuilderTest {
         assertEquals(trees, root.getParent());
         List<TagNode> level_1s = root.getChildren();
         assertEquals(2, level_1s.size());
+    }
+
+    @Test
+    public void testVerySimpleTreeOrdering() {
+        TreeBuilder builder = new TreeBuilder(nodes);
+        TagNode trees = builder.getFullTree();
+        assertEquals(2, trees.getChildren().size());
+        System.out.println(trees.getChildren());
+        TagNode root = trees.getChildren().get(1);
+        assertEquals(trees, root.getParent());
+        List<TagNode> level_1s = root.getChildren();
+        assertEquals(2, level_1s.size());
+        System.out.println(level_1s);
     }
 
     @Test
