@@ -31,6 +31,7 @@ import java.util.Set;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
+import static com.googlecode.fspotcloud.server.model.tag.TreeBuilder.sortTree;
 
 public class TagTreeHelper {
     private TagNode fullTree;
@@ -73,7 +74,7 @@ public class TagTreeHelper {
                 parentInSelected.addChild(unconnected);
             }
         }
-
+        sortTree(root);
         return root;
     }
 
