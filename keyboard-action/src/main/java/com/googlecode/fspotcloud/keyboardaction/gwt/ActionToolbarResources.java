@@ -22,24 +22,21 @@
  *
  */
 
-package com.googlecode.fspotcloud.keyboardaction;
+package com.googlecode.fspotcloud.keyboardaction.gwt;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 
-public interface KeyboardActionResources extends ClientBundle {
+public interface ActionToolbarResources extends ClientBundle {
 
-    @Source("actions.css")
+    @Source("toolbar.css")
     Style style();
-
-    @Source("images/Help.png")
-    ImageResource helpIcon();
 
     public interface Style extends CssResource {
 
-        String buttonPanelBlock();
+        String toolbar();
 
     }
 }

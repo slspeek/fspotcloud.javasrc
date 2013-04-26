@@ -77,7 +77,7 @@ public class SlideshowViewImpl extends Composite implements SlideshowView,
     }
 
     public void showControls(int duration) {
-        layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 50, Unit.PX);
+        layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 80, Unit.PX);
         layout.animate(duration);
     }
 

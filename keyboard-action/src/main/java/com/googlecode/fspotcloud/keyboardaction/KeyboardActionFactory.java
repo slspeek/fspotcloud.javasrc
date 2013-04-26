@@ -19,9 +19,9 @@ public class KeyboardActionFactory {
     private final NativePreviewHandler nativePreviewHandler;
     private final HelpActionsFactory helpActionsFactory;
     private final WidgetFactory widgetFactory;
-    private final KeyboardActionResources keyboardActionResources;
+    private final ActionToolbarResources actionToolbarResources;
     private final ResourcesSetup resourcesSetup;
-    private final Provider<ActionToolbar> actionToolbarProvider;
+    private final ToolbarFactory toolbarFactory;
 
     private IModeController modeController;
 
@@ -36,12 +36,12 @@ public class KeyboardActionFactory {
                                  ActionUIRegistry actionUIRegistry,
                                  List<ActionCategory> actionCategoryList,
                                  WidgetFactory widgetFactory,
-                                 KeyboardActionResources keyboardActionResources,
+                                 ActionToolbarResources actionToolbarResources,
                                  ResourcesSetup resourcesSetup,
-                                 Provider<ActionToolbar> actionToolbarProvider) {
-        this.keyboardActionResources = keyboardActionResources;
+                                 ToolbarFactory toolbarFactory) {
+        this.actionToolbarResources = actionToolbarResources;
         this.resourcesSetup = resourcesSetup;
-        this.actionToolbarProvider = actionToolbarProvider;
+        this.toolbarFactory = toolbarFactory;
         resourcesSetup.ensureInjected();
         builder.build();
         this.widgetFactory = widgetFactory;
@@ -72,7 +72,12 @@ public class KeyboardActionFactory {
     }
 
     public ActionToolbar getToolBar() {
-        return actionToolbarProvider.get();
+        return getToolBar(actionToolbarResources);
+    }
+
+    public ActionToolbar getToolBar(ActionToolbarResources actionToolbarResources
+    ) {
+        return toolbarFactory.get(actionToolbarResources);
     }
 
     public ActionMenu getMenu(String caption) {
