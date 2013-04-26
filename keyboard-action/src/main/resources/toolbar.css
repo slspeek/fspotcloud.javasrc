@@ -9,10 +9,10 @@
 @def hoverTransition all 0.2s ease-in-out;
 
 
-.buttonPanelBlock
+.toolbar
 {
   height:60px;
-  background-color:thirdColor;
+  /**background-color:thirdColor;*/
   padding-top:2px;
   padding-bottom:2px;
   border-collapse:collapse;

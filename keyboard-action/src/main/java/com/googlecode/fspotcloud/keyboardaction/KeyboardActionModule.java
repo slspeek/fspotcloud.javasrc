@@ -1,6 +1,7 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.googlecode.fspotcloud.keyboardaction.gwt.*;
@@ -32,6 +33,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(TimerInterface.class).annotatedWith(ActionTimer.class).to(TimerImpl.class);
         bind(IHelpContentGenerator.class).to(HelpContentGenerator.class);
         bind(KeyboardActionFactory.class).asEagerSingleton();//.in(Singleton.class);
+        install(new GinFactoryModuleBuilder().build(ToolbarFactory.class));
     }
 
     @Provides

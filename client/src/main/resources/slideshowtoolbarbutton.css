@@ -4,17 +4,17 @@
 @def hoverTransform scale(1);
 @def hoverMenuTransform scale(1);
 @def focusTransform scale(1);
-@def upTransform scale(0.85);
+@def upTransform scale(1);
 @def helpIconTransform scale(1);
 @def hoverTransition all 0.2s ease-in-out;
 @def disabledGreyScale 100%;
 
-@external toolbar-button;
-@external toolbar-button-up;
-@external toolbar-button-up-disabled;
-@external toolbar-button-up-hovering;
+@external slideshow-toolbar-button;
+@external slideshow-toolbar-button-up;
+@external slideshow-toolbar-button-up-disabled;
+@external slideshow-toolbar-button-up-hovering;
 
-.toolbar-button-up-disabled
+.slideshow-toolbar-button-up-disabled
 {
     filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
     -webkit-filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
@@ -23,7 +23,7 @@
     -o-filter: grayscale(disabledGreyScale) opacity(0.40) blur(1px);
 }
 
-.toolbar-button {
+.slideshow-toolbar-button {
 
 }
 
@@ -35,9 +35,8 @@
   -webkit-transform:upTransform;
   -moz-transform:upTransform;
   transform:upTransform;
-  margin: 0px;
-   -moz-border-radius:15px;
-   border-radius:15px;
+  margin:2px 2px 2px 2px;
+
 }
 
 
@@ -47,7 +46,7 @@
     color: purple;
 }
 
-.toolbar-button-up-hovering
+.slideshow-toolbar-button-up-hovering
 {
   -moz-transform:hoverTransform;
   transform:hoverTransform;
@@ -60,7 +59,7 @@
   border-width: 2px;
 }
 
-.toolbar-button:focus
+.slideshow-toolbar-button:focus
 {
   -moz-transform:focusTransform;
   transform:focusTransform;

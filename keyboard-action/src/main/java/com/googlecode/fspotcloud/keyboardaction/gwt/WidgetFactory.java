@@ -11,7 +11,7 @@ public class WidgetFactory {
     private final ActionMenuResources menuResources;
     private final ActionMenuItemSafeHtml actionMenuItemSafeHtml;
     private final WidgetRegistry widgetRegistry;
-    private final KeyboardActionResources keyboardActionResources;
+    private final ActionToolbarResources actionToolbarResources;
     private ActionButtonResources buttonResources;
     private String primaryStyleName = "gwt-PushButton";
 
@@ -23,7 +23,7 @@ public class WidgetFactory {
                           ActionMenuResources menuResources,
                           ActionMenuItemSafeHtml actionMenuItemSafeHtml,
                           WidgetRegistry widgetRegistry,
-                          KeyboardActionResources keyboardActionResources
+                          ActionToolbarResources actionToolbarResources
     ) {
         this.eventBus = eventBus;
         this.actionUIRegistry = actionUIRegistry;
@@ -31,7 +31,7 @@ public class WidgetFactory {
         this.menuResources = menuResources;
         this.actionMenuItemSafeHtml = actionMenuItemSafeHtml;
         this.widgetRegistry = widgetRegistry;
-        this.keyboardActionResources = keyboardActionResources;
+        this.actionToolbarResources = actionToolbarResources;
         menuResources.style().ensureInjected();
         buttonResources.style().ensureInjected();
     }
