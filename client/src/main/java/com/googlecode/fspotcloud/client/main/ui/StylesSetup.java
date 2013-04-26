@@ -19,6 +19,8 @@ public class StylesSetup {
     private final AdminActionButtonResources adminActionButtonResources;
     private final ToolbarButtonResources toolbarButtonResources;
     private final CellTableResources cellTableResources;
+    private final SlideshowToolbarResources slideshowToolbarResources;
+    private final SlideshowToolbarButtonResources slideshowToolbarButtonResources;
 
     @Inject
     public StylesSetup(Resources resources,
@@ -30,7 +32,10 @@ public class StylesSetup {
                        BasicTreeResources basicTreeResources,
                        BigActionButtonResources bigActionButtonResources,
                        AdminActionButtonResources adminActionButtonResources,
-                       ToolbarButtonResources toolbarButtonResources, CellTableResources cellTableResources) {
+                       ToolbarButtonResources toolbarButtonResources,
+                       CellTableResources cellTableResources,
+                       SlideshowToolbarResources slideshowToolbarResources,
+                       SlideshowToolbarButtonResources slideshowToolbarButtonResources) {
         this.resources = resources;
         this.userPagesResources = userPagesResources;
         this.fadeAnimationResources = fadeAnimationResources;
@@ -42,6 +47,8 @@ public class StylesSetup {
         this.adminActionButtonResources = adminActionButtonResources;
         this.toolbarButtonResources = toolbarButtonResources;
         this.cellTableResources = cellTableResources;
+        this.slideshowToolbarResources = slideshowToolbarResources;
+        this.slideshowToolbarButtonResources = slideshowToolbarButtonResources;
     }
 
     public void injectStyles() {
@@ -56,6 +63,8 @@ public class StylesSetup {
         adminActionButtonResources.style().ensureInjected();
         toolbarButtonResources.style().ensureInjected();
         cellTableResources.cellTableStyle().ensureInjected();
+        slideshowToolbarResources.style().ensureInjected();
+        slideshowToolbarButtonResources.style().ensureInjected();
         log.log(Level.FINE, "all styles were injected");
     }
 

@@ -10,15 +10,14 @@
 
 .button
 {
-
   font-size:160%;
   text-align:center;
   -webkit-transform:upTransform;
   -moz-transform:upTransform;
   transform:upTransform;
-  margin:8px 5px 2px;
-   -moz-border-radius:15px;
-   border-radius:15px;
+  margin:2px 2px 2px 2px;
+  -moz-border-radius:15px;
+  border-radius:15px;
 }
 
 .demoing

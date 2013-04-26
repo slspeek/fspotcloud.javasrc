@@ -40,10 +40,10 @@ public interface Resources extends ClientBundle {
     @Source("images/right_triangle.png")
     ImageResource playIcon();
 
-    @Source("images/Pause.png")
+    @Source("images/pause.png")
     ImageResource pauseIcon();
 
-    @Source("images/Stop.png")
+    @Source("images/stop.png")
     ImageResource stopIcon();
 
     @Source("images/gear.png")
@@ -52,10 +52,10 @@ public interface Resources extends ClientBundle {
     @Source("images/Fullscreen.png")
     ImageResource fullscreenIcon();
 
-    @Source("images/Slower.png")
+    @Source("images/plus.png")
     ImageResource slowerIcon();
 
-    @Source("images/Faster.png")
+    @Source("images/minus.png")
     ImageResource fasterIcon();
 
     @Source("images/running.png")
@@ -171,6 +171,7 @@ public interface Resources extends ClientBundle {
 
     public interface Style extends CssResource {
         String slideshow();
+        String slideshowIntervalLabel();
 
         String tag();
 

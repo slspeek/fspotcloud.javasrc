@@ -4,7 +4,7 @@
     <ui:style>
     </ui:style>
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
-    <g:HorizontalPanel styleName="{res.style.slideshow}" ui:field="mainPanel">
-        <g:Label ui:field="intervalLabel"></g:Label>
+    <g:HorizontalPanel  ui:field="mainPanel">
+        <g:Label ui:field="intervalLabel" addStyleNames="{res.style.slideshowIntervalLabel}"></g:Label>
     </g:HorizontalPanel>
 </ui:UiBinder> 

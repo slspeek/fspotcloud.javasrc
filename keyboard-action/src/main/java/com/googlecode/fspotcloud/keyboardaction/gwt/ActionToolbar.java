@@ -29,9 +29,9 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.keyboardaction.ActionCategory;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
-import com.googlecode.fspotcloud.keyboardaction.KeyboardActionResources;
 
 import java.util.List;
 
@@ -45,12 +45,12 @@ public class ActionToolbar extends LayoutPanel {
     private String buttonStylePrimaryName = "gwt-PushButton";
 
     @Inject
-    ActionToolbar(KeyboardActionResources keyboardActionResources,
+    ActionToolbar(@Assisted ActionToolbarResources actionToolbarResources,
                   ActionButtonResources actionButtonResources,
                   WidgetFactory widgetFactory) {
         this.widgetFactory = widgetFactory;
         this.actionButtonResources = actionButtonResources;
-        addStyleName(keyboardActionResources.style().buttonPanelBlock());
+        addStyleName(actionToolbarResources.style().toolbar());
     }
 
     public void setButtonStylePrimaryName(String buttonStylePrimaryName) {

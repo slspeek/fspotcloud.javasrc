@@ -18,6 +18,11 @@
 	color: #F0F0F0;
 }
 
+.slideshowIntervalLabel {
+	font-size: 16pt;
+	color: #F0F0F0;
+}
+
 .running {
     color: green;
     font-size: 150%;
