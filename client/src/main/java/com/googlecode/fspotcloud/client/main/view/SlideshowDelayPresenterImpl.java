@@ -47,7 +47,7 @@ public class SlideshowDelayPresenterImpl implements SlideshowDelayView.Slideshow
     }
 
     public void redraw(float delay, boolean running) {
-        slideshowDelayView.setLabelText(formatter.format(delay) + " seconds. ");
+        slideshowDelayView.setLabelText(String.valueOf((int)delay) + " seconds. ");
 
         if (running) {
             slideshowDelayView.addStyleRunning();

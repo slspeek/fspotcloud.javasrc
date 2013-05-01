@@ -1,9 +1,12 @@
 package com.googlecode.fspotcloud.client.enduseraction.dashboard;
 
 import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.keyboardaction.ActionUIDef;
 
 public class DashboardActions {
+
+    private final Resources RESOURCES;
     public final ActionUIDef adminHelp;
     public final ActionUIDef reloadTree;
     public final ActionUIDef focusTree;
@@ -17,10 +20,11 @@ public class DashboardActions {
 
 
     @Inject
-    public DashboardActions() {
+    public DashboardActions(Resources resources) {
+        RESOURCES = resources;
         reloadTree = new ActionUIDef("reload-admin-tree",
                 "Reload tree",
-                "Reload tree data from the server");
+                "Reload tree data from the server", RESOURCES.reloadTreeIcon());
         toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen");
         manageGroups = new ActionUIDef("manage-usergroups", "Manage groups", "Manage groups");
         synchronize = new ActionUIDef("synchronize", "Synchronize", "Synchronize with the peer");
@@ -29,6 +33,6 @@ public class DashboardActions {
         importTag = new ActionUIDef("import-tag", "Import tag", "Import this tag");
         manageAccess = new ActionUIDef("manage-access", "Manage access", "Grant or revoke access ");
         focusTree = new ActionUIDef("focus-admin-tree", "Focus tree", "Place keyboard focus on the category tree");
-        adminHelp = new ActionUIDef("admin-help", "Help", "Dashboard help");
+        adminHelp = new ActionUIDef("admin-help", "Help", "Dashboard help", RESOURCES.helpIcon());
     }
 }
