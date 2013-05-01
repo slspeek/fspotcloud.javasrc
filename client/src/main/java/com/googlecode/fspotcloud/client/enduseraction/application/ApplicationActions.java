@@ -62,7 +62,7 @@ public class ApplicationActions {
         show_shortcuts = new ActionUIDef("shortcuts", "Shortcuts", "Show the shortcuts popup");
         hide_help = new ActionUIDef("hide-help", "Hide help", "Hide the help popup.");
         demo = new ActionUIDef("demo", "Demo", "Play a demo.", RESOURCES.demoIcon());
-        reloadTree = new ActionUIDef("reload-tree", "Reload tree", "Reload the category tree");
+        reloadTree = new ActionUIDef("reload-tree", "Reload tree", "Reload the category tree", RESOURCES.reloadTreeIcon());
         goToLatest = new ActionUIDef("goto-latest", "Latest", "Go to category with latest image");
         toggleAutoHide = new ActionUIDef("auto-hide", "Auto hide", "Toggle auto hiding");
     }

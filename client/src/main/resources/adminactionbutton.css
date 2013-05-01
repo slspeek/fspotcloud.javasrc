@@ -1,10 +1,10 @@
 @def ligherColor #080808;
 @def thirdColor #000000;
 @def borderColor #303030;
-@def hoverTransform translate(0,-7px) scale(1);
+@def hoverTransform scale(1);
 @def hoverMenuTransform scale(1);
 @def focusTransform scale(1);
-@def upTransform scale(0.8);
+@def upTransform scale(1);
 @def helpIconTransform scale(1);
 @def hoverTransition all 0.2s ease-in-out;
 @def disabledGreyScale 75%;
@@ -38,14 +38,14 @@
 {
   /*background-color: #E8E4E4;*/
 
-  font-size:160%;
+  font-size:12pt;
   text-align:center;
   -webkit-transform:upTransform;
   -moz-transform:upTransform;
   transform:upTransform;
-  margin:8px 5px 2px;
-   -moz-border-radius:15px;
-   border-radius:15px;
+  margin:2px 2px 2px 2px;
+   -moz-border-radius:5px;
+   border-radius:5px;
 }
 
 
