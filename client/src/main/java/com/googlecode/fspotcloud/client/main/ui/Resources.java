@@ -43,7 +43,10 @@ public interface Resources extends ClientBundle {
     @Source("images/pause.png")
     ImageResource pauseIcon();
 
-    @Source("images/stop.png")
+    @Source("images/reload_tree.png")
+    ImageResource reloadTreeIcon();
+
+    @Source("images/switch_off.png")
     ImageResource stopIcon();
 
     @Source("images/gear.png")
@@ -52,10 +55,10 @@ public interface Resources extends ClientBundle {
     @Source("images/Fullscreen.png")
     ImageResource fullscreenIcon();
 
-    @Source("images/plus.png")
+    @Source("images/turtle.png")
     ImageResource slowerIcon();
 
-    @Source("images/minus.png")
+    @Source("images/hare.png")
     ImageResource fasterIcon();
 
     @Source("images/running.png")
@@ -168,6 +171,9 @@ public interface Resources extends ClientBundle {
 
     @Source("images/rss.png")
     ImageResource rssReedIcon();
+
+    @Source("images/user.png")
+    ImageResource userIcon();
 
     public interface Style extends CssResource {
         String slideshow();
