@@ -12,6 +12,7 @@ dependencies {
     testCompile project(path:':keyboard-action', configuration:'testCompile')
     testCompile libs.selenium
     testCompile libs.guava_testlib
+    testCompile libs.mockito
     testCompile libs.junit
     testCompile libs.guiceberry
     testCompile libs.inject
