@@ -11,6 +11,7 @@ dependencies {
     testCompile project(':model-api')
     testCompile project(path:':keyboard-action', configuration:'testCompile')
     testCompile ext.libs.selenium
+    testCompile ext.libs.mockito
     testCompile ext.libs.guava_testlib
     testCompile ext.libs.junit
     testCompile ext.libs.guiceberry

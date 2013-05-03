@@ -28,6 +28,7 @@ import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.TestScoped;
 import com.google.guiceberry.TestWrapper;
 import com.google.inject.Provides;
+import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
@@ -35,6 +36,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import javax.inject.Named;
+
+import static org.mockito.Mockito.mock;
 
 
 public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
@@ -59,5 +62,12 @@ public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
     protected void configure() {
         super.configure();
         bind(TestWrapper.class).to(SeleniumTestWrapper.class);
+
     }
+
+    @Provides
+    Resources getResource() {
+        return mock(Resources.class);
+    }
+
 }
