@@ -29,6 +29,7 @@ import com.google.guiceberry.controllable.IcMaster;
 import com.google.guiceberry.controllable.StaticMapInjectionController;
 import com.google.guiceberry.controllable.TestIdServerModule;
 import com.google.inject.*;
+import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
@@ -40,6 +41,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+
+import static org.mockito.Mockito.mock;
 
 
 public class IntegrationGuiceBerryEnv extends AbstractModule {
@@ -109,6 +112,11 @@ public class IntegrationGuiceBerryEnv extends AbstractModule {
         install(icMaster.buildClientModule());
     }
 
+
+    @Provides
+    Resources getResource() {
+        return mock(Resources.class);
+    }
     private static final class ServerStarter implements GuiceBerryEnvMain {
         @Inject
         private FscServer server;

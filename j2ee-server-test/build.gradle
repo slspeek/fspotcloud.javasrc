@@ -5,6 +5,7 @@ description = 'Integration testing for prod-j2ee-war'
 dependencies {
     testCompile project(':server-module-j2ee')
     testCompile project(':test-util')
+    testCompile project(':client')
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
     testCompile ext.libs.guava_testlib
     testCompile ext.libs.guiceberry
