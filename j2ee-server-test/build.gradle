@@ -13,9 +13,6 @@ dependencies {
     testCompile ext.libs.junit
     testCompile ext.libs.jetty
     testCompile 'org.slf4j:slf4j-jdk14:1.7.2'
-
-//    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
-//    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
 }
 
 task unpackTest(dependsOn: ':e2e-test:packageTests') << {

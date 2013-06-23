@@ -37,6 +37,7 @@ import org.mockito.ArgumentCaptor;
 import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -72,6 +73,7 @@ public class SendEmailConfirmationITest {
         sendEmailConfirmationPage.open();
         sendEmailConfirmationPage.submitEmail(ILogin.NEEDS_CONFIRMATION);
 
+        sleepShort();
         verify(mailerMock).send(recipient.capture(), subject.capture(), body.capture());
         Assert.assertEquals(ILogin.NEEDS_CONFIRMATION, recipient.getValue());
     }

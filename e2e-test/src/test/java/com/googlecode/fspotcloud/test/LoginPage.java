@@ -43,7 +43,7 @@ public class LoginPage {
     Selenium selenium;
 
     public void open() {
-        selenium.open("/#LoginPlace:");
+        selenium.open("#LoginPlace:");
         selenium.waitForPageToLoad("30000");
     }
 

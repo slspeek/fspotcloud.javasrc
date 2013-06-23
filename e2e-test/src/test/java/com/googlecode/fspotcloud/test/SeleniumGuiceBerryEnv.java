@@ -46,6 +46,7 @@ public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
     Selenium getSelenium(@Named("baseUrl")
                          String baseUrl) {
         WebDriver driver;
+        System.out.println("BaseURL: " + baseUrl);
         String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
 
         if (userChoice != null) {
@@ -55,7 +56,7 @@ public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
             ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
         }
 
-        return new WebDriverBackedSelenium(driver, baseUrl);
+        return new WebDriverBackedSeleniumExt(driver, baseUrl);
     }
 
     @Override
