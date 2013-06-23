@@ -46,7 +46,7 @@ public class ChangePasswordPage {
     SeleniumPerformer performer;
 
     public void open() {
-        selenium.open("/#ChangePasswordPlace:"+ILogin.SLS + ":" + ILogin.SLS_EMAIL_VERIFICATION_SECRET);
+        selenium.open("#ChangePasswordPlace:"+ILogin.SLS + ":" + ILogin.SLS_EMAIL_VERIFICATION_SECRET);
         selenium.waitForPageToLoad("30000");
     }
 
