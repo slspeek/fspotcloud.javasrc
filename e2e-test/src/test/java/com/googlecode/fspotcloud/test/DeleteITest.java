@@ -45,8 +45,8 @@ public class DeleteITest {
     public void testClear() throws Exception {
         dashboardPage.loginAndOpen();
         dashboardPage.removeAll();
-        sleepShort();
-        sleepShort();
+        Thread.sleep(4000);
+        sleepShort(2);
         dashboardPage.assertPhotoCountOnPeer(0);
         dashboardPage.assertTagCountOnPeer(0);
     }

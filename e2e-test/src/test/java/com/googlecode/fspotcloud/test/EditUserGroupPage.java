@@ -42,7 +42,7 @@ public class EditUserGroupPage {
     Selenium selenium;
 
     public void open(Long id) {
-        selenium.open("/#EditUserGroupPlace:" + id);
+        selenium.open("#EditUserGroupPlace:" + id);
         selenium.waitForPageToLoad("30000");
     }
 

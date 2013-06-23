@@ -37,6 +37,7 @@ import org.mockito.ArgumentCaptor;
 import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -69,7 +70,7 @@ public class SendPasswordResetITest {
         mailInjectionController.setOverride(mailerMock);
         sendPasswordResetPage.open();
         sendPasswordResetPage.submitEmail(ILogin.RMS_FSF_ORG);
-
+        sleepShort();
         verify(mailerMock).send(recipient.capture(), subject.capture(), body.capture());
         Assert.assertEquals(ILogin.RMS_FSF_ORG, recipient.getValue());
     }
