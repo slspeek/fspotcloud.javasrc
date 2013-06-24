@@ -44,7 +44,7 @@ public class UserAccountPage {
     Selenium selenium;
 
     public UserAccountPage open() {
-        selenium.open("/#UserAccountPlace:");
+        selenium.open("#UserAccountPlace:");
         selenium.waitForPageToLoad("30000");
         return this;
     }

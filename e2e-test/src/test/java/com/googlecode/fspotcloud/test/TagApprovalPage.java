@@ -41,7 +41,7 @@ public class TagApprovalPage {
     Selenium selenium;
 
     public void open(String tagId) {
-        selenium.open("/#TagApprovalPlace:" + tagId);
+        selenium.open("#TagApprovalPlace:" + tagId);
         selenium.waitForPageToLoad("30000");
     }
 

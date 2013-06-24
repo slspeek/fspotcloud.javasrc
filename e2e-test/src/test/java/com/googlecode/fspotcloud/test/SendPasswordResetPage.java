@@ -46,7 +46,7 @@ public class SendPasswordResetPage {
     private UserActions userActions;
 
     public SendPasswordResetPage open() {
-        selenium.open("/#SendPasswordResetPlace:");
+        selenium.open("#SendPasswordResetPlace:");
         selenium.waitForPageToLoad("30000");
         return this;
     }
