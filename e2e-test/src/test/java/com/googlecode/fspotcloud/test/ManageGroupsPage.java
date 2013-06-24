@@ -43,7 +43,7 @@ public class ManageGroupsPage {
     Selenium selenium;
 
     public void open() {
-        selenium.open("/#ManageGroupsPlace:");
+        selenium.open("#ManageGroupsPlace:");
         selenium.waitForPageToLoad("30000");
     }
 

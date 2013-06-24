@@ -44,7 +44,7 @@ public class SignUpPage {
     Selenium selenium;
 
     public void open() {
-        selenium.open("/#SignUpPlace:");
+        selenium.open("#SignUpPlace:");
         selenium.waitForPageToLoad("30000");
     }
 
