@@ -49,7 +49,7 @@ public class TabularITest {
         photoPage.clickImage(3, 0);
         photoPage.clickImage(0, 0);
 
-        selenium.open("/#BasePlace:1:12:2:2:false");
+        selenium.open("#BasePlace:1:12:2:2:false");
         selenium.waitForPageToLoad("30000");
         photoPage.back();
         photoPage.assertImageHasId(0, 1, "6");

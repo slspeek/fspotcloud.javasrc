@@ -48,7 +48,7 @@ public class SendEmailConfirmationPage {
 
 
     public void open() {
-        selenium.open("/#SendConfirmationPlace:");
+        selenium.open("#SendConfirmationPlace:");
         selenium.waitForPageToLoad("30000");
     }
 

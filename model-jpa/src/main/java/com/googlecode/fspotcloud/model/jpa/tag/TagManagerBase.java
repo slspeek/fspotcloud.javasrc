@@ -43,6 +43,9 @@ public abstract class TagManagerBase<T extends Tag, U extends T>
 
     @Override
     public TagNode getTagNode(Tag tag) {
+        if (tag == null) {
+            throw new IllegalStateException("tag parameter must be non-null");
+        }
         TagNode node = new TagNode();
         node.setId(tag.getId());
         node.setImportIssued(tag.isImportIssued());
