@@ -14,6 +14,11 @@
             <spec txt="" size="25" set="slspeek"/>
         </field>
         <field type="space"/>
+        <field type="staticText" align="left" txt="From address for mails send"/>
+        <field type="text" align="left" variable="email.from.userinput">
+            <spec txt="" size="25" set="slspeek@gmail.com"/>
+        </field>
+        <field type="space"/>
     </panel>
     <panel order="1">
         <field type="title" txt="Peer Configuration" bold="true" size="1"/>

@@ -35,7 +35,7 @@ task unpackWar(dependsOn: [':prod-j2ee-war:assemble', setupFixture]) << {
 
 task copyWar(dependsOn: unpackWar, type: Copy) {
     ant.properties['bot.secret.userinput'] = "${bot_secret}".toString()
-    ant.properties['admin.email'] = "rms@example.com"
+    ant.properties['admin.email.userinput'] = "rms@example.com"
     from('build/exploded-war-raw') {
         include "**/properties.properties"
         filter(ExpandProperties, project: ant.project)

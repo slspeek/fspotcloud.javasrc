@@ -42,7 +42,6 @@ public class HarnessActivityMapper implements ActivityMapper {
     @Inject
     public HarnessActivityMapper(HomeView.HomePresenter homePresenter, OutView.OutPresenter outPresenter) {
         super();
-
         this.homePresenter = homePresenter;
         this.outPresenter = outPresenter;
     }
