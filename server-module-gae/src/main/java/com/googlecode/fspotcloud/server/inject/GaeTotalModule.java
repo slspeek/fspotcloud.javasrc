@@ -49,9 +49,10 @@ public class GaeTotalModule extends AbstractModule {
     private final String botSecret;
     private final int maxTicks;
     private final String fromAddress;
-    private String smtpServer;
 
-    public GaeTotalModule(int maxTicks, String botSecret, String fromAddress) {
+    public GaeTotalModule(int maxTicks,
+                          String botSecret,
+                          String fromAddress) {
         this.maxTicks = maxTicks;
         this.botSecret = botSecret;
         this.fromAddress = fromAddress;
