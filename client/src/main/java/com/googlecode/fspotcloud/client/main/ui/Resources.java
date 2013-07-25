@@ -175,8 +175,12 @@ public interface Resources extends ClientBundle {
     @Source("images/user.png")
     ImageResource userIcon();
 
+    @Source("images/photo.png")
+    ImageResource photoIcon();
+
     public interface Style extends CssResource {
         String slideshow();
+
         String slideshowIntervalLabel();
 
         String tag();
