@@ -25,7 +25,7 @@ public class DashboardActions {
         reloadTree = new ActionUIDef("reload-admin-tree",
                 "Reload tree",
                 "Reload tree data from the server", RESOURCES.reloadTreeIcon());
-        toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen");
+        toPhotos = new ActionUIDef("to-photos", "To photos", "Go to the photos screen", RESOURCES.photoIcon());
         manageGroups = new ActionUIDef("manage-usergroups", "Manage groups", "Manage groups");
         synchronize = new ActionUIDef("synchronize", "Synchronize", "Synchronize with the peer");
         deleteCommands = new ActionUIDef("clear-queue", "Clear queue", "Delete all pending commands");
