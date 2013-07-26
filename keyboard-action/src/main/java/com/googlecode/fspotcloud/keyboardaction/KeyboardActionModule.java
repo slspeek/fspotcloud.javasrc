@@ -31,6 +31,7 @@ public class KeyboardActionModule extends AbstractGinModule {
         bind(PlaceContext.class).toProvider(PlaceContextProvider.class);
         bind(TimerInterface.class).annotatedWith(NextTimer.class).to(TimerImpl.class);
         bind(TimerInterface.class).annotatedWith(ActionTimer.class).to(TimerImpl.class);
+        bind(TimerInterface.class).annotatedWith(PreviewTimer.class).to(TimerImpl.class);
         bind(IHelpContentGenerator.class).to(HelpContentGenerator.class);
         bind(KeyboardActionFactory.class).asEagerSingleton();//.in(Singleton.class);
         install(new GinFactoryModuleBuilder().build(ToolbarFactory.class));
