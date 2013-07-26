@@ -81,5 +81,11 @@ public interface HelpResources extends ClientBundle {
         String shortcutsPopup();
 
         String shortcutsBody();
+
+        String keyPressPopup();
+
+        String keyPressBody();
+
+        String notFoundBody();
     }
 }

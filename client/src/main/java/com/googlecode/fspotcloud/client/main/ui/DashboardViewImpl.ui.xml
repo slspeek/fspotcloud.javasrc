@@ -47,7 +47,7 @@
                         <g:layer left="10%" width="6%" top="0%" height="64px">
                             <ka:ActionButton ui:field="reloadTree"></ka:ActionButton>
                         </g:layer>
-                        <g:layer left="40%" width="20%" top="0%" height="64px">
+                        <g:layer left="49%" width="6%" top="0%" height="64px">
                             <ka:ActionButton ui:field="toPhotos"></ka:ActionButton>
                         </g:layer>
                         <g:layer top="0%" width="25%" right="10%" height="43px">
