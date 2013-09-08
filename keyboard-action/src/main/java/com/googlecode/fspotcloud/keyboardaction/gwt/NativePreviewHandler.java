@@ -60,27 +60,25 @@ public class NativePreviewHandler implements Event.NativePreviewHandler {
         }
         final Modifiers modifiers = getModifiers(event);
         final String keyString = (new KeyStroke(modifiers, keycode)).toString();
-        final String pressed = keyString + " pressed.";
-        keyPressPopup.setSafeHtml(new SafeHtmlBuilder().appendEscaped(pressed).toSafeHtml());
-        keyPressPopup.center();
-        keyPressPopup.setPopupPosition(keyPressPopup.getAbsoluteLeft(), 3);
-        keyPressPopup.show();
+
 
         log.log(Level.FINEST, "Event preview in keydown-event  " + keyString + " keycode: " + keycode);
 
         final PlaceContext placeContext = placeContextProvider.get();
         List<String> actionIdList = keyboardPreferences.get(placeContext, new KeyStroke(modifiers, keycode));
+        final String pressed = keyString + " pressed.";
+        keyPressPopup.setSafeHtml(new SafeHtmlBuilder().appendEscaped(pressed).toSafeHtml());
         if (!actionIdList.isEmpty()) {
             preview.cancel();
-        } else {
-            keyPressPopup.setNotFound(true);
+            keyPressPopup.show();
         }
-
         for (final String actionId : actionIdList) {
             log.log(Level.FINEST, "ActionId found proceeding for: " + actionId);
             keyPressPopup.setSafeHtml(new SafeHtmlBuilder().appendEscaped(
                     pressed + ", processing action: " + actionUIRegistry.getAction(actionId).getName()
             ).toSafeHtml());
+            keyPressPopup.center();
+            keyPressPopup.setPopupPosition(keyPressPopup.getAbsoluteLeft(), 3);
             eventBus.fireEvent(new KeyboardActionEvent(actionId));
         }
         timerInterface.setRunnable(new Runnable() {
@@ -90,7 +88,7 @@ public class NativePreviewHandler implements Event.NativePreviewHandler {
                 keyPressPopup.setNotFound(false);
             }
         });
-        timerInterface.schedule(400);
+        timerInterface.schedule(1500);
     }
 
     private Modifiers getModifiers(NativeEvent event) {

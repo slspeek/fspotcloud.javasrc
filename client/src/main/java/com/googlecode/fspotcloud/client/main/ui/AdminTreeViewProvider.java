@@ -13,8 +13,11 @@ public class AdminTreeViewProvider implements Provider<TreeView> {
     private AdminCellTreeFactory adminCellTreeFactory;
     @Inject
     private IModeController modeController;
+    @Inject
+    private Resources resources;
+
     @Override
     public TreeView get() {
-        return new TreeViewImpl(adminCellTreeFactory, modeController);
+        return new TreeViewImpl(adminCellTreeFactory, modeController, resources);
     }
 }

@@ -31,7 +31,6 @@ import com.google.inject.Provides;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
@@ -48,7 +47,7 @@ public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
         WebDriver driver;
         System.out.println("BaseURL: " + baseUrl);
         String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
-
+        //System.setProperty("webdriver.chrome.driver", "/home/steven/tools/bin/chromedriver");
         if (userChoice != null) {
             driver = new FirefoxDriver();
         } else {

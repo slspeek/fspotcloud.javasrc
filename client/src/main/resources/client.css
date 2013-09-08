@@ -80,6 +80,15 @@
     border-width: 1px;
 }
 
+.treeBlockFocus {
+	background-color: #121212;
+	color: foregroundColor;
+    border-style: solid;
+    border-color: white;
+    border-collapse: collapse;
+    border-width: 1px;
+}
+
 .userInfoLabel {
 	background-color: treeColor;
 	color: foregroundColor;

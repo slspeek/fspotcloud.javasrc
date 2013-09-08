@@ -59,13 +59,17 @@ public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHand
 
     private static int counter;
     private final IModeController modeController;
+    private final Resources resources;
 
 
     @Inject
     public TreeViewImpl(CellTreeFactory cellTreeFactory,
-                        IModeController modeController) {
+                        IModeController modeController,
+                        Resources resources
+    ) {
         this.cellTreeFactory = cellTreeFactory;
         this.modeController = modeController;
+        this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
         userInfoLabel.ensureDebugId("user-info-label");
         log.log(Level.FINE, "Treeview created: " + ++counter);
@@ -95,13 +99,17 @@ public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHand
     public void requestFocus() {
         if (cellTree != null) {
             cellTree.setFocus(true);
+
         }
+
     }
 
     @Override
     public void requestBlur() {
         if (cellTree != null) {
             cellTree.setFocus(false);
+            removeStyleName(resources.style().treeBlockFocus());
+
         }
     }
 
@@ -117,12 +125,17 @@ public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHand
 
     @Override
     public void onBlur(BlurEvent event) {
-         modeController.unsetFlag(Flags.TREE_FOCUS.name());
+        log.log(Level.INFO, "Treeview on blur");
+        modeController.unsetFlag(Flags.TREE_FOCUS.name());
+        removeStyleName(resources.style().treeBlockFocus());
+
     }
 
     @Override
     public void onFocus(FocusEvent event) {
-         modeController.setFlag(Flags.TREE_FOCUS.name());
+        log.log(Level.INFO, "Treeview on focus");
+        modeController.setFlag(Flags.TREE_FOCUS.name());
+        setStyleName(resources.style().treeBlockFocus());
 
     }
 

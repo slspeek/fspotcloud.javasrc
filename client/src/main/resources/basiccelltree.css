@@ -1,7 +1,7 @@
  @def allMostBlack  #464646;
 
 .cellTreeWidget {
-   background-color: black;
+   /*background-color: black;*/
 }
 
 .cellTreeEmptyMessage {
