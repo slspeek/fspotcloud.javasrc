@@ -195,6 +195,8 @@ public interface Resources extends ClientBundle {
 
         String treeBlock();
 
+        String treeBlockFocus();
+
         String userInfoLabel();
 
         String pagerLabel();
