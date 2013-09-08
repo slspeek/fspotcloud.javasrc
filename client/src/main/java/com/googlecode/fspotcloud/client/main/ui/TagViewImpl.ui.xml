@@ -9,7 +9,7 @@
             <my:ImageRasterViewImpl ui:field="imageRasterView" styleName="{res.style.imagePanelBlock}"></my:ImageRasterViewImpl>
         </g:layer>
         <g:layer top="0%" height="92%" left="0%" width="22%">
-            <my:TreeViewImpl ui:field="treeView" styleName="{res.style.treeBlock}"></my:TreeViewImpl>
+            <my:TreeViewImpl ui:field="treeView" ></my:TreeViewImpl>
         </g:layer>
         <g:layer bottom="0%" height="8%">
             <ka:ActionToolbar ui:field="actionToolbar"></ka:ActionToolbar>

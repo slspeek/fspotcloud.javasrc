@@ -3,7 +3,7 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
         >
     <ui:with type="com.googlecode.fspotcloud.client.main.ui.Resources" field="res"></ui:with>
-    <g:LayoutPanel>
+    <g:LayoutPanel styleName="{res.style.treeBlock}">
         <g:layer width="100%" top="0%" height="95%">
             <g:ScrollPanel ui:field="tagTreeViewPanel"></g:ScrollPanel>
         </g:layer>

@@ -11,10 +11,12 @@ public class BasicTreeViewProvider implements Provider<TreeView> {
     private BasicCellTreeFactory basicCellTreeFactory;
     @Inject
     private IModeController modeController;
+    @Inject
+    private Resources resources;
 
 
     @Override
     public TreeView get() {
-        return new TreeViewImpl(basicCellTreeFactory, modeController);
+        return new TreeViewImpl(basicCellTreeFactory, modeController, resources);
     }
 }
