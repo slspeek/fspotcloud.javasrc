@@ -17,13 +17,13 @@ sourceSets {
 
 dependencies {
     compile project(':model-api')
-    compile ext.libs.inject
-    compile ext.libs.guice_servlet
-    provided ext.libs.servlet_spec
-    compile ext.libs.guava
+    compile libs.inject
+    compile libs.guice_servlet
+    provided libs.servlet_spec
+    compile libs.guava
     testCompile project(":model-jpa-j2ee")
-    testCompile ext.libs.junit
-    testCompile ext.libs.jukito
+    testCompile libs.junit
+    testCompile libs.jukito
 }
 
 task testJar(type: Jar, dependsOn: compileTestJava) {

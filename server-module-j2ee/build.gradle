@@ -21,19 +21,19 @@ dependencies {
     compile project(path: ':user-service-api', configuration: 'testFixtures')   //FIXME
     compile("com.googlecode.bot-dispatch:command-jpa-j2ee:${bot_dispatch_version}")
     compile("com.googlecode.taskqueue-dispatch:direct:${taskqueue_dispatch_version}")
-    compile ext.libs.simple_blobstore_j2ee
+    compile libs.simple_blobstore_j2ee
     compile("com.googlecode.bot-dispatch:command-jpa:${bot_dispatch_version}") {
         exclude(module: 'gwt-user')
     }
-    compile ext.libs.bot_dispatch_command_api
-    provided ext.libs.servlet_spec
+    compile libs.bot_dispatch_command_api
+    provided libs.servlet_spec
     testCompile project(':peer')
     testCompile project(':test-util')
     testCompile project(path: ':peer-server-integration', configuration: 'testCompile')
-    testCompile ext.libs.mockito
-    testCompile ext.libs.guava_testlib
-    testCompile ext.libs.junit
-    testCompile ext.libs.test_ng
+    testCompile libs.mockito
+    testCompile libs.guava_testlib
+    testCompile libs.junit
+    testCompile libs.test_ng
 
     integrationTest files("../peer-server-integration/build/libs/peer-server-integration-${version}-tests.jar")
 }

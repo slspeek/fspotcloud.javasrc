@@ -11,10 +11,10 @@ dependencies {
     }
     testCompile project(":user-service-openid")
     testCompile project(path: ':user-service-api', configuration: 'testFixtures')
-    testCompile ext.libs.test_ng
-    testCompile ext.libs.mockito
-    testCompile ext.libs.guava_testlib
-    testCompile ext.libs.guiceberry
+    testCompile libs.test_ng
+    testCompile libs.mockito
+    testCompile libs.guava_testlib
+    testCompile libs.guiceberry
 }
 
 test.useTestNG()

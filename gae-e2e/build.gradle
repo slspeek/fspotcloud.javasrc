@@ -2,27 +2,30 @@ import org.apache.tools.ant.filters.ExpandProperties
 
 description = 'Selenium testing of prod-gae-war'
 
-apply plugin: 'gae'
+apply plugin: 'appengine'
+
 System.properties['appengine.sdk.root'] = System.properties['user.home'] + "/appengine-java-sdk-${gae_version}"
+
 if ("${analysis}" == "true") {
     findbugsTest.enabled = false;
 }
-gae {
-    stopKey = 'STOP'
+
+appengine {
+    /*stopKey = 'STOP'*/
     disableUpdateCheck = true
     warDir = file('build/exploded');
 }
-gaeRun.daemon = Boolean.parseBoolean(server_daemon)
+appengineRun.daemon = Boolean.parseBoolean(server_daemon)
 
 dependencies {
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
     testCompile "org.seleniumhq.selenium:selenium:2.0b3"
     testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
-    testCompile ext.libs.guiceberry
-    testCompile ext.libs.guava_testlib
-    testCompile ext.libs.junit
-    testCompile ext.libs.inject
-    testCompile ext.libs.guice
+    testCompile libs.guiceberry
+    testCompile libs.guava_testlib
+    testCompile libs.junit
+    testCompile libs.inject
+    testCompile libs.guice
 }
 
 task unpackWar(dependsOn: ':prod-gae-war:assemble') << {
@@ -54,8 +57,8 @@ task peerStop(type: Exec) {
     ignoreExitValue = true
 }
 
-gaeRun.dependsOn copyWar
-test.dependsOn gaeRun, unpackTest, ":peer:assemble"
+appengineRun.dependsOn copyWar
+test.dependsOn appengineRun, unpackTest, ":peer:assemble"
 
 test {
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
@@ -74,7 +77,7 @@ test {
     testLogging.showStandardStreams = true
 }
 
-clean.dependsOn gaeStop, peerStop
+clean.dependsOn appengineStop, peerStop
 
 test << {
     println "Stopping GAE-server"

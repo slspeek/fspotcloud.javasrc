@@ -1,6 +1,6 @@
 description = 'Session test app'
 
-apply plugin: 'gae'
+apply plugin: 'appengine'
 apply plugin: 'war'
 if ("${analysis}" == "true") {
     findbugsTest.enabled = false;
@@ -9,16 +9,16 @@ if ("${analysis}" == "true") {
 
 System.properties['appengine.sdk.root'] = System.properties['user.home'] + "/appengine-java-sdk-${gae_version}"
 
-gae {
-    stopKey = 'STOP'
+appengine {
+    /*stopKey = 'STOP'*/
     disableUpdateCheck = true
     daemon = false
     httpPort = 7070
-    stopPort = 7071
+    /*stopPort = 7071*/
     //warDir = file('build/exploded');
 }
 
 dependencies {
-    compile ext.libs.servlet_spec
+    compile libs.servlet_spec
 }
 

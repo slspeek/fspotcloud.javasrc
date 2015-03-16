@@ -2,13 +2,13 @@ description = 'Model API'
 
 dependencies {
     compile project(':rpc')
-    compile ext.libs.simple_jpa_dao_api
-    compile ext.libs.simple_blobstore_api
-    testCompile ext.libs.guice
-    testCompile ext.libs.guiceberry
-    testCompile ext.libs.inject
-    testCompile ext.libs.junit
-    testCompile ext.libs.guava
+    compile libs.simple_jpa_dao_api
+    compile libs.simple_blobstore_api
+    testCompile libs.guice
+    testCompile libs.guiceberry
+    testCompile libs.inject
+    testCompile libs.junit
+    testCompile libs.guava
 }
 
 task packageTests(type: Jar, dependsOn: compileTestJava) {

@@ -12,27 +12,27 @@ dependencies {
     compile project(':rpc')
     compile project(':model-api')
     compile project(':model-jpa')
-    compile ext.libs.commons_lang
-    compile ext.libs.inject
-    compile ext.libs.guice
+    compile libs.commons_lang
+    compile libs.inject
+    compile libs.guice
     compile "org.hibernate:hibernate-core:4.0.0.Final"
     compile "javassist:javassist:3.12.0.GA"
     compile "org.hibernate:hibernate-entitymanager:4.0.0.Final"
-    compile ext.libs.derby_all
-    compile ext.libs.jta
-    compile ext.libs.gwt_dispatch
-    compile ext.libs.jdo_api
-    compile ext.libs.guice_servlet
-    compile ext.libs.simple_blobstore_j2ee
+    compile libs.derby_all
+    compile libs.jta
+    compile libs.gwt_dispatch
+    compile libs.jdo_api
+    compile libs.guice_servlet
+    compile libs.simple_blobstore_j2ee
 
     testCompile project(path: ":model-api", configuration: "testCompile")
-    testCompile ext.libs.guiceberry
-    testCompile ext.libs.junit
-    testCompile ext.libs.mockito
-    testCompile ext.libs.guava_testlib
+    testCompile libs.guiceberry
+    testCompile libs.junit
+    testCompile libs.mockito
+    testCompile libs.guava_testlib
     testCompile "org.slf4j:slf4j-log4j12:1.6.4"
-    daoTests ext.libs.simple_jpa_dao_namedid_test
-    genidDaoTests ext.libs.simple_jpa_dao_genid_test, ext.libs.simple_jpa_dao_base_test
+    daoTests libs.simple_jpa_dao_namedid_test
+    genidDaoTests libs.simple_jpa_dao_genid_test, libs.simple_jpa_dao_base_test
     modelTests files("../model-api/build/libs/model-api-${version}-tests.jar")
 }
 task deleteDB(type: Delete) {
@@ -56,7 +56,8 @@ task userDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
     classpath = sourceSets.test.runtimeClasspath
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.simplejpadao.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.server.model.test.UserGuiceBerryEnv'
-    testResultsDir file("${project.testResultsDir}/user")
+    reports.junitXml.destination =file("${project.testResultsDir}/user")
+    reports.html.destination =file("${project.testResultsDir}/user")
 }
 
 task userGroupDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
@@ -65,7 +66,8 @@ task userGroupDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
     classpath = sourceSets.test.runtimeClasspath
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.simplejpadao.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.server.model.test.UserGroupGuiceBerryEnv'
-    testResultsDir file("${project.testResultsDir}/usergroup")
+    reports.junitXml.destination =file("${project.testResultsDir}/usergroup")
+    reports.html.destination =file("${project.testResultsDir}/usergroup")
 }
 
 task photoDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
@@ -74,7 +76,8 @@ task photoDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
     classpath = sourceSets.test.runtimeClasspath
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.simplejpadao.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.server.model.test.PhotoGuiceBerryEnv'
-    testResultsDir file("${project.testResultsDir}/photo")
+    reports.junitXml.destination =file("${project.testResultsDir}/photo")
+    reports.html.destination =file("${project.testResultsDir}/photo")
 
 }
 
@@ -83,7 +86,8 @@ task tagDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
     classpath = sourceSets.test.runtimeClasspath
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.simplejpadao.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.server.model.test.TagGuiceBerryEnv'
-    testResultsDir file("${project.testResultsDir}/tag")
+    reports.junitXml.destination =file("${project.testResultsDir}/tag")
+    reports.html.destination =file("${project.testResultsDir}/tag")
 }
 
 task peerDatabaseDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
@@ -91,7 +95,8 @@ task peerDatabaseDaoTest(type: Test, dependsOn: [classes, unpackTest]) {
     classpath = sourceSets.test.runtimeClasspath
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.simplejpadao.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.server.model.test.PeerDatabaseGuiceBerryEnv'
-    testResultsDir file("${project.testResultsDir}/peerdatabase")
+    reports.junitXml.destination =file("${project.testResultsDir}/peerdatabase")
+    reports.html.destination =file("${project.testResultsDir}/peerdatabase")
 }
 
 task modelTest(type: Test, dependsOn: [classes, unpackTest]) {
@@ -99,7 +104,8 @@ task modelTest(type: Test, dependsOn: [classes, unpackTest]) {
     classpath = sourceSets.test.runtimeClasspath
     systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.model.api.test.EmptyGuiceBerryEnv'] =
         'com.googlecode.fspotcloud.server.model.test.J2eeModelGuiceBerryEnv'
-    testResultsDir file("${project.testResultsDir}/model")
+    reports.junitXml.destination =file("${project.testResultsDir}/model")
+    reports.html.destination =file("${project.testResultsDir}/model")
 }
 
 test.dependsOn photoDaoTest, tagDaoTest, peerDatabaseDaoTest, modelTest, userDaoTest, userGroupDaoTest

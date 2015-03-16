@@ -17,23 +17,23 @@ dependencies {
     compile project(':model-api')
     compile project(':user-service-api')
     compile project(':peer-rpc')
-    compile ext.libs.bot_dispatch_controller
-    compile ext.libs.bot_dispatch_api
-    compile ext.libs.bot_dispatch_command_api
-    compile ext.libs.task_dispatch_dispatch_api
-    compile ext.libs.simple_blobstore_api
-    provided ext.libs.servlet_spec
-//    compile ext.libs.servlet_spec
-    compile ext.libs.guava
-    compile ext.libs.javamail
+    compile libs.bot_dispatch_controller
+    compile libs.bot_dispatch_api
+    compile libs.bot_dispatch_command_api
+    compile libs.task_dispatch_dispatch_api
+    compile libs.simple_blobstore_api
+    provided libs.servlet_spec
+//    compile libs.servlet_spec
+    compile libs.guava
+    compile libs.javamail
 
     testCompile project(':model-jpa-j2ee')
     testCompile project(':test-util')
-    testCompile ext.libs.junit
-    testCompile ext.libs.mockito
-    testCompile ext.libs.guava
-    testCompile ext.libs.jukito
-    testCompile ext.libs.http_unit
+    testCompile libs.junit
+    testCompile libs.mockito
+    testCompile libs.guava
+    testCompile libs.jukito
+    testCompile libs.http_unit
     cobTuRA group: 'net.sourceforge.cobertura', name: 'cobertura', version: '1.9.4.1'
     testRuntime group: 'net.sourceforge.cobertura', name: 'cobertura', version: '1.9.4.1'
 

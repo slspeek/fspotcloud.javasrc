@@ -1,21 +1,18 @@
 description = 'Installer for GAE setup'
 buildscript {
     repositories {
-        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = 'GitHub'
-            addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
-        }
+			jcenter()
     }
 
     dependencies {
-        classpath 'bmuschko:gradle-izpack-plugin:0.2.1'
+        classpath 'com.bmuschko:gradle-izpack-plugin:2.0'
     }
 }
 
 configurations {
     appengine_sdk
 }
-apply plugin: 'izpack'
+apply plugin: 'com.bmuschko.izpack'
 
 dependencies {
     izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.1'
