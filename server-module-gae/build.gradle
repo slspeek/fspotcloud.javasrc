@@ -7,9 +7,9 @@ dependencies {
     compile project(':server')
     compile project(':model-jpa-gae')
     compile project(':user-service-gae')
-    compile ext.libs.inject
-    compile ext.libs.guice
-    compile ext.libs.guice_assisted_inject
+    compile libs.inject
+    compile libs.guice
+    compile libs.guice_assisted_inject
     compile("com.googlecode.taskqueue-dispatch:dispatch:${taskqueue_dispatch_version}") {
         exclude(module: 'gwt-user')
     }
@@ -19,9 +19,9 @@ dependencies {
     compile("com.googlecode.bot-dispatch:command-jpa:${bot_dispatch_version}") {
         exclude(module: 'gwt-user')
     }
-    compile ext.libs.bot_dispatch_command_api
-    compile ext.libs.servlet_spec
-    compile ext.libs.simple_blobstore_gae
+    compile libs.bot_dispatch_command_api
+    compile libs.servlet_spec
+    compile libs.simple_blobstore_gae
 
     testCompile project(':user-service-openid')
     testCompile project(':peer')
@@ -32,12 +32,12 @@ dependencies {
     testCompile("com.googlecode.taskqueue-dispatch:direct:${taskqueue_dispatch_version}") {
         exclude(module: 'gwt-user')
     }
-    testCompile ext.libs.guiceberry
-    testCompile ext.libs.guava_testlib
-    testCompile ext.libs.gae_testing
-    testCompile ext.libs.junit
-    testCompile ext.libs.test_ng
-    testCompile ext.libs.mockito
+    testCompile libs.guiceberry
+    testCompile libs.guava_testlib
+    testCompile libs.gae_testing
+    testCompile libs.junit
+    testCompile libs.test_ng
+    testCompile libs.mockito
 }
 
 task unpackTest << {

@@ -9,11 +9,11 @@ dependencies {
     testCompile project(':client')
     testCompile "org.seleniumhq.selenium:selenium:2.0b3"
     testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
-    testCompile ext.libs.guava_testlib
-    testCompile ext.libs.junit
-    testCompile ext.libs.guiceberry
-    testCompile ext.libs.inject
-    testCompile ext.libs.guice
+    testCompile libs.guava_testlib
+    testCompile libs.junit
+    testCompile libs.guiceberry
+    testCompile libs.inject
+    testCompile libs.guice
 }
 
 test {

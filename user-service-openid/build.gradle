@@ -15,12 +15,12 @@ dependencies {
     compile("org.openid4java:openid4java-consumer:0.9.6") {
         exclude module: 'guice'
     }
-    compile ext.libs.guice_servlet
-    compile ext.libs.guice
-    compile ext.libs.inject
-    provided ext.libs.servlet_spec
+    compile libs.guice_servlet
+    compile libs.guice
+    compile libs.inject
+    provided libs.servlet_spec
 
-    testCompile ext.libs.junit
-    testCompile ext.libs.jukito
-    testCompile ext.libs.guava
+    testCompile libs.junit
+    testCompile libs.jukito
+    testCompile libs.guava
 }

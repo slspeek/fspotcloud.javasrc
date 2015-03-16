@@ -11,17 +11,17 @@ sourceSets {
 dependencies {
     compile project(':rpc')
     compile project(':model-api')
-    compile ext.libs.guava
-    compile ext.libs.commons_lang
-    compile ext.libs.inject
-    compile ext.libs.guice
-    compile ext.libs.hibernate_all
-    compile ext.libs.jta
-    compile ext.libs.gwt_dispatch
-    compile ext.libs.jdo_api
-    compile ext.libs.guice_servlet
-    compile ext.libs.simple_jpa_dao_impl
-    compile ext.libs.simple_jpa_dao_cached_dao
-    compile ext.libs.simple_blobstore_api
-    provided ext.libs.servlet_spec
+    compile libs.guava
+    compile libs.commons_lang
+    compile libs.inject
+    compile libs.guice
+    compile libs.hibernate_all
+    compile libs.jta
+    compile libs.gwt_dispatch
+    compile libs.jdo_api
+    compile libs.guice_servlet
+    compile libs.simple_jpa_dao_impl
+    compile libs.simple_jpa_dao_cached_dao
+    compile libs.simple_blobstore_api
+    provided libs.servlet_spec
 }

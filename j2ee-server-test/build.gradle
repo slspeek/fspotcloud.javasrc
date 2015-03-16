@@ -5,10 +5,10 @@ description = 'Integration testing for prod-j2ee-war'
 dependencies {
     testCompile project(':server-module-j2ee')
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
-    testCompile ext.libs.guava_testlib
-    testCompile ext.libs.guiceberry
-    testCompile ext.libs.junit
-    testCompile ext.libs.jetty
+    testCompile libs.guava_testlib
+    testCompile libs.guiceberry
+    testCompile libs.junit
+    testCompile libs.jetty
 }
 
 task unpackTest(dependsOn: ':e2e-test:packageTests') << {

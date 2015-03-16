@@ -2,13 +2,13 @@ description = 'The Peer Bot'
 
 dependencies {
     compile project(':peer-rpc')
-    compile ext.libs.commons_lang
+    compile libs.commons_lang
     compile "org.xerial:sqlite-jdbc:3.6.7"
     compile "httpunit:httpunit:1.7"
-    compile ext.libs.bot_dispatch_bot
-    compile ext.libs.guice
-    compile ext.libs.guice_assisted_inject
-    compile ext.libs.guava
+    compile libs.bot_dispatch_bot
+    compile libs.guice
+    compile libs.guice_assisted_inject
+    compile libs.guava
 
     testCompile "junit:junit:3.8.1"
     testCompile "org.jmock:jmock:2.5.1"
