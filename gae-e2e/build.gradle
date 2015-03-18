@@ -19,8 +19,8 @@ appengineRun.daemon = Boolean.parseBoolean(server_daemon)
 
 dependencies {
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
-    testCompile "org.seleniumhq.selenium:selenium:2.0b3"
-    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:1.0.2"
+    testCompile "org.seleniumhq.selenium:selenium:${selenium_version}"
+    testCompile "org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:${selenium_client_version}"
     testCompile libs.guiceberry
     testCompile libs.guava_testlib
     testCompile libs.junit
