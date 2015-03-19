@@ -36,7 +36,7 @@ import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;

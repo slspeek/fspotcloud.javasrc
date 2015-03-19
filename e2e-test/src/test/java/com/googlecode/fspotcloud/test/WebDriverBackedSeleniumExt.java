@@ -2,7 +2,7 @@ package com.googlecode.fspotcloud.test;
 
 import com.google.common.base.Supplier;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * Created with IntelliJ IDEA.

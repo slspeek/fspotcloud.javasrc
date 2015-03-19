@@ -1,7 +1,7 @@
 description = 'GAE Fixture war'
 
 apply plugin: 'war'
-apply plugin: 'gae'
+apply plugin: 'appengine'
 
 dependencies {
     compile project(path: ':e2e-test', configuration: 'testCompile')
@@ -13,14 +13,14 @@ war {
     from "src/main/resources"
 }
 
-gae {
+appengine {
     httpPort = 8030
     stopPort = 8032
-    stopKey = 'STOP'
+    //stopKey = 'STOP'
     disableUpdateCheck = true
     daemon = true
 }
 
-task createFixture(dependsOn: [gaeRun, gaeStop]) << {
+task createFixture(dependsOn: [appengineRun, appengineStop]) << {
 
 }

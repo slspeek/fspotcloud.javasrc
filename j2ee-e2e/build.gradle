@@ -22,6 +22,7 @@ dependencies {
     tomcat libs.tomcat
 
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
+    testCompile project(':model-jpa-j2ee')
     testCompile libs.selenium
     testCompile libs.guiceberry
     testCompile libs.guava_testlib

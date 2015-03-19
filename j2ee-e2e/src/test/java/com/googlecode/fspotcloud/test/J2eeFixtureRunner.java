@@ -9,5 +9,6 @@ public class J2eeFixtureRunner {
         Injector injector = Guice.createInjector(new J2eeModelModule(100, "derby"));
         ThreeUsersFixture threeUsersFixture = new ThreeUsersFixture(injector);
         threeUsersFixture.run();
+				System.exit(0);
     }
 }

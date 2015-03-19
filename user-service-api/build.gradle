@@ -5,7 +5,7 @@ configurations {
     testFixtures {
         extendsFrom testRuntime
     }
-    sources
+    sourceCode
 }
 
 pmdMain {
@@ -44,6 +44,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 
 artifacts {
-    sources sourcesJar
+    sourceCode sourcesJar
     testFixtures testJar
 }
