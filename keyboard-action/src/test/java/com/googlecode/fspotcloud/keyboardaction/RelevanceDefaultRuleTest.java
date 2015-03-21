@@ -13,8 +13,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class RelevanceDefaultRuleTest {
 
-    Relevance relevance = (new Relevance(FlagsRule.needing("Foo"),
-            HomePlace.class))
+    Relevance relevance = new Relevance(FlagsRule.needing("Foo"),
+            HomePlace.class)
             .addDefaultKeys(KeyStroke.K);
     PlaceContext placeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet("Foo"));
 
@@ -41,8 +41,8 @@ public class RelevanceDefaultRuleTest {
 
     @Test
     public void testEmptyDefaultRule() throws Exception {
-        Relevance relevance = (new Relevance(FlagsRule.EMPTY,
-                HomePlace.class))
+        Relevance relevance = new Relevance(FlagsRule.EMPTY,
+                HomePlace.class)
                 .addDefaultKeys(KeyStroke.K);
         PlaceContext placeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet());
         List<KeyStroke> keys = relevance.getKeys(placeContext);

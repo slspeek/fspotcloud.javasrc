@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JukitoRunner.class)
 public class RelevanceNeedsFlagTest {
 
-    Relevance relevance = (new Relevance(HomePlace.class)).addDefaultKeys(KeyStroke.K);
+    Relevance relevance = new Relevance(HomePlace.class).addDefaultKeys(KeyStroke.K);
 
     PlaceContext placeContext = new PlaceContext(OutPlace.class, Sets.<String>newHashSet(MainBuilder.FLAG_LOGGED_ON));
 

@@ -91,7 +91,7 @@ public class PrivateAccessITest {
     @Test
     public void testRedirect() throws Exception {
         photoPage.open("#BasePlace:1:7:2:2:false");
-        sleepShort();
+        sleepShort(4);
         loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
         loginPage.login();
         photoPage.assertPagingLabelSays(1, 3);

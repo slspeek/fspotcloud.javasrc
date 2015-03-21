@@ -59,7 +59,7 @@ public class NativePreviewHandler implements Event.NativePreviewHandler {
             return;
         }
         final Modifiers modifiers = getModifiers(event);
-        final String keyString = (new KeyStroke(modifiers, keycode)).toString();
+        final String keyString = new KeyStroke(modifiers, keycode).toString();
 
 
         log.log(Level.FINEST, "Event preview in keydown-event  " + keyString + " keycode: " + keycode);

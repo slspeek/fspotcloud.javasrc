@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class RelevanceDefaultPlacesTest {
 
-    Relevance relevance = (new Relevance(HomePlace.class)).addDefaultKeys(KeyStroke.K);
+    Relevance relevance = new Relevance(HomePlace.class).addDefaultKeys(KeyStroke.K);
     @Test
     public void testGetKeys() throws Exception {
         List<Class<? extends Place>> places = relevance.getDefaultPlaces();

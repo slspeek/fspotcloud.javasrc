@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import static com.google.common.base.Objects.equal;
 import static com.google.common.collect.Lists.newArrayList;
@@ -18,7 +18,7 @@ import static com.google.common.collect.Sets.newHashSet;
 @GwtCompatible
 public class Relevance {
 
-    private final Logger log = Logger.getLogger(Relevance.class.getName());
+    //private final Logger log = Logger.getLogger(Relevance.class.getName());
     private final List<KeyStroke> defaultKeys = newArrayList();
     private final Map<Class<? extends Place>, Set<FlagsRule>> placeConditions = newHashMap();
     private final Map<PlaceFlagCondition, List<KeyStroke>> overridesMap = newHashMap();
@@ -67,7 +67,7 @@ public class Relevance {
         List<KeyStroke> result = newArrayList();
         final Class<? extends Place> place = placeContext.getPlace();
         final Set<String> flags = placeContext.getFlags();
-        if ((defaultPlaces.isEmpty() || (defaultPlaces.contains(place)) && defaultRule.holds(flags))) {
+        if (defaultPlaces.isEmpty() || (defaultPlaces.contains(place)) && defaultRule.holds(flags)) {
             result = defaultKeys;
         }
         List<KeyStroke> overrides = newArrayList();

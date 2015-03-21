@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class RelevanceAllPlacesTest {
 
-    Relevance relevance = (new Relevance()).addDefaultKeys(KeyStroke.K);
+    Relevance relevance = new Relevance().addDefaultKeys(KeyStroke.K);
     PlaceContext outContext = new PlaceContext(OutPlace.class, Sets.<String>newHashSet(MainBuilder.FLAG_LOGGED_ON));
     PlaceContext homeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet(MainBuilder.FLAG_LOGGED_ON));
     @Test

@@ -33,6 +33,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class EmailConfirmationITest {
 
@@ -52,6 +53,8 @@ public class EmailConfirmationITest {
         rms.setEmailVerificationSecret(SECRET);
         rms.setEnabled(false);
         userDao.save(rms);
-        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET).success();
+        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
+				sleepShort(4);
+				emailConfirmationPage.success();
     }
 }
