@@ -40,7 +40,7 @@ public class SessionEmail implements ISessionEmail {
         HttpSession session = sessionProvider.get();
         List<String> emails = (List<String>) session.getAttribute("email");
 
-        if ((emails != null) && !emails.isEmpty()) {
+        if (emails != null && !emails.isEmpty()) {
             return emails.get(0);
         } else {
             return null;

@@ -52,7 +52,7 @@ public class RemovePhotosFromTagAction extends AbstractBatchAction<String> {
 
         final RemovePhotosFromTagAction other = (RemovePhotosFromTagAction) obj;
 
-        if ((this.tagId == null) ? (other.tagId != null)
+        if (this.tagId == null ? other.tagId != null
                 : !this.tagId.equals(other.tagId)) {
             return false;
         }

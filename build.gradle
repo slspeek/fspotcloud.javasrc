@@ -2,15 +2,11 @@ buildscript {
     repositories {
         maven {
             url maven_repo
-            //artifactUrls "http://fspotcloud-maven.googlecode.com/svn/maven/repository"
+            artifactUrls "http://fspotcloud-maven.googlecode.com/svn/maven/repository"
         }
 				maven {
 					url 'http://dl.bintray.com/steffenschaefer/maven'
 				}
-        /*add(new org.apache.ivy.plugins.resolver.URLResolver()) {*/
-            /*name = 'GitHub'*/
-            /*addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'*/
-        /*}*/
         mavenLocal()
     }
 
@@ -193,9 +189,9 @@ task unittests(dependsOn: [
         ':peer-rpc:test',
         ':model-api:test',
         ':model-jpa:test',
-        ':model-jpa-gae:test',
+        //':model-jpa-gae:test',
         ':user-service-api:test',
-        ':user-service-gae:test',
+        //':user-service-gae:test',
         ':user-service-openid:test',
         ':keyboard-action:test'
 ]) << {
@@ -210,9 +206,9 @@ if ("${cobertura}" == "true") {
             ':peer-rpc:cobertura',
             ':model-api:cobertura',
             ':model-jpa:cobertura',
-            ':model-jpa-gae:cobertura',
+            //':model-jpa-gae:cobertura',
             ':user-service-api:cobertura',
-            ':user-service-gae:cobertura',
+            //':user-service-gae:cobertura',
             ':user-service-openid:cobertura',
             ':keyboard-action:cobertura'
     ]) << {

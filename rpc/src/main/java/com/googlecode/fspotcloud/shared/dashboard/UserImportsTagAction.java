@@ -62,7 +62,7 @@ public class UserImportsTagAction implements Action<VoidResult>,
 
         final UserImportsTagAction other = (UserImportsTagAction) obj;
 
-        if ((this.tagId == null) ? (other.tagId != null)
+        if (this.tagId == null ? other.tagId != null
                 : !this.tagId.equals(other.tagId)) {
             return false;
         }

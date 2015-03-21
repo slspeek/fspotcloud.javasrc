@@ -61,7 +61,7 @@ public class TagNodeTest {
         TagNode simpleTree = factory.getRootWithOneChild();
         TagNode child = simpleTree.getChildren().get(0);
 
-        assertEquals(new Integer(0), (child.pathTo(simpleTree)).get(0));
+        assertEquals(new Integer(0), child.pathTo(simpleTree).get(0));
 
     }
 
@@ -70,11 +70,11 @@ public class TagNodeTest {
         TagNode simpleTree = factory.getRootWithThreeChildren();
         TagNode child0 = simpleTree.getChildren().get(0);
 
-        assertEquals(new Integer(0), (child0.pathTo(simpleTree)).get(0));
+        assertEquals(new Integer(0), child0.pathTo(simpleTree).get(0));
 
         TagNode child2 = simpleTree.getChildren().get(2);
 
-        assertEquals(new Integer(2), (child2.pathTo(simpleTree)).get(0));
+        assertEquals(new Integer(2), child2.pathTo(simpleTree).get(0));
 
     }
 
@@ -86,15 +86,15 @@ public class TagNodeTest {
         extra.setParent(child2);
         child2.addChild(extra);
 
-        assertEquals(new Integer(2), (extra.pathTo(simpleTree)).get(0));
-        assertEquals(new Integer(0), (extra.pathTo(simpleTree)).get(1));
+        assertEquals(new Integer(2), extra.pathTo(simpleTree).get(0));
+        assertEquals(new Integer(0), extra.pathTo(simpleTree).get(1));
 
     }
 
     @Test
     public void testNumericalPathToRootInductionBase() throws Exception {
         TagNode simpleTree = factory.getSingleNodeWithOnePicture();
-        assertEquals(0, (simpleTree.pathTo(simpleTree)).size());
+        assertEquals(0, simpleTree.pathTo(simpleTree).size());
 
     }
 

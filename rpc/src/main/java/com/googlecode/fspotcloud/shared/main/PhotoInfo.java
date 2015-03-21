@@ -87,17 +87,17 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo> {
 
         final PhotoInfo other = (PhotoInfo) obj;
 
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+        if (this.id == null ? other.id != null : !this.id.equals(other.id)) {
             return false;
         }
 
-        if ((this.description == null) ? (other.description != null)
+        if (this.description == null ? other.description != null
                 : !this.description.equals(
                 other.description)) {
             return false;
         }
 
-        if ((this.exifData == null) ? (other.exifData != null)
+        if (this.exifData == null ? other.exifData != null
                 : !this.exifData.equals(other.exifData)) {
             return false;
         }

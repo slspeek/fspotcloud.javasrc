@@ -98,7 +98,7 @@ public class RemovePhotosFromTagHandler extends AbstractBatchActionHandler<Remov
                        Iterator<String> workLoad) {
         Tag tag = tagManager.find(((RemovePhotosFromTagAction) action).getTagId());
 
-        for (int i = 0; (i < MAX_DELETE_TICKS) && workLoad.hasNext(); i++) {
+        for (int i = 0; i < MAX_DELETE_TICKS && workLoad.hasNext(); i++) {
             String photoId = workLoad.next();
             checkForDeletion(tag, tag.getId(), photoId);
         }

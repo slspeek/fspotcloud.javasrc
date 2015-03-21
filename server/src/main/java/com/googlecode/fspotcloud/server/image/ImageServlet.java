@@ -70,8 +70,8 @@ public class ImageServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        boolean thumb = (request.getParameter("thumb") != null);
-        boolean fullSize = (request.getParameter("fs") != null);
+        boolean thumb = request.getParameter("thumb") != null;
+        boolean fullSize = request.getParameter("fs") != null;
         Photo photo = photoManager.find(id);
 
         if (userService.isUserAdmin() ||

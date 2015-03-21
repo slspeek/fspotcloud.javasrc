@@ -112,7 +112,7 @@ public class PeerServerEnvironment {
     }
 
     protected void setPeerTestDatabase(String db) throws SQLException {
-        String basedir = (new File(".")).getAbsolutePath();
+        String basedir = new File(".").getAbsolutePath();
         File testDatabase = new File(basedir + "./peer/src/test/resources/" +
                 db);
         String path = testDatabase.getPath();

@@ -1,4 +1,8 @@
 syntax: glob
+keyboard-action/war
+peer/runtime
+prod-j2ee-war/war
+j2ee-e2e/runtime
 client/war
 *.hprof
 *.swp

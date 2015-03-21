@@ -59,7 +59,7 @@ public abstract class AbstractBatchActionHandler<V extends AbstractBatchAction<T
             throws DispatchException {
         Iterator<T> it = action.iterator();
 
-        for (int i = 0; (i < MAX_DATA_TICKS) && it.hasNext(); i++) {
+        for (int i = 0; i < MAX_DATA_TICKS && it.hasNext(); i++) {
             doWork(action, it);
         }
 
