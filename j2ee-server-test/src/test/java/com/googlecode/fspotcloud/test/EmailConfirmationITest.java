@@ -54,7 +54,8 @@ public class EmailConfirmationITest {
         rms.setEnabled(false);
         userDao.save(rms);
         emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
-				sleepShort(4);
+        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
+				sleepShort();
 				emailConfirmationPage.success();
     }
 }

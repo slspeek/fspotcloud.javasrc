@@ -89,7 +89,7 @@ allprojects {
     apply plugin: 'eclipse'
 
     group = 'com.googlecode.fspotcloud'
-    version = "0.89-${build_number}"
+    version = "0.91-${build_number}"
 }
 
 subprojects {
