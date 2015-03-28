@@ -167,7 +167,7 @@ public class PeerDatabaseEntity implements PeerDatabase, Serializable {
 
     @Override
     public TagNode getCachedTagTree() {
-        if ((cachedTagTree == null) && (cachedTagTreeData != null)) {
+        if (cachedTagTree == null && cachedTagTreeData != null) {
             cachedTagTree = (TagNode) SerializationUtils.deserialize(cachedTagTreeData.getBytes());
         }
 
@@ -188,7 +188,7 @@ public class PeerDatabaseEntity implements PeerDatabase, Serializable {
 
     @Override
     public TagNode getCachedAdminTagTree() {
-        if ((cachedAdminTagTree == null) && (cachedAdminTagTreeData != null)) {
+        if (cachedAdminTagTree == null && cachedAdminTagTreeData != null) {
             cachedAdminTagTree = (TagNode) SerializationUtils.deserialize(cachedAdminTagTreeData.getBytes());
         }
 

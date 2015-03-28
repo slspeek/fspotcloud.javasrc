@@ -7,12 +7,16 @@ configurations {
     testCompile.extendsFrom(genidDaoTests, daoTests, modelTests)
     jdo
     testRuntime
+		//for jdoEnhance as it uses asm-4.1, and guice asm-3.1
+		runtime.exclude group: 'asm', module: 'asm'
     runtime
 }
+
+ext.appenginesdkroot = System.properties['appengine.sdk.root'] 
+
 dependencies {
-    jdo 'org.datanucleus:datanucleus-core:1.1.5',
-            'javax.jdo:jdo2-api:2.3-eb'
-    jdo 'org.datanucleus:datanucleus-enhancer:1.1.4'
+    jdo files("${appenginesdkroot}/lib/appengine-tools-api.jar")
+		jdo 'org.ow2.asm:asm:4.1'
 
     compile project(':rpc')
     compile project(':model-api')
@@ -129,21 +133,18 @@ task modelTest(type: Test, dependsOn: [classes, unpackTest]) {
 
 test.dependsOn photoDaoTest, tagDaoTest, peerDatabaseDaoTest, modelTest, userDaoTest, userGroupDaoTest
 
-task jdoEnhance  {
-    inputs.dir sourceSets.main.allSource
-    outputs.dir sourceSets.main.output.classesDir
-
-    ant.taskdef(name: 'enhancer', classname: 'org.datanucleus.enhancer.tools.EnhancerTask', classpath: configurations.jdo.asPath)
-    ant.enhancer(dir: sourceSets.main.output.classesDir.canonicalPath.toURI().toString(), verbose: 'true') {
-        classpath {
-            pathelement(location: sourceSets.main.output.classesDir.canonicalPath.toURI().toString())
-            pathelement(path: configurations.jdo.asPath)
-            pathelement(path: sourceSets.main.runtimeClasspath.asPath)
-        }
-        fileset(dir: sourceSets.main.output.classesDir.canonicalPath.toURI().toString()) {
-            include(name: '**/*.class')
-        }
-    }
+task jdoEnhance << {
+	ant.taskdef(name: 'enhancer', classname: 'com.google.appengine.tools.enhancer.EnhancerTask', classpath: configurations.jdo.asPath) 
+	ant.enhancer( dir: sourceSets.main.output.classesDir.canonicalPath.toURI().toString(), verbose: 'true') {
+		classpath {
+			pathelement(location: sourceSets.main.output.classesDir.canonicalPath.toURI().toString())
+			pathelement(path: configurations.jdo.asPath)
+			pathelement(path: sourceSets.main.runtimeClasspath.asPath)
+		}
+		fileset(dir: sourceSets.main.output.classesDir.canonicalPath.toURI().toString()) {
+			include(name: '**/*.class')
+		}
+	}
 }
 
 classes.dependsOn jdoEnhance

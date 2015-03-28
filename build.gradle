@@ -16,6 +16,7 @@ buildscript {
     }
 }
 
+System.properties['appengine.sdk.root'] = System.properties['user.home'] + "/appengine-java-sdk-${gae_version}"
 
 project.ext {
         libs = [
@@ -34,9 +35,9 @@ project.ext {
                 jta: "javax.transaction:jta:1.1",
                 commons_lang: "commons-lang:commons-lang:2.6",
                 commons_codec: "commons-codec:commons-codec:1.7",
-                gae_testing: ["com.google.appengine:appengine-local-runtime:${gae_version}",
-                        "com.google.appengine:appengine-api-stubs:${gae_version}",
-                        "com.google.appengine:appengine-testing:${gae_version}"],
+                gae_testing: ["com.google.appengine:appengine-api-stubs:${gae_version}",
+									"com.google.appengine:appengine-api-labs:${gae_version}",
+									"com.google.appengine:appengine-testing:${gae_version}"],
                 ginmvp: "com.google.code.ginmvp:ginmvp-core:1.1",
                 guava: "com.google.guava:guava:${guava_version}",
                 guava_gwt: "com.google.guava:guava-gwt:${guava_version}",
