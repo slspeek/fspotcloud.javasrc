@@ -15,7 +15,7 @@ war {
 
 appengine {
     httpPort = 8030
-    stopPort = 8032
+    //stopPort = 8032
     //stopKey = 'STOP'
     disableUpdateCheck = true
     daemon = true

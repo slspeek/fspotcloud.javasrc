@@ -2,9 +2,8 @@ import org.apache.tools.ant.filters.ExpandProperties
 
 description = 'Selenium testing of prod-gae-war'
 
+apply plugin: 'war'
 apply plugin: 'appengine'
-
-System.properties['appengine.sdk.root'] = System.properties['user.home'] + "/appengine-java-sdk-${gae_version}"
 
 if ("${analysis}" == "true") {
     findbugsTest.enabled = false;
@@ -28,8 +27,6 @@ dependencies {
     testCompile libs.inject
     testCompile libs.guice
 }
-
-
 
 task unpackWar(dependsOn: ':prod-gae-war:assemble') << {
     mkdir "$buildDir/exploded-war-raw"
@@ -88,11 +85,12 @@ test {
     testLogging.showStandardStreams = true
 }
 
-clean.dependsOn appengineStop, peerStop
+clean.dependsOn peerStop
+appengineStop.dependsOn test
 
 test << {
-    println "Stopping GAE-server"
-    gaeStop.execute()
     println "Stopping peer"
     peerStop.execute()
+    println "Stopping GAE Local server"
+		appengineStop.execute()
 }

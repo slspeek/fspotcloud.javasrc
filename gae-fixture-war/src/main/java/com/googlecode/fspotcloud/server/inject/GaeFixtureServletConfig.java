@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 
 
 public class GaeFixtureServletConfig extends GuiceServletContextListener {
-    final Properties p = (new PropertiesLoader("properties.properties")).loadProperties();
+    final Properties p = new PropertiesLoader("properties.properties").loadProperties();
 
     Injector injector;
 
