@@ -24,27 +24,29 @@
 
 package com.googlecode.fspotcloud.peer.handlers;
 
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.peer.GetTagUpdateInstructionsAction;
 import com.googlecode.fspotcloud.shared.peer.PhotoRemovedFromTag;
 import com.googlecode.fspotcloud.shared.peer.PhotoUpdate;
 import com.googlecode.fspotcloud.shared.peer.TagUpdateInstructionsResult;
+
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class GetTagUpdateInstructionsHandler extends SimpleActionHandler<GetTagUpdateInstructionsAction, TagUpdateInstructionsResult> {
-    private final Data data;
+    private final Backend data;
 
     @Inject
-    public GetTagUpdateInstructionsHandler(Data data) {
+    public GetTagUpdateInstructionsHandler(Backend data) {
         super();
         this.data = data;
     }

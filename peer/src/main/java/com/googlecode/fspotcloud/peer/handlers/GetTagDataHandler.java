@@ -25,9 +25,10 @@
 package com.googlecode.fspotcloud.peer.handlers;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.shared.peer.GetTagDataAction;
 import com.googlecode.fspotcloud.shared.peer.TagDataResult;
+
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
@@ -35,10 +36,10 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 
 public class GetTagDataHandler extends SimpleActionHandler<GetTagDataAction, TagDataResult> {
-    private final Data data;
+    private final Backend data;
 
     @Inject
-    public GetTagDataHandler(Data data) {
+    public GetTagDataHandler(Backend data) {
         super();
         this.data = data;
     }

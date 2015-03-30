@@ -47,8 +47,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class Data {
-    private static final Logger LOGGER = Logger.getLogger(Data.class.getName());
+public class FSpotBackend implements Backend {
+    private static final Logger LOGGER = Logger.getLogger(FSpotBackend.class.getName());
 
     static {
         try {
@@ -65,7 +65,7 @@ public class Data {
     private Connection connection;
 
     @Inject
-    public Data(@Named("JDBC URL")
+    public FSpotBackend(@Named("JDBC URL")
                 String jdbcURL) {
         this.jdbcURL = jdbcURL;
         this.photoDirectoryOverride = System.getProperty("photo.dir.override");
@@ -73,7 +73,8 @@ public class Data {
                 "photo.dir.original");
     }
 
-    @VisibleForTesting
+    @Override
+	@VisibleForTesting
     public void setJDBCUrl(String jdbcURL) throws SQLException {
         //LOGGER.info("setting: " + jdbcURL);
         this.jdbcURL = jdbcURL;
@@ -93,7 +94,8 @@ public class Data {
         return connection;
     }
 
-    public int getCount(String kind) throws SQLException {
+    @Override
+	public int getCount(String kind) throws SQLException {
         Connection conn = null;
         int result;
         conn = getConnection();
@@ -111,11 +113,13 @@ public class Data {
         return result;
     }
 
-    public Object[] getMetaData() throws SQLException {
+    @Override
+	public Object[] getMetaData() throws SQLException {
         return new Object[]{getCount("photos"), getCount("tags")};
     }
 
-    public List<TagData> getTagData(List<String> tagIdList)
+    @Override
+	public List<TagData> getTagData(List<String> tagIdList)
             throws SQLException {
         Connection conn = null;
         ResultSet rs = null;
@@ -146,7 +150,8 @@ public class Data {
         return tagList;
     }
 
-    public List<TagData> getTagData() throws SQLException {
+    @Override
+	public List<TagData> getTagData() throws SQLException {
         Connection conn = null;
         ResultSet rs = null;
         List<TagData> tagList;
@@ -172,7 +177,8 @@ public class Data {
         return tagList;
     }
 
-    public List<String> getPhotoKeysInTag(String tagId)
+    @Override
+	public List<String> getPhotoKeysInTag(String tagId)
             throws Exception {
         List<String> result = new ArrayList<String>();
         Connection conn = null;
@@ -198,7 +204,8 @@ public class Data {
         return result;
     }
 
-    public String getImageURL(String photoId)
+    @Override
+	public String getImageURL(String photoId)
             throws SQLException, MalformedURLException {
         String url = null;
         Connection conn = null;
@@ -284,7 +291,8 @@ public class Data {
         throw new IllegalStateException();
     }
 
-    public List<PhotoData> getPhotoData(ImageSpecs imageSpecs,
+    @Override
+	public List<PhotoData> getPhotoData(ImageSpecs imageSpecs,
                                         List<String> imageKeys) throws SQLException {
         List<PhotoData> result = new ArrayList<PhotoData>();
 
@@ -329,7 +337,8 @@ public class Data {
         return result;
     }
 
-    public int getPhotoDefaultVersion(String photoId) throws SQLException {
+    @Override
+	public int getPhotoDefaultVersion(String photoId) throws SQLException {
         Connection conn = null;
         ResultSet rs = null;
 
@@ -355,7 +364,8 @@ public class Data {
         return -1;
     }
 
-    public boolean isPhotoInTag(String tagId, String photoId)
+    @Override
+	public boolean isPhotoInTag(String tagId, String photoId)
             throws SQLException {
         boolean result = false;
         Connection conn = null;
@@ -381,7 +391,8 @@ public class Data {
         return result;
     }
 
-    public byte[] getFullsizePhotoData(String imageKey)
+    @Override
+	public byte[] getFullsizePhotoData(String imageKey)
             throws IOException, SQLException, URISyntaxException {
         String url = getImageURL(imageKey);
         URI fileURI = new URI(url);

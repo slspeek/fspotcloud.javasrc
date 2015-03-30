@@ -25,22 +25,24 @@
 package com.googlecode.fspotcloud.peer.handlers;
 
 import com.google.common.collect.ImmutableList;
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.shared.peer.*;
+
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class GetPeerUpdateInstructionsHandler extends SimpleActionHandler<GetPeerUpdateInstructionsAction, PeerUpdateInstructionsResult> {
-    private final Data data;
+    private final Backend data;
 
     @Inject
-    public GetPeerUpdateInstructionsHandler(Data data) {
+    public GetPeerUpdateInstructionsHandler(Backend data) {
         super();
         this.data = data;
     }

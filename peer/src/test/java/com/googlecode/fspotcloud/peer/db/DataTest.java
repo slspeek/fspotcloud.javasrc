@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 
 public class DataTest extends TestCase {
     private final Logger log = Logger.getLogger(DataTest.class.getName());
-    private Data data;
+    private Backend data;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -50,7 +50,7 @@ public class DataTest extends TestCase {
         System.clearProperty("photo.dir.override");
 
         String path = testDatabase.getPath();
-        data = new Data("jdbc:sqlite:" + path);
+        data = new FSpotBackend("jdbc:sqlite:" + path);
     }
 
     protected void tearDown() throws Exception {

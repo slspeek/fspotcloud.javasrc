@@ -85,8 +85,8 @@ test {
     testLogging.showStandardStreams = true
 }
 
-clean.dependsOn peerStop
-appengineStop.dependsOn test
+clean.dependsOn appengineStop, peerStop
+functionalTestClasses.dependsOn test
 
 test << {
     println "Stopping peer"

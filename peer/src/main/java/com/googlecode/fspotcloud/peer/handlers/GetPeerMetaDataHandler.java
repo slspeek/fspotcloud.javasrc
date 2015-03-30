@@ -25,9 +25,10 @@
 package com.googlecode.fspotcloud.peer.handlers;
 
 import com.google.inject.Inject;
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.shared.peer.GetPeerMetaDataAction;
 import com.googlecode.fspotcloud.shared.peer.PeerMetaDataResult;
+
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
@@ -37,10 +38,10 @@ import java.sql.SQLException;
 
 
 public class GetPeerMetaDataHandler extends SimpleActionHandler<GetPeerMetaDataAction, PeerMetaDataResult> {
-    private final Data data;
+    private final Backend data;
 
     @Inject
-    public GetPeerMetaDataHandler(Data data) {
+    public GetPeerMetaDataHandler(Backend data) {
         super();
         this.data = data;
     }

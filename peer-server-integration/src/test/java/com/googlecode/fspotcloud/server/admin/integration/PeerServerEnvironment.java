@@ -26,17 +26,19 @@ package com.googlecode.fspotcloud.server.admin.integration;
 
 import com.googlecode.botdispatch.SerializableAsyncCallback;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.*;
 import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
 import com.googlecode.fspotcloud.shared.main.TagTreeResult;
+
 import net.customware.gwt.dispatch.server.Dispatch;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -55,7 +57,7 @@ public class PeerServerEnvironment {
     @Inject
     PeerDatabaseDao peers;
     @Inject
-    Data data;
+    Backend data;
     @Inject
     Dispatch dispatch;
     @Inject

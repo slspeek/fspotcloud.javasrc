@@ -24,12 +24,14 @@
 
 package com.googlecode.fspotcloud.peer.handlers;
 
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
+import com.googlecode.fspotcloud.peer.db.FSpotBackend;
 import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.peer.GetTagUpdateInstructionsAction;
 import com.googlecode.fspotcloud.shared.peer.PhotoRemovedFromTag;
 import com.googlecode.fspotcloud.shared.peer.PhotoUpdate;
 import com.googlecode.fspotcloud.shared.peer.TagUpdateInstructionsResult;
+
 import junit.framework.TestCase;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
@@ -43,7 +45,7 @@ public class GetTagUpdateInstructionsHandlerTest extends TestCase {
     /**
      * Tag "5" Glass contains only image "3"
      */
-    private Data data;
+    private Backend data;
     GetTagUpdateInstructionsHandler handler;
     GetTagUpdateInstructionsAction action;
 
@@ -52,7 +54,7 @@ public class GetTagUpdateInstructionsHandlerTest extends TestCase {
 
         URL testDatabase = ClassLoader.getSystemResource("photos.db");
         String path = testDatabase.getPath();
-        data = new Data("jdbc:sqlite:" + path);
+        data = new FSpotBackend("jdbc:sqlite:" + path);
         handler = new GetTagUpdateInstructionsHandler(data);
         action = new GetTagUpdateInstructionsAction("5",
                 new TreeSet<PhotoInfo>());

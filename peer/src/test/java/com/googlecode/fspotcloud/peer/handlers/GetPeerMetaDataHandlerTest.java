@@ -24,9 +24,11 @@
 
 package com.googlecode.fspotcloud.peer.handlers;
 
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
+import com.googlecode.fspotcloud.peer.db.FSpotBackend;
 import com.googlecode.fspotcloud.shared.peer.GetPeerMetaDataAction;
 import com.googlecode.fspotcloud.shared.peer.PeerMetaDataResult;
+
 import junit.framework.TestCase;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
@@ -35,7 +37,7 @@ import java.net.URL;
 
 public class GetPeerMetaDataHandlerTest extends TestCase {
     final GetPeerMetaDataAction action = new GetPeerMetaDataAction();
-    Data data;
+    Backend data;
     GetPeerMetaDataHandler handler;
 
     protected void setUp() throws Exception {
@@ -43,7 +45,7 @@ public class GetPeerMetaDataHandlerTest extends TestCase {
 
         URL testDatabase = ClassLoader.getSystemResource("photos.db");
         String path = testDatabase.getPath();
-        data = new Data("jdbc:sqlite:" + path);
+        data = new FSpotBackend("jdbc:sqlite:" + path);
         handler = new GetPeerMetaDataHandler(data);
     }
 

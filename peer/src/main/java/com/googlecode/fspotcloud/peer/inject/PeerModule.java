@@ -28,7 +28,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import com.googlecode.fspotcloud.peer.CopyDatabase;
 import com.googlecode.fspotcloud.peer.ImageData;
-import com.googlecode.fspotcloud.peer.db.Data;
+import com.googlecode.fspotcloud.peer.db.Backend;
+import com.googlecode.fspotcloud.peer.db.FSpotBackend;
 
 import javax.inject.Singleton;
 
@@ -46,7 +47,7 @@ public class PeerModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(Data.class).in(Singleton.class);
+        bind(Backend.class).to(FSpotBackend.class).in(Singleton.class);
         bind(ImageData.class);
         bind(String.class).annotatedWith(Names.named("JDBC URL"))
                 .toProvider(CopyDatabase.class).in(Singleton.class);
