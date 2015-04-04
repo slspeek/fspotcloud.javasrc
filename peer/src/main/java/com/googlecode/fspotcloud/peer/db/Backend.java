@@ -1,12 +1,10 @@
 package com.googlecode.fspotcloud.peer.db;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
 import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
@@ -25,8 +23,7 @@ public interface Backend {
 
 	List<String> getPhotoKeysInTag(String tagId) throws Exception;
 
-	String getImageURL(String photoId) throws SQLException,
-			MalformedURLException;
+	String getImageURL(String photoId) throws SQLException;
 
 	List<PhotoData> getPhotoData(ImageSpecs imageSpecs, List<String> imageKeys)
 			throws SQLException;

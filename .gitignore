@@ -1,5 +1,6 @@
 syntax: glob
 server-module-gae/runtime/
+server-module-j2ee/runtime/
 gae-e2e/runtime/
 keyboard-action/war
 peer/runtime

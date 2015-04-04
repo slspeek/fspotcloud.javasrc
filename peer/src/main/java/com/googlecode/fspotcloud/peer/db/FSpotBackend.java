@@ -24,11 +24,9 @@
 
 package com.googlecode.fspotcloud.peer.db;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.googlecode.fspotcloud.peer.ImageData;
 import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
 import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
@@ -47,70 +45,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class FSpotBackend implements Backend {
-    private static final Logger LOGGER = Logger.getLogger(FSpotBackend.class.getName());
+public class FSpotBackend extends GenericBackend implements Backend {
+    static final Logger LOGGER = Logger.getLogger(FSpotBackend.class.getName());
 
-    static {
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Driver not found", e);
-        }
-    }
-
-    private String jdbcURL;
-    private final String photoDirectoryOverride;
-    private final String photoDirectoryOriginalPath;
-    private final ImageData imageData = new ImageData();
-    private Connection connection;
-
+   
     @Inject
     public FSpotBackend(@Named("JDBC URL")
                 String jdbcURL) {
-        this.jdbcURL = jdbcURL;
-        this.photoDirectoryOverride = System.getProperty("photo.dir.override");
-        this.photoDirectoryOriginalPath = System.getProperty(
-                "photo.dir.original");
-    }
-
-    @Override
-	@VisibleForTesting
-    public void setJDBCUrl(String jdbcURL) throws SQLException {
-        //LOGGER.info("setting: " + jdbcURL);
-        this.jdbcURL = jdbcURL;
-
-        if (connection != null) {
-            // connection.close();
-            connection = null;
-        }
-    }
-
-    private Connection getConnection() throws SQLException {
-        if (connection == null) {
-            LOGGER.info("Opening new connection: " + jdbcURL);
-            connection = DriverManager.getConnection(jdbcURL);
-        }
-
-        return connection;
-    }
-
-    @Override
-	public int getCount(String kind) throws SQLException {
-        Connection conn = null;
-        int result;
-        conn = getConnection();
-
-        Statement stmt = conn.createStatement();
-
-        ResultSet rs = stmt.executeQuery("SELECT count(id) FROM " + kind);
-
-        if (rs.next()) {
-            result = rs.getInt(1);
-        } else {
-            throw new SQLException("Result for count query was empty");
-        }
-
-        return result;
+        super(jdbcURL);
+       
     }
 
     @Override
@@ -206,7 +149,7 @@ public class FSpotBackend implements Backend {
 
     @Override
 	public String getImageURL(String photoId)
-            throws SQLException, MalformedURLException {
+            throws SQLException {
         String url = null;
         Connection conn = null;
         ResultSet rs = null;
