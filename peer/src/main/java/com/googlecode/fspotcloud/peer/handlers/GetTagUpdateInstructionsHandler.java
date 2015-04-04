@@ -59,7 +59,7 @@ public class GetTagUpdateInstructionsHandler extends SimpleActionHandler<GetTagU
                 new ArrayList<PhotoRemovedFromTag>());
 
         try {
-            List<String> keysOnThePeer = data.getPhotoKeysInTag(action.getTagId());
+            List<String> keysOnThePeer = data.getTagPhotos(action.getTagId());
 
             for (PhotoInfo photoInfo : action.getPhotosOnServer()) {
                 checkForUpdates(action.getTagId(), photoInfo, result);

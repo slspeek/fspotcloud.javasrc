@@ -44,13 +44,14 @@ public abstract class BackendTests extends TestCase {
 		assertEquals(5, count);
 	}
 
-	public void testGetTagList2() throws SQLException {
+	public void testGetTagList() throws SQLException {
 		List<TagData> result = data.getTagData(ImmutableList.of("1"));
 		assertEquals(1, result.size());
 	}
 
 	public void testGetPhotoKeysForTag() throws Exception {
-		List<String> result = data.getPhotoKeysInTag("5");
+		List<String> result = data.getTagPhotos("5");
+		log.info("In test" + result);
 		assertEquals("3", result.get(0));
 	}
 
@@ -71,5 +72,4 @@ public abstract class BackendTests extends TestCase {
 	public void testPhotoVersion() throws Exception {
 		assertEquals(1, data.getPhotoDefaultVersion("3"));
 	}
-
 }

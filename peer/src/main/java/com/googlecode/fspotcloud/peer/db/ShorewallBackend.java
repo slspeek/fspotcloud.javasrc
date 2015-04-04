@@ -7,7 +7,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -16,7 +18,7 @@ import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
 
 public class ShorewallBackend extends GenericBackend {
-
+	static final Logger LOGGER = Logger.getLogger(ShorewallBackend.class.getName());
 	@Inject
 	public ShorewallBackend(@Named("JDBC URL") String jdbcURL) {
 		super(jdbcURL);
@@ -41,9 +43,42 @@ public class ShorewallBackend extends GenericBackend {
 	}
 
 	@Override
-	public List<String> getPhotoKeysInTag(String tagId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getTagPhotos(String tagId) throws Exception {
+		   List<String> result = new ArrayList<String>();
+	        Connection conn = null;
+	        ResultSet rs = null;
+
+	        try {
+	            conn = getConnection();
+
+	            Statement stmt = conn.createStatement();
+
+	            rs = stmt.executeQuery(
+	                    "SELECT photo_id_list FROM TagTable WHERE id=\"" +
+	                            tagId + "\"");
+
+	            while (rs.next()) {
+	                String idsCommaSeparated = rs.getString(1);
+	                String[] ids = idsCommaSeparated.split(",");
+	                for (int i = 0; i < ids.length; i++) {
+	                	String id = ids[i];
+	                	id = fromHex(id);
+	                	LOGGER.info("Got from TagTable: " + id );
+	                	result.add(id);
+					}
+	            }
+	        } finally {
+	            rs.close();
+	        }
+
+	        return result;
+	}
+
+	private String fromHex(String id) {
+		id = id.substring(5);
+		long l = Long.parseLong(id, 16);
+		id = String.valueOf(l);
+		return id;
 	}
 
 	@Override
@@ -87,8 +122,8 @@ public class ShorewallBackend extends GenericBackend {
 
 	@Override
 	public int getPhotoDefaultVersion(String photoId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		// Shotwell does not support versions
+		return 1;
 	}
 
 	@Override

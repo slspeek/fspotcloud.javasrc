@@ -47,13 +47,11 @@ import java.util.logging.Logger;
 
 public class FSpotBackend extends GenericBackend implements Backend {
     static final Logger LOGGER = Logger.getLogger(FSpotBackend.class.getName());
-
    
     @Inject
     public FSpotBackend(@Named("JDBC URL")
                 String jdbcURL) {
         super(jdbcURL);
-       
     }
 
     @Override
@@ -121,7 +119,7 @@ public class FSpotBackend extends GenericBackend implements Backend {
     }
 
     @Override
-	public List<String> getPhotoKeysInTag(String tagId)
+	public List<String> getTagPhotos(String tagId)
             throws Exception {
         List<String> result = new ArrayList<String>();
         Connection conn = null;

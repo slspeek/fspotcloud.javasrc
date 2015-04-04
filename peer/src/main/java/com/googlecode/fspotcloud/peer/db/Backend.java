@@ -21,7 +21,7 @@ public interface Backend {
 
 	List<TagData> getTagData() throws SQLException;
 
-	List<String> getPhotoKeysInTag(String tagId) throws Exception;
+	List<String> getTagPhotos(String tagId) throws Exception;
 
 	String getImageURL(String photoId) throws SQLException;
 
