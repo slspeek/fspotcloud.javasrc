@@ -100,8 +100,33 @@ public class ShorewallBackend extends GenericBackend {
 
 	@Override
 	public List<TagData> getTagData() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		 Connection conn = null;
+	        ResultSet rs = null;
+	        List<TagData> tagList;
+	        tagList = new ArrayList<TagData>();
+
+	        try {
+	            conn = getConnection();
+
+	            Statement stmt = conn.createStatement();
+	            rs = stmt.executeQuery("SELECT id, name, photo_id_list FROM TagTable");
+
+	            while (rs.next()) {
+	            	String tagId = rs.getString(1);
+					String tagPath = rs.getString(2);
+					File tagPathFile = new File(tagPath);
+					String tagName = tagPathFile.getName();
+					String parentId = getParent(tagPath);
+
+					int photoCount = getPhotoCountFromIds(rs.getString(3));
+					tagList.add(new TagData(tagId, tagName, parentId,
+							photoCount));
+	            }
+	        } finally {
+	            rs.close();
+	        }
+
+	        return tagList;
 	}
 
 	@Override

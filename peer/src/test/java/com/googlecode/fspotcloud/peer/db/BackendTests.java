@@ -61,6 +61,16 @@ public abstract class BackendTests extends TestCase {
 		assertEquals(new TagData("3", "Mac","2",  2), result.get(0));
 	}
 	
+	public void testGetTagList() throws SQLException {
+		List<TagData> result = data.getTagData();
+		assertEquals(5, result.size());
+		assertEquals(new TagData("1", "Furniture","0",  9), result.get(0));
+		assertEquals(new TagData("2", "Computers","0",  12), result.get(1));
+		assertEquals(new TagData("3", "Mac","2",  2), result.get(2));
+		assertEquals(new TagData("4", "PC","2",  14), result.get(3));
+		assertEquals(new TagData("5", "Glass","0",  1), result.get(4));
+	}
+	
 	public void testGetPhotoKeysForTag() throws Exception {
 		List<String> result = data.getTagPhotos("5");
 		log.info("In test" + result);
