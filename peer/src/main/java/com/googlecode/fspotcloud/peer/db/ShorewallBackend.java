@@ -207,6 +207,38 @@ public class ShorewallBackend extends GenericBackend {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+
+    private List<String> getTagsForPhoto(int id) throws SQLException {
+        Connection conn = null;
+        ResultSet rs = null;
+        List<String> tagList = new ArrayList<String>();
+
+        try {
+            conn = getConnection();
+
+            Statement stmt = conn.createStatement();
+            String thumbName = getThumbName(id);
+            rs = stmt.executeQuery("SELECT id" +
+                    "FROM TagTable WHERE instr(photo_id_list,'" + thumbName +"') > 0");
+
+            while (rs.next()) {
+                String tagId = rs.getString(1);
+                tagList.add(tagId);
+            }
+        } finally {
+            rs.close();
+        }
+
+        return tagList;
+    }
+
+
+	private String getThumbName(int id) {
+		int i = Integer.valueOf(id);
+		String result = String.format("thumb%16x", i);
+		return result;
+	}
 
 	@Override
 	public int getPhotoDefaultVersion(String photoId) throws SQLException {

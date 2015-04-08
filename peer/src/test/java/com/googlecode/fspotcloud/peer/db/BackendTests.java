@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import junit.framework.TestCase;
 
 import com.google.common.collect.ImmutableList;
+import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
+import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
 
 public abstract class BackendTests extends TestCase {
@@ -22,10 +24,8 @@ public abstract class BackendTests extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
-
 		System.clearProperty("photo.dir.original");
 		System.clearProperty("photo.dir.override");
-
 	}
 
 	protected void tearDown() throws Exception {
@@ -94,4 +94,11 @@ public abstract class BackendTests extends TestCase {
 	public void testPhotoVersion() throws Exception {
 		assertEquals(1, data.getPhotoDefaultVersion("3"));
 	}
+	
+	public void testGetPhotoData() throws Exception {
+		PhotoData pd = data.getPhotoData(new ImageSpecs(1024,768,512, 384), ImmutableList.of("3")).get(0);
+		assertEquals("5", pd.getTagList().get(0));
+	}
+	
+	
 }
