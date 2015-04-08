@@ -27,17 +27,6 @@ public class ShotwellBackendTest extends BackendTests {
 	    int count = data.getCount("TagTable");
 	    assertEquals(5, count);
 	}
-	
-	public void testGetPhotoKeysForTag() throws Exception {
-		List<String> result = data.getTagPhotos("3"); //Glass
-		assertEquals("3", result.get(0));
-	}
-	
-	public void testGetPhotoKeysForTag2() throws Exception {
-		List<String> result = data.getTagPhotos("2"); //Mac
-		assertEquals("1", result.get(1));
-		assertEquals("8", result.get(0));
-	}
 
 	public void testGetImageURL() throws MalformedURLException,
 	SQLException {
