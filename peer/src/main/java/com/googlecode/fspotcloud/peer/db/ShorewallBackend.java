@@ -1,7 +1,7 @@
 package com.googlecode.fspotcloud.peer.db;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,7 +18,9 @@ import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
 
 public class ShorewallBackend extends GenericBackend {
-	static final Logger LOGGER = Logger.getLogger(ShorewallBackend.class.getName());
+	static final Logger LOGGER = Logger.getLogger(ShorewallBackend.class
+			.getName());
+
 	@Inject
 	public ShorewallBackend(@Named("JDBC URL") String jdbcURL) {
 		super(jdbcURL);
@@ -26,14 +28,74 @@ public class ShorewallBackend extends GenericBackend {
 
 	@Override
 	public Object[] getMetaData() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Object[] { getCount("PhotoTable"), getCount("TagTable") };
 	}
 
 	@Override
 	public List<TagData> getTagData(List<String> tagIdList) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		ResultSet rs = null;
+		List<TagData> tagList;
+		tagList = new ArrayList<TagData>();
+
+		for (String id : tagIdList) {
+			try {
+				conn = getConnection();
+
+				Statement stmt = conn.createStatement();
+				rs = stmt
+						.executeQuery("SELECT id, name, photo_id_list FROM TagTable WHERE id="
+								+ id);
+
+				while (rs.next()) {
+					String tagId = rs.getString(1);
+					String tagPath = rs.getString(2);
+					File tagPathFile = new File(tagPath);
+					String tagName = tagPathFile.getName();
+					String parentId = getParent(tagPath);
+
+					int photoCount = getPhotoCountFromIds(rs.getString(3));
+					tagList.add(new TagData(tagId, tagName, parentId,
+							photoCount));
+				}
+			} finally {
+				rs.close();
+			}
+		}
+
+		return tagList;
+	}
+
+	private int getPhotoCountFromIds(String ids) {
+		String[] splitted = ids.split(",");
+		if (splitted == null) {
+			return 0;
+		} else {
+			return splitted.length;
+		}
+	}
+
+	private String getParent(String tagName) throws SQLException {
+		File tag = new File(tagName);
+		String dir = tag.getParent();
+		Connection conn = null;
+		ResultSet rs = null;
+		String parent = null;
+		try {
+			conn = getConnection();
+
+			Statement stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT id FROM TagTable WHERE name=\"" + dir +"\"");
+
+			if (rs.next()) {
+				parent = rs.getString(1);
+			} else {
+				parent = "0";
+			}
+		} finally {
+			rs.close();
+		}
+		return parent;
 	}
 
 	@Override
@@ -44,34 +106,34 @@ public class ShorewallBackend extends GenericBackend {
 
 	@Override
 	public List<String> getTagPhotos(String tagId) throws Exception {
-		   List<String> result = new ArrayList<String>();
-	        Connection conn = null;
-	        ResultSet rs = null;
+		List<String> result = new ArrayList<String>();
+		Connection conn = null;
+		ResultSet rs = null;
 
-	        try {
-	            conn = getConnection();
+		try {
+			conn = getConnection();
 
-	            Statement stmt = conn.createStatement();
+			Statement stmt = conn.createStatement();
 
-	            rs = stmt.executeQuery(
-	                    "SELECT photo_id_list FROM TagTable WHERE id=\"" +
-	                            tagId + "\"");
+			rs = stmt
+					.executeQuery("SELECT photo_id_list FROM TagTable WHERE id=\""
+							+ tagId + "\"");
 
-	            while (rs.next()) {
-	                String idsCommaSeparated = rs.getString(1);
-	                String[] ids = idsCommaSeparated.split(",");
-	                for (int i = 0; i < ids.length; i++) {
-	                	String id = ids[i];
-	                	id = fromHex(id);
-	                	LOGGER.info("Got from TagTable: " + id );
-	                	result.add(id);
-					}
-	            }
-	        } finally {
-	            rs.close();
-	        }
+			while (rs.next()) {
+				String idsCommaSeparated = rs.getString(1);
+				String[] ids = idsCommaSeparated.split(",");
+				for (int i = 0; i < ids.length; i++) {
+					String id = ids[i];
+					id = fromHex(id);
+					LOGGER.info("Got from TagTable: " + id);
+					result.add(id);
+				}
+			}
+		} finally {
+			rs.close();
+		}
 
-	        return result;
+		return result;
 	}
 
 	private String fromHex(String id) {
@@ -84,33 +146,34 @@ public class ShorewallBackend extends GenericBackend {
 	@Override
 	public String getImageURL(String photoId) throws SQLException {
 		String url = null;
-        Connection conn = null;
-        ResultSet rs = null;
+		Connection conn = null;
+		ResultSet rs = null;
 
-        try {
-            conn = getConnection();
+		try {
+			conn = getConnection();
 
-            Statement stmt = conn.createStatement();
-            String query = "SELECT filename " +
-                    "FROM PhotoTable WHERE id = " + photoId;
-            rs = stmt.executeQuery(query);
+			Statement stmt = conn.createStatement();
+			String query = "SELECT filename " + "FROM PhotoTable WHERE id = "
+					+ photoId;
+			rs = stmt.executeQuery(query);
 
-            if (rs.next()) {
-                 url = rs.getString( 1);
+			if (rs.next()) {
+				url = rs.getString(1);
 
-                            }
-        } finally {
-            rs.close();
-        }
+			}
+		} finally {
+			rs.close();
+		}
 
-        if (photoDirectoryOverride != null) {
-            url = url.replaceFirst(photoDirectoryOriginalPath,
-                    photoDirectoryOverride);
-        }
+		if (photoDirectoryOverride != null) {
+			url = url.replaceFirst(photoDirectoryOriginalPath,
+					photoDirectoryOverride);
+		}
 
-        url = "file://" + url;
-        LOGGER.info("URL-String: " + url + " override: " + photoDirectoryOverride);
-        return url;
+		url = "file://" + url;
+		LOGGER.info("URL-String: " + url + " override: "
+				+ photoDirectoryOverride);
+		return url;
 	}
 
 	@Override

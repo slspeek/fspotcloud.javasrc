@@ -66,7 +66,7 @@ public class TagData extends BusinessBase implements Serializable {
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("id", tagId).add("name", name)
+        return Objects.toStringHelper(this).add("id", tagId).add("name", name).add("parent", parentId)
                 .add("#", count).toString();
     }
 }

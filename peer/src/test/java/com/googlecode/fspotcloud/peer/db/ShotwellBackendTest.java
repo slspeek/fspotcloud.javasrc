@@ -3,7 +3,6 @@ package com.googlecode.fspotcloud.peer.db;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ShotwellBackendTest extends BackendTests {
 
@@ -33,9 +32,6 @@ public class ShotwellBackendTest extends BackendTests {
 		String url = data.getImageURL("20");
 		assertEquals("file:///home/fspot/Photos/2010/06/22/img_0859-1.jpg",
 				String.valueOf(url));
-	}
-	//TODO REMOVE THIS
-	public void testGetTagList() throws SQLException {
 	}
 
 	//TODO REMOVE THIS

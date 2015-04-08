@@ -1,15 +1,14 @@
 package com.googlecode.fspotcloud.peer.db;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import junit.framework.TestCase;
+
 import com.google.common.collect.ImmutableList;
 import com.googlecode.fspotcloud.shared.peer.TagData;
-
-import junit.framework.TestCase;
 
 public abstract class BackendTests extends TestCase {
 
@@ -43,12 +42,25 @@ public abstract class BackendTests extends TestCase {
 		int count = data.getCount("tags");
 		assertEquals(5, count);
 	}
-
-	public void testGetTagList() throws SQLException {
-		List<TagData> result = data.getTagData(ImmutableList.of("1"));
-		assertEquals(1, result.size());
+	
+	public void testGetMetaData() throws SQLException {
+		Object[] meta = data.getMetaData();
+		assertEquals(5, meta[1]);
+		assertEquals(28, meta[0]);
 	}
 
+	public void testGetTagListFurniture() throws SQLException {
+		List<TagData> result = data.getTagData(ImmutableList.of("1"));
+		assertEquals(1, result.size());
+		assertEquals(new TagData("1", "Furniture","0",  9), result.get(0));
+	}
+
+	public void testGetTagListMac() throws SQLException {
+		List<TagData> result = data.getTagData(ImmutableList.of("3"));
+		assertEquals(1, result.size());
+		assertEquals(new TagData("3", "Mac","2",  2), result.get(0));
+	}
+	
 	public void testGetPhotoKeysForTag() throws Exception {
 		List<String> result = data.getTagPhotos("5");
 		log.info("In test" + result);
