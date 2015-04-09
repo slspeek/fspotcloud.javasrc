@@ -1,14 +1,15 @@
 package com.googlecode.fspotcloud.peer.db;
 
+import java.awt.Dimension;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.inject.Inject;
@@ -204,8 +205,47 @@ public class ShorewallBackend extends GenericBackend {
 	@Override
 	public List<PhotoData> getPhotoData(ImageSpecs imageSpecs,
 			List<String> imageKeys) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		 List<PhotoData> result = new ArrayList<PhotoData>();
+
+	        for (String imageKey : imageKeys) {
+	            Connection conn = null;
+	            ResultSet rs = null;
+
+	            try {
+	                conn = getConnection();
+
+	                Statement stmt = conn.createStatement();
+	                rs = stmt.executeQuery(
+	                        "SELECT id, comment, timestamp " +
+	                                "FROM PhotoTable WHERE id=\"" + imageKey + "\"");
+
+	                while (rs.next()) {
+	                    String id = rs.getString(1);
+	                    String desc = rs.getString(2);
+	                    long time = rs.getLong(3);
+	                    int version = 1;
+	                    Date date = new Date();
+	                    date.setTime(time * 1000);
+
+	                    List<String> tagList = getTagsForPhoto(Integer.valueOf(id));
+	                    String url = getImageURL(id);
+	                    byte[] image = imageData.getScaledImageData(url,
+	                            new Dimension(imageSpecs.getWidth(),
+	                                    imageSpecs.getHeight()));
+	                    byte[] thumb = imageData.getScaledImageData(url,
+	                            new Dimension(imageSpecs.getThumbWidth(),
+	                                    imageSpecs.getThumbHeight()));
+	                    result.add(new PhotoData(id, desc, date, image, thumb,
+	                            tagList, version));
+	                }
+	            } catch (Exception e) {
+	                LOGGER.log(Level.SEVERE, "getPhotoData: ", e);
+	            } finally {
+	                rs.close();
+	            }
+	        }
+
+	        return result;
 	}
 	
 
@@ -219,13 +259,15 @@ public class ShorewallBackend extends GenericBackend {
 
             Statement stmt = conn.createStatement();
             String thumbName = getThumbName(id);
-            rs = stmt.executeQuery("SELECT id" +
-                    "FROM TagTable WHERE instr(photo_id_list,'" + thumbName +"') > 0");
+            rs = stmt.executeQuery("SELECT id " +
+                    "FROM TagTable WHERE photo_id_list LIKE '%" + thumbName +"%'");
 
             while (rs.next()) {
                 String tagId = rs.getString(1);
                 tagList.add(tagId);
             }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "getPhotoData: ", e);
         } finally {
             rs.close();
         }
@@ -236,7 +278,7 @@ public class ShorewallBackend extends GenericBackend {
 
 	private String getThumbName(int id) {
 		int i = Integer.valueOf(id);
-		String result = String.format("thumb%16x", i);
+		String result = String.format("thumb%016x", i);
 		return result;
 	}
 
@@ -249,15 +291,28 @@ public class ShorewallBackend extends GenericBackend {
 	@Override
 	public boolean isPhotoInTag(String tagId, String photoId)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		  boolean result = false;
+	        Connection conn = null;
+	        ResultSet rs = null;
 
-	@Override
-	public byte[] getFullsizePhotoData(String imageKey) throws IOException,
-			SQLException, URISyntaxException {
-		// TODO Auto-generated method stub
-		return null;
+	        try {
+	            conn = getConnection();
+
+	            Statement stmt = conn.createStatement();
+	            rs = stmt.executeQuery("SELECT id " +
+	                    "FROM TagTable WHERE photo_id_list LIKE \"%" + getThumbName(Integer.valueOf(photoId)) +
+	                    "%\" AND id=\"" + tagId + "\"");
+
+	            if (rs.next()) {
+	                result = true;
+	            }
+	        } catch (Exception e) {
+	            LOGGER.log(Level.SEVERE, "isPhotoInTag: ", e);
+	        } finally {
+	            rs.close();
+	        }
+
+	        return result;
 	}
 
 }

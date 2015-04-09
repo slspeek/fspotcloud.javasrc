@@ -1,5 +1,9 @@
 package com.googlecode.fspotcloud.peer.db;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.io.Files;
 import com.googlecode.fspotcloud.peer.ImageData;
 
 public abstract class GenericBackend implements Backend {
@@ -73,6 +78,18 @@ public abstract class GenericBackend implements Backend {
 		}
 
 		return result;
+	}
+
+	public abstract String getImageURL(String key) throws SQLException;
+
+	@Override
+	public byte[] getFullsizePhotoData(String imageKey) throws IOException,
+			SQLException, URISyntaxException {
+		String url = getImageURL(imageKey);
+		URI fileURI = new URI(url);
+		File imageFile = new File(fileURI);
+
+		return Files.toByteArray(imageFile);
 	}
 
 }

@@ -31,69 +31,73 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
 public class PhotoData extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = -4172714943981557358L;
-    @BusinessKey
-    private final String photoId;
-    @BusinessKey
-    private final String description;
-    @BusinessKey
-    private final Date date;
-    @BusinessKey
-    private final byte[] imageData;
-    @BusinessKey
-    private final byte[] thumbData;
-    @BusinessKey
-    private final List<String> tagList;
-    @BusinessKey
-    private final int version;
+	private static final long serialVersionUID = -4172714943981557358L;
+	@BusinessKey
+	private final String photoId;
+	@BusinessKey
+	private final String description;
+	@BusinessKey
+	private final Date date;
+	@BusinessKey
+	private final byte[] imageData;
+	@BusinessKey
+	private final byte[] thumbData;
+	@BusinessKey
+	private final List<String> tagList;
+	@BusinessKey
+	private final int version;
 
-    public PhotoData(String photoId, String description, Date date,
-                     byte[] imageData, byte[] thumbData, List<String> tagList, int version) {
-        super();
-        this.photoId = photoId;
-        this.description = description.trim();
-        this.date = date;
-        this.imageData = imageData;
-        this.thumbData = thumbData;
-        this.tagList = tagList;
-        this.version = version;
-    }
+	public PhotoData(String photoId, String description, Date date,
+			byte[] imageData, byte[] thumbData, List<String> tagList,
+			int version) {
+		super();
+		this.photoId = photoId;
+		if (description != null) {
+			this.description = description.trim();
+		} else {
+			this.description = "";
+		}
+		this.date = date;
+		this.imageData = imageData;
+		this.thumbData = thumbData;
+		this.tagList = tagList;
+		this.version = version;
+	}
 
-    public int getVersion() {
-        return version;
-    }
+	public int getVersion() {
+		return version;
+	}
 
-    public String getPhotoId() {
-        return photoId;
-    }
+	public String getPhotoId() {
+		return photoId;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public byte[] getImageData() {
-        return imageData;
-    }
+	public byte[] getImageData() {
+		return imageData;
+	}
 
-    public byte[] getThumbData() {
-        return thumbData;
-    }
+	public byte[] getThumbData() {
+		return thumbData;
+	}
 
-    public List<String> getTagList() {
-        return tagList;
-    }
+	public List<String> getTagList() {
+		return tagList;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("v", version).add("id", photoId)
-                .add("desc", description).add("date", date)
-                .add("image len", imageData.length)
-                .add("thumb len", thumbData.length).add("tags", tagList)
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("v", version)
+				.add("id", photoId).add("desc", description).add("date", date)
+				.add("image len", imageData.length)
+				.add("thumb len", thumbData.length).add("tags", tagList)
+				.toString();
+	}
 }

@@ -25,10 +25,6 @@
 package com.googlecode.fspotcloud.peer.db;
 
 import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +36,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
@@ -333,15 +328,5 @@ public class FSpotBackend extends GenericBackend implements Backend {
         }
 
         return result;
-    }
-
-    @Override
-	public byte[] getFullsizePhotoData(String imageKey)
-            throws IOException, SQLException, URISyntaxException {
-        String url = getImageURL(imageKey);
-        URI fileURI = new URI(url);
-        File imageFile = new File(fileURI);
-
-        return Files.toByteArray(imageFile);
     }
 }
