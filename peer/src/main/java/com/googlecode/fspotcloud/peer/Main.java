@@ -38,9 +38,10 @@ public class Main {
         final String db = System.getProperty("db");
         final int stopPort = Integer.valueOf(System.getProperty("stop.port",
                 "-1"));
+        final boolean shotwell = Boolean.valueOf(System.getProperty("shotwell", "false"));
 
         Injector injector = Guice.createInjector(new PeerModule(db, workDir,
-                stopPort), new PeerActionsModule(), new BotModule());
+                stopPort, shotwell), new PeerActionsModule(), new BotModule());
 
         if (stopPort != -1) {
             StopListener stopListener = injector.getInstance(StopListener.class);

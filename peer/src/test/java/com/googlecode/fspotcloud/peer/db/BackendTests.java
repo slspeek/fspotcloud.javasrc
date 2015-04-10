@@ -75,6 +75,7 @@ public abstract class BackendTests extends TestCase {
 
 	public void testGetPhotoKeysForTag() throws Exception {
 		List<String> result = data.getTagPhotos("5");
+		assertEquals(1, result.size());
 		assertEquals("3", result.get(0));
 	}
 

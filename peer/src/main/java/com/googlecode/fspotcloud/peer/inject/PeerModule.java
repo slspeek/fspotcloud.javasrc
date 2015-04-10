@@ -30,32 +30,42 @@ import com.googlecode.fspotcloud.peer.CopyDatabase;
 import com.googlecode.fspotcloud.peer.ImageData;
 import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.peer.db.FSpotBackend;
+import com.googlecode.fspotcloud.peer.db.ShorewallBackend;
 
 import javax.inject.Singleton;
 
-
 public class PeerModule extends AbstractModule {
-    private final String db;
-    private final String workDir;
-    private final int stopPort;
+	private final String db;
+	private final String workDir;
+	private final int stopPort;
+	private final boolean shotwell;
 
-    public PeerModule(String db, String workDir, int stopPort) {
-        this.db = db;
-        this.workDir = workDir;
-        this.stopPort = stopPort;
-    }
+	public PeerModule(String db, String workDir, int stopPort) {
+		this(db, workDir, stopPort, false);
+	}
 
-    @Override
-    protected void configure() {
-        bind(Backend.class).to(FSpotBackend.class).in(Singleton.class);
-        bind(ImageData.class);
-        bind(String.class).annotatedWith(Names.named("JDBC URL"))
-                .toProvider(CopyDatabase.class).in(Singleton.class);
-        bind(String.class).annotatedWith(Names.named("DatabasePath"))
-                .toInstance(db);
-        bind(String.class).annotatedWith(Names.named("WorkDir"))
-                .toInstance(workDir);
-        bind(Integer.class).annotatedWith(Names.named("stop port"))
-                .toInstance(Integer.valueOf(stopPort));
-    }
+	public PeerModule(String db, String workDir, int stopPort, boolean shotwell) {
+		this.db = db;
+		this.workDir = workDir;
+		this.stopPort = stopPort;
+		this.shotwell = shotwell;
+	}
+
+	@Override
+	protected void configure() {
+		if (shotwell) {
+			bind(Backend.class).to(ShorewallBackend.class).in(Singleton.class);
+		} else {
+			bind(Backend.class).to(FSpotBackend.class).in(Singleton.class);
+		}
+		bind(ImageData.class);
+		bind(String.class).annotatedWith(Names.named("JDBC URL"))
+				.toProvider(CopyDatabase.class).in(Singleton.class);
+		bind(String.class).annotatedWith(Names.named("DatabasePath"))
+				.toInstance(db);
+		bind(String.class).annotatedWith(Names.named("WorkDir")).toInstance(
+				workDir);
+		bind(Integer.class).annotatedWith(Names.named("stop port")).toInstance(
+				Integer.valueOf(stopPort));
+	}
 }
