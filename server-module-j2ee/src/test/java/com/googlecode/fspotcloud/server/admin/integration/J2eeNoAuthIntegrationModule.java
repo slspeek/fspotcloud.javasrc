@@ -31,9 +31,14 @@ import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
 
 
-public class J2eeNoAuthIntegrationIntegrationModule
+public class J2eeNoAuthIntegrationModule
         extends NoAuthPlaceHolderIntegrationModule {
-    @Override
+	
+    public J2eeNoAuthIntegrationModule(boolean shotwell) {
+		super(shotwell);
+	}
+
+	@Override
     public void configure() {
         super.configure();
         install(new J2eeModelModule(3, "derby"));

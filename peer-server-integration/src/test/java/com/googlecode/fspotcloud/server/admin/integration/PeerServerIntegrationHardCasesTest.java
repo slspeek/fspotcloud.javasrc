@@ -42,20 +42,23 @@ import static org.testng.AssertJUnit.*;
 
 public class PeerServerIntegrationHardCasesTest extends PeerServerEnvironment {
     private TearDown toTearDown;
+    
+    private static final Logger log = Logger.getLogger(PeerServerIntegrationHardCasesTest.class.getName());
 
     @BeforeMethod
     public void setUp(Method m) throws SQLException {
         // Make this the call to TestNgGuiceBerry.setUp as early as possible
         toTearDown = TestNgGuiceBerry.setUp(this, m,
                 NoAuthPlaceHolderIntegrationModule.class);
+        tagDao.deleteBulk(1000);
+        photoDao.deleteBulk(1000);
+        peers.deleteBulk(1000);
         setUpPeer();
     }
 
     @AfterMethod
     public void tearDown() throws Exception {
-        tagDao.deleteBulk(1000);
-        photoDao.deleteBulk(1000);
-        peers.deleteBulk(1000);
+       
         // Make this the call to TestNgGuiceBerry.tearDown as late as possible
         toTearDown.tearDown();
     }
@@ -79,24 +82,24 @@ public class PeerServerIntegrationHardCasesTest extends PeerServerEnvironment {
     public void getTagTreeAfterOneSynchronize() throws Exception {
         TagTreeResult result = fetchTagTree();
         assertTrue(result.getTree().getChildren().isEmpty());
-        Logger.getAnonymousLogger().info("Start");
+        log.info("Start");
         synchronizePeer();
-        Logger.getAnonymousLogger().info("Fetch tree");
+        log.info("Fetch tree");
         result = fetchTagTree();
         //As nothing is imported yet
         assertTrue(result.getTree().getChildren().isEmpty());
-        Logger.getAnonymousLogger().info("Import tag 3");
+        log.info("Import tag 3");
         importTag("3");
-        Logger.getAnonymousLogger().info("Fetch tree");
+        log.info("Fetch tree");
         result = fetchTagTree();
 
         TagNode mac = result.getTree().getChildren().get(0);
         assertEquals("Mac", mac.getTagName());
 
         setPeerTestDatabase("photos_smaller.db");
-        Logger.getAnonymousLogger().info("Synchronize again");
+        log.info("Synchronize again");
         synchronizePeer();
-        Logger.getAnonymousLogger().info("Fetch tree last time");
+        log.info("Fetch tree last time");
         result = fetchTagTree();
         mac = result.getTree().getChildren().get(0);
         assertEquals("Macintosh", mac.getTagName());

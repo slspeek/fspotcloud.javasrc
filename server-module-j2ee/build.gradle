@@ -39,6 +39,7 @@ dependencies {
 }
 
 task deleteDB(type: Delete) {
+	println "About to delete the test databse"
     delete 'MODELJPA', 'runtime', 'derby.log'
 }
 
@@ -47,15 +48,42 @@ task unpackTest << {
     ant.unjar(dest: "$buildDir/classes/test", src: myTests)
 }
 
+
 test {
-    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule'] =
-        'com.googlecode.fspotcloud.server.admin.integration.J2eeNoAuthIntegrationIntegrationModule'
-    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule'] =
-        'com.googlecode.fspotcloud.server.admin.integration.J2eeIntegrationIntegrationModule'
-    testLogging.showStandardStreams = true
-    //include 'com/googlecode/fspotcloud/server/admin/integration/PeerServerIntegrationHardCasesTest.class'
+	exclude "*"
 }
 
-test.dependsOn unpackTest, deleteDB
+task testShotwell(type:Test, dependsOn: [unpackTest, deleteDB]) {
+	useTestNG {
+		outputDirectory = file("$buildDir/shotwell")
+	}
+	systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.J2eeNoAuthShotwellIntegrationModule'
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.J2eeShotwellIntegrationModule'
+    systemProperty 'fspotcloud.test.shotwell', 'true'
+    systemProperty 'photo.dir.original', '//home/fspot/Photos'
+    testLogging.showStandardStreams = true
+    reports.junitXml.destination =file("${project.testResultsDir}/shotwell")
+    reports.html.destination =file("${project.testResultsDir}/shotwell")
+}
+
+
+task testFSpot(type:Test, dependsOn: [unpackTest, deleteDB]) {
+	useTestNG {
+		outputDirectory = file("$buildDir/fspot")
+	}
+	systemProperty 'photo.dir.original', '//home/steven/Photos'
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.J2eeNoAuthFSpotIntegrationModule'
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.J2eeFSpotIntegrationModule'
+    //testLogging.showStandardStreams = true
+    reports.junitXml.destination =file("${project.testResultsDir}/fspot")
+    reports.html.destination =file("${project.testResultsDir}/fspot")
+}
+
+test.dependsOn testShotwell, testFSpot
 test.useTestNG()
+
 clean.dependsOn deleteDB

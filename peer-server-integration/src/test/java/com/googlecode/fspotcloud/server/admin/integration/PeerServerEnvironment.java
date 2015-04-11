@@ -47,135 +47,144 @@ import java.util.logging.Logger;
 import static org.testng.AssertJUnit.fail;
 
 public class PeerServerEnvironment {
-    static final Logger log = Logger.getLogger(PeerServerIntegrationTest.class.getName());
-    @Inject
-    PhotoDao photoDao;
-    @Inject
-    protected TagDao tagDao;
-    @Inject
-    ControllerDispatchAsync controller;
-    @Inject
-    PeerDatabaseDao peers;
-    @Inject
-    Backend data;
-    @Inject
-    Dispatch dispatch;
-    @Inject
-    PhotoAssert photoInfo;
-    @Inject
-    TagAssert tagInfo;
-    @Inject
-    PeerDatabaseAssert peerInfo;
+	static final Logger log = Logger.getLogger(PeerServerIntegrationTest.class
+			.getName());
+	@Inject
+	PhotoDao photoDao;
+	@Inject
+	protected TagDao tagDao;
+	@Inject
+	ControllerDispatchAsync controller;
+	@Inject
+	PeerDatabaseDao peers;
+	@Inject
+	Backend data;
+	@Inject
+	Dispatch dispatch;
+	@Inject
+	PhotoAssert photoInfo;
+	@Inject
+	TagAssert tagInfo;
+	@Inject
+	PeerDatabaseAssert peerInfo;
 
-    protected TagTreeResult fetchTagTree() throws DispatchException {
-        return dispatch.execute(new GetTagTreeAction());
-    }
+	protected TagTreeResult fetchTagTree() throws DispatchException {
+		return dispatch.execute(new GetTagTreeAction());
+	}
 
-    protected TagTreeResult fetchAdminTagTree() throws DispatchException {
-        return dispatch.execute(new GetAdminTagTreeAction());
-    }
+	protected TagTreeResult fetchAdminTagTree() throws DispatchException {
+		return dispatch.execute(new GetAdminTagTreeAction());
+	}
 
-    protected void setUpPeer() throws SQLException {
-        setPeerTestDatabase("photos.db");
-    }
+	protected void setUpPeer() throws SQLException {
+		setPeerTestDatabase("photos.db");
+	}
 
-    protected void verifyAllTagsAreLoaded() {
-        tagInfo.assertTagsLoaded("1", "2", "3", "4", "5");
-    }
+	protected void verifyAllTagsAreLoaded() {
+		tagInfo.assertTagsLoaded("1", "2", "3", "4", "5");
+	}
 
-    protected void verifiyFurnitureFirstPhaseWasRemoved() {
-        photoInfo.assertPhotosRemoved("12", "13", "4", "5", "15");
-    }
+	protected void verifiyFurnitureFirstPhaseWasRemoved() {
+		photoInfo.assertPhotosRemoved("12", "13", "4", "5", "15");
+	}
 
-    protected void verifyImagesWereRemoved() {
-        photoInfo.assertPhotosRemoved("6");
-        photoInfo.assertPhotosRemoved("16");
-        photoInfo.assertPhotosRemoved("14");
-        photoInfo.assertPhotosRemoved("7");
-    }
+	protected void verifyImagesWereRemoved() {
+		photoInfo.assertPhotosRemoved("6");
+		photoInfo.assertPhotosRemoved("7");
+		photoInfo.assertPhotosRemoved("14");
+		photoInfo.assertPhotosRemoved("16");
+	}
 
-    protected void verfiyFurnitureFirstPhaseIsLoaded() {
-        photoInfo.assertPhotosLoaded("12", "13", "4", "5", "15");
-    }
+	protected void verfiyFurnitureFirstPhaseIsLoaded() {
+		photoInfo.assertPhotosLoaded("4");//meub_2rietenstoelen.jpg
+		photoInfo.assertPhotosLoaded("5");//meub_babyluier.jpg
+		photoInfo.assertPhotosLoaded("12");//bed.jpg
+		photoInfo.assertPhotosLoaded("13");//fransestoel.jpg
+		photoInfo.assertPhotosLoaded("15");//salontafel.jpg
+	}
 
-    protected void verfiyFurnitureIsLoaded() {
-        photoInfo.assertPhotosLoaded("12", "13", "4", "5", "15");
-        photoInfo.assertPhotosLoaded("7", "6", "16", "14");
-    }
+	protected void verfiyFurnitureIsLoaded() {
+		photoInfo.assertPhotosLoaded("12", "13", "4", "5", "15");
+		photoInfo.assertPhotosLoaded("7", "6", "16", "14");
+	}
 
-    protected void assertPCLoaded() {
-        photoInfo.assertPhotosLoaded("17", "18", "19", "20", "21", "22", "23",
-                "24", "25", "26", "27", "28", "9", "11");
-    }
+	protected void assertPCLoaded() {
+		photoInfo.assertPhotosLoaded("17", "18", "19", "20", "21", "22", "23",
+				"24", "25", "26", "27", "28", "9", "11");
+	}
 
-    protected void assertComputersIsLoaded() {
-        photoInfo.assertPhotosLoaded("17", "18", "19", "20", "21", "22", "23",
-                "24", "25", "26", "27", "28");
-    }
+	protected void assertComputersIsLoaded() {
+		photoInfo.assertPhotosLoaded("17", "18", "19", "20", "21", "22", "23",
+				"24", "25", "26", "27", "28");
+	}
 
-    protected void setPeerTestDatabase(String db) throws SQLException {
-        String basedir = new File(".").getAbsolutePath();
-        File testDatabase = new File(basedir + "./peer/src/test/resources/" +
-                db);
-        String path = testDatabase.getPath();
-        log.info("DBPath " + path);
+	protected void setPeerTestDatabase(String db) throws SQLException {
+		if (Boolean.valueOf(System.getProperty("fspotcloud.test.shotwell",
+				"false"))) {
+			db = db.replace("photos", "shotwell");
+		}
+		String basedir = new File(".").getAbsolutePath();
+		File testDatabase = new File(basedir + "./peer/src/test/resources/"
+				+ db);
+		String path = testDatabase.getPath();
+		log.info("DBPath " + path);
 
-        if (data != null) {
-            data.setJDBCUrl("jdbc:sqlite:" + path);
-        }
-    }
+		if (data != null) {
+			data.setJDBCUrl("jdbc:sqlite:" + path);
+		}
+	}
 
-    protected void synchronizePeer() {
-        controller.execute(new UserSynchronizesPeerAction(),
-                new SerializableAsyncCallback<VoidResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "On fail ", caught);
-                        fail();
-                    }
+	protected void synchronizePeer() {
+		controller.execute(new UserSynchronizesPeerAction(),
+				new SerializableAsyncCallback<VoidResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						log.log(Level.SEVERE, "On fail ", caught);
+						fail();
+					}
 
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        log.info("On success");
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(VoidResult result) {
+						log.info("On success");
+					}
+				});
+	}
 
-    protected void importTag(String tagId) {
-        controller.execute(new UserImportsTagAction(tagId),
-                new SerializableAsyncCallback<VoidResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.info("On fail " + caught);
-                        fail();
-                    }
+	protected void importTag(String tagId) {
+		controller.execute(new UserImportsTagAction(tagId),
+				new SerializableAsyncCallback<VoidResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						log.info("On fail " + caught);
+						fail();
+					}
 
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        log.info("On success");
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(VoidResult result) {
+						log.info("On success");
+					}
+				});
+	}
 
-    protected void unImportTag(String tagId) {
-        controller.execute(new UserUnImportsTagAction(tagId),
-                new SerializableAsyncCallback<VoidResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.info("On fail " + caught);
-                        fail();
-                    }
+	protected void unImportTag(String tagId) {
+		controller.execute(new UserUnImportsTagAction(tagId),
+				new SerializableAsyncCallback<VoidResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						log.info("On fail " + caught);
+						fail();
+					}
 
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        log.info("On success");
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(VoidResult result) {
+						log.info("On success");
+					}
+				});
+	}
 
-    public void testImportAllTags() throws Exception {
-        setUpPeer();
-        synchronizePeer();
-        verifyAllTagsAreLoaded();
-    }
+	public void testImportAllTags() throws Exception {
+		setUpPeer();
+		synchronizePeer();
+		verifyAllTagsAreLoaded();
+	}
 }

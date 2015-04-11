@@ -46,16 +46,39 @@ task unpackTest << {
 }
 
 test {
-    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule'] =
-        'com.googlecode.fspotcloud.server.admin.integration.GaeNoAuthIntegrationIntegrationModule'
-    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule'] =
-        'com.googlecode.fspotcloud.server.admin.integration.GaeIntegrationGuiceBerryEnv'
-    //include 'com/googlecode/fspotcloud/server/admin/integration/AuthenticationIntegrationTest.class'
+	exclude "*"
+}
+
+task testShotwell(type:Test, dependsOn: [unpackTest]) {
+	useTestNG {
+		outputDirectory = file("$buildDir/shotwell")
+	}
+	systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.GaeNoAuthShotwellIntegrationModule'
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.GaeIntegrationModule'
+    systemProperty 'fspotcloud.test.shotwell', 'true'
+    systemProperty 'photo.dir.original', '//home/fspot/Photos'
     testLogging.showStandardStreams = true
-    //ignoreFailures = true
-    //exclude 'com/googlecode/fspotcloud/server/admin/integration/PeerServerIntegrationHardCasesTest.class'
+    reports.junitXml.destination =file("${project.testResultsDir}/shotwell")
+    reports.html.destination =file("${project.testResultsDir}/shotwell")
 }
 
 
-test.dependsOn(unpackTest)
+task testFSpot(type:Test, dependsOn: [unpackTest]) {
+	useTestNG {
+		outputDirectory = file("$buildDir/fspot")
+	}
+	systemProperty 'photo.dir.original', '//home/steven/Photos'
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.NoAuthPlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.GaeNoAuthFSpotIntegrationModule'
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.server.admin.integration.PlaceHolderIntegrationModule',
+        'com.googlecode.fspotcloud.server.admin.integration.GaeIntegrationModule'
+    //testLogging.showStandardStreams = true
+    reports.junitXml.destination =file("${project.testResultsDir}/fspot")
+    reports.html.destination =file("${project.testResultsDir}/fspot")
+}
+
+test.dependsOn testShotwell, testFSpot
 test.useTestNG()
+

@@ -38,11 +38,17 @@ import javax.servlet.http.HttpSession;
 
 public class PlaceHolderIntegrationModule extends GuiceBerryModule {
     public static final String RMS_FSF_ORG = "rms@example.com";
+	private final boolean shotwell;
 
-    @Override
+    public PlaceHolderIntegrationModule(boolean shotwell) {
+		super();
+		this.shotwell = shotwell;
+	}
+
+	@Override
     public void configure() {
         super.configure();
-        install(Modules.override(new CommonIntegrationModule(),
+        install(Modules.override(new CommonIntegrationModule(shotwell),
                 new OpenIdUserModule(RMS_FSF_ORG)).with(new AbstractModule() {
             @Override
             protected void configure() {

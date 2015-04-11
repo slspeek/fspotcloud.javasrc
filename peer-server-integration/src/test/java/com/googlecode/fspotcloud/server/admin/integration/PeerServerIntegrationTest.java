@@ -48,14 +48,15 @@ public class PeerServerIntegrationTest extends PeerServerEnvironment {
         // Make this the call to TestNgGuiceBerry.setUp as early as possible
         toTearDown = TestNgGuiceBerry.setUp(this, m,
                 NoAuthPlaceHolderIntegrationModule.class);
+        tagDao.deleteBulk(1000);
+        photoDao.deleteBulk(1000);
+        peers.deleteBulk(1000);
         setUpPeer();
     }
 
     @AfterMethod
     public void tearDown() throws Exception {
-        tagDao.deleteBulk(1000);
-        photoDao.deleteBulk(1000);
-        peers.deleteBulk(1000);
+       
         // Make this the call to TestNgGuiceBerry.tearDown as late as possible
         toTearDown.tearDown();
     }
@@ -68,8 +69,8 @@ public class PeerServerIntegrationTest extends PeerServerEnvironment {
         setPeerTestDatabase("photos_smaller.db");
         synchronizePeer();
         synchronizePeer();
-        verfiyFurnitureFirstPhaseIsLoaded();
         verifyImagesWereRemoved();
+        verfiyFurnitureFirstPhaseIsLoaded();
     }
 
     @Test

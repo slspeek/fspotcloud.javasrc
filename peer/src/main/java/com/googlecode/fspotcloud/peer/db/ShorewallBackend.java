@@ -191,12 +191,12 @@ public class ShorewallBackend extends GenericBackend {
 			rs.close();
 		}
 
+		url = "file://" + url;
 		if (photoDirectoryOverride != null) {
 			url = url.replaceFirst(photoDirectoryOriginalPath,
 					photoDirectoryOverride);
 		}
 
-		url = "file://" + url;
 		LOGGER.info("URL-String: " + url + " override: "
 				+ photoDirectoryOverride);
 		return url;

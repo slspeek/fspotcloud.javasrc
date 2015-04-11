@@ -40,11 +40,19 @@ import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.mock;
 
-public class GaeIntegrationGuiceBerryEnv extends GuiceBerryModule {
+public class GaeIntegrationModule extends GuiceBerryModule {
+	
+	
     @Override
     protected void configure() {
         super.configure();
-        System.setProperty("photo.dir.original", "//home/steven/Photos");
+        if (Boolean.valueOf(System.getProperty("fspotcloud.test.shotwell",
+				"false"))) {
+        	System.setProperty("photo.dir.original", "//home/fspot/Photos");
+		} else {
+			System.setProperty("photo.dir.original", "//home/steven/Photos");
+		}
+        
         System.setProperty("photo.dir.override",
                 "" + System.getProperty("user.dir") +
                         "/../peer/src/test/resources/Photos");

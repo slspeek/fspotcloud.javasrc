@@ -36,11 +36,17 @@ import javax.servlet.http.HttpSession;
 
 public class NoAuthPlaceHolderIntegrationModule extends GuiceBerryModule {
     public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+	private final boolean shotwell;
 
-    @Override
+    public NoAuthPlaceHolderIntegrationModule(boolean shotwell) {
+		super();
+		this.shotwell = shotwell;
+	}
+
+	@Override
     public void configure() {
         super.configure();
-        install(new CommonIntegrationModule());
+        install(new CommonIntegrationModule(shotwell));
         install(new LenientUserModule());
         bind(HttpSession.class).to(FakeHttpServletSession.class)
                 .in(TestScoped.class);

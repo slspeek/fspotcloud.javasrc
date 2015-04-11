@@ -45,10 +45,15 @@ import static org.mockito.Mockito.mock;
 
 public class CommonIntegrationModule extends AbstractModule {
     public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+	private final boolean shotwell;
+	
+    public CommonIntegrationModule(boolean shotwell) {
+		super();
+		this.shotwell = shotwell;
+	}
 
-    @Override
+	@Override
     public void configure() {
-        System.setProperty("photo.dir.original", "//home/steven/Photos");
         System.setProperty("photo.dir.override",
                 "" + System.getProperty("user.dir") +
                         "/../peer/src/test/resources/Photos");
@@ -74,10 +79,8 @@ public class CommonIntegrationModule extends AbstractModule {
         bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
                 .toInstance(3);
 
-        final String db = System.getProperty("db",
-                System.getProperty("user.dir") +
-                        "/../peer/src/test/resources/photos.db");
-        install(new PeerModule(db, System.getProperty("user.dir"), 4444));
+        final String db = System.getProperty("user.dir") + "/../peer/src/test/resources/photos.db";
+        install(new PeerModule(db, System.getProperty("user.dir"), 4444, shotwell));
         install(new PeerActionsModule());
     }
 }

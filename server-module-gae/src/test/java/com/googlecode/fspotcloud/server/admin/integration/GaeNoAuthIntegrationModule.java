@@ -24,18 +24,28 @@
 
 package com.googlecode.fspotcloud.server.admin.integration;
 
+import com.google.guiceberry.TestWrapper;
 import com.google.inject.Singleton;
 import com.googlecode.botdispatch.model.api.Commands;
-import com.googlecode.botdispatch.model.command.CommandManager;
-import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
+import com.googlecode.botdispatch.model.jpa.gae.command.CommandManager;
+import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 
 
-public class J2eeIntegrationIntegrationModule
-        extends PlaceHolderIntegrationModule {
-    @Override
+public class GaeNoAuthIntegrationModule
+        extends NoAuthPlaceHolderIntegrationModule {
+
+	public GaeNoAuthIntegrationModule(boolean shotwell) {
+		super(shotwell);
+	}
+
+	@Override
     public void configure() {
         super.configure();
-        install(new J2eeModelModule(3, "derby"));
+        System.setProperty("appengine.orm.disable.duplicate.emf.exception",
+                "true");
+        install(new GaeCachedModelModule(3, "gae"));
         bind(Commands.class).to(CommandManager.class).in(Singleton.class);
+
+        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
     }
 }
