@@ -79,13 +79,18 @@ tomcatRun {
 }
 
 test {
-    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
+	exclude "*"
+}
+
+task testShotwell(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"]) {
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
-    systemProperties['bot.secret'] = bot_secret
-    systemProperties['endpoint'] = "localhost:9050/j2ee-e2e"
-    systemProperties['stop.port'] = "5555"
-    systemProperties['pause.time'] = "${test_pause_time}"
-    systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
+    systemProperty 'bot.secret', bot_secret
+    systemProperty 'endpoint', "localhost:9050/j2ee-e2e"
+    systemProperty 'stop.port', "5555"
+    systemProperty 'pause.time', "${test_pause_time}"
+    systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
+    systemProperty "shotwell", "true"
     if ("${all_tests}" == "true") {
         include "com/googlecode/fspotcloud/test/LocalSuite.class"
     } else {
@@ -94,14 +99,43 @@ test {
     testLogging.showStandardStreams = true
 }
 
-test.dependsOn tomcatRun, unpackTest, ":peer:assemble"
-
-test << {
+testShotwell << {
     println "Stopping server"
     tomcatStop.execute()
     println "Stopping peer"
     peerStop.execute()
+    println "Deleting test database"
+		deleteDB.execute()
 }
+
+task testFSpot(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"]) {
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
+        'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
+    systemProperty 'bot.secret', bot_secret
+    systemProperty 'endpoint', "localhost:9050/j2ee-e2e"
+    systemProperty 'stop.port', "5555"
+    systemProperty 'pause.time', "${test_pause_time}"
+    systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
+    systemProperty "shotwell", "false"
+    if ("${all_tests}" == "true") {
+        include "com/googlecode/fspotcloud/test/LocalSuite.class"
+    } else {
+        include "com/googlecode/fspotcloud/test/ShortSuite.class"
+    }
+    testLogging.showStandardStreams = true
+}
+
+testFSpot << {
+    println "Stopping server"
+    tomcatStop.execute()
+    println "Stopping peer"
+    peerStop.execute()
+    println "Deleting test database"
+		deleteDB.execute()
+}
+// Use: cd j2ee-e2e && gradle -x:client:comG clean testFSpot && gradle clean build
+// Doing both in one run freaks guiceberry out.
+test.dependsOn testShotwell //, testFSpot
 
 task deleteDB(type: Delete) {
     delete '../MODELJPA', 'runtime', 'derby.log', "MODELJPA"

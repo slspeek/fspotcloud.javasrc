@@ -41,6 +41,7 @@ public class PeerRunner {
     private final String secret;
     private final String peerJar;
     private final String stopPort;
+    private final boolean shotwell;
 
 
     @Inject
@@ -49,6 +50,7 @@ public class PeerRunner {
         secret = System.getProperty("bot.secret");
         peerJar = System.getProperty("peer.jar");
         stopPort = System.getProperty("stop.port");
+        shotwell = Boolean.valueOf(System.getProperty("shotwell", "false"));
     }
 
     public void startPeer(String db) throws IOException {
@@ -64,8 +66,12 @@ public class PeerRunner {
     }
 
     private String[] getCommand(String db) {
+    	if (shotwell) {
+    		db = db.replace("photos", "shotwell");
+    	}
         String[] cmd = new String[]{
                 "screen", "-d", "-m", "java", "-cp", peerJar, "-Ddb=" + db,
+                "-Dshotwell="+ shotwell,
                 "-Dendpoint=" + endpoint, "-Dbot.secret=" + secret, "-Dpause=2",
                 "-Dphoto.dir.original=file:///home/steven/Photos",
                 "-Dstop.port=" + stopPort,
