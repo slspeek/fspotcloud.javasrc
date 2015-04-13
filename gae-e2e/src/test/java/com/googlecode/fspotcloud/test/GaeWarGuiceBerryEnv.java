@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.test;
 
 import com.google.inject.name.Names;
-import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 
 
 public class GaeWarGuiceBerryEnv extends SeleniumGuiceBerryEnv {
@@ -35,8 +34,5 @@ public class GaeWarGuiceBerryEnv extends SeleniumGuiceBerryEnv {
         bind(ILogin.class).to(GaeLoginBot.class);
         bind(String.class).annotatedWith(Names.named("baseUrl"))
                 .toInstance("http://localhost:8080");
-        install(new GaeCachedModelModule(100, "gae"));
     }
-
-
 }

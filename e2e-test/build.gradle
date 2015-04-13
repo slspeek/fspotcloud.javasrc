@@ -8,7 +8,6 @@ dependencies {
     testCompile project(':test-util')
     testCompile project(':server')
     testCompile project(':client')
-    testCompile project(':model-api')
     testCompile project(path:':keyboard-action', configuration:'testCompile')
     testCompile libs.selenium
     testCompile libs.guava_testlib

@@ -25,7 +25,6 @@
 package com.googlecode.fspotcloud.test;
 
 import com.google.inject.name.Names;
-import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 
 
 public class J2eeWarGuiceBerryEnv extends SeleniumGuiceBerryEnv {
@@ -35,6 +34,5 @@ public class J2eeWarGuiceBerryEnv extends SeleniumGuiceBerryEnv {
         bind(ILogin.class).to(RegularLoginBot.class);
         bind(String.class).annotatedWith(Names.named("baseUrl"))
                 .toInstance("http://localhost:9050/j2ee-e2e/");
-        install(new J2eeModelModule(100, "derby"));
     }
 }

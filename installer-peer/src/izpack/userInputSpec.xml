@@ -10,9 +10,14 @@
         <field type="text" align="left" variable="bot.secret.userinput">
             <spec txt="" size="25" set="SECRET"/>
         </field>
-        <field type="staticText" align="left" txt="F-Spot database to use:"/>
+         <field type="staticText" align="left"
+               txt="Use Shotwell"/>
+        <field type="check" align="left" variable="shotwell.userinput">
+            <spec txt="" true="true" false="false" set="true"/>
+        </field>
+        <field type="staticText" align="left" txt="Database to use:"/>
         <field type="file" align="left" variable="photos.db.userinput">
-            <spec txt="" size="25" set="$USER_HOME/.config/f-spot/photos.db"/>
+            <spec txt="" size="25" set="$USER_HOME/.local/share/shotwell/data/photo.db"/>
         </field>
         <field type="divider" align="bottom"/>
     </panel>
