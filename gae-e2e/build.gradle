@@ -65,16 +65,16 @@ task peerStop(type: Exec) {
 }
 
 appengineRun.dependsOn copyWar
-test.dependsOn appengineRun, unpackTest, ":peer:assemble"
+test.dependsOn appengineRun, unpackTest, setupFixture
 
 test {
-    systemProperties['GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv'] =
+    systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.GaeWarGuiceBerryEnv'
-    systemProperties['bot.secret'] = bot_secret
-    systemProperties['endpoint'] = "localhost:8080"
-    systemProperties['stop.port'] = "5555"
-    systemProperties['pause.time'] = "${test_pause_time}"
-    systemProperties['peer.jar'] = "../peer/build/libs/peer-${version}.jar"
+    systemProperty 'bot.secret', bot_secret
+    systemProperty 'endpoint', "localhost:8080"
+    systemProperty 'stop.port', "5555"
+    systemProperty 'pause.time', "${test_pause_time}"
+    systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
     println "All tests: ${all_tests} pause time: ${test_pause_time}"
     if ("${all_tests}" == "true") {
         include "com/googlecode/fspotcloud/test/LocalSuite.class"

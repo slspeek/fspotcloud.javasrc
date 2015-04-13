@@ -45,7 +45,6 @@ public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
     Selenium getSelenium(@Named("baseUrl")
                          String baseUrl) {
         WebDriver driver;
-        System.out.println("BaseURL: " + baseUrl);
         String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
         //System.setProperty("webdriver.chrome.driver", "/home/steven/tools/bin/chromedriver");
         if (userChoice != null) {
