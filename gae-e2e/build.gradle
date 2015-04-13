@@ -64,8 +64,8 @@ task peerStop(type: Exec) {
     ignoreExitValue = true
 }
 
-appengineRun.dependsOn copyWar
-test.dependsOn appengineRun, unpackTest, setupFixture
+appengineRun.dependsOn copyWar, setupFixture
+test.dependsOn appengineRun, unpackTest
 
 test {
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
