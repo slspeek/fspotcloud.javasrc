@@ -67,6 +67,18 @@
             <executable type="bin" stage="never"
                         targetfile="$INSTALL_PATH/appengine-java-sdk-@{gae.version}/bin/appcfg.sh"
                         os="unix"/>
+            <executable type="bin" stage="never"
+                        targetfile="$INSTALL_PATH/appengine-java-sdk-@{gae.version}/bin/run_java.sh"
+                        os="unix"/>
+            <executable type="bin" stage="never"
+                        targetfile="$INSTALL_PATH/appengine-java-sdk-@{gae.version}/bin/dev_appserver.sh"
+                        os="unix"/>
+            <executable type="bin" stage="never"
+                        targetfile="$INSTALL_PATH/appengine-java-sdk-@{gae.version}/bin/google_sql.sh"
+                        os="unix"/>
+            <executable type="bin" stage="never"
+                        targetfile="$INSTALL_PATH/appengine-java-sdk-@{gae.version}/bin/endpoints.sh"
+                        os="unix"/>
         </pack>
         <pack name="Post-Install Tasks" required="yes">
             <description>Deploying to Google AppEngine</description>

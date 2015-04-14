@@ -10,7 +10,7 @@
         <field type="text" align="left" variable="bot.secret.userinput">
             <spec txt="" size="25" set="SECRET"/>
         </field>
-         <field type="staticText" align="left"
+        <field type="staticText" align="left"
                txt="Use Shotwell"/>
         <field type="check" align="left" variable="shotwell.userinput">
             <spec txt="" true="true" false="false" set="true"/>
