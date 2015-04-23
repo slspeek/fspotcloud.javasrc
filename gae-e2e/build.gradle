@@ -10,22 +10,26 @@ if ("${analysis}" == "true") {
 }
 
 appengine {
-    /*stopKey = 'STOP'*/
     disableUpdateCheck = true
     warDir = file('build/exploded');
 }
 appengineRun.daemon = Boolean.parseBoolean(server_daemon)
 
+//configurations {
+		//testCompile
+		//functionalTest.extendsFrom(testCompile)
+//}
+
 dependencies {
-    testCompile project(path: ':e2e-test', configuration: 'testCompile')
-    testCompile libs.gae_testing
-    testCompile project(':model-jpa-gae')
-    testCompile libs.selenium
-    testCompile libs.guiceberry
-    testCompile libs.guava_testlib
-    testCompile libs.junit
-    testCompile libs.inject
-    testCompile libs.guice
+    functionalTestCompile project(path: ':e2e-test', configuration: 'testCompile')
+    functionalTestCompile libs.gae_testing
+    functionalTestCompile project(':model-jpa-gae')
+    functionalTestCompile libs.selenium
+    functionalTestCompile libs.guiceberry
+    functionalTestCompile libs.guava_testlib
+    functionalTestCompile libs.junit
+    functionalTestCompile libs.inject
+    functionalTestCompile libs.guice
 }
 
 task unpackWar(dependsOn: ':prod-gae-war:assemble') << {
@@ -56,7 +60,7 @@ task setupFixture(type: Copy, dependsOn: copyWar) {
 
 task unpackTest(dependsOn: ":e2e-test:packageTests") << {
     def myTests = file("../e2e-test/build/libs/e2e-test-${version}-tests.jar")
-    ant.unjar(dest: "$buildDir/classes/test", src: myTests)
+    ant.unjar(dest: "$buildDir/classes/functionalTest", src: myTests)
 }
 
 task peerStop(type: Exec) {
@@ -65,15 +69,16 @@ task peerStop(type: Exec) {
 }
 
 appengineRun.dependsOn copyWar, setupFixture
-test.dependsOn appengineRun, unpackTest
+appengineFunctionalTest.dependsOn appengineRun, unpackTest
 
-test {
+appengineFunctionalTest {
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.GaeWarGuiceBerryEnv'
     systemProperty 'bot.secret', bot_secret
     systemProperty 'endpoint', "localhost:8080"
     systemProperty 'stop.port', "5555"
     systemProperty 'pause.time', "${test_pause_time}"
+    systemProperty 'fspotcloud.test.shotwell', 'true'
     systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
     println "All tests: ${all_tests} pause time: ${test_pause_time}"
     if ("${all_tests}" == "true") {
@@ -83,14 +88,8 @@ test {
     }
 
     testLogging.showStandardStreams = true
+    reports.junitXml.destination =file("${project.testResultsDir}/shotwell")
+    reports.html.destination =file("${project.testResultsDir}/shotwell")
 }
 
 clean.dependsOn appengineStop, peerStop
-functionalTestClasses.dependsOn test
-
-test << {
-    println "Stopping peer"
-    peerStop.execute()
-    println "Stopping GAE Local server"
-		appengineStop.execute()
-}

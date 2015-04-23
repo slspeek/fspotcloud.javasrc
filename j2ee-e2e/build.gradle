@@ -97,6 +97,8 @@ task testShotwell(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"
         include "com/googlecode/fspotcloud/test/ShortSuite.class"
     }
     testLogging.showStandardStreams = true
+    reports.junitXml.destination =file("${project.testResultsDir}/shotwell")
+    reports.html.destination =file("${project.testResultsDir}/shotwell")
 }
 
 testShotwell << {
@@ -123,6 +125,8 @@ task testFSpot(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"]) 
         include "com/googlecode/fspotcloud/test/ShortSuite.class"
     }
     testLogging.showStandardStreams = true
+    reports.junitXml.destination =file("${project.testResultsDir}/fspot")
+    reports.html.destination =file("${project.testResultsDir}/fspot")
 }
 
 testFSpot << {
@@ -133,7 +137,7 @@ testFSpot << {
     println "Deleting test database"
 		deleteDB.execute()
 }
-// Use: cd j2ee-e2e && gradle -x:client:comG clean testFSpot && gradle clean build
+
 // Doing both in one run freaks guiceberry out.
 test.dependsOn testShotwell //, testFSpot
 
