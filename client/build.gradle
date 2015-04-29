@@ -62,13 +62,15 @@ test {
     exclude '**/*GwtTest*'
     exclude 'com/googlecode/fspotcloud/client/main/gin/GinJectorTest*'
     exclude 'com/googlecode/fspotcloud/client/place/TokenizerTest.*'
-    jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
+    //jvmArgs '-Xmx256m', '-XX:+HeapDumpOnOutOfMemoryError'
 }
 compileGwt.dependsOn convertIcons, writeVersion
 gwtDev.dependsOn convertIcons, writeVersion
 
 gwt {
-			modules = ['com.googlecode.fspotcloud.FSpotCloud']
+		modules = ['com.googlecode.fspotcloud.FSpotCloud']
+		minHeapSize = "512M";
+    maxHeapSize = "1024M";
 }
 
 compileGwt {
