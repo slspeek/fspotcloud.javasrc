@@ -52,7 +52,7 @@ task copyWar(dependsOn: unpackWar, type: Copy) {
 }
 
 task setupFixture(type: Copy, dependsOn: copyWar) {
-    from('src/test/resources/') {
+    from('src/functionalTest/resources/') {
         include "local_db.bin"
     }
     into 'build/exploded/WEB-INF/appengine-generated/'
@@ -68,7 +68,7 @@ task peerStop(type: Exec) {
     ignoreExitValue = true
 }
 
-appengineRun.dependsOn copyWar, setupFixture
+appengineRun.dependsOn setupFixture
 appengineFunctionalTest.dependsOn appengineRun, unpackTest
 
 appengineFunctionalTest {
