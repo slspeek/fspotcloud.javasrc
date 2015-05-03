@@ -18,12 +18,12 @@ import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
 import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
 
-public class ShorewallBackend extends GenericBackend {
-	static final Logger LOGGER = Logger.getLogger(ShorewallBackend.class
+public class ShotwellBackend extends GenericBackend {
+	static final Logger LOGGER = Logger.getLogger(ShotwellBackend.class
 			.getName());
 
 	@Inject
-	public ShorewallBackend(@Named("JDBC URL") String jdbcURL) {
+	public ShotwellBackend(@Named("JDBC URL") String jdbcURL) {
 		super(jdbcURL);
 	}
 

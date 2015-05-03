@@ -20,7 +20,7 @@ public class ShotwellBackendTest extends BackendTests {
 						+ "/../peer/src/test/resources/Photos");
 		URL testDatabase = ClassLoader.getSystemResource("shotwell.db");
 		String path = testDatabase.getPath();
-		data = new ShorewallBackend("jdbc:sqlite:" + path);
+		data = new ShotwellBackend("jdbc:sqlite:" + path);
 	}
 	
 	public void testGetPhotoCount() throws SQLException {

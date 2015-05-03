@@ -30,7 +30,7 @@ import com.googlecode.fspotcloud.peer.CopyDatabase;
 import com.googlecode.fspotcloud.peer.ImageData;
 import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.peer.db.FSpotBackend;
-import com.googlecode.fspotcloud.peer.db.ShorewallBackend;
+import com.googlecode.fspotcloud.peer.db.ShotwellBackend;
 
 import javax.inject.Singleton;
 
@@ -54,7 +54,7 @@ public class PeerModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		if (shotwell) {
-			bind(Backend.class).to(ShorewallBackend.class).in(Singleton.class);
+			bind(Backend.class).to(ShotwellBackend.class).in(Singleton.class);
 		} else {
 			bind(Backend.class).to(FSpotBackend.class).in(Singleton.class);
 		}
