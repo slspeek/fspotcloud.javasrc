@@ -69,7 +69,7 @@ task peerStop(type: Exec) {
 }
 
 appengineRun.dependsOn setupFixture
-appengineFunctionalTest.dependsOn appengineRun, unpackTest
+appengineFunctionalTest.dependsOn ":peer:build", appengineRun, unpackTest
 
 appengineFunctionalTest {
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
@@ -79,6 +79,7 @@ appengineFunctionalTest {
     systemProperty 'stop.port', "5555"
     systemProperty 'pause.time', "${test_pause_time}"
     systemProperty 'fspotcloud.test.shotwell', 'true'
+    systemProperty 'shotwell', 'true'
     systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
     println "All tests: ${all_tests} pause time: ${test_pause_time}"
     if ("${all_tests}" == "true") {

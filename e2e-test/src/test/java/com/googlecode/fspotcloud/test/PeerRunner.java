@@ -66,14 +66,18 @@ public class PeerRunner {
     }
 
     private String[] getCommand(String db) {
+			String original;
     	if (shotwell) {
     		db = db.replace("photos", "shotwell");
-    	}
+				original = "file:///home/fspot/Photos";
+    	} else {
+				original = "file:///home/steven/Photos";
+			}
         String[] cmd = new String[]{
                 "screen", "-d", "-m", "java", "-cp", peerJar, "-Ddb=" + db,
                 "-Dshotwell="+ shotwell,
                 "-Dendpoint=" + endpoint, "-Dbot.secret=" + secret, "-Dpause=2",
-                "-Dphoto.dir.original=file:///home/steven/Photos",
+                "-Dphoto.dir.original=" + original,
                 "-Dstop.port=" + stopPort,
                 "-Dphoto.dir.override=file://" +
                         System.getProperty("user.dir") +
