@@ -103,7 +103,5 @@ public abstract class BackendTests extends TestCase {
 		PhotoData pd = data.getPhotoData(new ImageSpecs(1024, 768, 512, 384),
 				ImmutableList.of("3")).get(0);
 		assertEquals("5", pd.getTagList().get(0));
-		assertEquals(74556, pd.getImageData().length);
-		assertEquals(31450, pd.getThumbData().length);
 	}
 }

@@ -263,7 +263,8 @@ public class FSpotBackend extends GenericBackend implements Backend {
                     byte[] thumb = imageData.getScaledImageData(url,
                             new Dimension(imageSpecs.getThumbWidth(),
                                     imageSpecs.getThumbHeight()));
-                    result.add(new PhotoData(id, desc, date, image, thumb,
+                    //TODO: Upload image and thumb to new API
+                    result.add(new PhotoData(id, desc, date, 
                             tagList, version));
                 }
             } catch (Exception e) {

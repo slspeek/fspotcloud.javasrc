@@ -35,8 +35,6 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
 
 public class PhotoDataResultTest {
-    private static final byte[] IMAGE_DATA = new byte[]{0, 1};
-    private static final byte[] THUMB_DATA = new byte[]{0};
     private static final String PHOTO_ID = "1";
     PhotoDataResult result;
 
@@ -44,7 +42,7 @@ public class PhotoDataResultTest {
     public void setUp() throws Exception {
         List<String> tags = newArrayList("TAG");
         PhotoData p1 = new PhotoData(PHOTO_ID, "Story", new Date(10),
-                IMAGE_DATA, THUMB_DATA, tags, 10);
+                tags, 10);
         List<PhotoData> list = newArrayList(p1);
         list.add(p1);
         result = new PhotoDataResult(list);

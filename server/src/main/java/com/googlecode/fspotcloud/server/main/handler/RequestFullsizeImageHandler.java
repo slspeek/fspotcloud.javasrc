@@ -24,11 +24,15 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static com.google.common.collect.Sets.newHashSet;
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.server.control.callback.FullsizePhotoCallback;
-import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
@@ -37,11 +41,6 @@ import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import com.googlecode.fspotcloud.shared.peer.GetFullsizePhotoAction;
 import com.googlecode.fspotcloud.user.UserService;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
-import static com.google.common.collect.Sets.newHashSet;
 
 
 public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFullsizeImageAction, FullsizeImageResult> {
@@ -54,8 +53,6 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
     private ControllerDispatchAsync controllerAsyc;
     @Inject
     private PhotoDao photoDao;
-    @Inject
-    private ImageHelper imageHelper;
     @Inject
     private UserService userService;
     @Inject
@@ -75,17 +72,17 @@ public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFull
             if (photo != null) {
                 if (userService.isUserAdmin() ||
                         userGroupHelper.containsOneOf(newHashSet(photo.getTagList()))) {
-                    byte[] fsImage = imageHelper.getImage(photo,
-                            ImageHelper.Type.FULLSIZE);
-
-                    if (fsImage != null) {
-                        mailerProvider.get().send(caller, "Your requested image: " + imageId,
-                                "Dear " + caller + ",\nYour requested image: " +
-                                        imageId + " is in the attachment", fsImage);
+//                    byte[] fsImage = imageHelper.getImage(photo,
+//                            ImageHelper.Type.FULLSIZE);
+//
+                    if (photo != null) {
+//                        mailerProvider.get().send(caller, "Your requested image: " + imageId,
+//                                "Dear " + caller + ",\nYour requested image: " +
+//                                        imageId + " is in the attachment", fsImage);
                         message = SUCCESSFULLY_MAILED;
                     } else {
                         controllerAsyc.execute(new GetFullsizePhotoAction(imageId),
-                                new FullsizePhotoCallback(caller, null, null));
+                                new FullsizePhotoCallback(caller));
                         message = SUCCESSFULLY_SCHEDULED;
                     }
                 } else {

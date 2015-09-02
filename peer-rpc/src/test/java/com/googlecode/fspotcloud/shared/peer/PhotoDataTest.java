@@ -36,8 +36,6 @@ import static org.junit.Assert.assertEquals;
 
 public class PhotoDataTest {
     private static final int VERSION = 17;
-    private static final byte[] IMAGE_DATA = new byte[]{0, 1};
-    private static final byte[] THUMB_DATA = new byte[]{0};
     private static final String TAG = "TAG";
     private static final Date LONG_TIME_AGO = new Date(10);
     private static final String DESCR = "Story";
@@ -47,8 +45,7 @@ public class PhotoDataTest {
     @Before
     public void setUp() throws Exception {
         List<String> tags = newArrayList(TAG);
-        data = new PhotoData(PHOTO_ID, DESCR, LONG_TIME_AGO, IMAGE_DATA,
-                THUMB_DATA, tags, VERSION);
+        data = new PhotoData(PHOTO_ID, DESCR, LONG_TIME_AGO, tags, VERSION);
     }
 
     @Test
@@ -79,16 +76,6 @@ public class PhotoDataTest {
     @Test
     public void testGetTagList() {
         assertEquals(TAG, data.getTagList().get(0));
-    }
-
-    @Test
-    public void testGetThumbData() {
-        assertEquals(THUMB_DATA, data.getThumbData());
-    }
-
-    @Test
-    public void testGetImageData() {
-        assertEquals(IMAGE_DATA, data.getImageData());
     }
 
     @Test

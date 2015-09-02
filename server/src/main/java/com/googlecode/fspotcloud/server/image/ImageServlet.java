@@ -24,21 +24,9 @@
 
 package com.googlecode.fspotcloud.server.image;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.googlecode.fspotcloud.server.model.api.Photo;
-import com.googlecode.fspotcloud.server.model.api.PhotoDao;
-import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
-import com.googlecode.fspotcloud.user.UserService;
-import com.googlecode.simpleblobstore.BlobService;
+import static com.google.common.collect.Sets.newHashSet;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,7 +34,20 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static com.google.common.collect.Sets.newHashSet;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.googlecode.fspotcloud.server.model.api.Photo;
+import com.googlecode.fspotcloud.server.model.api.PhotoDao;
+import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
+import com.googlecode.fspotcloud.user.UserService;
+import com.googlecode.simpleblobstore.BlobKey;
+import com.googlecode.simpleblobstore.BlobService;
 
 /*
  * Courtesy to Felipe Gaucho
@@ -57,8 +58,6 @@ public class ImageServlet extends HttpServlet {
     @VisibleForTesting
     @Inject
     PhotoDao photoManager;
-    @Inject
-    ImageHelper imageHelper;
     @Inject
     IUserGroupHelper userGroupHelper;
     @Inject
@@ -73,26 +72,26 @@ public class ImageServlet extends HttpServlet {
         boolean thumb = request.getParameter("thumb") != null;
         boolean fullSize = request.getParameter("fs") != null;
         Photo photo = photoManager.find(id);
+        if (photo == null) {
+        	response.sendError(404);
+        	return;
+        }
 
         if (userService.isUserAdmin() ||
                 userGroupHelper.containsOneOf(newHashSet(photo.getTagList()))) {
-            byte[] imageData;
+            String blobKey;
 
             if (thumb) {
-                imageData = imageHelper.getImage(photo, ImageHelper.Type.THUMB);
+                blobKey = photo.getThumbBlobKey();
             } else if (fullSize) {
-                imageData = imageHelper.getImage(photo,
-                        ImageHelper.Type.FULLSIZE);
+            	blobKey = photo.getFullsizeImageBlobKey();
             } else {
-                imageData = imageHelper.getImage(photo, ImageHelper.Type.NORMAL);
+            	blobKey = photo.getImageBlobKey();
             }
 
             response.setContentType("image/jpeg");
             setCacheExpireDate(response, 3600 * 24 * 30);
-
-            OutputStream out = response.getOutputStream();
-            out.write(imageData);
-            out.close();
+            blobService.serve(new BlobKey(blobKey), response);
         }
     }
 

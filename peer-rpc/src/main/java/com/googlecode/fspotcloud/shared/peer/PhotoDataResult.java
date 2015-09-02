@@ -24,12 +24,14 @@
 
 package com.googlecode.fspotcloud.shared.peer;
 
-import com.google.common.base.Objects;
-import com.openpojo.business.annotation.BusinessKey;
-import net.customware.gwt.dispatch.shared.Result;
-
 import java.io.Serializable;
 import java.util.List;
+
+import net.customware.gwt.dispatch.shared.Result;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.openpojo.business.annotation.BusinessKey;
 
 
 public class PhotoDataResult extends BusinessBase implements Result,
@@ -48,7 +50,7 @@ public class PhotoDataResult extends BusinessBase implements Result,
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("photos", photoDataList)
+        return new ToStringBuilder(this).append("photos", photoDataList)
                 .toString();
     }
 }

@@ -59,7 +59,10 @@ public class PhotoManagerBlobsTest {
         byte[] data = new byte[size];
         random.nextBytes(data);
 
-        return blobService.save("application", data).getKeyString();
+        //return blobService.save("application", data).getKeyString();
+        // TODO: Fix this?!
+        
+        return "wrong";
     }
 
     @Test
@@ -70,9 +73,9 @@ public class PhotoManagerBlobsTest {
         photo.setImageBlobKey(blobKey);
         photoManager.save(photo);
         photo = null;
-        assertNotNull(blobService.fetchData(new BlobKey(blobKey)));
+        assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
         photoManager.deleteByKey(TEST_ID);
-        assertNull(blobService.fetchData(new BlobKey(blobKey)));
+        assertNull(blobService.getInfo(new BlobKey(blobKey)));
     }
 
     @Test
@@ -83,9 +86,9 @@ public class PhotoManagerBlobsTest {
         photo.setThumbBlobKey(blobKey);
         photoManager.save(photo);
         photo = null;
-        assertNotNull(blobService.fetchData(new BlobKey(blobKey)));
+        assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
         photoManager.deleteByKey(TEST_ID);
-        assertNull(blobService.fetchData(new BlobKey(blobKey)));
+        assertNull(blobService.getInfo(new BlobKey(blobKey)));
     }
 
     @Test
@@ -96,8 +99,8 @@ public class PhotoManagerBlobsTest {
         photo.setFullsizeImageBlobKey(blobKey);
         photoManager.save(photo);
         photo = null;
-        assertNotNull(blobService.fetchData(new BlobKey(blobKey)));
+        assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
         photoManager.deleteByKey(TEST_ID);
-        assertNull(blobService.fetchData(new BlobKey(blobKey)));
+        assertNull(blobService.getInfo(new BlobKey(blobKey)));
     }
 }

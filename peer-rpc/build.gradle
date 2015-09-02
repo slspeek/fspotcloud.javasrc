@@ -9,6 +9,7 @@ dependencies {
     compile libs.gwt_servlet
     compile libs.guava
     compile libs.openpojo
+    compile libs.commons_lang
 
     testCompile libs.junit
     testCompile project(":test-util")

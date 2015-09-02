@@ -24,12 +24,13 @@
 
 package com.googlecode.fspotcloud.shared.peer;
 
-import com.google.common.base.Objects;
-import com.openpojo.business.annotation.BusinessKey;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.openpojo.business.annotation.BusinessKey;
 
 public class PhotoData extends BusinessBase implements Serializable {
 	private static final long serialVersionUID = -4172714943981557358L;
@@ -39,17 +40,14 @@ public class PhotoData extends BusinessBase implements Serializable {
 	private final String description;
 	@BusinessKey
 	private final Date date;
-	@BusinessKey
-	private final byte[] imageData;
-	@BusinessKey
-	private final byte[] thumbData;
+
 	@BusinessKey
 	private final List<String> tagList;
 	@BusinessKey
 	private final int version;
 
 	public PhotoData(String photoId, String description, Date date,
-			byte[] imageData, byte[] thumbData, List<String> tagList,
+			List<String> tagList,
 			int version) {
 		super();
 		this.photoId = photoId;
@@ -59,8 +57,6 @@ public class PhotoData extends BusinessBase implements Serializable {
 			this.description = "";
 		}
 		this.date = date;
-		this.imageData = imageData;
-		this.thumbData = thumbData;
 		this.tagList = tagList;
 		this.version = version;
 	}
@@ -81,23 +77,14 @@ public class PhotoData extends BusinessBase implements Serializable {
 		return date;
 	}
 
-	public byte[] getImageData() {
-		return imageData;
-	}
-
-	public byte[] getThumbData() {
-		return thumbData;
-	}
-
 	public List<String> getTagList() {
 		return tagList;
 	}
 
 	public String toString() {
-		return Objects.toStringHelper(this).add("v", version)
-				.add("id", photoId).add("desc", description).add("date", date)
-				.add("image len", imageData.length)
-				.add("thumb len", thumbData.length).add("tags", tagList)
+		return new ToStringBuilder(this).append("v", version)
+				.append("id", photoId).append("desc", description).append("date", date)
+				.append("tags", tagList)
 				.toString();
 	}
 }

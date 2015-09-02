@@ -24,18 +24,21 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
-import com.google.inject.Inject;
-import com.googlecode.botdispatch.SerializableAsyncCallback;
-import com.googlecode.fspotcloud.server.image.ImageHelper;
-import com.googlecode.fspotcloud.server.model.api.*;
-import com.googlecode.fspotcloud.shared.main.PhotoInfo;
-import com.googlecode.fspotcloud.shared.peer.PhotoData;
-import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
+
+import com.google.inject.Inject;
+import com.googlecode.botdispatch.SerializableAsyncCallback;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
+import com.googlecode.fspotcloud.server.model.api.Photo;
+import com.googlecode.fspotcloud.server.model.api.PhotoDao;
+import com.googlecode.fspotcloud.server.model.api.Tag;
+import com.googlecode.fspotcloud.server.model.api.TagDao;
+import com.googlecode.fspotcloud.shared.main.PhotoInfo;
+import com.googlecode.fspotcloud.shared.peer.PhotoData;
+import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
 
 
 public class PhotoDataCallback implements SerializableAsyncCallback<PhotoDataResult> {
@@ -43,19 +46,21 @@ public class PhotoDataCallback implements SerializableAsyncCallback<PhotoDataRes
     @Inject
     private transient PhotoDao photoManager;
     @Inject
-    private transient ImageHelper imageHelper;
-    @Inject
     private transient TagDao tagManager;
     @Inject
     private transient PeerDatabaseDao peerDatabaseDao;
 
-    public PhotoDataCallback(PhotoDao photoManager, ImageHelper imageHelper,
-                             TagDao tagManager, PeerDatabaseDao peerDatabaseDao) {
+    
+    public PhotoDataCallback(PhotoDao photoManager, TagDao tagManager,
+			PeerDatabaseDao peerDatabaseDao) {
+		super();
+		this.photoManager = photoManager;
+		this.tagManager = tagManager;
+		this.peerDatabaseDao = peerDatabaseDao;
+	}
+
+	public PhotoDataCallback() {
         super();
-        this.photoManager = photoManager;
-        this.imageHelper = imageHelper;
-        this.tagManager = tagManager;
-        this.peerDatabaseDao = peerDatabaseDao;
     }
 
     @Override
@@ -84,16 +89,10 @@ public class PhotoDataCallback implements SerializableAsyncCallback<PhotoDataRes
         String desc = photoData.getDescription();
         Date date = photoData.getDate();
         List<String> tags = photoData.getTagList();
-        byte[] imageData = photoData.getImageData();
-        byte[] thumbData = photoData.getThumbData();
-
         Photo photo = photoManager.findOrNew(keyName);
         photo.setDescription(desc);
         photo.setDate(date);
         photo.setTagList(tags);
-
-        imageHelper.saveImage(photo, ImageHelper.Type.NORMAL, imageData);
-        imageHelper.saveImage(photo, ImageHelper.Type.THUMB, imageData);
 
         for (String tagId : tags) {
             Tag tag = tagManager.find(tagId);

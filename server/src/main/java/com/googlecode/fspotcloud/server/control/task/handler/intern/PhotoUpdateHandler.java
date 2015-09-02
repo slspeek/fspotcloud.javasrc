@@ -69,8 +69,7 @@ public class PhotoUpdateHandler extends AbstractBatchActionHandler<PhotoUpdateAc
 
         GetPhotoDataAction botAction = new GetPhotoDataAction(imageSpecs,
                 imageKeys);
-        PhotoDataCallback callback = new PhotoDataCallback(null, null, null,
-                null);
+        PhotoDataCallback callback = new PhotoDataCallback();
         controllerDispatch.execute(botAction, callback);
     }
 }

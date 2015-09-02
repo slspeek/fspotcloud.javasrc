@@ -24,10 +24,10 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
-import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
@@ -39,16 +39,11 @@ public class FullsizePhotoCallback implements SerializableAsyncCallback<Fullsize
     @Inject
     private transient PhotoDao photoManager;
     @Inject
-    private transient ImageHelper imageHelper;
-    @Inject
     private transient Provider<IMail> mailerProvider;
     private String caller;
 
-    public FullsizePhotoCallback(String caller, PhotoDao photoManager,
-                                 ImageHelper imageHelper) {
+    public FullsizePhotoCallback(String caller) {
         this.caller = caller;
-        this.photoManager = photoManager;
-        this.imageHelper = imageHelper;
     }
 
     @Override
@@ -59,11 +54,11 @@ public class FullsizePhotoCallback implements SerializableAsyncCallback<Fullsize
     public void onSuccess(FullsizePhotoResult fullsizePhotoResult) {
         final String imageId = fullsizePhotoResult.getPhotoId();
         Photo photo = photoManager.find(imageId);
-        byte[] image = fullsizePhotoResult.getFullsizeImageData();
-        imageHelper.saveImage(photo, ImageHelper.Type.FULLSIZE, image);
+        String key = photo.getFullsizeImageBlobKey();
         photoManager.save(photo);
-        mailerProvider.get().send(caller, "Your requested image: " + imageId,
-                "Dear " + caller + ",\nYour requested image: " + imageId +
-                        " is in the attachment", image);
+//        mailerProvider.get().send(caller, "Your requested image: " + imageId,
+//                "Dear " + caller + ",\nYour requested image: " + imageId +
+//                        " is in the attachment", key);
+        throw new IllegalStateException();
     }
 }

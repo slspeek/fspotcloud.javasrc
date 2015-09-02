@@ -33,8 +33,6 @@ import com.google.inject.name.Names;
 import com.googlecode.botdispatch.controller.inject.ControllerServletModule;
 import com.googlecode.fspotcloud.server.control.task.inject.TaskActionsModule;
 import com.googlecode.fspotcloud.server.control.task.inject.TaskModule;
-import com.googlecode.fspotcloud.server.image.ImageHelper;
-import com.googlecode.fspotcloud.server.image.ImageHelperImpl;
 import com.googlecode.fspotcloud.server.mail.FromAddress;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.mail.Mailer;
@@ -70,7 +68,6 @@ public class ServerTotalModule extends AbstractModule {
         bind(String.class).annotatedWith(SMTPServer.class).toInstance(smtpServer);
 
         bind(IMail.class).to(Mailer.class);
-        bind(ImageHelper.class).to(ImageHelperImpl.class);
         install(new ServerServletModule());
         install(new ControllerServletModule(botSecret));
         install(new ServerControllerModule());

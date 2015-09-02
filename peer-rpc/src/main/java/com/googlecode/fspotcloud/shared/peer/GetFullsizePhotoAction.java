@@ -24,11 +24,13 @@
 
 package com.googlecode.fspotcloud.shared.peer;
 
-import com.google.common.base.Objects;
-import com.openpojo.business.annotation.BusinessKey;
+import java.io.Serializable;
+
 import net.customware.gwt.dispatch.shared.Action;
 
-import java.io.Serializable;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.openpojo.business.annotation.BusinessKey;
 
 
 public class GetFullsizePhotoAction extends BusinessBase implements Action<FullsizePhotoResult>,
@@ -47,6 +49,6 @@ public class GetFullsizePhotoAction extends BusinessBase implements Action<Fulls
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("id", imageKey).toString();
+        return new ToStringBuilder(this).append("id", imageKey).toString();
     }
 }

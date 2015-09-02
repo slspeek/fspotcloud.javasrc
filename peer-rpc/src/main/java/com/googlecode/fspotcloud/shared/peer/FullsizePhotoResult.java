@@ -24,11 +24,13 @@
 
 package com.googlecode.fspotcloud.shared.peer;
 
-import com.google.common.base.Objects;
-import com.openpojo.business.annotation.BusinessKey;
+import java.io.Serializable;
+
 import net.customware.gwt.dispatch.shared.Result;
 
-import java.io.Serializable;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.openpojo.business.annotation.BusinessKey;
 
 
 public class FullsizePhotoResult extends BusinessBase implements Result,
@@ -36,16 +38,9 @@ public class FullsizePhotoResult extends BusinessBase implements Result,
     private static final long serialVersionUID = -4172714943981557358L;
     @BusinessKey
     private final String photoId;
-    @BusinessKey
-    private final byte[] fullsizeImageData;
-
-    public FullsizePhotoResult(String photoId, byte[] fullsizeImageData) {
+    
+    public FullsizePhotoResult(String photoId) {
         this.photoId = photoId;
-        this.fullsizeImageData = fullsizeImageData;
-    }
-
-    public byte[] getFullsizeImageData() {
-        return fullsizeImageData;
     }
 
     public String getPhotoId() {
@@ -53,7 +48,7 @@ public class FullsizePhotoResult extends BusinessBase implements Result,
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("id", photoId)
-                .add("image len", fullsizeImageData.length).toString();
+        return new ToStringBuilder(this).append("id", photoId)
+                .toString();
     }
 }

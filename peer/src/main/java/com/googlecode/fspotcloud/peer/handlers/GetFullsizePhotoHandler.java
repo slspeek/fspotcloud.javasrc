@@ -50,8 +50,8 @@ public class GetFullsizePhotoHandler extends SimpleActionHandler<GetFullsizePhot
         FullsizePhotoResult result;
 
         try {
-            result = new FullsizePhotoResult(action.getImageKey(),
-                    data.getFullsizePhotoData(action.getImageKey()));
+        	// TODO: Upload fullsize to new API 
+            result = new FullsizePhotoResult(action.getImageKey());
         } catch (Exception e) {
             throw new ActionException(e);
         }
