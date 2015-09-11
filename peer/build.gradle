@@ -6,6 +6,7 @@ dependencies {
     compile "org.xerial:sqlite-jdbc:3.6.7"
     compile "httpunit:httpunit:1.7"
     compile libs.bot_dispatch_bot
+    compile libs.simple_blobstore_client
     compile libs.guice
     compile libs.guice_assisted_inject
     compile libs.guava

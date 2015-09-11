@@ -78,6 +78,7 @@ project.ext {
                 validation_api: 'javax.validation:validation-api:1.0.0.GA',
                 jetty: ["org.mortbay.jetty:jetty:${jetty_version}", "org.mortbay.jetty:jetty-util:${jetty_version}"],
                 simple_blobstore_api: "com.googlecode.simpleblobstore:blobstore-api:${simple_blobstore_version}",
+                simple_blobstore_client: "com.googlecode.simpleblobstore:client:${simple_blobstore_version}",
                 simple_blobstore_j2ee: "com.googlecode.simpleblobstore:blobstore-j2ee:${simple_blobstore_version}",
                 simple_blobstore_gae: "com.googlecode.simpleblobstore:blobstore-gae:${simple_blobstore_version}"
         ]
