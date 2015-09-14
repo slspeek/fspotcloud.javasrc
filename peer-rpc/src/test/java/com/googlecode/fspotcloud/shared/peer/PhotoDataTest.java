@@ -40,12 +40,17 @@ public class PhotoDataTest {
     private static final Date LONG_TIME_AGO = new Date(10);
     private static final String DESCR = "Story";
     private static final String PHOTO_ID = "1";
+    private static final String IMAGE_BLOBKEY= "42";
+    private static final String THUMB_BLOBKEY= "24";
+    
     PhotoData data;
 
     @Before
     public void setUp() throws Exception {
         List<String> tags = newArrayList(TAG);
         data = new PhotoData(PHOTO_ID, DESCR, LONG_TIME_AGO, tags, VERSION);
+        data.setThumbBlobKey(THUMB_BLOBKEY);
+        data.setImageBlobKey(IMAGE_BLOBKEY);
     }
 
     @Test
@@ -81,5 +86,14 @@ public class PhotoDataTest {
     @Test
     public void testGetVersion() {
         assertEquals(VERSION, data.getVersion());
+    }
+    
+    @Test
+    public void testGetThumbBlobKey() {
+        assertEquals(THUMB_BLOBKEY, data.getThumbBlobKey());
+    }
+    @Test
+    public void testGetImageBlobKey() {
+        assertEquals(IMAGE_BLOBKEY, data.getImageBlobKey());
     }
 }

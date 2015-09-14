@@ -54,7 +54,7 @@ public class GetTagUpdateInstructionsHandlerTest extends TestCase {
 
         URL testDatabase = ClassLoader.getSystemResource("photos.db");
         String path = testDatabase.getPath();
-        data = new FSpotBackend("jdbc:sqlite:" + path);
+        data = new FSpotBackend("jdbc:sqlite:" + path, null);
         handler = new GetTagUpdateInstructionsHandler(data);
         action = new GetTagUpdateInstructionsAction("5",
                 new TreeSet<PhotoInfo>());

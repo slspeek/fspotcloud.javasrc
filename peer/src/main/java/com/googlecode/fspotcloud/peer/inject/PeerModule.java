@@ -24,6 +24,8 @@
 
 package com.googlecode.fspotcloud.peer.inject;
 
+import javax.inject.Singleton;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import com.googlecode.fspotcloud.peer.CopyDatabase;
@@ -31,8 +33,7 @@ import com.googlecode.fspotcloud.peer.ImageData;
 import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.peer.db.FSpotBackend;
 import com.googlecode.fspotcloud.peer.db.ShotwellBackend;
-
-import javax.inject.Singleton;
+import com.googlecode.simpleblobstore.client.BlobstoreClient;
 
 public class PeerModule extends AbstractModule {
 	private final String db;
@@ -67,5 +68,6 @@ public class PeerModule extends AbstractModule {
 				workDir);
 		bind(Integer.class).annotatedWith(Names.named("stop port")).toInstance(
 				Integer.valueOf(stopPort));
+		bind(BlobstoreClient.class).toInstance(new BlobstoreClient(System.getProperty("endpoint") + System.getProperty("bot.secret") + "/"));
 	}
 }

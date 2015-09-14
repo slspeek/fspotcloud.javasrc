@@ -100,7 +100,7 @@ public abstract class BackendTests extends TestCase {
 	}
 
 	public void testGetPhotoData() throws Exception {
-		PhotoData pd = data.getPhotoData(new ImageSpecs(1024, 768, 512, 384),
+		PhotoData pd = data.getPhotoData(
 				ImmutableList.of("3")).get(0);
 		assertEquals("5", pd.getTagList().get(0));
 	}

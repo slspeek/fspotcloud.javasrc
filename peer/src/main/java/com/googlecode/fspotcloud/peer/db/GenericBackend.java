@@ -1,5 +1,6 @@
 package com.googlecode.fspotcloud.peer.db;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -9,12 +10,19 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.googlecode.fspotcloud.peer.ImageData;
+import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
+import com.googlecode.fspotcloud.shared.peer.PhotoData;
+import com.googlecode.simpleblobstore.BlobKey;
+import com.googlecode.simpleblobstore.client.BlobstoreClient;
 
 public abstract class GenericBackend implements Backend {
 	static final Logger LOGGER = Logger.getLogger(FSpotBackend.class.getName());
@@ -30,11 +38,13 @@ public abstract class GenericBackend implements Backend {
 	protected String jdbcURL;
 	protected final String photoDirectoryOverride;
 	protected final String photoDirectoryOriginalPath;
+	protected final BlobstoreClient blobClient;
 	protected final ImageData imageData = new ImageData();
 	private Connection connection;
 
-	public GenericBackend(String jdbcURL) {
+	public GenericBackend(String jdbcURL, BlobstoreClient blobClient) {
 		this.jdbcURL = jdbcURL;
+		this.blobClient = blobClient;
 		this.photoDirectoryOverride = System.getProperty("photo.dir.override");
 		this.photoDirectoryOriginalPath = System
 				.getProperty("photo.dir.original");
@@ -57,7 +67,6 @@ public abstract class GenericBackend implements Backend {
 			LOGGER.info("Opening new connection: " + jdbcURL);
 			connection = DriverManager.getConnection(jdbcURL);
 		}
-
 		return connection;
 	}
 
@@ -92,4 +101,29 @@ public abstract class GenericBackend implements Backend {
 		return Files.toByteArray(imageFile);
 	}
 
+	@Override
+	public void uploadImages(ImageSpecs imageSpecs, List<PhotoData> photos) throws Exception {
+		// collect all byte[]
+		Map<String, byte[]> uploadData = Maps.newHashMap();
+		for (PhotoData photo: photos) {
+			 String id = photo.getPhotoId();
+			 String url = getImageURL(id);
+             byte[] image = imageData.getScaledImageData(url,
+                     new Dimension(imageSpecs.getWidth(),
+                             imageSpecs.getHeight()));
+             byte[] thumb = imageData.getScaledImageData(url,
+                     new Dimension(imageSpecs.getThumbWidth(),
+                             imageSpecs.getThumbHeight()));
+             uploadData.put(id +"_thumb", thumb);
+             uploadData.put(id +"_image", image);
+		}
+		// call blobstoreclient.upload
+		Map<String, List<BlobKey>> upload = blobClient.upload(uploadData);
+		// modify photos with the result 
+		for (PhotoData photo: photos) {
+			 String id = photo.getPhotoId();
+			 photo.setThumbBlobKey(upload.get(id +"_thumb").get(0).getKeyString());	
+			 photo.setImageBlobKey(upload.get(id +"_image").get(0).getKeyString());
+		}
+	}
 }

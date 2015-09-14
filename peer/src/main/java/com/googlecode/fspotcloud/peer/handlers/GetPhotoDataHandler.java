@@ -24,39 +24,44 @@
 
 package com.googlecode.fspotcloud.peer.handlers;
 
-import com.google.inject.Inject;
-import com.googlecode.fspotcloud.peer.db.Backend;
-import com.googlecode.fspotcloud.shared.peer.GetPhotoDataAction;
-import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
+import java.util.List;
 
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.peer.db.Backend;
+import com.googlecode.fspotcloud.shared.peer.GetPhotoDataAction;
+import com.googlecode.fspotcloud.shared.peer.PhotoData;
+import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
 
-public class GetPhotoDataHandler extends SimpleActionHandler<GetPhotoDataAction, PhotoDataResult> {
-    private final Backend data;
+public class GetPhotoDataHandler extends
+		SimpleActionHandler<GetPhotoDataAction, PhotoDataResult> {
+	private final Backend data;
 
-    @Inject
-    public GetPhotoDataHandler(Backend data) {
-        super();
-        this.data = data;
-    }
+	@Inject
+	public GetPhotoDataHandler(Backend data) {
+		super();
+		this.data = data;
+	}
 
-    @Override
-    public PhotoDataResult execute(GetPhotoDataAction action,
-                                   ExecutionContext context) throws DispatchException {
-        PhotoDataResult result;
+	@Override
+	public PhotoDataResult execute(GetPhotoDataAction action,
+			ExecutionContext context) throws DispatchException {
+		PhotoDataResult result;
 
-        try {
-            result = new PhotoDataResult(data.getPhotoData(
-                    action.getImageSpecs(),
-                    action.getImageKeys()));
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
+		try {
+			List<PhotoData> photos = data.getPhotoData(
 
-        return result;
-    }
+			action.getImageKeys());
+			data.uploadImages(action.getImageSpecs(), photos);
+			result = new PhotoDataResult(photos);
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
+
+		return result;
+	}
 }

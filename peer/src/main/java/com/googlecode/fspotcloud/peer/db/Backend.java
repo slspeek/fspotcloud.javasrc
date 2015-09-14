@@ -25,7 +25,7 @@ public interface Backend {
 
 	String getImageURL(String photoId) throws SQLException;
 
-	List<PhotoData> getPhotoData(ImageSpecs imageSpecs, List<String> imageKeys)
+	List<PhotoData> getPhotoData(List<String> imageKeys)
 			throws SQLException;
 
 	int getPhotoDefaultVersion(String photoId) throws SQLException;
@@ -34,5 +34,7 @@ public interface Backend {
 
 	byte[] getFullsizePhotoData(String imageKey) throws IOException,
 			SQLException, URISyntaxException;
+
+	void uploadImages(ImageSpecs imageSpecs, List<PhotoData> photos) throws Exception;
 
 }

@@ -68,7 +68,8 @@ public class PhotoDataCallbackTest {
     PhotoData data;
     Date date = new Date(10);
     PhotoDataCallback callback;
-    ArgumentCaptor<List<Photo>> argumentCaptor = (ArgumentCaptor<List<Photo>>) (Object) ArgumentCaptor.forClass(List.class);
+    @SuppressWarnings("unchecked")
+	ArgumentCaptor<List<Photo>> argumentCaptor = (ArgumentCaptor<List<Photo>>) (Object) ArgumentCaptor.forClass(List.class);
     private ArrayList<PhotoData> dataList;
     private Tag tag1;
 

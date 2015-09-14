@@ -45,7 +45,7 @@ public class GetPeerMetaDataHandlerTest extends TestCase {
 
         URL testDatabase = ClassLoader.getSystemResource("photos.db");
         String path = testDatabase.getPath();
-        data = new FSpotBackend("jdbc:sqlite:" + path);
+        data = new FSpotBackend("jdbc:sqlite:" + path, null);
         handler = new GetPeerMetaDataHandler(data);
     }
 

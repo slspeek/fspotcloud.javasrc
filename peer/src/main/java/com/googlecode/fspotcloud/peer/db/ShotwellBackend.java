@@ -1,6 +1,5 @@
 package com.googlecode.fspotcloud.peer.db;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,17 +13,17 @@ import java.util.logging.Logger;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
 import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.TagData;
+import com.googlecode.simpleblobstore.client.BlobstoreClient;
 
 public class ShotwellBackend extends GenericBackend {
 	static final Logger LOGGER = Logger.getLogger(ShotwellBackend.class
 			.getName());
 
 	@Inject
-	public ShotwellBackend(@Named("JDBC URL") String jdbcURL) {
-		super(jdbcURL);
+	public ShotwellBackend(@Named("JDBC URL") String jdbcURL, BlobstoreClient blobClient) {
+		super(jdbcURL, blobClient);
 	}
 
 	@Override
@@ -86,7 +85,8 @@ public class ShotwellBackend extends GenericBackend {
 			conn = getConnection();
 
 			Statement stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT id FROM TagTable WHERE name=\"" + dir +"\"");
+			rs = stmt.executeQuery("SELECT id FROM TagTable WHERE name=\""
+					+ dir + "\"");
 
 			if (rs.next()) {
 				parent = rs.getString(1);
@@ -101,33 +101,33 @@ public class ShotwellBackend extends GenericBackend {
 
 	@Override
 	public List<TagData> getTagData() throws SQLException {
-		 Connection conn = null;
-	        ResultSet rs = null;
-	        List<TagData> tagList;
-	        tagList = new ArrayList<TagData>();
+		Connection conn = null;
+		ResultSet rs = null;
+		List<TagData> tagList;
+		tagList = new ArrayList<TagData>();
 
-	        try {
-	            conn = getConnection();
+		try {
+			conn = getConnection();
 
-	            Statement stmt = conn.createStatement();
-	            rs = stmt.executeQuery("SELECT id, name, photo_id_list FROM TagTable");
+			Statement stmt = conn.createStatement();
+			rs = stmt
+					.executeQuery("SELECT id, name, photo_id_list FROM TagTable");
 
-	            while (rs.next()) {
-	            	String tagId = rs.getString(1);
-					String tagPath = rs.getString(2);
-					File tagPathFile = new File(tagPath);
-					String tagName = tagPathFile.getName();
-					String parentId = getParent(tagPath);
+			while (rs.next()) {
+				String tagId = rs.getString(1);
+				String tagPath = rs.getString(2);
+				File tagPathFile = new File(tagPath);
+				String tagName = tagPathFile.getName();
+				String parentId = getParent(tagPath);
 
-					int photoCount = getPhotoCountFromIds(rs.getString(3));
-					tagList.add(new TagData(tagId, tagName, parentId,
-							photoCount));
-	            }
-	        } finally {
-	            rs.close();
-	        }
+				int photoCount = getPhotoCountFromIds(rs.getString(3));
+				tagList.add(new TagData(tagId, tagName, parentId, photoCount));
+			}
+		} finally {
+			rs.close();
+		}
 
-	        return tagList;
+		return tagList;
 	}
 
 	@Override
@@ -203,79 +203,67 @@ public class ShotwellBackend extends GenericBackend {
 	}
 
 	@Override
-	public List<PhotoData> getPhotoData(ImageSpecs imageSpecs,
-			List<String> imageKeys) throws SQLException {
-		 List<PhotoData> result = new ArrayList<PhotoData>();
+	public List<PhotoData> getPhotoData(List<String> imageKeys)
+			throws SQLException {
+		List<PhotoData> result = new ArrayList<PhotoData>();
 
-	        for (String imageKey : imageKeys) {
-	            Connection conn = null;
-	            ResultSet rs = null;
+		for (String imageKey : imageKeys) {
+			Connection conn = null;
+			ResultSet rs = null;
 
-	            try {
-	                conn = getConnection();
+			try {
+				conn = getConnection();
 
-	                Statement stmt = conn.createStatement();
-	                rs = stmt.executeQuery(
-	                        "SELECT id, comment, timestamp " +
-	                                "FROM PhotoTable WHERE id=\"" + imageKey + "\"");
+				Statement stmt = conn.createStatement();
+				rs = stmt.executeQuery("SELECT id, comment, timestamp "
+						+ "FROM PhotoTable WHERE id=\"" + imageKey + "\"");
 
-	                while (rs.next()) {
-	                    String id = rs.getString(1);
-	                    String desc = rs.getString(2);
-	                    long time = rs.getLong(3);
-	                    int version = 1;
-	                    Date date = new Date();
-	                    date.setTime(time * 1000);
+				while (rs.next()) {
+					String id = rs.getString(1);
+					String desc = rs.getString(2);
+					long time = rs.getLong(3);
+					int version = 1;
+					Date date = new Date();
+					date.setTime(time * 1000);
+					List<String> tagList = getTagsForPhoto(Integer.valueOf(id));
+					result.add(new PhotoData(id, desc, date, tagList, version));
+				}
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "getPhotoData: ", e);
+			} finally {
+				rs.close();
+			}
+		}
 
-	                    List<String> tagList = getTagsForPhoto(Integer.valueOf(id));
-	                    String url = getImageURL(id);
-	                    byte[] image = imageData.getScaledImageData(url,
-	                            new Dimension(imageSpecs.getWidth(),
-	                                    imageSpecs.getHeight()));
-	                    byte[] thumb = imageData.getScaledImageData(url,
-	                            new Dimension(imageSpecs.getThumbWidth(),
-	                                    imageSpecs.getThumbHeight()));
-	                  //TODO: Upload image and thumb to new API
-	                    result.add(new PhotoData(id, desc, date,
-	                            tagList, version));
-	                }
-	            } catch (Exception e) {
-	                LOGGER.log(Level.SEVERE, "getPhotoData: ", e);
-	            } finally {
-	                rs.close();
-	            }
-	        }
-
-	        return result;
+		return result;
 	}
-	
 
-    private List<String> getTagsForPhoto(int id) throws SQLException {
-        Connection conn = null;
-        ResultSet rs = null;
-        List<String> tagList = new ArrayList<String>();
+	private List<String> getTagsForPhoto(int id) throws SQLException {
+		Connection conn = null;
+		ResultSet rs = null;
+		List<String> tagList = new ArrayList<String>();
 
-        try {
-            conn = getConnection();
+		try {
+			conn = getConnection();
 
-            Statement stmt = conn.createStatement();
-            String thumbName = getThumbName(id);
-            rs = stmt.executeQuery("SELECT id " +
-                    "FROM TagTable WHERE photo_id_list LIKE '%" + thumbName +"%'");
+			Statement stmt = conn.createStatement();
+			String thumbName = getThumbName(id);
+			rs = stmt.executeQuery("SELECT id "
+					+ "FROM TagTable WHERE photo_id_list LIKE '%" + thumbName
+					+ "%'");
 
-            while (rs.next()) {
-                String tagId = rs.getString(1);
-                tagList.add(tagId);
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "getPhotoData: ", e);
-        } finally {
-            rs.close();
-        }
+			while (rs.next()) {
+				String tagId = rs.getString(1);
+				tagList.add(tagId);
+			}
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "getPhotoData: ", e);
+		} finally {
+			rs.close();
+		}
 
-        return tagList;
-    }
-
+		return tagList;
+	}
 
 	private String getThumbName(int id) {
 		int i = Integer.valueOf(id);
@@ -292,28 +280,29 @@ public class ShotwellBackend extends GenericBackend {
 	@Override
 	public boolean isPhotoInTag(String tagId, String photoId)
 			throws SQLException {
-		  boolean result = false;
-	        Connection conn = null;
-	        ResultSet rs = null;
+		boolean result = false;
+		Connection conn = null;
+		ResultSet rs = null;
 
-	        try {
-	            conn = getConnection();
+		try {
+			conn = getConnection();
 
-	            Statement stmt = conn.createStatement();
-	            rs = stmt.executeQuery("SELECT id " +
-	                    "FROM TagTable WHERE photo_id_list LIKE \"%" + getThumbName(Integer.valueOf(photoId)) +
-	                    "%\" AND id=\"" + tagId + "\"");
+			Statement stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT id "
+					+ "FROM TagTable WHERE photo_id_list LIKE \"%"
+					+ getThumbName(Integer.valueOf(photoId)) + "%\" AND id=\""
+					+ tagId + "\"");
 
-	            if (rs.next()) {
-	                result = true;
-	            }
-	        } catch (Exception e) {
-	            LOGGER.log(Level.SEVERE, "isPhotoInTag: ", e);
-	        } finally {
-	            rs.close();
-	        }
+			if (rs.next()) {
+				result = true;
+			}
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "isPhotoInTag: ", e);
+		} finally {
+			rs.close();
+		}
 
-	        return result;
+		return result;
 	}
 
 }

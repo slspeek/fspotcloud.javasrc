@@ -28,17 +28,28 @@ import com.google.inject.servlet.ServletModule;
 import com.googlecode.fspotcloud.server.cron.CronServlet;
 import com.googlecode.fspotcloud.server.cron.RssServlet;
 import com.googlecode.fspotcloud.server.image.ImageServlet;
+import com.googlecode.simpleblobstore.DefaultAfterUploadServlet;
+import com.googlecode.simpleblobstore.DefaultCreateUrlServlet;
+
 import net.customware.gwt.dispatch.server.guice.GuiceStandardDispatchServlet;
 
-
 public class ServerServletModule extends ServletModule {
-    @Override
-    protected void configureServlets() {
-        serve("/fspotcloud/dispatch").with(GuiceStandardDispatchServlet.class);
-        serve("/com.googlecode.fspotcloud.dashboard/dispatch")
-                .with(GuiceStandardDispatchServlet.class);
-        serve("/image").with(ImageServlet.class);
-        serve("/cron").with(CronServlet.class);
-        serve("/rss").with(RssServlet.class);
-    }
+
+	private final String botSecret;
+
+	public ServerServletModule(String botSecret) {
+		this.botSecret = botSecret;
+	}
+
+	@Override
+	protected void configureServlets() {
+		serve("/fspotcloud/dispatch").with(GuiceStandardDispatchServlet.class);
+		serve("/com.googlecode.fspotcloud.dashboard/dispatch").with(
+				GuiceStandardDispatchServlet.class);
+		serve("/image").with(ImageServlet.class);
+		serve("/cron").with(CronServlet.class);
+		serve("/rss").with(RssServlet.class);
+		serve("/" + botSecret + "/defaultcreateurl").with(DefaultCreateUrlServlet.class);
+		serve("/" + botSecret + "/defaultupload").with(DefaultAfterUploadServlet.class);
+	}
 }

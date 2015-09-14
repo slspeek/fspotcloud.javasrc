@@ -42,7 +42,7 @@ public class FSpotBackendTest extends BackendTests {
 		super.setUp();
 		URL testDatabase = ClassLoader.getSystemResource("photos.db");
 		String path = testDatabase.getPath();
-		data = new FSpotBackend("jdbc:sqlite:" + path);
+		data = new FSpotBackend("jdbc:sqlite:" + path, null);
 	}
 
 }

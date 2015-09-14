@@ -68,7 +68,7 @@ public class ServerTotalModule extends AbstractModule {
         bind(String.class).annotatedWith(SMTPServer.class).toInstance(smtpServer);
 
         bind(IMail.class).to(Mailer.class);
-        install(new ServerServletModule());
+        install(new ServerServletModule(botSecret));
         install(new ControllerServletModule(botSecret));
         install(new ServerControllerModule());
         install(new TaskActionsModule());

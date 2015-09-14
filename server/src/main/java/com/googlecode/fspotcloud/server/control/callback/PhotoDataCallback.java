@@ -93,6 +93,8 @@ public class PhotoDataCallback implements SerializableAsyncCallback<PhotoDataRes
         photo.setDescription(desc);
         photo.setDate(date);
         photo.setTagList(tags);
+        photo.setThumbBlobKey(photoData.getThumbBlobKey());
+        photo.setImageBlobKey(photoData.getImageBlobKey());
 
         for (String tagId : tags) {
             Tag tag = tagManager.find(tagId);
