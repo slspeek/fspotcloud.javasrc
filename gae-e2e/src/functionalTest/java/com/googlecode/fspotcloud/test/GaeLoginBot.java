@@ -24,16 +24,16 @@
 
 package com.googlecode.fspotcloud.test;
 
-import com.thoughtworks.selenium.Selenium;
-
 import javax.inject.Inject;
+
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 
 public class GaeLoginBot implements ILogin {
     @Inject
     LoginPage loginPage;
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
 
     public void login() throws Exception {
         loginPage.open();

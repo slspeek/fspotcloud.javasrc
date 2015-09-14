@@ -24,17 +24,17 @@
 
 package com.googlecode.fspotcloud.test;
 
+import javax.inject.Inject;
+
 import com.google.common.testing.TearDown;
 import com.google.common.testing.TearDownAccepter;
 import com.google.guiceberry.TestWrapper;
-import com.thoughtworks.selenium.Selenium;
-
-import javax.inject.Inject;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 
 public class SeleniumTestWrapper implements TestWrapper {
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
     @Inject
     TearDownAccepter tearDownAccepter;
 
