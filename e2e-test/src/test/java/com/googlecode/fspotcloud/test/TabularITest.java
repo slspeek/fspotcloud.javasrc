@@ -24,19 +24,20 @@
 
 package com.googlecode.fspotcloud.test;
 
-import com.google.guiceberry.junit4.GuiceBerryRule;
-import com.thoughtworks.selenium.Selenium;
+import javax.inject.Inject;
+
 import org.junit.Rule;
 import org.junit.Test;
 
-import javax.inject.Inject;
+import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 
 public class TabularITest {
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
     @Inject
     PhotoPage photoPage;
     @Inject

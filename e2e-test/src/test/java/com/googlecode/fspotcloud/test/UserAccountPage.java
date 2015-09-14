@@ -28,20 +28,21 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.thoughtworks.selenium.Selenium;
+import static org.junit.Assert.assertEquals;
 
-import javax.inject.Inject;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import javax.inject.Inject;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * @author steven
  */
 public class UserAccountPage {
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
 
     public UserAccountPage open() {
         selenium.open("#UserAccountPlace:");

@@ -24,20 +24,21 @@
 
 package com.googlecode.fspotcloud.test;
 
-import com.google.guiceberry.junit4.GuiceBerryRule;
-import com.thoughtworks.selenium.Selenium;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Rule;
+import org.junit.Test;
+
+import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 public class TagRenamingITest {
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
     @Inject
     ILogin login;
     @Inject

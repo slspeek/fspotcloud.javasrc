@@ -28,19 +28,19 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.googlecode.fspotcloud.client.main.view.LoginActivity;
-import com.thoughtworks.selenium.Selenium;
+import static org.junit.Assert.assertEquals;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import com.googlecode.fspotcloud.client.main.view.LoginActivity;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * @author steven
  */
 public class LoginPage {
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
 
     public void open() {
         selenium.open("#LoginPlace:");

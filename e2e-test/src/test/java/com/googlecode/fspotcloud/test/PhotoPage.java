@@ -28,19 +28,20 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.thoughtworks.selenium.Selenium;
-import org.junit.Assert;
+import static org.junit.Assert.fail;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.fail;
+import org.junit.Assert;
+
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * @author steven
  */
 public class PhotoPage {
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
 
     public void open(String token) {
         selenium.open("" + token);
@@ -86,6 +87,11 @@ public class PhotoPage {
         Assert.assertEquals("image?id=" + id + "&thumb=true",
                 selenium.getAttribute("//*[@id=\"gwt-debug-image-view-" + x + "x" +
                         y + "\"]@src"));
+    }
+    
+    public void assertImageIsLoaded(int x, int y) {
+//    	WebDriver driver = selenium.
+//    	WebElement image = 
     }
 
     public void assertPagingLabelSays(int pos, int total) {

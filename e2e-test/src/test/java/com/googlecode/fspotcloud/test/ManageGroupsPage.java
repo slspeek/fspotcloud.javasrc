@@ -28,19 +28,19 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.thoughtworks.selenium.Selenium;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * @author steven
  */
 public class ManageGroupsPage {
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
 
     public void open() {
         selenium.open("#ManageGroupsPlace:");

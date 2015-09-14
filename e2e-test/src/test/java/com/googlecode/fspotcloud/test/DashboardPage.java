@@ -28,19 +28,19 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import com.thoughtworks.selenium.Selenium;
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
+import static org.junit.Assert.assertEquals;
 
 import javax.inject.Inject;
 
-import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
-import static org.junit.Assert.assertEquals;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 /**
  * @author steven
  */
 public class DashboardPage {
     @Inject
-    Selenium selenium;
+    WebDriverBackedSelenium selenium;
     @Inject
     ILogin login;
 

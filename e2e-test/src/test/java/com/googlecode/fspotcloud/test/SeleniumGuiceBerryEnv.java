@@ -24,25 +24,26 @@
 
 package com.googlecode.fspotcloud.test;
 
+import static org.mockito.Mockito.mock;
+
+import javax.inject.Named;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.TestScoped;
 import com.google.guiceberry.TestWrapper;
 import com.google.inject.Provides;
 import com.googlecode.fspotcloud.client.main.ui.Resources;
-import com.thoughtworks.selenium.Selenium;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
-import javax.inject.Named;
-
-import static org.mockito.Mockito.mock;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 
 public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
     @Provides
     @TestScoped
-    Selenium getSelenium(@Named("baseUrl")
+    WebDriverBackedSelenium getSelenium(@Named("baseUrl")
                          String baseUrl) {
         WebDriver driver;
         String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
