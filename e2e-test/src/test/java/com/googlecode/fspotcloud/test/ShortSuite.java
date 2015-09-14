@@ -31,6 +31,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         DashboardITest.class,
+        TabularITest.class,
         DeleteITest.class
 })
 public class ShortSuite {

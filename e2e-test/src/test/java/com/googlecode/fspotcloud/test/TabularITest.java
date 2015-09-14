@@ -54,5 +54,7 @@ public class TabularITest {
         selenium.waitForPageToLoad("30000");
         photoPage.back();
         photoPage.assertImageHasId(0, 1, "6");
+        photoPage.assertImageIsLoaded(0, 0);
+        photoPage.assertImageIsLoaded(0, 1);
     }
 }
