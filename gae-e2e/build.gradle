@@ -81,6 +81,7 @@ appengineFunctionalTest {
     systemProperty 'fspotcloud.test.shotwell', 'true'
     systemProperty 'shotwell', 'true'
     systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
+    systemProperty 'java.util.logging.config.file', 'build/resources/test/logging.properties'
     println "All tests: ${all_tests} pause time: ${test_pause_time}"
     if ("${all_tests}" == "true") {
         include "com/googlecode/fspotcloud/test/LocalSuite.class"

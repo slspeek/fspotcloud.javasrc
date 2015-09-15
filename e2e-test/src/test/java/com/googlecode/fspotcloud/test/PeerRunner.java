@@ -57,11 +57,11 @@ public class PeerRunner {
         String[] command = getCommand(db);
         Joiner joiner = Joiner.on(" ");
         log.info("Peer started with: " + joiner.join(command));
-        Process peer = Runtime.getRuntime().exec(command);
+        Runtime.getRuntime().exec(command);
     }
 
     public void stopPeer() throws IOException {
-        Process peer = Runtime.getRuntime()
+        Runtime.getRuntime()
                 .exec(new String[]{"telnet", "localhost", stopPort});
     }
 
@@ -74,7 +74,10 @@ public class PeerRunner {
 				original = "file:///home/steven/Photos";
 			}
         String[] cmd = new String[]{
-                "screen", "-d", "-m", "java", "-cp", peerJar, "-Ddb=" + db,
+                "screen", "-d", "-m",
+                "java", "-cp", peerJar,
+                "-Djava.util.logging.config.file=" + System.getProperty("java.util.logging.config.file"),
+                "-Ddb=" + db,
                 "-Dshotwell="+ shotwell,
                 "-Dendpoint=" + endpoint, "-Dbot.secret=" + secret, "-Dpause=2",
                 "-Dphoto.dir.original=" + original,

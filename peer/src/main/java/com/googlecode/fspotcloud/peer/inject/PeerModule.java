@@ -68,6 +68,7 @@ public class PeerModule extends AbstractModule {
 				workDir);
 		bind(Integer.class).annotatedWith(Names.named("stop port")).toInstance(
 				Integer.valueOf(stopPort));
-		bind(BlobstoreClient.class).toInstance(new BlobstoreClient(System.getProperty("endpoint") + System.getProperty("bot.secret") + "/"));
+		bind(BlobstoreClient.class).toInstance(
+				new BlobstoreClient("http://" + System.getProperty("endpoint") + "/" + System.getProperty("bot.secret") + "/"));
 	}
 }

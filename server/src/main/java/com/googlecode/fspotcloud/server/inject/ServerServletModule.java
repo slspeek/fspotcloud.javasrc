@@ -50,6 +50,6 @@ public class ServerServletModule extends ServletModule {
 		serve("/cron").with(CronServlet.class);
 		serve("/rss").with(RssServlet.class);
 		serve("/" + botSecret + "/defaultcreateurl").with(DefaultCreateUrlServlet.class);
-		serve("/" + botSecret + "/defaultupload").with(DefaultAfterUploadServlet.class);
+		serve("/defaultupload").with(DefaultAfterUploadServlet.class);
 	}
 }

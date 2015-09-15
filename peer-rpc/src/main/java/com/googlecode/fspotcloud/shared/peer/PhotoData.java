@@ -45,18 +45,17 @@ public class PhotoData extends BusinessBase implements Serializable {
 	@BusinessKey
 	private final int version;
 	@BusinessKey
-	private String thumbBlobKey;
-	
-
+	private String thumbBlobKey = "";
 	@BusinessKey
-	private String imageBlobKey;
+	private String imageBlobKey = "";
 
 	
 	public PhotoData(String photoId, String description, Date date,
 			List<String> tagList, int version) {
 		super();
 		this.photoId = photoId;
-		this.description = description;
+		
+		this.description = description != null ? description:"";
 		this.date = date;
 		this.tagList = tagList;
 		this.version = version;

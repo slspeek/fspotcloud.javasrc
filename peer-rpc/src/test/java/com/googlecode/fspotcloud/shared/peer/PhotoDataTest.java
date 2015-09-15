@@ -30,6 +30,7 @@ import org.junit.Test;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.Assert;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
@@ -53,6 +54,13 @@ public class PhotoDataTest {
         data.setImageBlobKey(IMAGE_BLOBKEY);
     }
 
+    @Test 
+    public void nullDescription() {
+    	List<String> tags = newArrayList(TAG);
+    	PhotoData d = new PhotoData(PHOTO_ID, null, LONG_TIME_AGO, tags, VERSION);
+    	Assert.assertNotNull(d.getDescription());
+    }
+    
     @Test
     public void print() {
         System.out.println(data);

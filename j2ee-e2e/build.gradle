@@ -91,6 +91,7 @@ task testShotwell(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"
     systemProperty 'pause.time', "${test_pause_time}"
     systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
     systemProperty "shotwell", "true"
+    systemProperty 'java.util.logging.config.file', 'build/resources/functionalTest/logging.properties'
     if ("${all_tests}" == "true") {
         include "com/googlecode/fspotcloud/test/LocalSuite.class"
     } else {
