@@ -24,6 +24,9 @@
 
 package com.googlecode.fspotcloud.server.admin.integration;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.TestScoped;
 import com.google.inject.AbstractModule;
@@ -31,9 +34,6 @@ import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.SessionScoped;
 import com.google.inject.util.Modules;
 import com.googlecode.fspotcloud.user.openid.OpenIdUserModule;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 public class PlaceHolderIntegrationModule extends GuiceBerryModule {

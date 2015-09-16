@@ -1,0 +1,43 @@
+/*
+ * Copyright 2010-2012 Steven L. Speek.
+ * This program is free software; you can redistribute it
+                and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free
+                Software Foundation; either version 2
+ * of the License, or any later version.
+ *
+ * This program is
+                distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied
+                warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public
+                License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along
+                with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330,
+                Boston, MA 02111-1307, USA.
+ *
+ */
+
+package com.googlecode.fspotcloud.server.image;
+
+import com.googlecode.fspotcloud.server.model.api.Photo;
+
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: steven
+ * Date: 22-6-12
+ * Time: 20:32
+ * To change this template use File | Settings | File Templates.
+ */
+public interface ImageHelper {
+    byte[] getImage(Photo photo, Type type);
+
+    enum Type {
+        THUMB, NORMAL, FULLSIZE;
+    }
+}

@@ -34,6 +34,8 @@ import com.googlecode.fspotcloud.peer.inject.PeerActionsModule;
 import com.googlecode.fspotcloud.peer.inject.PeerModule;
 import com.googlecode.fspotcloud.server.control.task.inject.TaskActionsModule;
 import com.googlecode.fspotcloud.server.control.task.inject.TaskModule;
+import com.googlecode.fspotcloud.server.image.ImageHelper;
+import com.googlecode.fspotcloud.server.image.ImageHelperImpl;
 import com.googlecode.fspotcloud.server.inject.AdminActionsModule;
 import com.googlecode.fspotcloud.server.inject.MainActionModule;
 import com.googlecode.fspotcloud.server.mail.FromAddress;
@@ -75,7 +77,7 @@ public class CommonIntegrationModule extends AbstractModule {
         install(new LocalControllerModule());
         bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
                 .toInstance(3);
-
+        bind(ImageHelper.class).to(ImageHelperImpl.class);
         final String db = System.getProperty("user.dir") + "/../peer/src/test/resources/photos.db";
         install(new PeerModule(db, System.getProperty("user.dir"), 4444, shotwell));
         install(new PeerActionsModule());

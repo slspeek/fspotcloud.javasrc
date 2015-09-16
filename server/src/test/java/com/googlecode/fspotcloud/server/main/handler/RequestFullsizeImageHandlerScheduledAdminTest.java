@@ -1,16 +1,9 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import org.jukito.JukitoRunner;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.model.jpa.photo.PhotoEntity;
+import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
@@ -18,6 +11,13 @@ import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
 import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import com.googlecode.fspotcloud.user.UserService;
+import org.jukito.JukitoRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class RequestFullsizeImageHandlerScheduledAdminTest {
@@ -31,6 +31,8 @@ public class RequestFullsizeImageHandlerScheduledAdminTest {
     private ControllerDispatchAsync controllerAsyc;
     @Inject
     private PhotoDao photoDao;
+    @Inject
+    private ImageHelper imageHelper;
     @Inject
     private UserService userService;
     @Inject
@@ -47,6 +49,7 @@ public class RequestFullsizeImageHandlerScheduledAdminTest {
         when(photoDao.find(ID)).thenReturn(photo);
         when(userService.isUserAdmin()).thenReturn(true);
         when(userService.isUserLoggedIn()).thenReturn(true);
+        when(imageHelper.getImage(photo, ImageHelper.Type.FULLSIZE)).thenReturn(null);
     }
 
     @Test
