@@ -41,6 +41,7 @@ import com.googlecode.fspotcloud.server.inject.MainActionModule;
 import com.googlecode.fspotcloud.server.mail.FromAddress;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.shared.peer.ImageSpecs;
+import com.googlecode.simpleblobstore.client.BlobstoreClient;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchDirectModule;
 
 public class CommonIntegrationModule extends AbstractModule {
@@ -79,7 +80,15 @@ public class CommonIntegrationModule extends AbstractModule {
                 .toInstance(3);
         bind(ImageHelper.class).to(ImageHelperImpl.class);
         final String db = System.getProperty("user.dir") + "/../peer/src/test/resources/photos.db";
-        install(new PeerModule(db, System.getProperty("user.dir"), 4444, shotwell));
+        install(Modules.override(new PeerModule(db, System.getProperty("user.dir"), 4444, shotwell)).with(new AbstractModule() {
+
+			@Override
+			protected void configure() {
+				bind(BlobstoreClient.class).to(BlobstoreFakeClient.class);
+				
+			}
+        	
+        }));
         install(new PeerActionsModule());
     }
 }

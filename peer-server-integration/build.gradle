@@ -11,6 +11,7 @@ dependencies {
     }
     testCompile project(":user-service-openid")
     testCompile project(path: ':user-service-api', configuration: 'testFixtures')
+    testCompile libs.simple_blobstore_client
     testCompile libs.test_ng
     testCompile libs.mockito
     testCompile libs.guava_testlib

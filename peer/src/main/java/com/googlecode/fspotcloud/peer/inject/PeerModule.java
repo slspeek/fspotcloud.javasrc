@@ -34,6 +34,7 @@ import com.googlecode.fspotcloud.peer.db.Backend;
 import com.googlecode.fspotcloud.peer.db.FSpotBackend;
 import com.googlecode.fspotcloud.peer.db.ShotwellBackend;
 import com.googlecode.simpleblobstore.client.BlobstoreClient;
+import com.googlecode.simpleblobstore.client.BlobstoreClientImpl;
 
 public class PeerModule extends AbstractModule {
 	private final String db;
@@ -69,6 +70,8 @@ public class PeerModule extends AbstractModule {
 		bind(Integer.class).annotatedWith(Names.named("stop port")).toInstance(
 				Integer.valueOf(stopPort));
 		bind(BlobstoreClient.class).toInstance(
-				new BlobstoreClient("http://" + System.getProperty("endpoint") + "/" + System.getProperty("bot.secret") + "/"));
+				new BlobstoreClientImpl("http://"
+						+ System.getProperty("endpoint") + "/"
+						+ System.getProperty("bot.secret") + "/"));
 	}
 }

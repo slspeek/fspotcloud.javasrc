@@ -35,29 +35,28 @@ import com.google.inject.servlet.SessionScoped;
 import com.google.inject.util.Modules;
 import com.googlecode.fspotcloud.user.openid.OpenIdUserModule;
 
-
 public class PlaceHolderIntegrationModule extends GuiceBerryModule {
-    public static final String RMS_FSF_ORG = "rms@example.com";
+	public static final String RMS_FSF_ORG = "rms@example.com";
 	private final boolean shotwell;
 
-    public PlaceHolderIntegrationModule(boolean shotwell) {
+	public PlaceHolderIntegrationModule(boolean shotwell) {
 		super();
 		this.shotwell = shotwell;
 	}
 
 	@Override
-    public void configure() {
-        super.configure();
-        install(Modules.override(new CommonIntegrationModule(shotwell),
-                new OpenIdUserModule(RMS_FSF_ORG)).with(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(HttpSession.class).to(FakeHttpServletSession.class)
-                        .in(TestScoped.class);
-                bind(HttpServletRequest.class).to(FakeHttpRequest.class);
-                bindScope(RequestScoped.class, testScope);
-                bindScope(SessionScoped.class, testScope);
-            }
-        }));
-    }
+	public void configure() {
+		super.configure();
+		install(Modules.override(new CommonIntegrationModule(shotwell),
+				new OpenIdUserModule(RMS_FSF_ORG)).with(new AbstractModule() {
+			@Override
+			protected void configure() {
+				bind(HttpSession.class).to(FakeHttpServletSession.class).in(
+						TestScoped.class);
+				bind(HttpServletRequest.class).to(FakeHttpRequest.class);
+				bindScope(RequestScoped.class, testScope);
+				bindScope(SessionScoped.class, testScope);
+			}
+		}));
+	}
 }

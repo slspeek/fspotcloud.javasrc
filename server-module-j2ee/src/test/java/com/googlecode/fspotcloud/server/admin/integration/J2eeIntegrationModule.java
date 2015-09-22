@@ -29,19 +29,16 @@ import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.command.CommandManager;
 import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 
+public class J2eeIntegrationModule extends PlaceHolderIntegrationModule {
 
-public class J2eeIntegrationModule
-        extends PlaceHolderIntegrationModule {
-	
-    public J2eeIntegrationModule(boolean shotwell) {
+	public J2eeIntegrationModule(boolean shotwell) {
 		super(shotwell);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-    public void configure() {
-        super.configure();
-        install(new J2eeModelModule(3, "derby"));
-        bind(Commands.class).to(CommandManager.class).in(Singleton.class);
-    }
+	public void configure() {
+		super.configure();
+		install(new J2eeModelModule(3, "derby"));
+		bind(Commands.class).to(CommandManager.class).in(Singleton.class);
+	}
 }

@@ -36,34 +36,37 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public abstract class PhotoManagerBase<T extends Photo, U extends T>
-        extends SimpleDAONamedIdImpl<Photo, U, String> implements PhotoDao {
-    @Inject
-    private BlobService blobService;
+public abstract class PhotoManagerBase<T extends Photo, U extends T> extends
+		SimpleDAONamedIdImpl<Photo, U, String> implements PhotoDao {
+	@Inject
+	private BlobService blobService;
 
-    @Override
-    protected void preDelete(Photo entity) {
-        String imageKey = entity.getImageBlobKey();
-        String thumbKey = entity.getThumbBlobKey();
-        String fullsize = entity.getFullsizeImageBlobKey();
-        List<String> keys = newArrayList(imageKey, thumbKey, fullsize);
+	@Override
+	protected void preDelete(Photo entity) {
+		String imageKey = entity.getImageBlobKey();
+		String thumbKey = entity.getThumbBlobKey();
+		String fullsize = entity.getFullsizeImageBlobKey();
+		List<String> keys = newArrayList(imageKey, thumbKey, fullsize);
 
-        for (String key : keys) {
-            removeByKey(key);
-        }
-    }
+		for (String key : keys) {
+			removeByKey(key);
+		}
+	}
 
-    private void removeByKey(String keyString) {
-        if (keyString != null) {
-            BlobKey key = new BlobKey(keyString);
-            blobService.delete(key);
-        }
-    }
+	private void removeByKey(String keyString) {
+		try {
+			if (keyString != null) {
+				BlobKey key = new BlobKey(keyString);
+				blobService.delete(key);
+			}
+		} catch (Exception e) {
+		}
+	}
 
-    protected void detach(Photo photo) {
-        List<String> tagList = photo.getTagList();
-        photo.setTagList(new ArrayList<String>(tagList));
-    }
+	protected void detach(Photo photo) {
+		List<String> tagList = photo.getTagList();
+		photo.setTagList(new ArrayList<String>(tagList));
+	}
 
-    protected abstract Photo newPhoto();
+	protected abstract Photo newPhoto();
 }
