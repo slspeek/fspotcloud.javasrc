@@ -28,18 +28,18 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import static junit.framework.Assert.assertTrue;
+import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
 
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * @author steven
  */
 public class EmailConfirmationPage {
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
 
     public EmailConfirmationPage open(String email, String secret) {
         selenium.open("#EmailConfirmationPlace:" + email + ":" + secret);

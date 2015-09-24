@@ -28,18 +28,18 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
+import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
 
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 /**
  * @author steven
  */
 public class EditUserGroupPage {
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
 
     public void open(Long id) {
         selenium.open("#EditUserGroupPlace:" + id);

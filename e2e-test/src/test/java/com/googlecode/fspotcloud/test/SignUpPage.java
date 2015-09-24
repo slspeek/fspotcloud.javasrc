@@ -30,7 +30,6 @@ package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.main.view.SignUpActivity;
 import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import javax.inject.Inject;
 
@@ -42,7 +41,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class SignUpPage {
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
 
     public void open() {
         selenium.open("#SignUpPlace:");

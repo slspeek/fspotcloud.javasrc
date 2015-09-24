@@ -28,9 +28,9 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import javax.inject.Inject;
+import com.thoughtworks.selenium.Selenium;
 
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import javax.inject.Inject;
 
 
 /**
@@ -38,7 +38,7 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
  */
 public class TagApprovalPage {
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
 
     public void open(String tagId) {
         selenium.open("#TagApprovalPlace:" + tagId);

@@ -28,18 +28,18 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import javax.inject.Inject;
-
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.keyboardaction.SeleniumPerformer;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import com.thoughtworks.selenium.Selenium;
+
+import javax.inject.Inject;
 
 /**
  * @author steven
  */
 public class ChangePasswordPage {
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
     @Inject
     UserActions userActions;
     @Inject

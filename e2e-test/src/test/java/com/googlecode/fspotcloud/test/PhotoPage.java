@@ -28,8 +28,6 @@
  */
 package com.googlecode.fspotcloud.test;
 
-import static org.junit.Assert.fail;
-
 import javax.inject.Inject;
 
 import org.junit.Assert;
@@ -38,64 +36,20 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
-/**
- * @author steven
- */
 public class PhotoPage {
-	@Inject
-	WebDriverBackedSelenium selenium;
+    @Inject
+    Selenium selenium;
 
-	public void open(String token) {
-		selenium.open("" + token);
-		selenium.waitForPageToLoad("30000");
-	}
-
-	public void open() {
-		open("");
-	}
-
-	public void about() {
-		selenium.click("gwt-debug-about");
-	}
-
-	public void mailFullsize() {
-		selenium.click("gwt-debug-mail-fullsize");
-	}
-
-	public void showHelp() {
-		selenium.click("gwt-debug-help");
-	}
-
-	public void hideHelp() {
-		selenium.click("gwt-debug-help");
-	}
-
-	public void back() {
-		selenium.click("gwt-debug-back");
-		selenium.waitForPageToLoad("30000");
-	}
-
-	public void logout() {
-		selenium.click("gwt-debug-logout");
-		selenium.waitForPageToLoad("30000");
-	}
-
-	public void clickImage(int x, int y) {
-		selenium.click("gwt-debug-image-view-" + x + "x" + y);
-		selenium.waitForPageToLoad("30000");
-	}
-
-	public void assertImageHasId(int x, int y, String id) {
-		Assert.assertEquals(
-				"image?id=" + id + "&thumb=true",
-				selenium.getAttribute("//*[@id=\"gwt-debug-image-view-" + x
-						+ "x" + y + "\"]@src"));
-	}
+    public void open(String token) {
+        selenium.open("" + token);
+        selenium.waitForPageToLoad("30000");
+    }
 
 	public void assertImageIsLoaded(int x, int y) {
-		WebDriver driver = selenium.getWrappedDriver();
+		WebDriver driver = ((WebDriverBackedSelenium)selenium).getWrappedDriver();
 		WebElement image = driver.findElement(By.id("gwt-debug-image-view-" + x
 				+ "x" + y));
 		Object result = ((JavascriptExecutor) driver)
@@ -113,12 +67,54 @@ public class PhotoPage {
 		}
 	}
 
-	public void assertPagingLabelSays(int pos, int total) {
-		String pagingLabelText = selenium.getText("gwt-debug-paging-label");
 
-		final String label = pos + " of " + total;
-		if (!pagingLabelText.contains(label)) {
-			fail("Expected: " + label + " in: " + pagingLabelText);
-		}
-	}
+    public void open() {
+        open("");
+    }
+
+    public void about() {
+        selenium.click("gwt-debug-about");
+    }
+
+    public void mailFullsize() {
+        selenium.click("gwt-debug-mail-fullsize");
+    }
+
+    public void showHelp() {
+        selenium.click("gwt-debug-help");
+    }
+
+    public void hideHelp() {
+        selenium.click("gwt-debug-help");
+    }
+
+    public void back() {
+        selenium.click("gwt-debug-back");
+        selenium.waitForPageToLoad("30000");
+    }
+
+    public void logout() {
+        selenium.click("gwt-debug-logout");
+        selenium.waitForPageToLoad("30000");
+    }
+
+    public void clickImage(int x, int y) {
+        selenium.click("gwt-debug-image-view-" + x + "x" + y);
+        selenium.waitForPageToLoad("30000");
+    }
+
+    public void assertImageHasId(int x, int y, String id) {
+        Assert.assertEquals("image?id=" + id + "&thumb=true",
+                selenium.getAttribute("//*[@id=\"gwt-debug-image-view-" + x + "x" +
+                        y + "\"]@src"));
+    }
+
+    public void assertPagingLabelSays(int pos, int total) {
+        String pagingLabelText = selenium.getText("gwt-debug-paging-label");
+
+        final String label = pos + " of " + total;
+        if (!pagingLabelText.contains(label)) {
+            Assert.fail("Expected: " + label + " in: " + pagingLabelText);
+        }
+    }
 }

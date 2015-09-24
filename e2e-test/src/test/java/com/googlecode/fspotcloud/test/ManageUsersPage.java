@@ -28,19 +28,19 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
 
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author steven
  */
 public class ManageUsersPage {
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
 
     public void newUser(String email) {
         fillEmail(email);

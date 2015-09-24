@@ -28,11 +28,11 @@
 */
 package com.googlecode.fspotcloud.test;
 
-import javax.inject.Inject;
-
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
 import com.googlecode.fspotcloud.keyboardaction.SeleniumPerformer;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import com.thoughtworks.selenium.Selenium;
+
+import javax.inject.Inject;
 
 /**
  * @author steven
@@ -41,7 +41,7 @@ public class SendPasswordResetPage {
     @Inject
     private SeleniumPerformer performer;
     @Inject
-    private WebDriverBackedSelenium selenium;
+    private Selenium selenium;
     @Inject
     private UserActions userActions;
 

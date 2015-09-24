@@ -24,22 +24,21 @@
 
 package com.googlecode.fspotcloud.test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import javax.inject.Inject;
-
+import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.thoughtworks.selenium.Selenium;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.google.guiceberry.junit4.GuiceBerryRule;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import javax.inject.Inject;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ThreeFaseITest {
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
     @Inject
     PeerRunner peerRunner;
     @Inject

@@ -24,17 +24,15 @@
 
 package com.googlecode.fspotcloud.test;
 
-import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
-
-import java.util.logging.Logger;
-
-import javax.inject.Inject;
-
+import com.google.guiceberry.junit4.GuiceBerryRule;
+import com.thoughtworks.selenium.Selenium;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.google.guiceberry.junit4.GuiceBerryRule;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import javax.inject.Inject;
+import java.util.logging.Logger;
+
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class PrivateAccessITest {
     public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
@@ -42,7 +40,7 @@ public class PrivateAccessITest {
     @Rule
     public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
     @Inject
-    WebDriverBackedSelenium selenium;
+    Selenium selenium;
     @Inject
     DashboardPage dashboardPage;
     @Inject
