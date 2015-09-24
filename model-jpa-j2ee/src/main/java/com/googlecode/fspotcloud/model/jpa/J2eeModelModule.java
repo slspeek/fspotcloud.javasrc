@@ -32,9 +32,12 @@ import com.googlecode.fspotcloud.model.jpa.photo.PhotoManager;
 import com.googlecode.fspotcloud.model.jpa.tag.TagManager;
 import com.googlecode.fspotcloud.model.jpa.user.UserManager;
 import com.googlecode.fspotcloud.model.jpa.usergroup.UserGroupManager;
-import com.googlecode.fspotcloud.server.model.api.*;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
+import com.googlecode.fspotcloud.server.model.api.PhotoDao;
+import com.googlecode.fspotcloud.server.model.api.TagDao;
+import com.googlecode.fspotcloud.server.model.api.UserDao;
+import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
-import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.simplejpadao.EntityModule;
 
 
@@ -58,7 +61,6 @@ public class J2eeModelModule extends AbstractModule {
         bind(Integer.class).annotatedWith(Names.named("maxDelete"))
                 .toInstance(maxDelete);
         install(new J2eeSimpleBlobstoreModule());
-        install(new J2eeSimpleBlobstoreServletModule());
         install(new EntityModule(persistenceUnit));
     }
 }

@@ -31,6 +31,7 @@ import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.command.CommandManager;
 import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.fspotcloud.user.openid.OpenIdUserModule;
+import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchDirectModule;
 
 
@@ -61,6 +62,7 @@ public class J2eeTotalModule extends AbstractModule {
         install(new ServerTotalModule(maxTicks, botSecret, adminEmail,
                 smtpServer));
         install(new J2eeModelModule(maxTicks, "derby"));
+        install(new J2eeSimpleBlobstoreServletModule());
         install(new TaskQueueDispatchDirectModule());
         install(new OpenIdUserModule(adminEmail));
         bind(Commands.class).to(CommandManager.class).in(Singleton.class);
