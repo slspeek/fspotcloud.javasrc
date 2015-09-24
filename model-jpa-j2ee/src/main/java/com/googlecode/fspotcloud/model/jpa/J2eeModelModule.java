@@ -34,6 +34,7 @@ import com.googlecode.fspotcloud.model.jpa.user.UserManager;
 import com.googlecode.fspotcloud.model.jpa.usergroup.UserGroupManager;
 import com.googlecode.fspotcloud.server.model.api.*;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
+import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.simplejpadao.EntityModule;
 
 
@@ -57,6 +58,7 @@ public class J2eeModelModule extends AbstractModule {
         bind(Integer.class).annotatedWith(Names.named("maxDelete"))
                 .toInstance(maxDelete);
         install(new J2eeSimpleBlobstoreModule());
+        install(new J2eeSimpleBlobstoreServletModule());
         install(new EntityModule(persistenceUnit));
     }
 }
