@@ -26,6 +26,7 @@ package com.googlecode.fspotcloud.server.model.test;
 
 import com.google.guiceberry.GuiceBerryModule;
 import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
+import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 
 
 public class J2eeModelGuiceBerryEnv extends GuiceBerryModule {
@@ -33,5 +34,6 @@ public class J2eeModelGuiceBerryEnv extends GuiceBerryModule {
     protected void configure() {
         super.configure();
         install(new J2eeModelModule(100, "derby-test"));
+        install(new J2eeSimpleBlobstoreServletModule());
     }
 }

@@ -24,6 +24,16 @@
 
 package com.googlecode.fspotcloud.model.api.test.photo;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.Random;
+
+import org.junit.After;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
+
 import com.google.guiceberry.junit4.GuiceBerryRule;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.model.api.test.EmptyGuiceBerryEnv;
@@ -31,15 +41,8 @@ import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.simpleblobstore.BlobKey;
 import com.googlecode.simpleblobstore.BlobService;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
 
-import java.util.Random;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+@Ignore
 public class PhotoManagerBlobsTest {
     public static final String TEST_ID = "1";
     @Rule

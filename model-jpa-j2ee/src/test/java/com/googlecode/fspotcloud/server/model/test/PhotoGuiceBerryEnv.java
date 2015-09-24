@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.server.model.test;
 import com.google.guiceberry.GuiceBerryModule;
 import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.fspotcloud.model.jpa.photo.PhotoManager;
+import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
 
@@ -35,6 +36,7 @@ public class PhotoGuiceBerryEnv extends GuiceBerryModule {
     protected void configure() {
         super.configure();
         install(new J2eeModelModule(100, "derby-test"));
+        install(new J2eeSimpleBlobstoreServletModule());
         bind(SimpleDAONamedId.class).to(PhotoManager.class);
     }
 }

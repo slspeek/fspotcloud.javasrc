@@ -54,12 +54,9 @@ public abstract class PhotoManagerBase<T extends Photo, U extends T> extends
 	}
 
 	private void removeByKey(String keyString) {
-		try {
-			if (keyString != null) {
-				BlobKey key = new BlobKey(keyString);
-				blobService.delete(key);
-			}
-		} catch (Exception e) {
+		if (keyString != null) {
+			BlobKey key = new BlobKey(keyString);
+			blobService.delete(key);
 		}
 	}
 
