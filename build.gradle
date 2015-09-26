@@ -1,18 +1,23 @@
 buildscript {
     repositories {
         maven {
-            url maven_repo
-            artifactUrls "http://fspotcloud-maven.googlecode.com/svn/maven/repository"
+            	url maven_repo
+            	artifactUrls "http://fspotcloud-maven.googlecode.com/svn/maven/repository"
         }
-				maven {
-					url 'http://dl.bintray.com/steffenschaefer/maven'
-				}
+		maven {
+				url 'http://dl.bintray.com/steffenschaefer/maven'
+		}
+		maven {
+			    url "https://plugins.gradle.org/m2/"
+    	}
         mavenLocal()
     }
 
     dependencies {
 				classpath 'com.google.appengine:gradle-appengine-plugin:1.9.24'
 				classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+				classpath "gradle.plugin.com.github.youribonnaffe.gradle.format:gradle-format-plugin:1.2"
+				classpath "net.saliman:gradle-cobertura-plugin:2.2.7"
     }
 }
 
@@ -84,12 +89,12 @@ project.ext {
         ]
 }
 
-/*println "Main gradle.build ext: " + project.ext.libs*/
 allprojects {
     apply plugin: 'maven'
     apply plugin: 'idea'
     apply plugin: 'eclipse'
-
+	apply plugin: 'com.github.youribonnaffe.gradle.format'
+	
     group = 'com.googlecode.fspotcloud'
     version = "0.91-${build_number}"
 }
@@ -156,10 +161,12 @@ subprojects {
     }
 
     if ("${cobertura}" == "true") {
-        buildscript {
-            apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.2.1/coberturainit.gradle'
-        }
-
+    	apply plugin: 'net.saliman.cobertura'
+    	cobertura {
+ 		  rootProject.subprojects.each {
+     	  		coverageDirs << file("${it.name}/build/classes/main")
+   			}
+		}
     }
 //    if ("${run_jalopy}" == "true") {
 //        check.dependsOn jalopy
