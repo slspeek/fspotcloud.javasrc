@@ -16,7 +16,7 @@ apply plugin: 'com.bmuschko.izpack'
 
 dependencies {
     izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.1'
-    apache_tomcat 'org.apache.tomcat:apache-tomcat:6.0.35@zip'
+    apache_tomcat "org.apache.tomcat:apache-tomcat:${tomcat_version}@zip"
 }
 
 task initDirs << {

@@ -59,7 +59,7 @@ task testShotwell(type:Test, dependsOn: [unpackTest]) {
         'com.googlecode.fspotcloud.server.admin.integration.GaeIntegrationModule'
     systemProperty 'fspotcloud.test.shotwell', 'true'
     systemProperty 'photo.dir.original', '//home/fspot/Photos'
-    testLogging.showStandardStreams = true
+    //testLogging.showStandardStreams = true
     reports.junitXml.destination =file("${project.testResultsDir}/shotwell")
     reports.html.destination =file("${project.testResultsDir}/shotwell")
 }

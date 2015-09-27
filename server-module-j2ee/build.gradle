@@ -18,14 +18,13 @@ dependencies {
     compile project(':user-service-api')
     compile project(':user-service-openid')
     compile project(':model-jpa-j2ee')
-    compile project(path: ':user-service-api', configuration: 'testFixtures')   //FIXME
     compile("com.googlecode.bot-dispatch:command-jpa-j2ee:${bot_dispatch_version}")
     compile("com.googlecode.taskqueue-dispatch:direct:${taskqueue_dispatch_version}")
     compile libs.simple_blobstore_j2ee
     compile("com.googlecode.bot-dispatch:command-jpa:${bot_dispatch_version}") {
         exclude(module: 'gwt-user')
     }
-    compile libs.bot_dispatch_command_api
+    compile libs.bot_dispatch_command_api 
     provided libs.servlet_spec
     testCompile project(':peer')
     testCompile project(':test-util')

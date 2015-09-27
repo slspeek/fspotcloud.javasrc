@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.1'
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
     }
 }
 
@@ -14,13 +14,14 @@ description = 'Selenium testing for prod-j2ee-war'
 
 apply plugin: 'com.bmuschko.tomcat'
 
+
 if ("${analysis}" == "true") {
     findbugsTest.enabled = false
 }
 
 dependencies {
     tomcat libs.tomcat
-
+    
     testCompile project(path: ':e2e-test', configuration: 'testCompile')
     testCompile project(':model-jpa-j2ee')
     testCompile libs.selenium
@@ -29,7 +30,9 @@ dependencies {
     testCompile libs.junit
     testCompile libs.guice
 }
-
+war {
+    from 'build/exploded'
+}
 
 task setupFixture(type: JavaExec) {
     main = "com.googlecode.fspotcloud.test.J2eeFixtureRunner"
@@ -66,23 +69,18 @@ task peerStop(type: Exec) {
     ignoreExitValue = true
 }
 
-tomcatRun.dependsOn copyWar
+war.dependsOn copyWar
 
-
-[tomcatRun, tomcatStop]*.stopPort = 8060
-[tomcatRun, tomcatStop]*.stopKey = 'STOP'
-tomcatRun.daemon = Boolean.parseBoolean(server_daemon)
-tomcatRun.httpPort = 9050
-
-tomcatRun {
-    webAppSourceDirectory = file("build/exploded")
-}
+[tomcatRunWar, tomcatStop]*.stopPort = 8060
+[tomcatRunWar, tomcatStop]*.stopKey = 'STOP'
+tomcatRunWar.daemon = Boolean.parseBoolean(server_daemon)
+tomcatRunWar.httpPort = 9050
 
 test {
 	exclude "*"
 }
 
-task testShotwell(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"]) {
+task testShotwell(type:Test, dependsOn: [tomcatRunWar, unpackTest, ":peer:assemble"]) {
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
     systemProperty 'bot.secret', bot_secret
@@ -111,7 +109,7 @@ testShotwell << {
 		deleteDB.execute()
 }
 
-task testFSpot(type:Test, dependsOn: [tomcatRun, unpackTest, ":peer:assemble"]) {
+task testFSpot(type:Test, dependsOn: [tomcatRunWar, unpackTest, ":peer:assemble"]) {
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
     systemProperty 'bot.secret', bot_secret

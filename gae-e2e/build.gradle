@@ -15,11 +15,6 @@ appengine {
 }
 appengineRun.daemon = Boolean.parseBoolean(server_daemon)
 
-//configurations {
-		//testCompile
-		//functionalTest.extendsFrom(testCompile)
-//}
-
 dependencies {
     functionalTestCompile project(path: ':e2e-test', configuration: 'testCompile')
     functionalTestCompile libs.gae_testing

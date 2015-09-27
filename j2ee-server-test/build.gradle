@@ -1,6 +1,6 @@
 import org.apache.tools.ant.filters.ExpandProperties
 
-description = 'Integration testing for prod-j2ee-war'
+description = 'Selenium testing for prod-j2ee-war'
 
 dependencies {
     testCompile project(':server-module-j2ee')
@@ -12,12 +12,6 @@ dependencies {
     testCompile libs.mockito
     testCompile libs.junit
     testCompile libs.jetty
-    testCompile 'org.slf4j:slf4j-jdk14:1.7.2'
-}
-
-task unpackTest(dependsOn: ':e2e-test:packageTests') << {
-//    myTests = file("../e2e-test/build/libs/e2e-test-${version}-tests.jar")
-//    ant.unjar(dest: "$buildDir/classes/test", src: myTests)
 }
 
 task unpackWar(dependsOn: ':prod-j2ee-war:assemble') << {
@@ -58,7 +52,7 @@ test {
     //exclude  "*"
 }
 
-test.dependsOn unpackTest, copyWar, ":peer:assemble"
+test.dependsOn copyWar, ":peer:assemble"
 
 test << {
     println "Stopping peer"

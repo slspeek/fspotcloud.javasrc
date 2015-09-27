@@ -15,9 +15,6 @@ dependencies {
     compile libs.commons_lang
     compile libs.inject
     compile libs.guice
-    compile "org.hibernate:hibernate-core:4.0.0.Final"
-    compile "javassist:javassist:3.12.0.GA"
-    compile "org.hibernate:hibernate-entitymanager:4.0.0.Final"
     compile libs.derby_all
     compile libs.jta
     compile libs.gwt_dispatch
@@ -30,9 +27,11 @@ dependencies {
     testCompile libs.junit
     testCompile libs.mockito
     testCompile libs.guava_testlib
-    testCompile "org.slf4j:slf4j-log4j12:1.6.4"
+
     daoTests libs.simple_jpa_dao_namedid_test
+    
     genidDaoTests libs.simple_jpa_dao_genid_test, libs.simple_jpa_dao_base_test
+    
     modelTests files("../model-api/build/libs/model-api-${version}-tests.jar")
 }
 task deleteDB(type: Delete) {
