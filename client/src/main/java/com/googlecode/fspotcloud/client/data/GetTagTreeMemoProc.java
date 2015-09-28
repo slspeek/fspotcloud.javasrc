@@ -10,15 +10,14 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 @GwtCompatible
 public class GetTagTreeMemoProc extends MemoProcAsync<TagTreeResult> {
 
-    final private DispatchAsync dispatchAsync;
+	final private DispatchAsync dispatchAsync;
 
-    @Inject
-    public GetTagTreeMemoProc(DispatchAsync dispatchAsync) {
-        this.dispatchAsync = dispatchAsync;
-    }
+	@Inject
+	public GetTagTreeMemoProc(DispatchAsync dispatchAsync) {
+		this.dispatchAsync = dispatchAsync;
+	}
 
-
-    public void getAsyncImpl(AsyncCallback<TagTreeResult> callback) {
-        dispatchAsync.execute(new GetTagTreeAction(), callback);
-    }
+	public void getAsyncImpl(AsyncCallback<TagTreeResult> callback) {
+		dispatchAsync.execute(new GetTagTreeAction(), callback);
+	}
 }

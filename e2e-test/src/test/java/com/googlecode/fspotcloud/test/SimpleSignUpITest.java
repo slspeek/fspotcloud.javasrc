@@ -30,25 +30,25 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-
 public class SimpleSignUpITest {
 
-    public static final String MOOG_BB_ORG = "moog@example.com";
-    public static final String NSA = "nsa";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    SignUpPage signUpPage;
+	public static final String MOOG_BB_ORG = "moog@example.com";
+	public static final String NSA = "nsa";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	SignUpPage signUpPage;
 
-    @Test
-    public void signUp() throws Exception {
-        signUpPage.open();
-        signUpPage.fillForm(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED);
-        signUpPage.signUp();
-        signUpPage.verifyFailure();
-        signUpPage.open();
-        signUpPage.fillForm(MOOG_BB_ORG, NSA);
-        signUpPage.signUp();
-        signUpPage.verifySuccess();
-    }
+	@Test
+	public void signUp() throws Exception {
+		signUpPage.open();
+		signUpPage.fillForm(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED);
+		signUpPage.signUp();
+		signUpPage.verifyFailure();
+		signUpPage.open();
+		signUpPage.fillForm(MOOG_BB_ORG, NSA);
+		signUpPage.signUp();
+		signUpPage.verifySuccess();
+	}
 }

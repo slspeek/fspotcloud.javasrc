@@ -10,16 +10,15 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 @GwtCompatible
 public class FocusUsergroupTableHandler implements IActionHandler {
 
+	@Inject
+	private ManageGroupsView view;
+	@Inject
+	@ManageGroups
+	StatusView statusView;
 
-    @Inject
-    private ManageGroupsView view;
-    @Inject
-    @ManageGroups
-    StatusView statusView;
-
-    @Override
-    public void performAction(String actionId) {
-        view.focusTable();
-        statusView.setStatusText("Focused the table");
-    }
+	@Override
+	public void performAction(String actionId) {
+		view.focusTable();
+		statusView.setStatusText("Focused the table");
+	}
 }

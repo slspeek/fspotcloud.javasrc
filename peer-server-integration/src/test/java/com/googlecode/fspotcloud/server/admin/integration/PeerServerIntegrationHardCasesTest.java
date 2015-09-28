@@ -41,67 +41,68 @@ import java.util.logging.Logger;
 import static org.testng.AssertJUnit.*;
 
 public class PeerServerIntegrationHardCasesTest extends PeerServerEnvironment {
-    private TearDown toTearDown;
-    
-    private static final Logger log = Logger.getLogger(PeerServerIntegrationHardCasesTest.class.getName());
+	private TearDown toTearDown;
 
-    @BeforeMethod
-    public void setUp(Method m) throws SQLException {
-        // Make this the call to TestNgGuiceBerry.setUp as early as possible
-        toTearDown = TestNgGuiceBerry.setUp(this, m,
-                NoAuthPlaceHolderIntegrationModule.class);
-        tagDao.deleteBulk(1000);
-        photoDao.deleteBulk(1000);
-        peers.deleteBulk(1000);
-        setUpPeer();
-    }
+	private static final Logger log = Logger
+			.getLogger(PeerServerIntegrationHardCasesTest.class.getName());
 
-    @AfterMethod
-    public void tearDown() throws Exception {
-       
-        // Make this the call to TestNgGuiceBerry.tearDown as late as possible
-        toTearDown.tearDown();
-    }
+	@BeforeMethod
+	public void setUp(Method m) throws SQLException {
+		// Make this the call to TestNgGuiceBerry.setUp as early as possible
+		toTearDown = TestNgGuiceBerry.setUp(this, m,
+				NoAuthPlaceHolderIntegrationModule.class);
+		tagDao.deleteBulk(1000);
+		photoDao.deleteBulk(1000);
+		peers.deleteBulk(1000);
+		setUpPeer();
+	}
 
-    @Test
-    public void shouldBeNull() throws SQLException, DispatchException {
-        fetchTagTree();
-        peers.resetCachedTagTrees();
+	@AfterMethod
+	public void tearDown() throws Exception {
 
-        PeerDatabase peer = peers.get();
-        assertNull(peer.getCachedTagTree());
-        fetchTagTree();
-        peer = peers.get();
-        assertNotNull(peer.getCachedTagTree());
-        synchronizePeer();
-        peer = peers.get();
-        assertNull(peer.getCachedTagTree());
-    }
+		// Make this the call to TestNgGuiceBerry.tearDown as late as possible
+		toTearDown.tearDown();
+	}
 
-    @Test
-    public void getTagTreeAfterOneSynchronize() throws Exception {
-        TagTreeResult result = fetchTagTree();
-        assertTrue(result.getTree().getChildren().isEmpty());
-        log.info("Start");
-        synchronizePeer();
-        log.info("Fetch tree");
-        result = fetchTagTree();
-        //As nothing is imported yet
-        assertTrue(result.getTree().getChildren().isEmpty());
-        log.info("Import tag 3");
-        importTag("3");
-        log.info("Fetch tree");
-        result = fetchTagTree();
+	@Test
+	public void shouldBeNull() throws SQLException, DispatchException {
+		fetchTagTree();
+		peers.resetCachedTagTrees();
 
-        TagNode mac = result.getTree().getChildren().get(0);
-        assertEquals("Mac", mac.getTagName());
+		PeerDatabase peer = peers.get();
+		assertNull(peer.getCachedTagTree());
+		fetchTagTree();
+		peer = peers.get();
+		assertNotNull(peer.getCachedTagTree());
+		synchronizePeer();
+		peer = peers.get();
+		assertNull(peer.getCachedTagTree());
+	}
 
-        setPeerTestDatabase("photos_smaller.db");
-        log.info("Synchronize again");
-        synchronizePeer();
-        log.info("Fetch tree last time");
-        result = fetchTagTree();
-        mac = result.getTree().getChildren().get(0);
-        assertEquals("Macintosh", mac.getTagName());
-    }
+	@Test
+	public void getTagTreeAfterOneSynchronize() throws Exception {
+		TagTreeResult result = fetchTagTree();
+		assertTrue(result.getTree().getChildren().isEmpty());
+		log.info("Start");
+		synchronizePeer();
+		log.info("Fetch tree");
+		result = fetchTagTree();
+		//As nothing is imported yet
+		assertTrue(result.getTree().getChildren().isEmpty());
+		log.info("Import tag 3");
+		importTag("3");
+		log.info("Fetch tree");
+		result = fetchTagTree();
+
+		TagNode mac = result.getTree().getChildren().get(0);
+		assertEquals("Mac", mac.getTagName());
+
+		setPeerTestDatabase("photos_smaller.db");
+		log.info("Synchronize again");
+		synchronizePeer();
+		log.info("Fetch tree last time");
+		result = fetchTagTree();
+		mac = result.getTree().getChildren().get(0);
+		assertEquals("Macintosh", mac.getTagName());
+	}
 }

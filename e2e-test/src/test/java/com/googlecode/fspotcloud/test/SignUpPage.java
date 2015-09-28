@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.main.view.SignUpActivity;
@@ -40,41 +40,41 @@ import static org.junit.Assert.assertEquals;
  * @author steven
  */
 public class SignUpPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public void open() {
-        selenium.open("#SignUpPlace:");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open() {
+		selenium.open("#SignUpPlace:");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void fillForm(String email, String credentials)
-            throws InterruptedException {
-        selenium.type("id=gwt-debug-password", credentials);
-        selenium.type("id=gwt-debug-password-again", credentials);
-        selenium.type("id=gwt-debug-email", email);
-    }
+	public void fillForm(String email, String credentials)
+			throws InterruptedException {
+		selenium.type("id=gwt-debug-password", credentials);
+		selenium.type("id=gwt-debug-password-again", credentials);
+		selenium.type("id=gwt-debug-email", email);
+	}
 
-    public void signUp() throws InterruptedException {
-        selenium.click("gwt-debug-sign-up");
-        selenium.waitForPageToLoad("30000");
-        sleepShort(2);
-    }
+	public void signUp() throws InterruptedException {
+		selenium.click("gwt-debug-sign-up");
+		selenium.waitForPageToLoad("30000");
+		sleepShort(2);
+	}
 
-    public void verifySuccess() {
-        assertEquals(SignUpActivity.SIGNED_UP_SUCCESSFULLY, getStatusText());
-    }
+	public void verifySuccess() {
+		assertEquals(SignUpActivity.SIGNED_UP_SUCCESSFULLY, getStatusText());
+	}
 
-    private String getStatusText() {
-        return selenium.getText("id=gwt-debug-status");
-    }
+	private String getStatusText() {
+		return selenium.getText("id=gwt-debug-status");
+	}
 
-    public void verifyFailure() {
-        assertEquals(SignUpActivity.SIGN_UP_FAILED, getStatusText());
-    }
+	public void verifyFailure() {
+		assertEquals(SignUpActivity.SIGN_UP_FAILED, getStatusText());
+	}
 
-    public void verifyError() {
-        assertEquals(SignUpActivity.AN_ERROR_PROHIBITED_YOUR_SIGN_UP,
-                getStatusText());
-    }
+	public void verifyError() {
+		assertEquals(SignUpActivity.AN_ERROR_PROHIBITED_YOUR_SIGN_UP,
+				getStatusText());
+	}
 }

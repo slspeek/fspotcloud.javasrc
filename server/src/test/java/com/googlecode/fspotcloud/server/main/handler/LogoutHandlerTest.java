@@ -12,15 +12,15 @@ import static org.mockito.Mockito.verify;
 @RunWith(JukitoRunner.class)
 public class LogoutHandlerTest {
 
-    @Inject
-    LogoutHandler handler;
+	@Inject
+	LogoutHandler handler;
 
-    @Inject
-    private ILoginMetaDataUpdater loginMetaDataUpdater;
+	@Inject
+	private ILoginMetaDataUpdater loginMetaDataUpdater;
 
-    @Test
-    public void testExecute() throws Exception {
-        handler.execute(new LogoutAction(), null);
-        verify(loginMetaDataUpdater).clear();
-    }
+	@Test
+	public void testExecute() throws Exception {
+		handler.execute(new LogoutAction(), null);
+		verify(loginMetaDataUpdater).clear();
+	}
 }

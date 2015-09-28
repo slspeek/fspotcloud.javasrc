@@ -37,65 +37,65 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Logger;
 
+public class SendConfirmationActivity extends AbstractActivity
+		implements
+			SendConfirmationView.SendConfirmationPresenter {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(SendConfirmationActivity.class
+			.getName());
+	private final SendConfirmationView view;
+	private final DispatchAsync dispatchAsync;
+	private final UserActions userActions;
 
-public class SendConfirmationActivity extends AbstractActivity implements SendConfirmationView.SendConfirmationPresenter {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(SendConfirmationActivity.class.getName());
-    private final SendConfirmationView view;
-    private final DispatchAsync dispatchAsync;
-    private final UserActions userActions;
+	@Inject
+	public SendConfirmationActivity(SendConfirmationView view,
+			DispatchAsync dispatchAsync, UserActions userActions) {
+		this.view = view;
+		this.dispatchAsync = dispatchAsync;
+		this.userActions = userActions;
+	}
 
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		containerWidget.setWidget(view);
+	}
 
-    @Inject
-    public SendConfirmationActivity(SendConfirmationView view,
-                                    DispatchAsync dispatchAsync,
-                                    UserActions userActions) {
-        this.view = view;
-        this.dispatchAsync = dispatchAsync;
-        this.userActions = userActions;
-    }
+	private void send() {
+		String email = view.getEmailField();
+		view.setStatusText("Requesting a confirmation email");
+		SendConfirmationEmailAction action = new SendConfirmationEmailAction(
+				email);
+		dispatchAsync.execute(action,
+				new AsyncCallback<SendConfirmationEmailResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setStatusText("Failed due to a server error");
+					}
 
-    @Override
-    public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        containerWidget.setWidget(view);
-    }
+					@Override
+					public void onSuccess(SendConfirmationEmailResult result) {
+						switch (result.getCode()) {
+							case SUCCESS :
+								view.setStatusText("Success. Check your email.");
+								break;
+							case NOT_REGISTERED :
+								view.setStatusText("Failed. Please register first.");
+								break;
+						}
+					}
+				});
+	}
 
+	@Override
+	public void onStop() {
+		view.clearEmailField();
+		super.onStop();
+	}
 
-    private void send() {
-        String email = view.getEmailField();
-        view.setStatusText("Requesting a confirmation email");
-        SendConfirmationEmailAction action = new SendConfirmationEmailAction(email);
-        dispatchAsync.execute(action, new AsyncCallback<SendConfirmationEmailResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                view.setStatusText("Failed due to a server error");
-            }
-
-            @Override
-            public void onSuccess(SendConfirmationEmailResult result) {
-                switch (result.getCode()) {
-                    case SUCCESS:
-                        view.setStatusText("Success. Check your email.");
-                        break;
-                    case NOT_REGISTERED:
-                        view.setStatusText("Failed. Please register first.");
-                        break;
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onStop() {
-        view.clearEmailField();
-        super.onStop();
-    }
-
-
-    @Override
-    public void performAction(String actionId) {
-        if (userActions.doSendEmailConfirmation.getId().equals(actionId)) {
-            send();
-        }
-    }
+	@Override
+	public void performAction(String actionId) {
+		if (userActions.doSendEmailConfirmation.getId().equals(actionId)) {
+			send();
+		}
+	}
 }

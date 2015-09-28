@@ -39,77 +39,78 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.WidgetFactory;
 
 import java.util.logging.Logger;
 
-
 public class TagDetailsViewImpl extends Composite implements TagDetailsView {
-    private static final TagDetailsViewImplUiBinder uiBinder = GWT.create(TagDetailsViewImplUiBinder.class);
-    private static final Logger log = Logger.getLogger(TagDetailsViewImpl.class.getName());
-    @UiField
-    Label tagNameValueLabel;
-    @UiField
-    Label tagDescriptionValueLabel;
-    @UiField
-    Label tagImportIssuedValueLabel;
-    @UiField
-    Label tagCountValueLabel;
-    @UiField
-    Label tagLoadedCountValueLabel;
-    @UiField(provided = true)
-    ActionButton importTagButton;
-    @UiField(provided = true)
-    ActionButton manageAccessButton;
-    private TagDetailsPresenter presenter;
+	private static final TagDetailsViewImplUiBinder uiBinder = GWT
+			.create(TagDetailsViewImplUiBinder.class);
+	private static final Logger log = Logger.getLogger(TagDetailsViewImpl.class
+			.getName());
+	@UiField
+	Label tagNameValueLabel;
+	@UiField
+	Label tagDescriptionValueLabel;
+	@UiField
+	Label tagImportIssuedValueLabel;
+	@UiField
+	Label tagCountValueLabel;
+	@UiField
+	Label tagLoadedCountValueLabel;
+	@UiField(provided = true)
+	ActionButton importTagButton;
+	@UiField(provided = true)
+	ActionButton manageAccessButton;
+	private TagDetailsPresenter presenter;
 
-    private static int count;
+	private static int count;
 
+	@Inject
+	public TagDetailsViewImpl(DashboardActions dashboard,
+			WidgetFactory widgetFactory, AdminActionButtonResources resources) {
+		widgetFactory.setButtonResources(resources);
+		importTagButton = widgetFactory.getButton(dashboard.importTag);
+		manageAccessButton = widgetFactory.getButton(dashboard.manageAccess);
+		initWidget(uiBinder.createAndBindUi(this));
+		importTagButton.ensureDebugId("import-tag-button");
+		manageAccessButton.ensureDebugId("manage-access-button");
+		log.info("TagDetailsView created: " + ++count);
+	}
 
-    @Inject
-    public TagDetailsViewImpl(DashboardActions dashboard,
-                              WidgetFactory widgetFactory,
-                              AdminActionButtonResources resources) {
-        widgetFactory.setButtonResources(resources);
-        importTagButton = widgetFactory.getButton(dashboard.importTag);
-        manageAccessButton = widgetFactory.getButton(dashboard.manageAccess);
-        initWidget(uiBinder.createAndBindUi(this));
-        importTagButton.ensureDebugId("import-tag-button");
-        manageAccessButton.ensureDebugId("manage-access-button");
-        log.info("TagDetailsView created: " + ++count);
-    }
+	@Override
+	public HasText getTagDescriptionValue() {
+		return tagDescriptionValueLabel;
+	}
 
-    @Override
-    public HasText getTagDescriptionValue() {
-        return tagDescriptionValueLabel;
-    }
+	@Override
+	public HasText getTagImageCountValue() {
+		return tagCountValueLabel;
+	}
 
-    @Override
-    public HasText getTagImageCountValue() {
-        return tagCountValueLabel;
-    }
+	@Override
+	public HasText getTagImportIssuedValue() {
+		return tagImportIssuedValueLabel;
+	}
 
-    @Override
-    public HasText getTagImportIssuedValue() {
-        return tagImportIssuedValueLabel;
-    }
+	@Override
+	public HasText getTagLoadedImagesCountValue() {
+		return tagLoadedCountValueLabel;
+	}
 
-    @Override
-    public HasText getTagLoadedImagesCountValue() {
-        return tagLoadedCountValueLabel;
-    }
+	@Override
+	public HasText getTagNameValue() {
+		return tagNameValueLabel;
+	}
 
-    @Override
-    public HasText getTagNameValue() {
-        return tagNameValueLabel;
-    }
+	@Override
+	public void setPresenter(TagDetailsPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void setPresenter(TagDetailsPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public HasText getImportButtonText() {
+		return importTagButton;
+	}
 
-    @Override
-    public HasText getImportButtonText() {
-        return importTagButton;
-    }
-
-    interface TagDetailsViewImplUiBinder extends UiBinder<Widget, TagDetailsViewImpl> {
-    }
+	interface TagDetailsViewImplUiBinder
+			extends
+				UiBinder<Widget, TagDetailsViewImpl> {
+	}
 }

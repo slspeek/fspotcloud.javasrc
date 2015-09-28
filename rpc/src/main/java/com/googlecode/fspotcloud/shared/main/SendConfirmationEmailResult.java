@@ -27,25 +27,23 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Result;
 
-
 @GwtCompatible
 public class SendConfirmationEmailResult implements Result {
 
-    private Code code;
+	private Code code;
 
-    public enum Code {
-        NOT_REGISTERED,
-        SUCCESS
-    }
+	public enum Code {
+		NOT_REGISTERED, SUCCESS
+	}
 
-    private SendConfirmationEmailResult() {
-    }
+	private SendConfirmationEmailResult() {
+	}
 
-    public SendConfirmationEmailResult(Code code) {
-        this.code = code;
-    }
+	public SendConfirmationEmailResult(Code code) {
+		this.code = code;
+	}
 
-    public Code getCode() {
-        return code;
-    }
+	public Code getCode() {
+		return code;
+	}
 }

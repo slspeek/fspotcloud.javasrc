@@ -32,22 +32,22 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class TestServerGuiceServletConfig extends GuiceServletContextListener {
-    public static Injector INJECTOR;
-    public static Module MODULE;
+	public static Injector INJECTOR;
+	public static Module MODULE;
 
-    @Override
-    protected Injector getInjector() {
-        System.setProperty("java.util.logging.config.file", "logging.properties");
+	@Override
+	protected Injector getInjector() {
+		System.setProperty("java.util.logging.config.file",
+				"logging.properties");
 
-        try {
-            INJECTOR = Guice.createInjector(MODULE);
-        } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.SEVERE,
-                    "Error during injector setup", e);
-        }
-        Logger.getAnonymousLogger().info("Injector returned");
-        return INJECTOR;
-    }
+		try {
+			INJECTOR = Guice.createInjector(MODULE);
+		} catch (Exception e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE,
+					"Error during injector setup", e);
+		}
+		Logger.getAnonymousLogger().info("Injector returned");
+		return INJECTOR;
+	}
 }

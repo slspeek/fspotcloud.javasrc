@@ -36,24 +36,23 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class MVPSetup {
-    private final Logger log = Logger.getLogger(MVPSetup.class.getName());
-    private final GinMvpDisplay appWidget;
-    private final PlaceHistoryHandler placeHistoryHandler;
+	private final Logger log = Logger.getLogger(MVPSetup.class.getName());
+	private final GinMvpDisplay appWidget;
+	private final PlaceHistoryHandler placeHistoryHandler;
 
-    @Inject
-    public MVPSetup(ZoomViewEventHandlerImpl zoomViewEventHandler,
-                    GinMvpDisplay appWidget,
-                    PlaceHistoryHandler placeHistoryHandler,
-                    UserActionLateBinder userActionLateBinder) {
-        this.appWidget = appWidget;
-        this.placeHistoryHandler = placeHistoryHandler;
-        zoomViewEventHandler.init();
-    }
+	@Inject
+	public MVPSetup(ZoomViewEventHandlerImpl zoomViewEventHandler,
+			GinMvpDisplay appWidget, PlaceHistoryHandler placeHistoryHandler,
+			UserActionLateBinder userActionLateBinder) {
+		this.appWidget = appWidget;
+		this.placeHistoryHandler = placeHistoryHandler;
+		zoomViewEventHandler.init();
+	}
 
-    public void setup() {
-        log.info("Starting MVP setup");
-        RootLayoutPanel.get().add(appWidget);
-        placeHistoryHandler.handleCurrentHistory();
-        log.info("MVP setup finished");
-    }
+	public void setup() {
+		log.info("Starting MVP setup");
+		RootLayoutPanel.get().add(appWidget);
+		placeHistoryHandler.handleCurrentHistory();
+		log.info("MVP setup finished");
+	}
 }

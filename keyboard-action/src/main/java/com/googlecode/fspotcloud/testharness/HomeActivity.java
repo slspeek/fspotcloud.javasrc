@@ -33,21 +33,22 @@ import com.google.inject.Inject;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class HomeActivity extends AbstractActivity implements HomeView.HomePresenter {
+public class HomeActivity extends AbstractActivity
+		implements
+			HomeView.HomePresenter {
 
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(HomeActivity.class.getName());
-    private final HomeView homeView;
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(HomeActivity.class.getName());
+	private final HomeView homeView;
 
-    @Inject
-    public HomeActivity(HomeView homeView
-    ) {
-        this.homeView = homeView;
-    }
+	@Inject
+	public HomeActivity(HomeView homeView) {
+		this.homeView = homeView;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        containerWidget.setWidget(homeView);
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		containerWidget.setWidget(homeView);
 
-    }
+	}
 }

@@ -46,99 +46,100 @@ import com.googlecode.fspotcloud.keyboardaction.IModeController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class TreeViewImpl extends ResizeComposite
+		implements
+			TreeView,
+			FocusHandler,
+			BlurHandler {
+	private final Logger log = Logger.getLogger(TreeViewImpl.class.getName());
+	private static final TreeViewImplUiBinder uiBinder = GWT
+			.create(TreeViewImplUiBinder.class);
+	private CellTree cellTree;
+	private final CellTreeFactory cellTreeFactory;
+	@UiField
+	ScrollPanel tagTreeViewPanel;
+	@UiField
+	Label userInfoLabel;
 
-public class TreeViewImpl extends ResizeComposite implements TreeView, FocusHandler, BlurHandler {
-    private final Logger log = Logger.getLogger(TreeViewImpl.class.getName());
-    private static final TreeViewImplUiBinder uiBinder = GWT.create(TreeViewImplUiBinder.class);
-    private CellTree cellTree;
-    private final CellTreeFactory cellTreeFactory;
-    @UiField
-    ScrollPanel tagTreeViewPanel;
-    @UiField
-    Label userInfoLabel;
+	private static int counter;
+	private final IModeController modeController;
+	private final Resources resources;
 
-    private static int counter;
-    private final IModeController modeController;
-    private final Resources resources;
+	@Inject
+	public TreeViewImpl(CellTreeFactory cellTreeFactory,
+			IModeController modeController, Resources resources) {
+		this.cellTreeFactory = cellTreeFactory;
+		this.modeController = modeController;
+		this.resources = resources;
+		initWidget(uiBinder.createAndBindUi(this));
+		userInfoLabel.ensureDebugId("user-info-label");
+		log.log(Level.FINE, "Treeview created: " + ++counter);
+		ensureDebugId("tree-view");
+	}
 
+	@Override
+	public void setTreeModel(TreeViewModel model) {
+		log.log(Level.FINE, "setTreeModel on " + this);
+		cellTree = cellTreeFactory.get(model);
+		cellTree.addHandler(this, FocusEvent.getType());
+		cellTree.addHandler(this, BlurEvent.getType());
+		tagTreeViewPanel.setWidget(cellTree);
+	}
 
-    @Inject
-    public TreeViewImpl(CellTreeFactory cellTreeFactory,
-                        IModeController modeController,
-                        Resources resources
-    ) {
-        this.cellTreeFactory = cellTreeFactory;
-        this.modeController = modeController;
-        this.resources = resources;
-        initWidget(uiBinder.createAndBindUi(this));
-        userInfoLabel.ensureDebugId("user-info-label");
-        log.log(Level.FINE, "Treeview created: " + ++counter);
-        ensureDebugId("tree-view");
-    }
+	@Override
+	public TreeNode getRootNode() {
+		if (cellTree != null) {
+			return cellTree.getRootTreeNode();
+		} else {
+			log.warning("cellTree is null");
 
-    @Override
-    public void setTreeModel(TreeViewModel model) {
-        log.log(Level.FINE, "setTreeModel on " + this);
-        cellTree = cellTreeFactory.get(model);
-        cellTree.addHandler(this, FocusEvent.getType());
-        cellTree.addHandler(this, BlurEvent.getType());
-        tagTreeViewPanel.setWidget(cellTree);
-    }
+			return null;
+		}
+	}
 
-    @Override
-    public TreeNode getRootNode() {
-        if (cellTree != null) {
-            return cellTree.getRootTreeNode();
-        } else {
-            log.warning("cellTree is null");
+	public void requestFocus() {
+		if (cellTree != null) {
+			cellTree.setFocus(true);
 
-            return null;
-        }
-    }
+		}
 
-    public void requestFocus() {
-        if (cellTree != null) {
-            cellTree.setFocus(true);
+	}
 
-        }
+	@Override
+	public void requestBlur() {
+		if (cellTree != null) {
+			cellTree.setFocus(false);
+			removeStyleName(resources.style().treeBlockFocus());
 
-    }
+		}
+	}
 
-    @Override
-    public void requestBlur() {
-        if (cellTree != null) {
-            cellTree.setFocus(false);
-            removeStyleName(resources.style().treeBlockFocus());
+	@Override
+	public String toString() {
+		return "TreeViewImpl: " + counter;
+	}
 
-        }
-    }
+	@Override
+	public void setUserInfo(String info) {
+		userInfoLabel.setText(info);
+	}
 
-    @Override
-    public String toString() {
-        return "TreeViewImpl: " + counter;
-    }
+	@Override
+	public void onBlur(BlurEvent event) {
+		log.log(Level.INFO, "Treeview on blur");
+		modeController.unsetFlag(Flags.TREE_FOCUS.name());
+		removeStyleName(resources.style().treeBlockFocus());
 
-    @Override
-    public void setUserInfo(String info) {
-        userInfoLabel.setText(info);
-    }
+	}
 
-    @Override
-    public void onBlur(BlurEvent event) {
-        log.log(Level.INFO, "Treeview on blur");
-        modeController.unsetFlag(Flags.TREE_FOCUS.name());
-        removeStyleName(resources.style().treeBlockFocus());
+	@Override
+	public void onFocus(FocusEvent event) {
+		log.log(Level.INFO, "Treeview on focus");
+		modeController.setFlag(Flags.TREE_FOCUS.name());
+		setStyleName(resources.style().treeBlockFocus());
 
-    }
+	}
 
-    @Override
-    public void onFocus(FocusEvent event) {
-        log.log(Level.INFO, "Treeview on focus");
-        modeController.setFlag(Flags.TREE_FOCUS.name());
-        setStyleName(resources.style().treeBlockFocus());
-
-    }
-
-    interface TreeViewImplUiBinder extends UiBinder<Widget, TreeViewImpl> {
-    }
+	interface TreeViewImplUiBinder extends UiBinder<Widget, TreeViewImpl> {
+	}
 }

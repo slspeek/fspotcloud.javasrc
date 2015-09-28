@@ -28,25 +28,24 @@ import com.googlecode.fspotcloud.user.UserServiceBase;
 
 import javax.inject.Inject;
 
-
 public class UserServiceGae extends UserServiceBase {
-    @Inject
-    com.google.appengine.api.users.UserService delegate;
+	@Inject
+	com.google.appengine.api.users.UserService delegate;
 
-    @Override
-    public String getThirdPartyLoginURL(String nextUrl) {
-        nextUrl = urlUtil.toAbsoluteURL(nextUrl);
-        return delegate.createLoginURL(nextUrl);
-    }
+	@Override
+	public String getThirdPartyLoginURL(String nextUrl) {
+		nextUrl = urlUtil.toAbsoluteURL(nextUrl);
+		return delegate.createLoginURL(nextUrl);
+	}
 
-    @Override
-    public String getThirdPartyLogoutURL(String nextUrl) {
-        nextUrl = urlUtil.toAbsoluteURL(nextUrl);
-        return delegate.createLogoutURL(nextUrl);
-    }
+	@Override
+	public String getThirdPartyLogoutURL(String nextUrl) {
+		nextUrl = urlUtil.toAbsoluteURL(nextUrl);
+		return delegate.createLogoutURL(nextUrl);
+	}
 
-    @Override
-    public boolean isUserAdmin() {
-        return delegate.isUserLoggedIn() && delegate.isUserAdmin();
-    }
+	@Override
+	public boolean isUserAdmin() {
+		return delegate.isUserLoggedIn() && delegate.isUserAdmin();
+	}
 }

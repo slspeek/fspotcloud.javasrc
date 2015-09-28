@@ -21,41 +21,41 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 @RunWith(JukitoRunner.class)
 public class NavigationFlagsHelperTest {
 
-    @Inject
-    private ArgumentCaptor<AsyncCallback<Map<Move, Boolean>>> captor;
-    @Inject
-    private NavigationFlagsHelper helper;
-    @Inject
-    private Navigator navigator;
-    @Inject
-    private IModeController modeController;
-    @Inject
-    private ArgumentCaptor<Map<String, Boolean>> flagsCaptor;
+	@Inject
+	private ArgumentCaptor<AsyncCallback<Map<Move, Boolean>>> captor;
+	@Inject
+	private NavigationFlagsHelper helper;
+	@Inject
+	private Navigator navigator;
+	@Inject
+	private IModeController modeController;
+	@Inject
+	private ArgumentCaptor<Map<String, Boolean>> flagsCaptor;
 
-    @Test
-    public void testUpdate() throws Exception {
-        helper.update();
+	@Test
+	public void testUpdate() throws Exception {
+		helper.update();
 
-        verify(navigator).getPossibleMoves(
-                captor.capture());
+		verify(navigator).getPossibleMoves(captor.capture());
 
+		final HashMap<Move, Boolean> hashMap = newHashMap();
+		hashMap.put(
+				new Move(Navigator.Direction.FORWARD, Navigator.Unit.SINGLE),
+				true);
+		captor.getValue().onSuccess(hashMap);
+		verify(modeController).setFlags(flagsCaptor.capture());
 
-        final HashMap<Move, Boolean> hashMap = newHashMap();
-        hashMap.put(new Move(Navigator.Direction.FORWARD, Navigator.Unit.SINGLE), true);
-        captor.getValue().onSuccess(hashMap);
-        verify(modeController).setFlags(flagsCaptor.capture());
+		final Map<String, Boolean> flagsCaptorValue = flagsCaptor.getValue();
+		assertTrue(flagsCaptorValue.get(Flags.CAN_GO_NEXT_IMAGE.name()));
+	}
 
-        final Map<String, Boolean> flagsCaptorValue = flagsCaptor.getValue();
-        assertTrue(flagsCaptorValue.get(Flags.CAN_GO_NEXT_IMAGE.name()));
-    }
+	@Test
+	public void testUpdateFailure() throws Exception {
+		helper.update();
 
-    @Test
-    public void testUpdateFailure() throws Exception {
-        helper.update();
+		verify(navigator).getPossibleMoves(captor.capture());
 
-        verify(navigator).getPossibleMoves(captor.capture());
-
-        captor.getValue().onFailure(new RuntimeException());
-        verifyZeroInteractions(modeController);
-    }
+		captor.getValue().onFailure(new RuntimeException());
+		verifyZeroInteractions(modeController);
+	}
 }

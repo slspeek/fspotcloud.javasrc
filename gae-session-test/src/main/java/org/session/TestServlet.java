@@ -34,85 +34,84 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 
-
 @SuppressWarnings("serial")
 public class TestServlet extends HttpServlet {
-    public static final String DIRECT = "direct";
-    public static final String STRUCT = "struct";
+	public static final String DIRECT = "direct";
+	public static final String STRUCT = "struct";
 
-    private Struct getStruct(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Struct previousValue = (Struct) session.getAttribute(STRUCT);
+	private Struct getStruct(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Struct previousValue = (Struct) session.getAttribute(STRUCT);
 
-        if (previousValue == null) {
-            previousValue = new Struct();
-            session.setAttribute(STRUCT, previousValue);
-        }
+		if (previousValue == null) {
+			previousValue = new Struct();
+			session.setAttribute(STRUCT, previousValue);
+		}
 
-        return previousValue;
-    }
+		return previousValue;
+	}
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String name = request.getParameter("name");
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String name = request.getParameter("name");
 
-        if (name != null) {
-            appendToSessionDirect(name, request);
-        }
+		if (name != null) {
+			appendToSessionDirect(name, request);
+		}
 
-        String second = request.getParameter("second");
+		String second = request.getParameter("second");
 
-        if (second != null) {
-            appendToStruct(second, request);
-        }
+		if (second != null) {
+			appendToStruct(second, request);
+		}
 
-        OutputStream out = response.getOutputStream();
-        PrintWriter p = new PrintWriter(out);
-        p.write(outputHTML(request));
-        p.close();
-        out.close();
-    }
+		OutputStream out = response.getOutputStream();
+		PrintWriter p = new PrintWriter(out);
+		p.write(outputHTML(request));
+		p.close();
+		out.close();
+	}
 
-    private void appendToStruct(String second, HttpServletRequest request) {
-        Struct s = getStruct(request);
-        s.setBuffer(second);
-    }
+	private void appendToStruct(String second, HttpServletRequest request) {
+		Struct s = getStruct(request);
+		s.setBuffer(second);
+	}
 
-    private void appendToSessionDirect(String name, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String previousValue = (String) session.getAttribute(DIRECT);
+	private void appendToSessionDirect(String name, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String previousValue = (String) session.getAttribute(DIRECT);
 
-        if (previousValue != null) {
-            previousValue += " " + name;
-        } else {
-            previousValue = name;
-        }
+		if (previousValue != null) {
+			previousValue += " " + name;
+		} else {
+			previousValue = name;
+		}
 
-        session.setAttribute(DIRECT, previousValue);
-    }
+		session.setAttribute(DIRECT, previousValue);
+	}
 
-    private String outputHTML(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String result = "<html><h1>Session Test Servlet</h1><div>";
-        result += "DIRECT " + session.getAttribute(DIRECT);
+	private String outputHTML(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String result = "<html><h1>Session Test Servlet</h1><div>";
+		result += "DIRECT " + session.getAttribute(DIRECT);
 
-        Struct s = getStruct(request);
-        result += "<br>VIA STRUCT " + s.getBuffer();
-        result += "</div></html>";
+		Struct s = getStruct(request);
+		result += "<br>VIA STRUCT " + s.getBuffer();
+		result += "</div></html>";
 
-        return result;
-    }
+		return result;
+	}
 
-    public class Struct implements Serializable {
-        String buffer;
+	public class Struct implements Serializable {
+		String buffer;
 
-        public String getBuffer() {
-            return buffer;
-        }
+		public String getBuffer() {
+			return buffer;
+		}
 
-        public void setBuffer(String buffer) {
-            this.buffer = buffer;
-        }
-    }
+		public void setBuffer(String buffer) {
+			this.buffer = buffer;
+		}
+	}
 }

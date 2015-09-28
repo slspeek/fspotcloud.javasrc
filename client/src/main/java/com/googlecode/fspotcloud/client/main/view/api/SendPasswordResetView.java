@@ -31,12 +31,12 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface SendPasswordResetView extends IsWidget {
-    public String getEmailField();
+	public String getEmailField();
 
-    public void setStatusText(String text);
+	public void setStatusText(String text);
 
-    void clearEmailField();
+	void clearEmailField();
 
-    interface SendPasswordResetPresenter extends Activity, IActionHandler {
-    }
+	interface SendPasswordResetPresenter extends Activity, IActionHandler {
+	}
 }

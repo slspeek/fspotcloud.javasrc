@@ -40,27 +40,26 @@ import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
 import com.googlecode.simplejpadao.EntityModule;
 
-
 public class J2eeModelModule extends AbstractModule {
-    private final int maxDelete;
-    private final String persistenceUnit;
+	private final int maxDelete;
+	private final String persistenceUnit;
 
-    public J2eeModelModule(int maxDelete, String persistenceUnit) {
-        this.maxDelete = maxDelete;
-        this.persistenceUnit = persistenceUnit;
-    }
+	public J2eeModelModule(int maxDelete, String persistenceUnit) {
+		this.maxDelete = maxDelete;
+		this.persistenceUnit = persistenceUnit;
+	}
 
-    @Override
-    protected void configure() {
-        bind(PhotoDao.class).to(PhotoManager.class).in(Singleton.class);
-        bind(PeerDatabaseDao.class).to(PeerDatabaseManager.class)
-                .in(Singleton.class);
-        bind(TagDao.class).to(TagManager.class).in(Singleton.class);
-        bind(UserDao.class).to(UserManager.class).in(Singleton.class);
-        bind(UserGroupDao.class).to(UserGroupManager.class).in(Singleton.class);
-        bind(Integer.class).annotatedWith(Names.named("maxDelete"))
-                .toInstance(maxDelete);
-        install(new J2eeSimpleBlobstoreModule());
-        install(new EntityModule(persistenceUnit));
-    }
+	@Override
+	protected void configure() {
+		bind(PhotoDao.class).to(PhotoManager.class).in(Singleton.class);
+		bind(PeerDatabaseDao.class).to(PeerDatabaseManager.class).in(
+				Singleton.class);
+		bind(TagDao.class).to(TagManager.class).in(Singleton.class);
+		bind(UserDao.class).to(UserManager.class).in(Singleton.class);
+		bind(UserGroupDao.class).to(UserGroupManager.class).in(Singleton.class);
+		bind(Integer.class).annotatedWith(Names.named("maxDelete")).toInstance(
+				maxDelete);
+		install(new J2eeSimpleBlobstoreModule());
+		install(new EntityModule(persistenceUnit));
+	}
 }

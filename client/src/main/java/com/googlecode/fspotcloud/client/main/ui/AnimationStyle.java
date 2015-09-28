@@ -26,11 +26,9 @@ package com.googlecode.fspotcloud.client.main.ui;
 
 import com.google.gwt.resources.client.CssResource;
 
-
 public interface AnimationStyle extends CssResource {
 
+	String imageIn();
 
-    String imageIn();
-
-    String imageOut();
+	String imageOut();
 }

@@ -21,110 +21,107 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MailFullsizeActivity extends AbstractActivity implements MailFullsizeView.MailFullsizePresenter {
+public class MailFullsizeActivity extends AbstractActivity
+		implements
+			MailFullsizeView.MailFullsizePresenter {
 
-    private final Logger log = Logger.getLogger(MailFullsizeActivity.class.getName());
-    private final MailFullsizeView mailFullsizeView;
-    private final DispatchAsync dispatchAsync;
-    private final ImagePresenterFactory imagePresenterFactory;
-    private final Navigator navigator;
-    private final IScheduler scheduler;
-    private final UserActions userActions;
-    private MailFullsizePlace mailFullsizePlace;
+	private final Logger log = Logger.getLogger(MailFullsizeActivity.class
+			.getName());
+	private final MailFullsizeView mailFullsizeView;
+	private final DispatchAsync dispatchAsync;
+	private final ImagePresenterFactory imagePresenterFactory;
+	private final Navigator navigator;
+	private final IScheduler scheduler;
+	private final UserActions userActions;
+	private MailFullsizePlace mailFullsizePlace;
 
-    @Inject
-    public MailFullsizeActivity(
-            MailFullsizeView mailFullsizeView,
-            DispatchAsync dispatchAsync,
-            ImagePresenterFactory imagePresenterFactory,
-            Navigator navigator,
-            IScheduler scheduler,
-            UserActions userActions) {
-        this.mailFullsizeView = mailFullsizeView;
-        this.dispatchAsync = dispatchAsync;
-        this.imagePresenterFactory = imagePresenterFactory;
-        this.navigator = navigator;
-        this.scheduler = scheduler;
-        this.userActions = userActions;
-    }
+	@Inject
+	public MailFullsizeActivity(MailFullsizeView mailFullsizeView,
+			DispatchAsync dispatchAsync,
+			ImagePresenterFactory imagePresenterFactory, Navigator navigator,
+			IScheduler scheduler, UserActions userActions) {
+		this.mailFullsizeView = mailFullsizeView;
+		this.dispatchAsync = dispatchAsync;
+		this.imagePresenterFactory = imagePresenterFactory;
+		this.navigator = navigator;
+		this.scheduler = scheduler;
+		this.userActions = userActions;
+	}
 
-    public void setMailFullsizePlace(MailFullsizePlace mailFullsizePlace) {
-        this.mailFullsizePlace = mailFullsizePlace;
-    }
+	public void setMailFullsizePlace(MailFullsizePlace mailFullsizePlace) {
+		this.mailFullsizePlace = mailFullsizePlace;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        initImageView();
-        panel.setWidget(mailFullsizeView);
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		initImageView();
+		panel.setWidget(mailFullsizeView);
+	}
 
-    private void initImageView() {
-        final ImageView imageView = mailFullsizeView.getImageView();
-        if (mailFullsizePlace != null) {
-            navigator.getPageAsync(
-                    mailFullsizePlace.getTagId(),
-                    mailFullsizePlace.getPhotoId(),
-                    1,
-                    new AsyncCallback<List<PhotoInfo>>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            mailFullsizeView.setStatusText("Image information could not be loaded due to a server error");
-                        }
+	private void initImageView() {
+		final ImageView imageView = mailFullsizeView.getImageView();
+		if (mailFullsizePlace != null) {
+			navigator.getPageAsync(mailFullsizePlace.getTagId(),
+					mailFullsizePlace.getPhotoId(), 1,
+					new AsyncCallback<List<PhotoInfo>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							mailFullsizeView
+									.setStatusText("Image information could not be loaded due to a server error");
+						}
 
-                        @Override
-                        public void onSuccess(List<PhotoInfo> result) {
-                            if (result.size() > 0) {
-                                PhotoInfo info = result.get(0);
-                                final ImageView.ImagePresenter imagePresenter = imagePresenterFactory.get(
-                                        mailFullsizePlace.getTagId(),
-                                        info,
-                                        imageView,
-                                        false);
+						@Override
+						public void onSuccess(List<PhotoInfo> result) {
+							if (result.size() > 0) {
+								PhotoInfo info = result.get(0);
+								final ImageView.ImagePresenter imagePresenter = imagePresenterFactory
+										.get(mailFullsizePlace.getTagId(),
+												info, imageView, false);
 
-                                scheduler.schedule(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        imagePresenter.init();
-                                    }
-                                });
+								scheduler.schedule(new Runnable() {
+									@Override
+									public void run() {
+										imagePresenter.init();
+									}
+								});
 
-                            } else {
-                                log.log(Level.FINE, "No photo info");
-                            }
-                        }
-                    }
-            );
-        }
-    }
+							} else {
+								log.log(Level.FINE, "No photo info");
+							}
+						}
+					});
+		}
+	}
 
+	private void mailImage() {
+		final String id = mailFullsizePlace.getPhotoId();
+		mailFullsizeView.setStatusText("Requesting full size scheduling");
+		dispatchAsync.execute(new RequestFullsizeImageAction(id),
+				new AsyncCallback<FullsizeImageResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						mailFullsizeView
+								.setStatusText("Full size failed on server due to a server error");
+					}
 
-    private void mailImage() {
-        final String id = mailFullsizePlace.getPhotoId();
-        mailFullsizeView.setStatusText("Requesting full size scheduling");
-        dispatchAsync.execute(new RequestFullsizeImageAction(id),
-                new AsyncCallback<FullsizeImageResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        mailFullsizeView.setStatusText("Full size failed on server due to a server error");
-                    }
+					@Override
+					public void onSuccess(FullsizeImageResult result) {
+						mailFullsizeView.setStatusText(result.getMessage());
+					}
+				});
+	}
 
-                    @Override
-                    public void onSuccess(FullsizeImageResult result) {
-                        mailFullsizeView.setStatusText(result.getMessage());
-                    }
-                });
-    }
+	@Override
+	public void performAction(String actionId) {
+		if (userActions.doMailFullsize.getId().equals(actionId)) {
+			mailImage();
+		}
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        if (userActions.doMailFullsize.getId().equals(actionId)) {
-            mailImage();
-        }
-    }
-
-    @Override
-    public MailFullsizeView.MailFullsizePresenter withPlace(MailFullsizePlace place) {
-        setMailFullsizePlace(place);
-        return this;
-    }
+	@Override
+	public MailFullsizeView.MailFullsizePresenter withPlace(
+			MailFullsizePlace place) {
+		setMailFullsizePlace(place);
+		return this;
+	}
 }

@@ -34,30 +34,32 @@ import com.googlecode.fspotcloud.test.ThreeUsersFixture;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-
 public class GaeFixtureServletConfig extends GuiceServletContextListener {
-    final Properties p = new PropertiesLoader("properties.properties").loadProperties();
+	final Properties p = new PropertiesLoader("properties.properties")
+			.loadProperties();
 
-    Injector injector;
+	Injector injector;
 
-    public GaeFixtureServletConfig() {
-        injector = Guice.createInjector(new GaeTotalModule(100, "", ""), new FixtureServletModulde());
-        ThreeUsersFixture fixture = new ThreeUsersFixture(injector);
-        fixture.run();
-        Logger.getAnonymousLogger().info("We are called!");
-    }
+	public GaeFixtureServletConfig() {
+		injector = Guice.createInjector(new GaeTotalModule(100, "", ""),
+				new FixtureServletModulde());
+		ThreeUsersFixture fixture = new ThreeUsersFixture(injector);
+		fixture.run();
+		Logger.getAnonymousLogger().info("We are called!");
+	}
 
-    @Override
-    protected Injector getInjector() {
-        System.setProperty("java.util.logging.config.file", "logging.properties");
+	@Override
+	protected Injector getInjector() {
+		System.setProperty("java.util.logging.config.file",
+				"logging.properties");
 
-        return injector;
-    }
+		return injector;
+	}
 
-    class FixtureServletModulde extends ServletModule {
-        @Override
-        protected void configureServlets() {
-            serve("/fixture").with(FixtureRunServlet.class);
-        }
-    }
+	class FixtureServletModulde extends ServletModule {
+		@Override
+		protected void configureServlets() {
+			serve("/fixture").with(FixtureRunServlet.class);
+		}
+	}
 }

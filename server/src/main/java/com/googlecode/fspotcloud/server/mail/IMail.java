@@ -25,7 +25,7 @@
 package com.googlecode.fspotcloud.server.mail;
 
 public interface IMail {
-    void send(String recipient, String title, String body);
+	void send(String recipient, String title, String body);
 
-    void send(String recipient, String title, String body, byte[] attachment);
+	void send(String recipient, String title, String body, byte[] attachment);
 }

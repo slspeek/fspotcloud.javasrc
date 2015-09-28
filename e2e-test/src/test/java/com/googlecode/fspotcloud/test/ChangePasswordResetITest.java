@@ -31,23 +31,24 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 public class ChangePasswordResetITest {
-    public static final String GNU_RULES = "GNU Rules!";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private LoginPage loginPage;
-   @Inject
-    private UserAccountPage userAccountPage;
-    @Inject
-    private ChangePasswordPage changePasswordPage;
+	public static final String GNU_RULES = "GNU Rules!";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private LoginPage loginPage;
+	@Inject
+	private UserAccountPage userAccountPage;
+	@Inject
+	private ChangePasswordPage changePasswordPage;
 
-    @Test
-    public void testChangePassword() throws Exception {
-        changePasswordPage.open();
-        changePasswordPage.changePassword(GNU_RULES);
-        loginPage.open();
-        loginPage.fillForm(ILogin.SLS, GNU_RULES);
-        loginPage.login();
-        userAccountPage.verifyEmail(ILogin.SLS);
-    }
+	@Test
+	public void testChangePassword() throws Exception {
+		changePasswordPage.open();
+		changePasswordPage.changePassword(GNU_RULES);
+		loginPage.open();
+		loginPage.fillForm(ILogin.SLS, GNU_RULES);
+		loginPage.login();
+		userAccountPage.verifyEmail(ILogin.SLS);
+	}
 }

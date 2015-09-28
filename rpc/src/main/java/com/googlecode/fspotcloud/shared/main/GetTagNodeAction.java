@@ -28,24 +28,23 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class GetTagNodeAction implements Action<TagNodeResult> {
-    private String tagId;
+	private String tagId;
 
-    public GetTagNodeAction(String tagId) {
-        this.tagId = tagId;
-    }
+	public GetTagNodeAction(String tagId) {
+		this.tagId = tagId;
+	}
 
-    public GetTagNodeAction() {
-    }
+	public GetTagNodeAction() {
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this).add("tagId", tagId).toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("tagId", tagId).toString();
+	}
 }

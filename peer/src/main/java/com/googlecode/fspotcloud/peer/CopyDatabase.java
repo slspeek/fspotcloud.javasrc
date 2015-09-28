@@ -30,56 +30,55 @@ import javax.inject.Provider;
 import java.io.*;
 import java.util.logging.Logger;
 
-
 public class CopyDatabase implements Provider<String> {
-    @Inject
-    Logger log;
-    @Inject
-    @Named("DatabasePath")
-    private String srcPath;
-    @Inject
-    @Named("WorkDir")
-    private String pwd;
+	@Inject
+	Logger log;
+	@Inject
+	@Named("DatabasePath")
+	private String srcPath;
+	@Inject
+	@Named("WorkDir")
+	private String pwd;
 
-    public String copyDatabase() throws IOException {
-        log.info("src: " + srcPath);
+	public String copyDatabase() throws IOException {
+		log.info("src: " + srcPath);
 
-        File srcFile = new File(srcPath);
-        File targetDir = new File(pwd + "/runtime");
+		File srcFile = new File(srcPath);
+		File targetDir = new File(pwd + "/runtime");
 
-        if (!targetDir.exists()) {
-            targetDir.mkdir();
-        }
+		if (!targetDir.exists()) {
+			targetDir.mkdir();
+		}
 
-        File targetFile = new File(targetDir.getAbsolutePath() + "/copy.db");
-        InputStream in = new FileInputStream(srcFile);
-        OutputStream out = new FileOutputStream(targetFile);
-        byte[] buf = new byte[1024];
-        int len;
+		File targetFile = new File(targetDir.getAbsolutePath() + "/copy.db");
+		InputStream in = new FileInputStream(srcFile);
+		OutputStream out = new FileOutputStream(targetFile);
+		byte[] buf = new byte[1024];
+		int len;
 
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-        }
+		while ((len = in.read(buf)) > 0) {
+			out.write(buf, 0, len);
+		}
 
-        in.close();
-        out.close();
+		in.close();
+		out.close();
 
-        String url = "jdbc:sqlite:" + targetFile.getAbsolutePath();
-        log.info("url: " + url);
+		String url = "jdbc:sqlite:" + targetFile.getAbsolutePath();
+		log.info("url: " + url);
 
-        return url;
-    }
+		return url;
+	}
 
-    @Override
-    public String get() {
-        String destPath = null;
+	@Override
+	public String get() {
+		String destPath = null;
 
-        try {
-            destPath = copyDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		try {
+			destPath = copyDatabase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        return destPath;
-    }
+		return destPath;
+	}
 }

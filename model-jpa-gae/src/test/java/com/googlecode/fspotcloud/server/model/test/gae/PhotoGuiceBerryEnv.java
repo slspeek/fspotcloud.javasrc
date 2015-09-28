@@ -31,13 +31,12 @@ import com.googlecode.fspotcloud.model.jpa.gae.photo.CachedPhotoManager;
 import com.googlecode.fspotcloud.server.model.test.GaeLocalDatastoreTestWrapper;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public class PhotoGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-        install(new GaeCachedModelModule(100, "gae-test"));
-        bind(SimpleDAONamedId.class).to(CachedPhotoManager.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
+		install(new GaeCachedModelModule(100, "gae-test"));
+		bind(SimpleDAONamedId.class).to(CachedPhotoManager.class);
+	}
 }

@@ -27,31 +27,30 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class SignUpPlace extends Place {
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof SignUpPlace) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof SignUpPlace) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<SignUpPlace> {
-        @Override
-        public SignUpPlace getPlace(String token) {
-            return new SignUpPlace();
-        }
+	public static class Tokenizer implements PlaceTokenizer<SignUpPlace> {
+		@Override
+		public SignUpPlace getPlace(String token) {
+			return new SignUpPlace();
+		}
 
-        @Override
-        public String getToken(SignUpPlace place) {
-            return "";
-        }
-    }
+		@Override
+		public String getToken(SignUpPlace place) {
+			return "";
+		}
+	}
 }

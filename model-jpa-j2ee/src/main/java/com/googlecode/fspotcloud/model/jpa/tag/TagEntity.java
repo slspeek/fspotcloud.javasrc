@@ -47,105 +47,107 @@ import static com.google.common.collect.Sets.newHashSet;
  */
 @Entity
 public class TagEntity implements Serializable, Tag {
-    @Id
-    private String id;
-    @Basic
-    private String tagName;
-    @Basic
-    private String parentId;
-    @Basic
-    private String parent;
-    @Basic
-    private int count;
-    @Basic
-    private boolean importIssued = false;
-    @Lob //@Column(columnDefinition = "BLOB")
+	@Id
+	private String id;
+	@Basic
+	private String tagName;
+	@Basic
+	private String parentId;
+	@Basic
+	private String parent;
+	@Basic
+	private int count;
+	@Basic
+	private boolean importIssued = false;
+	@Lob
+	//@Column(columnDefinition = "BLOB")
+	private byte[] photoListData = SerializationUtils
+			.serialize(new TreeSet<PhotoInfo>());
+	@Basic
+	private HashSet<Long> approvedUserGroups = newHashSet();
 
-    private byte[] photoListData = SerializationUtils.serialize(new TreeSet<PhotoInfo>());
-    @Basic
-    private HashSet<Long> approvedUserGroups = newHashSet();
+	public TagEntity() {
+	}
 
-    public TagEntity() {
-    }
+	public HashSet<Long> getApprovedUserGroups() {
+		return approvedUserGroups;
+	}
 
-    public HashSet<Long> getApprovedUserGroups() {
-        return approvedUserGroups;
-    }
+	public void setApprovedUserGroups(Set<Long> approvedUserGroups) {
+		if (approvedUserGroups != null) {
+			this.approvedUserGroups = newHashSet(approvedUserGroups);
+		} else {
+			this.approvedUserGroups = newHashSet();
+		}
+	}
 
-    public void setApprovedUserGroups(Set<Long> approvedUserGroups) {
-        if (approvedUserGroups != null) {
-            this.approvedUserGroups = newHashSet(approvedUserGroups);
-        } else {
-            this.approvedUserGroups = newHashSet();
-        }
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	@Override
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
 
-    @Override
-    public void setParent(String parent) {
-        this.parent = parent;
-    }
+	@Override
+	public String getParent() {
+		return parent;
+	}
 
-    @Override
-    public String getParent() {
-        return parent;
-    }
+	@Override
+	public void setCount(int count) {
+		this.count = count;
+	}
 
-    @Override
-    public void setCount(int count) {
-        this.count = count;
-    }
+	@Override
+	public int getCount() {
+		return count;
+	}
 
-    @Override
-    public int getCount() {
-        return count;
-    }
+	@Override
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
 
-    @Override
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
+	@Override
+	public String getTagName() {
+		return tagName;
+	}
 
-    @Override
-    public String getTagName() {
-        return tagName;
-    }
+	@Override
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
-    @Override
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
+	@Override
+	public String getParentId() {
+		return parentId;
+	}
 
-    @Override
-    public String getParentId() {
-        return parentId;
-    }
+	@Override
+	public void setImportIssued(boolean importIssued) {
+		this.importIssued = importIssued;
+	}
 
-    @Override
-    public void setImportIssued(boolean importIssued) {
-        this.importIssued = importIssued;
-    }
+	@Override
+	public boolean isImportIssued() {
+		return importIssued;
+	}
 
-    @Override
-    public boolean isImportIssued() {
-        return importIssued;
-    }
+	@Override
+	public String getId() {
+		return id;
+	}
 
-    @Override
-    public String getId() {
-        return id;
-    }
+	@Override
+	public void setCachedPhotoList(TreeSet<PhotoInfo> cachedPhotoList) {
+		this.photoListData = SerializationUtils.serialize(cachedPhotoList);
+	}
 
-    @Override
-    public void setCachedPhotoList(TreeSet<PhotoInfo> cachedPhotoList) {
-        this.photoListData = SerializationUtils.serialize(cachedPhotoList);
-    }
-
-    @Override
-    public TreeSet<PhotoInfo> getCachedPhotoList() {
-        return (TreeSet<PhotoInfo>) SerializationUtils.deserialize(photoListData);
-    }
+	@Override
+	public TreeSet<PhotoInfo> getCachedPhotoList() {
+		return (TreeSet<PhotoInfo>) SerializationUtils
+				.deserialize(photoListData);
+	}
 }

@@ -36,20 +36,20 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 public class UrlUtilTest {
-    @Inject
-    UrlUtil util;
+	@Inject
+	UrlUtil util;
 
-    @Test
-    public void toAbsoluteURL() throws Exception {
-        String result = util.toAbsoluteURL("my-part");
-        assertEquals("http://localhost:8080/context/my-part", result);
-    }
+	@Test
+	public void toAbsoluteURL() throws Exception {
+		String result = util.toAbsoluteURL("my-part");
+		assertEquals("http://localhost:8080/context/my-part", result);
+	}
 
-    public static class Module extends JukitoModule {
-        @Override
-        protected void configureTest() {
-            bind(String.class).annotatedWith(ServerAddress.class)
-                    .toInstance("http://localhost:8080/context");
-        }
-    }
+	public static class Module extends JukitoModule {
+		@Override
+		protected void configureTest() {
+			bind(String.class).annotatedWith(ServerAddress.class).toInstance(
+					"http://localhost:8080/context");
+		}
+	}
 }

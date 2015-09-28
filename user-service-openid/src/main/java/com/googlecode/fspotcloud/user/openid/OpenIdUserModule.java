@@ -32,27 +32,28 @@ import com.googlecode.fspotcloud.user.SessionEmail;
 import com.googlecode.fspotcloud.user.inject.AbstractUserModule;
 
 public class OpenIdUserModule extends AbstractUserModule {
-    private final String adminEmail;
+	private final String adminEmail;
 
-    public OpenIdUserModule(String adminEmail) {
-        this.adminEmail = adminEmail;
-    }
+	public OpenIdUserModule(String adminEmail) {
+		this.adminEmail = adminEmail;
+	}
 
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(String.class).annotatedWith(AdminEmail.class).toInstance(adminEmail);
-        bind(com.googlecode.fspotcloud.user.UserService.class)
-                .to(com.googlecode.fspotcloud.user.openid.OpenIdUserService.class);
-        bind(ISessionEmail.class).to(SessionEmail.class);
-        bind(PostThirdPartyLoginWorker.class).to(PostOpenIdLoginWorker.class);
-        install(new UserServletModule());
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(String.class).annotatedWith(AdminEmail.class).toInstance(
+				adminEmail);
+		bind(com.googlecode.fspotcloud.user.UserService.class).to(
+				com.googlecode.fspotcloud.user.openid.OpenIdUserService.class);
+		bind(ISessionEmail.class).to(SessionEmail.class);
+		bind(PostThirdPartyLoginWorker.class).to(PostOpenIdLoginWorker.class);
+		install(new UserServletModule());
+	}
 
-    private class UserServletModule extends ServletModule {
-        protected void configureServlets() {
+	private class UserServletModule extends ServletModule {
+		protected void configureServlets() {
 
-            serve("/post-login").with(PostThirdPartyLoginServlet.class);
-        }
-    }
+			serve("/post-login").with(PostThirdPartyLoginServlet.class);
+		}
+	}
 }

@@ -6,8 +6,8 @@ import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 
 public class ProtonHandler extends LoadNewLocationAction {
 
-    @Inject
-    private ProtonHandler(OpenNewTab loader) {
-        super(loader, "http://www.protonradio.com/player/live/player.php");
-    }
+	@Inject
+	private ProtonHandler(OpenNewTab loader) {
+		super(loader, "http://www.protonradio.com/player/live/player.php");
+	}
 }

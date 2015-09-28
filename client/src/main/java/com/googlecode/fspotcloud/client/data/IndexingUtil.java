@@ -28,20 +28,19 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.Map;
 
-
 public class IndexingUtil {
 
-    public void rebuildTagNodeIndex(Map<String, TagNode> tagNodeIndex,
-                                    TagNode tagTree) {
-        tagNodeIndex.clear();
-        addTagNodeIndex(tagNodeIndex, tagTree);
-    }
+	public void rebuildTagNodeIndex(Map<String, TagNode> tagNodeIndex,
+			TagNode tagTree) {
+		tagNodeIndex.clear();
+		addTagNodeIndex(tagNodeIndex, tagTree);
+	}
 
-    private void addTagNodeIndex(Map<String, TagNode> tagNodeIndex, TagNode node) {
-        tagNodeIndex.put(node.getId(), node);
+	private void addTagNodeIndex(Map<String, TagNode> tagNodeIndex, TagNode node) {
+		tagNodeIndex.put(node.getId(), node);
 
-        for (TagNode child : node.getChildren()) {
-            addTagNodeIndex(tagNodeIndex, child);
-        }
-    }
+		for (TagNode child : node.getChildren()) {
+			addTagNodeIndex(tagNodeIndex, child);
+		}
+	}
 }

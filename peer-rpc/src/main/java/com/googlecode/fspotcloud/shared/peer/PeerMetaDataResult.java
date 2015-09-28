@@ -30,31 +30,32 @@ import net.customware.gwt.dispatch.shared.Result;
 
 import java.io.Serializable;
 
+public class PeerMetaDataResult extends BusinessBase
+		implements
+			Result,
+			Serializable {
+	private static final long serialVersionUID = 5786908411967248429L;
+	@BusinessKey
+	private final int tagCount;
+	@BusinessKey
+	private final int photoCount;
 
-public class PeerMetaDataResult extends BusinessBase implements Result,
-        Serializable {
-    private static final long serialVersionUID = 5786908411967248429L;
-    @BusinessKey
-    private final int tagCount;
-    @BusinessKey
-    private final int photoCount;
+	public PeerMetaDataResult(int tagCount, int photoCount) {
+		super();
+		this.tagCount = tagCount;
+		this.photoCount = photoCount;
+	}
 
-    public PeerMetaDataResult(int tagCount, int photoCount) {
-        super();
-        this.tagCount = tagCount;
-        this.photoCount = photoCount;
-    }
+	public int getTagCount() {
+		return tagCount;
+	}
 
-    public int getTagCount() {
-        return tagCount;
-    }
+	public int getPhotoCount() {
+		return photoCount;
+	}
 
-    public int getPhotoCount() {
-        return photoCount;
-    }
-
-    public String toString() {
-        return Objects.toStringHelper(this).add("#tag", tagCount)
-                .add("#photo", photoCount).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("#tag", tagCount)
+				.add("#photo", photoCount).toString();
+	}
 }

@@ -7,17 +7,17 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class SetRasterHandler implements IActionHandler {
 
-    private final IRasterer rasterer;
-    private final int size;
+	private final IRasterer rasterer;
+	private final int size;
 
-    @Inject
-    SetRasterHandler(IRasterer rasterer, @Assisted int size) {
-        this.rasterer = rasterer;
-        this.size = size;
-    }
+	@Inject
+	SetRasterHandler(IRasterer rasterer, @Assisted int size) {
+		this.rasterer = rasterer;
+		this.size = size;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        rasterer.setRasterDimension(size, size);
-    }
+	@Override
+	public void performAction(String actionId) {
+		rasterer.setRasterDimension(size, size);
+	}
 }

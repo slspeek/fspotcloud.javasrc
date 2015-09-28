@@ -16,51 +16,50 @@ import static org.mockito.Mockito.verify;
 @RunWith(JukitoRunner.class)
 public class NavigatorImplPageCountTest {
 
+	private static final String TAG_ID = "1";
+	@Inject
+	private DataManager dataManager;
+	@Inject
+	private NavigatorImpl navigator;
+	@Inject
+	private TagNodeTestFactory tagNodeTestFactory;
+	@Inject
+	private ArgumentCaptor<AsyncCallback<TagNode>> captor;
+	@Inject
+	private AsyncCallback<Integer> integerAsyncCallback;
 
-    private static final String TAG_ID = "1";
-    @Inject
-    private  DataManager dataManager;
-    @Inject
-    private NavigatorImpl navigator;
-    @Inject
-    private TagNodeTestFactory tagNodeTestFactory;
-    @Inject
-    private ArgumentCaptor<AsyncCallback<TagNode>> captor;
-    @Inject
-    private AsyncCallback<Integer> integerAsyncCallback;
+	@Test
+	public void testPageCount() throws Exception {
 
-    @Test
-    public void testPageCount() throws Exception {
+		navigator.getPageCountAsync(TAG_ID, 1, integerAsyncCallback);
+		verify(dataManager).getTagNode(any(String.class), captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
+		TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
+		callback.onSuccess(tree);
+		verify(integerAsyncCallback).onSuccess(1);
+	}
 
-        navigator.getPageCountAsync(TAG_ID, 1,  integerAsyncCallback);
-        verify(dataManager).getTagNode(any(String.class), captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
-        TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
-        callback.onSuccess(tree);
-        verify(integerAsyncCallback).onSuccess(1);
-    }
+	@Test
+	public void testPageCountWithRounding() throws Exception {
 
-    @Test
-    public void testPageCountWithRounding() throws Exception {
+		navigator.getPageCountAsync(TAG_ID, 2, integerAsyncCallback);
+		verify(dataManager).getTagNode(any(String.class), captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
+		TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
+		callback.onSuccess(tree);
+		verify(integerAsyncCallback).onSuccess(1);
+	}
 
-        navigator.getPageCountAsync(TAG_ID, 2, integerAsyncCallback);
-        verify(dataManager).getTagNode(any(String.class), captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
-        TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
-        callback.onSuccess(tree);
-        verify(integerAsyncCallback).onSuccess(1);
-    }
+	@Test
+	public void testPageCountError() throws Exception {
 
-    @Test
-    public void testPageCountError() throws Exception {
-
-        navigator.getPageCountAsync(TAG_ID, 1, integerAsyncCallback);
-        verify(dataManager).getTagNode(any(String.class), captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
-        TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
-        final Exception caught = new Exception();
-        callback.onFailure(caught);
-        verify(integerAsyncCallback).onFailure(caught);
-    }
+		navigator.getPageCountAsync(TAG_ID, 1, integerAsyncCallback);
+		verify(dataManager).getTagNode(any(String.class), captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
+		TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
+		final Exception caught = new Exception();
+		callback.onFailure(caught);
+		verify(integerAsyncCallback).onFailure(caught);
+	}
 
 }

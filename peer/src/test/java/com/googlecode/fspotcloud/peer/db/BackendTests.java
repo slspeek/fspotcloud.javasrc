@@ -83,8 +83,8 @@ public abstract class BackendTests extends TestCase {
 		String url = data.getImageURL("20");
 		log.info("getImageURL url:" + url);
 		assertEquals("file://" + System.getProperty("user.dir")
-				+ "/../peer/src/test/resources/Photos/"  +"2010/06/22/img_0859-1.jpg",
-				String.valueOf(url));
+				+ "/../peer/src/test/resources/Photos/"
+				+ "2010/06/22/img_0859-1.jpg", String.valueOf(url));
 	}
 
 	public void testIsPhotoInTag() throws Exception {
@@ -100,8 +100,7 @@ public abstract class BackendTests extends TestCase {
 	}
 
 	public void testGetPhotoData() throws Exception {
-		PhotoData pd = data.getPhotoData(
-				ImmutableList.of("3")).get(0);
+		PhotoData pd = data.getPhotoData(ImmutableList.of("3")).get(0);
 		assertEquals("5", pd.getTagList().get(0));
 	}
 }

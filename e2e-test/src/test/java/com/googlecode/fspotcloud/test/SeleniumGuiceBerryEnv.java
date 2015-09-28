@@ -38,35 +38,33 @@ import javax.inject.Named;
 
 import static org.mockito.Mockito.mock;
 
-
 public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
-    @Provides
-    @TestScoped
-    Selenium getSelenium(@Named("baseUrl")
-                         String baseUrl) {
-        WebDriver driver;
-        String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
-        //System.setProperty("webdriver.chrome.driver", "/home/steven/tools/bin/chromedriver");
-        if (userChoice != null) {
-            driver = new FirefoxDriver();
-        } else {
-            driver = new HtmlUnitDriver();
-            ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
-        }
+	@Provides
+	@TestScoped
+	Selenium getSelenium(@Named("baseUrl") String baseUrl) {
+		WebDriver driver;
+		String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
+		//System.setProperty("webdriver.chrome.driver", "/home/steven/tools/bin/chromedriver");
+		if (userChoice != null) {
+			driver = new FirefoxDriver();
+		} else {
+			driver = new HtmlUnitDriver();
+			((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+		}
 
-        return new WebDriverBackedSeleniumExt(driver, baseUrl);
-    }
+		return new WebDriverBackedSeleniumExt(driver, baseUrl);
+	}
 
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(TestWrapper.class).to(SeleniumTestWrapper.class);
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(TestWrapper.class).to(SeleniumTestWrapper.class);
 
-    }
+	}
 
-    @Provides
-    Resources getResource() {
-        return mock(Resources.class);
-    }
+	@Provides
+	Resources getResource() {
+		return mock(Resources.class);
+	}
 
 }

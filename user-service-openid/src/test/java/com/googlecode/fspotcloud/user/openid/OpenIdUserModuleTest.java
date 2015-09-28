@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.user.openid;
 
 import com.google.inject.Guice;
@@ -33,23 +33,22 @@ import com.google.inject.Injector;
 import org.junit.Ignore;
 import org.junit.Test;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class OpenIdUserModuleTest {
-    public OpenIdUserModuleTest() {
-    }
+	public OpenIdUserModuleTest() {
+	}
 
-    /**
-     * Test of configure method, of class OpenIdUserModule.
-     */
-    @Ignore
-    @Test
-    public void testConfigure() {
-        Injector injector = Guice.createInjector(new OpenIdUserModule(
-                "foo@bar.org"));
-    }
+	/**
+	 * Test of configure method, of class OpenIdUserModule.
+	 */
+	@Ignore
+	@Test
+	public void testConfigure() {
+		Injector injector = Guice.createInjector(new OpenIdUserModule(
+				"foo@bar.org"));
+	}
 }

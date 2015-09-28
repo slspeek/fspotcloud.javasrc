@@ -28,25 +28,24 @@ import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class RevokeTagAction implements Action<VoidResult> {
-    private String tagId;
-    private Long userGroupId;
+	private String tagId;
+	private Long userGroupId;
 
-    public RevokeTagAction(String tagId, Long userGroupId) {
-        this.tagId = tagId;
-        this.userGroupId = userGroupId;
-    }
+	public RevokeTagAction(String tagId, Long userGroupId) {
+		this.tagId = tagId;
+		this.userGroupId = userGroupId;
+	}
 
-    public RevokeTagAction() {
-    }
+	public RevokeTagAction() {
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public Long getUserGroupId() {
-        return userGroupId;
-    }
+	public Long getUserGroupId() {
+		return userGroupId;
+	}
 }

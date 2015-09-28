@@ -31,8 +31,8 @@ import com.google.gwt.user.client.ui.IsWidget;
 @GwtCompatible
 public interface HomeView extends IsWidget {
 
-    void setStatusText(String result);
+	void setStatusText(String result);
 
-    interface HomePresenter extends Activity {
-    }
+	interface HomePresenter extends Activity {
+	}
 }

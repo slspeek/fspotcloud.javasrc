@@ -38,32 +38,33 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+public class TagUpdateHandler
+		extends
+			AbstractBatchActionHandler<TagUpdateAction, TagUpdate> {
+	private final int MAX_DATA_TICKS;
+	private final ControllerDispatchAsync controllerDispatch;
 
-public class TagUpdateHandler extends AbstractBatchActionHandler<TagUpdateAction, TagUpdate> {
-    private final int MAX_DATA_TICKS;
-    private final ControllerDispatchAsync controllerDispatch;
+	@Inject
+	public TagUpdateHandler(@Named("maxTicks") int maxTicks,
+			ControllerDispatchAsync controllerDispatch,
+			TaskQueueDispatch dispatchAsync) {
+		super(dispatchAsync, maxTicks);
+		this.controllerDispatch = controllerDispatch;
+		MAX_DATA_TICKS = maxTicks;
+	}
 
-    @Inject
-    public TagUpdateHandler(@Named("maxTicks")
-                            int maxTicks, ControllerDispatchAsync controllerDispatch,
-                            TaskQueueDispatch dispatchAsync) {
-        super(dispatchAsync, maxTicks);
-        this.controllerDispatch = controllerDispatch;
-        MAX_DATA_TICKS = maxTicks;
-    }
+	@Override
+	public void doWork(AbstractBatchAction<TagUpdate> action,
+			Iterator<TagUpdate> workLoad) {
+		List<String> tagKeys = new ArrayList<String>();
 
-    @Override
-    public void doWork(AbstractBatchAction<TagUpdate> action,
-                       Iterator<TagUpdate> workLoad) {
-        List<String> tagKeys = new ArrayList<String>();
+		for (int j = 0; workLoad.hasNext() && j < MAX_DATA_TICKS; j++) {
+			TagUpdate tagUpdate = workLoad.next();
+			tagKeys.add(tagUpdate.getTagId());
+		}
 
-        for (int j = 0; workLoad.hasNext() && j < MAX_DATA_TICKS; j++) {
-            TagUpdate tagUpdate = workLoad.next();
-            tagKeys.add(tagUpdate.getTagId());
-        }
-
-        GetTagDataAction botAction = new GetTagDataAction(tagKeys);
-        TagDataCallback callback = new TagDataCallback(null, null);
-        controllerDispatch.execute(botAction, callback);
-    }
+		GetTagDataAction botAction = new GetTagDataAction(tagKeys);
+		TagDataCallback callback = new TagDataCallback(null, null);
+		controllerDispatch.execute(botAction, callback);
+	}
 }

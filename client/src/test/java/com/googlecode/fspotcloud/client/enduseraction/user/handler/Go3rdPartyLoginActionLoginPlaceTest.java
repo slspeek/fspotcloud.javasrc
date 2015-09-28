@@ -16,26 +16,26 @@ import static org.mockito.Mockito.when;
 @RunWith(JukitoRunner.class)
 public class Go3rdPartyLoginActionLoginPlaceTest {
 
-    public static final String FSF_ORG = "fsf.org";
-    @Inject
-    private Go3rdPartyLoginHandler handler;
-    @Inject
-    private IClientLoginManager clientLoginManager;
-    @Inject
-    private IPlaceController placeController;
-    @Inject
-    private UserActions userActions;
+	public static final String FSF_ORG = "fsf.org";
+	@Inject
+	private Go3rdPartyLoginHandler handler;
+	@Inject
+	private IClientLoginManager clientLoginManager;
+	@Inject
+	private IPlaceController placeController;
+	@Inject
+	private UserActions userActions;
 
-    private LoginPlace loginPlace = new LoginPlace(FSF_ORG);
+	private LoginPlace loginPlace = new LoginPlace(FSF_ORG);
 
-    @Before
-    public void setUp() throws Exception {
-        when(placeController.getRawWhere()).thenReturn(loginPlace);
-    }
+	@Before
+	public void setUp() throws Exception {
+		when(placeController.getRawWhere()).thenReturn(loginPlace);
+	}
 
-    @Test
-    public void testLogin() throws Exception {
-        handler.performAction(userActions.otherLogin.getId());
-        verify(clientLoginManager).goTo3rdPartyLogin(FSF_ORG);
-    }
+	@Test
+	public void testLogin() throws Exception {
+		handler.performAction(userActions.otherLogin.getId());
+		verify(clientLoginManager).goTo3rdPartyLogin(FSF_ORG);
+	}
 }

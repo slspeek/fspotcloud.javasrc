@@ -37,53 +37,53 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class ActionDemoEvent extends Event<IActionDemoHandler> {
-    private final Logger log = Logger.getLogger(ActionDemoEvent.class.getName());
-    public static final Type<IActionDemoHandler> TYPE = new Type<IActionDemoHandler>();
-    private final String actionId;
-    private final boolean state;
+	private final Logger log = Logger
+			.getLogger(ActionDemoEvent.class.getName());
+	public static final Type<IActionDemoHandler> TYPE = new Type<IActionDemoHandler>();
+	private final String actionId;
+	private final boolean state;
 
-    public ActionDemoEvent(String actionId, boolean state) {
-        this.actionId = actionId;
-        this.state = state;
-    }
+	public ActionDemoEvent(String actionId, boolean state) {
+		this.actionId = actionId;
+		this.state = state;
+	}
 
-    public String getActionId() {
-        return actionId;
-    }
+	public String getActionId() {
+		return actionId;
+	}
 
-    @Override
-    public Type<IActionDemoHandler> getAssociatedType() {
-        return TYPE;
-    }
+	@Override
+	public Type<IActionDemoHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    @Override
-    protected void dispatch(IActionDemoHandler handlerI) {
-        log.log(Level.FINEST, "in dispatch for " + this);
-        handlerI.onEvent(this);
-    }
+	@Override
+	protected void dispatch(IActionDemoHandler handlerI) {
+		log.log(Level.FINEST, "in dispatch for " + this);
+		handlerI.onEvent(this);
+	}
 
-    public boolean equals(Object o) {
-        if (o instanceof ActionDemoEvent) {
-            ActionDemoEvent other = (ActionDemoEvent) o;
-            return Objects.equal(other.actionId, actionId) && state == other.state;
-        } else {
-            return false;
-        }
-    }
+	public boolean equals(Object o) {
+		if (o instanceof ActionDemoEvent) {
+			ActionDemoEvent other = (ActionDemoEvent) o;
+			return Objects.equal(other.actionId, actionId)
+					&& state == other.state;
+		} else {
+			return false;
+		}
+	}
 
-    public int hashCode() {
-        return Objects.hashCode(actionId, state);
-    }
+	public int hashCode() {
+		return Objects.hashCode(actionId, state);
+	}
 
-    public boolean getState() {
-        return state;
-    }
+	public boolean getState() {
+		return state;
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("action", actionId)
-                .add("state", state)
-                .omitNullValues().toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("action", actionId)
+				.add("state", state).omitNullValues().toString();
+	}
 }

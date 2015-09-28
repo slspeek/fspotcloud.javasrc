@@ -28,22 +28,21 @@ import com.openpojo.business.annotation.BusinessKey;
 
 import java.io.Serializable;
 
-
 public class PhotoUpdate extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = 9209829522681263384L;
-    @BusinessKey
-    private final String photoId;
+	private static final long serialVersionUID = 9209829522681263384L;
+	@BusinessKey
+	private final String photoId;
 
-    public PhotoUpdate(String photoId) {
-        super();
-        this.photoId = photoId;
-    }
+	public PhotoUpdate(String photoId) {
+		super();
+		this.photoId = photoId;
+	}
 
-    public String getPhotoId() {
-        return photoId;
-    }
+	public String getPhotoId() {
+		return photoId;
+	}
 
-    public String toString() {
-        return "PhotoUpdate(" + getPhotoId() + ")";
-    }
+	public String toString() {
+		return "PhotoUpdate(" + getPhotoId() + ")";
+	}
 }

@@ -36,29 +36,30 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.sql.SQLException;
 
+public class GetPeerMetaDataHandler
+		extends
+			SimpleActionHandler<GetPeerMetaDataAction, PeerMetaDataResult> {
+	private final Backend data;
 
-public class GetPeerMetaDataHandler extends SimpleActionHandler<GetPeerMetaDataAction, PeerMetaDataResult> {
-    private final Backend data;
+	@Inject
+	public GetPeerMetaDataHandler(Backend data) {
+		super();
+		this.data = data;
+	}
 
-    @Inject
-    public GetPeerMetaDataHandler(Backend data) {
-        super();
-        this.data = data;
-    }
+	@Override
+	public PeerMetaDataResult execute(GetPeerMetaDataAction action,
+			ExecutionContext context) throws DispatchException {
+		PeerMetaDataResult result;
 
-    @Override
-    public PeerMetaDataResult execute(GetPeerMetaDataAction action,
-                                      ExecutionContext context) throws DispatchException {
-        PeerMetaDataResult result;
+		try {
+			Object[] resultArray = data.getMetaData();
+			result = new PeerMetaDataResult((Integer) resultArray[1],
+					(Integer) resultArray[0]);
+		} catch (SQLException e) {
+			throw new ActionException(e);
+		}
 
-        try {
-            Object[] resultArray = data.getMetaData();
-            result = new PeerMetaDataResult((Integer) resultArray[1],
-                    (Integer) resultArray[0]);
-        } catch (SQLException e) {
-            throw new ActionException(e);
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

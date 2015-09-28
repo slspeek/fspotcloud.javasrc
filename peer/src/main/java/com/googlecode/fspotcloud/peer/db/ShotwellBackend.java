@@ -22,13 +22,14 @@ public class ShotwellBackend extends GenericBackend {
 			.getName());
 
 	@Inject
-	public ShotwellBackend(@Named("JDBC URL") String jdbcURL, BlobstoreClient blobClient) {
+	public ShotwellBackend(@Named("JDBC URL") String jdbcURL,
+			BlobstoreClient blobClient) {
 		super(jdbcURL, blobClient);
 	}
 
 	@Override
 	public Object[] getMetaData() throws SQLException {
-		return new Object[] { getCount("PhotoTable"), getCount("TagTable") };
+		return new Object[]{getCount("PhotoTable"), getCount("TagTable")};
 	}
 
 	@Override

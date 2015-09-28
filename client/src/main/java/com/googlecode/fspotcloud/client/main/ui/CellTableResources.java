@@ -4,8 +4,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 
 public interface CellTableResources extends CellTable.Resources {
 
-    @Override
-    @Source("celltable.css")
-    CellTable.Style cellTableStyle();
+	@Override
+	@Source("celltable.css")
+	CellTable.Style cellTableStyle();
 
 }

@@ -37,50 +37,51 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+public class GetPeerUpdateInstructionsHandler
+		extends
+			SimpleActionHandler<GetPeerUpdateInstructionsAction, PeerUpdateInstructionsResult> {
+	private final Backend data;
 
-public class GetPeerUpdateInstructionsHandler extends SimpleActionHandler<GetPeerUpdateInstructionsAction, PeerUpdateInstructionsResult> {
-    private final Backend data;
+	@Inject
+	public GetPeerUpdateInstructionsHandler(Backend data) {
+		super();
+		this.data = data;
+	}
 
-    @Inject
-    public GetPeerUpdateInstructionsHandler(Backend data) {
-        super();
-        this.data = data;
-    }
+	@Override
+	public PeerUpdateInstructionsResult execute(
+			GetPeerUpdateInstructionsAction action, ExecutionContext context)
+			throws DispatchException {
+		PeerUpdateInstructionsResult result = new PeerUpdateInstructionsResult(
+				new ArrayList<TagUpdate>(), new ArrayList<TagRemovedFromPeer>());
 
-    @Override
-    public PeerUpdateInstructionsResult execute(
-            GetPeerUpdateInstructionsAction action,
-            ExecutionContext context) throws DispatchException {
-        PeerUpdateInstructionsResult result = new PeerUpdateInstructionsResult(new ArrayList<TagUpdate>(),
-                new ArrayList<TagRemovedFromPeer>());
+		try {
+			List<TagData> peerTagData = data.getTagData();
 
-        try {
-            List<TagData> peerTagData = data.getTagData();
+			for (TagData tagData : action.getTagsOnServer()) {
+				String tagId = tagData.getTagId();
+				List<TagData> actual = data.getTagData(ImmutableList.of(tagId));
 
-            for (TagData tagData : action.getTagsOnServer()) {
-                String tagId = tagData.getTagId();
-                List<TagData> actual = data.getTagData(ImmutableList.of(tagId));
+				if (!actual.isEmpty()) {
+					TagData actualData = actual.get(0);
 
-                if (!actual.isEmpty()) {
-                    TagData actualData = actual.get(0);
+					if (actualData.equals(tagData)) {
+						peerTagData.remove(tagData);
+					}
+				} else {
+					result.getToBoRemovedFromPeer().add(
+							new TagRemovedFromPeer(tagId));
+				}
+			}
 
-                    if (actualData.equals(tagData)) {
-                        peerTagData.remove(tagData);
-                    }
-                } else {
-                    result.getToBoRemovedFromPeer()
-                            .add(new TagRemovedFromPeer(tagId));
-                }
-            }
+			for (TagData data : peerTagData) {
+				TagUpdate update = new TagUpdate(data.getTagId());
+				result.getToBoUpdated().add(update);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-            for (TagData data : peerTagData) {
-                TagUpdate update = new TagUpdate(data.getTagId());
-                result.getToBoUpdated().add(update);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

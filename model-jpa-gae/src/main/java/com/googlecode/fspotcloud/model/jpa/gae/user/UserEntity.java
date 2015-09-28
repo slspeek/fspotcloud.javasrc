@@ -48,108 +48,108 @@ import static com.googlecode.fspotcloud.server.model.api.DateUtil.cloneDate;
  */
 @Entity
 public class UserEntity implements User, Serializable {
-    @Id
-    String id; //email-address
-    private String credentials;
-    private String nickname;
-    private String emailVerificationSecret;
-    @Column(nullable = true)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date lastLoginTime;
-    private boolean enabled;
-    private HashSet<Long> grantedUserGroups = newHashSet();
-    private boolean registered = false;
+	@Id
+	String id; //email-address
+	private String credentials;
+	private String nickname;
+	private String emailVerificationSecret;
+	@Column(nullable = true)
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date lastLoginTime;
+	private boolean enabled;
+	private HashSet<Long> grantedUserGroups = newHashSet();
+	private boolean registered = false;
 
-    //Persistence demands this
-    UserEntity() {
-    }
+	//Persistence demands this
+	UserEntity() {
+	}
 
-    public UserEntity(String email) {
-        setEmail(email);
-    }
+	public UserEntity(String email) {
+		setEmail(email);
+	}
 
-    public boolean hasRegistered() {
-        return registered;
-    }
+	public boolean hasRegistered() {
+		return registered;
+	}
 
-    public void setRegistered(boolean registered) {
-        this.registered = registered;
-    }
+	public void setRegistered(boolean registered) {
+		this.registered = registered;
+	}
 
-    public String getEmail() {
-        return getId();
-    }
+	public String getEmail() {
+		return getId();
+	}
 
-    public void setEmail(String email) {
-        setId(email);
-    }
+	public void setEmail(String email) {
+		setId(email);
+	}
 
-    public String getCredentials() {
-        return credentials;
-    }
+	public String getCredentials() {
+		return credentials;
+	}
 
-    public void setCredentials(String credentials) {
-        this.credentials = credentials;
-    }
+	public void setCredentials(String credentials) {
+		this.credentials = credentials;
+	}
 
-    public String getNickname() {
-        return nickname;
-    }
+	public String getNickname() {
+		return nickname;
+	}
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-    public boolean getEnabled() {
-        return enabled;
-    }
+	public boolean getEnabled() {
+		return enabled;
+	}
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    @Override
-    public Set<Long> getGrantedUserGroups() {
-        return grantedUserGroups;
-    }
+	@Override
+	public Set<Long> getGrantedUserGroups() {
+		return grantedUserGroups;
+	}
 
-    @Override
-    public void setGrantedUserGroups(Set<Long> userGroups) {
-        this.grantedUserGroups = newHashSet(userGroups);
-    }
+	@Override
+	public void setGrantedUserGroups(Set<Long> userGroups) {
+		this.grantedUserGroups = newHashSet(userGroups);
+	}
 
-    @Override
-    public Date getLastLoginTime() {
-        return cloneDate(lastLoginTime);
-    }
+	@Override
+	public Date getLastLoginTime() {
+		return cloneDate(lastLoginTime);
+	}
 
-    @Override
-    public void setLastLoginTime(Date loginTime) {
-        this.lastLoginTime = cloneDate(loginTime);
-    }
+	@Override
+	public void setLastLoginTime(Date loginTime) {
+		this.lastLoginTime = cloneDate(loginTime);
+	}
 
-    @Override
-    public void touchLastLoginTime() {
-        setLastLoginTime(new Date());
-    }
+	@Override
+	public void touchLastLoginTime() {
+		setLastLoginTime(new Date());
+	}
 
-    @Override
-    public String emailVerificationSecret() {
-        return emailVerificationSecret;
-    }
+	@Override
+	public String emailVerificationSecret() {
+		return emailVerificationSecret;
+	}
 
-    @Override
-    public void setEmailVerificationSecret(String secret) {
-        this.emailVerificationSecret = secret;
-    }
+	@Override
+	public void setEmailVerificationSecret(String secret) {
+		this.emailVerificationSecret = secret;
+	}
 
-    @Override
-    public void setId(String aLong) {
-        this.id = aLong;
-    }
+	@Override
+	public void setId(String aLong) {
+		this.id = aLong;
+	}
 
-    @Override
-    public String getId() {
-        return id;
-    }
+	@Override
+	public String getId() {
+		return id;
+	}
 }

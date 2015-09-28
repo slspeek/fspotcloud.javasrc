@@ -30,10 +30,10 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 @GwtCompatible
 public interface SlideshowView extends IsWidget {
-    void hideControlsLater(int visibleDuration);
+	void hideControlsLater(int visibleDuration);
 
-    void setPresenter(SlideshowPresenter slideshowActivity);
+	void setPresenter(SlideshowPresenter slideshowActivity);
 
-    interface SlideshowPresenter extends Activity {
-    }
+	interface SlideshowPresenter extends Activity {
+	}
 }

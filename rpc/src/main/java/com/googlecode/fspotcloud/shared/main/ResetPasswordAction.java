@@ -27,34 +27,33 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class ResetPasswordAction implements Action<ResetPasswordResult> {
-    private String email;
-    private String secret;
-    private String newPassword;
+	private String email;
+	private String secret;
+	private String newPassword;
 
-    /**
-     * Needed for Serializable
-     */
-    private ResetPasswordAction() {
-    }
+	/**
+	 * Needed for Serializable
+	 */
+	private ResetPasswordAction() {
+	}
 
-    public ResetPasswordAction(String email, String secret, String newPassword) {
-        this.email = email;
-        this.secret = secret;
-        this.newPassword = newPassword;
-    }
+	public ResetPasswordAction(String email, String secret, String newPassword) {
+		this.email = email;
+		this.secret = secret;
+		this.newPassword = newPassword;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getSecret() {
-        return secret;
-    }
+	public String getSecret() {
+		return secret;
+	}
 
-    public String getNewPassword() {
-        return newPassword;
-    }
+	public String getNewPassword() {
+		return newPassword;
+	}
 }

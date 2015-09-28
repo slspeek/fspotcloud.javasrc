@@ -32,15 +32,15 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface ChangePasswordView extends IsWidget {
-    public String getPasswordField();
+	public String getPasswordField();
 
-    public String getPasswordAgainField();
+	public String getPasswordAgainField();
 
-    void setStatusText(String text);
+	void setStatusText(String text);
 
-    void clearFields();
+	void clearFields();
 
-    interface ChangePasswordPresenter extends Activity, IActionHandler {
-        ChangePasswordPresenter withPlace(ChangePasswordPlace place);
-    }
+	interface ChangePasswordPresenter extends Activity, IActionHandler {
+		ChangePasswordPresenter withPlace(ChangePasswordPlace place);
+	}
 }

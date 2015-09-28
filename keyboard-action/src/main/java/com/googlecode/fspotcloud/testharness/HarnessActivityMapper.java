@@ -32,27 +32,28 @@ import com.google.inject.Inject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class HarnessActivityMapper implements ActivityMapper {
-    private final Logger log = Logger.getLogger(HarnessActivityMapper.class.getName());
+	private final Logger log = Logger.getLogger(HarnessActivityMapper.class
+			.getName());
 
-    private final HomeView.HomePresenter homePresenter;
-    private final OutView.OutPresenter outPresenter;
+	private final HomeView.HomePresenter homePresenter;
+	private final OutView.OutPresenter outPresenter;
 
-    @Inject
-    public HarnessActivityMapper(HomeView.HomePresenter homePresenter, OutView.OutPresenter outPresenter) {
-        super();
-        this.homePresenter = homePresenter;
-        this.outPresenter = outPresenter;
-    }
+	@Inject
+	public HarnessActivityMapper(HomeView.HomePresenter homePresenter,
+			OutView.OutPresenter outPresenter) {
+		super();
+		this.homePresenter = homePresenter;
+		this.outPresenter = outPresenter;
+	}
 
-    @Override
-    public Activity getActivity(Place place) {
-        log.log(Level.FINE, "getActivity : " + place);
-        if (place instanceof HomePlace) {
-            return homePresenter;
-        } else {
-            return outPresenter;
-        }
-    }
+	@Override
+	public Activity getActivity(Place place) {
+		log.log(Level.FINE, "getActivity : " + place);
+		if (place instanceof HomePlace) {
+			return homePresenter;
+		} else {
+			return outPresenter;
+		}
+	}
 }

@@ -12,17 +12,17 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @RunWith(JukitoRunner.class)
 public class NavigationActionHandlerHomeTest {
 
-    @Inject
-    private NavigationActionHandler handler;
+	@Inject
+	private NavigationActionHandler handler;
 
-    @Inject
-    private Navigator navigator;
+	@Inject
+	private Navigator navigator;
 
-
-    @Test
-    public void testPerformAction() throws Exception {
-             handler.performAction(NavigationActions.HOME_ID);
-            verify(navigator).goAsync(Navigator.Direction.BACKWARD, Navigator.Unit.BORDER);
-        verifyNoMoreInteractions(navigator);
-    }
+	@Test
+	public void testPerformAction() throws Exception {
+		handler.performAction(NavigationActions.HOME_ID);
+		verify(navigator).goAsync(Navigator.Direction.BACKWARD,
+				Navigator.Unit.BORDER);
+		verifyNoMoreInteractions(navigator);
+	}
 }

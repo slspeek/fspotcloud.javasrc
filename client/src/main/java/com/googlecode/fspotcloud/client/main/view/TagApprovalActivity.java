@@ -40,147 +40,150 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-public class TagApprovalActivity extends AbstractActivity implements TagApprovalView.TagApprovalPresenter {
-    private final Logger log = Logger.getLogger(TagApprovalActivity.class.getName());
-    private final TagApprovalView view;
-    private final DispatchAsync dispatch;
-    private final GroupActions groupActions;
-    private Set<UserGroupInfo> allGroups;
-    private TagNode tagNode;
-    private String tagId;
+public class TagApprovalActivity extends AbstractActivity
+		implements
+			TagApprovalView.TagApprovalPresenter {
+	private final Logger log = Logger.getLogger(TagApprovalActivity.class
+			.getName());
+	private final TagApprovalView view;
+	private final DispatchAsync dispatch;
+	private final GroupActions groupActions;
+	private Set<UserGroupInfo> allGroups;
+	private TagNode tagNode;
+	private String tagId;
 
-    @Inject
-    public TagApprovalActivity(TagApprovalView view,
-                               DispatchAsync dispatch,
-                               GroupActions groupActions) {
-        this.view = view;
-        this.dispatch = dispatch;
-        this.groupActions = groupActions;
-    }
+	@Inject
+	public TagApprovalActivity(TagApprovalView view, DispatchAsync dispatch,
+			GroupActions groupActions) {
+		this.view = view;
+		this.dispatch = dispatch;
+		this.groupActions = groupActions;
+	}
 
-    private Set<UserGroupInfo> getNotGrantedGroups(Set<UserGroupInfo> all,
-                                                   Set<Long> approved) {
-        Set<UserGroupInfo> result = newHashSet();
-        for (UserGroupInfo info : all) {
-            if (!approved.contains(info.getId())) {
-                result.add(info);
-            }
-        }
-        return result;
-    }
+	private Set<UserGroupInfo> getNotGrantedGroups(Set<UserGroupInfo> all,
+			Set<Long> approved) {
+		Set<UserGroupInfo> result = newHashSet();
+		for (UserGroupInfo info : all) {
+			if (!approved.contains(info.getId())) {
+				result.add(info);
+			}
+		}
+		return result;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(view);
-        // view.setData(newArrayList(new UserGroupInfo("foo", "Uh foo")));
-        refreshData();
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		panel.setWidget(view);
+		// view.setData(newArrayList(new UserGroupInfo("foo", "Uh foo")));
+		refreshData();
+	}
 
-    private void refreshData() {
-        dispatch.execute(new GetMyUserGroupsAction(),
-                new AsyncCallback<GetMyUserGroupsResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
+	private void refreshData() {
+		dispatch.execute(new GetMyUserGroupsAction(),
+				new AsyncCallback<GetMyUserGroupsResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						//To change body of implemented methods use File | Settings | File Templates.
+					}
 
-                    @Override
-                    public void onSuccess(GetMyUserGroupsResult result) {
-                        if (result.getData() != null) {
-                            allGroups = newHashSet(result.getData());
-                            refreshTagNode(tagId);
-                        }
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(GetMyUserGroupsResult result) {
+						if (result.getData() != null) {
+							allGroups = newHashSet(result.getData());
+							refreshTagNode(tagId);
+						}
+					}
+				});
+	}
 
-    private void revokeGroup() {
-        final UserGroupInfo info = view.getApprovedSelected();
+	private void revokeGroup() {
+		final UserGroupInfo info = view.getApprovedSelected();
 
-        if (info != null) {
-            view.setStatusText("Requesting the server to revoke access for group: " + info.getName());
-            dispatch.execute(new RevokeTagAction(tagId, info.getId()),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            view.setStatusText("Could not revoke access for group: " + info.getName() +
-                                    " due to a server error");
-                        }
+		if (info != null) {
+			view.setStatusText("Requesting the server to revoke access for group: "
+					+ info.getName());
+			dispatch.execute(new RevokeTagAction(tagId, info.getId()),
+					new AsyncCallback<VoidResult>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							view.setStatusText("Could not revoke access for group: "
+									+ info.getName() + " due to a server error");
+						}
 
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            refreshData();
-                        }
-                    });
-        }
-    }
+						@Override
+						public void onSuccess(VoidResult result) {
+							refreshData();
+						}
+					});
+		}
+	}
 
-    private void grantGroup() {
-        final UserGroupInfo info = view.getOtherSelected();
-        if (info != null) {
-            view.setStatusText("Requesting the server to grant access to group: " + info.getName());
-            dispatch.execute(new ApproveTagAction(tagId, info.getId()),
-                    new AsyncCallback<VoidResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            view.setStatusText("Could not grant access to group: " + info.getName() +
-                                    " due to a server error");
-                        }
+	private void grantGroup() {
+		final UserGroupInfo info = view.getOtherSelected();
+		if (info != null) {
+			view.setStatusText("Requesting the server to grant access to group: "
+					+ info.getName());
+			dispatch.execute(new ApproveTagAction(tagId, info.getId()),
+					new AsyncCallback<VoidResult>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							view.setStatusText("Could not grant access to group: "
+									+ info.getName() + " due to a server error");
+						}
 
-                        @Override
-                        public void onSuccess(VoidResult result) {
-                            refreshData();
-                        }
-                    });
-        }
-    }
+						@Override
+						public void onSuccess(VoidResult result) {
+							refreshData();
+						}
+					});
+		}
+	}
 
-    @Override
-    public void setTagId(String tagId) {
-        this.tagId = tagId;
-        refreshTagNode(tagId);
-    }
+	@Override
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
+		refreshTagNode(tagId);
+	}
 
-    private void refreshTagNode(String tagId) {
-        view.setStatusText("Loading information on category id=" + tagId);
-        dispatch.execute(new GetTagNodeAction(tagId),
-                new AsyncCallback<TagNodeResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.setStatusText("Loading information failed due to a server error");
-                    }
+	private void refreshTagNode(String tagId) {
+		view.setStatusText("Loading information on category id=" + tagId);
+		dispatch.execute(new GetTagNodeAction(tagId),
+				new AsyncCallback<TagNodeResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setStatusText("Loading information failed due to a server error");
+					}
 
-                    @Override
-                    public void onSuccess(TagNodeResult result) {
-                        tagNode = result.getInfo();
-                        view.setTagName(tagNode.getTagName());
+					@Override
+					public void onSuccess(TagNodeResult result) {
+						tagNode = result.getInfo();
+						view.setTagName(tagNode.getTagName());
 
-                        final Set<UserGroupInfo> others = getNotGrantedGroups(allGroups,
-                                tagNode.getApprovedUserGroups());
-                        view.setOtherGroups(others);
+						final Set<UserGroupInfo> others = getNotGrantedGroups(
+								allGroups, tagNode.getApprovedUserGroups());
+						view.setOtherGroups(others);
 
-                        Set<UserGroupInfo> copyOfAll = newHashSet(allGroups);
-                        copyOfAll.removeAll(others);
+						Set<UserGroupInfo> copyOfAll = newHashSet(allGroups);
+						copyOfAll.removeAll(others);
 
-                        Set<UserGroupInfo> approved = copyOfAll;
-                        view.setApprovedGroups(approved);
-                        view.setStatusText("Updated UI with server data");
-                    }
-                });
-    }
+						Set<UserGroupInfo> approved = copyOfAll;
+						view.setApprovedGroups(approved);
+						view.setStatusText("Updated UI with server data");
+					}
+				});
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        if (groupActions.revokeGroup.getId().equals(actionId)) {
-            revokeGroup();
-        } else if (groupActions.grantGroup.getId().equals(actionId)) {
-            grantGroup();
-        } else if (groupActions.focusGrantedTable.getId().equals(actionId)) {
-            view.focusGrantedTable();
-        } else if (groupActions.focusRevokedTable.getId().equals(actionId)) {
-            view.focusRevokedTable();
-        }
+	@Override
+	public void performAction(String actionId) {
+		if (groupActions.revokeGroup.getId().equals(actionId)) {
+			revokeGroup();
+		} else if (groupActions.grantGroup.getId().equals(actionId)) {
+			grantGroup();
+		} else if (groupActions.focusGrantedTable.getId().equals(actionId)) {
+			view.focusGrantedTable();
+		} else if (groupActions.focusRevokedTable.getId().equals(actionId)) {
+			view.focusRevokedTable();
+		}
 
-
-    }
+	}
 }

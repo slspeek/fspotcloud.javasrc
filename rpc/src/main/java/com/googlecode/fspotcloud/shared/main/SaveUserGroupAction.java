@@ -28,29 +28,28 @@ import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class SaveUserGroupAction implements Action<VoidResult> {
-    UserGroupInfo infoToSave;
+	UserGroupInfo infoToSave;
 
-    public SaveUserGroupAction() {
-    }
+	public SaveUserGroupAction() {
+	}
 
-    public SaveUserGroupAction(UserGroupInfo infoToSave) {
-        this.infoToSave = infoToSave;
-    }
+	public SaveUserGroupAction(UserGroupInfo infoToSave) {
+		this.infoToSave = infoToSave;
+	}
 
-    public UserGroupInfo getInfoToSave() {
-        return infoToSave;
-    }
+	public UserGroupInfo getInfoToSave() {
+		return infoToSave;
+	}
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("SaveUserGroupAction");
-        sb.append("{infoToSave=").append(infoToSave);
-        sb.append('}');
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("SaveUserGroupAction");
+		sb.append("{infoToSave=").append(infoToSave);
+		sb.append('}');
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 }

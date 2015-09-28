@@ -29,21 +29,19 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import java.io.Serializable;
 
-
 @GwtCompatible
-public class UserUnImportsTagAction implements Action<VoidResult>,
-        Serializable {
-    private String tagId;
+public class UserUnImportsTagAction implements Action<VoidResult>, Serializable {
+	private String tagId;
 
-    public UserUnImportsTagAction(String tagId) {
-        super();
-        this.tagId = tagId;
-    }
+	public UserUnImportsTagAction(String tagId) {
+		super();
+		this.tagId = tagId;
+	}
 
-    UserUnImportsTagAction() {
-    }
+	UserUnImportsTagAction() {
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 }

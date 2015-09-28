@@ -31,18 +31,18 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface SignUpView extends IsWidget {
-    public String getEmailField();
+	public String getEmailField();
 
-    public String getPasswordField();
+	public String getPasswordField();
 
-    public String getPasswordAgainField();
+	public String getPasswordAgainField();
 
-    void setStatusText(String text);
+	void setStatusText(String text);
 
-    public void focusEmailField();
+	public void focusEmailField();
 
-    void clearFields();
+	void clearFields();
 
-    interface SignUpPresenter extends Activity, IActionHandler {
-    }
+	interface SignUpPresenter extends Activity, IActionHandler {
+	}
 }

@@ -28,11 +28,11 @@ import com.google.common.annotations.GwtCompatible;
 
 @GwtCompatible
 public interface TimerInterface {
-    void scheduleRepeating(int millis);
+	void scheduleRepeating(int millis);
 
-    void schedule(int millis);
+	void schedule(int millis);
 
-    void cancel();
+	void cancel();
 
-    void setRunnable(Runnable runnable);
+	void setRunnable(Runnable runnable);
 }

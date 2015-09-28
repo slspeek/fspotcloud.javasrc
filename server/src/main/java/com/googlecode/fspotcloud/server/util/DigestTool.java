@@ -7,15 +7,14 @@ import java.io.Serializable;
 
 public class DigestTool {
 
+	public String getHash(Serializable o) {
+		byte[] serial = SerializationUtils.serialize(o);
+		String hash = DigestUtils.md2Hex(serial);
+		return hash;
+	}
 
-    public String getHash(Serializable o) {
-        byte[] serial = SerializationUtils.serialize(o);
-        String hash = DigestUtils.md2Hex(serial);
-        return hash;
-    }
-
-    public static String hash(String username, String plainPassword) {
-        return DigestUtils.md5Hex(username + plainPassword);
-    }
+	public static String hash(String username, String plainPassword) {
+		return DigestUtils.md5Hex(username + plainPassword);
+	}
 
 }

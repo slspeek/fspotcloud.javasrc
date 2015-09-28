@@ -23,76 +23,88 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @RunWith(JukitoRunner.class)
 public class DashboardActivityTest {
 
+	@Inject
+	private DashboardActivity dashboardPresenter;
+	@Inject
+	private DashboardView dashboardView;
+	@Inject
+	@AdminTreeView
+	private TreeView.TreePresenter treePresenter;
+	@Inject
+	private PeerActionsView.PeerActionsPresenter peerActionsPresenter;
+	@Inject
+	private TagDetailsActivity tagDetailsActivityFactory;
+	@Inject
+	private IClientLoginManager clientLoginManager;
+	@Inject
+	private IPlaceController IPlaceController;
 
-    @Inject
-    private DashboardActivity dashboardPresenter;
-    @Inject
-    private DashboardView dashboardView;
-    @Inject
-    @AdminTreeView
-    private TreeView.TreePresenter treePresenter;
-    @Inject
-    private PeerActionsView.PeerActionsPresenter peerActionsPresenter;
-    @Inject
-    private TagDetailsActivity tagDetailsActivityFactory;
-    @Inject
-    private IClientLoginManager clientLoginManager;
-    @Inject
-    private IPlaceController IPlaceController;
+	@Inject
+	private ArgumentCaptor<AsyncCallback<UserInfo>> asyncCallbackArgumentCaptor;
 
-    @Inject
-    private ArgumentCaptor<AsyncCallback<UserInfo>> asyncCallbackArgumentCaptor;
+	private UserInfo userInfo;
 
-    private UserInfo userInfo;
+	@Test
+	public void testInitAdmin() throws Exception {
+		dashboardPresenter.init();
+		verify(clientLoginManager).getUserInfoAsync(
+				asyncCallbackArgumentCaptor.capture());
+		AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor
+				.getValue();
+		userInfo = new UserInfo("sls", true, true, "", "", new Date(0), null);
+		callback.onSuccess(userInfo);
+		verify(peerActionsPresenter).init();
+		verify(treePresenter).init();
+		verifyNoMoreInteractions(IPlaceController, clientLoginManager,
+				treePresenter, peerActionsPresenter);
+	}
 
-    @Test
-    public void testInitAdmin() throws Exception {
-        dashboardPresenter.init();
-        verify(clientLoginManager).getUserInfoAsync(asyncCallbackArgumentCaptor.capture());
-        AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor.getValue();
-        userInfo = new UserInfo("sls", true, true, "", "", new Date(0), null);
-        callback.onSuccess(userInfo);
-        verify(peerActionsPresenter).init();
-        verify(treePresenter).init();
-        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
-    }
+	@Test
+	public void testLoggedOnNotAdmin() throws Exception {
+		dashboardPresenter.init();
+		verify(clientLoginManager).getUserInfoAsync(
+				asyncCallbackArgumentCaptor.capture());
+		AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor
+				.getValue();
+		userInfo = new UserInfo("sls", false, true, "", "", new Date(0), null);
+		callback.onSuccess(userInfo);
+		verify(IPlaceController).goTo(new HomePlace());
+		verifyNoMoreInteractions(IPlaceController, clientLoginManager,
+				treePresenter, peerActionsPresenter);
+	}
 
-    @Test
-    public void testLoggedOnNotAdmin() throws Exception {
-        dashboardPresenter.init();
-        verify(clientLoginManager).getUserInfoAsync(asyncCallbackArgumentCaptor.capture());
-        AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor.getValue();
-        userInfo = new UserInfo("sls", false, true, "", "", new Date(0), null);
-        callback.onSuccess(userInfo);
-        verify(IPlaceController).goTo(new HomePlace());
-        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
-    }
+	@Test
+	public void testNotLoggedOn() throws Exception {
+		dashboardPresenter.init();
+		verify(clientLoginManager).getUserInfoAsync(
+				asyncCallbackArgumentCaptor.capture());
+		AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor
+				.getValue();
+		userInfo = new UserInfo("sls", false, false, "", "", new Date(0), null);
+		callback.onSuccess(userInfo);
+		verify(clientLoginManager).redirectToLogin();
+		verifyNoMoreInteractions(IPlaceController, clientLoginManager,
+				treePresenter, peerActionsPresenter);
+	}
 
-    @Test
-    public void testNotLoggedOn() throws Exception {
-        dashboardPresenter.init();
-        verify(clientLoginManager).getUserInfoAsync(asyncCallbackArgumentCaptor.capture());
-        AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor.getValue();
-        userInfo = new UserInfo("sls", false, false, "", "", new Date(0), null);
-        callback.onSuccess(userInfo);
-        verify(clientLoginManager).redirectToLogin();
-        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
-    }
+	@Test
+	public void testErrorInClientLoginManager() throws Exception {
+		dashboardPresenter.init();
+		verify(clientLoginManager).getUserInfoAsync(
+				asyncCallbackArgumentCaptor.capture());
+		AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor
+				.getValue();
+		callback.onFailure(new RuntimeException());
+		verify(IPlaceController).goTo(new HomePlace());
+		verifyNoMoreInteractions(IPlaceController, clientLoginManager,
+				treePresenter, peerActionsPresenter);
+	}
 
-    @Test
-    public void testErrorInClientLoginManager() throws Exception {
-        dashboardPresenter.init();
-        verify(clientLoginManager).getUserInfoAsync(asyncCallbackArgumentCaptor.capture());
-        AsyncCallback<UserInfo> callback = asyncCallbackArgumentCaptor.getValue();
-        callback.onFailure(new RuntimeException());
-        verify(IPlaceController).goTo(new HomePlace());
-        verifyNoMoreInteractions(IPlaceController, clientLoginManager, treePresenter, peerActionsPresenter);
-    }
-
-    @Test
-    public void testOnStop() throws Exception {
-        dashboardPresenter.onStop();
-        verify(peerActionsPresenter).stop();
-        verifyNoMoreInteractions(peerActionsPresenter, IPlaceController, clientLoginManager, treePresenter);
-    }
+	@Test
+	public void testOnStop() throws Exception {
+		dashboardPresenter.onStop();
+		verify(peerActionsPresenter).stop();
+		verifyNoMoreInteractions(peerActionsPresenter, IPlaceController,
+				clientLoginManager, treePresenter);
+	}
 }

@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.model.jpa.peerdatabase;
 
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -42,24 +42,24 @@ import static org.junit.Assert.assertNull;
  * @author steven
  */
 public class PeerDatabaseEntityTest {
-    @Test
-    public void testGetCachedTagTree() {
-        System.out.println("getCachedTagTree");
+	@Test
+	public void testGetCachedTagTree() {
+		System.out.println("getCachedTagTree");
 
-        PeerDatabaseEntity instance = new PeerDatabaseEntity();
-        List expResult = null;
-        TagNode result = instance.getCachedTagTree();
-        assertEquals(expResult, result);
-        TagNode root = new TagNode();
-        TagNode tree = new TagNode("1");
-        root.addChild(tree);
-        instance.setCachedTagTree(root);
+		PeerDatabaseEntity instance = new PeerDatabaseEntity();
+		List expResult = null;
+		TagNode result = instance.getCachedTagTree();
+		assertEquals(expResult, result);
+		TagNode root = new TagNode();
+		TagNode tree = new TagNode("1");
+		root.addChild(tree);
+		instance.setCachedTagTree(root);
 
-        TagNode rTree = instance.getCachedTagTree();
-        TagNode rNode = rTree.getChildren().get(0);
-        assertEquals("1", rNode.getId());
+		TagNode rTree = instance.getCachedTagTree();
+		TagNode rNode = rTree.getChildren().get(0);
+		assertEquals("1", rNode.getId());
 
-        instance.setCachedTagTree(null);
-        assertNull(instance.getCachedTagTree());
-    }
+		instance.setCachedTagTree(null);
+		assertNull(instance.getCachedTagTree());
+	}
 }

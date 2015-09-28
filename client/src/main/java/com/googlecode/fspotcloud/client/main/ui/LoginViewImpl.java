@@ -41,109 +41,107 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class LoginViewImpl extends Composite implements LoginView {
-    private final Logger log = Logger.getLogger(LoginViewImpl.class.getName());
-    private static final LoginViewImplUiBinder uiBinder = GWT.create(LoginViewImplUiBinder.class);
-    private final IScheduler scheduler;
-    private LoginPresenter presenter;
-    @UiField
-    TextBox userNameTextBox;
-    @UiField
-    PasswordTextBox passwordTextBox;
-    @UiField(provided = true)
-    ActionButton otherLogin;
-    @UiField
-    Label statusLabel;
-    @UiField(provided = true)
-    ActionButton login;
-    @UiField(provided = true)
-    ActionButton signUp;
-    @UiField(provided = true)
-    ActionButton cancel;
-    @UiField(provided = true)
-    ActionButton resend;
-    @UiField(provided = true)
-    ActionButton passwordReset;
+	private final Logger log = Logger.getLogger(LoginViewImpl.class.getName());
+	private static final LoginViewImplUiBinder uiBinder = GWT
+			.create(LoginViewImplUiBinder.class);
+	private final IScheduler scheduler;
+	private LoginPresenter presenter;
+	@UiField
+	TextBox userNameTextBox;
+	@UiField
+	PasswordTextBox passwordTextBox;
+	@UiField(provided = true)
+	ActionButton otherLogin;
+	@UiField
+	Label statusLabel;
+	@UiField(provided = true)
+	ActionButton login;
+	@UiField(provided = true)
+	ActionButton signUp;
+	@UiField(provided = true)
+	ActionButton cancel;
+	@UiField(provided = true)
+	ActionButton resend;
+	@UiField(provided = true)
+	ActionButton passwordReset;
 
-    @Inject
-    public LoginViewImpl(IScheduler scheduler, UserActions actions,
-                         ApplicationActions applicationActions,
-                         BigButtonFactory factory) {
-        this.scheduler = scheduler;
-        otherLogin = factory.getButton(actions.otherLogin);
-        cancel = factory.getButton(applicationActions.goToLatest);
-        signUp = factory.getButton(actions.goSignUp);
-        resend = factory.getButton(actions.goResendConfirmation);
-        passwordReset = factory.getButton(actions.goResetPassword);
-        login = factory.getButton(actions.doLogin);
+	@Inject
+	public LoginViewImpl(IScheduler scheduler, UserActions actions,
+			ApplicationActions applicationActions, BigButtonFactory factory) {
+		this.scheduler = scheduler;
+		otherLogin = factory.getButton(actions.otherLogin);
+		cancel = factory.getButton(applicationActions.goToLatest);
+		signUp = factory.getButton(actions.goSignUp);
+		resend = factory.getButton(actions.goResendConfirmation);
+		passwordReset = factory.getButton(actions.goResetPassword);
+		login = factory.getButton(actions.doLogin);
 
-        initWidget(uiBinder.createAndBindUi(this));
+		initWidget(uiBinder.createAndBindUi(this));
 
-        userNameTextBox.ensureDebugId("username");
-        passwordTextBox.ensureDebugId("password");
-        statusLabel.ensureDebugId("status");
-        log.log(Level.FINE, "Created");
-    }
+		userNameTextBox.ensureDebugId("username");
+		passwordTextBox.ensureDebugId("password");
+		statusLabel.ensureDebugId("status");
+		log.log(Level.FINE, "Created");
+	}
 
-    @Override
-    public void setPresenter(LoginPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setPresenter(LoginPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public String getUserNameField() {
-        return userNameTextBox.getText();
-    }
+	@Override
+	public String getUserNameField() {
+		return userNameTextBox.getText();
+	}
 
-    @Override
-    public String getPasswordField() {
-        return passwordTextBox.getText();
-    }
+	@Override
+	public String getPasswordField() {
+		return passwordTextBox.getText();
+	}
 
-    @Override
-    public void setStatusText(String text) {
-        statusLabel.setText(text);
-    }
+	@Override
+	public void setStatusText(String text) {
+		statusLabel.setText(text);
+	}
 
-    @Override
-    public void focusUserNameField() {
-        scheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                userNameTextBox.setFocus(true);
-            }
-        });
-    }
+	@Override
+	public void focusUserNameField() {
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				userNameTextBox.setFocus(true);
+			}
+		});
+	}
 
-    @Override
-    public void focusPasswordField() {
-        scheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                passwordTextBox.setFocus(true);
-            }
-        });
+	@Override
+	public void focusPasswordField() {
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				passwordTextBox.setFocus(true);
+			}
+		});
 
-    }
+	}
 
-    @Override
-    public void clearFields() {
-        userNameTextBox.setText("");
-        passwordTextBox.setText("");
-    }
+	@Override
+	public void clearFields() {
+		userNameTextBox.setText("");
+		passwordTextBox.setText("");
+	}
 
+	@UiHandler("userNameTextBox")
+	public void onUserNameKey(KeyUpEvent e) {
+		presenter.onUserFieldKeyUp(e.getNativeKeyCode());
+	}
 
-    @UiHandler("userNameTextBox")
-    public void onUserNameKey(KeyUpEvent e) {
-        presenter.onUserFieldKeyUp(e.getNativeKeyCode());
-    }
+	@UiHandler("passwordTextBox")
+	public void onPasswordKey(KeyUpEvent e) {
+		presenter.onPasswordFieldKeyUp(e.getNativeKeyCode());
+	}
 
-    @UiHandler("passwordTextBox")
-    public void onPasswordKey(KeyUpEvent e) {
-        presenter.onPasswordFieldKeyUp(e.getNativeKeyCode());
-    }
-
-    interface LoginViewImplUiBinder extends UiBinder<Widget, LoginViewImpl> {
-    }
+	interface LoginViewImplUiBinder extends UiBinder<Widget, LoginViewImpl> {
+	}
 }

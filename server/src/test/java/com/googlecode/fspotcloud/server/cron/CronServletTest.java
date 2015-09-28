@@ -41,42 +41,42 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class CronServletTest extends ServletTestCase {
-    ServletRunner sr;
+	ServletRunner sr;
 
-    public CronServletTest(String name) {
-        super(name);
-    }
+	public CronServletTest(String name) {
+		super(name);
+	}
 
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-        sr = new ServletRunner();
-        sr.registerServlet("cron", CronServlet.class.getName());
-    }
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		sr = new ServletRunner();
+		sr.registerServlet("cron", CronServlet.class.getName());
+	}
 
-    @Test
-    public void testThumb() throws Exception {
-        Dispatch dispatch = mock(Dispatch.class);
+	@Test
+	public void testThumb() throws Exception {
+		Dispatch dispatch = mock(Dispatch.class);
 
-        ServletUnitClient sc = sr.newClient();
-        WebRequest request = new GetMethodWebRequest(
-                "http://test.meterware.com/cron");
-        request.setParameter("action", "synchronize-peer");
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request = new GetMethodWebRequest(
+				"http://test.meterware.com/cron");
+		request.setParameter("action", "synchronize-peer");
 
-        InvocationContext ic = sc.newInvocation(request);
-        CronServlet servlet = (CronServlet) ic.getServlet();
-        servlet.dispatch = dispatch;
-        servlet.service(ic.getRequest(), ic.getResponse());
+		InvocationContext ic = sc.newInvocation(request);
+		CronServlet servlet = (CronServlet) ic.getServlet();
+		servlet.dispatch = dispatch;
+		servlet.service(ic.getRequest(), ic.getResponse());
 
-        WebResponse response = ic.getServletResponse();
-        assertNotNull("No response received", response);
-        assertEquals("content type", "text/plain", response.getContentType());
-        verify(dispatch).execute(new UserSynchronizesPeerAction());
-    }
+		WebResponse response = ic.getServletResponse();
+		assertNotNull("No response received", response);
+		assertEquals("content type", "text/plain", response.getContentType());
+		verify(dispatch).execute(new UserSynchronizesPeerAction());
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
-        sr.shutDown();
-    }
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+		sr.shutDown();
+	}
 }

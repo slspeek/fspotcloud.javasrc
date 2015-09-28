@@ -39,51 +39,53 @@ import java.util.logging.Logger;
 import static org.junit.Assert.*;
 
 public class UserManagerTest {
-    private final Logger log = Logger.getLogger(UserManagerTest.class.getName());
-    public static final String EMAIL = "douglas@yahoo.com";
-    public static final String JSLINT = "jslint";
-    public static final String IHATEPASSOWRDS = "ihatepassowrds";
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private UserDao userManager;
+	private final Logger log = Logger
+			.getLogger(UserManagerTest.class.getName());
+	public static final String EMAIL = "douglas@yahoo.com";
+	public static final String JSLINT = "jslint";
+	public static final String IHATEPASSOWRDS = "ihatepassowrds";
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private UserDao userManager;
 
-    @Before
-    public void assertEmpty() {
-        assertTrue(userManager.isEmpty());
-    }
+	@Before
+	public void assertEmpty() {
+		assertTrue(userManager.isEmpty());
+	}
 
-    @After
-    public void cleanUp() throws Exception {
-        userManager.deleteBulk(100);
-    }
+	@After
+	public void cleanUp() throws Exception {
+		userManager.deleteBulk(100);
+	}
 
-    @Test
-    public void testLogin() throws Exception {
-        // userManager.newPeristentEntity();
-        User user;
+	@Test
+	public void testLogin() throws Exception {
+		// userManager.newPeristentEntity();
+		User user;
 
-        user = userManager.newEntity(RMS_FSF_ORG);
-        user.setCredentials(IHATEPASSOWRDS);
-        userManager.save(user);
+		user = userManager.newEntity(RMS_FSF_ORG);
+		user.setCredentials(IHATEPASSOWRDS);
+		userManager.save(user);
 
-        user = userManager.newEntity("foo");
-        user.setEmail(EMAIL);
-        user.setCredentials(JSLINT);
-        userManager.save(user);
-        user = userManager.newEntity("foo");
-        user.setEmail(EMAIL);
-        user.setCredentials(JSLINT);
-        userManager.save(user);
-        assertEquals(2, userManager.count(10));
+		user = userManager.newEntity("foo");
+		user.setEmail(EMAIL);
+		user.setCredentials(JSLINT);
+		userManager.save(user);
+		user = userManager.newEntity("foo");
+		user.setEmail(EMAIL);
+		user.setCredentials(JSLINT);
+		userManager.save(user);
+		assertEquals(2, userManager.count(10));
 
-        user = null;
-        user = userManager.tryToLogin(EMAIL, JSLINT);
-        assertNotNull(user);
+		user = null;
+		user = userManager.tryToLogin(EMAIL, JSLINT);
+		assertNotNull(user);
 
-        user = null;
-        user = userManager.tryToLogin(RMS_FSF_ORG, IHATEPASSOWRDS);
-        assertNotNull(user);
-    }
+		user = null;
+		user = userManager.tryToLogin(RMS_FSF_ORG, IHATEPASSOWRDS);
+		assertNotNull(user);
+	}
 }

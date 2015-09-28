@@ -38,111 +38,112 @@ import javax.inject.Inject;
 import static org.junit.Assert.*;
 
 public class PeerDatabaseManagerTest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private PeerDatabaseDao manager;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private PeerDatabaseDao manager;
 
-    @Before
-    public void setUp() throws Exception {
-    }
+	@Before
+	public void setUp() throws Exception {
+	}
 
-    @Test
-    public void resetCachedTagTree() {
-        PeerDatabase defaultPD = manager.get();
-        TagNode list = defaultPD.getCachedTagTree();
-        assertNull(list);
-        list = new TagNode();
-        defaultPD.setCachedTagTree(list);
-        manager.save(defaultPD);
-        defaultPD = null;
-        defaultPD = manager.get();
-        list = defaultPD.getCachedTagTree();
-        assertNotNull(list);
-        defaultPD.setCachedTagTree(null);
-        assertNull(defaultPD.getCachedTagTree());
-        manager.save(defaultPD);
-        defaultPD = null;
-        defaultPD = manager.get();
-        list = defaultPD.getCachedTagTree();
-        assertNull(list);
-    }
+	@Test
+	public void resetCachedTagTree() {
+		PeerDatabase defaultPD = manager.get();
+		TagNode list = defaultPD.getCachedTagTree();
+		assertNull(list);
+		list = new TagNode();
+		defaultPD.setCachedTagTree(list);
+		manager.save(defaultPD);
+		defaultPD = null;
+		defaultPD = manager.get();
+		list = defaultPD.getCachedTagTree();
+		assertNotNull(list);
+		defaultPD.setCachedTagTree(null);
+		assertNull(defaultPD.getCachedTagTree());
+		manager.save(defaultPD);
+		defaultPD = null;
+		defaultPD = manager.get();
+		list = defaultPD.getCachedTagTree();
+		assertNull(list);
+	}
 
-    @Test
-    public void resetCachedAdminTagTree() {
-        PeerDatabase defaultPD = manager.get();
-        TagNode list = defaultPD.getCachedAdminTagTree();
-        assertNull(list);
-        list = new TagNode();
-        defaultPD.setCachedAdminTagTree(list);
-        manager.save(defaultPD);
-        defaultPD = null;
-        defaultPD = manager.get();
-        list = defaultPD.getCachedAdminTagTree();
-        assertNotNull(list);
-        defaultPD.setCachedAdminTagTree(null);
-        assertNull(defaultPD.getCachedAdminTagTree());
-        manager.save(defaultPD);
-        defaultPD = null;
-        defaultPD = manager.get();
-        list = defaultPD.getCachedAdminTagTree();
-        assertNull(list);
-    }
+	@Test
+	public void resetCachedAdminTagTree() {
+		PeerDatabase defaultPD = manager.get();
+		TagNode list = defaultPD.getCachedAdminTagTree();
+		assertNull(list);
+		list = new TagNode();
+		defaultPD.setCachedAdminTagTree(list);
+		manager.save(defaultPD);
+		defaultPD = null;
+		defaultPD = manager.get();
+		list = defaultPD.getCachedAdminTagTree();
+		assertNotNull(list);
+		defaultPD.setCachedAdminTagTree(null);
+		assertNull(defaultPD.getCachedAdminTagTree());
+		manager.save(defaultPD);
+		defaultPD = null;
+		defaultPD = manager.get();
+		list = defaultPD.getCachedAdminTagTree();
+		assertNull(list);
+	}
 
-    @Test
-    public void resetCachedTagTree2() {
-        manager.resetCachedTagTrees();
+	@Test
+	public void resetCachedTagTree2() {
+		manager.resetCachedTagTrees();
 
-        PeerDatabase defaultPD = manager.get();
-        TagNode list = defaultPD.getCachedTagTree();
-        assertNull(list);
-        list = new TagNode();
-        defaultPD.setCachedTagTree(list);
-        manager.save(defaultPD);
-        defaultPD = null;
-        defaultPD = manager.get();
-        list = defaultPD.getCachedTagTree();
-        assertNotNull(list);
-        manager.resetCachedTagTrees();
-        defaultPD = null;
-        defaultPD = manager.get();
-        list = defaultPD.getCachedTagTree();
-        assertNull(list);
-    }
+		PeerDatabase defaultPD = manager.get();
+		TagNode list = defaultPD.getCachedTagTree();
+		assertNull(list);
+		list = new TagNode();
+		defaultPD.setCachedTagTree(list);
+		manager.save(defaultPD);
+		defaultPD = null;
+		defaultPD = manager.get();
+		list = defaultPD.getCachedTagTree();
+		assertNotNull(list);
+		manager.resetCachedTagTrees();
+		defaultPD = null;
+		defaultPD = manager.get();
+		list = defaultPD.getCachedTagTree();
+		assertNull(list);
+	}
 
-    @Test
-    public void testGet() {
-        PeerDatabase defaultPD = manager.get();
-        assertNotNull(defaultPD);
+	@Test
+	public void testGet() {
+		PeerDatabase defaultPD = manager.get();
+		assertNotNull(defaultPD);
 
-        PeerDatabase secondInstance = manager.get();
-        assertNotNull(secondInstance);
-    }
+		PeerDatabase secondInstance = manager.get();
+		assertNotNull(secondInstance);
+	}
 
-    @Test
-    public void testSave() {
-        PeerDatabase defaultPD = manager.get();
-        manager.save(defaultPD);
-    }
+	@Test
+	public void testSave() {
+		PeerDatabase defaultPD = manager.get();
+		manager.save(defaultPD);
+	}
 
-    @Test
-    public void testGetCachedTagTree() {
-        PeerDatabase defaultPD = manager.get();
-        TagNode list = defaultPD.getCachedTagTree();
-        assertNull(list);
-    }
+	@Test
+	public void testGetCachedTagTree() {
+		PeerDatabase defaultPD = manager.get();
+		TagNode list = defaultPD.getCachedTagTree();
+		assertNull(list);
+	}
 
-    @Test
-    public void testDefaultsForThumbDimension() {
-        PeerDatabase defaultPD = manager.get();
-        String dim = defaultPD.getThumbDimension();
-        assertEquals("512x384", dim);
-    }
+	@Test
+	public void testDefaultsForThumbDimension() {
+		PeerDatabase defaultPD = manager.get();
+		String dim = defaultPD.getThumbDimension();
+		assertEquals("512x384", dim);
+	}
 
-    @Test
-    public void testDefaultForGetTagCount() {
-        PeerDatabase defaultPD = manager.get();
-        int count = defaultPD.getTagCount();
-        assertEquals(0, count);
-    }
+	@Test
+	public void testDefaultForGetTagCount() {
+		PeerDatabase defaultPD = manager.get();
+		int count = defaultPD.getTagCount();
+		assertEquals(0, count);
+	}
 }

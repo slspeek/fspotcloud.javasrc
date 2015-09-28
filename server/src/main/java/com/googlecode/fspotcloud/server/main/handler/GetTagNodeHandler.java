@@ -34,20 +34,21 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class GetTagNodeHandler
+		extends
+			SimpleActionHandler<GetTagNodeAction, TagNodeResult> {
+	private final TagDao tagDao;
 
-public class GetTagNodeHandler extends SimpleActionHandler<GetTagNodeAction, TagNodeResult> {
-    private final TagDao tagDao;
+	@Inject
+	public GetTagNodeHandler(TagDao tagDao) {
+		this.tagDao = tagDao;
+	}
 
-    @Inject
-    public GetTagNodeHandler(TagDao tagDao) {
-        this.tagDao = tagDao;
-    }
-
-    @Override
-    public TagNodeResult execute(GetTagNodeAction action,
-                                 ExecutionContext context) throws DispatchException {
-        Tag tag = tagDao.find(action.getTagId());
-        TagNode node = tagDao.getTagNode(tag);
-        return new TagNodeResult(node);
-    }
+	@Override
+	public TagNodeResult execute(GetTagNodeAction action,
+			ExecutionContext context) throws DispatchException {
+		Tag tag = tagDao.find(action.getTagId());
+		TagNode node = tagDao.getTagNode(tag);
+		return new TagNodeResult(node);
+	}
 }

@@ -40,41 +40,42 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 
 import java.util.logging.Logger;
 
-
 public class MailFullsizeViewImpl extends Composite implements MailFullsizeView {
-    private final Logger log = Logger.getLogger(MailFullsizeViewImpl.class.getName());
-    private static final MailFullsizeImplUiBinder uiBinder = GWT.create(MailFullsizeImplUiBinder.class);
-    @UiField
-    Label statusLabel;
-    @UiField(provided = true)
-    ActionButton mail;
-    @UiField(provided = true)
-    ActionButton cancel;
-    @UiField(provided = true)
-    ImageViewImpl imageView;
+	private final Logger log = Logger.getLogger(MailFullsizeViewImpl.class
+			.getName());
+	private static final MailFullsizeImplUiBinder uiBinder = GWT
+			.create(MailFullsizeImplUiBinder.class);
+	@UiField
+	Label statusLabel;
+	@UiField(provided = true)
+	ActionButton mail;
+	@UiField(provided = true)
+	ActionButton cancel;
+	@UiField(provided = true)
+	ImageViewImpl imageView;
 
-    @Inject
-    public MailFullsizeViewImpl(UserActions userActions,
-                                DashboardActions dashboardActions,
-                                BigButtonFactory factory,
-                                ImageViewFactoryImpl imageViewFactory) {
-        mail = factory.getButton(userActions.doMailFullsize);
-        cancel = factory.getButton(dashboardActions.toPhotos);
-        this.imageView = (ImageViewImpl) imageViewFactory.get("0x0");
-        initWidget(uiBinder.createAndBindUi(this));
-        statusLabel.ensureDebugId("status");
-    }
+	@Inject
+	public MailFullsizeViewImpl(UserActions userActions,
+			DashboardActions dashboardActions, BigButtonFactory factory,
+			ImageViewFactoryImpl imageViewFactory) {
+		mail = factory.getButton(userActions.doMailFullsize);
+		cancel = factory.getButton(dashboardActions.toPhotos);
+		this.imageView = (ImageViewImpl) imageViewFactory.get("0x0");
+		initWidget(uiBinder.createAndBindUi(this));
+		statusLabel.ensureDebugId("status");
+	}
 
-    public ImageViewImpl getImageView() {
-        return imageView;
-    }
+	public ImageViewImpl getImageView() {
+		return imageView;
+	}
 
-    @Override
-    public void setStatusText(String text) {
-        statusLabel.setText(text);
-    }
+	@Override
+	public void setStatusText(String text) {
+		statusLabel.setText(text);
+	}
 
-
-    interface MailFullsizeImplUiBinder extends UiBinder<Widget, MailFullsizeViewImpl> {
-    }
+	interface MailFullsizeImplUiBinder
+			extends
+				UiBinder<Widget, MailFullsizeViewImpl> {
+	}
 }

@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
@@ -38,21 +38,21 @@ import javax.inject.Inject;
  * @author steven
  */
 public class SendPasswordResetPage {
-    @Inject
-    private SeleniumPerformer performer;
-    @Inject
-    private Selenium selenium;
-    @Inject
-    private UserActions userActions;
+	@Inject
+	private SeleniumPerformer performer;
+	@Inject
+	private Selenium selenium;
+	@Inject
+	private UserActions userActions;
 
-    public SendPasswordResetPage open() {
-        selenium.open("#SendPasswordResetPlace:");
-        selenium.waitForPageToLoad("30000");
-        return this;
-    }
+	public SendPasswordResetPage open() {
+		selenium.open("#SendPasswordResetPlace:");
+		selenium.waitForPageToLoad("30000");
+		return this;
+	}
 
-    public void submitEmail(String email) {
-        selenium.type("id=gwt-debug-email", email);
-        performer.performAction(userActions.doRequestPasswordReset);
-    }
+	public void submitEmail(String email) {
+		selenium.type("id=gwt-debug-email", email);
+		performer.performAction(userActions.doRequestPasswordReset);
+	}
 }

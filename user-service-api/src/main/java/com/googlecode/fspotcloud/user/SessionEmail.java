@@ -30,20 +30,19 @@ import com.google.inject.Provider;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-
 public class SessionEmail implements ISessionEmail {
-    @Inject
-    Provider<HttpSession> sessionProvider;
+	@Inject
+	Provider<HttpSession> sessionProvider;
 
-    @Override
-    public String getEmail() {
-        HttpSession session = sessionProvider.get();
-        List<String> emails = (List<String>) session.getAttribute("email");
+	@Override
+	public String getEmail() {
+		HttpSession session = sessionProvider.get();
+		List<String> emails = (List<String>) session.getAttribute("email");
 
-        if (emails != null && !emails.isEmpty()) {
-            return emails.get(0);
-        } else {
-            return null;
-        }
-    }
+		if (emails != null && !emails.isEmpty()) {
+			return emails.get(0);
+		} else {
+			return null;
+		}
+	}
 }

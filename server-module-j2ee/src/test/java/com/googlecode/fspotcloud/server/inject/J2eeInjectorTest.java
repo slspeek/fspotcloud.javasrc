@@ -39,25 +39,29 @@ import org.testng.annotations.Test;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 public class J2eeInjectorTest {
-    @Test
-    public void testInjector() {
-        Injector injector = Guice.createInjector(Modules.override(
-                new J2eeTotalModule(10, "FOO_BAR", "foo@bar", "")).with(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(HttpSession.class).to(FakeHttpServletSession.class);
+	@Test
+	public void testInjector() {
+		Injector injector = Guice.createInjector(Modules.override(
+				new J2eeTotalModule(10, "FOO_BAR", "foo@bar", "")).with(
+				new AbstractModule() {
+					@Override
+					protected void configure() {
+						bind(HttpSession.class)
+								.to(FakeHttpServletSession.class);
 
-                bind(HttpServletRequest.class).to(FakeHttpRequest.class);
-            }
-        }));
+						bind(HttpServletRequest.class)
+								.to(FakeHttpRequest.class);
+					}
+				}));
 
-        AssertJUnit.assertNotNull(injector);
+		AssertJUnit.assertNotNull(injector);
 
-        PeerDatabaseDao defaultPeer = injector.getInstance(PeerDatabaseDao.class);
-        PeerDatabase pd = defaultPeer.get();
-        ControllerDispatchAsync controller = injector.getInstance(ControllerDispatchAsync.class);
-        AssertJUnit.assertNotNull(controller);
-    }
+		PeerDatabaseDao defaultPeer = injector
+				.getInstance(PeerDatabaseDao.class);
+		PeerDatabase pd = defaultPeer.get();
+		ControllerDispatchAsync controller = injector
+				.getInstance(ControllerDispatchAsync.class);
+		AssertJUnit.assertNotNull(controller);
+	}
 }

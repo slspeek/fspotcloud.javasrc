@@ -26,56 +26,55 @@ package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
 import java.util.List;
 
-
 public class RemovePhotosFromTagAction extends AbstractBatchAction<String> {
-    private static final long serialVersionUID = -8353337263892135688L;
-    private final String tagId;
+	private static final long serialVersionUID = -8353337263892135688L;
+	private final String tagId;
 
-    public RemovePhotosFromTagAction(String tagId, List<String> toBeDeleted) {
-        super(toBeDeleted);
-        this.tagId = tagId;
-    }
+	public RemovePhotosFromTagAction(String tagId, List<String> toBeDeleted) {
+		super(toBeDeleted);
+		this.tagId = tagId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 
-        final RemovePhotosFromTagAction other = (RemovePhotosFromTagAction) obj;
+		final RemovePhotosFromTagAction other = (RemovePhotosFromTagAction) obj;
 
-        if (this.tagId == null ? other.tagId != null
-                : !this.tagId.equals(other.tagId)) {
-            return false;
-        }
+		if (this.tagId == null ? other.tagId != null : !this.tagId
+				.equals(other.tagId)) {
+			return false;
+		}
 
-        return super.equals(obj);
-    }
+		return super.equals(obj);
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (this.tagId != null ? this.tagId.hashCode() : 0);
+	@Override
+	public int hashCode() {
+		int hash = 5;
+		hash = 71 * hash + (this.tagId != null ? this.tagId.hashCode() : 0);
 
-        return hash;
-    }
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("RemovePhotosFromTagAction");
-        sb.append("{super='").append(super.toString()).append("' tagId='")
-                .append(tagId).append('\'');
-        sb.append('}');
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("RemovePhotosFromTagAction");
+		sb.append("{super='").append(super.toString()).append("' tagId='")
+				.append(tagId).append('\'');
+		sb.append('}');
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 }

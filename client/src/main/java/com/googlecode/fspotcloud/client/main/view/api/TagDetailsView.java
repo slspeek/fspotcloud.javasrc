@@ -32,24 +32,24 @@ import com.google.gwt.user.client.ui.IsWidget;
 @GwtCompatible
 public interface TagDetailsView extends IsWidget {
 
-    HasText getImportButtonText();
+	HasText getImportButtonText();
 
-    HasText getTagNameValue();
+	HasText getTagNameValue();
 
-    HasText getTagDescriptionValue();
+	HasText getTagDescriptionValue();
 
-    HasText getTagImportIssuedValue();
+	HasText getTagImportIssuedValue();
 
-    HasText getTagLoadedImagesCountValue();
+	HasText getTagLoadedImagesCountValue();
 
-    HasText getTagImageCountValue();
+	HasText getTagImageCountValue();
 
-    void setPresenter(TagDetailsPresenter presenter);
+	void setPresenter(TagDetailsPresenter presenter);
 
-    interface TagDetailsPresenter extends Activity {
+	interface TagDetailsPresenter extends Activity {
 
-        void init();
+		void init();
 
-        void populateView();
-    }
+		void populateView();
+	}
 }

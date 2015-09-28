@@ -52,131 +52,131 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class ManageUsersViewImpl extends Composite implements ManageUsersView {
-    private final Logger log = Logger.getLogger(ManageUsersViewImpl.class.getName());
-    private static final ManageUsersViewImplUiBinder uiBinder = GWT.create(ManageUsersViewImplUiBinder.class);
-    private ManageUsersView.ManageUsersPresenter presenter;
-    private final ListDataProvider<String> dataProvider;
-    private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
-    private final IModeController modeController;
-    @UiField(provided = true)
-    CellTable<String> table;
-    @UiField(provided = true)
-    ActionButton addButton;
-    @UiField
-    TextBox emailTextBox;
-    @UiField(provided = true)
-    ActionButton removeButton;
-    @UiField(provided = true)
-    ActionButton myUsergroupsButton;
-    @UiField(provided = true)
-    ActionButton dashboardButton;
-    @UiField
-    Label userGroupName;
-    @UiField(provided = true)
-    StatusViewImpl status;
+	private final Logger log = Logger.getLogger(ManageUsersViewImpl.class
+			.getName());
+	private static final ManageUsersViewImplUiBinder uiBinder = GWT
+			.create(ManageUsersViewImplUiBinder.class);
+	private ManageUsersView.ManageUsersPresenter presenter;
+	private final ListDataProvider<String> dataProvider;
+	private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
+	private final IModeController modeController;
+	@UiField(provided = true)
+	CellTable<String> table;
+	@UiField(provided = true)
+	ActionButton addButton;
+	@UiField
+	TextBox emailTextBox;
+	@UiField(provided = true)
+	ActionButton removeButton;
+	@UiField(provided = true)
+	ActionButton myUsergroupsButton;
+	@UiField(provided = true)
+	ActionButton dashboardButton;
+	@UiField
+	Label userGroupName;
+	@UiField(provided = true)
+	StatusViewImpl status;
 
-    @Inject
-    public ManageUsersViewImpl(AdminButtonFactory factory,
-                               DashboardActions dashboardActions,
-                               GroupActions groupActions,
-                               ApplicationActions applicationActions,
-                               @ManageUsers StatusView statusView,
-                               CellTableResources resources,
-                               IModeController modeController) {
-        this.modeController = modeController;
-        this.table = new CellTable<String>(15, resources);
-        this.status = (StatusViewImpl) statusView;
-        myUsergroupsButton = factory.getButton(dashboardActions.manageGroups);
-        addButton = factory.getButton(groupActions.addUser);
-        removeButton = factory.getButton(groupActions.removeUser);
-        dashboardButton = factory.getButton(applicationActions.dashboard);
-        initWidget(uiBinder.createAndBindUi(this));
-        addButton.ensureDebugId("new-button");
-        emailTextBox.ensureDebugId("email");
-        removeButton.ensureDebugId("delete-button");
+	@Inject
+	public ManageUsersViewImpl(AdminButtonFactory factory,
+			DashboardActions dashboardActions, GroupActions groupActions,
+			ApplicationActions applicationActions,
+			@ManageUsers StatusView statusView, CellTableResources resources,
+			IModeController modeController) {
+		this.modeController = modeController;
+		this.table = new CellTable<String>(15, resources);
+		this.status = (StatusViewImpl) statusView;
+		myUsergroupsButton = factory.getButton(dashboardActions.manageGroups);
+		addButton = factory.getButton(groupActions.addUser);
+		removeButton = factory.getButton(groupActions.removeUser);
+		dashboardButton = factory.getButton(applicationActions.dashboard);
+		initWidget(uiBinder.createAndBindUi(this));
+		addButton.ensureDebugId("new-button");
+		emailTextBox.ensureDebugId("email");
+		removeButton.ensureDebugId("delete-button");
 
-        TextColumn<String> nameColumn = new TextColumn<String>() {
-            @Override
-            public String getValue(String info) {
-                return info;
-            }
-        };
-        nameColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		TextColumn<String> nameColumn = new TextColumn<String>() {
+			@Override
+			public String getValue(String info) {
+				return info;
+			}
+		};
+		nameColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-        table.addColumn(nameColumn, "Email");
-        table.setWidth("100%");
-        dataProvider = new ListDataProvider<String>();
+		table.addColumn(nameColumn, "Email");
+		table.setWidth("100%");
+		dataProvider = new ListDataProvider<String>();
 
-        dataProvider.addDataDisplay(table);
-        table.setSelectionModel(selectionModel);
-        table.setPageSize(25);
-    }
+		dataProvider.addDataDisplay(table);
+		table.setSelectionModel(selectionModel);
+		table.setPageSize(25);
+	}
 
+	@Override
+	public void setPresenter(ManageUsersView.ManageUsersPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void setPresenter(ManageUsersView.ManageUsersPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setData(Set<String> data) {
+		List<String> list = dataProvider.getList();
+		list.clear();
 
-    @Override
-    public void setData(Set<String> data) {
-        List<String> list = dataProvider.getList();
-        list.clear();
+		for (String contact : data) {
+			list.add(contact);
+		}
+	}
 
-        for (String contact : data) {
-            list.add(contact);
-        }
-    }
+	@UiHandler("emailTextBox")
+	public void onFocus(FocusEvent e) {
+		log.log(Level.FINEST, "email field focused");
+		modeController.setFlag(Flags.TEXT_INPUT.name());
+	}
 
-    @UiHandler("emailTextBox")
-    public void onFocus(FocusEvent e) {
-        log.log(Level.FINEST, "email field focused");
-        modeController.setFlag(Flags.TEXT_INPUT.name());
-    }
+	@UiHandler("emailTextBox")
+	public void onBlur(BlurEvent e) {
+		log.log(Level.FINEST, "email field focus was lost");
+		modeController.unsetFlag(Flags.TEXT_INPUT.name());
+	}
 
-    @UiHandler("emailTextBox")
-    public void onBlur(BlurEvent e) {
-        log.log(Level.FINEST, "email field focus was lost");
-        modeController.unsetFlag(Flags.TEXT_INPUT.name());
-    }
+	@Override
+	public String getSelected() {
+		return selectionModel.getSelectedObject();
+	}
 
-    @Override
-    public String getSelected() {
-        return selectionModel.getSelectedObject();
-    }
+	@Override
+	public String getNewEmail() {
+		return emailTextBox.getText();
+	}
 
-    @Override
-    public String getNewEmail() {
-        return emailTextBox.getText();
-    }
+	@Override
+	public void setGroupName(String name) {
+		userGroupName.setText(name);
+	}
 
-    @Override
-    public void setGroupName(String name) {
-        userGroupName.setText(name);
-    }
+	@Override
+	public void clearEmail() {
+		emailTextBox.setText("");
+	}
 
-    @Override
-    public void clearEmail() {
-        emailTextBox.setText("");
-    }
+	@Override
+	public void focusEmail() {
+		emailTextBox.setFocus(true);
+	}
 
-    @Override
-    public void focusEmail() {
-        emailTextBox.setFocus(true);
-    }
+	@Override
+	public void focusUsers() {
+		table.setFocus(true);
+	}
 
-    @Override
-    public void focusUsers() {
-        table.setFocus(true);
-    }
+	@Override
+	public void setSelected(String item, boolean state) {
+		selectionModel.setSelected(item, state);
+	}
 
-    @Override
-    public void setSelected(String item, boolean state) {
-        selectionModel.setSelected(item, state);
-    }
-
-    interface ManageUsersViewImplUiBinder extends UiBinder<Widget, ManageUsersViewImpl> {
-    }
+	interface ManageUsersViewImplUiBinder
+			extends
+				UiBinder<Widget, ManageUsersViewImpl> {
+	}
 }

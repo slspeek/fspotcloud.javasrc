@@ -38,40 +38,41 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.util.Set;
 
+public class RevokeUserHandler
+		extends
+			SimpleActionHandler<RevokeUserAction, VoidResult> {
+	private final UserGroupDao userGroupDao;
+	private final UserDao userDao;
+	private final IAdminPermission adminPermission;
 
-public class RevokeUserHandler extends SimpleActionHandler<RevokeUserAction, VoidResult> {
-    private final UserGroupDao userGroupDao;
-    private final UserDao userDao;
-    private final IAdminPermission adminPermission;
+	@Inject
+	public RevokeUserHandler(UserGroupDao userGroupDao, UserDao userDao,
+			IAdminPermission adminPermission) {
+		this.userGroupDao = userGroupDao;
+		this.userDao = userDao;
+		this.adminPermission = adminPermission;
+	}
 
-    @Inject
-    public RevokeUserHandler(UserGroupDao userGroupDao, UserDao userDao,
-                             IAdminPermission adminPermission) {
-        this.userGroupDao = userGroupDao;
-        this.userDao = userDao;
-        this.adminPermission = adminPermission;
-    }
+	@Override
+	public VoidResult execute(RevokeUserAction action, ExecutionContext context)
+			throws DispatchException {
+		adminPermission.checkAdminPermission();
 
-    @Override
-    public VoidResult execute(RevokeUserAction action, ExecutionContext context)
-            throws DispatchException {
-        adminPermission.checkAdminPermission();
+		User user = userDao.findOrNew(action.getEmail());
+		Set<Long> grantedToUser = user.getGrantedUserGroups();
+		grantedToUser.remove(action.getUserGroupId());
+		user.setGrantedUserGroups(grantedToUser);
+		userDao.save(user);
 
-        User user = userDao.findOrNew(action.getEmail());
-        Set<Long> grantedToUser = user.getGrantedUserGroups();
-        grantedToUser.remove(action.getUserGroupId());
-        user.setGrantedUserGroups(grantedToUser);
-        userDao.save(user);
+		UserGroup group = userGroupDao.find(action.getUserGroupId());
 
-        UserGroup group = userGroupDao.find(action.getUserGroupId());
+		if (group != null) {
+			Set<String> userInGroup = group.getGrantedUsers();
+			userInGroup.remove(action.getEmail());
+			group.setGrantedUsers(userInGroup);
+			userGroupDao.save(group);
+		}
 
-        if (group != null) {
-            Set<String> userInGroup = group.getGrantedUsers();
-            userInGroup.remove(action.getEmail());
-            group.setGrantedUsers(userInGroup);
-            userGroupDao.save(group);
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

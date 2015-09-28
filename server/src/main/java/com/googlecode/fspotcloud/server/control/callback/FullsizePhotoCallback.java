@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
-
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
@@ -33,32 +32,33 @@ import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.fspotcloud.shared.peer.FullsizePhotoResult;
 
+public class FullsizePhotoCallback
+		implements
+			SerializableAsyncCallback<FullsizePhotoResult> {
+	private static final long serialVersionUID = 246810426240427570L;
+	@Inject
+	private transient PhotoDao photoManager;
+	@Inject
+	private transient Provider<IMail> mailerProvider;
+	private String caller;
 
-public class FullsizePhotoCallback implements SerializableAsyncCallback<FullsizePhotoResult> {
-    private static final long serialVersionUID = 246810426240427570L;
-    @Inject
-    private transient PhotoDao photoManager;
-    @Inject
-    private transient Provider<IMail> mailerProvider;
-    private String caller;
+	public FullsizePhotoCallback(String caller) {
+		this.caller = caller;
+	}
 
-    public FullsizePhotoCallback(String caller) {
-        this.caller = caller;
-    }
+	@Override
+	public void onFailure(Throwable caught) {
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-    }
-
-    @Override
-    public void onSuccess(FullsizePhotoResult fullsizePhotoResult) {
-        final String imageId = fullsizePhotoResult.getPhotoId();
-        Photo photo = photoManager.find(imageId);
-        String key = photo.getFullsizeImageBlobKey();
-        photoManager.save(photo);
-//        mailerProvider.get().send(caller, "Your requested image: " + imageId,
-//                "Dear " + caller + ",\nYour requested image: " + imageId +
-//                        " is in the attachment", key);
-        throw new IllegalStateException();
-    }
+	@Override
+	public void onSuccess(FullsizePhotoResult fullsizePhotoResult) {
+		final String imageId = fullsizePhotoResult.getPhotoId();
+		Photo photo = photoManager.find(imageId);
+		String key = photo.getFullsizeImageBlobKey();
+		photoManager.save(photo);
+		//        mailerProvider.get().send(caller, "Your requested image: " + imageId,
+		//                "Dear " + caller + ",\nYour requested image: " + imageId +
+		//                        " is in the attachment", key);
+		throw new IllegalStateException();
+	}
 }

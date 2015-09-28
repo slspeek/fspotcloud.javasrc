@@ -31,13 +31,12 @@ import com.googlecode.fspotcloud.model.jpa.gae.user.UserManager;
 import com.googlecode.fspotcloud.server.model.test.GaeLocalDatastoreTestWrapper;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public class UserGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-        install(new GaeCachedModelModule(100, "gae-test"));
-        bind(SimpleDAONamedId.class).to(UserManager.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
+		install(new GaeCachedModelModule(100, "gae-test"));
+		bind(SimpleDAONamedId.class).to(UserManager.class);
+	}
 }

@@ -23,11 +23,10 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.user;
-
 
 /**
  * DOCUMENT ME!
@@ -35,28 +34,28 @@ package com.googlecode.fspotcloud.user;
  * @author steven
  */
 public class LenientUserService implements UserService {
-    @Override
-    public String getThirdPartyLoginURL(String nextUrl) {
-        return "";
-    }
+	@Override
+	public String getThirdPartyLoginURL(String nextUrl) {
+		return "";
+	}
 
-    @Override
-    public String getThirdPartyLogoutURL(String nextUrl) {
-        return "";
-    }
+	@Override
+	public String getThirdPartyLogoutURL(String nextUrl) {
+		return "";
+	}
 
-    @Override
-    public String getEmail() {
-        return "";
-    }
+	@Override
+	public String getEmail() {
+		return "";
+	}
 
-    @Override
-    public boolean isUserLoggedIn() {
-        return true;
-    }
+	@Override
+	public boolean isUserLoggedIn() {
+		return true;
+	}
 
-    @Override
-    public boolean isUserAdmin() {
-        return true;
-    }
+	@Override
+	public boolean isUserAdmin() {
+		return true;
+	}
 }

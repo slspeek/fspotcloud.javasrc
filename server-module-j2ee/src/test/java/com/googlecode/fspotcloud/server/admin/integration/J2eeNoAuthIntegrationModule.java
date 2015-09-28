@@ -35,24 +35,26 @@ import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.simpleblobstore.BlobService;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreModule;
 
-
 public class J2eeNoAuthIntegrationModule
-        extends NoAuthPlaceHolderIntegrationModule {
-	
-    public J2eeNoAuthIntegrationModule(boolean shotwell) {
+		extends
+			NoAuthPlaceHolderIntegrationModule {
+
+	public J2eeNoAuthIntegrationModule(boolean shotwell) {
 		super(shotwell);
 	}
 
 	@Override
-    public void configure() {
-        super.configure();
-        install(Modules.override(new J2eeModelModule(3, "derby"), new J2eeSimpleBlobstoreModule()).with(new AbstractModule(){
+	public void configure() {
+		super.configure();
+		install(Modules.override(new J2eeModelModule(3, "derby"),
+				new J2eeSimpleBlobstoreModule()).with(new AbstractModule() {
 
 			@Override
 			protected void configure() {
 				bind(BlobService.class).toInstance(mock(BlobService.class));
-				
-			}}));
-        bind(Commands.class).to(CommandManager.class).in(Singleton.class);
-    }
+
+			}
+		}));
+		bind(Commands.class).to(CommandManager.class).in(Singleton.class);
+	}
 }

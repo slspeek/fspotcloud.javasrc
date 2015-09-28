@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
@@ -38,22 +38,22 @@ import javax.inject.Inject;
  * @author steven
  */
 public class ChangePasswordPage {
-    @Inject
-    Selenium selenium;
-    @Inject
-    UserActions userActions;
-    @Inject
-    SeleniumPerformer performer;
+	@Inject
+	Selenium selenium;
+	@Inject
+	UserActions userActions;
+	@Inject
+	SeleniumPerformer performer;
 
-    public void open() {
-        selenium.open("#ChangePasswordPlace:"+ILogin.SLS + ":" + ILogin.SLS_EMAIL_VERIFICATION_SECRET);
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open() {
+		selenium.open("#ChangePasswordPlace:" + ILogin.SLS + ":"
+				+ ILogin.SLS_EMAIL_VERIFICATION_SECRET);
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void changePassword(String credentials)
-            throws InterruptedException {
-        selenium.type("id=gwt-debug-password", credentials);
-        selenium.type("id=gwt-debug-password-again", credentials);
-        performer.performAction(userActions.doPasswordReset);
-    }
+	public void changePassword(String credentials) throws InterruptedException {
+		selenium.type("id=gwt-debug-password", credentials);
+		selenium.type("id=gwt-debug-password-again", credentials);
+		performer.performAction(userActions.doPasswordReset);
+	}
 }

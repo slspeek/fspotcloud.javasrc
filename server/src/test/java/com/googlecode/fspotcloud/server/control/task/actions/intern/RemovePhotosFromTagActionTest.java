@@ -31,28 +31,31 @@ import org.junit.Test;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertNotNull;
 
-public class RemovePhotosFromTagActionTest extends EqualsTest<RemovePhotosFromTagAction> {
-    @Test
-    public void testSerialization() {
-        RemovePhotosFromTagAction action = new RemovePhotosFromTagAction("fooMock",
-                newArrayList("2", "3"));
-        byte[] ser = SerializationUtils.serialize(action);
-        RemovePhotosFromTagAction deserialized = (RemovePhotosFromTagAction) SerializationUtils.deserialize(ser);
-        assertNotNull(deserialized);
-    }
+public class RemovePhotosFromTagActionTest
+		extends
+			EqualsTest<RemovePhotosFromTagAction> {
+	@Test
+	public void testSerialization() {
+		RemovePhotosFromTagAction action = new RemovePhotosFromTagAction(
+				"fooMock", newArrayList("2", "3"));
+		byte[] ser = SerializationUtils.serialize(action);
+		RemovePhotosFromTagAction deserialized = (RemovePhotosFromTagAction) SerializationUtils
+				.deserialize(ser);
+		assertNotNull(deserialized);
+	}
 
-    @Override
-    protected RemovePhotosFromTagAction getOne() {
-        return new RemovePhotosFromTagAction("1", newArrayList("2", "3"));
-    }
+	@Override
+	protected RemovePhotosFromTagAction getOne() {
+		return new RemovePhotosFromTagAction("1", newArrayList("2", "3"));
+	}
 
-    @Override
-    protected RemovePhotosFromTagAction getTheOther() {
-        return new RemovePhotosFromTagAction("1", newArrayList("2", "3"));
-    }
+	@Override
+	protected RemovePhotosFromTagAction getTheOther() {
+		return new RemovePhotosFromTagAction("1", newArrayList("2", "3"));
+	}
 
-    @Override
-    protected RemovePhotosFromTagAction getDifferentOne() {
-        return new RemovePhotosFromTagAction("2", newArrayList("2", "3"));
-    }
+	@Override
+	protected RemovePhotosFromTagAction getDifferentOne() {
+		return new RemovePhotosFromTagAction("2", newArrayList("2", "3"));
+	}
 }

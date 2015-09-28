@@ -31,9 +31,9 @@ import com.google.gwt.user.client.ui.IsWidget;
 @GwtCompatible
 public interface EmailConfirmationView extends IsWidget {
 
-    void setStatusText(String text);
+	void setStatusText(String text);
 
-    interface EmailConfirmationPresenter extends Activity {
+	interface EmailConfirmationPresenter extends Activity {
 
-    }
+	}
 }

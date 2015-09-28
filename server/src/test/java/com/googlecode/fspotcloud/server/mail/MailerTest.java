@@ -32,24 +32,23 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
-
 @RunWith(JukitoRunner.class)
 public class MailerTest {
-    @Inject
-    private Mailer mailer;
+	@Inject
+	private Mailer mailer;
 
-    @Test
-    public void testSend() throws Exception {
-        mailer.send("slspeek@gmail.com", "Hi", "Hi Steven");
-        Logger.getAnonymousLogger().info("Mail to steven@localhost send");
-    }
+	@Test
+	public void testSend() throws Exception {
+		mailer.send("slspeek@gmail.com", "Hi", "Hi Steven");
+		Logger.getAnonymousLogger().info("Mail to steven@localhost send");
+	}
 
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
-            bind(String.class).annotatedWith(FromAddress.class)
-                    .toInstance("slspeek@gmail.com");
-            bind(String.class).annotatedWith(SMTPServer.class)
-                    .toInstance("smtp.xs4all.nl");
-        }
-    }
+	public static class Module extends JukitoModule {
+		protected void configureTest() {
+			bind(String.class).annotatedWith(FromAddress.class).toInstance(
+					"slspeek@gmail.com");
+			bind(String.class).annotatedWith(SMTPServer.class).toInstance(
+					"smtp.xs4all.nl");
+		}
+	}
 }

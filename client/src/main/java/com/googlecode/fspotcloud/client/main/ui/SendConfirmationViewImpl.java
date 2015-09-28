@@ -43,47 +43,51 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class SendConfirmationViewImpl extends Composite implements SendConfirmationView {
-    private final Logger log = Logger.getLogger(SendConfirmationViewImpl.class.getName());
-    private static final SendConfirmationViewImplUiBinder uiBinder = GWT.create(SendConfirmationViewImplUiBinder.class);
-    @UiField
-    TextBox emailTextBox;
-    @UiField
-    Label statusLabel;
-    @UiField(provided = true)
-    ActionButton send;
-    @UiField(provided = true)
-    ActionButton cancel;
+public class SendConfirmationViewImpl extends Composite
+		implements
+			SendConfirmationView {
+	private final Logger log = Logger.getLogger(SendConfirmationViewImpl.class
+			.getName());
+	private static final SendConfirmationViewImplUiBinder uiBinder = GWT
+			.create(SendConfirmationViewImplUiBinder.class);
+	@UiField
+	TextBox emailTextBox;
+	@UiField
+	Label statusLabel;
+	@UiField(provided = true)
+	ActionButton send;
+	@UiField(provided = true)
+	ActionButton cancel;
 
-    @Inject
-    public SendConfirmationViewImpl(UserActions userActions,
-                                    DashboardActions dashboardActions,
-                                    BigButtonFactory buttonFactory) {
-        send = buttonFactory.getButton(userActions.doSendEmailConfirmation);
-        cancel = buttonFactory.getButton(dashboardActions.toPhotos);
-        initWidget(uiBinder.createAndBindUi(this));
-        cancel.ensureDebugId("cancel");
-        statusLabel.ensureDebugId("status");
-        emailTextBox.ensureDebugId("email");
-        log.log(Level.FINE, "Created ");
-    }
+	@Inject
+	public SendConfirmationViewImpl(UserActions userActions,
+			DashboardActions dashboardActions, BigButtonFactory buttonFactory) {
+		send = buttonFactory.getButton(userActions.doSendEmailConfirmation);
+		cancel = buttonFactory.getButton(dashboardActions.toPhotos);
+		initWidget(uiBinder.createAndBindUi(this));
+		cancel.ensureDebugId("cancel");
+		statusLabel.ensureDebugId("status");
+		emailTextBox.ensureDebugId("email");
+		log.log(Level.FINE, "Created ");
+	}
 
+	@Override
+	public String getEmailField() {
+		return emailTextBox.getText();
+	}
 
-    @Override
-    public String getEmailField() {
-        return emailTextBox.getText();
-    }
+	@Override
+	public void setStatusText(String text) {
+		statusLabel.setText(text);
+	}
 
-    @Override
-    public void setStatusText(String text) {
-        statusLabel.setText(text);
-    }
+	@Override
+	public void clearEmailField() {
+		emailTextBox.setText("");
+	}
 
-    @Override
-    public void clearEmailField() {
-        emailTextBox.setText("");
-    }
-
-    interface SendConfirmationViewImplUiBinder extends UiBinder<Widget, SendConfirmationViewImpl> {
-    }
+	interface SendConfirmationViewImplUiBinder
+			extends
+				UiBinder<Widget, SendConfirmationViewImpl> {
+	}
 }

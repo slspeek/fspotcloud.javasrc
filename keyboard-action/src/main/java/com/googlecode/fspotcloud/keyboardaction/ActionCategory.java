@@ -10,37 +10,37 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @GwtCompatible
 public class ActionCategory {
-    private final String name;
-    private final List<ActionUIDef> actions = newArrayList();
+	private final String name;
+	private final List<ActionUIDef> actions = newArrayList();
 
-    ActionCategory(String name) {
-        this.name = name;
-    }
+	ActionCategory(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    void add(ActionUIDef action) {
-        actions.add(action);
-    }
+	void add(ActionUIDef action) {
+		actions.add(action);
+	}
 
-    public List<ActionUIDef> getActions() {
-        return actions;
-    }
+	public List<ActionUIDef> getActions() {
+		return actions;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof ActionCategory) {
-            ActionCategory actionCategory = (ActionCategory) o;
-            return equal(name, actionCategory.name) &&
-                    equal(actions, actionCategory.actions);
-        }
-        return false;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof ActionCategory) {
+			ActionCategory actionCategory = (ActionCategory) o;
+			return equal(name, actionCategory.name)
+					&& equal(actions, actionCategory.actions);
+		}
+		return false;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name, actions);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(name, actions);
+	}
 }

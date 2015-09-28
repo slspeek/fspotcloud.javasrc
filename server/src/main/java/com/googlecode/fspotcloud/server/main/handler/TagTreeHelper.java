@@ -34,93 +34,92 @@ import static com.google.common.collect.Sets.newHashSet;
 import static com.googlecode.fspotcloud.server.model.tag.TreeBuilder.sortTree;
 
 public class TagTreeHelper {
-    private TagNode fullTree;
-    private Set<String> subSet;
-    private Map<String, TagNode> index = newHashMap();
+	private TagNode fullTree;
+	private Set<String> subSet;
+	private Map<String, TagNode> index = newHashMap();
 
-    public TagTreeHelper(TagNode fullTree, Set<String> subSet) {
-        this.fullTree = fullTree;
-        this.subSet = subSet;
-    }
+	public TagTreeHelper(TagNode fullTree, Set<String> subSet) {
+		this.fullTree = fullTree;
+		this.subSet = subSet;
+	}
 
-    private void buildIndex() {
-        index(fullTree);
-    }
+	private void buildIndex() {
+		index(fullTree);
+	}
 
-    private void index(TagNode tagNode) {
-        String tagId = tagNode.getId();
-        if (tagId != null) {
-            index.put(tagNode.getId(), tagNode);
-        }
-        for (TagNode child : tagNode.getChildren()) {
-            index(child);
-        }
-    }
+	private void index(TagNode tagNode) {
+		String tagId = tagNode.getId();
+		if (tagId != null) {
+			index.put(tagNode.getId(), tagNode);
+		}
+		for (TagNode child : tagNode.getChildren()) {
+			index(child);
+		}
+	}
 
-    public TagNode getSubTree() {
-        buildIndex();
+	public TagNode getSubTree() {
+		buildIndex();
 
-        TagNode root = new TagNode();
-        Set<TagNode> selected = subSetNodes();
+		TagNode root = new TagNode();
+		Set<TagNode> selected = subSetNodes();
 
-        for (TagNode unconnected : selected) {
-            TagNode parent = getParentInSelection(unconnected);
+		for (TagNode unconnected : selected) {
+			TagNode parent = getParentInSelection(unconnected);
 
-            if (parent == null) {
+			if (parent == null) {
 
-                root.addChild(unconnected);
-            } else {
-                TagNode parentInSelected = find(parent, selected);
-                parentInSelected.addChild(unconnected);
-            }
-        }
-        sortTree(root);
-        return root;
-    }
+				root.addChild(unconnected);
+			} else {
+				TagNode parentInSelected = find(parent, selected);
+				parentInSelected.addChild(unconnected);
+			}
+		}
+		sortTree(root);
+		return root;
+	}
 
-    private TagNode find(TagNode parent, Set<TagNode> selected) {
-        String id = parent.getId();
-        for (TagNode node : selected) {
-            if (node.getId().equals(id)) {
-                return node;
-            }
-        }
-        return null;
-    }
+	private TagNode find(TagNode parent, Set<TagNode> selected) {
+		String id = parent.getId();
+		for (TagNode node : selected) {
+			if (node.getId().equals(id)) {
+				return node;
+			}
+		}
+		return null;
+	}
 
-    private TagNode getParentInSelection(TagNode node) {
-        String id = node.getId();
-        node = index.get(id);
+	private TagNode getParentInSelection(TagNode node) {
+		String id = node.getId();
+		node = index.get(id);
 
-        if ("0".equals(node.getParentId())) {
-            return null;
-        } else {
-            TagNode parent;
+		if ("0".equals(node.getParentId())) {
+			return null;
+		} else {
+			TagNode parent;
 
-            while ((parent = index.get(node.getParentId())) != null) {
-                if (subSet.contains(parent.getId())) {
+			while ((parent = index.get(node.getParentId())) != null) {
+				if (subSet.contains(parent.getId())) {
 
+					return parent;
+				} else {
+					node = parent;
+				}
+			}
 
-                    return parent;
-                } else {
-                    node = parent;
-                }
-            }
+			return null;
+		}
+	}
 
-            return null;
-        }
-    }
+	Set<TagNode> subSetNodes() {
+		Set<TagNode> nodeSet = newHashSet();
 
-    Set<TagNode> subSetNodes() {
-        Set<TagNode> nodeSet = newHashSet();
+		for (String tagId : subSet) {
+			if (index.containsKey(tagId)) {
+				final TagNode e = index.get(tagId);
+				nodeSet.add(new TagNode(e));
+			}
+		}
 
-        for (String tagId : subSet) {
-            if (index.containsKey(tagId)) {
-                final TagNode e = index.get(tagId);
-                nodeSet.add(new TagNode(e));
-            }
-        }
-
-        return nodeSet;
-    }
+		return nodeSet;
+	}
 }

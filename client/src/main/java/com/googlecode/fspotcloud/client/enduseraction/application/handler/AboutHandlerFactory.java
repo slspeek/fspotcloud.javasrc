@@ -32,29 +32,27 @@ import com.googlecode.fspotcloud.keyboardaction.HelpActionsFactory;
 import com.googlecode.fspotcloud.keyboardaction.HelpConfig;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
-
 public class AboutHandlerFactory {
 
-    private final HelpActionsFactory helpActionsFactory;
-    private final CategoryDef categoryDef;
-    private final Resources resources;
+	private final HelpActionsFactory helpActionsFactory;
+	private final CategoryDef categoryDef;
+	private final Resources resources;
 
+	@Inject
+	public AboutHandlerFactory(HelpActionsFactory helpActionsFactory,
+			CategoryDef categoryDef, Resources resources) {
+		this.helpActionsFactory = helpActionsFactory;
+		this.categoryDef = categoryDef;
+		this.resources = resources;
+	}
 
-    @Inject
-    public AboutHandlerFactory(HelpActionsFactory helpActionsFactory,
-                               CategoryDef categoryDef,
-                               Resources resources) {
-        this.helpActionsFactory = helpActionsFactory;
-        this.categoryDef = categoryDef;
-        this.resources = resources;
-    }
-
-    public IActionHandler getAboutHandler() {
-        SafeHtmlBuilder builder = new SafeHtmlBuilder();
-        builder.appendEscapedLines(resources.getVersion().getText());
-        HelpConfig helpConfig = new HelpConfig("About F-Spot Cloud", builder.toSafeHtml());
-        helpConfig.addToFirstColumn(categoryDef.ABOUT);
-        return helpActionsFactory.getHelpAction(helpConfig);
-    }
+	public IActionHandler getAboutHandler() {
+		SafeHtmlBuilder builder = new SafeHtmlBuilder();
+		builder.appendEscapedLines(resources.getVersion().getText());
+		HelpConfig helpConfig = new HelpConfig("About F-Spot Cloud",
+				builder.toSafeHtml());
+		helpConfig.addToFirstColumn(categoryDef.ABOUT);
+		return helpActionsFactory.getHelpAction(helpConfig);
+	}
 
 }

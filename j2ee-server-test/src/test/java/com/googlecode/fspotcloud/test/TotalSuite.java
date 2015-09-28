@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({EmailConfirmationITest.class,
-        SendEmailConfirmationITest.class,
-        SendPasswordResetITest.class})
+		SendEmailConfirmationITest.class, SendPasswordResetITest.class})
 public class TotalSuite {
 }

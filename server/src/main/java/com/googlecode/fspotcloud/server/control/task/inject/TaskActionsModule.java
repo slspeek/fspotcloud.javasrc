@@ -29,20 +29,19 @@ import com.googlecode.fspotcloud.server.control.task.handler.intern.*;
 import com.googlecode.fspotcloud.server.main.handler.RssFeedHandler;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
-
 public class TaskActionsModule extends ActionHandlerModule {
-    @Override
-    protected void configureHandlers() {
-        bindHandler(PhotoUpdateAction.class, PhotoUpdateHandler.class);
-        bindHandler(DeleteAllTagsAction.class, DeleteTagsHandler.class);
-        bindHandler(DeleteAllPhotosAction.class, DeleteAllPhotosHandler.class);
-        bindHandler(RemovePhotosFromTagAction.class,
-                RemovePhotosFromTagHandler.class);
-        bindHandler(RemoveTagsDeletedFromPeerAction.class,
-                RemoveTagsFromPeerHandler.class);
-        bindHandler(TagUpdateAction.class, TagUpdateHandler.class);
-        bindHandler(ImportManyTagsPhotosAction.class,
-                ImportManyTagsPhotosHandler.class);
-        bindHandler(RssFeedAction.class, RssFeedHandler.class);
-    }
+	@Override
+	protected void configureHandlers() {
+		bindHandler(PhotoUpdateAction.class, PhotoUpdateHandler.class);
+		bindHandler(DeleteAllTagsAction.class, DeleteTagsHandler.class);
+		bindHandler(DeleteAllPhotosAction.class, DeleteAllPhotosHandler.class);
+		bindHandler(RemovePhotosFromTagAction.class,
+				RemovePhotosFromTagHandler.class);
+		bindHandler(RemoveTagsDeletedFromPeerAction.class,
+				RemoveTagsFromPeerHandler.class);
+		bindHandler(TagUpdateAction.class, TagUpdateHandler.class);
+		bindHandler(ImportManyTagsPhotosAction.class,
+				ImportManyTagsPhotosHandler.class);
+		bindHandler(RssFeedAction.class, RssFeedHandler.class);
+	}
 }

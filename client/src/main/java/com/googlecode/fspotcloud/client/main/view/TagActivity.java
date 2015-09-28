@@ -35,47 +35,48 @@ import com.googlecode.fspotcloud.client.place.NavigationFlagsHelper;
 
 import java.util.logging.Logger;
 
+public class TagActivity extends AbstractActivity
+		implements
+			TagView.TagPresenter {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(TagActivity.class.getName());
+	private final TagView tagView;
+	private final ImageRasterView.ImageRasterPresenter imageRasterPresenter;
+	private final IScheduler scheduler;
+	private final BasePlace place;
+	private final NavigationFlagsHelper navigationFlagsHelper;
 
-public class TagActivity extends AbstractActivity implements TagView.TagPresenter {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(TagActivity.class.getName());
-    private final TagView tagView;
-    private final ImageRasterView.ImageRasterPresenter imageRasterPresenter;
-    private final IScheduler scheduler;
-    private final BasePlace place;
-    private final NavigationFlagsHelper navigationFlagsHelper;
+	public TagActivity(TagView tagView,
+			ImageRasterView.ImageRasterPresenter imageRasterPresenter,
+			IScheduler scheduler, BasePlace place,
+			NavigationFlagsHelper navigationFlagsHelper) {
+		this.tagView = tagView;
+		this.imageRasterPresenter = imageRasterPresenter;
+		this.scheduler = scheduler;
+		this.place = place;
+		this.navigationFlagsHelper = navigationFlagsHelper;
+	}
 
-    public TagActivity(TagView tagView,
-                       ImageRasterView.ImageRasterPresenter imageRasterPresenter,
-                       IScheduler scheduler,
-                       BasePlace place, NavigationFlagsHelper navigationFlagsHelper) {
-        this.tagView = tagView;
-        this.imageRasterPresenter = imageRasterPresenter;
-        this.scheduler = scheduler;
-        this.place = place;
-        this.navigationFlagsHelper = navigationFlagsHelper;
-    }
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		containerWidget.setWidget(tagView);
+		navigationFlagsHelper.update();
 
-    @Override
-    public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        containerWidget.setWidget(tagView);
-        navigationFlagsHelper.update();
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				imageRasterPresenter.init();
+			}
+		});
+		if (place.isAutoHide()) {
+			tagView.hideControlsLater(10000);
+		}
+		tagView.setAutoHide(place.isAutoHide());
+	}
 
-        scheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                imageRasterPresenter.init();
-            }
-        });
-        if (place.isAutoHide()) {
-            tagView.hideControlsLater(10000);
-        }
-        tagView.setAutoHide(place.isAutoHide());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        tagView.cancelHiding();
-    }
+	@Override
+	public void onStop() {
+		super.onStop();
+		tagView.cancelHiding();
+	}
 }

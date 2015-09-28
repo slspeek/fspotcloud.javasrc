@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.callback;
 
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
@@ -58,35 +58,35 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(JukitoRunner.class)
 public class PeerMetaDataCallbackTest {
-    public static final String TAG_ID = "1";
-    @Inject
-    PeerMetaDataCallback callback;
+	public static final String TAG_ID = "1";
+	@Inject
+	PeerMetaDataCallback callback;
 
-    @Test
-    public void testNormalExecute(PeerDatabaseDao defaultPeer,
-                                  ControllerDispatchAsync dispatchAsync, TagDao tagManager,
-                                  ArgumentCaptor<GetPeerUpdateInstructionsAction> actionCaptor,
-                                  ArgumentCaptor<PeerUpdateInstructionsCallback> callbackCaptor)
-            throws Exception {
-        PeerDatabase peer = new PeerDatabaseEntity();
-        List<Tag> tagList = newArrayList();
-        Tag tag = new TagEntity();
-        tag.setId(TAG_ID);
-        tagList.add(tag);
-        when(tagManager.findAll(1000)).thenReturn(tagList);
-        when(defaultPeer.get()).thenReturn(peer);
+	@Test
+	public void testNormalExecute(PeerDatabaseDao defaultPeer,
+			ControllerDispatchAsync dispatchAsync, TagDao tagManager,
+			ArgumentCaptor<GetPeerUpdateInstructionsAction> actionCaptor,
+			ArgumentCaptor<PeerUpdateInstructionsCallback> callbackCaptor)
+			throws Exception {
+		PeerDatabase peer = new PeerDatabaseEntity();
+		List<Tag> tagList = newArrayList();
+		Tag tag = new TagEntity();
+		tag.setId(TAG_ID);
+		tagList.add(tag);
+		when(tagManager.findAll(1000)).thenReturn(tagList);
+		when(defaultPeer.get()).thenReturn(peer);
 
-        PeerMetaDataResult result = new PeerMetaDataResult(10, 20);
-        callback.onSuccess(result);
+		PeerMetaDataResult result = new PeerMetaDataResult(10, 20);
+		callback.onSuccess(result);
 
-        verify(dispatchAsync)
-                .execute(actionCaptor.capture(), callbackCaptor.capture());
+		verify(dispatchAsync).execute(actionCaptor.capture(),
+				callbackCaptor.capture());
 
-        GetPeerUpdateInstructionsAction action = actionCaptor.getValue();
-        TagData data = action.getTagsOnServer().get(0);
-        assertEquals(TAG_ID, data.getTagId());
-        assertEquals(0, data.getCount());
-        assertEquals(10, peer.getTagCount());
-        assertEquals(20, peer.getPeerPhotoCount());
-    }
+		GetPeerUpdateInstructionsAction action = actionCaptor.getValue();
+		TagData data = action.getTagsOnServer().get(0);
+		assertEquals(TAG_ID, data.getTagId());
+		assertEquals(0, data.getCount());
+		assertEquals(10, peer.getTagCount());
+		assertEquals(20, peer.getPeerPhotoCount());
+	}
 }

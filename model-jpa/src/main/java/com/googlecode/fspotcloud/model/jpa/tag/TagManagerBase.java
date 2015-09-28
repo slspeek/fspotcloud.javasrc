@@ -38,51 +38,52 @@ import java.util.logging.Logger;
 import static com.google.common.collect.Lists.newArrayList;
 
 public abstract class TagManagerBase<T extends Tag, U extends T>
-        extends SimpleDAONamedIdImpl<Tag, U, String> implements TagDao {
-    private final Logger log = Logger.getLogger(TagManagerBase.class.getName());
+		extends
+			SimpleDAONamedIdImpl<Tag, U, String> implements TagDao {
+	private final Logger log = Logger.getLogger(TagManagerBase.class.getName());
 
-    @Override
-    public TagNode getTagNode(Tag tag) {
-        if (tag == null) {
-            throw new IllegalStateException("tag parameter must be non-null");
-        }
-        TagNode node = new TagNode();
-        node.setId(tag.getId());
-        node.setImportIssued(tag.isImportIssued());
-        node.setParentId(tag.getParentId());
-        node.setTagName(tag.getTagName());
-        node.setCount(tag.getCount());
+	@Override
+	public TagNode getTagNode(Tag tag) {
+		if (tag == null) {
+			throw new IllegalStateException("tag parameter must be non-null");
+		}
+		TagNode node = new TagNode();
+		node.setId(tag.getId());
+		node.setImportIssued(tag.isImportIssued());
+		node.setParentId(tag.getParentId());
+		node.setTagName(tag.getTagName());
+		node.setCount(tag.getCount());
 
-        SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
+		SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
 
-        if (photoList != null) {
-            node.setCachedPhotoList(new PhotoInfoStore(photoList));
-        } else {
-            throw new IllegalStateException(
-                    "photoList field of Tag should not be null");
-        }
+		if (photoList != null) {
+			node.setCachedPhotoList(new PhotoInfoStore(photoList));
+		} else {
+			throw new IllegalStateException(
+					"photoList field of Tag should not be null");
+		}
 
-        node.setApprovedUserGroups(tag.getApprovedUserGroups());
+		node.setApprovedUserGroups(tag.getApprovedUserGroups());
 
-        return node;
-    }
+		return node;
+	}
 
-    @Override
-    public List<TagNode> getTags() {
-        List<TagNode> result = newArrayList();
+	@Override
+	public List<TagNode> getTags() {
+		List<TagNode> result = newArrayList();
 
-        for (Tag tag : findAll(1000)) {
-            TagNode node = getTagNode(tag);
-            result.add(node);
-        }
+		for (Tag tag : findAll(1000)) {
+			TagNode node = getTagNode(tag);
+			result.add(node);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public List<Tag> getImportedTags() {
-        return findAllWhere(1000, "importIssued = true");
-    }
+	@Override
+	public List<Tag> getImportedTags() {
+		return findAllWhere(1000, "importIssued = true");
+	}
 
-    protected abstract Tag newTag();
+	protected abstract Tag newTag();
 }

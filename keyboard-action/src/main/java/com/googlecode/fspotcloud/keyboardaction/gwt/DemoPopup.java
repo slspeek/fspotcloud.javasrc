@@ -40,52 +40,52 @@ import com.googlecode.fspotcloud.keyboardaction.HelpResources;
 
 import java.util.logging.Logger;
 
-
 public class DemoPopup extends PopupPanel implements DemoPopupView {
-    private final Logger log = Logger.getLogger(DemoPopup.class.getName());
-    private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
-    @UiField
-    Anchor stopAnchor;
-    @UiField
-    FocusPanel focusPanel;
-    @UiField
-    DivElement helpBodyDiv;
-    @UiField
-    DivElement titleDiv;
-    private final HelpResources helpResources;
+	private final Logger log = Logger.getLogger(DemoPopup.class.getName());
+	private static final HelpPopupUiBinder uiBinder = GWT
+			.create(HelpPopupUiBinder.class);
+	@UiField
+	Anchor stopAnchor;
+	@UiField
+	FocusPanel focusPanel;
+	@UiField
+	DivElement helpBodyDiv;
+	@UiField
+	DivElement titleDiv;
+	private final HelpResources helpResources;
 
-    private Demo demo;
+	private Demo demo;
 
-    @Inject
-    private DemoPopup(HelpResources helpResources) {
-        super(true);
-        this.helpResources = helpResources;
-        setWidget(uiBinder.createAndBindUi(this));
-        addStyleName(helpResources.style().demoPopup());
-    }
+	@Inject
+	private DemoPopup(HelpResources helpResources) {
+		super(true);
+		this.helpResources = helpResources;
+		setWidget(uiBinder.createAndBindUi(this));
+		addStyleName(helpResources.style().demoPopup());
+	}
 
-    @Override
-    public void setDemo(Demo demo) {
-        this.demo = demo;
-    }
+	@Override
+	public void setDemo(Demo demo) {
+		this.demo = demo;
+	}
 
-    @Override
-    public void setSafeHtml(SafeHtml text) {
-        helpBodyDiv.setInnerSafeHtml(text);
-    }
+	@Override
+	public void setSafeHtml(SafeHtml text) {
+		helpBodyDiv.setInnerSafeHtml(text);
+	}
 
-    @Override
-    public void setTitle(String text) {
-        titleDiv.setInnerHTML(text);
-    }
+	@Override
+	public void setTitle(String text) {
+		titleDiv.setInnerHTML(text);
+	}
 
-    interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopup> {
-    }
+	interface HelpPopupUiBinder extends UiBinder<FocusPanel, DemoPopup> {
+	}
 
-    @UiHandler("stopAnchor")
-    public void handleClose(ClickEvent clickEvent) {
-        demo.stop();
-        hide();
-    }
+	@UiHandler("stopAnchor")
+	public void handleClose(ClickEvent clickEvent) {
+		demo.stop();
+		hide();
+	}
 
 }

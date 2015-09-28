@@ -41,49 +41,52 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class SendPasswordResetViewImpl extends Composite
+		implements
+			SendPasswordResetView {
+	private final Logger log = Logger.getLogger(SendPasswordResetViewImpl.class
+			.getName());
+	private static final SendResetPasswordViewImplUiBinder uiBinder = GWT
+			.create(SendResetPasswordViewImplUiBinder.class);
 
-public class SendPasswordResetViewImpl extends Composite implements SendPasswordResetView {
-    private final Logger log = Logger.getLogger(SendPasswordResetViewImpl.class.getName());
-    private static final SendResetPasswordViewImplUiBinder uiBinder = GWT.create(SendResetPasswordViewImplUiBinder.class);
+	@UiField
+	TextBox emailTextBox;
+	@UiField
+	Label statusLabel;
+	@UiField(provided = true)
+	ActionButton send;
+	@UiField(provided = true)
+	ActionButton cancel;
 
-    @UiField
-    TextBox emailTextBox;
-    @UiField
-    Label statusLabel;
-    @UiField(provided = true)
-    ActionButton send;
-    @UiField(provided = true)
-    ActionButton cancel;
+	@Inject
+	public SendPasswordResetViewImpl(DashboardActions dashboardActions,
+			UserActions userActions, BigButtonFactory buttonFactory) {
+		cancel = buttonFactory.getButton(dashboardActions.toPhotos);
+		send = buttonFactory.getButton(userActions.doRequestPasswordReset);
+		initWidget(uiBinder.createAndBindUi(this));
+		cancel.ensureDebugId("cancel");
+		statusLabel.ensureDebugId("status");
+		emailTextBox.ensureDebugId("email");
+		log.log(Level.FINE, "Created ");
+	}
 
-    @Inject
-    public SendPasswordResetViewImpl(DashboardActions dashboardActions,
-                                     UserActions userActions,
-                                     BigButtonFactory buttonFactory) {
-        cancel = buttonFactory.getButton(dashboardActions.toPhotos);
-        send = buttonFactory.getButton(userActions.doRequestPasswordReset);
-        initWidget(uiBinder.createAndBindUi(this));
-        cancel.ensureDebugId("cancel");
-        statusLabel.ensureDebugId("status");
-        emailTextBox.ensureDebugId("email");
-        log.log(Level.FINE, "Created ");
-    }
+	@Override
+	public String getEmailField() {
+		return emailTextBox.getText();
+	}
 
-    @Override
-    public String getEmailField() {
-        return emailTextBox.getText();
-    }
+	@Override
+	public void setStatusText(String text) {
+		statusLabel.setText(text);
+	}
 
-    @Override
-    public void setStatusText(String text) {
-        statusLabel.setText(text);
-    }
+	@Override
+	public void clearEmailField() {
+		emailTextBox.setText("");
+	}
 
-    @Override
-    public void clearEmailField() {
-        emailTextBox.setText("");
-    }
-
-
-    interface SendResetPasswordViewImplUiBinder extends UiBinder<Widget, SendPasswordResetViewImpl> {
-    }
+	interface SendResetPasswordViewImplUiBinder
+			extends
+				UiBinder<Widget, SendPasswordResetViewImpl> {
+	}
 }

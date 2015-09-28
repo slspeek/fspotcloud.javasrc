@@ -10,14 +10,13 @@ import static junit.framework.Assert.assertNotNull;
 @RunWith(JukitoRunner.class)
 public class ModeControllerProviderTest {
 
+	@Inject
+	private ModeControllerProvider provider;
 
-    @Inject
-    private ModeControllerProvider provider;
+	@Test
+	public void testGet() throws Exception {
+		IModeController controller = provider.get();
+		assertNotNull(controller);
 
-    @Test
-    public void testGet() throws Exception {
-        IModeController controller = provider.get();
-        assertNotNull(controller);
-
-    }
+	}
 }

@@ -42,67 +42,69 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ManageGroupsActivity extends AbstractActivity implements ManageGroupsView.ManageGroupsPresenter {
-    private final Logger log = Logger.getLogger(ManageGroupsActivity.class.getName());
-    private final ManageGroupsView view;
-    private final DispatchAsync dispatch;
-    private final IScheduler scheduler;
-    private List<UserGroupInfo> data;
+public class ManageGroupsActivity extends AbstractActivity
+		implements
+			ManageGroupsView.ManageGroupsPresenter {
+	private final Logger log = Logger.getLogger(ManageGroupsActivity.class
+			.getName());
+	private final ManageGroupsView view;
+	private final DispatchAsync dispatch;
+	private final IScheduler scheduler;
+	private List<UserGroupInfo> data;
 
-    @Inject
-    public ManageGroupsActivity(ManageGroupsView view,
-                                DispatchAsync dispatch,
-                                IScheduler scheduler) {
-        this.view = view;
-        this.dispatch = dispatch;
-        this.scheduler = scheduler;
-    }
+	@Inject
+	public ManageGroupsActivity(ManageGroupsView view, DispatchAsync dispatch,
+			IScheduler scheduler) {
+		this.view = view;
+		this.dispatch = dispatch;
+		this.scheduler = scheduler;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        this.view.setPresenter(this);
-        panel.setWidget(view);
-        refreshData();
-        scheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                view.focusTable();
-            }
-        });
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		this.view.setPresenter(this);
+		panel.setWidget(view);
+		refreshData();
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				view.focusTable();
+			}
+		});
+	}
 
-    @Override
-    public void refreshData() {
-        view.setStatusText("Requesting all groups from the server");
-        dispatch.execute(new GetMyUserGroupsAction(),
-                new AsyncCallback<GetMyUserGroupsResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.setStatusText("Could not retrieve groups due to a server error");
-                    }
+	@Override
+	public void refreshData() {
+		view.setStatusText("Requesting all groups from the server");
+		dispatch.execute(new GetMyUserGroupsAction(),
+				new AsyncCallback<GetMyUserGroupsResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setStatusText("Could not retrieve groups due to a server error");
+					}
 
-                    @Override
-                    public void onSuccess(GetMyUserGroupsResult result) {
-                        data = result.getData();
-                        if (data != null) {
-                            view.setData(result.getData());
-                            view.setStatusText("Reloaded the table from server data");
-                            selectFirstGroup();
-                        }
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(GetMyUserGroupsResult result) {
+						data = result.getData();
+						if (data != null) {
+							view.setData(result.getData());
+							view.setStatusText("Reloaded the table from server data");
+							selectFirstGroup();
+						}
+					}
+				});
+	}
 
-    @Override
-    public UserGroupInfo getSelected() {
-        return view.getSelected();
-    }
+	@Override
+	public UserGroupInfo getSelected() {
+		return view.getSelected();
+	}
 
-    private void selectFirstGroup() {
-        UserGroupInfo info = getSelected();
-        if (data.size() > 0) {
-            view.setSelected(data.get(0));
-            log.log(Level.FINE, "set selected row 0");
-        }
-    }
+	private void selectFirstGroup() {
+		UserGroupInfo info = getSelected();
+		if (data.size() > 0) {
+			view.setSelected(data.get(0));
+			log.log(Level.FINE, "set selected row 0");
+		}
+	}
 }

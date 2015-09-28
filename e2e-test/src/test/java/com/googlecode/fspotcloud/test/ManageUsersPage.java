@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.thoughtworks.selenium.Selenium;
@@ -39,34 +39,34 @@ import static org.junit.Assert.assertTrue;
  * @author steven
  */
 public class ManageUsersPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public void newUser(String email) {
-        fillEmail(email);
+	public void newUser(String email) {
+		fillEmail(email);
 
-        selenium.click("gwt-debug-new-button");
-        selenium.waitForPageToLoad("30000");
-    }
+		selenium.click("gwt-debug-new-button");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void fillEmail(String email) {
-        selenium.type("gwt-debug-email", email);
-    }
+	public void fillEmail(String email) {
+		selenium.type("gwt-debug-email", email);
+	}
 
-    public void deleteUser() {
-        selenium.click("gwt-debug-delete-button");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void deleteUser() {
+		selenium.click("gwt-debug-delete-button");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void verifyText(String text) {
-        assertTrue(selenium.getBodyText().contains(text));
-    }
+	public void verifyText(String text) {
+		assertTrue(selenium.getBodyText().contains(text));
+	}
 
-    public void verifyTextNotPresent(String text) {
-        assertFalse(selenium.getBodyText().contains(text));
-    }
+	public void verifyTextNotPresent(String text) {
+		assertFalse(selenium.getBodyText().contains(text));
+	}
 
-    public void selectFirstRow() {
-        selenium.click("//td/div");
-    }
+	public void selectFirstRow() {
+		selenium.click("//td/div");
+	}
 }

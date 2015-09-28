@@ -34,31 +34,32 @@ import javax.inject.Inject;
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class IntersectionDeleteITest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    Selenium selenium;
-    @Inject
-    PeerRunner peerRunner;
-    @Inject
-    DashboardPage dashboardPage;
-    @Inject
-    PhotoPage photoPage;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	Selenium selenium;
+	@Inject
+	PeerRunner peerRunner;
+	@Inject
+	DashboardPage dashboardPage;
+	@Inject
+	PhotoPage photoPage;
 
-    @Test
-    public void testDelteAfterImport() throws Exception {
-        peerRunner.startPeer("../peer/src/test/resources/photos.db");
-        dashboardPage.loginAndOpen();
-        dashboardPage.toggleImportForTagId("2");
-        dashboardPage.toggleImportForTagId("4"); //import pc
-        dashboardPage.toggleImportForTagId("2"); //remove computers
-        sleepShort(3);
-        selenium.open("#BasePlace:4:11:1:1:false");
-        selenium.waitForPageToLoad("30000");
-        sleepShort(4);
+	@Test
+	public void testDelteAfterImport() throws Exception {
+		peerRunner.startPeer("../peer/src/test/resources/photos.db");
+		dashboardPage.loginAndOpen();
+		dashboardPage.toggleImportForTagId("2");
+		dashboardPage.toggleImportForTagId("4"); //import pc
+		dashboardPage.toggleImportForTagId("2"); //remove computers
+		sleepShort(3);
+		selenium.open("#BasePlace:4:11:1:1:false");
+		selenium.waitForPageToLoad("30000");
+		sleepShort(4);
 
-        photoPage.assertPagingLabelSays(1, 14);
+		photoPage.assertPagingLabelSays(1, 14);
 
-        peerRunner.stopPeer();
-    }
+		peerRunner.stopPeer();
+	}
 }

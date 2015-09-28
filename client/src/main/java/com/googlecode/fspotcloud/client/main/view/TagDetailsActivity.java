@@ -40,72 +40,74 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class TagDetailsActivity extends AbstractActivity
+		implements
+			TagDetailsView.TagDetailsPresenter {
+	private final Logger log = Logger.getLogger(TagDetailsActivity.class
+			.getName());
+	private final TagDetailsView tagDetailsView;
+	private final DataManager dataManager;
+	private final IPlaceController placeController;
+	private final StatusView statusView;
 
+	@Inject
+	public TagDetailsActivity(TagDetailsView tagDetailsView,
+			DataManager dataManager, IPlaceController placeController,
+			@Dashboard StatusView statusView) {
+		super();
+		this.tagDetailsView = tagDetailsView;
+		this.dataManager = dataManager;
+		this.placeController = placeController;
+		this.statusView = statusView;
+	}
 
-public class TagDetailsActivity extends AbstractActivity implements TagDetailsView.TagDetailsPresenter {
-    private final Logger log = Logger.getLogger(TagDetailsActivity.class.getName());
-    private final TagDetailsView tagDetailsView;
-    private final DataManager dataManager;
-    private final IPlaceController placeController;
-    private final StatusView statusView;
+	@Override
+	public void init() {
+		log.log(Level.FINE, "init");
+		tagDetailsView.setPresenter(this);
+		populateView();
+	}
 
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		panel.setWidget(tagDetailsView);
+	}
 
-    @Inject
-    public TagDetailsActivity(TagDetailsView tagDetailsView,
-                              DataManager dataManager,
-                              IPlaceController placeController,
-                              @Dashboard StatusView statusView) {
-        super();
-        this.tagDetailsView = tagDetailsView;
-        this.dataManager = dataManager;
-        this.placeController = placeController;
-        this.statusView = statusView;
-    }
+	public void populateView() {
+		statusView.setStatusText("Retrieving category data");
+		DashboardPlace dashboardPlace = (DashboardPlace) placeController
+				.getRawWhere();
 
-    @Override
-    public void init() {
-        log.log(Level.FINE, "init");
-        tagDetailsView.setPresenter(this);
-        populateView();
-    }
+		dataManager.getAdminTagNode(dashboardPlace.getTagId(),
+				new AsyncCallback<TagNode>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						log.log(Level.SEVERE,
+								"Trouble retrieving admin tag tree ", caught);
+						statusView
+								.setStatusText("A server error prevented reloading category data");
+					}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(tagDetailsView);
-    }
+					@Override
+					public void onSuccess(TagNode result) {
+						populateView(result);
+						statusView
+								.setStatusText("Reloaded information for category: "
+										+ result.getTagName());
+					}
+				});
+	}
 
-    public void populateView() {
-        statusView.setStatusText("Retrieving category data");
-        DashboardPlace dashboardPlace = (DashboardPlace) placeController.getRawWhere();
-
-        dataManager.getAdminTagNode(dashboardPlace.getTagId(),
-                new AsyncCallback<TagNode>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "Trouble retrieving admin tag tree ",
-                                caught);
-                        statusView.setStatusText("A server error prevented reloading category data");
-                    }
-
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        populateView(result);
-                        statusView.setStatusText("Reloaded information for category: " + result.getTagName());
-                    }
-                });
-    }
-
-    private void populateView(TagNode tag) {
-        tagDetailsView.getTagNameValue().setText(tag.getTagName());
-        tagDetailsView.getTagDescriptionValue().setText(tag.getDescription());
-        tagDetailsView.getTagImageCountValue()
-                .setText(String.valueOf(tag.getCount()));
-        tagDetailsView.getTagImportIssuedValue()
-                .setText(tag.isImportIssued() ? "yes" : "no");
-        tagDetailsView.getImportButtonText()
-                .setText(tag.isImportIssued() ? "Remove" : "Import");
-        tagDetailsView.getTagLoadedImagesCountValue()
-                .setText(String.valueOf(tag.getCachedPhotoList()
-                        .lastIndex() + 1));
-    }
+	private void populateView(TagNode tag) {
+		tagDetailsView.getTagNameValue().setText(tag.getTagName());
+		tagDetailsView.getTagDescriptionValue().setText(tag.getDescription());
+		tagDetailsView.getTagImageCountValue().setText(
+				String.valueOf(tag.getCount()));
+		tagDetailsView.getTagImportIssuedValue().setText(
+				tag.isImportIssued() ? "yes" : "no");
+		tagDetailsView.getImportButtonText().setText(
+				tag.isImportIssued() ? "Remove" : "Import");
+		tagDetailsView.getTagLoadedImagesCountValue().setText(
+				String.valueOf(tag.getCachedPhotoList().lastIndex() + 1));
+	}
 }

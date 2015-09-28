@@ -32,30 +32,31 @@ import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
 import java.util.logging.Logger;
 
-
 public class SlideshowActivity extends AbstractActivity
-        implements SlideshowView.SlideshowPresenter {
+		implements
+			SlideshowView.SlideshowPresenter {
 
-    private final Logger log = Logger.getLogger(SlideshowActivity.class.getName());
-    private final SlideshowView slideshowView;
-    private final DoubleImagePresenterImpl doubleImagePresenter;
+	private final Logger log = Logger.getLogger(SlideshowActivity.class
+			.getName());
+	private final SlideshowView slideshowView;
+	private final DoubleImagePresenterImpl doubleImagePresenter;
 
-    private SlideshowPlace currentPlace;
+	private SlideshowPlace currentPlace;
 
-    public SlideshowActivity(SlideshowView imageView,
-                             DoubleImagePresenterImpl doubleImagePresenter) {
-        this.slideshowView = imageView;
-        this.doubleImagePresenter = doubleImagePresenter;
-    }
+	public SlideshowActivity(SlideshowView imageView,
+			DoubleImagePresenterImpl doubleImagePresenter) {
+		this.slideshowView = imageView;
+		this.doubleImagePresenter = doubleImagePresenter;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        slideshowView.setPresenter(this);
-        panel.setWidget(slideshowView);
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		slideshowView.setPresenter(this);
+		panel.setWidget(slideshowView);
+	}
 
-    public void setCurrentPlace(SlideshowPlace currentPlace) {
-        this.currentPlace = currentPlace;
-        doubleImagePresenter.setCurrentPlace(currentPlace);
-    }
+	public void setCurrentPlace(SlideshowPlace currentPlace) {
+		this.currentPlace = currentPlace;
+		doubleImagePresenter.setCurrentPlace(currentPlace);
+	}
 }

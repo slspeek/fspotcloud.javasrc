@@ -30,87 +30,86 @@ import net.customware.gwt.dispatch.shared.Result;
 
 import java.util.Date;
 
-
 @GwtCompatible
 public class GetMetaDataResult implements IsSerializable, Result {
-    private Date created = new Date();
-    private int peerPhotoCount;
-    private int tagCount;
-    private int pendingCommandCount;
-    private Date peerLastSeen;
-    private String instanceName;
-    private long photoCount;
-    private Date photosLastCounted;
-    private String adminTreeHash;
+	private Date created = new Date();
+	private int peerPhotoCount;
+	private int tagCount;
+	private int pendingCommandCount;
+	private Date peerLastSeen;
+	private String instanceName;
+	private long photoCount;
+	private Date photosLastCounted;
+	private String adminTreeHash;
 
-    public GetMetaDataResult() {
-    }
+	public GetMetaDataResult() {
+	}
 
-    public long getPhotoCount() {
-        return photoCount;
-    }
+	public long getPhotoCount() {
+		return photoCount;
+	}
 
-    public void setPhotoCount(long photoCount) {
-        this.photoCount = photoCount;
-    }
+	public void setPhotoCount(long photoCount) {
+		this.photoCount = photoCount;
+	}
 
-    public Date getPhotosLastCounted() {
-        return photosLastCounted;
-    }
+	public Date getPhotosLastCounted() {
+		return photosLastCounted;
+	}
 
-    public void setPhotosLastCounted(Date photosLastCounted) {
-        this.photosLastCounted = photosLastCounted;
-    }
+	public void setPhotosLastCounted(Date photosLastCounted) {
+		this.photosLastCounted = photosLastCounted;
+	}
 
-    public Date getCreated() {
-        return created;
-    }
+	public Date getCreated() {
+		return created;
+	}
 
-    public int getPeerPhotoCount() {
-        return peerPhotoCount;
-    }
+	public int getPeerPhotoCount() {
+		return peerPhotoCount;
+	}
 
-    public void setPeerPhotoCount(int peerPhotoCount) {
-        this.peerPhotoCount = peerPhotoCount;
-    }
+	public void setPeerPhotoCount(int peerPhotoCount) {
+		this.peerPhotoCount = peerPhotoCount;
+	}
 
-    public int getTagCount() {
-        return tagCount;
-    }
+	public int getTagCount() {
+		return tagCount;
+	}
 
-    public void setTagCount(int tagCount) {
-        this.tagCount = tagCount;
-    }
+	public void setTagCount(int tagCount) {
+		this.tagCount = tagCount;
+	}
 
-    public Date getPeerLastSeen() {
-        return peerLastSeen;
-    }
+	public Date getPeerLastSeen() {
+		return peerLastSeen;
+	}
 
-    public void setPeerLastSeen(Date peerLastSeen) {
-        this.peerLastSeen = peerLastSeen;
-    }
+	public void setPeerLastSeen(Date peerLastSeen) {
+		this.peerLastSeen = peerLastSeen;
+	}
 
-    public String getInstanceName() {
-        return instanceName;
-    }
+	public String getInstanceName() {
+		return instanceName;
+	}
 
-    public void setInstanceName(String instanceName) {
-        this.instanceName = instanceName;
-    }
+	public void setInstanceName(String instanceName) {
+		this.instanceName = instanceName;
+	}
 
-    public void setPendingCommandCount(int pendingCommandCount) {
-        this.pendingCommandCount = pendingCommandCount;
-    }
+	public void setPendingCommandCount(int pendingCommandCount) {
+		this.pendingCommandCount = pendingCommandCount;
+	}
 
-    public int getPendingCommandCount() {
-        return pendingCommandCount;
-    }
+	public int getPendingCommandCount() {
+		return pendingCommandCount;
+	}
 
-    public void setAdminTreeHash(String adminTreeHash) {
-        this.adminTreeHash = adminTreeHash;
-    }
+	public void setAdminTreeHash(String adminTreeHash) {
+		this.adminTreeHash = adminTreeHash;
+	}
 
-    public String getAdminTreeHash() {
-        return adminTreeHash;
-    }
+	public String getAdminTreeHash() {
+		return adminTreeHash;
+	}
 }

@@ -28,10 +28,12 @@ import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.client.main.view.SingleSelectionModelExt;
 
 @GwtCompatible
-public interface ITreeSelectionHandler extends com.google.gwt.view.client.SelectionChangeEvent.Handler {
-    void setSelectionModel(SingleSelectionModelExt selectionModel);
+public interface ITreeSelectionHandler
+		extends
+			com.google.gwt.view.client.SelectionChangeEvent.Handler {
+	void setSelectionModel(SingleSelectionModelExt selectionModel);
 
-    boolean isIgnoreNext();
+	boolean isIgnoreNext();
 
-    void setIgnoreNext(boolean ignoreNext);
+	void setIgnoreNext(boolean ignoreNext);
 }

@@ -28,35 +28,34 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Result;
 
-
 @GwtCompatible
 public class SignUpResult implements Result {
-    private boolean success;
+	private boolean success;
 
-    public SignUpResult() {
-    }
+	public SignUpResult() {
+	}
 
-    public SignUpResult(boolean success) {
-        this.success = success;
-    }
+	public SignUpResult(boolean success) {
+		this.success = success;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof SignUpResult) {
-            SignUpResult other = (SignUpResult) obj;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SignUpResult) {
+			SignUpResult other = (SignUpResult) obj;
 
-            return Objects.equal(other.success, getSuccess());
-        } else {
-            return false;
-        }
-    }
+			return Objects.equal(other.success, getSuccess());
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return 1;
-    }
+	@Override
+	public int hashCode() {
+		return 1;
+	}
 
-    public boolean getSuccess() {
-        return success;
-    }
+	public boolean getSuccess() {
+		return success;
+	}
 }

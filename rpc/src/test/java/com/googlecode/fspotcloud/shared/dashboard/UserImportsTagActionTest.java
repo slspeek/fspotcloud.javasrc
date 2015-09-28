@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.shared.dashboard;
 
 import org.apache.commons.lang.SerializationUtils;
@@ -39,19 +39,19 @@ import static org.junit.Assert.assertEquals;
  * @author steven
  */
 public class UserImportsTagActionTest {
-    public static final String TAG_ID = "1";
+	public static final String TAG_ID = "1";
 
-    @Test
-    public void testGetTagId() {
-        UserImportsTagAction instance = new UserImportsTagAction(TAG_ID);
-        String expResult = TAG_ID;
-        String result = instance.getTagId();
-        assertEquals(expResult, result);
-    }
+	@Test
+	public void testGetTagId() {
+		UserImportsTagAction instance = new UserImportsTagAction(TAG_ID);
+		String expResult = TAG_ID;
+		String result = instance.getTagId();
+		assertEquals(expResult, result);
+	}
 
-    @Test
-    public void testSeriazability() {
-        UserImportsTagAction instance = new UserImportsTagAction(TAG_ID);
-        SerializationUtils.serialize(instance);
-    }
+	@Test
+	public void testSeriazability() {
+		UserImportsTagAction instance = new UserImportsTagAction(TAG_ID);
+		SerializationUtils.serialize(instance);
+	}
 }

@@ -46,101 +46,104 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class ImageViewImpl extends ResizeComposite implements ImageView {
-    private final Logger log = Logger.getLogger(ImageViewImpl.class.getName());
-    private static final ImageViewImplUiBinder uiBinder = GWT.create(ImageViewImplUiBinder.class);
-    private final TimerInterface timer;
-    private final String location;
-    private static final int PADDING_Y = 2;
-    private static final int PADDING_X = 2;
-    @UiField
-    Label info;
-    @UiField
-    FitImage image;
-    @UiField
-    LayoutPanel layout;
-    protected ImageView.ImagePresenter presenter;
-    protected final Resources resources;
+	private final Logger log = Logger.getLogger(ImageViewImpl.class.getName());
+	private static final ImageViewImplUiBinder uiBinder = GWT
+			.create(ImageViewImplUiBinder.class);
+	private final TimerInterface timer;
+	private final String location;
+	private static final int PADDING_Y = 2;
+	private static final int PADDING_X = 2;
+	@UiField
+	Label info;
+	@UiField
+	FitImage image;
+	@UiField
+	LayoutPanel layout;
+	protected ImageView.ImagePresenter presenter;
+	protected final Resources resources;
 
-    @Inject
-    public ImageViewImpl(@Assisted
-                         String location, TimerInterface timer, Resources resources) {
-        this.timer = timer;
-        this.resources = resources;
-        initWidget(uiBinder.createAndBindUi(this));
-        this.location = location;
-        init();
-    }
+	@Inject
+	public ImageViewImpl(@Assisted String location, TimerInterface timer,
+			Resources resources) {
+		this.timer = timer;
+		this.resources = resources;
+		initWidget(uiBinder.createAndBindUi(this));
+		this.location = location;
+		init();
+	}
 
-    private void init() {
-        image.ensureDebugId("image-view-" + location);
-    }
+	private void init() {
+		image.ensureDebugId("image-view-" + location);
+	}
 
-    @Override
-    public void setImageUrl(final String url) {
-        image.setUrl(url);
-    }
+	@Override
+	public void setImageUrl(final String url) {
+		image.setUrl(url);
+	}
 
-    @UiHandler("image")
-    public void imageClicked(ClickEvent event) {
-        log.log(Level.FINER, "image clicked " + location);
-        this.presenter.imageClicked();
-    }
+	@UiHandler("image")
+	public void imageClicked(ClickEvent event) {
+		log.log(Level.FINER, "image clicked " + location);
+		this.presenter.imageClicked();
+	}
 
-    @UiHandler("image")
-    public void infoHover(MouseMoveEvent event) {
-        showLabel();
-        hideLabelLater(3000);
-    }
+	@UiHandler("image")
+	public void infoHover(MouseMoveEvent event) {
+		showLabel();
+		hideLabelLater(3000);
+	}
 
-    private void showLabel() {
-        layout.setWidgetBottomHeight(info, 0, Unit.CM, 16, Unit.PX);
-        layout.animate(500);
-    }
+	private void showLabel() {
+		layout.setWidgetBottomHeight(info, 0, Unit.CM, 16, Unit.PX);
+		layout.animate(500);
+	}
 
-    public void hideLabelLater(final int duration) {
-        timer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                layout.setWidgetBottomHeight(info, 0, Unit.CM, 0, Unit.PX);
-                layout.animate(500);
-            }
-        });
-        timer.schedule(duration);
-    }
+	public void hideLabelLater(final int duration) {
+		timer.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				layout.setWidgetBottomHeight(info, 0, Unit.CM, 0, Unit.PX);
+				layout.animate(500);
+			}
+		});
+		timer.schedule(duration);
+	}
 
-    @Override
-    public void setPresenter(ImagePresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setPresenter(ImagePresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void setDescription(String text) {
-        info.setText(text);
-    }
+	@Override
+	public void setDescription(String text) {
+		info.setText(text);
+	}
 
-    @Override
-    public void setSelected(boolean selected) {
-        if (selected) {
-            setStyleName(resources.style().selectedImage());
-        } else {
-            setStyleName(resources.style().image());
-        }
-    }
+	@Override
+	public void setSelected(boolean selected) {
+		if (selected) {
+			setStyleName(resources.style().selectedImage());
+		} else {
+			setStyleName(resources.style().image());
+		}
+	}
 
-    @Override
-    public void onResize() {
-        super.onResize();
-        adjustSize();
-    }
+	@Override
+	public void onResize() {
+		super.onResize();
+		adjustSize();
+	}
 
-    @Override
-    public void adjustSize() {
-        log.log(Level.FINEST, "Called adjust size");
-        int width = Math.max(0, getOffsetWidth() - PADDING_X);
-        int height = Math.max(0, getOffsetHeight() - PADDING_Y);
-        image.setMaxSize(width, height);
-    }
+	@Override
+	public void adjustSize() {
+		log.log(Level.FINEST, "Called adjust size");
+		int width = Math.max(0, getOffsetWidth() - PADDING_X);
+		int height = Math.max(0, getOffsetHeight() - PADDING_Y);
+		image.setMaxSize(width, height);
+	}
 
-    interface ImageViewImplUiBinder extends UiBinder<LayoutPanel, ImageViewImpl> {
-    }
+	interface ImageViewImplUiBinder
+			extends
+				UiBinder<LayoutPanel, ImageViewImpl> {
+	}
 }

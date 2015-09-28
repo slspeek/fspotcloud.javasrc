@@ -29,44 +29,40 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 import static com.google.common.base.Objects.equal;
 
-
 public class SlideshowPlace extends BasePlace {
 
-    public SlideshowPlace(String tagId, String photoId) {
-        super(tagId, photoId);
-    }
+	public SlideshowPlace(String tagId, String photoId) {
+		super(tagId, photoId);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(
-                getTagId(),
-                getPhotoId()
-                );
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(getTagId(), getPhotoId());
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (other.getClass().equals(SlideshowPlace.class)) {
-            SlideshowPlace basePlace = (SlideshowPlace) other;
-            return equal(getTagId(), basePlace.getTagId()) &&
-                    equal(getPhotoId(), basePlace.getPhotoId());
+	@Override
+	public boolean equals(Object other) {
+		if (other.getClass().equals(SlideshowPlace.class)) {
+			SlideshowPlace basePlace = (SlideshowPlace) other;
+			return equal(getTagId(), basePlace.getTagId())
+					&& equal(getPhotoId(), basePlace.getPhotoId());
 
-        } else {
-            return false;
-        }
-    }
+		} else {
+			return false;
+		}
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<SlideshowPlace> {
-        @Override
-        public SlideshowPlace getPlace(String token) {
-            TokenizerUtil util = new TokenizerUtil(token);
+	public static class Tokenizer implements PlaceTokenizer<SlideshowPlace> {
+		@Override
+		public SlideshowPlace getPlace(String token) {
+			TokenizerUtil util = new TokenizerUtil(token);
 
-            return new SlideshowPlace(util.getTagId(), util.getPhotoId());
-        }
+			return new SlideshowPlace(util.getTagId(), util.getPhotoId());
+		}
 
-        @Override
-        public String getToken(SlideshowPlace place) {
-            return place.getTagId() + ":" + place.getPhotoId();
-        }
-    }
+		@Override
+		public String getToken(SlideshowPlace place) {
+			return place.getTagId() + ":" + place.getPhotoId();
+		}
+	}
 }

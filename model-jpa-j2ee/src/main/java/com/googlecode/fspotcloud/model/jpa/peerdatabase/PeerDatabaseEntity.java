@@ -32,189 +32,191 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
 /**
  * Represents a whole F-Spot instance and stores application state
  */
 @Entity
 public class PeerDatabaseEntity implements PeerDatabase, Serializable {
-    //public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
-    private static final transient long serialVersionUID = -4842421992073164575L;
-    @Id
-    private String name;
-    @Basic
-    private String peerName;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date peerLastContact;
-    @Basic
-    private int peerPhotoCount;
-    @Basic
-    private int tagCount;
-    @Basic
-    private long photoCount;
-    @Basic
-    private String thumbDimension = "512x384";
-    @Basic
-    private String imageDimension = "1024x768";
-    @Lob
-    byte[] cachedTagTreeData; // = EMPTY_BYTE_ARRAY;
-    @Basic
-    private transient TagNode cachedTagTree = null;
+	//public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+	private static final transient long serialVersionUID = -4842421992073164575L;
+	@Id
+	private String name;
+	@Basic
+	private String peerName;
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date peerLastContact;
+	@Basic
+	private int peerPhotoCount;
+	@Basic
+	private int tagCount;
+	@Basic
+	private long photoCount;
+	@Basic
+	private String thumbDimension = "512x384";
+	@Basic
+	private String imageDimension = "1024x768";
+	@Lob
+	byte[] cachedTagTreeData; // = EMPTY_BYTE_ARRAY;
+	@Basic
+	private transient TagNode cachedTagTree = null;
 
-    @Lob
-    byte[] cachedAdminTagTreeData; // = EMPTY_BYTE_ARRAY;
-    @Basic
-    private transient TagNode cachedAdminTagTree = null;
+	@Lob
+	byte[] cachedAdminTagTreeData; // = EMPTY_BYTE_ARRAY;
+	@Basic
+	private transient TagNode cachedAdminTagTree = null;
 
+	public PeerDatabaseEntity() {
+	}
 
-    public PeerDatabaseEntity() {
-    }
+	@Override
+	public String getThumbDimension() {
+		return thumbDimension;
+	}
 
-    @Override
-    public String getThumbDimension() {
-        return thumbDimension;
-    }
+	@Override
+	public void setThumbDimension(String thumbDimension) {
+		this.thumbDimension = thumbDimension;
+	}
 
-    @Override
-    public void setThumbDimension(String thumbDimension) {
-        this.thumbDimension = thumbDimension;
-    }
+	@Override
+	public String getImageDimension() {
+		return imageDimension;
+	}
 
-    @Override
-    public String getImageDimension() {
-        return imageDimension;
-    }
+	@Override
+	public void setImageDimension(String imageDimension) {
+		this.imageDimension = imageDimension;
+	}
 
-    @Override
-    public void setImageDimension(String imageDimension) {
-        this.imageDimension = imageDimension;
-    }
+	@Override
+	public Date getPeerLastContact() {
+		return peerLastContact;
+	}
 
-    @Override
-    public Date getPeerLastContact() {
-        return peerLastContact;
-    }
+	@Override
+	public void setPeerLastContact(Date peerLastContact) {
+		this.peerLastContact = peerLastContact;
+	}
 
-    @Override
-    public void setPeerLastContact(Date peerLastContact) {
-        this.peerLastContact = peerLastContact;
-    }
+	@Override
+	public String getId() {
+		return name;
+	}
 
-    @Override
-    public String getId() {
-        return name;
-    }
+	@Override
+	public void setId(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public void setId(String name) {
-        this.name = name;
-    }
+	@Override
+	public void setPeerPhotoCount(int count) {
+		this.peerPhotoCount = count;
+	}
 
-    @Override
-    public void setPeerPhotoCount(int count) {
-        this.peerPhotoCount = count;
-    }
+	@Override
+	public void setPeerName(String peerName) {
+		this.peerName = peerName;
+	}
 
-    @Override
-    public void setPeerName(String peerName) {
-        this.peerName = peerName;
-    }
+	@Override
+	public String getPeerName() {
+		return peerName;
+	}
 
-    @Override
-    public String getPeerName() {
-        return peerName;
-    }
+	@Override
+	public void setTagCount(int tagCount) {
+		this.tagCount = tagCount;
+	}
 
-    @Override
-    public void setTagCount(int tagCount) {
-        this.tagCount = tagCount;
-    }
+	@Override
+	public int getTagCount() {
+		return tagCount;
+	}
 
-    @Override
-    public int getTagCount() {
-        return tagCount;
-    }
+	@Override
+	public void touchPeerContact() {
+		setPeerLastContact(new Date());
+	}
 
-    @Override
-    public void touchPeerContact() {
-        setPeerLastContact(new Date());
-    }
+	@Override
+	public int getPeerPhotoCount() {
+		return peerPhotoCount;
+	}
 
-    @Override
-    public int getPeerPhotoCount() {
-        return peerPhotoCount;
-    }
+	public void setPhotoCount(long photoCount) {
+		this.photoCount = photoCount;
+	}
 
-    public void setPhotoCount(long photoCount) {
-        this.photoCount = photoCount;
-    }
+	public long getPhotoCount() {
+		return photoCount;
+	}
 
-    public long getPhotoCount() {
-        return photoCount;
-    }
+	@Override
+	public void setCachedTagTree(TagNode newTagTree) {
+		if (newTagTree == null) {
+			this.cachedTagTreeData = null;
+			this.cachedTagTree = null;
+		} else {
+			this.cachedTagTree = newTagTree;
+			this.cachedTagTreeData = SerializationUtils
+					.serialize(this.cachedTagTree);
+		}
+	}
 
-    @Override
-    public void setCachedTagTree(TagNode newTagTree) {
-        if (newTagTree == null) {
-            this.cachedTagTreeData = null;
-            this.cachedTagTree = null;
-        } else {
-            this.cachedTagTree = newTagTree;
-            this.cachedTagTreeData = SerializationUtils.serialize(this.cachedTagTree);
-        }
-    }
+	@Override
+	public TagNode getCachedTagTree() {
+		if (cachedTagTree == null && cachedTagTreeData != null) {
+			cachedTagTree = (TagNode) SerializationUtils
+					.deserialize(cachedTagTreeData);
+		}
 
-    @Override
-    public TagNode getCachedTagTree() {
-        if (cachedTagTree == null && cachedTagTreeData != null) {
-            cachedTagTree = (TagNode) SerializationUtils.deserialize(cachedTagTreeData);
-        }
+		return cachedTagTree;
+	}
 
-        return cachedTagTree;
-    }
+	@Override
+	public void setCachedAdminTagTree(TagNode newTagTree) {
+		if (newTagTree == null) {
+			this.cachedAdminTagTreeData = null;
+			this.cachedAdminTagTree = null;
+		} else {
+			this.cachedAdminTagTree = newTagTree;
+			this.cachedAdminTagTreeData = SerializationUtils
+					.serialize(this.cachedAdminTagTree);
+		}
+	}
 
-    @Override
-    public void setCachedAdminTagTree(TagNode newTagTree) {
-        if (newTagTree == null) {
-            this.cachedAdminTagTreeData = null;
-            this.cachedAdminTagTree = null;
-        } else {
-            this.cachedAdminTagTree = newTagTree;
-            this.cachedAdminTagTreeData = SerializationUtils.serialize(this.cachedAdminTagTree);
-        }
-    }
+	@Override
+	public TagNode getCachedAdminTagTree() {
+		if (cachedAdminTagTree == null && cachedAdminTagTreeData != null) {
+			cachedAdminTagTree = (TagNode) SerializationUtils
+					.deserialize(cachedAdminTagTreeData);
+		}
+		return cachedAdminTagTree;
+	}
 
-    @Override
-    public TagNode getCachedAdminTagTree() {
-        if (cachedAdminTagTree == null && cachedAdminTagTreeData != null) {
-            cachedAdminTagTree = (TagNode) SerializationUtils.deserialize(cachedAdminTagTreeData);
-        }
-        return cachedAdminTagTree;
-    }
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("PeerDatabaseEntity");
+		sb.append("{name='").append(name).append('\'');
+		sb.append(", peerName='").append(peerName).append('\'');
+		sb.append(", peerLastContact=").append(peerLastContact);
+		sb.append(", peerPhotoCount=").append(peerPhotoCount);
+		sb.append(", tagCount=").append(tagCount);
+		sb.append(", photoCount=").append(photoCount);
+		sb.append(", thumbDimension='").append(thumbDimension).append('\'');
+		sb.append(", imageDimension='").append(imageDimension).append('\'');
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("PeerDatabaseEntity");
-        sb.append("{name='").append(name).append('\'');
-        sb.append(", peerName='").append(peerName).append('\'');
-        sb.append(", peerLastContact=").append(peerLastContact);
-        sb.append(", peerPhotoCount=").append(peerPhotoCount);
-        sb.append(", tagCount=").append(tagCount);
-        sb.append(", photoCount=").append(photoCount);
-        sb.append(", thumbDimension='").append(thumbDimension).append('\'');
-        sb.append(", imageDimension='").append(imageDimension).append('\'');
+		if (cachedTagTreeData != null) {
+			sb.append(", cachedTagTreeDATA=").append(
+					SerializationUtils.deserialize(cachedTagTreeData));
+		}
 
-        if (cachedTagTreeData != null) {
-            sb.append(", cachedTagTreeDATA=")
-                    .append(SerializationUtils.deserialize(cachedTagTreeData));
-        }
+		sb.append(", (cachedTagTreeData == null)= ").append(
+				cachedTagTreeData == null);
+		sb.append(", cachedTagTree=").append(cachedTagTree);
+		sb.append(", @ (" + super.toString() + ") }");
 
-        sb.append(", (cachedTagTreeData == null)= ")
-                .append(cachedTagTreeData == null);
-        sb.append(", cachedTagTree=").append(cachedTagTree);
-        sb.append(", @ (" + super.toString() + ") }");
-
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 }

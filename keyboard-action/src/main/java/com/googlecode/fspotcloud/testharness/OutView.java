@@ -31,8 +31,8 @@ import com.google.gwt.user.client.ui.IsWidget;
 @GwtCompatible
 public interface OutView extends IsWidget {
 
-    void setStatusText(String result);
+	void setStatusText(String result);
 
-    interface OutPresenter extends Activity {
-    }
+	interface OutPresenter extends Activity {
+	}
 }

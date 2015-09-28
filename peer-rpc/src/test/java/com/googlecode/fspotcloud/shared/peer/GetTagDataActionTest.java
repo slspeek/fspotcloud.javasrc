@@ -33,16 +33,16 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 
 public class GetTagDataActionTest {
-    private final List<String> ID_LIST = newArrayList("1", "2");
-    GetTagDataAction action;
+	private final List<String> ID_LIST = newArrayList("1", "2");
+	GetTagDataAction action;
 
-    @Before
-    public void setUp() throws Exception {
-        action = new GetTagDataAction(ID_LIST);
-    }
+	@Before
+	public void setUp() throws Exception {
+		action = new GetTagDataAction(ID_LIST);
+	}
 
-    @Test
-    public void testSerialize() throws Exception {
-        testSerialization(action);
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		testSerialization(action);
+	}
 }

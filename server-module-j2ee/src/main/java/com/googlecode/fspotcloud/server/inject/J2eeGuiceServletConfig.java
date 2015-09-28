@@ -31,23 +31,23 @@ import com.googlecode.fspotcloud.server.main.PropertiesLoader;
 
 import java.util.Properties;
 
-
 public class J2eeGuiceServletConfig extends GuiceServletContextListener {
-    final Properties p = new PropertiesLoader("properties.properties").loadProperties();
+	final Properties p = new PropertiesLoader("properties.properties")
+			.loadProperties();
 
-    @Override
-    protected Injector getInjector() {
-        System.setProperty("java.util.logging.config.file", "logging.properties");
+	@Override
+	protected Injector getInjector() {
+		System.setProperty("java.util.logging.config.file",
+				"logging.properties");
 
-        int maxTicks = Integer.valueOf(p.getProperty(
-                "fspotcloud.max.data.ticks",
-                "100"));
-        String adminEmail = p.getProperty("fspotcloud.admin.email");
-        String botSecret = p.getProperty("fspotcloud.bot.secret");
-        String smtpServer = p.getProperty("fspotcloud.smtp.server");
-        Injector i = Guice.createInjector(new J2eeTotalModule(maxTicks,
-                botSecret, adminEmail, smtpServer));
+		int maxTicks = Integer.valueOf(p.getProperty(
+				"fspotcloud.max.data.ticks", "100"));
+		String adminEmail = p.getProperty("fspotcloud.admin.email");
+		String botSecret = p.getProperty("fspotcloud.bot.secret");
+		String smtpServer = p.getProperty("fspotcloud.smtp.server");
+		Injector i = Guice.createInjector(new J2eeTotalModule(maxTicks,
+				botSecret, adminEmail, smtpServer));
 
-        return i;
-    }
+		return i;
+	}
 }

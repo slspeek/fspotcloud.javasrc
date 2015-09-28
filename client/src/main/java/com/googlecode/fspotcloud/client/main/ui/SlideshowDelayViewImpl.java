@@ -38,39 +38,45 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class SlideshowDelayViewImpl extends Composite implements SlideshowDelayView {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(SlideshowDelayViewImpl.class.getName());
-    private static final SlideshowViewImplUiBinder uiBinder = GWT.create(SlideshowViewImplUiBinder.class);
-    private final Resources resources;
+public class SlideshowDelayViewImpl extends Composite
+		implements
+			SlideshowDelayView {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(SlideshowDelayViewImpl.class
+			.getName());
+	private static final SlideshowViewImplUiBinder uiBinder = GWT
+			.create(SlideshowViewImplUiBinder.class);
+	private final Resources resources;
 
-    @UiField
-    HorizontalPanel mainPanel;
-    @UiField
-    Label intervalLabel;
+	@UiField
+	HorizontalPanel mainPanel;
+	@UiField
+	Label intervalLabel;
 
-    @Inject
-    public SlideshowDelayViewImpl(Resources resources) {
-        this.resources = resources;
-        initWidget(uiBinder.createAndBindUi(this));
-        log.info("created");
-    }
+	@Inject
+	public SlideshowDelayViewImpl(Resources resources) {
+		this.resources = resources;
+		initWidget(uiBinder.createAndBindUi(this));
+		log.info("created");
+	}
 
-    @Override
-    public void setLabelText(String text) {
-        intervalLabel.setText(text);
-    }
+	@Override
+	public void setLabelText(String text) {
+		intervalLabel.setText(text);
+	}
 
-    @Override
-    public void addStyleRunning() {
-        asWidget().addStyleName(resources.style().running());
-    }
+	@Override
+	public void addStyleRunning() {
+		asWidget().addStyleName(resources.style().running());
+	}
 
-    @Override
-    public void removeStyleRunning() {
-        asWidget().removeStyleName(resources.style().running());
-    }
+	@Override
+	public void removeStyleRunning() {
+		asWidget().removeStyleName(resources.style().running());
+	}
 
-    interface SlideshowViewImplUiBinder extends UiBinder<Widget, SlideshowDelayViewImpl> {
-    }
+	interface SlideshowViewImplUiBinder
+			extends
+				UiBinder<Widget, SlideshowDelayViewImpl> {
+	}
 }

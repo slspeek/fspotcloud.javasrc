@@ -42,87 +42,88 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class UserAccountViewImpl extends Composite implements UserAccountView {
-    private final Logger log = Logger.getLogger(UserAccountViewImpl.class.getName());
-    private static final UserAccountViewImplUiBinder uiBinder = GWT.create(UserAccountViewImplUiBinder.class);
+	private final Logger log = Logger.getLogger(UserAccountViewImpl.class
+			.getName());
+	private static final UserAccountViewImplUiBinder uiBinder = GWT
+			.create(UserAccountViewImplUiBinder.class);
 
-    @UiField
-    Label emailValueLabel;
-    @UiField
-    Label lastLoginValueLabel;
-    @UiField
-    PasswordTextBox oldPasswordTextBox;
+	@UiField
+	Label emailValueLabel;
+	@UiField
+	Label lastLoginValueLabel;
+	@UiField
+	PasswordTextBox oldPasswordTextBox;
 
-    @UiField
-    PasswordTextBox passwordTextBox;
-    @UiField
-    PasswordTextBox passwordAgainTextBox;
-    @UiField
-    Label statusLabel;
-    @UiField(provided = true)
-    ActionButton save;
-    @UiField(provided = true)
-    ActionButton logout;
-    @UiField(provided = true)
-    ActionButton cancel;
+	@UiField
+	PasswordTextBox passwordTextBox;
+	@UiField
+	PasswordTextBox passwordAgainTextBox;
+	@UiField
+	Label statusLabel;
+	@UiField(provided = true)
+	ActionButton save;
+	@UiField(provided = true)
+	ActionButton logout;
+	@UiField(provided = true)
+	ActionButton cancel;
 
-    @Inject
-    public UserAccountViewImpl(UserActions userActions,
-                               DashboardActions dashboardActions,
-                               ApplicationActions applicationActions,
-                               BigButtonFactory buttonFactory
-    ) {
-        save = buttonFactory.getButton(userActions.doChangePassword);
-        cancel = buttonFactory.getButton(dashboardActions.toPhotos);
-        logout = buttonFactory.getButton(applicationActions.logout);
-        initWidget(uiBinder.createAndBindUi(this));
-        emailValueLabel.ensureDebugId("email");
-        lastLoginValueLabel.ensureDebugId("last-login");
-        oldPasswordTextBox.ensureDebugId("old-password");
-        passwordTextBox.ensureDebugId("new-password");
-        passwordAgainTextBox.ensureDebugId("new-password-again");
-        log.log(Level.FINE, "Created ");
-    }
+	@Inject
+	public UserAccountViewImpl(UserActions userActions,
+			DashboardActions dashboardActions,
+			ApplicationActions applicationActions,
+			BigButtonFactory buttonFactory) {
+		save = buttonFactory.getButton(userActions.doChangePassword);
+		cancel = buttonFactory.getButton(dashboardActions.toPhotos);
+		logout = buttonFactory.getButton(applicationActions.logout);
+		initWidget(uiBinder.createAndBindUi(this));
+		emailValueLabel.ensureDebugId("email");
+		lastLoginValueLabel.ensureDebugId("last-login");
+		oldPasswordTextBox.ensureDebugId("old-password");
+		passwordTextBox.ensureDebugId("new-password");
+		passwordAgainTextBox.ensureDebugId("new-password-again");
+		log.log(Level.FINE, "Created ");
+	}
 
-    @Override
-    public void setEmail(String email) {
-        emailValueLabel.setText(email);
-    }
+	@Override
+	public void setEmail(String email) {
+		emailValueLabel.setText(email);
+	}
 
-    @Override
-    public void setLastLoginTime(String date) {
-        lastLoginValueLabel.setText(date);
-    }
+	@Override
+	public void setLastLoginTime(String date) {
+		lastLoginValueLabel.setText(date);
+	}
 
-    @Override
-    public String getOldPasswordField() {
-        return oldPasswordTextBox.getText();
-    }
+	@Override
+	public String getOldPasswordField() {
+		return oldPasswordTextBox.getText();
+	}
 
-    @Override
-    public String getPasswordField() {
-        return passwordTextBox.getText();
-    }
+	@Override
+	public String getPasswordField() {
+		return passwordTextBox.getText();
+	}
 
-    @Override
-    public String getPasswordAgainField() {
-        return passwordAgainTextBox.getText();
-    }
+	@Override
+	public String getPasswordAgainField() {
+		return passwordAgainTextBox.getText();
+	}
 
-    @Override
-    public void setStatusText(String text) {
-        statusLabel.setText(text);
-    }
+	@Override
+	public void setStatusText(String text) {
+		statusLabel.setText(text);
+	}
 
-    @Override
-    public void clearFields() {
-        oldPasswordTextBox.setText("");
-        passwordAgainTextBox.setText("");
-        passwordTextBox.setText("");
-    }
+	@Override
+	public void clearFields() {
+		oldPasswordTextBox.setText("");
+		passwordAgainTextBox.setText("");
+		passwordTextBox.setText("");
+	}
 
-
-    interface UserAccountViewImplUiBinder extends UiBinder<Widget, UserAccountViewImpl> {
-    }
+	interface UserAccountViewImplUiBinder
+			extends
+				UiBinder<Widget, UserAccountViewImpl> {
+	}
 }

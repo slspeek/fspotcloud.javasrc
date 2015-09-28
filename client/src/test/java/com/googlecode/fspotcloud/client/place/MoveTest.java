@@ -14,46 +14,50 @@ public class MoveTest extends EqualityTest
 
 {
 
-    private Move move = new Move(Navigator.Direction.FORWARD, Navigator.Unit.BORDER);
-    @Test
-    public void testGetDirection() throws Exception {
-        assertEquals(Navigator.Direction.FORWARD, move.getDirection());
+	private Move move = new Move(Navigator.Direction.FORWARD,
+			Navigator.Unit.BORDER);
+	@Test
+	public void testGetDirection() throws Exception {
+		assertEquals(Navigator.Direction.FORWARD, move.getDirection());
 
-    }
+	}
 
-    @Test
-    public void testGetUnit() throws Exception {
+	@Test
+	public void testGetUnit() throws Exception {
 
-        assertEquals(Navigator.Unit.BORDER, move.getUnit());
-    }
+		assertEquals(Navigator.Unit.BORDER, move.getUnit());
+	}
 
-    @Override
-    protected List<Provider<Object>> getUniqueObjects() {
-        List<Provider<Object>> result = newArrayList();
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new Move(Navigator.Direction.BACKWARD, Navigator.Unit.SINGLE);
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new Move(Navigator.Direction.FORWARD, Navigator.Unit.SINGLE);
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new Move(Navigator.Direction.FORWARD, Navigator.Unit.ROW);
-            }
-        });
-        return result;
-    }
+	@Override
+	protected List<Provider<Object>> getUniqueObjects() {
+		List<Provider<Object>> result = newArrayList();
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new Move(Navigator.Direction.BACKWARD,
+						Navigator.Unit.SINGLE);
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new Move(Navigator.Direction.FORWARD,
+						Navigator.Unit.SINGLE);
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new Move(Navigator.Direction.FORWARD, Navigator.Unit.ROW);
+			}
+		});
+		return result;
+	}
 
-    @Test
-    public void testToString() throws Exception {
-        assertEquals("Move{direction=null, unit=null}", new Move(null, null).toString());
+	@Test
+	public void testToString() throws Exception {
+		assertEquals("Move{direction=null, unit=null}",
+				new Move(null, null).toString());
 
-    }
+	}
 }

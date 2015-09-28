@@ -8,13 +8,11 @@ import com.googlecode.fspotcloud.client.enduseraction.user.UserLateBinder;
 
 public class UserActionLateBinder {
 
+	@Inject
+	UserActionLateBinder(ApplicationLateBinder applicationLateBinder,
+			DashboardLateBinder dashboardLateBinder,
+			UserLateBinder userLateBinder, GroupLateBinder groupLateBinder) {
 
-    @Inject
-    UserActionLateBinder(ApplicationLateBinder applicationLateBinder,
-                         DashboardLateBinder dashboardLateBinder,
-                         UserLateBinder userLateBinder,
-                         GroupLateBinder groupLateBinder) {
-
-    }
+	}
 
 }

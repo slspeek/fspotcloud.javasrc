@@ -38,42 +38,44 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 import java.util.logging.Logger;
 
+public class ConfirmationDialogBox extends DialogBox {
+	private final Logger log = Logger.getLogger(ConfirmationDialogBox.class
+			.getName());
+	private Runnable confirmAction;
 
-public class ConfirmationDialogBox extends DialogBox  {
-    private final Logger log = Logger.getLogger(ConfirmationDialogBox.class.getName());
-    private Runnable confirmAction;
+	interface ConfirmationDialogBoxUiBinder
+			extends
+				UiBinder<Widget, ConfirmationDialogBox> {
+	}
 
+	private static final ConfirmationDialogBoxUiBinder uiBinder = GWT
+			.create(ConfirmationDialogBoxUiBinder.class);
 
-    interface ConfirmationDialogBoxUiBinder extends UiBinder<Widget, ConfirmationDialogBox> {
-    }
+	@UiField
+	Button okButton;
 
-    private static final ConfirmationDialogBoxUiBinder uiBinder = GWT.create(ConfirmationDialogBoxUiBinder.class);
+	@UiField
+	Button cancelButton;
 
-    @UiField
-    Button  okButton;
+	@Inject
+	public ConfirmationDialogBox() {
+		setWidget(uiBinder.createAndBindUi(this));
+		okButton.ensureDebugId("confirm-ok");
+		cancelButton.ensureDebugId("confirm-cancel");
+	}
 
-    @UiField
-    Button cancelButton;
+	@UiHandler("cancelButton")
+	public void onCancel(ClickEvent e) {
+		hide();
+	}
 
-    @Inject
-    public ConfirmationDialogBox() {
-        setWidget(uiBinder.createAndBindUi(this));
-        okButton.ensureDebugId("confirm-ok");
-        cancelButton.ensureDebugId("confirm-cancel");
-    }
+	public void setConfirmAction(Runnable confirmAction) {
+		this.confirmAction = confirmAction;
+	}
 
-    @UiHandler("cancelButton")
-    public void onCancel(ClickEvent e) {
-        hide();
-    }
-
-    public void setConfirmAction(Runnable confirmAction) {
-        this.confirmAction = confirmAction;
-    }
-
-    @UiHandler("okButton")
-    public void onOkey(ClickEvent e) {
-        hide();
-        confirmAction.run();
-    }
+	@UiHandler("okButton")
+	public void onOkey(ClickEvent e) {
+		hide();
+		confirmAction.run();
+	}
 }

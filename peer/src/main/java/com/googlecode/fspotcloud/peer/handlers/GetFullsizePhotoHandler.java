@@ -34,28 +34,29 @@ import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class GetFullsizePhotoHandler
+		extends
+			SimpleActionHandler<GetFullsizePhotoAction, FullsizePhotoResult> {
+	private final Backend data;
 
-public class GetFullsizePhotoHandler extends SimpleActionHandler<GetFullsizePhotoAction, FullsizePhotoResult> {
-    private final Backend data;
+	@Inject
+	public GetFullsizePhotoHandler(Backend data) {
+		super();
+		this.data = data;
+	}
 
-    @Inject
-    public GetFullsizePhotoHandler(Backend data) {
-        super();
-        this.data = data;
-    }
+	@Override
+	public FullsizePhotoResult execute(GetFullsizePhotoAction action,
+			ExecutionContext context) throws DispatchException {
+		FullsizePhotoResult result;
 
-    @Override
-    public FullsizePhotoResult execute(GetFullsizePhotoAction action,
-                                       ExecutionContext context) throws DispatchException {
-        FullsizePhotoResult result;
+		try {
+			// TODO: Upload fullsize to new API 
+			result = new FullsizePhotoResult(action.getImageKey());
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-        try {
-        	// TODO: Upload fullsize to new API 
-            result = new FullsizePhotoResult(action.getImageKey());
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

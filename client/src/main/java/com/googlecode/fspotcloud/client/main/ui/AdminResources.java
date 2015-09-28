@@ -27,61 +27,60 @@ package com.googlecode.fspotcloud.client.main.ui;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-
 public interface AdminResources extends ClientBundle {
-    @Source("admin.css")
-    Style style();
+	@Source("admin.css")
+	Style style();
 
-    public interface Style extends CssResource {
+	public interface Style extends CssResource {
 
-        String status();
+		String status();
 
-        String copyleft();
+		String copyleft();
 
-        String editUsergroup();
+		String editUsergroup();
 
-        String editUsergroupHeader();
+		String editUsergroupHeader();
 
-        String manageUsers();
+		String manageUsers();
 
-        String usergroupName();
+		String usergroupName();
 
-        String myUsergroups();
+		String myUsergroups();
 
-        String myUsergroupsTable();
+		String myUsergroupsTable();
 
-        String publicCheckbox();
+		String publicCheckbox();
 
-        String tree();
+		String tree();
 
-        String main();
+		String main();
 
-        String footer();
+		String footer();
 
-        String titleLabel();
+		String titleLabel();
 
-        String importedTag();
+		String importedTag();
 
-        String tag();
+		String tag();
 
-        String headerLabel();
+		String headerLabel();
 
-        String propertyLabel();
+		String propertyLabel();
 
-        String propertyInput();
+		String propertyInput();
 
-        String propertyValue();
+		String propertyValue();
 
-        String propertyNumberValue();
+		String propertyNumberValue();
 
-        String labelDetails();
+		String labelDetails();
 
-        String globalActions();
+		String globalActions();
 
-        String tableLayout();
+		String tableLayout();
 
-        String tableLayoutLayer();
+		String tableLayoutLayer();
 
-        String tableHeader();
-    }
+		String tableHeader();
+	}
 }

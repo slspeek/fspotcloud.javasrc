@@ -6,27 +6,27 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ManageGroupsPlaceTest extends EqualsTest<ManageGroupsPlace> {
-    
-    @Override
-    protected ManageGroupsPlace getOne() {
-        return new ManageGroupsPlace();
-    }
 
-    @Override
-    protected ManageGroupsPlace getDifferentOne() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	protected ManageGroupsPlace getOne() {
+		return new ManageGroupsPlace();
+	}
 
-    @Test
-    public void testTokenizerGetToken() throws Exception {
-        ManageGroupsPlace.Tokenizer tokenizer = new ManageGroupsPlace.Tokenizer();
-        String token = tokenizer.getToken(new ManageGroupsPlace());
-        assertEquals("", token);
-    }
+	@Override
+	protected ManageGroupsPlace getDifferentOne() {
+		return null; //To change body of implemented methods use File | Settings | File Templates.
+	}
 
-    @Test
-    public void testTokenizerGetPlace() throws Exception {
-        ManageGroupsPlace.Tokenizer tokenizer = new ManageGroupsPlace.Tokenizer();
-        assertEquals(new ManageGroupsPlace(), tokenizer.getPlace(""));
-    }
+	@Test
+	public void testTokenizerGetToken() throws Exception {
+		ManageGroupsPlace.Tokenizer tokenizer = new ManageGroupsPlace.Tokenizer();
+		String token = tokenizer.getToken(new ManageGroupsPlace());
+		assertEquals("", token);
+	}
+
+	@Test
+	public void testTokenizerGetPlace() throws Exception {
+		ManageGroupsPlace.Tokenizer tokenizer = new ManageGroupsPlace.Tokenizer();
+		assertEquals(new ManageGroupsPlace(), tokenizer.getPlace(""));
+	}
 }

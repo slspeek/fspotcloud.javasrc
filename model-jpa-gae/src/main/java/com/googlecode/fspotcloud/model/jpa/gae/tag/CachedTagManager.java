@@ -33,27 +33,27 @@ import com.googlecode.simplejpadao.AbstractDAO;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
-
 public class CachedTagManager extends CachedTagManagerBase<Tag, TagEntity>
-        implements TagDao {
-    private final Logger log = Logger.getLogger(CachedTagManager.class.getName());
-    @Inject
-    TagManagerBase<Tag, TagEntity> delegate;
+		implements
+			TagDao {
+	private final Logger log = Logger.getLogger(CachedTagManager.class
+			.getName());
+	@Inject
+	TagManagerBase<Tag, TagEntity> delegate;
 
-    @Override
-    protected Tag newTag() {
-        return new TagEntity();
-    }
+	@Override
+	protected Tag newTag() {
+		return new TagEntity();
+	}
 
-    @Override
-    public Class<TagEntity> getEntityType() {
-        return TagEntity.class;
-    }
+	@Override
+	public Class<TagEntity> getEntityType() {
+		return TagEntity.class;
+	}
 
-    @Override
-    public AbstractDAO<Tag, String> getDelegate() {
-        return delegate;
-    }
-
+	@Override
+	public AbstractDAO<Tag, String> getDelegate() {
+		return delegate;
+	}
 
 }

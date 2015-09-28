@@ -33,37 +33,40 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class SlideshowDelayPresenterImpl
+		implements
+			SlideshowDelayView.SlideshowPresenter,
+			SlideshowStatusEvent.Handler {
+	private final Logger log = Logger
+			.getLogger(SlideshowDelayPresenterImpl.class.getName());
+	private final SlideshowDelayView slideshowDelayView;
+	private final NumberFormat formatter = NumberFormat.getDecimalFormat();
 
-public class SlideshowDelayPresenterImpl implements SlideshowDelayView.SlideshowPresenter,
-        SlideshowStatusEvent.Handler {
-    private final Logger log = Logger.getLogger(SlideshowDelayPresenterImpl.class.getName());
-    private final SlideshowDelayView slideshowDelayView;
-    private final NumberFormat formatter = NumberFormat.getDecimalFormat();
+	@Inject
+	public SlideshowDelayPresenterImpl(SlideshowDelayView slideshowDelayView) {
+		this.slideshowDelayView = slideshowDelayView;
+		log.log(Level.FINEST, "Created");
+	}
 
-    @Inject
-    public SlideshowDelayPresenterImpl(SlideshowDelayView slideshowDelayView) {
-        this.slideshowDelayView = slideshowDelayView;
-        log.log(Level.FINEST, "Created");
-    }
+	public void redraw(float delay, boolean running) {
+		slideshowDelayView.setLabelText(String.valueOf((int) delay)
+				+ " seconds. ");
 
-    public void redraw(float delay, boolean running) {
-        slideshowDelayView.setLabelText(String.valueOf((int)delay) + " seconds. ");
+		if (running) {
+			slideshowDelayView.addStyleRunning();
 
-        if (running) {
-            slideshowDelayView.addStyleRunning();
+		} else {
+			slideshowDelayView.removeStyleRunning();
+		}
+	}
 
-        } else {
-            slideshowDelayView.removeStyleRunning();
-        }
-    }
+	@Override
+	public void onEvent(SlideshowStatusEvent e) {
+		redraw(e.getDelay(), e.isRunning());
+	}
 
-    @Override
-    public void onEvent(SlideshowStatusEvent e) {
-        redraw(e.getDelay(), e.isRunning());
-    }
-
-    @Override
-    public IsWidget getView() {
-        return slideshowDelayView;
-    }
+	@Override
+	public IsWidget getView() {
+		return slideshowDelayView;
+	}
 }

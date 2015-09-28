@@ -11,25 +11,25 @@ import java.util.logging.Logger;
 
 public class ManageAccessHandler implements IActionHandler {
 
-    @Inject
-    private IPlaceController IPlaceController;
-    @Inject
-    private CurrentTagNodeAsync nodeAsync;
-    private Logger log = Logger.getLogger(ManageAccessHandler.class.getName());
+	@Inject
+	private IPlaceController IPlaceController;
+	@Inject
+	private CurrentTagNodeAsync nodeAsync;
+	private Logger log = Logger.getLogger(ManageAccessHandler.class.getName());
 
-    @Override
-    public void performAction(String actionId) {
-        nodeAsync.getNode(new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-            }
+	@Override
+	public void performAction(String actionId) {
+		nodeAsync.getNode(new AsyncCallback<TagNode>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
 
-            @Override
-            public void onSuccess(TagNode tagNode) {
-                log.info("Go to manage access " + tagNode);
-                IPlaceController.goTo(new TagApprovalPlace(tagNode.getId()));
-            }
-        });
+			@Override
+			public void onSuccess(TagNode tagNode) {
+				log.info("Go to manage access " + tagNode);
+				IPlaceController.goTo(new TagApprovalPlace(tagNode.getId()));
+			}
+		});
 
-    }
+	}
 }

@@ -38,94 +38,94 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class PeerActionsPresenter
+		implements
+			PeerActionsView.PeerActionsPresenter {
+	private final Logger log = Logger.getLogger(PeerActionsPresenter.class
+			.getName());
+	private final PeerActionsView peerActionsView;
+	private final DispatchAsync dispatcher;
+	private final TimerInterface timer;
+	private final EventBus eventBus;
+	private final DashboardActions actions;
 
-public class PeerActionsPresenter implements PeerActionsView.PeerActionsPresenter {
-    private final Logger log = Logger.getLogger(PeerActionsPresenter.class.getName());
-    private final PeerActionsView peerActionsView;
-    private final DispatchAsync dispatcher;
-    private final TimerInterface timer;
-    private final EventBus eventBus;
-    private final DashboardActions actions;
+	private String lastTreeHash = "";
 
-    private String lastTreeHash = "";
+	@Inject
+	public PeerActionsPresenter(PeerActionsView peerActionsView,
+			DispatchAsync dispatcher, TimerInterface timer, EventBus eventBus,
+			DashboardActions actions) {
+		super();
+		this.timer = timer;
+		this.peerActionsView = peerActionsView;
+		this.eventBus = eventBus;
+		this.actions = actions;
+		peerActionsView.setPresenter(this);
+		this.dispatcher = dispatcher;
+	}
 
-    @Inject
-    public PeerActionsPresenter(PeerActionsView peerActionsView,
-                                DispatchAsync dispatcher,
-                                TimerInterface timer,
-                                EventBus eventBus,
-                                DashboardActions actions) {
-        super();
-        this.timer = timer;
-        this.peerActionsView = peerActionsView;
-        this.eventBus = eventBus;
-        this.actions = actions;
-        peerActionsView.setPresenter(this);
-        this.dispatcher = dispatcher;
-    }
+	@Override
+	public void init() {
+		peerActionsView.setPresenter(this);
+		log.info("init");
+		getMetaData();
+	}
 
+	@Override
+	public void stop() {
+		timer.cancel();
+	}
 
-    @Override
-    public void init() {
-        peerActionsView.setPresenter(this);
-        log.info("init");
-        getMetaData();
-    }
+	private void getMetaData() {
+		dispatcher.execute(new GetMetaDataAction(),
+				new AsyncCallback<GetMetaDataResult>() {
+					@Override
+					public void onSuccess(GetMetaDataResult meta) {
+						processMetaData(meta);
+					}
 
-    @Override
-    public void stop() {
-        timer.cancel();
-    }
+					@Override
+					public void onFailure(Throwable caught) {
+						log.log(Level.SEVERE, "Action Exception from remote: ",
+								caught);
+						timer.setRunnable(new Runnable() {
+							@Override
+							public void run() {
+								getMetaData();
+							}
+						});
+						timer.schedule(6000);
+					}
+				});
+	}
 
-    private void getMetaData() {
-        dispatcher.execute(new GetMetaDataAction(),
-                new AsyncCallback<GetMetaDataResult>() {
-                    @Override
-                    public void onSuccess(GetMetaDataResult meta) {
-                        processMetaData(meta);
-                    }
+	private void processMetaData(GetMetaDataResult meta) {
+		populateView(meta);
+		String newHash = meta.getAdminTreeHash();
+		if (!newHash.equals(lastTreeHash)) {
+			lastTreeHash = newHash;
+			eventBus.fireEvent(new KeyboardActionEvent(actions.reloadTree
+					.getId()));
+		}
+	}
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "Action Exception from remote: ",
-                                caught);
-                        timer.setRunnable(new Runnable() {
-                            @Override
-                            public void run() {
-                                getMetaData();
-                            }
-                        });
-                        timer.schedule(6000);
-                    }
-                });
-    }
+	private void populateView(GetMetaDataResult info) {
+		log.info("populate");
+		peerActionsView.getLastSeenPeerValue().setText(
+				String.valueOf(info.getPeerLastSeen()));
+		peerActionsView.getPhotoCountOnPeerValue().setText(
+				String.valueOf(info.getPeerPhotoCount()));
+		peerActionsView.getTagCountValue().setText(
+				String.valueOf(info.getTagCount()));
+		peerActionsView.getPendingCommandCountValue().setText(
+				String.valueOf(info.getPendingCommandCount()));
 
-    private void processMetaData(GetMetaDataResult meta) {
-        populateView(meta);
-        String newHash = meta.getAdminTreeHash();
-        if (!newHash.equals(lastTreeHash)) {
-            lastTreeHash = newHash;
-            eventBus.fireEvent(new KeyboardActionEvent(actions.reloadTree.getId()));
-        }
-    }
-
-    private void populateView(GetMetaDataResult info) {
-        log.info("populate");
-        peerActionsView.getLastSeenPeerValue()
-                .setText(String.valueOf(info.getPeerLastSeen()));
-        peerActionsView.getPhotoCountOnPeerValue()
-                .setText(String.valueOf(info.getPeerPhotoCount()));
-        peerActionsView.getTagCountValue()
-                .setText(String.valueOf(info.getTagCount()));
-        peerActionsView.getPendingCommandCountValue()
-                .setText(String.valueOf(info.getPendingCommandCount()));
-
-        timer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                getMetaData();
-            }
-        });
-        timer.schedule(7000);
-    }
+		timer.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				getMetaData();
+			}
+		});
+		timer.schedule(7000);
+	}
 }

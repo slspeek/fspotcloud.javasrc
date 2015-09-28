@@ -29,29 +29,30 @@ import com.googlecode.fspotcloud.user.inject.ServerAddress;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-
 public class MailGenerator {
-    @Inject
-    @ServerAddress
-    private Provider<String> serverAddressProvider;
+	@Inject
+	@ServerAddress
+	private Provider<String> serverAddressProvider;
 
-    public String getConfirmationMailBody(String user, String secret) {
-        String result = "Hello " + user + ",\n";
-        result += "Please click this link to confirm your email address:\n";
-        result += serverAddressProvider.get() + "/#EmailConfirmationPlace:" + user + ":" + secret;
-        result += "\n";
-        result += "The F-Spot Cloud Team";
+	public String getConfirmationMailBody(String user, String secret) {
+		String result = "Hello " + user + ",\n";
+		result += "Please click this link to confirm your email address:\n";
+		result += serverAddressProvider.get() + "/#EmailConfirmationPlace:"
+				+ user + ":" + secret;
+		result += "\n";
+		result += "The F-Spot Cloud Team";
 
-        return result;
-    }
+		return result;
+	}
 
-    public String getPasswordResetMailBody(String user, String secret) {
-        String result = "Hello " + user + ",\n";
-        result += "Please click this link to reset your password:\n";
-        result += serverAddressProvider.get() + "/#ChangePasswordPlace:" + user + ":" + secret;
-        result += "\n";
-        result += "The F-Spot Cloud Team";
+	public String getPasswordResetMailBody(String user, String secret) {
+		String result = "Hello " + user + ",\n";
+		result += "Please click this link to reset your password:\n";
+		result += serverAddressProvider.get() + "/#ChangePasswordPlace:" + user
+				+ ":" + secret;
+		result += "\n";
+		result += "The F-Spot Cloud Team";
 
-        return result;
-    }
+		return result;
+	}
 }

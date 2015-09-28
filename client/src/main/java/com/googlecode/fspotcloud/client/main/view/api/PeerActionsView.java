@@ -30,19 +30,19 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 @GwtCompatible
 public interface PeerActionsView extends IsWidget {
-    void setPresenter(PeerActionsPresenter presenter);
+	void setPresenter(PeerActionsPresenter presenter);
 
-    HasText getTagCountValue();
+	HasText getTagCountValue();
 
-    HasText getPhotoCountOnPeerValue();
+	HasText getPhotoCountOnPeerValue();
 
-    HasText getPendingCommandCountValue();
+	HasText getPendingCommandCountValue();
 
-    HasText getLastSeenPeerValue();
+	HasText getLastSeenPeerValue();
 
-    interface PeerActionsPresenter {
-        void init();
+	interface PeerActionsPresenter {
+		void init();
 
-        void stop();
-    }
+		void stop();
+	}
 }

@@ -30,28 +30,27 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+public class TokenizerTest<P extends Place> {
+	final private PlaceTokenizer<P> tokenizer;
+	final private P place;
+	final private String token;
 
-public class TokenizerTest<P extends Place>  {
-    final private PlaceTokenizer<P> tokenizer;
-    final private P place;
-    final private String token;
+	public TokenizerTest(PlaceTokenizer<P> tokenizer, P place, String token) {
+		this.tokenizer = tokenizer;
+		this.place = place;
+		this.token = token;
+	}
 
-    public TokenizerTest(PlaceTokenizer<P> tokenizer, P place, String token) {
-        this.tokenizer = tokenizer;
-        this.place = place;
-        this.token = token;
-    }
+	@Test
+	public void testGetPlace() {
+		P actualPlace = tokenizer.getPlace(token);
+		assertEquals(place, actualPlace);
 
-    @Test
-    public void testGetPlace() {
-        P actualPlace = tokenizer.getPlace(token);
-        assertEquals(place, actualPlace);
-        
-    }
+	}
 
-    @Test
-    public void testGetToken() {
-        String actualToken = tokenizer.getToken(place);
-        assertEquals(token, actualToken);
-    }
+	@Test
+	public void testGetToken() {
+		String actualToken = tokenizer.getToken(place);
+		assertEquals(token, actualToken);
+	}
 }

@@ -40,16 +40,17 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 public class PhotoPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public void open(String token) {
-        selenium.open("" + token);
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open(String token) {
+		selenium.open("" + token);
+		selenium.waitForPageToLoad("30000");
+	}
 
 	public void assertImageIsLoaded(int x, int y) {
-		WebDriver driver = ((WebDriverBackedSelenium)selenium).getWrappedDriver();
+		WebDriver driver = ((WebDriverBackedSelenium) selenium)
+				.getWrappedDriver();
 		WebElement image = driver.findElement(By.id("gwt-debug-image-view-" + x
 				+ "x" + y));
 		Object result = ((JavascriptExecutor) driver)
@@ -63,58 +64,59 @@ public class PhotoPage {
 			loaded = (Boolean) result;
 		}
 		if (!loaded) {
-			Assert.fail("Expected image(" + x + "x" +y + ") to be loaded, but it was not.");
+			Assert.fail("Expected image(" + x + "x" + y
+					+ ") to be loaded, but it was not.");
 		}
 	}
 
+	public void open() {
+		open("");
+	}
 
-    public void open() {
-        open("");
-    }
+	public void about() {
+		selenium.click("gwt-debug-about");
+	}
 
-    public void about() {
-        selenium.click("gwt-debug-about");
-    }
+	public void mailFullsize() {
+		selenium.click("gwt-debug-mail-fullsize");
+	}
 
-    public void mailFullsize() {
-        selenium.click("gwt-debug-mail-fullsize");
-    }
+	public void showHelp() {
+		selenium.click("gwt-debug-help");
+	}
 
-    public void showHelp() {
-        selenium.click("gwt-debug-help");
-    }
+	public void hideHelp() {
+		selenium.click("gwt-debug-help");
+	}
 
-    public void hideHelp() {
-        selenium.click("gwt-debug-help");
-    }
+	public void back() {
+		selenium.click("gwt-debug-back");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void back() {
-        selenium.click("gwt-debug-back");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void logout() {
+		selenium.click("gwt-debug-logout");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void logout() {
-        selenium.click("gwt-debug-logout");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void clickImage(int x, int y) {
+		selenium.click("gwt-debug-image-view-" + x + "x" + y);
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void clickImage(int x, int y) {
-        selenium.click("gwt-debug-image-view-" + x + "x" + y);
-        selenium.waitForPageToLoad("30000");
-    }
+	public void assertImageHasId(int x, int y, String id) {
+		Assert.assertEquals(
+				"image?id=" + id + "&thumb=true",
+				selenium.getAttribute("//*[@id=\"gwt-debug-image-view-" + x
+						+ "x" + y + "\"]@src"));
+	}
 
-    public void assertImageHasId(int x, int y, String id) {
-        Assert.assertEquals("image?id=" + id + "&thumb=true",
-                selenium.getAttribute("//*[@id=\"gwt-debug-image-view-" + x + "x" +
-                        y + "\"]@src"));
-    }
+	public void assertPagingLabelSays(int pos, int total) {
+		String pagingLabelText = selenium.getText("gwt-debug-paging-label");
 
-    public void assertPagingLabelSays(int pos, int total) {
-        String pagingLabelText = selenium.getText("gwt-debug-paging-label");
-
-        final String label = pos + " of " + total;
-        if (!pagingLabelText.contains(label)) {
-            Assert.fail("Expected: " + label + " in: " + pagingLabelText);
-        }
-    }
+		final String label = pos + " of " + total;
+		if (!pagingLabelText.contains(label)) {
+			Assert.fail("Expected: " + label + " in: " + pagingLabelText);
+		}
+	}
 }

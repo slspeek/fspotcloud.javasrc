@@ -27,12 +27,8 @@ package com.googlecode.fspotcloud.test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-        DashboardITest.class,
-        TabularITest.class,
-        DeleteITest.class
-})
+@Suite.SuiteClasses({DashboardITest.class, TabularITest.class,
+		DeleteITest.class})
 public class ShortSuite {
 }

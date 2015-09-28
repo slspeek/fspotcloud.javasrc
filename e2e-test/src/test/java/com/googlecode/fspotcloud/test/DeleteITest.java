@@ -34,20 +34,21 @@ import javax.inject.Inject;
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class DeleteITest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    Selenium selenium;
-    @Inject
-    DashboardPage dashboardPage;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	Selenium selenium;
+	@Inject
+	DashboardPage dashboardPage;
 
-    @Test
-    public void testClear() throws Exception {
-        dashboardPage.loginAndOpen();
-        dashboardPage.removeAll();
-        Thread.sleep(4000);
-        sleepShort(2);
-        dashboardPage.assertPhotoCountOnPeer(0);
-        dashboardPage.assertTagCountOnPeer(0);
-    }
+	@Test
+	public void testClear() throws Exception {
+		dashboardPage.loginAndOpen();
+		dashboardPage.removeAll();
+		Thread.sleep(4000);
+		sleepShort(2);
+		dashboardPage.assertPhotoCountOnPeer(0);
+		dashboardPage.assertTagCountOnPeer(0);
+	}
 }

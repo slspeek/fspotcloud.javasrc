@@ -26,11 +26,10 @@ package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
 import java.util.List;
 
-
 public class ImportManyTagsPhotosAction extends AbstractBatchAction<String> {
-    private static final long serialVersionUID = -8353337263892135688L;
+	private static final long serialVersionUID = -8353337263892135688L;
 
-    public ImportManyTagsPhotosAction(List<String> tagIdList) {
-        super(tagIdList);
-    }
+	public ImportManyTagsPhotosAction(List<String> tagIdList) {
+		super(tagIdList);
+	}
 }

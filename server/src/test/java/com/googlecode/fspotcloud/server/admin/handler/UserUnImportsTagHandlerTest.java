@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
@@ -52,83 +52,84 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class UserUnImportsTagHandlerTest {
-    @Inject
-    private UserUnImportsTagHandler handler;
-    private final String TAG_ID = "1";
-    private final UserUnImportsTagAction action = new UserUnImportsTagAction(TAG_ID);
+	@Inject
+	private UserUnImportsTagHandler handler;
+	private final String TAG_ID = "1";
+	private final UserUnImportsTagAction action = new UserUnImportsTagAction(
+			TAG_ID);
 
-    @Test
-    public void testNormalExecute(TagDao tagManager,
-                                  TaskQueueDispatch dispatchAsync, PeerDatabaseDao peerDatabaseDao,
-                                  ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
-            throws Exception {
-        Tag tagOne = new TagEntity();
-        tagOne.setId(TAG_ID);
-        when(tagManager.find(TAG_ID)).thenReturn(tagOne);
+	@Test
+	public void testNormalExecute(TagDao tagManager,
+			TaskQueueDispatch dispatchAsync, PeerDatabaseDao peerDatabaseDao,
+			ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
+			throws Exception {
+		Tag tagOne = new TagEntity();
+		tagOne.setId(TAG_ID);
+		when(tagManager.find(TAG_ID)).thenReturn(tagOne);
 
-        VoidResult result = handler.execute(action, null);
-        verify(dispatchAsync).execute(actionCaptor.capture());
+		VoidResult result = handler.execute(action, null);
+		verify(dispatchAsync).execute(actionCaptor.capture());
 
-        RemovePhotosFromTagAction deleteAction = actionCaptor.getValue();
-        assertEquals(TAG_ID, deleteAction.getTagId());
-        verify(tagManager).find(TAG_ID);
-        verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
-    }
+		RemovePhotosFromTagAction deleteAction = actionCaptor.getValue();
+		assertEquals(TAG_ID, deleteAction.getTagId());
+		verify(tagManager).find(TAG_ID);
+		verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
+	}
 
-    @Test
-    public void testNormalExecuteUnImportNeeded(TagDao tagManager,
-                                                TaskQueueDispatch dispatchAsync, PeerDatabaseDao peerDatabaseDao,
-                                                ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
-            throws Exception {
-        Tag tagOne = new TagEntity();
-        tagOne.setId(TAG_ID);
-        tagOne.setImportIssued(true);
-        when(tagManager.find(TAG_ID)).thenReturn(tagOne);
+	@Test
+	public void testNormalExecuteUnImportNeeded(TagDao tagManager,
+			TaskQueueDispatch dispatchAsync, PeerDatabaseDao peerDatabaseDao,
+			ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
+			throws Exception {
+		Tag tagOne = new TagEntity();
+		tagOne.setId(TAG_ID);
+		tagOne.setImportIssued(true);
+		when(tagManager.find(TAG_ID)).thenReturn(tagOne);
 
-        VoidResult result = handler.execute(action, null);
+		VoidResult result = handler.execute(action, null);
 
-        verify(dispatchAsync).execute(actionCaptor.capture());
+		verify(dispatchAsync).execute(actionCaptor.capture());
 
-        RemovePhotosFromTagAction deleteAction = actionCaptor.getValue();
-        assertEquals(TAG_ID, deleteAction.getTagId());
-        verify(tagManager).find(TAG_ID);
-        verify(tagManager).save(tagOne);
-        verify(peerDatabaseDao).resetCachedTagTrees();
-        verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
-    }
+		RemovePhotosFromTagAction deleteAction = actionCaptor.getValue();
+		assertEquals(TAG_ID, deleteAction.getTagId());
+		verify(tagManager).find(TAG_ID);
+		verify(tagManager).save(tagOne);
+		verify(peerDatabaseDao).resetCachedTagTrees();
+		verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
+	}
 
-    @Test
-    public void testNormalExecuteTreeCacheNeedsClearing(TagDao tagManager,
-                                                        TaskQueueDispatch dispatchAsync, PeerDatabaseDao peerDatabaseDao,
-                                                        ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
-            throws Exception {
-        PeerDatabase peer = new PeerDatabaseEntity();
+	@Test
+	public void testNormalExecuteTreeCacheNeedsClearing(TagDao tagManager,
+			TaskQueueDispatch dispatchAsync, PeerDatabaseDao peerDatabaseDao,
+			ArgumentCaptor<RemovePhotosFromTagAction> actionCaptor)
+			throws Exception {
+		PeerDatabase peer = new PeerDatabaseEntity();
 
-        peer.setCachedTagTree(new TagNode());
+		peer.setCachedTagTree(new TagNode());
 
-        Tag tagOne = new TagEntity();
-        tagOne.setId(TAG_ID);
-        tagOne.setImportIssued(true);
-        when(tagManager.find(TAG_ID)).thenReturn(tagOne);
+		Tag tagOne = new TagEntity();
+		tagOne.setId(TAG_ID);
+		tagOne.setImportIssued(true);
+		when(tagManager.find(TAG_ID)).thenReturn(tagOne);
 
-        VoidResult result = handler.execute(action, null);
+		VoidResult result = handler.execute(action, null);
 
-        verify(dispatchAsync).execute(actionCaptor.capture());
+		verify(dispatchAsync).execute(actionCaptor.capture());
 
-        RemovePhotosFromTagAction deleteAction = actionCaptor.getValue();
-        assertEquals(TAG_ID, deleteAction.getTagId());
-        verify(tagManager).find(TAG_ID);
-        verify(tagManager).save(tagOne);
-        verify(peerDatabaseDao).resetCachedTagTrees();
-        verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
-    }
+		RemovePhotosFromTagAction deleteAction = actionCaptor.getValue();
+		assertEquals(TAG_ID, deleteAction.getTagId());
+		verify(tagManager).find(TAG_ID);
+		verify(tagManager).save(tagOne);
+		verify(peerDatabaseDao).resetCachedTagTrees();
+		verifyNoMoreInteractions(tagManager, peerDatabaseDao, dispatchAsync);
+	}
 
-    @Test(expected = SecurityException.class)
-    public void testUnAuthorizedExecute(IAdminPermission adminPermission)
-            throws Exception {
-        doThrow(new SecurityException()).when(adminPermission)
-                .checkAdminPermission();
+	@Test(expected = SecurityException.class)
+	public void testUnAuthorizedExecute(IAdminPermission adminPermission)
+			throws Exception {
+		doThrow(new SecurityException()).when(adminPermission)
+				.checkAdminPermission();
 
-        VoidResult result = handler.execute(action, null);
-    }
+		VoidResult result = handler.execute(action, null);
+	}
 }

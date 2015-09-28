@@ -38,30 +38,31 @@ import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 
+public class SignUpHandler
+		extends
+			SimpleActionHandler<SignUpAction, SignUpResult> {
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private Dispatch dispatch;
 
-public class SignUpHandler extends SimpleActionHandler<SignUpAction, SignUpResult> {
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private Dispatch dispatch;
+	@Override
+	public SignUpResult execute(SignUpAction action, ExecutionContext context)
+			throws DispatchException {
+		final String email = action.getEmail();
+		User mayBeExisted = userDao.findOrNew(email);
 
-    @Override
-    public SignUpResult execute(SignUpAction action, ExecutionContext context)
-            throws DispatchException {
-        final String email = action.getEmail();
-        User mayBeExisted = userDao.findOrNew(email);
-
-        if (!mayBeExisted.hasRegistered()) {
-            final User newUser = mayBeExisted;
-            String newHashedPassword = hash(email, action.getPassword());
-            newUser.setNickname(action.getNickname());
-            newUser.setCredentials(newHashedPassword);
-            newUser.setRegistered(true);
-            userDao.save(newUser);
-            dispatch.execute(new SendConfirmationEmailAction(email));
-            return new SignUpResult(true);
-        } else {
-            return new SignUpResult(false);
-        }
-    }
+		if (!mayBeExisted.hasRegistered()) {
+			final User newUser = mayBeExisted;
+			String newHashedPassword = hash(email, action.getPassword());
+			newUser.setNickname(action.getNickname());
+			newUser.setCredentials(newHashedPassword);
+			newUser.setRegistered(true);
+			userDao.save(newUser);
+			dispatch.execute(new SendConfirmationEmailAction(email));
+			return new SignUpResult(true);
+		} else {
+			return new SignUpResult(false);
+		}
+	}
 }

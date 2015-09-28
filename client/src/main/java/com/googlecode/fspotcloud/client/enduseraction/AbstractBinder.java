@@ -5,21 +5,19 @@ import com.googlecode.fspotcloud.keyboardaction.*;
 
 public abstract class AbstractBinder {
 
+	@Inject
+	protected ConfigBuilder configBuilder;
 
-    @Inject
-    protected ConfigBuilder configBuilder;
+	protected final ActionCategory category;
 
-    protected final ActionCategory category;
+	public AbstractBinder(ActionCategory category) {
+		this.category = category;
+	}
 
-    public AbstractBinder(ActionCategory category
-    ) {
-        this.category = category;
-    }
+	public abstract void build();
 
-    public abstract void build();
-
-    protected void bind(ActionUIDef
-                                actionUIDef, IActionHandler handler, Relevance binding) {
-        configBuilder.addBinding(category, actionUIDef, handler, binding);
-    }
+	protected void bind(ActionUIDef actionUIDef, IActionHandler handler,
+			Relevance binding) {
+		configBuilder.addBinding(category, actionUIDef, handler, binding);
+	}
 }

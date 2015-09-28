@@ -48,116 +48,123 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class LoginActivityTest {
-    public static final String SECRET = "Secret";
-    public static final String ADMIN = "Admin";
-    @Inject
-    LoginActivity presenter;
+	public static final String SECRET = "Secret";
+	public static final String ADMIN = "Admin";
+	@Inject
+	LoginActivity presenter;
 
-    @Before
-    public void train(LoginView loginView, IPlaceController placeWhere) throws Exception {
-        when(placeWhere.getRawWhere()).thenReturn(new LoginPlace(""));
-        when(loginView.getPasswordField()).thenReturn(SECRET);
-        when(loginView.getUserNameField()).thenReturn(ADMIN);
+	@Before
+	public void train(LoginView loginView, IPlaceController placeWhere)
+			throws Exception {
+		when(placeWhere.getRawWhere()).thenReturn(new LoginPlace(""));
+		when(loginView.getPasswordField()).thenReturn(SECRET);
+		when(loginView.getUserNameField()).thenReturn(ADMIN);
 
-    }
+	}
 
-    @Test
-    public void testStart(LoginView loginView, DispatchAsync dispatch,
-                          AcceptsOneWidget panel) throws Exception {
-        presenter.start(panel, null);
+	@Test
+	public void testStart(LoginView loginView, DispatchAsync dispatch,
+			AcceptsOneWidget panel) throws Exception {
+		presenter.start(panel, null);
 
-        verify(loginView).setPresenter(presenter);
-        verify(loginView).focusUserNameField();
-        verify(panel).setWidget(loginView);
-        verifyNoMoreInteractions(panel, loginView, dispatch);
-    }
+		verify(loginView).setPresenter(presenter);
+		verify(loginView).focusUserNameField();
+		verify(panel).setWidget(loginView);
+		verifyNoMoreInteractions(panel, loginView, dispatch);
+	}
 
-    @Test
-    public void testOnUserFieldKeyUp(LoginView loginView,
-                                     DispatchAsync dispatch, ArgumentCaptor<AsyncCallback<UserInfo>> captor,
-                                     ArgumentCaptor<Action> actionCaptor) throws Exception {
-        presenter.onUserFieldKeyUp(11);
+	@Test
+	public void testOnUserFieldKeyUp(LoginView loginView,
+			DispatchAsync dispatch,
+			ArgumentCaptor<AsyncCallback<UserInfo>> captor,
+			ArgumentCaptor<Action> actionCaptor) throws Exception {
+		presenter.onUserFieldKeyUp(11);
 
-        verifyNoMoreInteractions(loginView, dispatch);
-        presenter.onUserFieldKeyUp(13);
-        verify(loginView).focusPasswordField();
-        verifyNoMoreInteractions(loginView, dispatch);
-    }
+		verifyNoMoreInteractions(loginView, dispatch);
+		presenter.onUserFieldKeyUp(13);
+		verify(loginView).focusPasswordField();
+		verifyNoMoreInteractions(loginView, dispatch);
+	}
 
-    @Test
-    public void testOnPasswordFieldKeyUp(LoginView loginView,
-                                         DispatchAsync dispatch, ArgumentCaptor<AsyncCallback<?>> captor,
-                                         ArgumentCaptor<Action> actionCaptor) throws Exception {
-        presenter.onPasswordFieldKeyUp(11);
-        verifyNoMoreInteractions(loginView, dispatch);
-    }
+	@Test
+	public void testOnPasswordFieldKeyUp(LoginView loginView,
+			DispatchAsync dispatch, ArgumentCaptor<AsyncCallback<?>> captor,
+			ArgumentCaptor<Action> actionCaptor) throws Exception {
+		presenter.onPasswordFieldKeyUp(11);
+		verifyNoMoreInteractions(loginView, dispatch);
+	}
 
-    @Test
-    public void testSubmitError(LoginView loginView, DispatchAsync dispatch,
-                                ArgumentCaptor<AsyncCallback<? extends Result>> captor,
-                                ArgumentCaptor<Action> actionCaptor) throws Exception {
-        presenter.onPasswordFieldKeyUp(13);
+	@Test
+	public void testSubmitError(LoginView loginView, DispatchAsync dispatch,
+			ArgumentCaptor<AsyncCallback<? extends Result>> captor,
+			ArgumentCaptor<Action> actionCaptor) throws Exception {
+		presenter.onPasswordFieldKeyUp(13);
 
-        verify(dispatch).execute(actionCaptor.capture(), captor.capture());
+		verify(dispatch).execute(actionCaptor.capture(), captor.capture());
 
-        verifyActionParameters(actionCaptor);
+		verifyActionParameters(actionCaptor);
 
-        verify(loginView).getUserNameField();
-        verify(loginView).getPasswordField();
-        verifyNoMoreInteractions(dispatch, loginView);
+		verify(loginView).getUserNameField();
+		verify(loginView).getPasswordField();
+		verifyNoMoreInteractions(dispatch, loginView);
 
-        AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
-        callback.onFailure(new RuntimeException("Boom"));
-        verify(loginView)
-                .setStatusText(LoginActivity.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST);
+		AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor
+				.getValue();
+		callback.onFailure(new RuntimeException("Boom"));
+		verify(loginView)
+				.setStatusText(
+						LoginActivity.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST);
 
-        verifyNoMoreInteractions(loginView, dispatch);
-    }
+		verifyNoMoreInteractions(loginView, dispatch);
+	}
 
-    private void verifyActionParameters(ArgumentCaptor<Action> actionCaptor) {
-        AuthenticationAction action = (AuthenticationAction) actionCaptor.getValue();
-        assertEquals(SECRET, action.getPassword());
-        assertEquals(ADMIN, action.getUserName());
-    }
+	private void verifyActionParameters(ArgumentCaptor<Action> actionCaptor) {
+		AuthenticationAction action = (AuthenticationAction) actionCaptor
+				.getValue();
+		assertEquals(SECRET, action.getPassword());
+		assertEquals(ADMIN, action.getUserName());
+	}
 
-    @Test
-    public void testSubmitFailure(LoginView loginView, DispatchAsync dispatch,
-                                  ArgumentCaptor<AsyncCallback<? extends Result>> captor,
-                                  ArgumentCaptor<Action> actionCaptor) throws Exception {
-        presenter.onPasswordFieldKeyUp(13);
-        verify(dispatch).execute(actionCaptor.capture(), captor.capture());
+	@Test
+	public void testSubmitFailure(LoginView loginView, DispatchAsync dispatch,
+			ArgumentCaptor<AsyncCallback<? extends Result>> captor,
+			ArgumentCaptor<Action> actionCaptor) throws Exception {
+		presenter.onPasswordFieldKeyUp(13);
+		verify(dispatch).execute(actionCaptor.capture(), captor.capture());
 
-        verifyActionParameters(actionCaptor);
+		verifyActionParameters(actionCaptor);
 
-        verify(loginView).getUserNameField();
-        verify(loginView).getPasswordField();
-        verifyNoMoreInteractions(dispatch, loginView);
+		verify(loginView).getUserNameField();
+		verify(loginView).getPasswordField();
+		verifyNoMoreInteractions(dispatch, loginView);
 
-        AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
-        callback.onSuccess(new AuthenticationResult(false));
-        verify(loginView)
-                .setStatusText(LoginActivity.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
+		AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor
+				.getValue();
+		callback.onSuccess(new AuthenticationResult(false));
+		verify(loginView).setStatusText(
+				LoginActivity.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
 
-        verifyNoMoreInteractions(loginView, dispatch);
-    }
+		verifyNoMoreInteractions(loginView, dispatch);
+	}
 
-    @Test
-    public void testSubmitSuccess(LoginView loginView, DispatchAsync dispatch,
-                                  ArgumentCaptor<AsyncCallback<? extends Result>> captor,
-                                  ArgumentCaptor<Action> actionCaptor) throws Exception {
-        presenter.onPasswordFieldKeyUp(13);
-        verify(dispatch).execute(actionCaptor.capture(), captor.capture());
+	@Test
+	public void testSubmitSuccess(LoginView loginView, DispatchAsync dispatch,
+			ArgumentCaptor<AsyncCallback<? extends Result>> captor,
+			ArgumentCaptor<Action> actionCaptor) throws Exception {
+		presenter.onPasswordFieldKeyUp(13);
+		verify(dispatch).execute(actionCaptor.capture(), captor.capture());
 
-        verifyActionParameters(actionCaptor);
+		verifyActionParameters(actionCaptor);
 
-        verify(loginView).getUserNameField();
-        verify(loginView).getPasswordField();
-        verifyNoMoreInteractions(dispatch, loginView);
+		verify(loginView).getUserNameField();
+		verify(loginView).getPasswordField();
+		verifyNoMoreInteractions(dispatch, loginView);
 
-        AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor.getValue();
-        callback.onSuccess(new AuthenticationResult(true));
-        verify(loginView).setStatusText(LoginActivity.LOGGED_IN);
-        verify(loginView).clearFields();
-        verifyNoMoreInteractions(loginView, dispatch);
-    }
+		AsyncCallback<AuthenticationResult> callback = (AsyncCallback<AuthenticationResult>) captor
+				.getValue();
+		callback.onSuccess(new AuthenticationResult(true));
+		verify(loginView).setStatusText(LoginActivity.LOGGED_IN);
+		verify(loginView).clearFields();
+		verifyNoMoreInteractions(loginView, dispatch);
+	}
 }

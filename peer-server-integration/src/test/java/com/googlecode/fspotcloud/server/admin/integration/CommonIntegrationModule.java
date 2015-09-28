@@ -45,50 +45,53 @@ import com.googlecode.simpleblobstore.client.BlobstoreClient;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchDirectModule;
 
 public class CommonIntegrationModule extends AbstractModule {
-    public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+	public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
 	private final boolean shotwell;
-	
-    public CommonIntegrationModule(boolean shotwell) {
+
+	public CommonIntegrationModule(boolean shotwell) {
 		super();
 		this.shotwell = shotwell;
 	}
 
 	@Override
-    public void configure() {
-        System.setProperty("photo.dir.override",
-                "" + System.getProperty("user.dir") +
-                        "/../peer/src/test/resources/Photos");
-        install(new AdminActionsModule());
-        bind(Integer.class).annotatedWith(Names.named("maxTicks"))
-                .toInstance(new Integer(3));
-        bind(String.class).annotatedWith(FromAddress.class)
-                .toInstance(SLSPEEK_GMAIL_COM);
-        bind(IMail.class).toInstance(mock(IMail.class));
-        install(new TaskActionsModule());
-        install(Modules.override(new TaskModule()).with(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(ImageSpecs.class)
-                        .annotatedWith(Names.named("defaultImageSpecs"))
-                        .toInstance(new ImageSpecs(2, 1, 2, 1));
-            }
-        }));
-        install(new MainActionModule());
-        install(new TaskQueueDispatchDirectModule());
-        install(new LocalControllerModule());
-        bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
-                .toInstance(3);
-        bind(ImageHelper.class).to(ImageHelperImpl.class);
-        final String db = System.getProperty("user.dir") + "/../peer/src/test/resources/photos.db";
-        install(Modules.override(new PeerModule(db, System.getProperty("user.dir"), 4444, shotwell)).with(new AbstractModule() {
+	public void configure() {
+		System.setProperty("photo.dir.override",
+				"" + System.getProperty("user.dir")
+						+ "/../peer/src/test/resources/Photos");
+		install(new AdminActionsModule());
+		bind(Integer.class).annotatedWith(Names.named("maxTicks")).toInstance(
+				new Integer(3));
+		bind(String.class).annotatedWith(FromAddress.class).toInstance(
+				SLSPEEK_GMAIL_COM);
+		bind(IMail.class).toInstance(mock(IMail.class));
+		install(new TaskActionsModule());
+		install(Modules.override(new TaskModule()).with(new AbstractModule() {
+			@Override
+			protected void configure() {
+				bind(ImageSpecs.class).annotatedWith(
+						Names.named("defaultImageSpecs")).toInstance(
+						new ImageSpecs(2, 1, 2, 1));
+			}
+		}));
+		install(new MainActionModule());
+		install(new TaskQueueDispatchDirectModule());
+		install(new LocalControllerModule());
+		bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
+				.toInstance(3);
+		bind(ImageHelper.class).to(ImageHelperImpl.class);
+		final String db = System.getProperty("user.dir")
+				+ "/../peer/src/test/resources/photos.db";
+		install(Modules.override(
+				new PeerModule(db, System.getProperty("user.dir"), 4444,
+						shotwell)).with(new AbstractModule() {
 
 			@Override
 			protected void configure() {
 				bind(BlobstoreClient.class).to(BlobstoreFakeClient.class);
-				
+
 			}
-        	
-        }));
-        install(new PeerActionsModule());
-    }
+
+		}));
+		install(new PeerActionsModule());
+	}
 }

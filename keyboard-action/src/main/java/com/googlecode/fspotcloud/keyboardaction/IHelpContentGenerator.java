@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.Set;
 
 public interface IHelpContentGenerator {
-    void setStyle(HelpResources.Style style);
+	void setStyle(HelpResources.Style style);
 
-    SafeHtml getHelpRow(List<String> keys, ActionUIDef actionUIDef, String description);
+	SafeHtml getHelpRow(List<String> keys, ActionUIDef actionUIDef,
+			String description);
 
-    SafeHtml getHelp(ActionCategory category);
+	SafeHtml getHelp(ActionCategory category);
 
-    SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys, String description);
+	SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys,
+			String description);
 
-    SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys);
+	SafeHtml getHelpText(ActionUIDef shortcut, List<KeyStroke> keys);
 
-    SafeHtml getShortcuts(Set<String> actions, PlaceContext placeContext);
+	SafeHtml getShortcuts(Set<String> actions, PlaceContext placeContext);
 
-    SafeHtml getHelpText(List<ActionCategory> column);
+	SafeHtml getHelpText(List<ActionCategory> column);
 }

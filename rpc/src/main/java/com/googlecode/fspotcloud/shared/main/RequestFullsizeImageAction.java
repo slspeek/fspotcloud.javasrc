@@ -30,42 +30,38 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import static com.google.common.base.Objects.equal;
 
-
 @GwtCompatible
 public class RequestFullsizeImageAction implements Action<FullsizeImageResult> {
-    private String imageId;
+	private String imageId;
 
-    public RequestFullsizeImageAction(String imageId) {
-        this.imageId = imageId;
-    }
+	public RequestFullsizeImageAction(String imageId) {
+		this.imageId = imageId;
+	}
 
-    public RequestFullsizeImageAction() {
-    }
+	public RequestFullsizeImageAction() {
+	}
 
-    public String getImageId() {
-        return imageId;
-    }
+	public String getImageId() {
+		return imageId;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof RequestFullsizeImageAction) {
-            RequestFullsizeImageAction that = (RequestFullsizeImageAction) o;
-            return equal(imageId, that.imageId);
-        }
-        else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof RequestFullsizeImageAction) {
+			RequestFullsizeImageAction that = (RequestFullsizeImageAction) o;
+			return equal(imageId, that.imageId);
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(imageId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(imageId);
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("imageId", imageId)
-                .toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("imageId", imageId).toString();
+	}
 }

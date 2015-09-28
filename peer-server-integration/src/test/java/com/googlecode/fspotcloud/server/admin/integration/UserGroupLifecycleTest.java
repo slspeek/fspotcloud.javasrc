@@ -39,75 +39,75 @@ import java.sql.SQLException;
 import static org.testng.AssertJUnit.*;
 
 public class UserGroupLifecycleTest extends PeerServerEnvironment {
-    public static final String TAG_ID_3 = "3";
-    public static final String RMS_EXAMPLE_COM = "rms@example.com";
-    private TearDown toTearDown;
-    @Inject
-    Fixture fixture;
-    @Inject
-    private UserGroupDao userGroupDao;
-    @Inject
-    private UserDao userDao;
+	public static final String TAG_ID_3 = "3";
+	public static final String RMS_EXAMPLE_COM = "rms@example.com";
+	private TearDown toTearDown;
+	@Inject
+	Fixture fixture;
+	@Inject
+	private UserGroupDao userGroupDao;
+	@Inject
+	private UserDao userDao;
 
-    @BeforeMethod
-    public void setUp(Method m) throws SQLException {
-        // Make this the call to TestNgGuiceBerry.setUp as early as possible
-        toTearDown = TestNgGuiceBerry.setUp(this, m,
-                NoAuthPlaceHolderIntegrationModule.class);
+	@BeforeMethod
+	public void setUp(Method m) throws SQLException {
+		// Make this the call to TestNgGuiceBerry.setUp as early as possible
+		toTearDown = TestNgGuiceBerry.setUp(this, m,
+				NoAuthPlaceHolderIntegrationModule.class);
 
-        userDao.deleteBulk(100);
-        assertTrue(userDao.isEmpty());
-    }
+		userDao.deleteBulk(100);
+		assertTrue(userDao.isEmpty());
+	}
 
-    @AfterMethod
-    public void tearDown() throws Exception {
-        // Make this the call to TestNgGuiceBerry.tearDown as late as possible
-        toTearDown.tearDown();
-    }
+	@AfterMethod
+	public void tearDown() throws Exception {
+		// Make this the call to TestNgGuiceBerry.tearDown as late as possible
+		toTearDown.tearDown();
+	}
 
-    @Test
-    public void testCreationAndTagApproval() throws Exception {
-        fixture.setUpFixture();
+	@Test
+	public void testCreationAndTagApproval() throws Exception {
+		fixture.setUpFixture();
 
-        GetUserGroupResult r = dispatch.execute(new NewUserGroupAction());
-        Long id = r.getInfo().getId();
-        dispatch.execute(new ApproveTagAction(TAG_ID_3, id));
+		GetUserGroupResult r = dispatch.execute(new NewUserGroupAction());
+		Long id = r.getInfo().getId();
+		dispatch.execute(new ApproveTagAction(TAG_ID_3, id));
 
-        Tag tag3 = tagDao.find(TAG_ID_3);
-        assertTrue(tag3.getApprovedUserGroups().contains(id));
+		Tag tag3 = tagDao.find(TAG_ID_3);
+		assertTrue(tag3.getApprovedUserGroups().contains(id));
 
-        UserGroup userGroup = userGroupDao.find(id);
-        assertTrue(userGroup.getApprovedTagIds().contains(TAG_ID_3));
+		UserGroup userGroup = userGroupDao.find(id);
+		assertTrue(userGroup.getApprovedTagIds().contains(TAG_ID_3));
 
-        dispatch.execute(new DeleteGroupAction(id));
+		dispatch.execute(new DeleteGroupAction(id));
 
-        tag3 = tagDao.find(TAG_ID_3);
-        assertFalse(tag3.getApprovedUserGroups().contains(id));
-        assertNull(userGroupDao.find(id));
-    }
+		tag3 = tagDao.find(TAG_ID_3);
+		assertFalse(tag3.getApprovedUserGroups().contains(id));
+		assertNull(userGroupDao.find(id));
+	}
 
-    @Test
-    public void testCreationAndUserAdding() throws Exception {
-        fixture.setUpFixture();
+	@Test
+	public void testCreationAndUserAdding() throws Exception {
+		fixture.setUpFixture();
 
-        SignUpAction action = new SignUpAction(RMS_EXAMPLE_COM, "ihp", "rms");
-        SignUpResult result = dispatch.execute(action);
-        assertTrue(result.getSuccess());
+		SignUpAction action = new SignUpAction(RMS_EXAMPLE_COM, "ihp", "rms");
+		SignUpResult result = dispatch.execute(action);
+		assertTrue(result.getSuccess());
 
-        GetUserGroupResult r = dispatch.execute(new NewUserGroupAction());
-        Long id = r.getInfo().getId();
-        dispatch.execute(new GrantUserAction(RMS_EXAMPLE_COM, id));
+		GetUserGroupResult r = dispatch.execute(new NewUserGroupAction());
+		Long id = r.getInfo().getId();
+		dispatch.execute(new GrantUserAction(RMS_EXAMPLE_COM, id));
 
-        User rms = userDao.find(RMS_EXAMPLE_COM);
-        assertTrue(rms.getGrantedUserGroups().contains(id));
+		User rms = userDao.find(RMS_EXAMPLE_COM);
+		assertTrue(rms.getGrantedUserGroups().contains(id));
 
-        UserGroup userGroup = userGroupDao.find(id);
-        assertTrue(userGroup.getGrantedUsers().contains(RMS_EXAMPLE_COM));
+		UserGroup userGroup = userGroupDao.find(id);
+		assertTrue(userGroup.getGrantedUsers().contains(RMS_EXAMPLE_COM));
 
-        dispatch.execute(new DeleteGroupAction(id));
+		dispatch.execute(new DeleteGroupAction(id));
 
-        rms = userDao.find(RMS_EXAMPLE_COM);
-        assertFalse(rms.getGrantedUserGroups().contains(id));
-        assertNull(userGroupDao.find(id));
-    }
+		rms = userDao.find(RMS_EXAMPLE_COM);
+		assertFalse(rms.getGrantedUserGroups().contains(id));
+		assertNull(userGroupDao.find(id));
+	}
 }

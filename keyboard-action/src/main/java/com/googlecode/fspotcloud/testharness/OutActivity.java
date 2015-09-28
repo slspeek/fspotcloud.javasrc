@@ -33,20 +33,21 @@ import com.google.inject.Inject;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class OutActivity extends AbstractActivity implements OutView.OutPresenter {
+public class OutActivity extends AbstractActivity
+		implements
+			OutView.OutPresenter {
 
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(OutActivity.class.getName());
-    private final OutView outView;
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(OutActivity.class.getName());
+	private final OutView outView;
 
-    @Inject
-    public OutActivity(OutView outView
-    ) {
-        this.outView = outView;
-    }
+	@Inject
+	public OutActivity(OutView outView) {
+		this.outView = outView;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        containerWidget.setWidget(outView);
-    }
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		containerWidget.setWidget(outView);
+	}
 }

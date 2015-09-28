@@ -6,16 +6,15 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class ToggleTabularViewHandler implements IActionHandler {
 
-    private final IRasterer rasterer;
+	private final IRasterer rasterer;
 
-    @Inject
-    public ToggleTabularViewHandler(IRasterer rasterer) {
-        this.rasterer = rasterer;
-    }
+	@Inject
+	public ToggleTabularViewHandler(IRasterer rasterer) {
+		this.rasterer = rasterer;
+	}
 
-
-    @Override
-    public void performAction(String actionId) {
-        rasterer.toggleRasterView();
-    }
+	@Override
+	public void performAction(String actionId) {
+		rasterer.toggleRasterView();
+	}
 }

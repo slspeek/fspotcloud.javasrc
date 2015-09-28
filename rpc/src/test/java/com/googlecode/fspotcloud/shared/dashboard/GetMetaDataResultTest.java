@@ -33,64 +33,64 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GetMetaDataResultTest {
-    GetMetaDataResult result;
+	GetMetaDataResult result;
 
-    @Before
-    public void setUp() throws Exception {
-        result = new GetMetaDataResult();
-    }
+	@Before
+	public void setUp() throws Exception {
+		result = new GetMetaDataResult();
+	}
 
-    @Test
-    public void testPhotoCount() {
-        final int count = 100000;
-        result.setPhotoCount(count);
-        assertEquals(count, result.getPhotoCount());
-    }
+	@Test
+	public void testPhotoCount() {
+		final int count = 100000;
+		result.setPhotoCount(count);
+		assertEquals(count, result.getPhotoCount());
+	}
 
-    @Test
-    public void testPhotosLastCounted() {
-        final Date lastCounted = new Date(10000);
-        result.setPhotosLastCounted(lastCounted);
-        assertEquals(lastCounted, result.getPhotosLastCounted());
-    }
+	@Test
+	public void testPhotosLastCounted() {
+		final Date lastCounted = new Date(10000);
+		result.setPhotosLastCounted(lastCounted);
+		assertEquals(lastCounted, result.getPhotosLastCounted());
+	}
 
-    @Test
-    public void testGetCreated() {
-        assertNotNull(result.getCreated());
-    }
+	@Test
+	public void testGetCreated() {
+		assertNotNull(result.getCreated());
+	}
 
-    @Test
-    public void testPeerPhotoCount() {
-        final int peerCount = 100000;
-        result.setPeerPhotoCount(peerCount);
-        assertEquals(peerCount, result.getPeerPhotoCount());
-    }
+	@Test
+	public void testPeerPhotoCount() {
+		final int peerCount = 100000;
+		result.setPeerPhotoCount(peerCount);
+		assertEquals(peerCount, result.getPeerPhotoCount());
+	}
 
-    @Test
-    public void testTagCount() {
-        final int tagCount = 1000;
-        result.setTagCount(tagCount);
-        assertEquals(tagCount, result.getTagCount());
-    }
+	@Test
+	public void testTagCount() {
+		final int tagCount = 1000;
+		result.setTagCount(tagCount);
+		assertEquals(tagCount, result.getTagCount());
+	}
 
-    @Test
-    public void testPeerLastSeen() {
-        final Date peerLastSeen = new Date(0);
-        result.setPeerLastSeen(peerLastSeen);
-        assertEquals(peerLastSeen, result.getPeerLastSeen());
-    }
+	@Test
+	public void testPeerLastSeen() {
+		final Date peerLastSeen = new Date(0);
+		result.setPeerLastSeen(peerLastSeen);
+		assertEquals(peerLastSeen, result.getPeerLastSeen());
+	}
 
-    @Test
-    public void testGetInstanceName() {
-        final String INSTANCE = "FOO";
-        result.setInstanceName(INSTANCE);
-        assertEquals(INSTANCE, result.getInstanceName());
-    }
+	@Test
+	public void testGetInstanceName() {
+		final String INSTANCE = "FOO";
+		result.setInstanceName(INSTANCE);
+		assertEquals(INSTANCE, result.getInstanceName());
+	}
 
-    @Test
-    public void testGetPendingCommandCount() {
-        final int PENDING_COUNT = 999;
-        result.setPendingCommandCount(PENDING_COUNT);
-        assertEquals(PENDING_COUNT, result.getPendingCommandCount());
-    }
+	@Test
+	public void testGetPendingCommandCount() {
+		final int PENDING_COUNT = 999;
+		result.setPendingCommandCount(PENDING_COUNT);
+		assertEquals(PENDING_COUNT, result.getPendingCommandCount());
+	}
 }

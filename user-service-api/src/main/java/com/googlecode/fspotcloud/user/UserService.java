@@ -25,13 +25,13 @@
 package com.googlecode.fspotcloud.user;
 
 public interface UserService {
-    String getThirdPartyLogoutURL(String nextUrl);
+	String getThirdPartyLogoutURL(String nextUrl);
 
-    String getThirdPartyLoginURL(String nextUrl);
+	String getThirdPartyLoginURL(String nextUrl);
 
-    String getEmail();
+	String getEmail();
 
-    boolean isUserLoggedIn();
+	boolean isUserLoggedIn();
 
-    boolean isUserAdmin();
+	boolean isUserAdmin();
 }

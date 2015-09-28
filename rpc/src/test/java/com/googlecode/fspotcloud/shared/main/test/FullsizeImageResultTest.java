@@ -12,33 +12,34 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class FullsizeImageResultTest extends EqualityTest {
-    @Test
-    public void testToString() throws Exception {
-        Assert.assertEquals("FullsizeImageResult{message=null}", new FullsizeImageResult(null).toString());
+	@Test
+	public void testToString() throws Exception {
+		Assert.assertEquals("FullsizeImageResult{message=null}",
+				new FullsizeImageResult(null).toString());
 
-    }
+	}
 
-    @Override
-    protected List<Provider<Object>> getUniqueObjects() {
-        List<Provider<Object>> result = newArrayList();
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new FullsizeImageResult(null);
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new FullsizeImageResult("");
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new FullsizeImageResult("foo");
-            }
-        });
-        return result;
-    }
+	@Override
+	protected List<Provider<Object>> getUniqueObjects() {
+		List<Provider<Object>> result = newArrayList();
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new FullsizeImageResult(null);
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new FullsizeImageResult("");
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new FullsizeImageResult("foo");
+			}
+		});
+		return result;
+	}
 }

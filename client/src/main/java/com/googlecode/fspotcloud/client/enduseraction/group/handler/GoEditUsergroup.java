@@ -12,25 +12,25 @@ import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 @GwtCompatible
 public class GoEditUsergroup extends PlaceMoverBase {
 
-    private final ManageGroupsView.ManageGroupsPresenter presenter;
+	private final ManageGroupsView.ManageGroupsPresenter presenter;
 
-    @Inject
-    protected GoEditUsergroup(IPlaceController IPlaceController,
-                              ManageGroupsView.ManageGroupsPresenter presenter)
+	@Inject
+	protected GoEditUsergroup(IPlaceController IPlaceController,
+			ManageGroupsView.ManageGroupsPresenter presenter)
 
-    {
-        super(IPlaceController);
-        this.presenter = presenter;
-    }
+	{
+		super(IPlaceController);
+		this.presenter = presenter;
+	}
 
-    @Override
-    public Place getPlace() {
-        UserGroupInfo info = presenter.getSelected();
+	@Override
+	public Place getPlace() {
+		UserGroupInfo info = presenter.getSelected();
 
-        if (info != null) {
-            return new EditUserGroupPlace(info.getId());
-        } else {
-            return null;
-        }
-    }
+		if (info != null) {
+			return new EditUserGroupPlace(info.getId());
+		} else {
+			return null;
+		}
+	}
 }

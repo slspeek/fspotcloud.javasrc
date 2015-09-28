@@ -34,65 +34,64 @@ import static com.google.common.base.Objects.equal;
 
 @GwtCompatible
 public class ActionStateEvent extends Event<IActionEnableHandler> {
-    private final Logger log = Logger.getLogger(ActionStateEvent.class.getName());
-    public static final Type<IActionEnableHandler> TYPE = new Type<IActionEnableHandler>();
-    private final String actionId;
-    private final boolean state;
-    private String acceleratorString = null;
+	private final Logger log = Logger.getLogger(ActionStateEvent.class
+			.getName());
+	public static final Type<IActionEnableHandler> TYPE = new Type<IActionEnableHandler>();
+	private final String actionId;
+	private final boolean state;
+	private String acceleratorString = null;
 
-    ActionStateEvent(String actionId, boolean state, String acceleratorString) {
-        this.actionId = actionId;
-        this.state = state;
-        this.acceleratorString = acceleratorString;
-    }
+	ActionStateEvent(String actionId, boolean state, String acceleratorString) {
+		this.actionId = actionId;
+		this.state = state;
+		this.acceleratorString = acceleratorString;
+	}
 
-    public ActionStateEvent(String actionId, boolean state) {
-        this(actionId, state, null);
-    }
+	public ActionStateEvent(String actionId, boolean state) {
+		this(actionId, state, null);
+	}
 
-    public String getActionId() {
-        return actionId;
-    }
+	public String getActionId() {
+		return actionId;
+	}
 
-    public String getAcceleratorString() {
-        return acceleratorString;
-    }
+	public String getAcceleratorString() {
+		return acceleratorString;
+	}
 
-    @Override
-    public Type<IActionEnableHandler> getAssociatedType() {
-        return TYPE;
-    }
+	@Override
+	public Type<IActionEnableHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    @Override
-    protected void dispatch(IActionEnableHandler handlerI) {
-        handlerI.onEvent(this);
-    }
+	@Override
+	protected void dispatch(IActionEnableHandler handlerI) {
+		handlerI.onEvent(this);
+	}
 
-    public boolean equals(Object o) {
-        if (o instanceof ActionStateEvent) {
-            ActionStateEvent other = (ActionStateEvent) o;
-            return equal(other.actionId, actionId) &&
-                    equal(other.acceleratorString, acceleratorString) &&
-                    state == other.state;
-        } else {
-            return false;
-        }
-    }
+	public boolean equals(Object o) {
+		if (o instanceof ActionStateEvent) {
+			ActionStateEvent other = (ActionStateEvent) o;
+			return equal(other.actionId, actionId)
+					&& equal(other.acceleratorString, acceleratorString)
+					&& state == other.state;
+		} else {
+			return false;
+		}
+	}
 
-    public int hashCode() {
-        return Objects.hashCode(actionId, state);
-    }
+	public int hashCode() {
+		return Objects.hashCode(actionId, state);
+	}
 
-    public boolean getState() {
-        return state;
-    }
+	public boolean getState() {
+		return state;
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("action", actionId)
-                .add("state", state)
-                .add("accelerators", acceleratorString)
-                .omitNullValues().toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("action", actionId)
+				.add("state", state).add("accelerators", acceleratorString)
+				.omitNullValues().toString();
+	}
 }

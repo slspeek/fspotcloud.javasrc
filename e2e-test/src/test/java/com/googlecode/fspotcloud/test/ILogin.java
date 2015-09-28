@@ -24,14 +24,14 @@
 package com.googlecode.fspotcloud.test;
 
 public interface ILogin {
-    String RMS_FSF_ORG = "rms@example.com";
-    String RMS_CRED = "GNU";
-    String SLS = "slspeek@gmail.com";
-    String SLS_CRED = SLS;
-    String SLS_EMAIL_VERIFICATION_SECRET = SLS;
-    String NEEDS_CONFIRMATION = "needs@example.com";
-    String NEEDS_CRED = "needs@example.com";
-    String NEEDS_SECRET = "needs@example.com";
+	String RMS_FSF_ORG = "rms@example.com";
+	String RMS_CRED = "GNU";
+	String SLS = "slspeek@gmail.com";
+	String SLS_CRED = SLS;
+	String SLS_EMAIL_VERIFICATION_SECRET = SLS;
+	String NEEDS_CONFIRMATION = "needs@example.com";
+	String NEEDS_CRED = "needs@example.com";
+	String NEEDS_SECRET = "needs@example.com";
 
-    void login() throws Exception;
+	void login() throws Exception;
 }

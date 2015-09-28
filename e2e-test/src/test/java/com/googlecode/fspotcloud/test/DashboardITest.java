@@ -30,24 +30,24 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-
 public class DashboardITest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    PeerRunner peerRunner;
-    @Inject
-    DashboardPage dashboardPage;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	PeerRunner peerRunner;
+	@Inject
+	DashboardPage dashboardPage;
 
-    @Test
-    public void testImportFurniture() throws Exception {
-        peerRunner.startPeer("../peer/src/test/resources/photos.db");
-        dashboardPage.loginAndOpen();
-        dashboardPage.assertPhotoCountOnPeer(0);
-        dashboardPage.assertTagCountOnPeer(0);
-        dashboardPage.synchronize();
-        dashboardPage.open();
-        dashboardPage.toggleImportForTagId("1"); //Furniture
-        peerRunner.stopPeer();
-    }
+	@Test
+	public void testImportFurniture() throws Exception {
+		peerRunner.startPeer("../peer/src/test/resources/photos.db");
+		dashboardPage.loginAndOpen();
+		dashboardPage.assertPhotoCountOnPeer(0);
+		dashboardPage.assertTagCountOnPeer(0);
+		dashboardPage.synchronize();
+		dashboardPage.open();
+		dashboardPage.toggleImportForTagId("1"); //Furniture
+		peerRunner.stopPeer();
+	}
 }

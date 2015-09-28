@@ -35,34 +35,35 @@ import java.util.logging.Logger;
 import static com.google.common.collect.Sets.newHashSet;
 
 public abstract class UserManagerBase<T extends User, U extends T>
-        extends SimpleDAONamedIdImpl<User, U, String> implements UserDao {
-    private final Logger log = Logger.getLogger(UserManagerBase.class.getName());
+		extends
+			SimpleDAONamedIdImpl<User, U, String> implements UserDao {
+	private final Logger log = Logger
+			.getLogger(UserManagerBase.class.getName());
 
-    protected void detach(User user) {
-        Set<Long> uG = user.getGrantedUserGroups();
+	protected void detach(User user) {
+		Set<Long> uG = user.getGrantedUserGroups();
 
-        if (uG != null) {
-            user.setGrantedUserGroups(newHashSet(uG));
-        }
-    }
+		if (uG != null) {
+			user.setGrantedUserGroups(newHashSet(uG));
+		}
+	}
 
-    @Override
-    public User tryToLogin(String email, String credentials) {
-        List<User> tryToFind = findAllWhere(1,
-                "c.id = '" + email + "' AND c.credentials = '" + credentials +
-                        "'");
+	@Override
+	public User tryToLogin(String email, String credentials) {
+		List<User> tryToFind = findAllWhere(1, "c.id = '" + email
+				+ "' AND c.credentials = '" + credentials + "'");
 
-        if (tryToFind.size() > 0) {
-            return tryToFind.get(0);
-        } else {
-            return null;
-        }
-    }
+		if (tryToFind.size() > 0) {
+			return tryToFind.get(0);
+		} else {
+			return null;
+		}
+	}
 
-    @Override
-    public User newEntity(String key) {
-        return newUser(key);
-    }
+	@Override
+	public User newEntity(String key) {
+		return newUser(key);
+	}
 
-    protected abstract User newUser(String email);
+	protected abstract User newUser(String email);
 }

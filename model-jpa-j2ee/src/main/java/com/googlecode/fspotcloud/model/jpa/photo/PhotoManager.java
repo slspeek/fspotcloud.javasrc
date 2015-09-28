@@ -28,18 +28,18 @@ import com.googlecode.fspotcloud.server.model.api.Photo;
 
 import java.util.logging.Logger;
 
-
 public class PhotoManager extends PhotoManagerBase<Photo, PhotoEntity> {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(PhotoManagerBase.class.getName());
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(PhotoManagerBase.class
+			.getName());
 
-    @Override
-    protected Photo newPhoto() {
-        return new PhotoEntity();
-    }
+	@Override
+	protected Photo newPhoto() {
+		return new PhotoEntity();
+	}
 
-    @Override
-    public Class<PhotoEntity> getEntityType() {
-        return PhotoEntity.class;
-    }
+	@Override
+	public Class<PhotoEntity> getEntityType() {
+		return PhotoEntity.class;
+	}
 }

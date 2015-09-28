@@ -36,32 +36,39 @@ import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 
+public class ResetPasswordHandler
+		extends
+			SimpleActionHandler<ResetPasswordAction, ResetPasswordResult> {
 
-public class ResetPasswordHandler extends SimpleActionHandler<ResetPasswordAction, ResetPasswordResult> {
+	@Inject
+	private UserDao userDao;
 
-    @Inject
-    private UserDao userDao;
+	@Override
+	public ResetPasswordResult execute(ResetPasswordAction action,
+			ExecutionContext context) throws DispatchException {
+		User user = userDao.find(action.getEmail());
+		if (user != null && user.hasRegistered()) {
+			if (user.getEnabled()) {
+				if (action.getSecret().equals(user.emailVerificationSecret())) {
+					String newHashedPassword = hash(user.getEmail(),
+							action.getNewPassword());
+					user.setCredentials(newHashedPassword);
+					user.setEmailVerificationSecret(null);
+					userDao.save(user);
+					return new ResetPasswordResult(
+							ResetPasswordResult.Code.SUCCESS);
+				} else {
+					return new ResetPasswordResult(
+							ResetPasswordResult.Code.WRONG_CODE);
+				}
+			} else {
+				return new ResetPasswordResult(
+						ResetPasswordResult.Code.NOT_VERIFIED);
+			}
 
-    @Override
-    public ResetPasswordResult execute(ResetPasswordAction action, ExecutionContext context) throws DispatchException {
-        User user = userDao.find(action.getEmail());
-        if (user != null && user.hasRegistered()) {
-            if (user.getEnabled()) {
-                if (action.getSecret().equals(user.emailVerificationSecret())) {
-                    String newHashedPassword = hash(user.getEmail(), action.getNewPassword());
-                    user.setCredentials(newHashedPassword);
-                    user.setEmailVerificationSecret(null);
-                    userDao.save(user);
-                    return new ResetPasswordResult(ResetPasswordResult.Code.SUCCESS);
-                } else {
-                    return new ResetPasswordResult(ResetPasswordResult.Code.WRONG_CODE);
-                }
-            } else {
-                return new ResetPasswordResult(ResetPasswordResult.Code.NOT_VERIFIED);
-            }
-
-        } else {
-            return new ResetPasswordResult(ResetPasswordResult.Code.NOT_REGISTERED);
-        }
-    }
+		} else {
+			return new ResetPasswordResult(
+					ResetPasswordResult.Code.NOT_REGISTERED);
+		}
+	}
 }

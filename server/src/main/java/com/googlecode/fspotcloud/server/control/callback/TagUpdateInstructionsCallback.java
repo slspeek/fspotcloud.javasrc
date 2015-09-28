@@ -39,41 +39,44 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class TagUpdateInstructionsCallback implements SerializableAsyncCallback<TagUpdateInstructionsResult> {
-    private static final long serialVersionUID = -6213572441944313878L;
-    @Inject
-    @VisibleForTesting
-    transient Logger log;
-    @Inject
-    private transient TaskQueueDispatch dispatchAsync;
-    private String tagId;
+public class TagUpdateInstructionsCallback
+		implements
+			SerializableAsyncCallback<TagUpdateInstructionsResult> {
+	private static final long serialVersionUID = -6213572441944313878L;
+	@Inject
+	@VisibleForTesting
+	transient Logger log;
+	@Inject
+	private transient TaskQueueDispatch dispatchAsync;
+	private String tagId;
 
-    public TagUpdateInstructionsCallback(String tagId,
-                                         TaskQueueDispatch dispatchAsync) {
-        super();
-        this.tagId = tagId;
-        this.dispatchAsync = dispatchAsync;
-    }
+	public TagUpdateInstructionsCallback(String tagId,
+			TaskQueueDispatch dispatchAsync) {
+		super();
+		this.tagId = tagId;
+		this.dispatchAsync = dispatchAsync;
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-        log.log(Level.SEVERE, "Caught: ", caught);
-    }
+	@Override
+	public void onFailure(Throwable caught) {
+		log.log(Level.SEVERE, "Caught: ", caught);
+	}
 
-    @Override
-    public void onSuccess(TagUpdateInstructionsResult result) {
-        PhotoUpdateAction photoUpdate = new PhotoUpdateAction(result.getToBoUpdated());
-        List<String> photoIds = newArrayList();
+	@Override
+	public void onSuccess(TagUpdateInstructionsResult result) {
+		PhotoUpdateAction photoUpdate = new PhotoUpdateAction(
+				result.getToBoUpdated());
+		List<String> photoIds = newArrayList();
 
-        for (PhotoRemovedFromTag removal : result.getToBoRemovedFromTag()) {
-            photoIds.add(removal.getPhotoId());
-        }
+		for (PhotoRemovedFromTag removal : result.getToBoRemovedFromTag()) {
+			photoIds.add(removal.getPhotoId());
+		}
 
-        RemovePhotosFromTagAction photoRemove = new RemovePhotosFromTagAction(tagId,
-                photoIds);
-        log.info("PhotoRemove to be executed: " + photoRemove);
-        dispatchAsync.execute(photoRemove);
-        log.info("PhotoUpdate to be executed: " + photoUpdate);
-        dispatchAsync.execute(photoUpdate);
-    }
+		RemovePhotosFromTagAction photoRemove = new RemovePhotosFromTagAction(
+				tagId, photoIds);
+		log.info("PhotoRemove to be executed: " + photoRemove);
+		dispatchAsync.execute(photoRemove);
+		log.info("PhotoUpdate to be executed: " + photoUpdate);
+		dispatchAsync.execute(photoUpdate);
+	}
 }

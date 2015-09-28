@@ -42,102 +42,100 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class UserAccountActivity extends AbstractActivity
+		implements
+			UserAccountView.UserAccountPresenter {
+	private final Logger log = Logger.getLogger(UserAccountActivity.class
+			.getName());
+	private final UserAccountView view;
+	private final IClientLoginManager clientLoginManager;
+	private final DispatchAsync dispatch;
+	private final UserActions userActions;
 
-public class UserAccountActivity extends AbstractActivity implements UserAccountView.UserAccountPresenter {
-    private final Logger log = Logger.getLogger(UserAccountActivity.class.getName());
-    private final UserAccountView view;
-    private final IClientLoginManager clientLoginManager;
-    private final DispatchAsync dispatch;
-    private final UserActions userActions;
+	private static final String YOUR_PASSWORD_WAS_CHANGED = "Your password was changed";
 
-    private static final String YOUR_PASSWORD_WAS_CHANGED = "Your password was changed";
+	@Inject
+	public UserAccountActivity(UserAccountView view,
+			IClientLoginManager clientLoginManager, DispatchAsync dispatch,
+			UserActions userActions) {
+		this.view = view;
+		this.clientLoginManager = clientLoginManager;
+		this.dispatch = dispatch;
+		this.userActions = userActions;
+	}
 
-    @Inject
-    public UserAccountActivity(UserAccountView view,
-                               IClientLoginManager clientLoginManager,
-                               DispatchAsync dispatch,
-                               UserActions userActions) {
-        this.view = view;
-        this.clientLoginManager = clientLoginManager;
-        this.dispatch = dispatch;
-        this.userActions = userActions;
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		panel.setWidget(view);
+		clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(view);
-        clientLoginManager.getUserInfoAsync(
-                new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                    }
+			@Override
+			public void onSuccess(UserInfo result) {
+				view.setEmail(result.getEmail());
 
-                    @Override
-                    public void onSuccess(UserInfo result) {
-                        view.setEmail(result.getEmail());
+				String date = DateTimeFormat.getFormat(
+						DateTimeFormat.PredefinedFormat.DATE_TIME_LONG).format(
+						result.getLastLoginTime());
+				view.setLastLoginTime(date);
+			}
+		});
+	}
 
-                        String date = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_LONG)
-                                .format(result.getLastLoginTime());
-                        view.setLastLoginTime(date);
-                    }
-                });
-    }
+	private void updateAccount() {
+		String oldPw = view.getOldPasswordField();
+		String password = verifyPasswords();
 
+		if (password == null) {
+			view.setStatusText("Passwords do not match");
+		} else {
+			UpdateUserAction action = new UpdateUserAction(password, oldPw);
+			send(action);
+		}
 
-    private void updateAccount() {
-        String oldPw = view.getOldPasswordField();
-        String password = verifyPasswords();
+	}
 
-        if (password == null) {
-            view.setStatusText("Passwords do not match");
-        } else {
-            UpdateUserAction action = new UpdateUserAction(password, oldPw);
-            send(action);
-        }
+	private void send(UpdateUserAction action) {
+		dispatch.execute(action, new AsyncCallback<UpdateUserResult>() {
+			public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
 
-    }
+			@Override
+			public void onFailure(Throwable caught) {
+				view.setStatusText(AN_ERROR_PROHIBITED_CHANGING_PASSWORDS);
+				log.log(Level.WARNING, "Changing password failed ", caught);
+			}
 
-    private void send(UpdateUserAction action) {
-        dispatch.execute(action,
-                new AsyncCallback<UpdateUserResult>() {
-                    public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
+			@Override
+			public void onSuccess(UpdateUserResult result) {
+				if (result.getSuccess()) {
+					view.setStatusText(YOUR_PASSWORD_WAS_CHANGED);
+				}
+			}
+		});
+	}
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.setStatusText(AN_ERROR_PROHIBITED_CHANGING_PASSWORDS);
-                        log.log(Level.WARNING, "Changing password failed ", caught);
-                    }
+	private String verifyPasswords() {
+		String password = view.getPasswordField();
 
-                    @Override
-                    public void onSuccess(UpdateUserResult result) {
-                        if (result.getSuccess()) {
-                            view.setStatusText(YOUR_PASSWORD_WAS_CHANGED);
-                        }
-                    }
-                });
-    }
+		if (Objects.equal(password, view.getPasswordAgainField())) {
+			return password;
+		} else {
+			return null;
+		}
+	}
 
+	@Override
+	public void performAction(String actionId) {
+		if (userActions.doChangePassword.getId().equals(actionId)) {
+			updateAccount();
+		}
+	}
 
-    private String verifyPasswords() {
-        String password = view.getPasswordField();
-
-        if (Objects.equal(password, view.getPasswordAgainField())) {
-            return password;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public void performAction(String actionId) {
-        if (userActions.doChangePassword.getId().equals(actionId)) {
-            updateAccount();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        view.clearFields();
-        super.onStop();
-    }
+	@Override
+	public void onStop() {
+		view.clearFields();
+		super.onStop();
+	}
 }

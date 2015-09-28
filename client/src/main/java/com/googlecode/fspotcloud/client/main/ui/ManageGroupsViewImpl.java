@@ -50,122 +50,123 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class ManageGroupsViewImpl extends Composite implements ManageGroupsView {
-    private final Logger log = Logger.getLogger(ManageGroupsViewImpl.class.getName());
-    private static final ManageGroupsViewImplUiBinder uiBinder = GWT.create(ManageGroupsViewImplUiBinder.class);
-    private ManageGroupsPresenter presenter;
-    private final ListDataProvider<UserGroupInfo> dataProvider;
-    private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
+	private final Logger log = Logger.getLogger(ManageGroupsViewImpl.class
+			.getName());
+	private static final ManageGroupsViewImplUiBinder uiBinder = GWT
+			.create(ManageGroupsViewImplUiBinder.class);
+	private ManageGroupsPresenter presenter;
+	private final ListDataProvider<UserGroupInfo> dataProvider;
+	private final SingleSelectionModel<UserGroupInfo> selectionModel = new SingleSelectionModel<UserGroupInfo>();
 
-    @UiField(provided = true)
-    CellTable<UserGroupInfo> table;
-    @UiField(provided = true)
-    ActionButton newButton;
-    @UiField(provided = true)
-    ActionButton editButton;
-    @UiField(provided = true)
-    ActionButton deleteButton;
-    @UiField(provided = true)
-    ActionButton manageButton;
-    @UiField(provided = true)
-    ActionButton dashboardButton;
-    @UiField(provided = true)
-    StatusViewImpl statusView;
+	@UiField(provided = true)
+	CellTable<UserGroupInfo> table;
+	@UiField(provided = true)
+	ActionButton newButton;
+	@UiField(provided = true)
+	ActionButton editButton;
+	@UiField(provided = true)
+	ActionButton deleteButton;
+	@UiField(provided = true)
+	ActionButton manageButton;
+	@UiField(provided = true)
+	ActionButton dashboardButton;
+	@UiField(provided = true)
+	StatusViewImpl statusView;
 
+	@Inject
+	public ManageGroupsViewImpl(@ManageGroups StatusView statusView,
+			GroupActions actions, ApplicationActions applicationActions,
+			AdminButtonFactory buttonFactory,
+			CellTableResources cellTableResources) {
+		this.statusView = (StatusViewImpl) statusView;
+		this.table = new CellTable<UserGroupInfo>(15, cellTableResources);
 
-    @Inject
-    public ManageGroupsViewImpl(@ManageGroups StatusView statusView,
-                                GroupActions actions,
-                                ApplicationActions applicationActions,
-                                AdminButtonFactory buttonFactory,
-                                CellTableResources cellTableResources
-    ) {
-        this.statusView = (StatusViewImpl) statusView;
-        this.table = new CellTable<UserGroupInfo>(15, cellTableResources);
+		newButton = buttonFactory.getButton(actions.newUsergroup);
+		editButton = buttonFactory.getButton(actions.editUsergroup);
+		deleteButton = buttonFactory.getButton(actions.deleteUsergroup);
+		manageButton = buttonFactory.getButton(actions.manageUsers);
+		dashboardButton = buttonFactory.getButton(applicationActions.dashboard);
+		initWidget(uiBinder.createAndBindUi(this));
+		newButton.ensureDebugId("new-button");
+		editButton.ensureDebugId("edit-button");
+		deleteButton.ensureDebugId("delete-button");
+		manageButton.ensureDebugId("manage-button");
 
-        newButton = buttonFactory.getButton(actions.newUsergroup);
-        editButton = buttonFactory.getButton(actions.editUsergroup);
-        deleteButton = buttonFactory.getButton(actions.deleteUsergroup);
-        manageButton = buttonFactory.getButton(actions.manageUsers);
-        dashboardButton = buttonFactory.getButton(applicationActions.dashboard);
-        initWidget(uiBinder.createAndBindUi(this));
-        newButton.ensureDebugId("new-button");
-        editButton.ensureDebugId("edit-button");
-        deleteButton.ensureDebugId("delete-button");
-        manageButton.ensureDebugId("manage-button");
+		// Create name column.
+		TextColumn<UserGroupInfo> nameColumn = new TextColumn<UserGroupInfo>() {
+			@Override
+			public String getValue(UserGroupInfo info) {
+				return info.getName();
+			}
+		};
+		nameColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-        // Create name column.
-        TextColumn<UserGroupInfo> nameColumn = new TextColumn<UserGroupInfo>() {
-            @Override
-            public String getValue(UserGroupInfo info) {
-                return info.getName();
-            }
-        };
-        nameColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		// Create address column.
+		TextColumn<UserGroupInfo> descColumn = new TextColumn<UserGroupInfo>() {
+			@Override
+			public String getValue(UserGroupInfo info) {
+				return info.getDescription();
+			}
+		};
+		descColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-        // Create address column.
-        TextColumn<UserGroupInfo> descColumn = new TextColumn<UserGroupInfo>() {
-            @Override
-            public String getValue(UserGroupInfo info) {
-                return info.getDescription();
-            }
-        };
-        descColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		TextColumn<UserGroupInfo> publicColumn = new TextColumn<UserGroupInfo>() {
+			@Override
+			public String getValue(UserGroupInfo object) {
+				return object.isPublic() ? "yes" : "no";
+			}
+		};
+		publicColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		// Add the columns.
+		table.addColumn(nameColumn, "Name");
+		table.addColumn(descColumn, "Description");
+		table.addColumn(publicColumn, "Public");
+		// Create a data provider.
+		dataProvider = new ListDataProvider<UserGroupInfo>();
 
-        TextColumn<UserGroupInfo> publicColumn = new TextColumn<UserGroupInfo>() {
-            @Override
-            public String getValue(UserGroupInfo object) {
-                return object.isPublic() ? "yes" : "no";
-            }
-        };
-        publicColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-        // Add the columns.
-        table.addColumn(nameColumn, "Name");
-        table.addColumn(descColumn, "Description");
-        table.addColumn(publicColumn, "Public");
-        // Create a data provider.
-        dataProvider = new ListDataProvider<UserGroupInfo>();
+		// Connect the table to the data provider.
+		dataProvider.addDataDisplay(table);
+		table.setSelectionModel(selectionModel);
+		table.setPageSize(25);
+		table.setWidth("100%");
+	}
 
-        // Connect the table to the data provider.
-        dataProvider.addDataDisplay(table);
-        table.setSelectionModel(selectionModel);
-        table.setPageSize(25);
-        table.setWidth("100%");
-    }
+	@Override
+	public void setPresenter(ManageGroupsPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void setPresenter(ManageGroupsPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setData(List<UserGroupInfo> data) {
+		List<UserGroupInfo> list = dataProvider.getList();
+		list.clear();
+		for (UserGroupInfo contact : data) {
+			list.add(contact);
+		}
+	}
 
-    @Override
-    public void setData(List<UserGroupInfo> data) {
-        List<UserGroupInfo> list = dataProvider.getList();
-        list.clear();
-        for (UserGroupInfo contact : data) {
-            list.add(contact);
-        }
-    }
+	@Override
+	public UserGroupInfo getSelected() {
+		return selectionModel.getSelectedObject();
+	}
 
-    @Override
-    public UserGroupInfo getSelected() {
-        return selectionModel.getSelectedObject();
-    }
+	@Override
+	public void focusTable() {
+		table.setFocus(true);
+	}
 
-    @Override
-    public void focusTable() {
-        table.setFocus(true);
-    }
+	@Override
+	public void setSelected(UserGroupInfo userGroupInfo) {
+		selectionModel.setSelected(userGroupInfo, true);
+	}
 
-    @Override
-    public void setSelected(UserGroupInfo userGroupInfo) {
-        selectionModel.setSelected(userGroupInfo, true);
-    }
+	@Override
+	public void setStatusText(String status) {
+		statusView.setStatusText(status);
+	}
 
-    @Override
-    public void setStatusText(String status) {
-        statusView.setStatusText(status);
-    }
-
-    interface ManageGroupsViewImplUiBinder extends UiBinder<Widget, ManageGroupsViewImpl> {
-    }
+	interface ManageGroupsViewImplUiBinder
+			extends
+				UiBinder<Widget, ManageGroupsViewImpl> {
+	}
 }

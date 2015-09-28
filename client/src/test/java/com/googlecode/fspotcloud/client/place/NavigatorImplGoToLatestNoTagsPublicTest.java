@@ -18,65 +18,64 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 @RunWith(JukitoRunner.class)
 public class NavigatorImplGoToLatestNoTagsPublicTest {
 
+	private static final String TAG_ID = "1";
+	@Inject
+	private DataManager dataManager;
+	@Inject
+	private NavigatorImpl navigator;
+	@Inject
+	private ArgumentCaptor<AsyncCallback<TagNode>> captor;
 
-    private static final String TAG_ID = "1";
-    @Inject
-    private  DataManager dataManager;
-    @Inject
-    private NavigatorImpl navigator;
-    @Inject
-    private ArgumentCaptor<AsyncCallback<TagNode>> captor;
+	@Inject
+	private IPlaceController placeController;
+	@Inject
+	private IClientLoginManager clientLoginManager;
 
-    @Inject
-    private IPlaceController placeController;
-    @Inject
-    private IClientLoginManager clientLoginManager;
+	@Inject
+	private ArgumentCaptor<AsyncCallback<UserInfo>> clientCaptor;
 
+	@Test
+	public void testGoToLatestTagNoPublicTagsAdmin() throws Exception {
+		navigator.goToLatestTag();
+		verify(dataManager).getTagTree(captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
 
-    @Inject private ArgumentCaptor<AsyncCallback<UserInfo>> clientCaptor;
+		callback.onSuccess(new TagNode());
 
-    @Test
-    public void testGoToLatestTagNoPublicTagsAdmin() throws Exception {
-        navigator.goToLatestTag();
-        verify(dataManager).getTagTree(captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
+		verify(clientLoginManager).getUserInfoAsync(clientCaptor.capture());
 
-        callback.onSuccess(new TagNode());
+		AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
+		userInfoAsyncCallback.onSuccess(new UserInfo("sls", true, true));
+		verify(placeController).goTo(DashboardPlace.DEFAULT);
+	}
+	@Test
+	public void testGoToLatestTagNoPublicTagsLoggedOn() throws Exception {
+		navigator.goToLatestTag();
+		verify(dataManager).getTagTree(captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
 
-        verify(clientLoginManager).getUserInfoAsync(clientCaptor.capture());
+		callback.onSuccess(new TagNode());
 
-        AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
-        userInfoAsyncCallback.onSuccess(new UserInfo("sls", true, true));
-        verify(placeController).goTo(DashboardPlace.DEFAULT);
-    }
-    @Test
-    public void testGoToLatestTagNoPublicTagsLoggedOn() throws Exception {
-        navigator.goToLatestTag();
-        verify(dataManager).getTagTree(captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
+		verify(clientLoginManager).getUserInfoAsync(clientCaptor.capture());
 
-        callback.onSuccess(new TagNode());
+		AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
+		userInfoAsyncCallback.onSuccess(new UserInfo("sls", false, true));
+		verifyZeroInteractions(placeController);
+	}
 
-        verify(clientLoginManager).getUserInfoAsync(clientCaptor.capture());
+	@Test
+	public void testGoToLatestTagNoPublicTagsNotLoggedOn() throws Exception {
+		navigator.goToLatestTag();
+		verify(dataManager).getTagTree(captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
 
-        AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
-        userInfoAsyncCallback.onSuccess(new UserInfo("sls", false, true));
-        verifyZeroInteractions(placeController);
-    }
+		callback.onSuccess(new TagNode());
 
-    @Test
-    public void testGoToLatestTagNoPublicTagsNotLoggedOn() throws Exception {
-        navigator.goToLatestTag();
-        verify(dataManager).getTagTree(captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
+		verify(clientLoginManager).getUserInfoAsync(clientCaptor.capture());
 
-        callback.onSuccess(new TagNode());
-
-        verify(clientLoginManager).getUserInfoAsync(clientCaptor.capture());
-
-        AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
-        userInfoAsyncCallback.onSuccess(new UserInfo("sls", false, false));
-        verifyZeroInteractions(placeController);
-        verify(clientLoginManager).redirectToLogin();
-    }
+		AsyncCallback<UserInfo> userInfoAsyncCallback = clientCaptor.getValue();
+		userInfoAsyncCallback.onSuccess(new UserInfo("sls", false, false));
+		verifyZeroInteractions(placeController);
+		verify(clientLoginManager).redirectToLogin();
+	}
 }

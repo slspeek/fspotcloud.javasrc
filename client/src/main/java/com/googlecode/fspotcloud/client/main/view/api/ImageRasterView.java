@@ -31,21 +31,21 @@ import java.util.List;
 
 @GwtCompatible
 public interface ImageRasterView extends IsWidget {
-    List<ImageView> buildRaster(int rowCount, int columnCount);
+	List<ImageView> buildRaster(int rowCount, int columnCount);
 
-    void setPresenter(ImageRasterPresenter presenter);
+	void setPresenter(ImageRasterPresenter presenter);
 
-    void setPagingText(String text);
+	void setPagingText(String text);
 
-    ImageRasterPresenter getPresenter();
+	ImageRasterPresenter getPresenter();
 
-    interface ImageRasterPresenter {
-        void init();
+	interface ImageRasterPresenter {
+		void init();
 
-        void onMouseWheelNorth();
+		void onMouseWheelNorth();
 
-        void onMouseWheelSouth();
+		void onMouseWheelSouth();
 
-        void adjustSizes();
-    }
+		void adjustSizes();
+	}
 }

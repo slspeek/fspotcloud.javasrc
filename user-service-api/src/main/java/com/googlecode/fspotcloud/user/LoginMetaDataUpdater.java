@@ -35,36 +35,36 @@ import java.util.logging.Logger;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class LoginMetaDataUpdater implements ILoginMetaDataUpdater {
-    @Inject
-    Logger log;
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private Provider<LoginMetaData> loginMetaDataProvider;
+	@Inject
+	Logger log;
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private Provider<LoginMetaData> loginMetaDataProvider;
 
-    @Override
-    public void doUpdate(User user, LoginMetaData.Type loginType) {
-        LoginMetaData loginMetaData = loginMetaDataProvider.get();
+	@Override
+	public void doUpdate(User user, LoginMetaData.Type loginType) {
+		LoginMetaData loginMetaData = loginMetaDataProvider.get();
 
-        loginMetaData.setLastTime(user.getLastLoginTime());
-        loginMetaData.setEmail(user.getEmail());
-        loginMetaData.setLoginType(loginType);
-        loginMetaData.setGrantedUserGroups(newHashSet(
-                user.getGrantedUserGroups()));
-        user.touchLastLoginTime();
-        userDao.save(user);
-        log.info("doUpdate on:" + loginMetaData);
-    }
+		loginMetaData.setLastTime(user.getLastLoginTime());
+		loginMetaData.setEmail(user.getEmail());
+		loginMetaData.setLoginType(loginType);
+		loginMetaData.setGrantedUserGroups(newHashSet(user
+				.getGrantedUserGroups()));
+		user.touchLastLoginTime();
+		userDao.save(user);
+		log.info("doUpdate on:" + loginMetaData);
+	}
 
-    @Override
-    public void clear() {
-        LoginMetaData loginMetaData = loginMetaDataProvider.get();
-        loginMetaData.setLastTime(null);
-        loginMetaData.setLoginType(null);
-        loginMetaData.setEmail(null);
+	@Override
+	public void clear() {
+		LoginMetaData loginMetaData = loginMetaDataProvider.get();
+		loginMetaData.setLastTime(null);
+		loginMetaData.setLoginType(null);
+		loginMetaData.setEmail(null);
 
-        HashSet<Long> userGroups = newHashSet();
-        loginMetaData.setGrantedUserGroups(userGroups);
-        log.info("clear on:" + loginMetaData);
-    }
+		HashSet<Long> userGroups = newHashSet();
+		loginMetaData.setGrantedUserGroups(userGroups);
+		log.info("clear on:" + loginMetaData);
+	}
 }

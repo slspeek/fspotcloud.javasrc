@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
@@ -54,47 +54,46 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(JukitoRunner.class)
 public class GetAdminTagTreeHandlerTest {
-    @Inject
-    GetAdminTagTreeHandler handler;
-    private final GetAdminTagTreeAction action = new GetAdminTagTreeAction();
-    private final PeerDatabaseEntity pd = new PeerDatabaseEntity();
+	@Inject
+	GetAdminTagTreeHandler handler;
+	private final GetAdminTagTreeAction action = new GetAdminTagTreeAction();
+	private final PeerDatabaseEntity pd = new PeerDatabaseEntity();
 
-    @Before
-    public void setUp(PeerDatabaseDao peerDatabaseDao) throws Exception {
-        when(peerDatabaseDao.get()).thenReturn(pd);
-    }
+	@Before
+	public void setUp(PeerDatabaseDao peerDatabaseDao) throws Exception {
+		when(peerDatabaseDao.get()).thenReturn(pd);
+	}
 
-    @Test
-    public void testNormalExecuteNoTags(TagDao tagManager,
-                                        IAdminPermission adminPermission,
-                                        PeerDatabaseDao peerDatabaseDao
-    ) throws Exception {
-        TagTreeResult result = handler.execute(action, null);
-        verify(tagManager).getTags();
-        assertTrue(result.getTree().getChildren().isEmpty());
-    }
+	@Test
+	public void testNormalExecuteNoTags(TagDao tagManager,
+			IAdminPermission adminPermission, PeerDatabaseDao peerDatabaseDao)
+			throws Exception {
+		TagTreeResult result = handler.execute(action, null);
+		verify(tagManager).getTags();
+		assertTrue(result.getTree().getChildren().isEmpty());
+	}
 
-    @Test
-    public void testNormalExecuteOneTags(TagDao tagManager,
-                                         IAdminPermission adminPermission,
-                                         PeerDatabaseDao peerDatabaseDao) throws Exception {
-        List<TagNode> list = newArrayList();
-        list.add(new TagNode("1"));
-        when(tagManager.getTags()).thenReturn(list);
+	@Test
+	public void testNormalExecuteOneTags(TagDao tagManager,
+			IAdminPermission adminPermission, PeerDatabaseDao peerDatabaseDao)
+			throws Exception {
+		List<TagNode> list = newArrayList();
+		list.add(new TagNode("1"));
+		when(tagManager.getTags()).thenReturn(list);
 
-        TagTreeResult result = handler.execute(action, null);
-        verify(tagManager).getTags();
-        assertEquals(1, result.getTree().getChildren().size());
-    }
+		TagTreeResult result = handler.execute(action, null);
+		verify(tagManager).getTags();
+		assertEquals(1, result.getTree().getChildren().size());
+	}
 
-    @Test(expected = SecurityException.class)
-    public void testUnAuthorizedExecute(TagDao tagManager,
-                                        IAdminPermission adminPermission,
-                                        PeerDatabaseDao peerDatabaseDao) throws Exception {
-        doThrow(new SecurityException()).when(adminPermission)
-                .checkAdminPermission();
+	@Test(expected = SecurityException.class)
+	public void testUnAuthorizedExecute(TagDao tagManager,
+			IAdminPermission adminPermission, PeerDatabaseDao peerDatabaseDao)
+			throws Exception {
+		doThrow(new SecurityException()).when(adminPermission)
+				.checkAdminPermission();
 
-        TagTreeResult result = handler.execute(action, null);
-        fail();
-    }
+		TagTreeResult result = handler.execute(action, null);
+		fail();
+	}
 }

@@ -25,19 +25,19 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 public interface Slideshow {
-    void start();
+	void start();
 
-    void stop();
+	void stop();
 
-    float faster();
+	float faster();
 
-    float slower();
+	float slower();
 
-    float delay();
+	float delay();
 
-    boolean isRunning();
+	boolean isRunning();
 
-    void pause();
+	void pause();
 
-    void togglePause();
+	void togglePause();
 }

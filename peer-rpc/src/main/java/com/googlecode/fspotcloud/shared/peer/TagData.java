@@ -29,44 +29,43 @@ import com.openpojo.business.annotation.BusinessKey;
 
 import java.io.Serializable;
 
-
 public class TagData extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = -7990602627338507900L;
-    @BusinessKey
-    private final String tagId;
-    @BusinessKey
-    private final String parentId;
-    @BusinessKey
-    private final String name;
-    @BusinessKey
-    private final int count;
+	private static final long serialVersionUID = -7990602627338507900L;
+	@BusinessKey
+	private final String tagId;
+	@BusinessKey
+	private final String parentId;
+	@BusinessKey
+	private final String name;
+	@BusinessKey
+	private final int count;
 
-    public TagData(String tagId, String name, String parentId, int count) {
-        super();
-        this.tagId = tagId;
-        this.parentId = parentId;
-        this.name = name;
-        this.count = count;
-    }
+	public TagData(String tagId, String name, String parentId, int count) {
+		super();
+		this.tagId = tagId;
+		this.parentId = parentId;
+		this.name = name;
+		this.count = count;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public String getParentId() {
-        return parentId;
-    }
+	public String getParentId() {
+		return parentId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getCount() {
-        return count;
-    }
+	public int getCount() {
+		return count;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("id", tagId).add("name", name).add("parent", parentId)
-                .add("#", count).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("id", tagId).add("name", name)
+				.add("parent", parentId).add("#", count).toString();
+	}
 }

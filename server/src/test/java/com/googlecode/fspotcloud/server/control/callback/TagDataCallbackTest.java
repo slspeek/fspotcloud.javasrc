@@ -47,59 +47,60 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 public class TagDataCallbackTest {
-    TagDao tagManager;
-    Tag tag;
-    PeerDatabase peer = new PeerDatabaseEntity();
-    PeerDatabaseDao peers;
-    TagDataCallback callback;
-    final String TAGNAME = "Foo";
-    final String TAGID = "FooID";
-    TagDataResult incoming;
-    TagData row;
-    ArgumentCaptor<List<Tag>> argumentCaptor = (ArgumentCaptor<List<Tag>>) (Object) ArgumentCaptor.forClass(List.class);
+	TagDao tagManager;
+	Tag tag;
+	PeerDatabase peer = new PeerDatabaseEntity();
+	PeerDatabaseDao peers;
+	TagDataCallback callback;
+	final String TAGNAME = "Foo";
+	final String TAGID = "FooID";
+	TagDataResult incoming;
+	TagData row;
+	ArgumentCaptor<List<Tag>> argumentCaptor = (ArgumentCaptor<List<Tag>>) (Object) ArgumentCaptor
+			.forClass(List.class);
 
-    @Before
-    public void setUp() throws Exception {
-        tagManager = mock(TagDao.class);
-        peers = mock(PeerDatabaseDao.class);
-        when(peers.get()).thenReturn(peer);
-        tag = new TagEntity();
-        tag.setId(TAGID);
-        row = new TagData(TAGID, TAGNAME, null, 10);
+	@Before
+	public void setUp() throws Exception {
+		tagManager = mock(TagDao.class);
+		peers = mock(PeerDatabaseDao.class);
+		when(peers.get()).thenReturn(peer);
+		tag = new TagEntity();
+		tag.setId(TAGID);
+		row = new TagData(TAGID, TAGNAME, null, 10);
 
-        List<TagData> list = new ArrayList<TagData>();
-        list.add(row);
-        incoming = new TagDataResult(list);
-        when(tagManager.findOrNew(TAGID)).thenReturn(tag);
-        callback = new TagDataCallback(tagManager, peers);
-    }
+		List<TagData> list = new ArrayList<TagData>();
+		list.add(row);
+		incoming = new TagDataResult(list);
+		when(tagManager.findOrNew(TAGID)).thenReturn(tag);
+		callback = new TagDataCallback(tagManager, peers);
+	}
 
-    @Test
-    public void testSerialize() throws Exception {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bos);
-        out.writeObject(callback);
-        out.close();
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream out = new ObjectOutputStream(bos);
+		out.writeObject(callback);
+		out.close();
+	}
 
-    @Test
-    public void testRecieveTagData() throws DispatchException {
-        callback.onSuccess(incoming);
-        assertEquals(10, tag.getCount());
-        assertEquals(TAGNAME, tag.getTagName());
-        assertNull(tag.getParentId());
-        verify(peers).resetCachedTagTrees();
-        verifyNoMoreInteractions(peers);
-    }
+	@Test
+	public void testRecieveTagData() throws DispatchException {
+		callback.onSuccess(incoming);
+		assertEquals(10, tag.getCount());
+		assertEquals(TAGNAME, tag.getTagName());
+		assertNull(tag.getParentId());
+		verify(peers).resetCachedTagTrees();
+		verifyNoMoreInteractions(peers);
+	}
 
-    @Test
-    public void testRecieveTagDataImported() throws DispatchException {
-        tag.setImportIssued(true);
-        callback.onSuccess(incoming);
-        assertEquals(10, tag.getCount());
-        assertEquals(TAGNAME, tag.getTagName());
-        assertNull(tag.getParentId());
-        verify(peers).resetCachedTagTrees();
-        verifyNoMoreInteractions(peers);
-    }
+	@Test
+	public void testRecieveTagDataImported() throws DispatchException {
+		tag.setImportIssued(true);
+		callback.onSuccess(incoming);
+		assertEquals(10, tag.getCount());
+		assertEquals(TAGNAME, tag.getTagName());
+		assertNull(tag.getParentId());
+		verify(peers).resetCachedTagTrees();
+		verifyNoMoreInteractions(peers);
+	}
 }

@@ -38,40 +38,42 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 
+public class AuthenticationHandler
+		extends
+			SimpleActionHandler<AuthenticationAction, AuthenticationResult> {
+	private final UserService userService;
+	private final UserDao userDao;
+	private final ILoginMetaDataUpdater loginMetaDataUpdater;
 
-public class AuthenticationHandler extends SimpleActionHandler<AuthenticationAction, AuthenticationResult> {
-    private final UserService userService;
-    private final UserDao userDao;
-    private final ILoginMetaDataUpdater loginMetaDataUpdater;
+	@Inject
+	public AuthenticationHandler(UserService userService, UserDao userDao,
+			ILoginMetaDataUpdater loginMetaDataUpdater) {
+		this.userService = userService;
+		this.userDao = userDao;
+		this.loginMetaDataUpdater = loginMetaDataUpdater;
+	}
 
-    @Inject
-    public AuthenticationHandler(UserService userService, UserDao userDao,
-                                 ILoginMetaDataUpdater loginMetaDataUpdater) {
-        this.userService = userService;
-        this.userDao = userDao;
-        this.loginMetaDataUpdater = loginMetaDataUpdater;
-    }
+	@Override
+	public AuthenticationResult execute(AuthenticationAction action,
+			ExecutionContext context) throws DispatchException {
+		if (!"".equals(action.getUserName())) {
+			User user = userDao.find(action.getUserName());
 
-    @Override
-    public AuthenticationResult execute(AuthenticationAction action,
-                                        ExecutionContext context) throws DispatchException {
-        if (!"".equals(action.getUserName())) {
-            User user = userDao.find(action.getUserName());
+			if (user != null && checkCredentials(user, action)) {
+				loginMetaDataUpdater.doUpdate(user,
+						LoginMetaData.Type.REGULAR_LOGIN);
 
-            if (user != null && checkCredentials(user, action)) {
-                loginMetaDataUpdater.doUpdate(user,
-                        LoginMetaData.Type.REGULAR_LOGIN);
+				return new AuthenticationResult(true);
+			}
+		}
 
-                return new AuthenticationResult(true);
-            }
-        }
+		return new AuthenticationResult(false);
+	}
 
-        return new AuthenticationResult(false);
-    }
-
-    private boolean checkCredentials(User user, AuthenticationAction action) {
-        String plainPassword = action.getPassword();
-        String hashedPassword = hash(user.getEmail(), plainPassword);
-        return user.getEnabled() && user.getCredentials().equals(hashedPassword);
-    }
+	private boolean checkCredentials(User user, AuthenticationAction action) {
+		String plainPassword = action.getPassword();
+		String hashedPassword = hash(user.getEmail(), plainPassword);
+		return user.getEnabled()
+				&& user.getCredentials().equals(hashedPassword);
+	}
 }

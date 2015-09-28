@@ -27,36 +27,37 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class SendPasswordResetPlace extends Place {
 
-    public SendPasswordResetPlace() {
-    }
+	public SendPasswordResetPlace() {
+	}
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof SendPasswordResetPlace) {
-            return true;
-        } else {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SendPasswordResetPlace) {
+			return true;
+		} else {
+			return false;
+		}
 
-    }
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<SendPasswordResetPlace> {
-        @Override
-        public SendPasswordResetPlace getPlace(String token) {
-            return new SendPasswordResetPlace();
-        }
+	public static class Tokenizer
+			implements
+				PlaceTokenizer<SendPasswordResetPlace> {
+		@Override
+		public SendPasswordResetPlace getPlace(String token) {
+			return new SendPasswordResetPlace();
+		}
 
-        @Override
-        public String getToken(SendPasswordResetPlace place) {
-            return "";
-        }
-    }
+		@Override
+		public String getToken(SendPasswordResetPlace place) {
+			return "";
+		}
+	}
 }

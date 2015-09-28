@@ -6,13 +6,13 @@ import com.googlecode.fspotcloud.client.enduseraction.dashboard.DashboardActions
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 
 public class BigToPhotosButtonProvider implements Provider<ActionButton> {
-    @Inject
-    BigButtonFactory buttonFactory;
-    @Inject
-    DashboardActions dashboardActions;
+	@Inject
+	BigButtonFactory buttonFactory;
+	@Inject
+	DashboardActions dashboardActions;
 
-    @Override
-    public ActionButton get() {
-        return buttonFactory.getButton(dashboardActions.toPhotos);
-    }
+	@Override
+	public ActionButton get() {
+		return buttonFactory.getButton(dashboardActions.toPhotos);
+	}
 }

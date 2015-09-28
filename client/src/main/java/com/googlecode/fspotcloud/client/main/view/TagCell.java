@@ -34,23 +34,22 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 
 import java.util.logging.Logger;
 
-
 public class TagCell extends AbstractCell<TagNode> {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(TagCell.class.getName());
-    private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
-    private final Resources resources = GWT.create(Resources.class);
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(TagCell.class.getName());
+	private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
+	private final Resources resources = GWT.create(Resources.class);
 
-    @Override
-    public void render(com.google.gwt.cell.client.Cell.Context arg0,
-                       TagNode value, SafeHtmlBuilder sb) {
-        SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(),
-                resources.style().tag());
-        sb.append(snippetHtml);
-    }
+	@Override
+	public void render(com.google.gwt.cell.client.Cell.Context arg0,
+			TagNode value, SafeHtmlBuilder sb) {
+		SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(), resources
+				.style().tag());
+		sb.append(snippetHtml);
+	}
 
-    public interface MyTemplates extends SafeHtmlTemplates {
-        @Template("<span class=\"{1}\">{0}</span>")
-        SafeHtml message(String message, String style);
-    }
+	public interface MyTemplates extends SafeHtmlTemplates {
+		@Template("<span class=\"{1}\">{0}</span>")
+		SafeHtml message(String message, String style);
+	}
 }

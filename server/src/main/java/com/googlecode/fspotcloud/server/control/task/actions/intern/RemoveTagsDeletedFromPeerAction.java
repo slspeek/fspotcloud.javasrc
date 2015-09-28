@@ -28,11 +28,12 @@ import com.googlecode.fspotcloud.shared.peer.TagRemovedFromPeer;
 
 import java.util.List;
 
+public class RemoveTagsDeletedFromPeerAction
+		extends
+			AbstractBatchAction<TagRemovedFromPeer> {
+	private static final long serialVersionUID = 7650176553018963544L;
 
-public class RemoveTagsDeletedFromPeerAction extends AbstractBatchAction<TagRemovedFromPeer> {
-    private static final long serialVersionUID = 7650176553018963544L;
-
-    public RemoveTagsDeletedFromPeerAction(List<TagRemovedFromPeer> toBoDeleted) {
-        super(toBoDeleted);
-    }
+	public RemoveTagsDeletedFromPeerAction(List<TagRemovedFromPeer> toBoDeleted) {
+		super(toBoDeleted);
+	}
 }

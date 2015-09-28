@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.main;
 
 import com.googlecode.fspotcloud.server.inject.PropertiesFile;
@@ -38,7 +38,6 @@ import javax.inject.Inject;
 
 import static org.junit.Assert.assertNull;
 
-
 /**
  * PropertiesLoader failure unit test
  *
@@ -47,24 +46,24 @@ import static org.junit.Assert.assertNull;
 @RunWith(JukitoRunner.class)
 public class PropertiesLoaderFailureTest {
 
+	public static class Module extends JukitoModule {
+		protected void configureTest() {
 
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
+			bind(String.class).annotatedWith(PropertiesFile.class).toInstance(
+					"nonexistent");
 
-            bind(String.class).annotatedWith(PropertiesFile.class).toInstance("nonexistent");
+		}
+	}
 
-        }
-    }
+	@Inject
+	private PropertiesLoader loader;
 
-    @Inject
-    private PropertiesLoader loader;
-
-    /**
-     * Verifies that errors are caught and null is returned
-     */
-    @Test
-    public void testLoadProperties() {
-        assertNull(loader.loadProperties());
-    }
+	/**
+	 * Verifies that errors are caught and null is returned
+	 */
+	@Test
+	public void testLoadProperties() {
+		assertNull(loader.loadProperties());
+	}
 
 }

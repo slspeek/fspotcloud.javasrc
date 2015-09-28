@@ -41,26 +41,29 @@ import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class EmailNotVerifiedTest {
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    public static final String NEW_PASSWORD = "new password";
-    public static final String OLD_PASSWORD = "old password";
-    @Inject
-    UpdateUserHandler handler;
-    User user;
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	public static final String NEW_PASSWORD = "new password";
+	public static final String OLD_PASSWORD = "old password";
+	@Inject
+	UpdateUserHandler handler;
+	User user;
 
-    @Before
-    public void setUp(UserDao userDao, UserService userService) throws Exception {
-        user = new UserEntity(RMS_FSF_ORG);
-        user.setCredentials(OLD_PASSWORD);
-        user.setRegistered(true);
-        when(userDao.find(RMS_FSF_ORG)).thenReturn(user);
-        when(userService.isUserLoggedIn()).thenReturn(true);
-        when(userService.getEmail()).thenReturn(RMS_FSF_ORG);
-    }
+	@Before
+	public void setUp(UserDao userDao, UserService userService)
+			throws Exception {
+		user = new UserEntity(RMS_FSF_ORG);
+		user.setCredentials(OLD_PASSWORD);
+		user.setRegistered(true);
+		when(userDao.find(RMS_FSF_ORG)).thenReturn(user);
+		when(userService.isUserLoggedIn()).thenReturn(true);
+		when(userService.getEmail()).thenReturn(RMS_FSF_ORG);
+	}
 
-    @Test(expected = EmailNotVerifiedException.class)
-    public void testExecute(UserDao userDao, UserService userService) throws Exception {
-        UpdateUserAction action = new UpdateUserAction(NEW_PASSWORD, OLD_PASSWORD);
-        UpdateUserResult result = handler.execute(action, null);
-    }
+	@Test(expected = EmailNotVerifiedException.class)
+	public void testExecute(UserDao userDao, UserService userService)
+			throws Exception {
+		UpdateUserAction action = new UpdateUserAction(NEW_PASSWORD,
+				OLD_PASSWORD);
+		UpdateUserResult result = handler.execute(action, null);
+	}
 }

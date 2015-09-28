@@ -14,29 +14,29 @@ import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 @GwtCompatible
 public class GoManageUsers extends PlaceMoverBase {
 
-    private final ManageGroupsView.ManageGroupsPresenter presenter;
-    private final StatusView statusView;
+	private final ManageGroupsView.ManageGroupsPresenter presenter;
+	private final StatusView statusView;
 
-    @Inject
-    protected GoManageUsers(IPlaceController IPlaceController,
-                            ManageGroupsView.ManageGroupsPresenter presenter,
-                            @ManageGroups StatusView statusView)
+	@Inject
+	protected GoManageUsers(IPlaceController IPlaceController,
+			ManageGroupsView.ManageGroupsPresenter presenter,
+			@ManageGroups StatusView statusView)
 
-    {
-        super(IPlaceController);
-        this.presenter = presenter;
-        this.statusView = statusView;
-    }
+	{
+		super(IPlaceController);
+		this.presenter = presenter;
+		this.statusView = statusView;
+	}
 
-    @Override
-    public Place getPlace() {
-        UserGroupInfo info = presenter.getSelected();
-        if (info != null) {
-            return new ManageUsersPlace(info.getId());
+	@Override
+	public Place getPlace() {
+		UserGroupInfo info = presenter.getSelected();
+		if (info != null) {
+			return new ManageUsersPlace(info.getId());
 
-        } else {
-            statusView.setStatusText("Please selected a group first");
-            return null;
-        }
-    }
+		} else {
+			statusView.setStatusText("Please selected a group first");
+			return null;
+		}
+	}
 }

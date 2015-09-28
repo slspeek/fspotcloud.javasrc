@@ -39,74 +39,72 @@ import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.logging.Logger;
 
-
 public class TreePresenterImpl extends TreePresenterBase {
-    private final Logger log = Logger.getLogger(TreePresenterImpl.class.getName());
-    private final IClientLoginManager IClientLoginManager;
+	private final Logger log = Logger.getLogger(TreePresenterImpl.class
+			.getName());
+	private final IClientLoginManager IClientLoginManager;
 
-    @Inject
-    public TreePresenterImpl(@BasicTreeView TreeView treeView,
-                             DataManager dataManager,
-                             SingleSelectionModelExt singleSelectionModel,
-                             @BasicTreeView ITreeSelectionHandler treeSelectionHandler,
-                             IClientLoginManager IClientLoginManager) {
-        super(treeView, dataManager, singleSelectionModel, treeSelectionHandler);
-        this.IClientLoginManager = IClientLoginManager;
-    }
+	@Inject
+	public TreePresenterImpl(@BasicTreeView TreeView treeView,
+			DataManager dataManager,
+			SingleSelectionModelExt singleSelectionModel,
+			@BasicTreeView ITreeSelectionHandler treeSelectionHandler,
+			IClientLoginManager IClientLoginManager) {
+		super(treeView, dataManager, singleSelectionModel, treeSelectionHandler);
+		this.IClientLoginManager = IClientLoginManager;
+	}
 
-    public void init() {
-        super.init();
-        //treeSelectionHandler.setSelectionModel(selectionModel);
-        loadUserInfo();
-    }
+	public void init() {
+		super.init();
+		//treeSelectionHandler.setSelectionModel(selectionModel);
+		loadUserInfo();
+	}
 
-    private void loadUserInfo() {
-        IClientLoginManager.getUserInfoAsync(
-                new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                    }
+	private void loadUserInfo() {
+		IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
 
-                    @Override
-                    public void onSuccess(UserInfo result) {
-                        String userName = result.getEmail();
-                        String info;
+			@Override
+			public void onSuccess(UserInfo result) {
+				String userName = result.getEmail();
+				String info;
 
-                        if (userName != null) {
-                            info = "Logged in as: " + userName;
-                        } else {
-                            info = "Not logged in";
-                        }
+				if (userName != null) {
+					info = "Logged in as: " + userName;
+				} else {
+					info = "Not logged in";
+				}
 
-                        treeView.setUserInfo(info);
-                    }
-                });
-    }
+				treeView.setUserInfo(info);
+			}
+		});
+	}
 
+	protected void requestTagTreeData() {
 
-    protected void requestTagTreeData() {
+		dataManager.getTagTree(new AsyncCallback<TagNode>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.warning("Loading of the tree data failed: " + caught);
+			}
 
-        dataManager.getTagTree(new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                log.warning("Loading of the tree data failed: " + caught);
-            }
+			@Override
+			public void onSuccess(TagNode result) {
+				setModel(result);
+			}
+		});
+	}
 
-            @Override
-            public void onSuccess(TagNode result) {
-                setModel(result);
-            }
-        });
-    }
+	@Override
+	public Cell<TagNode> get() {
+		return new TagCell();
+	}
 
-    @Override
-    public Cell<TagNode> get() {
-        return new TagCell();
-    }
-
-    public void setPlace(BasePlace place) {
-        this.place = new DashboardPlace(place.getTagId());
-        updatePlace();
-    }
+	public void setPlace(BasePlace place) {
+		this.place = new DashboardPlace(place.getTagId());
+		updatePlace();
+	}
 
 }

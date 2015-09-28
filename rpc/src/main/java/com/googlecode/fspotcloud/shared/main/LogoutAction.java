@@ -28,9 +28,8 @@ import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class LogoutAction implements Action<VoidResult> {
-    public LogoutAction() {
-    }
+	public LogoutAction() {
+	}
 }

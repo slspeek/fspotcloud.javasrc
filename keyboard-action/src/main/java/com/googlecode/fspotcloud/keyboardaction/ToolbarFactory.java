@@ -5,5 +5,5 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbarResources;
 
 public interface ToolbarFactory {
 
-    ActionToolbar get(ActionToolbarResources actionToolbarResources);
+	ActionToolbar get(ActionToolbarResources actionToolbarResources);
 }

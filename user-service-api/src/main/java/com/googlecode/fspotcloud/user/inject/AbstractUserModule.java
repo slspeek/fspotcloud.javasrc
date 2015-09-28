@@ -30,14 +30,14 @@ import com.googlecode.fspotcloud.user.*;
 import com.googlecode.fspotcloud.user.emailconfirmation.RandomSecretGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
 
-
 public class AbstractUserModule extends AbstractModule {
-    protected void configure() {
-        bind(IAdminPermission.class).to(AdminPermission.class);
-        bind(ILoginMetaData.class).to(LoginMetaData.class);
-        bind(ILoginMetaDataUpdater.class).to(LoginMetaDataUpdater.class);
-        bind(String.class).annotatedWith(ServerAddress.class)
-                .toProvider(ServerAddressProvider.class);
-        bind(SecretGenerator.class).to(RandomSecretGenerator.class).in(Singleton.class);
-    }
+	protected void configure() {
+		bind(IAdminPermission.class).to(AdminPermission.class);
+		bind(ILoginMetaData.class).to(LoginMetaData.class);
+		bind(ILoginMetaDataUpdater.class).to(LoginMetaDataUpdater.class);
+		bind(String.class).annotatedWith(ServerAddress.class).toProvider(
+				ServerAddressProvider.class);
+		bind(SecretGenerator.class).to(RandomSecretGenerator.class).in(
+				Singleton.class);
+	}
 }

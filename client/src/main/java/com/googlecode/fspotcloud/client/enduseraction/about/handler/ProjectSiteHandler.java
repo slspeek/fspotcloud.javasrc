@@ -6,8 +6,8 @@ import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 
 public class ProjectSiteHandler extends LoadNewLocationAction {
 
-    @Inject
-    private ProjectSiteHandler(OpenNewTab loader) {
-        super(loader, "http://code.google.com/p/fspotcloud");
-    }
+	@Inject
+	private ProjectSiteHandler(OpenNewTab loader) {
+		super(loader, "http://code.google.com/p/fspotcloud");
+	}
 }

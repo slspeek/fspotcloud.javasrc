@@ -28,5 +28,5 @@ import com.google.common.annotations.GwtCompatible;
 
 @GwtCompatible
 public interface ImageViewFactory {
-    ImageView get(String location);
+	ImageView get(String location);
 }

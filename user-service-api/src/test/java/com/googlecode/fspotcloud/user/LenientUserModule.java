@@ -23,13 +23,12 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.user;
 
 import com.googlecode.fspotcloud.user.inject.AbstractUserModule;
-
 
 /**
  * User module for testing, no authentication checks done at all.
@@ -37,9 +36,9 @@ import com.googlecode.fspotcloud.user.inject.AbstractUserModule;
  * @author steven
  */
 public class LenientUserModule extends AbstractUserModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(UserService.class).to(LenientUserService.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(UserService.class).to(LenientUserService.class);
+	}
 }

@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.server.admin.integration;
 
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -35,24 +34,23 @@ import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 
 import java.util.logging.Logger;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class PeerDatabaseAssert {
-    @Inject
-    Logger log;
-    @Inject
-    PeerDatabaseDao peers;
+	@Inject
+	Logger log;
+	@Inject
+	PeerDatabaseDao peers;
 
-    public boolean isEmpty() {
-        return peers.isEmpty();
-    }
+	public boolean isEmpty() {
+		return peers.isEmpty();
+	}
 
-    public void printPeers() {
-        log.info(peers + " PEERS: " + peers.findAll(10) + "Tree:" +
-                peers.get().getCachedTagTree());
-    }
+	public void printPeers() {
+		log.info(peers + " PEERS: " + peers.findAll(10) + "Tree:"
+				+ peers.get().getCachedTagTree());
+	}
 }

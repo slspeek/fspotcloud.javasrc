@@ -29,22 +29,21 @@ import com.openpojo.business.annotation.BusinessKey;
 
 import java.io.Serializable;
 
-
 public class TagUpdate extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = 9202829522681263384L;
-    @BusinessKey
-    private final String tagId;
+	private static final long serialVersionUID = 9202829522681263384L;
+	@BusinessKey
+	private final String tagId;
 
-    public TagUpdate(String photoId) {
-        super();
-        this.tagId = photoId;
-    }
+	public TagUpdate(String photoId) {
+		super();
+		this.tagId = photoId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("id", tagId).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("id", tagId).toString();
+	}
 }

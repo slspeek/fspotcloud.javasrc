@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.thoughtworks.selenium.Selenium;
@@ -39,61 +39,64 @@ import static org.junit.Assert.assertEquals;
  * @author steven
  */
 public class DashboardPage {
-    @Inject
-    Selenium selenium;
-    @Inject
-    ILogin login;
+	@Inject
+	Selenium selenium;
+	@Inject
+	ILogin login;
 
-    public void open() {
-        selenium.open("#DashboardPlace:1");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open() {
+		selenium.open("#DashboardPlace:1");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void loginAndOpen() throws Exception {
-        login.login();
-        open();
-    }
+	public void loginAndOpen() throws Exception {
+		login.login();
+		open();
+	}
 
-    public void manageUsergroups() {
-        selenium.click("gwt-debug-manage-groups-button");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void manageUsergroups() {
+		selenium.click("gwt-debug-manage-groups-button");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void synchronize() throws InterruptedException {
-        selenium.click("gwt-debug-update-button");
-        sleepShort(4);
+	public void synchronize() throws InterruptedException {
+		selenium.click("gwt-debug-update-button");
+		sleepShort(4);
 
-    }
+	}
 
-    public void toggleImportForTagId(String id) throws InterruptedException {
-        selenium.open("#DashboardPlace:" + id);
-        selenium.refresh();
-        selenium.waitForPageToLoad("30000");
-        selenium.click("gwt-debug-import-tag-button");
-        sleepShort(4);
-    }
+	public void toggleImportForTagId(String id) throws InterruptedException {
+		selenium.open("#DashboardPlace:" + id);
+		selenium.refresh();
+		selenium.waitForPageToLoad("30000");
+		selenium.click("gwt-debug-import-tag-button");
+		sleepShort(4);
+	}
 
-    public void manageApprovalForTag(String id) throws InterruptedException {
-        selenium.open("#DashboardPlace:" + id);
-        selenium.waitForPageToLoad("30000");
-        selenium.refresh();
-        selenium.click("gwt-debug-manage-access-button");
-    }
+	public void manageApprovalForTag(String id) throws InterruptedException {
+		selenium.open("#DashboardPlace:" + id);
+		selenium.waitForPageToLoad("30000");
+		selenium.refresh();
+		selenium.click("gwt-debug-manage-access-button");
+	}
 
-    void removeAll() throws InterruptedException {
-        selenium.click("gwt-debug-delete-all-tags-button");
-        sleepShort();
-        selenium.click("gwt-debug-confirm-ok");
-        sleepShort();
-    }
+	void removeAll() throws InterruptedException {
+		selenium.click("gwt-debug-delete-all-tags-button");
+		sleepShort();
+		selenium.click("gwt-debug-confirm-ok");
+		sleepShort();
+	}
 
-    void assertPhotoCountOnPeer(int count) {
-        assertEquals(count, Integer.parseInt(selenium.getText("gwt-debug-peer-photo-count-label"), 10));
-    }
+	void assertPhotoCountOnPeer(int count) {
+		assertEquals(count, Integer.parseInt(
+				selenium.getText("gwt-debug-peer-photo-count-label"), 10));
+	}
 
-
-    void assertTagCountOnPeer(int count) {
-        assertEquals(count, Integer.parseInt(selenium.getText("gwt-debug-peer-tag-count-label"), 10));
-    }
+	void assertTagCountOnPeer(int count) {
+		assertEquals(
+				count,
+				Integer.parseInt(
+						selenium.getText("gwt-debug-peer-tag-count-label"), 10));
+	}
 
 }

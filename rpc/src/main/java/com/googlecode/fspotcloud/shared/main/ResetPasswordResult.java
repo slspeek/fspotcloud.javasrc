@@ -27,27 +27,23 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Result;
 
-
 @GwtCompatible
 public class ResetPasswordResult implements Result {
 
-    private Code code;
+	private Code code;
 
-    public enum Code {
-        NOT_REGISTERED,
-        NOT_VERIFIED,
-        WRONG_CODE,
-        SUCCESS
-    }
+	public enum Code {
+		NOT_REGISTERED, NOT_VERIFIED, WRONG_CODE, SUCCESS
+	}
 
-    private ResetPasswordResult() {
-    }
+	private ResetPasswordResult() {
+	}
 
-    public ResetPasswordResult(Code code) {
-        this.code = code;
-    }
+	public ResetPasswordResult(Code code) {
+		this.code = code;
+	}
 
-    public Code getCode() {
-        return code;
-    }
+	public Code getCode() {
+		return code;
+	}
 }

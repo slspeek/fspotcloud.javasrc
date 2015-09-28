@@ -29,52 +29,50 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import java.io.Serializable;
 
-
 @GwtCompatible
-public class UserImportsTagAction implements Action<VoidResult>,
-        Serializable {
-    private String tagId;
+public class UserImportsTagAction implements Action<VoidResult>, Serializable {
+	private String tagId;
 
-    public UserImportsTagAction(String tagId) {
-        super();
-        this.tagId = tagId;
-    }
+	public UserImportsTagAction(String tagId) {
+		super();
+		this.tagId = tagId;
+	}
 
-    /**
-     * Needed for GWT-RPC
-     */
-    UserImportsTagAction() {
-    }
+	/**
+	 * Needed for GWT-RPC
+	 */
+	UserImportsTagAction() {
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 
-        final UserImportsTagAction other = (UserImportsTagAction) obj;
+		final UserImportsTagAction other = (UserImportsTagAction) obj;
 
-        if (this.tagId == null ? other.tagId != null
-                : !this.tagId.equals(other.tagId)) {
-            return false;
-        }
+		if (this.tagId == null ? other.tagId != null : !this.tagId
+				.equals(other.tagId)) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + (this.tagId != null ? this.tagId.hashCode() : 0);
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 41 * hash + (this.tagId != null ? this.tagId.hashCode() : 0);
 
-        return hash;
-    }
+		return hash;
+	}
 }

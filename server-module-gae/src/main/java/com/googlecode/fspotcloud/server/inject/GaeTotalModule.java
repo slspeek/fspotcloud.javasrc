@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.inject;
 
 import com.google.inject.AbstractModule;
@@ -38,35 +38,32 @@ import com.googlecode.fspotcloud.user.gae.UserModuleGae;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchModule;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchServletModule;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class GaeTotalModule extends AbstractModule {
-    public static final Integer MAX_COMMAND_DELETE = new Integer(300);
-    private final String botSecret;
-    private final int maxTicks;
-    private final String fromAddress;
+	public static final Integer MAX_COMMAND_DELETE = new Integer(300);
+	private final String botSecret;
+	private final int maxTicks;
+	private final String fromAddress;
 
-    public GaeTotalModule(int maxTicks,
-                          String botSecret,
-                          String fromAddress) {
-        this.maxTicks = maxTicks;
-        this.botSecret = botSecret;
-        this.fromAddress = fromAddress;
-    }
+	public GaeTotalModule(int maxTicks, String botSecret, String fromAddress) {
+		this.maxTicks = maxTicks;
+		this.botSecret = botSecret;
+		this.fromAddress = fromAddress;
+	}
 
-    @Override
-    protected void configure() {
-        install(new ServerTotalModule(maxTicks, botSecret, fromAddress, ""));
-        install(new GaeCachedModelModule(maxTicks, "gae"));
-        install(new TaskQueueDispatchModule());
-        install(new TaskQueueDispatchServletModule());
-        install(new UserModuleGae());
-        bind(Commands.class).to(CommandManager.class).in(Singleton.class);
-        bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
-                .toInstance(MAX_COMMAND_DELETE);
-    }
+	@Override
+	protected void configure() {
+		install(new ServerTotalModule(maxTicks, botSecret, fromAddress, ""));
+		install(new GaeCachedModelModule(maxTicks, "gae"));
+		install(new TaskQueueDispatchModule());
+		install(new TaskQueueDispatchServletModule());
+		install(new UserModuleGae());
+		bind(Commands.class).to(CommandManager.class).in(Singleton.class);
+		bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
+				.toInstance(MAX_COMMAND_DELETE);
+	}
 }

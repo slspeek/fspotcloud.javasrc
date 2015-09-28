@@ -25,13 +25,13 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 public interface RasterAware {
-    void setColumnCount(int width);
+	void setColumnCount(int width);
 
-    void setRowCount(int height);
+	void setRowCount(int height);
 
-    void reset();
+	void reset();
 
-    void increaseColumnCount(int amount);
+	void increaseColumnCount(int amount);
 
-    void increaseRowCount(int amount);
+	void increaseRowCount(int amount);
 }

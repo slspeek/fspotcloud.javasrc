@@ -15,43 +15,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MailFullSizeHandler implements IActionHandler {
-    private final Logger log = Logger.getLogger(MailFullSizeHandler.class.getName());
-    private final IPlaceController placeController;
-    private final IClientLoginManager IClientLoginManager;
+	private final Logger log = Logger.getLogger(MailFullSizeHandler.class
+			.getName());
+	private final IPlaceController placeController;
+	private final IClientLoginManager IClientLoginManager;
 
-    @Inject
-    public MailFullSizeHandler(
-            IPlaceController placeController,
-            IClientLoginManager IClientLoginManager) {
-        this.placeController = placeController;
-        this.IClientLoginManager = IClientLoginManager;
-    }
+	@Inject
+	public MailFullSizeHandler(IPlaceController placeController,
+			IClientLoginManager IClientLoginManager) {
+		this.placeController = placeController;
+		this.IClientLoginManager = IClientLoginManager;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                log.log(Level.INFO, "client login manager return an error", caught);
-            }
+	@Override
+	public void performAction(String actionId) {
+		IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.INFO, "client login manager return an error",
+						caught);
+			}
 
-            @Override
-            public void onSuccess(UserInfo result) {
-                Place place = placeController.where();
-                if (place instanceof BasePlace) {
-                    BasePlace basePlace = (BasePlace) place;
-                    final String tagId = basePlace.getTagId();
-                    final String photoId = basePlace.getPhotoId();
-                    if (result.isLoggedIn()) {
-                        final MailFullsizePlace mailFullsizePlace = new MailFullsizePlace(tagId, photoId);
-                        placeController.goTo(mailFullsizePlace);
-                    } else {
-                        LoginPlace loginPlace = new LoginPlace("#MailFullsizePlace:" + tagId + ":" + photoId);
-                        placeController.goTo(loginPlace);
-                    }
-                }
-            }
-        });
+			@Override
+			public void onSuccess(UserInfo result) {
+				Place place = placeController.where();
+				if (place instanceof BasePlace) {
+					BasePlace basePlace = (BasePlace) place;
+					final String tagId = basePlace.getTagId();
+					final String photoId = basePlace.getPhotoId();
+					if (result.isLoggedIn()) {
+						final MailFullsizePlace mailFullsizePlace = new MailFullsizePlace(
+								tagId, photoId);
+						placeController.goTo(mailFullsizePlace);
+					} else {
+						LoginPlace loginPlace = new LoginPlace(
+								"#MailFullsizePlace:" + tagId + ":" + photoId);
+						placeController.goTo(loginPlace);
+					}
+				}
+			}
+		});
 
-    }
+	}
 }

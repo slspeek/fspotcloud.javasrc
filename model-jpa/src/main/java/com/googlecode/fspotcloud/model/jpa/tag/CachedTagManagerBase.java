@@ -40,84 +40,85 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.logging.Logger;
 
-
 public abstract class CachedTagManagerBase<T extends Tag, U extends T>
-        extends CachedSimpleDAONamedIdImpl<Tag, U, String> implements TagDao {
-    private final Logger log = Logger.getLogger(CachedTagManagerBase.class.getName());
-    @Inject
-    @Named("maxDelete")
-    private Integer maxDelete;
+		extends
+			CachedSimpleDAONamedIdImpl<Tag, U, String> implements TagDao {
+	private final Logger log = Logger.getLogger(CachedTagManagerBase.class
+			.getName());
+	@Inject
+	@Named("maxDelete")
+	private Integer maxDelete;
 
-    @Override
-    public TagNode getTagNode(Tag tag) {
-        TagNode node = new TagNode();
-        node.setId(tag.getId());
-        node.setImportIssued(tag.isImportIssued());
-        node.setParentId(tag.getParentId());
-        node.setTagName(tag.getTagName());
-        node.setCount(tag.getCount());
+	@Override
+	public TagNode getTagNode(Tag tag) {
+		TagNode node = new TagNode();
+		node.setId(tag.getId());
+		node.setImportIssued(tag.isImportIssued());
+		node.setParentId(tag.getParentId());
+		node.setTagName(tag.getTagName());
+		node.setCount(tag.getCount());
 
-        SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
+		SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
 
-        if (photoList != null) {
-            node.setCachedPhotoList(new PhotoInfoStore(photoList));
-        } else {
-            throw new IllegalStateException(
-                    "photoList field of Tag should not be null");
-        }
+		if (photoList != null) {
+			node.setCachedPhotoList(new PhotoInfoStore(photoList));
+		} else {
+			throw new IllegalStateException(
+					"photoList field of Tag should not be null");
+		}
 
-        node.setApprovedUserGroups(tag.getApprovedUserGroups());
+		node.setApprovedUserGroups(tag.getApprovedUserGroups());
 
-        return node;
-    }
+		return node;
+	}
 
-    @Override
-    public List<TagNode> getTags() {
-        List<TagNode> result = new ArrayList<TagNode>();
+	@Override
+	public List<TagNode> getTags() {
+		List<TagNode> result = new ArrayList<TagNode>();
 
-        for (Tag tag : findAll(1000)) {
-            TagNode node = getTagNode(tag);
-            node.setId(tag.getId());
-            node.setImportIssued(tag.isImportIssued());
-            node.setParentId(tag.getParentId());
-            node.setTagName(tag.getTagName());
-            node.setCount(tag.getCount());
+		for (Tag tag : findAll(1000)) {
+			TagNode node = getTagNode(tag);
+			node.setId(tag.getId());
+			node.setImportIssued(tag.isImportIssued());
+			node.setParentId(tag.getParentId());
+			node.setTagName(tag.getTagName());
+			node.setCount(tag.getCount());
 
-            SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
+			SortedSet<PhotoInfo> photoList = tag.getCachedPhotoList();
 
-            if (photoList != null) {
-                node.setCachedPhotoList(new PhotoInfoStore(photoList));
-            } else {
-                throw new IllegalStateException(
-                        "photoList field of Tag should not be null");
-            }
+			if (photoList != null) {
+				node.setCachedPhotoList(new PhotoInfoStore(photoList));
+			} else {
+				throw new IllegalStateException(
+						"photoList field of Tag should not be null");
+			}
 
-            result.add(node);
-        }
+			result.add(node);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public List<Tag> getImportedTags() {
-        EntityManager em = entityManagerProvider.get();
-        em.getTransaction().begin();
+	@Override
+	public List<Tag> getImportedTags() {
+		EntityManager em = entityManagerProvider.get();
+		em.getTransaction().begin();
 
-        try {
-            Query query = em.createQuery("select c from " +
-                    getEntityType().getName() +
-                    " AS c WHERE importIssued = true ");
-            @SuppressWarnings("unchecked")
-            List<Tag> rs = (List<Tag>) query.getResultList();
-            List<Tag> result = new ArrayList<Tag>();
-            result.addAll(rs);
-            em.getTransaction().commit();
+		try {
+			Query query = em.createQuery("select c from "
+					+ getEntityType().getName()
+					+ " AS c WHERE importIssued = true ");
+			@SuppressWarnings("unchecked")
+			List<Tag> rs = (List<Tag>) query.getResultList();
+			List<Tag> result = new ArrayList<Tag>();
+			result.addAll(rs);
+			em.getTransaction().commit();
 
-            return result;
-        } finally {
-            em.close();
-        }
-    }
+			return result;
+		} finally {
+			em.close();
+		}
+	}
 
-    protected abstract Tag newTag();
+	protected abstract Tag newTag();
 }

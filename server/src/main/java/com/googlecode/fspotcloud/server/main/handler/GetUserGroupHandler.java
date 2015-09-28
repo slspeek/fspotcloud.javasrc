@@ -35,44 +35,45 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class GetUserGroupHandler
+		extends
+			SimpleActionHandler<GetUserGroupAction, GetUserGroupResult> {
+	private final UserService userService;
+	private final UserGroupDao userGroupDao;
 
-public class GetUserGroupHandler extends SimpleActionHandler<GetUserGroupAction, GetUserGroupResult> {
-    private final UserService userService;
-    private final UserGroupDao userGroupDao;
+	@Inject
+	public GetUserGroupHandler(UserService userService,
+			UserGroupDao userGroupDao) {
+		this.userService = userService;
+		this.userGroupDao = userGroupDao;
+	}
 
-    @Inject
-    public GetUserGroupHandler(UserService userService,
-                               UserGroupDao userGroupDao) {
-        this.userService = userService;
-        this.userGroupDao = userGroupDao;
-    }
+	@Override
+	public GetUserGroupResult execute(GetUserGroupAction action,
+			ExecutionContext context) throws DispatchException {
+		if (userService.isUserLoggedIn()) {
+			String userName = userService.getEmail();
+			UserGroup userGroup = userGroupDao.find(action.getId());
+			if (userGroup != null) {
+				if (userName.equals(userGroup.getOwner())) {
+					return new GetUserGroupResult(get(userGroup));
+				} else {
+					throw new UserIsNotOwnerException();
+				}
+			} else {
+				throw new UsergroupNotFoundException();
+			}
 
-    @Override
-    public GetUserGroupResult execute(GetUserGroupAction action,
-                                      ExecutionContext context) throws DispatchException {
-        if (userService.isUserLoggedIn()) {
-            String userName = userService.getEmail();
-            UserGroup userGroup = userGroupDao.find(action.getId());
-            if (userGroup != null) {
-                if (userName.equals(userGroup.getOwner())) {
-                    return new GetUserGroupResult(get(userGroup));
-                } else {
-                    throw new UserIsNotOwnerException();
-                }
-            } else {
-                throw new UsergroupNotFoundException();
-            }
+		} else {
+			throw new UserIsNotLoggedOnException();
+		}
 
-        } else {
-            throw new UserIsNotLoggedOnException();
-        }
+	}
 
-    }
-
-    public static UserGroupInfo get(UserGroup group) {
-        UserGroupInfo info = new UserGroupInfo(group.getId(), group.getName(),
-                group.getDescription(), group.isPublic());
-        info.setGrantedUsers(group.getGrantedUsers());
-        return info;
-    }
+	public static UserGroupInfo get(UserGroup group) {
+		UserGroupInfo info = new UserGroupInfo(group.getId(), group.getName(),
+				group.getDescription(), group.isPublic());
+		info.setGrantedUsers(group.getGrantedUsers());
+		return info;
+	}
 }

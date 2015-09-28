@@ -41,52 +41,53 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class GetAdminTagTreeHandler
+		extends
+			SimpleActionHandler<GetAdminTagTreeAction, TagTreeResult> {
+	@SuppressWarnings("unused")
+	@Inject
+	private Logger log;
+	private final TagDao tagManager;
+	private final IAdminPermission adminPermission;
+	private final PeerDatabaseDao peerDatabaseDao;
 
-public class GetAdminTagTreeHandler extends SimpleActionHandler<GetAdminTagTreeAction, TagTreeResult> {
-    @SuppressWarnings("unused")
-    @Inject
-    private Logger log;
-    private final TagDao tagManager;
-    private final IAdminPermission adminPermission;
-    private final PeerDatabaseDao peerDatabaseDao;
+	@Inject
+	public GetAdminTagTreeHandler(TagDao tagManager,
+			IAdminPermission adminPermission, PeerDatabaseDao peerDatabaseDao) {
+		this.tagManager = tagManager;
+		this.adminPermission = adminPermission;
+		this.peerDatabaseDao = peerDatabaseDao;
+	}
 
-    @Inject
-    public GetAdminTagTreeHandler(TagDao tagManager,
-                                  IAdminPermission adminPermission,
-                                  PeerDatabaseDao peerDatabaseDao) {
-        this.tagManager = tagManager;
-        this.adminPermission = adminPermission;
-        this.peerDatabaseDao = peerDatabaseDao;
-    }
+	@Override
+	public TagTreeResult execute(GetAdminTagTreeAction action,
+			ExecutionContext context) throws DispatchException {
+		adminPermission.checkAdminPermission();
+		return new TagTreeResult(getFullTree());
+	}
 
-    @Override
-    public TagTreeResult execute(GetAdminTagTreeAction action,
-                                 ExecutionContext context) throws DispatchException {
-        adminPermission.checkAdminPermission();
-        return new TagTreeResult(getFullTree());
-    }
+	private TagNode getFullTree() {
+		PeerDatabase p = peerDatabaseDao.get();
 
-    private TagNode getFullTree() {
-        PeerDatabase p = peerDatabaseDao.get();
+		if (p.getCachedAdminTagTree() != null) {
+			log.info("Got the admin tree from cache HIT");
 
-        if (p.getCachedAdminTagTree() != null) {
-            log.info("Got the admin tree from cache HIT");
+			return p.getCachedAdminTagTree();
+		} else {
+			log.info("Missed the cache; building admin");
+			List<TagNode> tags = tagManager.getTags();
+			TreeBuilder builder = new TreeBuilder(tags);
+			TagNode tree = builder.getFullTree();
+			p.setCachedAdminTagTree(tree);
+			try {
+				log.info("Builded, about to save");
+				peerDatabaseDao.save(p);
+			} catch (Exception e) {
+				log.log(Level.INFO,
+						"Saving peerDatabase with admin-tree failed: ", e);
+			}
 
-            return p.getCachedAdminTagTree();
-        } else {
-            log.info("Missed the cache; building admin");
-            List<TagNode> tags = tagManager.getTags();
-            TreeBuilder builder = new TreeBuilder(tags);
-            TagNode tree = builder.getFullTree();
-            p.setCachedAdminTagTree(tree);
-            try {
-                log.info("Builded, about to save");
-                peerDatabaseDao.save(p);
-            } catch (Exception e) {
-                log.log(Level.INFO, "Saving peerDatabase with admin-tree failed: ", e);
-            }
-
-            return tree;
-        }
-    }
+			return tree;
+		}
+	}
 }

@@ -11,18 +11,17 @@ import java.util.logging.Logger;
 
 public class CurrentTagNodeAsync {
 
-    @Inject
-    protected IPlaceController placeController;
-    @Inject
-    protected DataManager dataManager;
-    private Logger log = Logger.getLogger(CurrentTagNodeAsync.class.getName());
+	@Inject
+	protected IPlaceController placeController;
+	@Inject
+	protected DataManager dataManager;
+	private Logger log = Logger.getLogger(CurrentTagNodeAsync.class.getName());
 
-    public void getNode(AsyncCallback<TagNode> node) {
-        DashboardPlace place = (DashboardPlace) placeController.getRawWhere();
-        String tagId = place.getTagId();
-        log.info("Current node async: " + tagId);
-        dataManager.getAdminTagNode(tagId, node);
-    }
-
+	public void getNode(AsyncCallback<TagNode> node) {
+		DashboardPlace place = (DashboardPlace) placeController.getRawWhere();
+		String tagId = place.getTagId();
+		log.info("Current node async: " + tagId);
+		dataManager.getAdminTagNode(tagId, node);
+	}
 
 }

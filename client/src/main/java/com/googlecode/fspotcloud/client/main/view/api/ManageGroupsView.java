@@ -33,19 +33,19 @@ import java.util.List;
 
 @GwtCompatible
 public interface ManageGroupsView extends IsWidget, StatusView {
-    void setPresenter(ManageGroupsPresenter presenter);
+	void setPresenter(ManageGroupsPresenter presenter);
 
-    void setData(List<UserGroupInfo> data);
+	void setData(List<UserGroupInfo> data);
 
-    UserGroupInfo getSelected();
+	UserGroupInfo getSelected();
 
-    void focusTable();
+	void focusTable();
 
-    void setSelected(UserGroupInfo userGroupInfo);
+	void setSelected(UserGroupInfo userGroupInfo);
 
-    interface ManageGroupsPresenter extends Activity {
-        UserGroupInfo getSelected();
+	interface ManageGroupsPresenter extends Activity {
+		UserGroupInfo getSelected();
 
-        void refreshData();
-    }
+		void refreshData();
+	}
 }

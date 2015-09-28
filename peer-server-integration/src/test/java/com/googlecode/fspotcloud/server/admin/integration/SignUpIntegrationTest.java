@@ -43,45 +43,46 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class SignUpIntegrationTest {
-    static final Logger log = Logger.getLogger(SignUpIntegrationTest.class.getName());
-    public static final String RMS_FSF_ORG1 = "rms@example.com";
-    public static final String RMS_FSF_ORG = RMS_FSF_ORG1;
-    private TearDown toTearDown;
-    @Inject
-    UserDao userDao;
-    @Inject
-    Dispatch dispatch;
+	static final Logger log = Logger.getLogger(SignUpIntegrationTest.class
+			.getName());
+	public static final String RMS_FSF_ORG1 = "rms@example.com";
+	public static final String RMS_FSF_ORG = RMS_FSF_ORG1;
+	private TearDown toTearDown;
+	@Inject
+	UserDao userDao;
+	@Inject
+	Dispatch dispatch;
 
-    @BeforeMethod
-    public void setUp(Method m) throws SQLException {
-        // Make this the call to TestNgGuiceBerry.setUp as early as possible
-        toTearDown = TestNgGuiceBerry.setUp(this, m,
-                NoAuthPlaceHolderIntegrationModule.class);
+	@BeforeMethod
+	public void setUp(Method m) throws SQLException {
+		// Make this the call to TestNgGuiceBerry.setUp as early as possible
+		toTearDown = TestNgGuiceBerry.setUp(this, m,
+				NoAuthPlaceHolderIntegrationModule.class);
 
-        userDao.deleteBulk(100);
-        assertTrue(userDao.isEmpty());
-    }
+		userDao.deleteBulk(100);
+		assertTrue(userDao.isEmpty());
+	}
 
-    @AfterMethod
-    public void tearDown() throws Exception {
-        // Make this the call to TestNgGuiceBerry.tearDown as late as possible
-        toTearDown.tearDown();
-    }
+	@AfterMethod
+	public void tearDown() throws Exception {
+		// Make this the call to TestNgGuiceBerry.tearDown as late as possible
+		toTearDown.tearDown();
+	}
 
-    @Test
-    public void signUp() throws Exception {
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
-        SignUpResult result = dispatch.execute(action);
-        assertTrue(result.getSuccess());
-    }
+	@Test
+	public void signUp() throws Exception {
+		SignUpAction action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
+		SignUpResult result = dispatch.execute(action);
+		assertTrue(result.getSuccess());
+	}
 
-    @Test
-    public void signUpTwice() throws Exception {
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
-        SignUpResult result = dispatch.execute(action);
-        assertTrue(result.getSuccess());
-        action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
-        result = dispatch.execute(action);
-        assertFalse(result.getSuccess());
-    }
+	@Test
+	public void signUpTwice() throws Exception {
+		SignUpAction action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
+		SignUpResult result = dispatch.execute(action);
+		assertTrue(result.getSuccess());
+		action = new SignUpAction(RMS_FSF_ORG1, "ihp", "rms");
+		result = dispatch.execute(action);
+		assertFalse(result.getSuccess());
+	}
 }

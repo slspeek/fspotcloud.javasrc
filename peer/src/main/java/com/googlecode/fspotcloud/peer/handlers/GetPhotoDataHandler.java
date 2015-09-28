@@ -39,10 +39,12 @@ import com.googlecode.fspotcloud.shared.peer.GetPhotoDataAction;
 import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
 
-public class GetPhotoDataHandler extends
-		SimpleActionHandler<GetPhotoDataAction, PhotoDataResult> {
-	
-	private final Logger log = Logger.getLogger(GetPhotoDataHandler.class.getName());
+public class GetPhotoDataHandler
+		extends
+			SimpleActionHandler<GetPhotoDataAction, PhotoDataResult> {
+
+	private final Logger log = Logger.getLogger(GetPhotoDataHandler.class
+			.getName());
 	private final Backend data;
 
 	@Inject
@@ -63,7 +65,7 @@ public class GetPhotoDataHandler extends
 			data.uploadImages(action.getImageSpecs(), photos);
 			result = new PhotoDataResult(photos);
 		} catch (Exception e) {
-			log.log(Level.WARNING, "Action: " +action + " threw: ", e);
+			log.log(Level.WARNING, "Action: " + action + " threw: ", e);
 			throw new ActionException(e);
 		}
 

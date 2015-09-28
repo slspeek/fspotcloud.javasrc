@@ -29,23 +29,22 @@ import com.openpojo.business.annotation.BusinessKey;
 
 import java.io.Serializable;
 
-
 public class PhotoRemovedFromTag extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = 2281991078773646131L;
-    @BusinessKey
-    private final String photoId;
+	private static final long serialVersionUID = 2281991078773646131L;
+	@BusinessKey
+	private final String photoId;
 
-    public PhotoRemovedFromTag(String photoId) {
-        super();
-        this.photoId = photoId;
-    }
+	public PhotoRemovedFromTag(String photoId) {
+		super();
+		this.photoId = photoId;
+	}
 
-    public String getPhotoId() {
-        return photoId;
-    }
+	public String getPhotoId() {
+		return photoId;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper("PhotoRemove").add("id", photoId)
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper("PhotoRemove").add("id", photoId)
+				.toString();
+	}
 }

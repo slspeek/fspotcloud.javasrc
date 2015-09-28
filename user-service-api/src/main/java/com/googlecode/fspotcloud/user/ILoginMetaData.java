@@ -28,7 +28,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 
-
 /**
  * Created with IntelliJ IDEA.
  * User: steven
@@ -37,23 +36,23 @@ import java.util.HashSet;
  * To change this template use File | Settings | File Templates.
  */
 public interface ILoginMetaData extends Serializable {
-    HashSet<Long> getGrantedUserGroups();
+	HashSet<Long> getGrantedUserGroups();
 
-    void setGrantedUserGroups(HashSet<Long> grantedUserGroups);
+	void setGrantedUserGroups(HashSet<Long> grantedUserGroups);
 
-    String getEmail();
+	String getEmail();
 
-    void setEmail(String email);
+	void setEmail(String email);
 
-    Type getLoginType();
+	Type getLoginType();
 
-    void setLoginType(Type loginType);
+	void setLoginType(Type loginType);
 
-    Date getLastTime();
+	Date getLastTime();
 
-    void setLastTime(Date lastTime);
+	void setLastTime(Date lastTime);
 
-    public enum Type {
-        REGULAR_LOGIN, OPEN_ID_LOGIN, GAE_LOGIN;
-    }
+	public enum Type {
+		REGULAR_LOGIN, OPEN_ID_LOGIN, GAE_LOGIN;
+	}
 }

@@ -40,36 +40,38 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class PhotoUpdateHandler extends AbstractBatchActionHandler<PhotoUpdateAction, PhotoUpdate> {
-    private final int MAX_PHOTO_TICKS;
-    private final ControllerDispatchAsync controllerDispatch;
-    private final ImageSpecs imageSpecs;
+public class PhotoUpdateHandler
+		extends
+			AbstractBatchActionHandler<PhotoUpdateAction, PhotoUpdate> {
+	private final int MAX_PHOTO_TICKS;
+	private final ControllerDispatchAsync controllerDispatch;
+	private final ImageSpecs imageSpecs;
 
-    @Inject
-    public PhotoUpdateHandler(@Named("maxTicks")
-                              int maxTicks, @Named("maxPhotoTicks")
-                              int maxPhotoTicks, @Named("defaultImageSpecs")
-                              ImageSpecs imageSpecs, ControllerDispatchAsync controllerDispatch,
-                              TaskQueueDispatch dispatchAsync) {
-        super(dispatchAsync, maxTicks);
-        this.controllerDispatch = controllerDispatch;
-        MAX_PHOTO_TICKS = maxPhotoTicks;
-        this.imageSpecs = imageSpecs;
-    }
+	@Inject
+	public PhotoUpdateHandler(@Named("maxTicks") int maxTicks,
+			@Named("maxPhotoTicks") int maxPhotoTicks,
+			@Named("defaultImageSpecs") ImageSpecs imageSpecs,
+			ControllerDispatchAsync controllerDispatch,
+			TaskQueueDispatch dispatchAsync) {
+		super(dispatchAsync, maxTicks);
+		this.controllerDispatch = controllerDispatch;
+		MAX_PHOTO_TICKS = maxPhotoTicks;
+		this.imageSpecs = imageSpecs;
+	}
 
-    @Override
-    public void doWork(AbstractBatchAction<PhotoUpdate> action,
-                       Iterator<PhotoUpdate> workLoad) {
-        List<String> imageKeys = newArrayList();
+	@Override
+	public void doWork(AbstractBatchAction<PhotoUpdate> action,
+			Iterator<PhotoUpdate> workLoad) {
+		List<String> imageKeys = newArrayList();
 
-        for (int j = 0; j < MAX_PHOTO_TICKS && workLoad.hasNext(); j++) {
-            PhotoUpdate photoUpdate = workLoad.next();
-            imageKeys.add(photoUpdate.getPhotoId());
-        }
+		for (int j = 0; j < MAX_PHOTO_TICKS && workLoad.hasNext(); j++) {
+			PhotoUpdate photoUpdate = workLoad.next();
+			imageKeys.add(photoUpdate.getPhotoId());
+		}
 
-        GetPhotoDataAction botAction = new GetPhotoDataAction(imageSpecs,
-                imageKeys);
-        PhotoDataCallback callback = new PhotoDataCallback();
-        controllerDispatch.execute(botAction, callback);
-    }
+		GetPhotoDataAction botAction = new GetPhotoDataAction(imageSpecs,
+				imageKeys);
+		PhotoDataCallback callback = new PhotoDataCallback();
+		controllerDispatch.execute(botAction, callback);
+	}
 }

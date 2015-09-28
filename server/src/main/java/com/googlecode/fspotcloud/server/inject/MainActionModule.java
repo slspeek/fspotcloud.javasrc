@@ -31,32 +31,34 @@ import com.googlecode.fspotcloud.shared.main.*;
 import com.googlecode.fspotcloud.user.emailconfirmation.EmailConfirmationHandler;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
-
 public class MainActionModule extends ActionHandlerModule {
-    @Override
-    protected void configureHandlers() {
-        bindHandler(GetUserInfo.class, GetUserInfoHandler.class);
-        bindHandler(GetTagTreeAction.class, GetTagTreeHandler.class);
-        bindHandler(AuthenticationAction.class, AuthenticationHandler.class);
-        bindHandler(SignUpAction.class, SignUpHandler.class);
-        bindHandler(LogoutAction.class, LogoutHandler.class);
-        bindHandler(GetMyUserGroupsAction.class, GetMyUserGroupsHandler.class);
-        bindHandler(NewUserGroupAction.class, NewUserGroupHandler.class);
-        bindHandler(DeleteGroupAction.class, DeleteUserGroupHandler.class);
-        bindHandler(GetUserGroupAction.class, GetUserGroupHandler.class);
-        bindHandler(SaveUserGroupAction.class, SaveUserGroupHandler.class);
-        bindHandler(GrantUserAction.class, GrantUserHandler.class);
-        bindHandler(RevokeUserAction.class, RevokeUserHandler.class);
-        bindHandler(ApproveTagAction.class, ApproveTagHandler.class);
-        bindHandler(RevokeTagAction.class, RevokeTagHandler.class);
-        bindHandler(GetTagNodeAction.class, GetTagNodeHandler.class);
-        bindHandler(RequestFullsizeImageAction.class,
-                RequestFullsizeImageHandler.class);
-        bindHandler(UpdateUserAction.class, UpdateUserHandler.class);
-        bind(IUserGroupHelper.class).to(UserGroupHelper.class);
-        bindHandler(EmailConfirmationAction.class, EmailConfirmationHandler.class);
-        bindHandler(SendConfirmationEmailAction.class, SendConfirmationEmailHandler.class);
-        bindHandler(SendPasswordResetAction.class, SendPasswordResetHandler.class);
-        bindHandler(ResetPasswordAction.class, ResetPasswordHandler.class);
-    }
+	@Override
+	protected void configureHandlers() {
+		bindHandler(GetUserInfo.class, GetUserInfoHandler.class);
+		bindHandler(GetTagTreeAction.class, GetTagTreeHandler.class);
+		bindHandler(AuthenticationAction.class, AuthenticationHandler.class);
+		bindHandler(SignUpAction.class, SignUpHandler.class);
+		bindHandler(LogoutAction.class, LogoutHandler.class);
+		bindHandler(GetMyUserGroupsAction.class, GetMyUserGroupsHandler.class);
+		bindHandler(NewUserGroupAction.class, NewUserGroupHandler.class);
+		bindHandler(DeleteGroupAction.class, DeleteUserGroupHandler.class);
+		bindHandler(GetUserGroupAction.class, GetUserGroupHandler.class);
+		bindHandler(SaveUserGroupAction.class, SaveUserGroupHandler.class);
+		bindHandler(GrantUserAction.class, GrantUserHandler.class);
+		bindHandler(RevokeUserAction.class, RevokeUserHandler.class);
+		bindHandler(ApproveTagAction.class, ApproveTagHandler.class);
+		bindHandler(RevokeTagAction.class, RevokeTagHandler.class);
+		bindHandler(GetTagNodeAction.class, GetTagNodeHandler.class);
+		bindHandler(RequestFullsizeImageAction.class,
+				RequestFullsizeImageHandler.class);
+		bindHandler(UpdateUserAction.class, UpdateUserHandler.class);
+		bind(IUserGroupHelper.class).to(UserGroupHelper.class);
+		bindHandler(EmailConfirmationAction.class,
+				EmailConfirmationHandler.class);
+		bindHandler(SendConfirmationEmailAction.class,
+				SendConfirmationEmailHandler.class);
+		bindHandler(SendPasswordResetAction.class,
+				SendPasswordResetHandler.class);
+		bindHandler(ResetPasswordAction.class, ResetPasswordHandler.class);
+	}
 }

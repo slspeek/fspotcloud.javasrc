@@ -31,15 +31,15 @@ import com.googlecode.fspotcloud.client.place.DashboardPlace;
 
 @GwtCompatible
 public interface DashboardView extends IsWidget {
-    PeerActionsView getPeerActionsView();
+	PeerActionsView getPeerActionsView();
 
-    TagDetailsView getTagDetailsView();
+	TagDetailsView getTagDetailsView();
 
-    void setPresenter(DashboardPresenter presenter);
+	void setPresenter(DashboardPresenter presenter);
 
-    interface DashboardPresenter extends Activity {
-        void init();
+	interface DashboardPresenter extends Activity {
+		void init();
 
-        DashboardPresenter withPlace(DashboardPlace place);
-    }
+		DashboardPresenter withPlace(DashboardPlace place);
+	}
 }

@@ -10,11 +10,11 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class DateUtil {
-    public static Date cloneDate(Date date) {
-        Date result = null;
-        if (date != null) {
-            result = new Date(date.getTime());
-        }
-        return result;
-    }
+	public static Date cloneDate(Date date) {
+		Date result = null;
+		if (date != null) {
+			result = new Date(date.getTime());
+		}
+		return result;
+	}
 }

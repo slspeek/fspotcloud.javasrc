@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.main.view.LoginActivity;
@@ -39,41 +39,43 @@ import static org.junit.Assert.assertEquals;
  * @author steven
  */
 public class LoginPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public void open() {
-        selenium.open("#LoginPlace:");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open() {
+		selenium.open("#LoginPlace:");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void fillForm(String email, String credentials)
-            throws InterruptedException {
-        selenium.type("id=gwt-debug-password", credentials);
-        selenium.type("id=gwt-debug-username", email);
-    }
+	public void fillForm(String email, String credentials)
+			throws InterruptedException {
+		selenium.type("id=gwt-debug-password", credentials);
+		selenium.type("id=gwt-debug-username", email);
+	}
 
-    public void login() throws InterruptedException {
-        selenium.click("gwt-debug-do-login");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void login() throws InterruptedException {
+		selenium.click("gwt-debug-do-login");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void clickGoogleLogin() throws InterruptedException {
-        selenium.click("gwt-debug-go-other-login");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void clickGoogleLogin() throws InterruptedException {
+		selenium.click("gwt-debug-go-other-login");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    private String getStatusText() {
-        return selenium.getText("gwt-debug-status");
-    }
+	private String getStatusText() {
+		return selenium.getText("gwt-debug-status");
+	}
 
-    public void verifyFailure() {
-        assertEquals(LoginActivity.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION,
-                getStatusText());
-    }
+	public void verifyFailure() {
+		assertEquals(
+				LoginActivity.NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION,
+				getStatusText());
+	}
 
-    public void verifyError() {
-        assertEquals(LoginActivity.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST,
-                getStatusText());
-    }
+	public void verifyError() {
+		assertEquals(
+				LoginActivity.AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST,
+				getStatusText());
+	}
 }

@@ -35,29 +35,29 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Provider;
 
+public class GetUserInfoHandler
+		extends
+			SimpleActionHandler<GetUserInfo, UserInfo> {
+	private final UserService userService;
+	private final Provider<LoginMetaData> loginMetaDataProvider;
 
-public class GetUserInfoHandler extends SimpleActionHandler<GetUserInfo, UserInfo> {
-    private final UserService userService;
-    private final Provider<LoginMetaData> loginMetaDataProvider;
+	@Inject
+	public GetUserInfoHandler(UserService userService,
+			Provider<LoginMetaData> loginMetaDataProvider) {
+		this.userService = userService;
+		this.loginMetaDataProvider = loginMetaDataProvider;
+	}
 
-    @Inject
-    public GetUserInfoHandler(UserService userService,
-                              Provider<LoginMetaData> loginMetaDataProvider) {
-        this.userService = userService;
-        this.loginMetaDataProvider = loginMetaDataProvider;
-    }
+	@Override
+	public UserInfo execute(GetUserInfo action, ExecutionContext context)
+			throws DispatchException {
+		LoginMetaData metaData = loginMetaDataProvider.get();
+		UserInfo info = new UserInfo(userService.getEmail(),
+				userService.isUserAdmin(), userService.isUserLoggedIn(),
+				userService.getThirdPartyLoginURL(action.getDestinationUrl()),
+				userService.getThirdPartyLogoutURL(action.getDestinationUrl()),
+				metaData.getLastTime(), String.valueOf(metaData.getLoginType()));
 
-    @Override
-    public UserInfo execute(GetUserInfo action, ExecutionContext context)
-            throws DispatchException {
-        LoginMetaData metaData = loginMetaDataProvider.get();
-        UserInfo info = new UserInfo(userService.getEmail(),
-                userService.isUserAdmin(), userService.isUserLoggedIn(),
-                userService.getThirdPartyLoginURL(action.getDestinationUrl()),
-                userService.getThirdPartyLogoutURL(action.getDestinationUrl()),
-                metaData.getLastTime(),
-                String.valueOf(metaData.getLoginType()));
-
-        return info;
-    }
+		return info;
+	}
 }

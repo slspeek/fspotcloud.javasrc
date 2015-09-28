@@ -36,33 +36,34 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
+public class DeleteAllPhotosHandler
+		extends
+			SimpleActionHandler<DeleteAllPhotosAction, VoidResult> {
+	private final Logger log = Logger.getLogger(DeleteAllPhotosHandler.class
+			.getName());
+	private final TaskQueueDispatch dispatchAsync;
+	private final PhotoDao photoManager;
+	private final PeerDatabaseDao peerDatabaseDao;
 
-public class DeleteAllPhotosHandler extends SimpleActionHandler<DeleteAllPhotosAction, VoidResult> {
-    private final Logger log = Logger.getLogger(DeleteAllPhotosHandler.class.getName());
-    private final TaskQueueDispatch dispatchAsync;
-    private final PhotoDao photoManager;
-    private final PeerDatabaseDao peerDatabaseDao;
+	@Inject
+	public DeleteAllPhotosHandler(TaskQueueDispatch dispatchAsync,
+			PhotoDao photoManager, PeerDatabaseDao peerDatabaseDao) {
+		super();
+		this.dispatchAsync = dispatchAsync;
+		this.photoManager = photoManager;
+		this.peerDatabaseDao = peerDatabaseDao;
+	}
 
-    @Inject
-    public DeleteAllPhotosHandler(TaskQueueDispatch dispatchAsync,
-                                  PhotoDao photoManager,
-                                  PeerDatabaseDao peerDatabaseDao) {
-        super();
-        this.dispatchAsync = dispatchAsync;
-        this.photoManager = photoManager;
-        this.peerDatabaseDao = peerDatabaseDao;
-    }
+	@Override
+	public VoidResult execute(DeleteAllPhotosAction action,
+			ExecutionContext context) throws DispatchException {
+		photoManager.deleteBulk(30);
 
-    @Override
-    public VoidResult execute(DeleteAllPhotosAction action,
-                              ExecutionContext context) throws DispatchException {
-        photoManager.deleteBulk(30);
-
-        if (!photoManager.isEmpty()) {
-            dispatchAsync.execute(new DeleteAllPhotosAction());
-        } else {
-            peerDatabaseDao.resetCachedTagTrees();
-        }
-        return new VoidResult();
-    }
+		if (!photoManager.isEmpty()) {
+			dispatchAsync.execute(new DeleteAllPhotosAction());
+		} else {
+			peerDatabaseDao.resetCachedTagTrees();
+		}
+		return new VoidResult();
+	}
 }

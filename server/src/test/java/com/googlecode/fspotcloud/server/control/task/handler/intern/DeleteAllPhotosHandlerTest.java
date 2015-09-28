@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllPhotosAction;
@@ -48,51 +48,51 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(JukitoRunner.class)
 public class DeleteAllPhotosHandlerTest {
-    @Inject
-    private DeleteAllPhotosHandler instance;
+	@Inject
+	private DeleteAllPhotosHandler instance;
 
-    @Test
-    public void testExecuteWithRecursion(PhotoDao photoDao,
-                                         TaskQueueDispatch dispatch) throws Exception {
-        DeleteAllPhotosAction action = new DeleteAllPhotosAction();
-        ExecutionContext context = null;
-        VoidResult expResult = new VoidResult();
-        VoidResult result = instance.execute(action, context);
-        assertEquals(expResult, result);
-        verify(dispatch).execute(new DeleteAllPhotosAction());
-        verify(photoDao).deleteBulk(30);
-        verify(photoDao).isEmpty();
-        verifyNoMoreInteractions(dispatch, photoDao);
-    }
+	@Test
+	public void testExecuteWithRecursion(PhotoDao photoDao,
+			TaskQueueDispatch dispatch) throws Exception {
+		DeleteAllPhotosAction action = new DeleteAllPhotosAction();
+		ExecutionContext context = null;
+		VoidResult expResult = new VoidResult();
+		VoidResult result = instance.execute(action, context);
+		assertEquals(expResult, result);
+		verify(dispatch).execute(new DeleteAllPhotosAction());
+		verify(photoDao).deleteBulk(30);
+		verify(photoDao).isEmpty();
+		verifyNoMoreInteractions(dispatch, photoDao);
+	}
 
-    @Test
-    public void testExecuteWithoutRecursion(PhotoDao photoDao,
-                                            TaskQueueDispatch dispatch) throws Exception {
-        when(photoDao.isEmpty()).thenReturn(Boolean.TRUE);
+	@Test
+	public void testExecuteWithoutRecursion(PhotoDao photoDao,
+			TaskQueueDispatch dispatch) throws Exception {
+		when(photoDao.isEmpty()).thenReturn(Boolean.TRUE);
 
-        DeleteAllPhotosAction action = new DeleteAllPhotosAction();
-        ExecutionContext context = null;
-        VoidResult expResult = new VoidResult();
-        VoidResult result = instance.execute(action, context);
-        assertEquals(expResult, result);
-        verify(photoDao).deleteBulk(30);
-        verify(photoDao).isEmpty();
-        verifyNoMoreInteractions(dispatch, photoDao);
-    }
+		DeleteAllPhotosAction action = new DeleteAllPhotosAction();
+		ExecutionContext context = null;
+		VoidResult expResult = new VoidResult();
+		VoidResult result = instance.execute(action, context);
+		assertEquals(expResult, result);
+		verify(photoDao).deleteBulk(30);
+		verify(photoDao).isEmpty();
+		verifyNoMoreInteractions(dispatch, photoDao);
+	}
 
-    @Test
-    public void testExecuteFinalRun(PhotoDao photoDao,
-                                    PeerDatabaseDao peerDatabaseDao,
-                                    TaskQueueDispatch dispatch) throws Exception {
-        when(photoDao.isEmpty()).thenReturn(Boolean.TRUE);
-        DeleteAllPhotosAction action = new DeleteAllPhotosAction();
-        ExecutionContext context = null;
-        VoidResult expResult = new VoidResult();
-        VoidResult result = instance.execute(action, context);
-        assertEquals(expResult, result);
-        verify(photoDao).deleteBulk(30);
-        verify(photoDao).isEmpty();
-        verify(peerDatabaseDao).resetCachedTagTrees();
-        verifyNoMoreInteractions(dispatch, photoDao);
-    }
+	@Test
+	public void testExecuteFinalRun(PhotoDao photoDao,
+			PeerDatabaseDao peerDatabaseDao, TaskQueueDispatch dispatch)
+			throws Exception {
+		when(photoDao.isEmpty()).thenReturn(Boolean.TRUE);
+		DeleteAllPhotosAction action = new DeleteAllPhotosAction();
+		ExecutionContext context = null;
+		VoidResult expResult = new VoidResult();
+		VoidResult result = instance.execute(action, context);
+		assertEquals(expResult, result);
+		verify(photoDao).deleteBulk(30);
+		verify(photoDao).isEmpty();
+		verify(peerDatabaseDao).resetCachedTagTrees();
+		verifyNoMoreInteractions(dispatch, photoDao);
+	}
 }

@@ -26,6 +26,5 @@ package com.googlecode.fspotcloud.test;
 
 import com.google.guiceberry.GuiceBerryModule;
 
-
 public class EmptyGuiceBerryEnv extends GuiceBerryModule {
 }

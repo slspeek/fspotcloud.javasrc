@@ -28,15 +28,14 @@ import com.googlecode.fspotcloud.shared.peer.PhotoUpdate;
 
 import java.util.List;
 
-
 public class PhotoUpdateAction extends AbstractBatchAction<PhotoUpdate> {
-    private static final long serialVersionUID = -5470374310534233053L;
+	private static final long serialVersionUID = -5470374310534233053L;
 
-    public PhotoUpdateAction(List<PhotoUpdate> updates) {
-        super(updates);
-    }
+	public PhotoUpdateAction(List<PhotoUpdate> updates) {
+		super(updates);
+	}
 
-    public String toString() {
-        return "PhotoUpdateAction{super='" + super.toString() + "'}";
-    }
+	public String toString() {
+		return "PhotoUpdateAction{super='" + super.toString() + "'}";
+	}
 }

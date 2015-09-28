@@ -14,62 +14,57 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 public class MainToolbarProvider implements Provider<ActionToolbar> {
 
+	private final KeyboardActionFactory keyboardActionFactory;
+	private final ToolbarButtonResources toolbarButtonResources;
+	private final AboutActions aboutActions;
+	private final ApplicationActions applicationActions;
+	private final NavigationActions navigationActions;
+	private final SlideshowActions slideshowActions;
+	private final RasterActions rasterActions;
+	private final UserActions userActions;
 
-    private final KeyboardActionFactory keyboardActionFactory;
-    private final ToolbarButtonResources toolbarButtonResources;
-    private final AboutActions aboutActions;
-    private final ApplicationActions applicationActions;
-    private final NavigationActions navigationActions;
-    private final SlideshowActions slideshowActions;
-    private final RasterActions rasterActions;
-    private final UserActions userActions;
+	@Inject
+	public MainToolbarProvider(KeyboardActionFactory keyboardActionFactory,
+			ToolbarButtonResources toolbarButtonResources,
+			AboutActions aboutActions, ApplicationActions applicationActions,
+			NavigationActions navigationActions,
+			SlideshowActions slideshowActions, RasterActions rasterActions,
+			UserActions userActions) {
+		this.keyboardActionFactory = keyboardActionFactory;
+		this.toolbarButtonResources = toolbarButtonResources;
+		this.aboutActions = aboutActions;
+		this.applicationActions = applicationActions;
+		this.navigationActions = navigationActions;
+		this.slideshowActions = slideshowActions;
+		this.rasterActions = rasterActions;
+		this.userActions = userActions;
+	}
 
-
-    @Inject
-    public MainToolbarProvider(KeyboardActionFactory keyboardActionFactory,
-                               ToolbarButtonResources toolbarButtonResources,
-                               AboutActions aboutActions,
-                               ApplicationActions applicationActions,
-                               NavigationActions navigationActions,
-                               SlideshowActions slideshowActions,
-                               RasterActions rasterActions,
-                               UserActions userActions) {
-        this.keyboardActionFactory = keyboardActionFactory;
-        this.toolbarButtonResources = toolbarButtonResources;
-        this.aboutActions = aboutActions;
-        this.applicationActions = applicationActions;
-        this.navigationActions = navigationActions;
-        this.slideshowActions = slideshowActions;
-        this.rasterActions = rasterActions;
-        this.userActions = userActions;
-    }
-
-
-    @Override
-    public ActionToolbar get() {
-        ActionToolbar toolbar = keyboardActionFactory.getToolBar();
-        toolbar.setActionButtonResources(toolbarButtonResources);
-        toolbar.setButtonStylePrimaryName("toolbar-button");
-        toolbar.add(applicationActions.show_help);
-        toolbar.add(applicationActions.reloadTree);
-        toolbar.add(applicationActions.demo);
-        toolbar.add(navigationActions.home);
-        toolbar.add(navigationActions.page_up);
-        toolbar.add(navigationActions.back);
-        toolbar.add(slideshowActions.slideshow_start);
-        toolbar.add(navigationActions.next);
-        toolbar.add(navigationActions.page_down);
-        toolbar.add(navigationActions.end);
-        toolbar.add(applicationActions.zoom_in);
-        toolbar.add(applicationActions.zoom_out);
-        toolbar.add(rasterActions.mail_fullsize);
-        toolbar.add(applicationActions.login);
-        toolbar.add(applicationActions.logout);
-        toolbar.add(userActions.goAccountPage);
-        toolbar.add(applicationActions.about);
-        //toolbar.add(aboutActions.project_hosting);
-        toolbar.add(applicationActions.dashboard);
-        toolbar.add(navigationActions.rss_feed);
-        return toolbar;
-    }
+	@Override
+	public ActionToolbar get() {
+		ActionToolbar toolbar = keyboardActionFactory.getToolBar();
+		toolbar.setActionButtonResources(toolbarButtonResources);
+		toolbar.setButtonStylePrimaryName("toolbar-button");
+		toolbar.add(applicationActions.show_help);
+		toolbar.add(applicationActions.reloadTree);
+		toolbar.add(applicationActions.demo);
+		toolbar.add(navigationActions.home);
+		toolbar.add(navigationActions.page_up);
+		toolbar.add(navigationActions.back);
+		toolbar.add(slideshowActions.slideshow_start);
+		toolbar.add(navigationActions.next);
+		toolbar.add(navigationActions.page_down);
+		toolbar.add(navigationActions.end);
+		toolbar.add(applicationActions.zoom_in);
+		toolbar.add(applicationActions.zoom_out);
+		toolbar.add(rasterActions.mail_fullsize);
+		toolbar.add(applicationActions.login);
+		toolbar.add(applicationActions.logout);
+		toolbar.add(userActions.goAccountPage);
+		toolbar.add(applicationActions.about);
+		//toolbar.add(aboutActions.project_hosting);
+		toolbar.add(applicationActions.dashboard);
+		toolbar.add(navigationActions.rss_feed);
+		return toolbar;
+	}
 }

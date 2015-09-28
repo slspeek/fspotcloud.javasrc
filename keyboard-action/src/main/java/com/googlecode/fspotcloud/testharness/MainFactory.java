@@ -10,22 +10,21 @@ import java.util.logging.Logger;
 @GwtCompatible
 public class MainFactory {
 
-    public static final Logger log = Logger.getLogger(MainFactory.class.getName());
+	public static final Logger log = Logger.getLogger(MainFactory.class
+			.getName());
 
-    static TextArea messageBoard = new TextArea();
+	static TextArea messageBoard = new TextArea();
 
-    static void outputMesg(String msg) {
-        log.log(Level.FINEST, msg);
-        messageBoard.setText(msg);
-    }
+	static void outputMesg(String msg) {
+		log.log(Level.FINEST, msg);
+		messageBoard.setText(msg);
+	}
 
+	@Inject
+	public MainFactory() {
+		MainFactory.messageBoard.setVisibleLines(20);
+		MainFactory.messageBoard.setCharacterWidth(100);
 
-    @Inject
-    public MainFactory(){
-        MainFactory.messageBoard.setVisibleLines(20);
-        MainFactory.messageBoard.setCharacterWidth(100);
-
-    }
-
+	}
 
 }

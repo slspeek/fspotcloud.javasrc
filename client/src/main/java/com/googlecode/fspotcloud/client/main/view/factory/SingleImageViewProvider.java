@@ -9,15 +9,15 @@ import com.googlecode.fspotcloud.client.main.view.api.ImageViewFactory;
 @GwtCompatible
 public class SingleImageViewProvider implements Provider<ImageView> {
 
-    private final ImageViewFactory imageViewFactory;
+	private final ImageViewFactory imageViewFactory;
 
-    @Inject
-    public SingleImageViewProvider(ImageViewFactory imageViewFactory) {
-        this.imageViewFactory = imageViewFactory;
-    }
+	@Inject
+	public SingleImageViewProvider(ImageViewFactory imageViewFactory) {
+		this.imageViewFactory = imageViewFactory;
+	}
 
-    @Override
-    public ImageView get() {
-        return imageViewFactory.get("slideshow");
-    }
+	@Override
+	public ImageView get() {
+		return imageViewFactory.get("slideshow");
+	}
 }

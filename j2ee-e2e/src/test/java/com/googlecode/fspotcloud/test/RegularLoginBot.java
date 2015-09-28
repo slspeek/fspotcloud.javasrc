@@ -26,15 +26,14 @@ package com.googlecode.fspotcloud.test;
 
 import javax.inject.Inject;
 
-
 public class RegularLoginBot implements ILogin {
-    @Inject
-    private LoginPage loginPage;
+	@Inject
+	private LoginPage loginPage;
 
-    @Override
-    public void login() throws Exception {
-        loginPage.open();
-        loginPage.fillForm(RMS_FSF_ORG, RMS_CRED);
-        loginPage.login();
-    }
+	@Override
+	public void login() throws Exception {
+		loginPage.open();
+		loginPage.fillForm(RMS_FSF_ORG, RMS_CRED);
+		loginPage.login();
+	}
 }

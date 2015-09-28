@@ -27,15 +27,14 @@ package com.googlecode.fspotcloud.client.data;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.fspotcloud.shared.main.TagNode;
 
-
 public interface DataManager {
-    void getTagNode(String id, AsyncCallback<TagNode> callback);
+	void getTagNode(String id, AsyncCallback<TagNode> callback);
 
-    void getTagTree(final AsyncCallback<TagNode> callback);
+	void getTagTree(final AsyncCallback<TagNode> callback);
 
-    void getAdminTagTree(final AsyncCallback<TagNode> callback);
+	void getAdminTagTree(final AsyncCallback<TagNode> callback);
 
-    void getAdminTagNode(String tagId, AsyncCallback<TagNode> asyncCallback);
+	void getAdminTagNode(String tagId, AsyncCallback<TagNode> asyncCallback);
 
-    void reset();
+	void reset();
 }

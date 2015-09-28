@@ -33,27 +33,28 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowView;
 import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
 @GwtCompatible
-public class SlideshowActivityFactoryImpl
-        implements SlideshowActivityFactory {
-    private final DoubleImagePresenterImpl doubleImagePresenter;
-    private final SlideshowView slideshowView;
-    private SlideshowActivity singleton;
+public class SlideshowActivityFactoryImpl implements SlideshowActivityFactory {
+	private final DoubleImagePresenterImpl doubleImagePresenter;
+	private final SlideshowView slideshowView;
+	private SlideshowActivity singleton;
 
-    @Inject
-    public SlideshowActivityFactoryImpl(
-            DoubleImagePresenterImpl doubleImagePresenter, SlideshowView slideshowView) {
-        super();
-        this.doubleImagePresenter = doubleImagePresenter;
-        this.slideshowView = slideshowView;
-    }
+	@Inject
+	public SlideshowActivityFactoryImpl(
+			DoubleImagePresenterImpl doubleImagePresenter,
+			SlideshowView slideshowView) {
+		super();
+		this.doubleImagePresenter = doubleImagePresenter;
+		this.slideshowView = slideshowView;
+	}
 
-    @Override
-    public SlideshowView.SlideshowPresenter get(SlideshowPlace place) {
-        if (singleton == null) {
-            doubleImagePresenter.init();
-            singleton = new SlideshowActivity(slideshowView, doubleImagePresenter);
-        }
-        singleton.setCurrentPlace(place);
-        return singleton;
-    }
+	@Override
+	public SlideshowView.SlideshowPresenter get(SlideshowPlace place) {
+		if (singleton == null) {
+			doubleImagePresenter.init();
+			singleton = new SlideshowActivity(slideshowView,
+					doubleImagePresenter);
+		}
+		singleton.setCurrentPlace(place);
+		return singleton;
+	}
 }

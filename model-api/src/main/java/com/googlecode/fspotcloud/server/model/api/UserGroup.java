@@ -28,27 +28,26 @@ import com.googlecode.simplejpadao.HasKey;
 
 import java.util.Set;
 
-
 public interface UserGroup extends HasKey<Long>, IsOwned {
-    static Long PUBLIC = Long.MIN_VALUE;
+	static Long PUBLIC = Long.MIN_VALUE;
 
-    void setName(String name);
+	void setName(String name);
 
-    String getName();
+	String getName();
 
-    void setDescription(String description);
+	void setDescription(String description);
 
-    String getDescription();
+	String getDescription();
 
-    Set<String> getGrantedUsers();
+	Set<String> getGrantedUsers();
 
-    void setGrantedUsers(Set<String> users);
+	void setGrantedUsers(Set<String> users);
 
-    Set<String> getApprovedTagIds();
+	Set<String> getApprovedTagIds();
 
-    void setApprovedTagIds(Set<String> tagIds);
+	void setApprovedTagIds(Set<String> tagIds);
 
-    boolean isPublic();
+	boolean isPublic();
 
-    void setPublic(boolean isPublic);
+	void setPublic(boolean isPublic);
 }

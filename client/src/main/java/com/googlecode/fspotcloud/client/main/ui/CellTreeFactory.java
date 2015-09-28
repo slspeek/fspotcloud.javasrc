@@ -4,5 +4,5 @@ import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.view.client.TreeViewModel;
 
 public interface CellTreeFactory {
-    CellTree get(TreeViewModel model);
+	CellTree get(TreeViewModel model);
 }

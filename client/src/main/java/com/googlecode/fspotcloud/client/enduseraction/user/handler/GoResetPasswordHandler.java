@@ -8,13 +8,13 @@ import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 
 public class GoResetPasswordHandler extends PlaceMoverBase {
 
-    @Inject
-    public GoResetPasswordHandler(IPlaceController IPlaceController) {
-        super(IPlaceController);
-    }
+	@Inject
+	public GoResetPasswordHandler(IPlaceController IPlaceController) {
+		super(IPlaceController);
+	}
 
-    @Override
-    public Place getPlace() {
-        return new SendPasswordResetPlace();
-    }
+	@Override
+	public Place getPlace() {
+		return new SendPasswordResetPlace();
+	}
 }

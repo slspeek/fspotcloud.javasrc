@@ -32,26 +32,24 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
-
 public class OutViewImpl extends Composite implements OutView {
 
+	private static final OutViewImplUiBinder uiBinder = GWT
+			.create(OutViewImplUiBinder.class);
 
-    private static final OutViewImplUiBinder uiBinder = GWT.create(OutViewImplUiBinder.class);
+	@UiField(provided = true)
+	ActionToolbar toolbar;
 
+	@Inject
+	public OutViewImpl(ActionToolbar actionToolbar) {
+		toolbar = actionToolbar;
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 
-    @UiField(provided = true)
-    ActionToolbar toolbar;
+	@Override
+	public void setStatusText(String result) {
+	}
 
-    @Inject
-    public OutViewImpl(ActionToolbar actionToolbar) {
-        toolbar = actionToolbar;
-        initWidget(uiBinder.createAndBindUi(this));
-    }
-
-    @Override
-    public void setStatusText(String result) {
-    }
-
-    interface OutViewImplUiBinder extends UiBinder<Widget, OutViewImpl> {
-    }
+	interface OutViewImplUiBinder extends UiBinder<Widget, OutViewImpl> {
+	}
 }

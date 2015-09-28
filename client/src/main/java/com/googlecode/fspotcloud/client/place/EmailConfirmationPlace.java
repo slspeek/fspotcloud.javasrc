@@ -28,53 +28,53 @@ import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class EmailConfirmationPlace extends Place {
 
-    private String secret;
-    private String email;
+	private String secret;
+	private String email;
 
-    public EmailConfirmationPlace(String email, String secret) {
-        this.secret = secret;
-        this.email = email;
-    }
+	public EmailConfirmationPlace(String email, String secret) {
+		this.secret = secret;
+		this.email = email;
+	}
 
-    public String getSecret() {
-        return secret;
-    }
+	public String getSecret() {
+		return secret;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(
-                this.secret, this.email);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.secret, this.email);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof EmailConfirmationPlace) {
-            EmailConfirmationPlace emailConfirmationPlace = (EmailConfirmationPlace) obj;
-            return Objects.equal(emailConfirmationPlace.email, email) &&
-                    Objects.equal(emailConfirmationPlace.secret, secret);
-        } else {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof EmailConfirmationPlace) {
+			EmailConfirmationPlace emailConfirmationPlace = (EmailConfirmationPlace) obj;
+			return Objects.equal(emailConfirmationPlace.email, email)
+					&& Objects.equal(emailConfirmationPlace.secret, secret);
+		} else {
+			return false;
+		}
 
-    }
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<EmailConfirmationPlace> {
-        @Override
-        public EmailConfirmationPlace getPlace(String token) {
-            String[] arguments = token.split(":");
-            return new EmailConfirmationPlace(arguments[0], arguments[1]);
-        }
+	public static class Tokenizer
+			implements
+				PlaceTokenizer<EmailConfirmationPlace> {
+		@Override
+		public EmailConfirmationPlace getPlace(String token) {
+			String[] arguments = token.split(":");
+			return new EmailConfirmationPlace(arguments[0], arguments[1]);
+		}
 
-        @Override
-        public String getToken(EmailConfirmationPlace place) {
-            return place.getEmail() + ":" + place.getSecret();
-        }
-    }
+		@Override
+		public String getToken(EmailConfirmationPlace place) {
+			return place.getEmail() + ":" + place.getSecret();
+		}
+	}
 }

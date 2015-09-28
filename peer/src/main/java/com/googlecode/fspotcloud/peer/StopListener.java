@@ -31,28 +31,26 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.logging.Logger;
 
-
 public class StopListener extends Thread {
-    private final Logger log = Logger.getLogger(StopListener.class.getName());
-    final int stopPort;
-    private ServerSocket server;
+	private final Logger log = Logger.getLogger(StopListener.class.getName());
+	final int stopPort;
+	private ServerSocket server;
 
-    @Inject
-    public StopListener(@Named("stop port")
-                        int port) {
-        this.stopPort = port;
-    }
+	@Inject
+	public StopListener(@Named("stop port") int port) {
+		this.stopPort = port;
+	}
 
-    public void run() {
-        try {
-            server = new ServerSocket(stopPort);
-            server.accept();
-        } catch (IOException e) {
-            log.warning("Could not listen on port " + stopPort);
-            log.warning("Aborting on request");
-            System.exit(-1);
-        }
+	public void run() {
+		try {
+			server = new ServerSocket(stopPort);
+			server.accept();
+		} catch (IOException e) {
+			log.warning("Could not listen on port " + stopPort);
+			log.warning("Aborting on request");
+			System.exit(-1);
+		}
 
-        System.exit(0);
-    }
+		System.exit(0);
+	}
 }

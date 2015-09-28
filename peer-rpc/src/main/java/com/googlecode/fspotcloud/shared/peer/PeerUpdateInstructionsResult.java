@@ -31,33 +31,34 @@ import net.customware.gwt.dispatch.shared.Result;
 import java.io.Serializable;
 import java.util.List;
 
+public class PeerUpdateInstructionsResult extends BusinessBase
+		implements
+			Result,
+			Serializable {
+	private static final long serialVersionUID = -4987610701630937829L;
+	@BusinessKey
+	private final List<TagUpdate> toBoUpdated;
+	@BusinessKey
+	private final List<TagRemovedFromPeer> toBoRemovedFromPeer;
 
-public class PeerUpdateInstructionsResult extends BusinessBase implements Result,
-        Serializable {
-    private static final long serialVersionUID = -4987610701630937829L;
-    @BusinessKey
-    private final List<TagUpdate> toBoUpdated;
-    @BusinessKey
-    private final List<TagRemovedFromPeer> toBoRemovedFromPeer;
+	public PeerUpdateInstructionsResult(List<TagUpdate> toBoUpdated,
+			List<TagRemovedFromPeer> toBoRemovedFromPeer) {
+		super();
+		this.toBoUpdated = toBoUpdated;
+		this.toBoRemovedFromPeer = toBoRemovedFromPeer;
+	}
 
-    public PeerUpdateInstructionsResult(List<TagUpdate> toBoUpdated,
-                                        List<TagRemovedFromPeer> toBoRemovedFromPeer) {
-        super();
-        this.toBoUpdated = toBoUpdated;
-        this.toBoRemovedFromPeer = toBoRemovedFromPeer;
-    }
+	public List<TagRemovedFromPeer> getToBoRemovedFromPeer() {
+		return toBoRemovedFromPeer;
+	}
 
-    public List<TagRemovedFromPeer> getToBoRemovedFromPeer() {
-        return toBoRemovedFromPeer;
-    }
+	public List<TagUpdate> getToBoUpdated() {
+		return toBoUpdated;
+	}
 
-    public List<TagUpdate> getToBoUpdated() {
-        return toBoUpdated;
-    }
-
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("removedFromPeer", toBoRemovedFromPeer)
-                .add("updates", toBoUpdated).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this)
+				.add("removedFromPeer", toBoRemovedFromPeer)
+				.add("updates", toBoUpdated).toString();
+	}
 }

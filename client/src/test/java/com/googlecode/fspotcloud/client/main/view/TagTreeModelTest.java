@@ -32,32 +32,30 @@ import junit.framework.TestCase;
 
 import javax.inject.Provider;
 
-
 public class TagTreeModelTest extends TestCase {
-    public final TagNode data;
-    private TagTreeModel model;
+	public final TagNode data;
+	private TagTreeModel model;
 
-    public TagTreeModelTest() {
-        DispatchAsyncTestImpl service = new DispatchAsyncTestImpl();
-        data = service.initData();
-    }
+	public TagTreeModelTest() {
+		DispatchAsyncTestImpl service = new DispatchAsyncTestImpl();
+		data = service.initData();
+	}
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        model = new TagTreeModel(data, null,
-                new Provider<Cell<TagNode>>() {
-                    @Override
-                    public Cell<TagNode> get() {
-                        return null;
-                    }
-                });
-    }
+	protected void setUp() throws Exception {
+		super.setUp();
+		model = new TagTreeModel(data, null, new Provider<Cell<TagNode>>() {
+			@Override
+			public Cell<TagNode> get() {
+				return null;
+			}
+		});
+	}
 
-    public void testGetNodeInfo() {
-        NodeInfo<TagNode> roots = (NodeInfo<TagNode>) model.getNodeInfo(null);
-    }
+	public void testGetNodeInfo() {
+		NodeInfo<TagNode> roots = (NodeInfo<TagNode>) model.getNodeInfo(null);
+	}
 
-    public void testIsLeaf() {
-        assertFalse(model.isLeaf(null));
-    }
+	public void testIsLeaf() {
+		assertFalse(model.isLeaf(null));
+	}
 }

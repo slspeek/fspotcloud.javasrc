@@ -35,83 +35,84 @@ import java.util.logging.Logger;
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class PrivateAccessITest {
-    public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
-    public static final Logger log = Logger.getLogger(PrivateAccessITest.class.getName());
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    Selenium selenium;
-    @Inject
-    DashboardPage dashboardPage;
-    @Inject
-    TagApprovalPage tagApprovalPage;
-    @Inject
-    ManageGroupsPage manageGroupsPage;
-    @Inject
-    EditUserGroupPage editUserGroupPage;
-    @Inject
-    private ManageUsersPage manageUsersPage;
-    @Inject
-    private PhotoPage photoPage;
-    @Inject
-    private LoginPage loginPage;
-    @Inject
-    private UserAccountPage userAccountPage;
+	public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+	public static final Logger log = Logger.getLogger(PrivateAccessITest.class
+			.getName());
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	Selenium selenium;
+	@Inject
+	DashboardPage dashboardPage;
+	@Inject
+	TagApprovalPage tagApprovalPage;
+	@Inject
+	ManageGroupsPage manageGroupsPage;
+	@Inject
+	EditUserGroupPage editUserGroupPage;
+	@Inject
+	private ManageUsersPage manageUsersPage;
+	@Inject
+	private PhotoPage photoPage;
+	@Inject
+	private LoginPage loginPage;
+	@Inject
+	private UserAccountPage userAccountPage;
 
-    public void runTests() throws Exception {
-        testAccess();
-        testRedirect();
-    }
+	public void runTests() throws Exception {
+		testAccess();
+		testRedirect();
+	}
 
+	@Test
+	public void testAccess() throws Exception {
+		dashboardPage.loginAndOpen();
+		dashboardPage.manageUsergroups();
+		manageGroupsPage.open();
+		manageGroupsPage.newUserGroup();
+		manageGroupsPage.selectFirstRow();
+		manageGroupsPage.editUserGroup();
+		editUserGroupPage.fill("GNU Friends",
+				"My friends from all over the world");
+		editUserGroupPage.save();
+		manageGroupsPage.open();
+		manageGroupsPage.selectFirstRow();
+		manageGroupsPage.manageUserGroup();
+		manageUsersPage.newUser(ILogin.SLS);
+		dashboardPage.manageApprovalForTag("1");
+		sleepShort();
+		tagApprovalPage.selectTopDeniedGroup();
+		tagApprovalPage.approveUserGroup();
+		photoPage.open();
+		photoPage.logout();
+		photoPage.open();
+	}
 
-    @Test
-    public void testAccess() throws Exception {
-        dashboardPage.loginAndOpen();
-        dashboardPage.manageUsergroups();
-        manageGroupsPage.open();
-        manageGroupsPage.newUserGroup();
-        manageGroupsPage.selectFirstRow();
-        manageGroupsPage.editUserGroup();
-        editUserGroupPage.fill("GNU Friends",
-                "My friends from all over the world");
-        editUserGroupPage.save();
-        manageGroupsPage.open();
-        manageGroupsPage.selectFirstRow();
-        manageGroupsPage.manageUserGroup();
-        manageUsersPage.newUser(ILogin.SLS);
-        dashboardPage.manageApprovalForTag("1");
-        sleepShort();
-        tagApprovalPage.selectTopDeniedGroup();
-        tagApprovalPage.approveUserGroup();
-        photoPage.open();
-        photoPage.logout();
-        photoPage.open();
-    }
-
-    @Test
-    public void testRedirect() throws Exception {
-        photoPage.open("#BasePlace:1:7:2:2:false");
-        sleepShort(4);
-        loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
-        loginPage.login();
-        photoPage.assertPagingLabelSays(1, 3);
-        photoPage.logout();
-        dashboardPage.loginAndOpen();
-        manageGroupsPage.open();
-        manageGroupsPage.selectFirstRow();
-        manageGroupsPage.editUserGroup();
-        editUserGroupPage.togglePublic();
-        editUserGroupPage.save();
-        photoPage.open();
-        photoPage.logout();
-        userAccountPage.open();
-        photoPage.open();
-        sleepShort();
-        log.info("Before click 0,0");
-        photoPage.clickImage(0, 0);
-        log.info("After click 0,0");
-        sleepShort();
-        photoPage.assertPagingLabelSays(1, 9);
-    }
+	@Test
+	public void testRedirect() throws Exception {
+		photoPage.open("#BasePlace:1:7:2:2:false");
+		sleepShort(4);
+		loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
+		loginPage.login();
+		photoPage.assertPagingLabelSays(1, 3);
+		photoPage.logout();
+		dashboardPage.loginAndOpen();
+		manageGroupsPage.open();
+		manageGroupsPage.selectFirstRow();
+		manageGroupsPage.editUserGroup();
+		editUserGroupPage.togglePublic();
+		editUserGroupPage.save();
+		photoPage.open();
+		photoPage.logout();
+		userAccountPage.open();
+		photoPage.open();
+		sleepShort();
+		log.info("Before click 0,0");
+		photoPage.clickImage(0, 0);
+		log.info("After click 0,0");
+		sleepShort();
+		photoPage.assertPagingLabelSays(1, 9);
+	}
 
 }

@@ -42,36 +42,37 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class DeleteTagsHandlerTest {
-    DeleteTagsHandler target;
-    @Inject
-    TaskQueueDispatch dispatchAsync;
-    @Inject
-    TagDao tagManager;
-    @Inject
-    PeerDatabaseDao peerDatabaseDao;
-    @Inject
-    ArgumentCaptor<DeleteAllTagsAction> newAction;
+	DeleteTagsHandler target;
+	@Inject
+	TaskQueueDispatch dispatchAsync;
+	@Inject
+	TagDao tagManager;
+	@Inject
+	PeerDatabaseDao peerDatabaseDao;
+	@Inject
+	ArgumentCaptor<DeleteAllTagsAction> newAction;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        target = new DeleteTagsHandler(dispatchAsync, tagManager, peerDatabaseDao);
-        System.out.println(tagManager);
-    }
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		target = new DeleteTagsHandler(dispatchAsync, tagManager,
+				peerDatabaseDao);
+		System.out.println(tagManager);
+	}
 
-    @Test
-    public void testRecursionStop() throws DispatchException {
-        when(tagManager.isEmpty()).thenReturn(true);
-        target.execute(new DeleteAllTagsAction(), null);
-        verifyNoMoreInteractions(dispatchAsync);
-        verify(peerDatabaseDao).resetCachedTagTrees();
-    }
+	@Test
+	public void testRecursionStop() throws DispatchException {
+		when(tagManager.isEmpty()).thenReturn(true);
+		target.execute(new DeleteAllTagsAction(), null);
+		verifyNoMoreInteractions(dispatchAsync);
+		verify(peerDatabaseDao).resetCachedTagTrees();
+	}
 
-    @Test
-    public void testRecursion() throws DispatchException {
-        when(tagManager.isEmpty()).thenReturn(false);
-        target.execute(new DeleteAllTagsAction(), null);
-        verify(dispatchAsync).execute(newAction.capture());
-        assertNotNull(newAction.getValue());
-    }
+	@Test
+	public void testRecursion() throws DispatchException {
+		when(tagManager.isEmpty()).thenReturn(false);
+		target.execute(new DeleteAllTagsAction(), null);
+		verify(dispatchAsync).execute(newAction.capture());
+		assertNotNull(newAction.getValue());
+	}
 }

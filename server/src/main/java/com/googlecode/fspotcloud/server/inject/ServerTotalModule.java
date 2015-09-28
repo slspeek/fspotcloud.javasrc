@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.inject;
 
 import com.google.inject.AbstractModule;
@@ -40,42 +40,42 @@ import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.mail.Mailer;
 import com.googlecode.fspotcloud.server.mail.SMTPServer;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class ServerTotalModule extends AbstractModule {
-    private final int maxTicks;
-    private String botSecret;
-    private String fromAddress;
-    private String smtpServer;
+	private final int maxTicks;
+	private String botSecret;
+	private String fromAddress;
+	private String smtpServer;
 
-    public ServerTotalModule(int maxTicks, String botSecret,
-                             String fromAddress, String smtpServer) {
-        this.maxTicks = maxTicks;
-        this.botSecret = botSecret;
-        this.fromAddress = fromAddress;
-        this.smtpServer = smtpServer;
-    }
+	public ServerTotalModule(int maxTicks, String botSecret,
+			String fromAddress, String smtpServer) {
+		this.maxTicks = maxTicks;
+		this.botSecret = botSecret;
+		this.fromAddress = fromAddress;
+		this.smtpServer = smtpServer;
+	}
 
-    @Override
-    protected void configure() {
-        install(new AdminActionsModule());
-        bind(Integer.class).annotatedWith(Names.named("maxTicks"))
-                .toInstance(new Integer(maxTicks));
-        bind(String.class).annotatedWith(FromAddress.class)
-                .toInstance(fromAddress);
-        bind(String.class).annotatedWith(SMTPServer.class).toInstance(smtpServer);
+	@Override
+	protected void configure() {
+		install(new AdminActionsModule());
+		bind(Integer.class).annotatedWith(Names.named("maxTicks")).toInstance(
+				new Integer(maxTicks));
+		bind(String.class).annotatedWith(FromAddress.class).toInstance(
+				fromAddress);
+		bind(String.class).annotatedWith(SMTPServer.class).toInstance(
+				smtpServer);
 
-        bind(IMail.class).to(Mailer.class);
-        bind(ImageHelper.class).to(ImageHelperImpl.class);
-        install(new ServerServletModule(botSecret));
-        install(new ControllerServletModule(botSecret));
-        install(new ServerControllerModule());
-        install(new TaskActionsModule());
-        install(new TaskModule());
-        install(new MainActionModule());
-    }
+		bind(IMail.class).to(Mailer.class);
+		bind(ImageHelper.class).to(ImageHelperImpl.class);
+		install(new ServerServletModule(botSecret));
+		install(new ControllerServletModule(botSecret));
+		install(new ServerControllerModule());
+		install(new TaskActionsModule());
+		install(new TaskModule());
+		install(new MainActionModule());
+	}
 }

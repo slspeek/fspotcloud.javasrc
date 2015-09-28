@@ -6,15 +6,15 @@ import com.google.inject.Inject;
 
 public class BasicCellTreeFactory implements CellTreeFactory {
 
-    private final BasicTreeResources resources;
+	private final BasicTreeResources resources;
 
-    @Inject
-    public BasicCellTreeFactory(BasicTreeResources resources) {
-        this.resources = resources;
-    }
+	@Inject
+	public BasicCellTreeFactory(BasicTreeResources resources) {
+		this.resources = resources;
+	}
 
-    @Override
-    public CellTree get(TreeViewModel model) {
-        return new CellTree(model, null, resources);
-    }
+	@Override
+	public CellTree get(TreeViewModel model) {
+		return new CellTree(model, null, resources);
+	}
 }

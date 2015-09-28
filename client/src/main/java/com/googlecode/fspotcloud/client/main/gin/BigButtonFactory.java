@@ -10,15 +10,16 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.WidgetFactory;
 @GwtCompatible
 public class BigButtonFactory {
 
-    private final WidgetFactory factory;
+	private final WidgetFactory factory;
 
-    @Inject
-    public BigButtonFactory(WidgetFactory factory, BigActionButtonResources resources) {
-        this.factory = factory;
-        factory.setButtonResources(resources);
-    }
+	@Inject
+	public BigButtonFactory(WidgetFactory factory,
+			BigActionButtonResources resources) {
+		this.factory = factory;
+		factory.setButtonResources(resources);
+	}
 
-    public ActionButton getButton(ActionUIDef actionUIDef) {
-        return factory.getButton(actionUIDef);
-    }
+	public ActionButton getButton(ActionUIDef actionUIDef) {
+		return factory.getButton(actionUIDef);
+	}
 }

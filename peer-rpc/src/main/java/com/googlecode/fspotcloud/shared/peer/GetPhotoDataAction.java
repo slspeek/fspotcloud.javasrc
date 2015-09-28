@@ -31,31 +31,32 @@ import net.customware.gwt.dispatch.shared.Action;
 import java.io.Serializable;
 import java.util.List;
 
+public class GetPhotoDataAction extends BusinessBase
+		implements
+			Action<PhotoDataResult>,
+			Serializable {
+	private static final long serialVersionUID = 3730836943695700527L;
+	@BusinessKey
+	private final ImageSpecs imageSpecs;
+	@BusinessKey
+	private final List<String> imageKeys;
 
-public class GetPhotoDataAction extends BusinessBase implements Action<PhotoDataResult>,
-        Serializable {
-    private static final long serialVersionUID = 3730836943695700527L;
-    @BusinessKey
-    private final ImageSpecs imageSpecs;
-    @BusinessKey
-    private final List<String> imageKeys;
+	public GetPhotoDataAction(ImageSpecs imageSpecs, List<String> imageKeys) {
+		super();
+		this.imageSpecs = imageSpecs;
+		this.imageKeys = imageKeys;
+	}
 
-    public GetPhotoDataAction(ImageSpecs imageSpecs, List<String> imageKeys) {
-        super();
-        this.imageSpecs = imageSpecs;
-        this.imageKeys = imageKeys;
-    }
+	public ImageSpecs getImageSpecs() {
+		return imageSpecs;
+	}
 
-    public ImageSpecs getImageSpecs() {
-        return imageSpecs;
-    }
+	public List<String> getImageKeys() {
+		return imageKeys;
+	}
 
-    public List<String> getImageKeys() {
-        return imageKeys;
-    }
-
-    public String toString() {
-        return Objects.toStringHelper(this).add("imageKeys", imageKeys)
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("imageKeys", imageKeys)
+				.toString();
+	}
 }

@@ -31,28 +31,28 @@ import net.customware.gwt.dispatch.shared.Action;
 import java.io.Serializable;
 import java.util.List;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class GetPeerUpdateInstructionsAction extends BusinessBase
-        implements Action<PeerUpdateInstructionsResult>,
-        Serializable {
-    @BusinessKey
-    private final List<TagData> tagsOnServer;
+		implements
+			Action<PeerUpdateInstructionsResult>,
+			Serializable {
+	@BusinessKey
+	private final List<TagData> tagsOnServer;
 
-    public GetPeerUpdateInstructionsAction(List<TagData> tagsOnServer) {
-        this.tagsOnServer = tagsOnServer;
-    }
+	public GetPeerUpdateInstructionsAction(List<TagData> tagsOnServer) {
+		this.tagsOnServer = tagsOnServer;
+	}
 
-    public List<TagData> getTagsOnServer() {
-        return tagsOnServer;
-    }
+	public List<TagData> getTagsOnServer() {
+		return tagsOnServer;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("tagsOnServer", tagsOnServer)
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("tagsOnServer", tagsOnServer)
+				.toString();
+	}
 }

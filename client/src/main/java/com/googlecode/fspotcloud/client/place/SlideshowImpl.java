@@ -40,150 +40,145 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.FINER;
 
-
 public class SlideshowImpl implements Slideshow {
-    private final Logger log = Logger.getLogger(SlideshowImpl.class.getName());
-    private final Navigator navigator;
-    private final TimerInterface timer;
-    private boolean isRunning = false;
-    private final float INCREASE_FACTOR = 4f / 3f;
-    private float delay = 4f;
-    private final EventBus eventBus;
-    private final IPlaceController placeController;
+	private final Logger log = Logger.getLogger(SlideshowImpl.class.getName());
+	private final Navigator navigator;
+	private final TimerInterface timer;
+	private boolean isRunning = false;
+	private final float INCREASE_FACTOR = 4f / 3f;
+	private float delay = 4f;
+	private final EventBus eventBus;
+	private final IPlaceController placeController;
 
-    @Inject
-    public SlideshowImpl(Navigator navigator,
-                         TimerInterface timer,
-                         EventBus eventBus,
-                         IPlaceController placeController) {
-        this.eventBus = eventBus;
-        this.navigator = navigator;
-        this.timer = timer;
-        this.placeController = placeController;
-        initTimer();
-        log.log(FINER, "Created");
-    }
+	@Inject
+	public SlideshowImpl(Navigator navigator, TimerInterface timer,
+			EventBus eventBus, IPlaceController placeController) {
+		this.eventBus = eventBus;
+		this.navigator = navigator;
+		this.timer = timer;
+		this.placeController = placeController;
+		initTimer();
+		log.log(FINER, "Created");
+	}
 
-    private void initTimer() {
-        timer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                navigator.canGoAsync(Direction.FORWARD, Unit.SINGLE,
-                        new AsyncCallback<Boolean>() {
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                log.warning(caught.getMessage());
-                            }
+	private void initTimer() {
+		timer.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				navigator.canGoAsync(Direction.FORWARD, Unit.SINGLE,
+						new AsyncCallback<Boolean>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								log.warning(caught.getMessage());
+							}
 
-                            @Override
-                            public void onSuccess(Boolean result) {
-                                go(result);
-                            }
-                        });
-            }
-        });
-    }
+							@Override
+							public void onSuccess(Boolean result) {
+								go(result);
+							}
+						});
+			}
+		});
+	}
 
-    private void go(boolean canGo) {
-        if (canGo) {
-            navigator.goAsync(Direction.FORWARD, Unit.SINGLE);
-        } else {
-            stop();
-            log.log(FINE, "Timer stopped, because the end was reached.");
-        }
-    }
+	private void go(boolean canGo) {
+		if (canGo) {
+			navigator.goAsync(Direction.FORWARD, Unit.SINGLE);
+		} else {
+			stop();
+			log.log(FINE, "Timer stopped, because the end was reached.");
+		}
+	}
 
-    private void reschedule() {
-        timer.cancel();
-        timer.scheduleRepeating((int) (1000 * delay));
-    }
+	private void reschedule() {
+		timer.cancel();
+		timer.scheduleRepeating((int) (1000 * delay));
+	}
 
-    @Override
-    public void start() {
-        log.log(FINE, "Starting slideshow");
-        isRunning = true;
-        slideshow();
-        reschedule();
-        fireStatusChanged();
-    }
+	@Override
+	public void start() {
+		log.log(FINE, "Starting slideshow");
+		isRunning = true;
+		slideshow();
+		reschedule();
+		fireStatusChanged();
+	}
 
-    @Override
-    public void stop() {
-        log.log(FINE, "Stopping slideshow");
-        isRunning = false;
-        timer.cancel();
-        fireStatusChanged();
-        unslideshow();
-    }
+	@Override
+	public void stop() {
+		log.log(FINE, "Stopping slideshow");
+		isRunning = false;
+		timer.cancel();
+		fireStatusChanged();
+		unslideshow();
+	}
 
-    @Override
-    public void pause() {
-        log.log(FINE, "Pause slideshow");
-        isRunning = false;
-        timer.cancel();
-        fireStatusChanged();
-    }
+	@Override
+	public void pause() {
+		log.log(FINE, "Pause slideshow");
+		isRunning = false;
+		timer.cancel();
+		fireStatusChanged();
+	}
 
-    @Override
-    public void togglePause() {
-        if (isRunning) {
-            pause();
-        } else {
-            start();
-        }
-    }
+	@Override
+	public void togglePause() {
+		if (isRunning) {
+			pause();
+		} else {
+			start();
+		}
+	}
 
-    @Override
-    public float faster() {
-        delay /= INCREASE_FACTOR;
-        fireStatusChanged();
-        reschedule();
+	@Override
+	public float faster() {
+		delay /= INCREASE_FACTOR;
+		fireStatusChanged();
+		reschedule();
 
-        return delay();
-    }
+		return delay();
+	}
 
-    @Override
-    public float slower() {
-        delay *= INCREASE_FACTOR;
-        fireStatusChanged();
-        reschedule();
+	@Override
+	public float slower() {
+		delay *= INCREASE_FACTOR;
+		fireStatusChanged();
+		reschedule();
 
-        return delay();
-    }
+		return delay();
+	}
 
-    private void fireStatusChanged() {
-        eventBus.fireEvent(new SlideshowStatusEvent(isRunning, delay()));
-    }
+	private void fireStatusChanged() {
+		eventBus.fireEvent(new SlideshowStatusEvent(isRunning, delay()));
+	}
 
-    @Override
-    public float delay() {
-        return delay;
-    }
+	@Override
+	public float delay() {
+		return delay;
+	}
 
-    @Override
-    public boolean isRunning() {
-        return isRunning;
-    }
+	@Override
+	public boolean isRunning() {
+		return isRunning;
+	}
 
+	void slideshow() {
+		BasePlace now = placeController.where();
+		if (now != null) {
+			SlideshowPlace destination = new SlideshowPlace(now.getTagId(),
+					now.getPhotoId());
+			placeController.goTo(destination);
+		}
+	}
 
-    void slideshow() {
-        BasePlace now = placeController.where();
-        if (now != null) {
-            SlideshowPlace destination = new SlideshowPlace(now.getTagId(),
-                    now.getPhotoId());
-            placeController.goTo(destination);
-        }
-    }
-
-
-    void unslideshow() {
-        BasePlace fromPlace = placeController.where();
-        BasePlace result;
-        if (fromPlace instanceof SlideshowPlace) {
-            PlaceBuilder builder = new PlaceBuilder(fromPlace);
-            result = builder.place();
-            placeController.goTo(result);
-        }
-    }
+	void unslideshow() {
+		BasePlace fromPlace = placeController.where();
+		BasePlace result;
+		if (fromPlace instanceof SlideshowPlace) {
+			PlaceBuilder builder = new PlaceBuilder(fromPlace);
+			result = builder.place();
+			placeController.goTo(result);
+		}
+	}
 
 }

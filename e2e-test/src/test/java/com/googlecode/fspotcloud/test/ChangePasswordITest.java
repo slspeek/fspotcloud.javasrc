@@ -31,25 +31,26 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 public class ChangePasswordITest {
-    public static final String GNU_RULES = "GNU Rules!";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private LoginPage loginPage;
-    @Inject
-    private UserAccountPage userAccountPage;
-    @Test
-    public void testChangePassword() throws Exception {
-        loginPage.open();
-        loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
-        loginPage.login();
-        userAccountPage.verifyEmail(ILogin.SLS);
-        userAccountPage.fillForm(ILogin.SLS_CRED, GNU_RULES);
-        userAccountPage.save();
-        userAccountPage.logout();
-        loginPage.open();
-        loginPage.fillForm(ILogin.SLS, GNU_RULES);
-        loginPage.login();
-        userAccountPage.verifyEmail(ILogin.SLS);
-    }
+	public static final String GNU_RULES = "GNU Rules!";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private LoginPage loginPage;
+	@Inject
+	private UserAccountPage userAccountPage;
+	@Test
+	public void testChangePassword() throws Exception {
+		loginPage.open();
+		loginPage.fillForm(ILogin.SLS, ILogin.SLS_CRED);
+		loginPage.login();
+		userAccountPage.verifyEmail(ILogin.SLS);
+		userAccountPage.fillForm(ILogin.SLS_CRED, GNU_RULES);
+		userAccountPage.save();
+		userAccountPage.logout();
+		loginPage.open();
+		loginPage.fillForm(ILogin.SLS, GNU_RULES);
+		loginPage.login();
+		userAccountPage.verifyEmail(ILogin.SLS);
+	}
 }

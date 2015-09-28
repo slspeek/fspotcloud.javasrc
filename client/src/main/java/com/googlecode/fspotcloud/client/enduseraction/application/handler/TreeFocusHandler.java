@@ -34,28 +34,28 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.logging.Logger;
 
-
 public class TreeFocusHandler implements IActionHandler {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(TreeFocusHandler.class.getName());
-    private final TreeView treeView;
-    private final TagViewImpl tagView;
-    private final Slideshow slideshow;
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(TreeFocusHandler.class
+			.getName());
+	private final TreeView treeView;
+	private final TagViewImpl tagView;
+	private final Slideshow slideshow;
 
-    @Inject
-    public TreeFocusHandler(@BasicTreeView TreeView treeView, TagView tagView,
-                            Slideshow slideshow) {
-        super();
-        this.slideshow = slideshow;
-        this.treeView = treeView;
-        this.tagView = (TagViewImpl) tagView;
-    }
+	@Inject
+	public TreeFocusHandler(@BasicTreeView TreeView treeView, TagView tagView,
+			Slideshow slideshow) {
+		super();
+		this.slideshow = slideshow;
+		this.treeView = treeView;
+		this.tagView = (TagViewImpl) tagView;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        slideshow.stop();
-        tagView.cancelHiding();
-        tagView.animateControlsIn(100);
-        treeView.requestFocus();
-    }
+	@Override
+	public void performAction(String actionId) {
+		slideshow.stop();
+		tagView.cancelHiding();
+		tagView.animateControlsIn(100);
+		treeView.requestFocus();
+	}
 }

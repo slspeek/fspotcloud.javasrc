@@ -15,29 +15,29 @@ import static org.mockito.Mockito.*;
 @RunWith(JukitoRunner.class)
 public class GoRssFeedHandlerTest {
 
-    @Inject
-    private IPlaceController placeController;
-    @Inject
-    private OpenNewTab loader;
-    @Inject
-    private GoRssFeedHandler handler;
-    @Inject
-    private NavigationActions navigationActions;
-    private BasePlace place = new BasePlace("1", "1000");
+	@Inject
+	private IPlaceController placeController;
+	@Inject
+	private OpenNewTab loader;
+	@Inject
+	private GoRssFeedHandler handler;
+	@Inject
+	private NavigationActions navigationActions;
+	private BasePlace place = new BasePlace("1", "1000");
 
-    @Before
-    public void setUp() throws Exception {
-        when(placeController.where()).thenReturn(place);
+	@Before
+	public void setUp() throws Exception {
+		when(placeController.where()).thenReturn(place);
 
-    }
+	}
 
-    @Test
-    public void testPerformAction() throws Exception {
-        handler.performAction(navigationActions.rss_feed.getId());
+	@Test
+	public void testPerformAction() throws Exception {
+		handler.performAction(navigationActions.rss_feed.getId());
 
-        verify(loader).setLocation("/rss?tag=" + place.getTagId());
-        verify(placeController).where();
-        verifyNoMoreInteractions(loader, placeController);
+		verify(loader).setLocation("/rss?tag=" + place.getTagId());
+		verify(placeController).where();
+		verifyNoMoreInteractions(loader, placeController);
 
-    }
+	}
 }

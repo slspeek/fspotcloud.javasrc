@@ -36,95 +36,94 @@ import net.customware.gwt.dispatch.shared.Result;
 
 import java.util.Date;
 
-
 public class DispatchAsyncTestImpl implements DispatchAsync {
-    private TagNode tagTreeData;
+	private TagNode tagTreeData;
 
-    public DispatchAsyncTestImpl() {
-        initData();
-    }
+	public DispatchAsyncTestImpl() {
+		initData();
+	}
 
-    private static TagNode createNode(String id, String name, int count) {
-        TagNode node = new TagNode();
-        node.setId(id);
-        node.setTagName(name);
-        node.setCount(count);
+	private static TagNode createNode(String id, String name, int count) {
+		TagNode node = new TagNode();
+		node.setId(id);
+		node.setTagName(name);
+		node.setCount(count);
 
-        return node;
-    }
+		return node;
+	}
 
-    public TagNode initData() {
-        TagNode root1 = createNode("1", "Friends", 10);
-        PhotoInfo pi1 = new PhotoInfo("1", "Daniel", new Date(1));
-        PhotoInfo pi2 = new PhotoInfo("2", "Aute", new Date(2));
-        PhotoInfo pi3 = new PhotoInfo("3", "Jan", new Date(3));
-        ImmutableSortedSet<PhotoInfo> photoList = ImmutableSortedSet.of(pi1,
-                pi2, pi3);
-        root1.setCachedPhotoList(new PhotoInfoStore(photoList));
+	public TagNode initData() {
+		TagNode root1 = createNode("1", "Friends", 10);
+		PhotoInfo pi1 = new PhotoInfo("1", "Daniel", new Date(1));
+		PhotoInfo pi2 = new PhotoInfo("2", "Aute", new Date(2));
+		PhotoInfo pi3 = new PhotoInfo("3", "Jan", new Date(3));
+		ImmutableSortedSet<PhotoInfo> photoList = ImmutableSortedSet.of(pi1,
+				pi2, pi3);
+		root1.setCachedPhotoList(new PhotoInfoStore(photoList));
 
-        TagNode cats = createNode("2", "Cats", 10);
-        pi1 = new PhotoInfo("4", "", new Date(1));
-        pi2 = new PhotoInfo("5", "", new Date(2));
-        pi3 = new PhotoInfo("6", "", new Date(3));
-        photoList = ImmutableSortedSet.of(pi1, pi2, pi3);
-        cats.setCachedPhotoList(new PhotoInfoStore(photoList));
+		TagNode cats = createNode("2", "Cats", 10);
+		pi1 = new PhotoInfo("4", "", new Date(1));
+		pi2 = new PhotoInfo("5", "", new Date(2));
+		pi3 = new PhotoInfo("6", "", new Date(3));
+		photoList = ImmutableSortedSet.of(pi1, pi2, pi3);
+		cats.setCachedPhotoList(new PhotoInfoStore(photoList));
 
-        TagNode empty = createNode("2.5", "Empty", 10);
-        TagNode root3 = createNode("3", "Languages", 10);
-        pi1 = new PhotoInfo("7", "Latin", new Date(1));
-        pi2 = new PhotoInfo("8", "Greek", new Date(2));
-        pi3 = new PhotoInfo("9", "Lisp", new Date(3));
+		TagNode empty = createNode("2.5", "Empty", 10);
+		TagNode root3 = createNode("3", "Languages", 10);
+		pi1 = new PhotoInfo("7", "Latin", new Date(1));
+		pi2 = new PhotoInfo("8", "Greek", new Date(2));
+		pi3 = new PhotoInfo("9", "Lisp", new Date(3));
 
-        PhotoInfo pi4 = new PhotoInfo("9", "Python", new Date(4));
-        photoList = ImmutableSortedSet.of(pi1, pi2, pi3, pi4);
-        root3.setCachedPhotoList(new PhotoInfoStore(photoList));
+		PhotoInfo pi4 = new PhotoInfo("9", "Python", new Date(4));
+		photoList = ImmutableSortedSet.of(pi1, pi2, pi3, pi4);
+		root3.setCachedPhotoList(new PhotoInfoStore(photoList));
 
-        TagNode felix = createNode("4", "Felix", 2);
-        pi1 = new PhotoInfo("11", "Snowie", new Date(1));
-        pi2 = new PhotoInfo("12", "Siepie", new Date(2));
-        pi3 = new PhotoInfo("13", "Pluk", new Date(3));
-        photoList = ImmutableSortedSet.of(pi1, pi2, pi3);
-        felix.setCachedPhotoList(new PhotoInfoStore(photoList));
+		TagNode felix = createNode("4", "Felix", 2);
+		pi1 = new PhotoInfo("11", "Snowie", new Date(1));
+		pi2 = new PhotoInfo("12", "Siepie", new Date(2));
+		pi3 = new PhotoInfo("13", "Pluk", new Date(3));
+		photoList = ImmutableSortedSet.of(pi1, pi2, pi3);
+		felix.setCachedPhotoList(new PhotoInfoStore(photoList));
 
-        TagNode woefje = createNode("5", "Woefje", 1);
-        pi1 = new PhotoInfo("21", "", new Date(1));
-        pi2 = new PhotoInfo("22", "", new Date(2));
-        pi3 = new PhotoInfo("23", "", new Date(3000)); //Latest picture
-        photoList = ImmutableSortedSet.of(pi1, pi2, pi3);
-        woefje.setCachedPhotoList(new PhotoInfoStore(photoList));
+		TagNode woefje = createNode("5", "Woefje", 1);
+		pi1 = new PhotoInfo("21", "", new Date(1));
+		pi2 = new PhotoInfo("22", "", new Date(2));
+		pi3 = new PhotoInfo("23", "", new Date(3000)); //Latest picture
+		photoList = ImmutableSortedSet.of(pi1, pi2, pi3);
+		woefje.setCachedPhotoList(new PhotoInfoStore(photoList));
 
-        TagNode otherCats = createNode("6", "Other cats", 1);
-        pi1 = new PhotoInfo("100", "", new Date(100));
-        pi2 = new PhotoInfo("101", "", new Date(101));
-        pi3 = new PhotoInfo("102", "", new Date(102));
-        pi4 = new PhotoInfo("103", "", new Date(103));
+		TagNode otherCats = createNode("6", "Other cats", 1);
+		pi1 = new PhotoInfo("100", "", new Date(100));
+		pi2 = new PhotoInfo("101", "", new Date(101));
+		pi3 = new PhotoInfo("102", "", new Date(102));
+		pi4 = new PhotoInfo("103", "", new Date(103));
 
-        PhotoInfo pi5 = new PhotoInfo("104", "", new Date(104));
-        PhotoInfo pi6 = new PhotoInfo("105", "", new Date(105));
-        PhotoInfo pi7 = new PhotoInfo("106", "", new Date(106));
-        PhotoInfo pi8 = new PhotoInfo("107", "", new Date(107));
-        PhotoInfo pi9 = new PhotoInfo("108", "", new Date(108));
-        photoList = ImmutableSortedSet.of(pi1, pi2, pi3, pi4, pi5, pi6, pi7,
-                pi8, pi9);
-        otherCats.setCachedPhotoList(new PhotoInfoStore(photoList));
+		PhotoInfo pi5 = new PhotoInfo("104", "", new Date(104));
+		PhotoInfo pi6 = new PhotoInfo("105", "", new Date(105));
+		PhotoInfo pi7 = new PhotoInfo("106", "", new Date(106));
+		PhotoInfo pi8 = new PhotoInfo("107", "", new Date(107));
+		PhotoInfo pi9 = new PhotoInfo("108", "", new Date(108));
+		photoList = ImmutableSortedSet.of(pi1, pi2, pi3, pi4, pi5, pi6, pi7,
+				pi8, pi9);
+		otherCats.setCachedPhotoList(new PhotoInfoStore(photoList));
 
-        cats.addChild(empty);
-        cats.addChild(felix);
-        cats.addChild(woefje);
-        cats.addChild(otherCats);
+		cats.addChild(empty);
+		cats.addChild(felix);
+		cats.addChild(woefje);
+		cats.addChild(otherCats);
 
-        tagTreeData = new TagNode();
-        tagTreeData.addChild(root1);
-        tagTreeData.addChild(cats);
-        tagTreeData.addChild(root3);
-        //System.out.println(felix.getCachedPhotoList());
-        return tagTreeData;
-    }
+		tagTreeData = new TagNode();
+		tagTreeData.addChild(root1);
+		tagTreeData.addChild(cats);
+		tagTreeData.addChild(root3);
+		//System.out.println(felix.getCachedPhotoList());
+		return tagTreeData;
+	}
 
-    @Override
-    public <A extends Action<R>, R extends Result> void execute(A action,
-                                                                AsyncCallback<R> _callback) {
-        AsyncCallback<TagTreeResult> callback = (AsyncCallback<TagTreeResult>) _callback;
-        callback.onSuccess(new TagTreeResult(tagTreeData));
-    }
+	@Override
+	public <A extends Action<R>, R extends Result> void execute(A action,
+			AsyncCallback<R> _callback) {
+		AsyncCallback<TagTreeResult> callback = (AsyncCallback<TagTreeResult>) _callback;
+		callback.onSuccess(new TagTreeResult(tagTreeData));
+	}
 }

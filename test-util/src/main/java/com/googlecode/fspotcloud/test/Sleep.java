@@ -28,19 +28,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Sleep {
-    private static final int PAUSE_TIME = Integer.valueOf(System.getProperty(
-            "pause.time",
-            "900"));
+	private static final int PAUSE_TIME = Integer.valueOf(System.getProperty(
+			"pause.time", "900"));
 
-    private static final Logger LOGGER = Logger.getLogger(Sleep.class.getName());
+	private static final Logger LOGGER = Logger
+			.getLogger(Sleep.class.getName());
 
-    public static void sleepShort() throws InterruptedException {
-        sleepShort(1);
-    }
+	public static void sleepShort() throws InterruptedException {
+		sleepShort(1);
+	}
 
-    public static void sleepShort(final int times) throws InterruptedException {
-        final int millis = PAUSE_TIME * times;
-        LOGGER.log(Level.FINE, "Sleeping for " + millis);
-        Thread.sleep(millis);
-    }
+	public static void sleepShort(final int times) throws InterruptedException {
+		final int millis = PAUSE_TIME * times;
+		LOGGER.log(Level.FINE, "Sleeping for " + millis);
+		Thread.sleep(millis);
+	}
 }

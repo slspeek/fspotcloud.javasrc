@@ -21,52 +21,49 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 @RunWith(JukitoRunner.class)
 public class NavigatorImplPageTest {
 
+	private static final String TAG_ID = "1";
+	@Inject
+	private DataManager dataManager;
+	@Inject
+	private NavigatorImpl navigator;
+	@Inject
+	private TagNodeTestFactory tagNodeTestFactory;
+	@Inject
+	private ArgumentCaptor<AsyncCallback<TagNode>> captor;
 
-    private static final String TAG_ID = "1";
-    @Inject
-    private  DataManager dataManager;
-    @Inject
-    private NavigatorImpl navigator;
-    @Inject
-    private TagNodeTestFactory tagNodeTestFactory;
-    @Inject
-    private ArgumentCaptor<AsyncCallback<TagNode>> captor;
+	@Inject
+	private AsyncCallback<List<PhotoInfo>> photoInfoListCallback;
+	@Inject
+	private ArgumentCaptor<List<PhotoInfo>> listCaptor;
 
-    @Inject
-    private AsyncCallback<List<PhotoInfo>> photoInfoListCallback;
-    @Inject
-    private ArgumentCaptor<List<PhotoInfo>> listCaptor;
+	@Test
+	public void testNegativePageIsNoop() throws Exception {
+		navigator.getPageAsync(TAG_ID, 1, -4, photoInfoListCallback);
+		verifyZeroInteractions(dataManager, photoInfoListCallback);
+	}
 
+	@Test
+	public void testGetPage() throws Exception {
+		navigator.getPageAsync(TAG_ID, 1, 0, photoInfoListCallback);
+		verify(dataManager).getTagNode(any(String.class), captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
+		TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
+		callback.onSuccess(tree);
+		verify(photoInfoListCallback).onSuccess(listCaptor.capture());
+		List<PhotoInfo> list = listCaptor.getValue();
+		Assert.assertEquals(TagNodeTestFactory.FIRST_PICTURE_INFO, list.get(0));
+	}
 
-    @Test
-    public void testNegativePageIsNoop() throws Exception {
-        navigator.getPageAsync(TAG_ID, 1, -4, photoInfoListCallback);
-        verifyZeroInteractions(dataManager, photoInfoListCallback);
-    }
+	@Test
+	public void testGetPageNullNode() throws Exception {
+		navigator.getPageAsync(TAG_ID, 1, 0, photoInfoListCallback);
+		verify(dataManager).getTagNode(any(String.class), captor.capture());
+		AsyncCallback<TagNode> callback = captor.getValue();
 
-    @Test
-    public void testGetPage() throws Exception {
-        navigator.getPageAsync(TAG_ID, 1, 0, photoInfoListCallback);
-        verify(dataManager).getTagNode(any(String.class), captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
-        TagNode tree = tagNodeTestFactory.getSingleNodeWithOnePicture();
-        callback.onSuccess(tree);
-        verify(photoInfoListCallback).onSuccess(listCaptor.capture());
-        List<PhotoInfo> list = listCaptor.getValue();
-        Assert.assertEquals(TagNodeTestFactory.FIRST_PICTURE_INFO, list.get(0));
-    }
-
-    @Test
-    public void testGetPageNullNode() throws Exception {
-        navigator.getPageAsync(TAG_ID, 1, 0, photoInfoListCallback);
-        verify(dataManager).getTagNode(any(String.class), captor.capture());
-        AsyncCallback<TagNode> callback = captor.getValue();
-
-        callback.onSuccess(null);
-        verify(photoInfoListCallback).onSuccess(listCaptor.capture());
-        List<PhotoInfo> list = listCaptor.getValue();
-        Assert.assertEquals(0, list.size());
-    }
-
+		callback.onSuccess(null);
+		verify(photoInfoListCallback).onSuccess(listCaptor.capture());
+		List<PhotoInfo> list = listCaptor.getValue();
+		Assert.assertEquals(0, list.size());
+	}
 
 }

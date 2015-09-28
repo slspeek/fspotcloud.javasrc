@@ -4,5 +4,4 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 public class UsergroupNotFoundException extends DispatchException {
 
-
 }

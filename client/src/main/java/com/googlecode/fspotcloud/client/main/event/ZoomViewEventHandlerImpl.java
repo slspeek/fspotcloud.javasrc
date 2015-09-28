@@ -32,25 +32,23 @@ import com.googlecode.fspotcloud.client.place.api.IRasterer;
 @GwtCompatible
 public class ZoomViewEventHandlerImpl implements ZoomViewEvent.Handler {
 
-    private final EventBus eventBus;
-    private final IRasterer rasterer;
+	private final EventBus eventBus;
+	private final IRasterer rasterer;
 
-    @Inject
-    public ZoomViewEventHandlerImpl(EventBus eventBus,
-                                    IRasterer rasterer
-                                    ) {
-        super();
-        this.eventBus = eventBus;
-        this.rasterer = rasterer;
-    }
+	@Inject
+	public ZoomViewEventHandlerImpl(EventBus eventBus, IRasterer rasterer) {
+		super();
+		this.eventBus = eventBus;
+		this.rasterer = rasterer;
+	}
 
-    public void init() {
-        eventBus.addHandler(ZoomViewEvent.TYPE, this);
-    }
+	public void init() {
+		eventBus.addHandler(ZoomViewEvent.TYPE, this);
+	}
 
-    @Override
-    public void onEvent(ZoomViewEvent e) {
-        rasterer.toggleZoomView(e.getTagId(), e.getPhotoId());
+	@Override
+	public void onEvent(ZoomViewEvent e) {
+		rasterer.toggleZoomView(e.getTagId(), e.getPhotoId());
 
-    }
+	}
 }

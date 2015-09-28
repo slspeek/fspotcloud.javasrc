@@ -44,105 +44,104 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class LoginActivity extends AbstractActivity
+		implements
+			LoginView.LoginPresenter {
+	private final Logger log = Logger.getLogger(LoginActivity.class.getName());
+	public static final String AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST = "An error occurred making the authentication request";
+	public static final String LOGGED_IN = "Logged in";
+	public static final String NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION = "Not a valid username and password combination";
+	private final LoginView view;
+	private final DispatchAsync dispatch;
+	private final IPlaceController placeController;
+	private final IClientLoginManager clientLoginManager;
+	private final EventBus eventBus;
+	private final ApplicationActions applicationActions;
+	private final IModeController modeController;
 
-public class LoginActivity extends AbstractActivity implements LoginView.LoginPresenter {
-    private final Logger log = Logger.getLogger(LoginActivity.class.getName());
-    public static final String AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST =
-            "An error occurred making the authentication request";
-    public static final String LOGGED_IN = "Logged in";
-    public static final String NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION = "Not a valid username and password combination";
-    private final LoginView view;
-    private final DispatchAsync dispatch;
-    private final IPlaceController placeController;
-    private final IClientLoginManager clientLoginManager;
-    private final EventBus eventBus;
-    private final ApplicationActions applicationActions;
-    private final IModeController modeController;
+	@Inject
+	public LoginActivity(LoginView loginView, DispatchAsync dispatch,
+			IPlaceController placeController,
+			IClientLoginManager clientLoginManager, EventBus eventBus,
+			ApplicationActions applicationActions,
+			IModeController modeController) {
+		this.view = loginView;
+		this.dispatch = dispatch;
+		this.placeController = placeController;
+		this.clientLoginManager = clientLoginManager;
+		this.eventBus = eventBus;
+		this.applicationActions = applicationActions;
+		this.modeController = modeController;
+	}
 
+	@Override
+	public void start(AcceptsOneWidget panel,
+			com.google.gwt.event.shared.EventBus eventBus) {
+		this.view.setPresenter(this);
+		panel.setWidget(view);
+		view.focusUserNameField();
+	}
 
-    @Inject
-    public LoginActivity(LoginView loginView,
-                         DispatchAsync dispatch,
-                         IPlaceController placeController,
-                         IClientLoginManager clientLoginManager,
-                         EventBus eventBus,
-                         ApplicationActions applicationActions,
-                         IModeController modeController) {
-        this.view = loginView;
-        this.dispatch = dispatch;
-        this.placeController = placeController;
-        this.clientLoginManager = clientLoginManager;
-        this.eventBus = eventBus;
-        this.applicationActions = applicationActions;
-        this.modeController = modeController;
-    }
+	private String getNextUrl() {
+		return ((LoginPlace) placeController.getRawWhere()).getNextUrl();
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBus) {
-        this.view.setPresenter(this);
-        panel.setWidget(view);
-        view.focusUserNameField();
-    }
+	@Override
+	public void onUserFieldKeyUp(int code) {
+		log.log(Level.FINE, "Code: " + code);
+		if (code == 13) {
+			view.focusPasswordField();
+		}
+	}
 
-    private String getNextUrl() {
-        return ((LoginPlace) placeController.getRawWhere()).getNextUrl();
-    }
+	@Override
+	public void onPasswordFieldKeyUp(int code) {
+		if (code == 13) {
+			submitToServer();
+		}
+	}
 
-    @Override
-    public void onUserFieldKeyUp(int code) {
-        log.log(Level.FINE, "Code: " + code);
-        if (code == 13) {
-            view.focusPasswordField();
-        }
-    }
+	private void submitToServer() {
+		String userName = view.getUserNameField();
+		String password = view.getPasswordField();
+		AuthenticationAction auth = new AuthenticationAction(userName, password);
+		dispatch.execute(auth, new AsyncCallback<AuthenticationResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.WARNING, "Auth request could not be made", caught);
+				view.setStatusText(AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST);
+			}
 
-    @Override
-    public void onPasswordFieldKeyUp(int code) {
-        if (code == 13) {
-            submitToServer();
-        }
-    }
+			@Override
+			public void onSuccess(AuthenticationResult result) {
+				log.log(Level.FINE,
+						"Server replied to auth request: "
+								+ result.getSuccess());
 
-    private void submitToServer() {
-        String userName = view.getUserNameField();
-        String password = view.getPasswordField();
-        AuthenticationAction auth = new AuthenticationAction(userName, password);
-        dispatch.execute(auth,
-                new AsyncCallback<AuthenticationResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.WARNING, "Auth request could not be made",
-                                caught);
-                        view.setStatusText(AN_ERROR_OCCURRED_MAKING_THE_AUTHENTICATION_REQUEST);
-                    }
+				if (result.getSuccess()) {
+					//modeController.setFlag(Flags.LOGGED_ON.name());
 
-                    @Override
-                    public void onSuccess(AuthenticationResult result) {
-                        log.log(Level.FINE, "Server replied to auth request: " + result.getSuccess());
+					view.setStatusText(LOGGED_IN);
+					view.clearFields();
+					clientLoginManager.resetApplicationData();
+					String nextUrl = getNextUrl();
+					if (!nextUrl.equals("")) {
+						placeController.goTo(nextUrl);
+					} else {
+						placeController.goTo(new UserAccountPlace());
+					}
+					eventBus.fireEvent(new KeyboardActionEvent(
+							applicationActions.reloadTree.getId()));
+					log.log(Level.FINEST, "Reached end of login");
+				} else {
+					view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
+				}
+			}
+		});
+	}
 
-                        if (result.getSuccess()) {
-                            //modeController.setFlag(Flags.LOGGED_ON.name());
-
-                            view.setStatusText(LOGGED_IN);
-                            view.clearFields();
-                            clientLoginManager.resetApplicationData();
-                            String nextUrl = getNextUrl();
-                            if (!nextUrl.equals("")) {
-                                placeController.goTo(nextUrl);
-                            } else {
-                                placeController.goTo(new UserAccountPlace());
-                            }
-                            eventBus.fireEvent(new KeyboardActionEvent(applicationActions.reloadTree.getId()));
-                            log.log(Level.FINEST, "Reached end of login");
-                        } else {
-                            view.setStatusText(NOT_A_VALID_USERNAME_AND_PASSWORD_COMBINATION);
-                        }
-                    }
-                });
-    }
-
-    @Override
-    public void performAction(String actionId) {
-        submitToServer();
-    }
+	@Override
+	public void performAction(String actionId) {
+		submitToServer();
+	}
 }

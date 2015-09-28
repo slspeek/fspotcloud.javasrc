@@ -27,31 +27,30 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class SignUpAction implements Action<SignUpResult> {
-    private String email;
-    private String password;
-    private String nickname;
+	private String email;
+	private String password;
+	private String nickname;
 
-    public SignUpAction() {
-    }
+	public SignUpAction() {
+	}
 
-    public SignUpAction(String email, String password, String nickname) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-    }
+	public SignUpAction(String email, String password, String nickname) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getNickname() {
-        return nickname;
-    }
+	public String getNickname() {
+		return nickname;
+	}
 }

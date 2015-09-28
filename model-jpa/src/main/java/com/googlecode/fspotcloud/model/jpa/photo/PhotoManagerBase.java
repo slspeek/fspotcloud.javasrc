@@ -36,8 +36,9 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public abstract class PhotoManagerBase<T extends Photo, U extends T> extends
-		SimpleDAONamedIdImpl<Photo, U, String> implements PhotoDao {
+public abstract class PhotoManagerBase<T extends Photo, U extends T>
+		extends
+			SimpleDAONamedIdImpl<Photo, U, String> implements PhotoDao {
 	@Inject
 	private BlobService blobService;
 

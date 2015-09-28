@@ -2,6 +2,6 @@ package com.googlecode.fspotcloud.keyboardaction;
 
 public interface IActionHandler {
 
-    void performAction(String actionId);
+	void performAction(String actionId);
 
 }

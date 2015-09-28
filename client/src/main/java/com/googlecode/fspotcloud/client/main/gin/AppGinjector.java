@@ -33,9 +33,10 @@ import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
 import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
 
 @GwtCompatible
-@GinModules({AppModule.class, UserActionModule.class, StandardDispatchModule.class})
+@GinModules({AppModule.class, UserActionModule.class,
+		StandardDispatchModule.class})
 public interface AppGinjector extends Ginjector {
-    MVPSetup getMVPSetup();
+	MVPSetup getMVPSetup();
 
-    StylesSetup getStylesSetup();
+	StylesSetup getStylesSetup();
 }

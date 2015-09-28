@@ -33,80 +33,78 @@ import javax.mail.util.ByteArrayDataSource;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-
 public class Mailer implements IMail {
-    private String fromAddress;
-    private String smtpServer;
+	private String fromAddress;
+	private String smtpServer;
 
-    @Inject
-    public Mailer(@FromAddress
-                  String fromAddress, @SMTPServer
-                  String smtpServer) {
-        this.fromAddress = fromAddress;
-        this.smtpServer = smtpServer;
-    }
+	@Inject
+	public Mailer(@FromAddress String fromAddress, @SMTPServer String smtpServer) {
+		this.fromAddress = fromAddress;
+		this.smtpServer = smtpServer;
+	}
 
-    @Override
-    public void send(String recipient, String subject, String body) {
-        Properties props = new Properties();
-        props.setProperty("mail.smtp.host", smtpServer);
+	@Override
+	public void send(String recipient, String subject, String body) {
+		Properties props = new Properties();
+		props.setProperty("mail.smtp.host", smtpServer);
 
-        Session session = Session.getDefaultInstance(props, null);
+		Session session = Session.getDefaultInstance(props, null);
 
-        try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(fromAddress));
-            msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(recipient));
-            msg.setSubject(subject);
-            msg.setText(body);
-            Transport.send(msg);
-        } catch (AddressException e) {
-            Logger.getAnonymousLogger().info(e.getLocalizedMessage());
-        } catch (MessagingException e) {
-            Logger.getAnonymousLogger().info(e.getLocalizedMessage());
-        }
-    }
+		try {
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(fromAddress));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+					recipient));
+			msg.setSubject(subject);
+			msg.setText(body);
+			Transport.send(msg);
+		} catch (AddressException e) {
+			Logger.getAnonymousLogger().info(e.getLocalizedMessage());
+		} catch (MessagingException e) {
+			Logger.getAnonymousLogger().info(e.getLocalizedMessage());
+		}
+	}
 
-    @Override
-    public void send(String recipient, String subject, String body,
-                     byte[] attachment) {
-        Properties props = new Properties();
-        props.setProperty("mail.smtp.host", smtpServer);
+	@Override
+	public void send(String recipient, String subject, String body,
+			byte[] attachment) {
+		Properties props = new Properties();
+		props.setProperty("mail.smtp.host", smtpServer);
 
-        Session session = Session.getDefaultInstance(props, null);
+		Session session = Session.getDefaultInstance(props, null);
 
-        try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(fromAddress));
-            msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(recipient));
-            msg.setSubject(subject);
+		try {
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(fromAddress));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+					recipient));
+			msg.setSubject(subject);
 
-            // create the message part
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
+			// create the message part
+			MimeBodyPart messageBodyPart = new MimeBodyPart();
 
-            //fill message
-            messageBodyPart.setText(body);
+			//fill message
+			messageBodyPart.setText(body);
 
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageBodyPart);
 
-            // Part two is attachment
-            messageBodyPart = new MimeBodyPart();
+			// Part two is attachment
+			messageBodyPart = new MimeBodyPart();
 
-            DataSource source = new ByteArrayDataSource(attachment, "image/jpeg");
-            messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName("image.jpg");
-            multipart.addBodyPart(messageBodyPart);
+			DataSource source = new ByteArrayDataSource(attachment,
+					"image/jpeg");
+			messageBodyPart.setDataHandler(new DataHandler(source));
+			messageBodyPart.setFileName("image.jpg");
+			multipart.addBodyPart(messageBodyPart);
 
-            // Put parts in message
-            msg.setContent(multipart);
-            Transport.send(msg);
-        } catch (AddressException e) {
-            Logger.getAnonymousLogger().info(e.getLocalizedMessage());
-        } catch (MessagingException e) {
-            Logger.getAnonymousLogger().info(e.getLocalizedMessage());
-        }
-    }
+			// Put parts in message
+			msg.setContent(multipart);
+			Transport.send(msg);
+		} catch (AddressException e) {
+			Logger.getAnonymousLogger().info(e.getLocalizedMessage());
+		} catch (MessagingException e) {
+			Logger.getAnonymousLogger().info(e.getLocalizedMessage());
+		}
+	}
 }

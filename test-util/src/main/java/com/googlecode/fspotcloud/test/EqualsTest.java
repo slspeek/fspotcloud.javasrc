@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import org.junit.Before;
@@ -38,53 +38,53 @@ import static org.junit.Assert.assertFalse;
  * @author steven
  */
 public abstract class EqualsTest<T> {
-    T one;
-    T theOther;
-    T differs;
-    final Object obj = new Object();
+	T one;
+	T theOther;
+	T differs;
+	final Object obj = new Object();
 
-    @Before
-    public final void setup() {
-        one = getOne();
-        theOther = getTheOther();
-        differs = getDifferentOne();
-    }
+	@Before
+	public final void setup() {
+		one = getOne();
+		theOther = getTheOther();
+		differs = getDifferentOne();
+	}
 
-    protected abstract T getOne();
+	protected abstract T getOne();
 
-    protected  T getTheOther() {
-      return getOne();
-    }
+	protected T getTheOther() {
+		return getOne();
+	}
 
-    protected abstract T getDifferentOne();
+	protected abstract T getDifferentOne();
 
-    @Test
-    public void testEquals() {
-        assertEquals(one, theOther);
-    }
+	@Test
+	public void testEquals() {
+		assertEquals(one, theOther);
+	}
 
-    @Test
-    public void testSame() {
-        assertEquals(one, one);
-    }
+	@Test
+	public void testSame() {
+		assertEquals(one, one);
+	}
 
-    @Test
-    public void shouldNotBeEqual() {
-        assertFalse(one.equals(obj));
-    }
+	@Test
+	public void shouldNotBeEqual() {
+		assertFalse(one.equals(obj));
+	}
 
-    @Test
-    public void shouldNotEqual() {
-        assertFalse(one.equals(differs));
-    }
+	@Test
+	public void shouldNotEqual() {
+		assertFalse(one.equals(differs));
+	}
 
-    @Test
-    public void shouldNotEqualNull() {
-        assertFalse(one.equals(null));
-    }
+	@Test
+	public void shouldNotEqualNull() {
+		assertFalse(one.equals(null));
+	}
 
-    @Test
-    public void hashCodeContract() {
-        assertEquals(one.hashCode(), theOther.hashCode());
-    }
+	@Test
+	public void hashCodeContract() {
+		assertEquals(one.hashCode(), theOther.hashCode());
+	}
 }

@@ -36,78 +36,81 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+public class RemovePhotosFromTagHandler
+		extends
+			AbstractBatchActionHandler<RemovePhotosFromTagAction, String> {
+	private final int MAX_DELETE_TICKS;
+	private final TaskQueueDispatch dispatchAsync;
+	private final PhotoDao photoDao;
+	private final TagDao tagManager;
+	private final PeerDatabaseDao peerDatabaseManager;
 
-public class RemovePhotosFromTagHandler extends AbstractBatchActionHandler<RemovePhotosFromTagAction, String> {
-    private final int MAX_DELETE_TICKS;
-    private final TaskQueueDispatch dispatchAsync;
-    private final PhotoDao photoDao;
-    private final TagDao tagManager;
-    private final PeerDatabaseDao peerDatabaseManager;
+	@Inject
+	public RemovePhotosFromTagHandler(@Named("maxDelete") int maxDeleteTicks,
+			TaskQueueDispatch dispatchAsync, PhotoDao photoDao,
+			TagDao tagManager, PeerDatabaseDao peerDatabaseManager) {
+		super(dispatchAsync, maxDeleteTicks);
+		MAX_DELETE_TICKS = maxDeleteTicks;
+		this.dispatchAsync = dispatchAsync;
+		this.photoDao = photoDao;
+		this.tagManager = tagManager;
+		this.peerDatabaseManager = peerDatabaseManager;
+	}
 
-    @Inject
-    public RemovePhotosFromTagHandler(@Named("maxDelete")
-                                      int maxDeleteTicks, TaskQueueDispatch dispatchAsync, PhotoDao photoDao,
-                                      TagDao tagManager, PeerDatabaseDao peerDatabaseManager) {
-        super(dispatchAsync, maxDeleteTicks);
-        MAX_DELETE_TICKS = maxDeleteTicks;
-        this.dispatchAsync = dispatchAsync;
-        this.photoDao = photoDao;
-        this.tagManager = tagManager;
-        this.peerDatabaseManager = peerDatabaseManager;
-    }
+	private void checkForDeletion(Tag tag, String deleteTagId, String key) {
+		Photo photo = photoDao.find(key);
 
-    private void checkForDeletion(Tag tag, String deleteTagId, String key) {
-        Photo photo = photoDao.find(key);
+		if (photo != null) {
+			boolean moreImports = false;
 
-        if (photo != null) {
-            boolean moreImports = false;
+			for (String tagId : photo.getTagList()) {
+				if (!deleteTagId.equals(tagId)) {
+					Tag tagRelated = tagManager.find(tagId);
 
-            for (String tagId : photo.getTagList()) {
-                if (!deleteTagId.equals(tagId)) {
-                    Tag tagRelated = tagManager.find(tagId);
+					if (tagRelated != null && tagRelated.isImportIssued()) {
+						moreImports = true;
+						break;
+					}
+				}
+			}
 
-                    if (tagRelated != null && tagRelated.isImportIssued()) {
-                        moreImports = true;
-                        break;
-                    }
-                }
-            }
+			if (!moreImports) {
+				photoDao.delete(photo);
 
-            if (!moreImports) {
-                photoDao.delete(photo);
+				final TreeSet<PhotoInfo> cachedPhotoList = tag
+						.getCachedPhotoList();
+				cachedPhotoList.remove(find(tag.getCachedPhotoList(), key));
+				tag.setCachedPhotoList(cachedPhotoList);
+			}
+		}
+	}
 
-                final TreeSet<PhotoInfo> cachedPhotoList = tag.getCachedPhotoList();
-                cachedPhotoList.remove(find(tag.getCachedPhotoList(), key));
-                tag.setCachedPhotoList(cachedPhotoList);
-            }
-        }
-    }
+	private PhotoInfo find(SortedSet<PhotoInfo> set, String id) {
+		for (PhotoInfo info : set) {
+			if (info.getId().equals(id)) {
+				return info;
+			}
+		}
 
-    private PhotoInfo find(SortedSet<PhotoInfo> set, String id) {
-        for (PhotoInfo info : set) {
-            if (info.getId().equals(id)) {
-                return info;
-            }
-        }
+		return null;
+	}
 
-        return null;
-    }
+	@Override
+	public void doWork(AbstractBatchAction<String> action,
+			Iterator<String> workLoad) {
+		Tag tag = tagManager.find(((RemovePhotosFromTagAction) action)
+				.getTagId());
 
-    @Override
-    public void doWork(AbstractBatchAction<String> action,
-                       Iterator<String> workLoad) {
-        Tag tag = tagManager.find(((RemovePhotosFromTagAction) action).getTagId());
+		for (int i = 0; i < MAX_DELETE_TICKS && workLoad.hasNext(); i++) {
+			String photoId = workLoad.next();
+			checkForDeletion(tag, tag.getId(), photoId);
+		}
 
-        for (int i = 0; i < MAX_DELETE_TICKS && workLoad.hasNext(); i++) {
-            String photoId = workLoad.next();
-            checkForDeletion(tag, tag.getId(), photoId);
-        }
+		tagManager.save(tag);
+		clearTreeCache();
+	}
 
-        tagManager.save(tag);
-        clearTreeCache();
-    }
-
-    private void clearTreeCache() {
-        peerDatabaseManager.resetCachedTagTrees();
-    }
+	private void clearTreeCache() {
+		peerDatabaseManager.resetCachedTagTrees();
+	}
 }

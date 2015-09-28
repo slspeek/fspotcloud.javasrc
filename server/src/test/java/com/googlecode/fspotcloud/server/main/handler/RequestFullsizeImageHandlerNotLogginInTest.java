@@ -22,36 +22,36 @@ import static org.mockito.Mockito.when;
 @RunWith(JukitoRunner.class)
 public class RequestFullsizeImageHandlerNotLogginInTest {
 
+	public static final String ID = "1";
+	@Inject
+	private RequestFullsizeImageHandler handler;
 
-    public static final String ID = "1";
-    @Inject
-    private RequestFullsizeImageHandler handler;
+	@Inject
+	private ControllerDispatchAsync controllerAsyc;
+	@Inject
+	private PhotoDao photoDao;
+	@Inject
+	private ImageHelper imageHelper;
+	@Inject
+	private UserService userService;
+	@Inject
+	private IMail mailer;
+	@Inject
+	private IUserGroupHelper userGroupHelper;
 
-    @Inject
-    private ControllerDispatchAsync controllerAsyc;
-    @Inject
-    private PhotoDao photoDao;
-    @Inject
-    private ImageHelper imageHelper;
-    @Inject
-    private UserService userService;
-    @Inject
-    private IMail mailer;
-    @Inject
-    private IUserGroupHelper userGroupHelper;
+	private Photo photo = new PhotoEntity();
+	private RequestFullsizeImageAction action = new RequestFullsizeImageAction(
+			ID);
 
-    private Photo photo = new PhotoEntity();
-    private RequestFullsizeImageAction action = new RequestFullsizeImageAction(ID);
+	@Before
+	public void setUp() throws Exception {
+		when(userService.isUserLoggedIn()).thenReturn(false);
+	}
 
-
-    @Before
-    public void setUp() throws Exception {
-        when(userService.isUserLoggedIn()).thenReturn(false);
-    }
-
-    @Test
-    public void testExecute() throws Exception {
-        FullsizeImageResult result = handler.execute(action, null);
-        assertEquals(RequestFullsizeImageHandler.LOGON_FIRST, result.getMessage());
-    }
+	@Test
+	public void testExecute() throws Exception {
+		FullsizeImageResult result = handler.execute(action, null);
+		assertEquals(RequestFullsizeImageHandler.LOGON_FIRST,
+				result.getMessage());
+	}
 }

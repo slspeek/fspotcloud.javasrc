@@ -38,39 +38,47 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
 
+public class SendPasswordResetHandler
+		extends
+			SimpleActionHandler<SendPasswordResetAction, SendPasswordResetResult> {
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private Provider<IMail> mailerProvider;
+	@Inject
+	private MailGenerator mailGenerator;
+	@Inject
+	private Provider<SecretGenerator> secretGeneratorProvider;
 
-public class SendPasswordResetHandler extends SimpleActionHandler<SendPasswordResetAction, SendPasswordResetResult> {
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private Provider<IMail> mailerProvider;
-    @Inject
-    private MailGenerator mailGenerator;
-    @Inject
-    private Provider<SecretGenerator> secretGeneratorProvider;
+	@Override
+	public SendPasswordResetResult execute(SendPasswordResetAction action,
+			ExecutionContext context) throws DispatchException {
+		final String email = action.getEmail();
+		final User mayBeExisted = userDao.find(email);
+		if (mayBeExisted != null && mayBeExisted.hasRegistered()) {
+			final User registeredUser = mayBeExisted;
+			if (registeredUser.getEnabled()) {
+				String emailConfirmationSecret = secretGeneratorProvider.get()
+						.getSecret(email);
+				registeredUser
+						.setEmailVerificationSecret(emailConfirmationSecret);
+				userDao.save(registeredUser);
 
-    @Override
-    public SendPasswordResetResult execute(SendPasswordResetAction action, ExecutionContext context) throws DispatchException {
-        final String email = action.getEmail();
-        final User mayBeExisted = userDao.find(email);
-        if (mayBeExisted != null && mayBeExisted.hasRegistered()) {
-            final User registeredUser = mayBeExisted;
-            if (registeredUser.getEnabled()) {
-                String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
-                registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
-                userDao.save(registeredUser);
+				String confirmationMail = mailGenerator
+						.getPasswordResetMailBody(email,
+								emailConfirmationSecret);
+				mailerProvider.get().send(email,
+						"F-Spot Cloud reset password link", confirmationMail);
+				return new SendPasswordResetResult(
+						SendPasswordResetResult.Code.SUCCESS);
+			} else {
+				return new SendPasswordResetResult(
+						SendPasswordResetResult.Code.NOT_VERIFIED);
+			}
 
-                String confirmationMail = mailGenerator.getPasswordResetMailBody(email,
-                        emailConfirmationSecret);
-                mailerProvider.get().send(email, "F-Spot Cloud reset password link",
-                        confirmationMail);
-                return new SendPasswordResetResult(SendPasswordResetResult.Code.SUCCESS);
-            } else {
-                return new SendPasswordResetResult(SendPasswordResetResult.Code.NOT_VERIFIED);
-            }
-
-        } else {
-            return new SendPasswordResetResult(SendPasswordResetResult.Code.NOT_REGISTERED);
-        }
-    }
+		} else {
+			return new SendPasswordResetResult(
+					SendPasswordResetResult.Code.NOT_REGISTERED);
+		}
+	}
 }

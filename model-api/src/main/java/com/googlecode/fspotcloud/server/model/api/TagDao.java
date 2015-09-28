@@ -29,11 +29,10 @@ import com.googlecode.simplejpadao.SimpleDAONamedId;
 
 import java.util.List;
 
-
 public interface TagDao extends SimpleDAONamedId<Tag, String> {
-    List<TagNode> getTags();
+	List<TagNode> getTags();
 
-    List<Tag> getImportedTags();
+	List<Tag> getImportedTags();
 
-    TagNode getTagNode(Tag tag);
+	TagNode getTagNode(Tag tag);
 }

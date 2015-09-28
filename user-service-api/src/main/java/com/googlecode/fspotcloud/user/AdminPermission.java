@@ -27,26 +27,25 @@ package com.googlecode.fspotcloud.user;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-
 /**
  * Encapsulated the verification of the user being logged as admin
  *
  * @author steven
  */
 public class AdminPermission implements IAdminPermission {
-    private final Provider<UserService> userServiceProvider;
+	private final Provider<UserService> userServiceProvider;
 
-    @Inject
-    public AdminPermission(Provider<UserService> userServiceProvider) {
-        this.userServiceProvider = userServiceProvider;
-    }
+	@Inject
+	public AdminPermission(Provider<UserService> userServiceProvider) {
+		this.userServiceProvider = userServiceProvider;
+	}
 
-    @Override
-    public void checkAdminPermission() {
-        UserService userService = userServiceProvider.get();
+	@Override
+	public void checkAdminPermission() {
+		UserService userService = userServiceProvider.get();
 
-        if (!userService.isUserAdmin()) {
-            throw new SecurityException("User is not logged in as admin");
-        }
-    }
+		if (!userService.isUserAdmin()) {
+			throw new SecurityException("User is not logged in as admin");
+		}
+	}
 }

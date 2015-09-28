@@ -27,15 +27,17 @@ package com.googlecode.fspotcloud.model.jpa.usergroup;
 import com.googlecode.fspotcloud.server.model.api.UserGroup;
 import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 
+public class UserGroupManager
+		extends
+			UserGroupManagerBase<UserGroup, UserGroupEntity>
+		implements
+			UserGroupDao {
+	@Override
+	protected UserGroup newUserGroup() {
+		return new UserGroupEntity();
+	}
 
-public class UserGroupManager extends UserGroupManagerBase<UserGroup, UserGroupEntity>
-        implements UserGroupDao {
-    @Override
-    protected UserGroup newUserGroup() {
-        return new UserGroupEntity();
-    }
-
-    public Class<UserGroupEntity> getEntityType() {
-        return UserGroupEntity.class;
-    }
+	public Class<UserGroupEntity> getEntityType() {
+		return UserGroupEntity.class;
+	}
 }

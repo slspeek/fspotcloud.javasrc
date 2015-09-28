@@ -29,13 +29,12 @@ import com.googlecode.fspotcloud.client.main.ui.GwtTestImageViewImpl;
 import junit.framework.Test;
 import junit.framework.TestCase;
 
-
 public class DefaultGwtTestSuite extends TestCase {
-    public static Test suite() {
-        GWTTestSuite suite = new GWTTestSuite("All Gwt Tests");
-        suite.addTestSuite(GwtTestImageViewImpl.class);
-        //suite.addTestSuite(GwtTestButtonPanelPresenterProvider.class);
+	public static Test suite() {
+		GWTTestSuite suite = new GWTTestSuite("All Gwt Tests");
+		suite.addTestSuite(GwtTestImageViewImpl.class);
+		//suite.addTestSuite(GwtTestButtonPanelPresenterProvider.class);
 
-        return suite;
-    }
+		return suite;
+	}
 }

@@ -30,15 +30,16 @@ import com.googlecode.simplejpadao.SimpleDAOGenIdImpl;
 
 import java.util.logging.Logger;
 
-
 public abstract class UserGroupManagerBase<T extends UserGroup, U extends T>
-        extends SimpleDAOGenIdImpl<UserGroup, U, Long> implements UserGroupDao {
-    private final Logger log = Logger.getLogger(UserGroupManagerBase.class.getName());
+		extends
+			SimpleDAOGenIdImpl<UserGroup, U, Long> implements UserGroupDao {
+	private final Logger log = Logger.getLogger(UserGroupManagerBase.class
+			.getName());
 
-    @Override
-    public UserGroup newEntity() {
-        return newUserGroup();
-    }
+	@Override
+	public UserGroup newEntity() {
+		return newUserGroup();
+	}
 
-    protected abstract UserGroup newUserGroup();
+	protected abstract UserGroup newUserGroup();
 }

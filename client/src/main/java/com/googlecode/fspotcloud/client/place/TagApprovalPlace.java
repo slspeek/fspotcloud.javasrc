@@ -27,68 +27,67 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class TagApprovalPlace extends Place {
-    private final String tagId;
+	private final String tagId;
 
-    public TagApprovalPlace(String tagId) {
-        this.tagId = tagId;
-    }
+	public TagApprovalPlace(String tagId) {
+		this.tagId = tagId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof TagApprovalPlace) {
-            TagApprovalPlace basePlace = (TagApprovalPlace) other;
-            String tagId = basePlace.getTagId();
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof TagApprovalPlace) {
+			TagApprovalPlace basePlace = (TagApprovalPlace) other;
+			String tagId = basePlace.getTagId();
 
-            return equal(this.tagId, tagId);
-        } else {
-            return false;
-        }
-    }
+			return equal(this.tagId, tagId);
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
+	@Override
+	public int hashCode() {
+		int hash = 0;
 
-        if (tagId != null) {
-            hash += tagId.hashCode();
-        }
+		if (tagId != null) {
+			hash += tagId.hashCode();
+		}
 
-        return hash;
-    }
+		return hash;
+	}
 
-    public String toString() {
-        String result = getClass().getName() + ": tagId: " + tagId;
+	public String toString() {
+		String result = getClass().getName() + ": tagId: " + tagId;
 
-        return result;
-    }
+		return result;
+	}
 
-    public static boolean equal(Object a, Object b) {
-        if (a == null) {
-            if (b == null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return a.equals(b);
-        }
-    }
+	public static boolean equal(Object a, Object b) {
+		if (a == null) {
+			if (b == null) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return a.equals(b);
+		}
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<TagApprovalPlace> {
-        @Override
-        public TagApprovalPlace getPlace(String token) {
-            return new TagApprovalPlace(token);
-        }
+	public static class Tokenizer implements PlaceTokenizer<TagApprovalPlace> {
+		@Override
+		public TagApprovalPlace getPlace(String token) {
+			return new TagApprovalPlace(token);
+		}
 
-        @Override
-        public String getToken(TagApprovalPlace place) {
-            return place.getTagId();
-        }
-    }
+		@Override
+		public String getToken(TagApprovalPlace place) {
+			return place.getTagId();
+		}
+	}
 }

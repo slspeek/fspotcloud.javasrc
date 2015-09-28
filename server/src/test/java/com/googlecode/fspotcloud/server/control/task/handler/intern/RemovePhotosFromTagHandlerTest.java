@@ -49,82 +49,82 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class RemovePhotosFromTagHandlerTest {
-    private static final String ID_B = "B";
-    private static final String ID_A = "A";
-    private static final String TAG_ID = "1";
-    int MAX_DELETE_TICKS = 1;
-    @Mock
-    TaskQueueDispatch dispatchAsync;
-    @Mock
-    PhotoDao photoDao;
-    @Mock
-    TagDao tagManager;
-    @Mock
-    PeerDatabaseDao peers;
-    Tag tag;
-    Tag tag3;
-    @Captor
-    ArgumentCaptor<RemovePhotosFromTagAction> nextCallCaptor;
-    PhotoInfo photoInfoA;
-    PhotoInfo photoInfoB;
-    List<String> idList;
-    Photo photoA;
-    Photo photoB;
-    List<String> tagIdListA = ImmutableList.of("1");
-    List<String> tagIdListB = ImmutableList.of("1", "3");
-    PeerDatabase peer = new PeerDatabaseEntity();
-    RemovePhotosFromTagHandler handler;
+	private static final String ID_B = "B";
+	private static final String ID_A = "A";
+	private static final String TAG_ID = "1";
+	int MAX_DELETE_TICKS = 1;
+	@Mock
+	TaskQueueDispatch dispatchAsync;
+	@Mock
+	PhotoDao photoDao;
+	@Mock
+	TagDao tagManager;
+	@Mock
+	PeerDatabaseDao peers;
+	Tag tag;
+	Tag tag3;
+	@Captor
+	ArgumentCaptor<RemovePhotosFromTagAction> nextCallCaptor;
+	PhotoInfo photoInfoA;
+	PhotoInfo photoInfoB;
+	List<String> idList;
+	Photo photoA;
+	Photo photoB;
+	List<String> tagIdListA = ImmutableList.of("1");
+	List<String> tagIdListB = ImmutableList.of("1", "3");
+	PeerDatabase peer = new PeerDatabaseEntity();
+	RemovePhotosFromTagHandler handler;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        handler = new RemovePhotosFromTagHandler(MAX_DELETE_TICKS,
-                dispatchAsync, photoDao, tagManager, peers);
-        tag3 = new TagEntity();
-        tag3.setId("3");
-        tag3.setImportIssued(true);
-        tag = new TagEntity();
-        tag.setId(TAG_ID);
-        photoA = new PhotoEntity();
-        photoA.setTagList(tagIdListA);
-        photoB = new PhotoEntity();
-        photoB.setTagList(tagIdListB);
-        photoInfoA = new PhotoInfo(ID_A, "", new Date(10));
-        photoInfoB = new PhotoInfo(ID_B, "", new Date(100000));
-        idList = newArrayList(ID_A, ID_B);
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		handler = new RemovePhotosFromTagHandler(MAX_DELETE_TICKS,
+				dispatchAsync, photoDao, tagManager, peers);
+		tag3 = new TagEntity();
+		tag3.setId("3");
+		tag3.setImportIssued(true);
+		tag = new TagEntity();
+		tag.setId(TAG_ID);
+		photoA = new PhotoEntity();
+		photoA.setTagList(tagIdListA);
+		photoB = new PhotoEntity();
+		photoB.setTagList(tagIdListB);
+		photoInfoA = new PhotoInfo(ID_A, "", new Date(10));
+		photoInfoB = new PhotoInfo(ID_B, "", new Date(100000));
+		idList = newArrayList(ID_A, ID_B);
 
-        TreeSet<PhotoInfo> cached = new TreeSet<PhotoInfo>();
-        cached.add(photoInfoA);
-        cached.add(photoInfoB);
-        tag.setCachedPhotoList(cached);
-        when(tagManager.find(TAG_ID)).thenReturn(tag);
-        when(tagManager.find("3")).thenReturn(tag3);
-        when(photoDao.find(ID_A)).thenReturn(photoA);
-        when(photoDao.find(ID_B)).thenReturn(photoB);
-        when(peers.get()).thenReturn(peer);
-    }
+		TreeSet<PhotoInfo> cached = new TreeSet<PhotoInfo>();
+		cached.add(photoInfoA);
+		cached.add(photoInfoB);
+		tag.setCachedPhotoList(cached);
+		when(tagManager.find(TAG_ID)).thenReturn(tag);
+		when(tagManager.find("3")).thenReturn(tag3);
+		when(photoDao.find(ID_A)).thenReturn(photoA);
+		when(photoDao.find(ID_B)).thenReturn(photoB);
+		when(peers.get()).thenReturn(peer);
+	}
 
-    /**
-     * First gets deleted, the second is needed in another tag. The
-     * max_delete = 1 so this takes 'recursion' over asyncDispatch.
-     *
-     * @throws DispatchException
-     */
-    @Test
-    public void testExecute() throws DispatchException {
-        assertEquals(2, tag.getCachedPhotoList().size());
+	/**
+	 * First gets deleted, the second is needed in another tag. The
+	 * max_delete = 1 so this takes 'recursion' over asyncDispatch.
+	 *
+	 * @throws DispatchException
+	 */
+	@Test
+	public void testExecute() throws DispatchException {
+		assertEquals(2, tag.getCachedPhotoList().size());
 
-        handler.execute(new RemovePhotosFromTagAction(TAG_ID, idList), null);
-        verify(photoDao).delete(photoA);
-        verify(photoDao).find(ID_A);
-        assertEquals(1, tag.getCachedPhotoList().size());
-        verifyNoMoreInteractions(photoDao);
-        verify(dispatchAsync).execute(nextCallCaptor.capture());
-        assertEquals(TAG_ID, nextCallCaptor.getValue().getTagId());
-        handler.execute(new RemovePhotosFromTagAction(TAG_ID, idList), null);
-        verifyNoMoreInteractions(dispatchAsync);
-        verify(photoDao).find(ID_B);
-        verifyNoMoreInteractions(photoDao);
-        assertEquals(1, tag.getCachedPhotoList().size());
-    }
+		handler.execute(new RemovePhotosFromTagAction(TAG_ID, idList), null);
+		verify(photoDao).delete(photoA);
+		verify(photoDao).find(ID_A);
+		assertEquals(1, tag.getCachedPhotoList().size());
+		verifyNoMoreInteractions(photoDao);
+		verify(dispatchAsync).execute(nextCallCaptor.capture());
+		assertEquals(TAG_ID, nextCallCaptor.getValue().getTagId());
+		handler.execute(new RemovePhotosFromTagAction(TAG_ID, idList), null);
+		verifyNoMoreInteractions(dispatchAsync);
+		verify(photoDao).find(ID_B);
+		verifyNoMoreInteractions(photoDao);
+		assertEquals(1, tag.getCachedPhotoList().size());
+	}
 }

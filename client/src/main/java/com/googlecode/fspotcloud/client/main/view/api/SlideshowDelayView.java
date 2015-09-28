@@ -29,13 +29,13 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 @GwtCompatible
 public interface SlideshowDelayView extends IsWidget {
-    void setLabelText(String text);
+	void setLabelText(String text);
 
-    void addStyleRunning();
+	void addStyleRunning();
 
-    void removeStyleRunning();
+	void removeStyleRunning();
 
-    interface SlideshowPresenter {
-        IsWidget getView();
-    }
+	interface SlideshowPresenter {
+		IsWidget getView();
+	}
 }

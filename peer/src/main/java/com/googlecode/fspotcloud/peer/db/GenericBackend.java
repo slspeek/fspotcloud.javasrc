@@ -102,28 +102,29 @@ public abstract class GenericBackend implements Backend {
 	}
 
 	@Override
-	public void uploadImages(ImageSpecs imageSpecs, List<PhotoData> photos) throws Exception {
+	public void uploadImages(ImageSpecs imageSpecs, List<PhotoData> photos)
+			throws Exception {
 		// collect all byte[]
 		Map<String, byte[]> uploadData = Maps.newHashMap();
-		for (PhotoData photo: photos) {
-			 String id = photo.getPhotoId();
-			 String url = getImageURL(id);
-             byte[] image = imageData.getScaledImageData(url,
-                     new Dimension(imageSpecs.getWidth(),
-                             imageSpecs.getHeight()));
-             byte[] thumb = imageData.getScaledImageData(url,
-                     new Dimension(imageSpecs.getThumbWidth(),
-                             imageSpecs.getThumbHeight()));
-             uploadData.put(id +"_thumb", thumb);
-             uploadData.put(id +"_image", image);
+		for (PhotoData photo : photos) {
+			String id = photo.getPhotoId();
+			String url = getImageURL(id);
+			byte[] image = imageData.getScaledImageData(url, new Dimension(
+					imageSpecs.getWidth(), imageSpecs.getHeight()));
+			byte[] thumb = imageData.getScaledImageData(url, new Dimension(
+					imageSpecs.getThumbWidth(), imageSpecs.getThumbHeight()));
+			uploadData.put(id + "_thumb", thumb);
+			uploadData.put(id + "_image", image);
 		}
 		// call blobstoreclient.upload
 		Map<String, List<BlobKey>> upload = blobClient.upload(uploadData);
 		// modify photos with the result 
-		for (PhotoData photo: photos) {
-			 String id = photo.getPhotoId();
-			 photo.setThumbBlobKey(upload.get(id +"_thumb").get(0).getKeyString());	
-			 photo.setImageBlobKey(upload.get(id +"_image").get(0).getKeyString());
+		for (PhotoData photo : photos) {
+			String id = photo.getPhotoId();
+			photo.setThumbBlobKey(upload.get(id + "_thumb").get(0)
+					.getKeyString());
+			photo.setImageBlobKey(upload.get(id + "_image").get(0)
+					.getKeyString());
 		}
 	}
 }

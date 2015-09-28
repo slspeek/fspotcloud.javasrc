@@ -43,54 +43,55 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 
 public class TagManagerTest {
-    private final Logger log = Logger.getLogger(TagManagerTest.class.getName());
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private TagDao tagManager;
+	private final Logger log = Logger.getLogger(TagManagerTest.class.getName());
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private TagDao tagManager;
 
-    @After
-    public void setUp() throws Exception {
-        tagManager.deleteBulk(100);
-    }
+	@After
+	public void setUp() throws Exception {
+		tagManager.deleteBulk(100);
+	}
 
-    @Test
-    public void testGetTags() {
-        createSaveTag("21");
+	@Test
+	public void testGetTags() {
+		createSaveTag("21");
 
-        List<TagNode> tags = tagManager.getTags();
-        TagNode node = tags.get(0);
-        assertEquals("21", node.getId());
-    }
+		List<TagNode> tags = tagManager.getTags();
+		TagNode node = tags.get(0);
+		assertEquals("21", node.getId());
+	}
 
-    private Tag createSaveTag(String id) {
-        Tag tag = tagManager.findOrNew(id);
-        tag.setId(id);
-        tagManager.save(tag);
+	private Tag createSaveTag(String id) {
+		Tag tag = tagManager.findOrNew(id);
+		tag.setId(id);
+		tagManager.save(tag);
 
-        return tag;
-    }
+		return tag;
+	}
 
-    @Test
-    public void modifyPhotoList() {
-        Tag subject = createSaveTag("9");
-        TreeSet<PhotoInfo> list = subject.getCachedPhotoList();
-        list.add(new PhotoInfo("1", "desc", new Date(10000)));
-        subject.setCachedPhotoList(list);
-        tagManager.save(subject);
-        assertEquals("desc",
-                tagManager.find("9").getCachedPhotoList().first().getDescription());
-    }
+	@Test
+	public void modifyPhotoList() {
+		Tag subject = createSaveTag("9");
+		TreeSet<PhotoInfo> list = subject.getCachedPhotoList();
+		list.add(new PhotoInfo("1", "desc", new Date(10000)));
+		subject.setCachedPhotoList(list);
+		tagManager.save(subject);
+		assertEquals("desc", tagManager.find("9").getCachedPhotoList().first()
+				.getDescription());
+	}
 
-    @Test
-    public void getImportedTags() {
-        Tag tag = createSaveTag("21");
-        tag.setImportIssued(true);
-        tagManager.save(tag);
-        createSaveTag("22");
+	@Test
+	public void getImportedTags() {
+		Tag tag = createSaveTag("21");
+		tag.setImportIssued(true);
+		tagManager.save(tag);
+		createSaveTag("22");
 
-        List<Tag> importedTags = tagManager.getImportedTags();
-        assertEquals(1, importedTags.size());
-        assertEquals("21", importedTags.get(0).getId());
-    }
+		List<Tag> importedTags = tagManager.getImportedTags();
+		assertEquals(1, importedTags.size());
+		assertEquals("21", importedTags.get(0).getId());
+	}
 }

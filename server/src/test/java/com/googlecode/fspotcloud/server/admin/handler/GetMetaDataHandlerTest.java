@@ -43,51 +43,50 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 public class GetMetaDataHandlerTest {
-    GetMetaDataHandler handler;
-    GetMetaDataAction action = new GetMetaDataAction();
-    @Mock
-    Commands commandManager;
-    @Mock
-    PeerDatabaseDao defaultPeer;
-    @Mock
-    IAdminPermission adminPermission;
-    PeerDatabase pd;
+	GetMetaDataHandler handler;
+	GetMetaDataAction action = new GetMetaDataAction();
+	@Mock
+	Commands commandManager;
+	@Mock
+	PeerDatabaseDao defaultPeer;
+	@Mock
+	IAdminPermission adminPermission;
+	PeerDatabase pd;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        pd = new PeerDatabaseEntity();
-        handler = new GetMetaDataHandler(commandManager, defaultPeer,
-                adminPermission);
-    }
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		pd = new PeerDatabaseEntity();
+		handler = new GetMetaDataHandler(commandManager, defaultPeer,
+				adminPermission);
+	}
 
-    @Test
-    public void testExecute() throws DispatchException {
-        when(commandManager.getCountUnderAThousend()).thenReturn(100);
-        when(defaultPeer.get()).thenReturn(pd);
+	@Test
+	public void testExecute() throws DispatchException {
+		when(commandManager.getCountUnderAThousend()).thenReturn(100);
+		when(defaultPeer.get()).thenReturn(pd);
 
-        GetMetaDataResult result = handler.execute(action, null);
-        assertNull(result.getInstanceName());
-        assertEquals(0, result.getPeerPhotoCount());
-        assertEquals(100, result.getPendingCommandCount());
-    }
+		GetMetaDataResult result = handler.execute(action, null);
+		assertNull(result.getInstanceName());
+		assertEquals(0, result.getPeerPhotoCount());
+		assertEquals(100, result.getPendingCommandCount());
+	}
 
-    @Test(expected = DispatchException.class)
+	@Test(expected = DispatchException.class)
+	public void testException() throws DispatchException {
+		when(commandManager.getCountUnderAThousend()).thenThrow(
+				RuntimeException.class);
+		when(defaultPeer.get()).thenReturn(pd);
 
-    public void testException() throws DispatchException {
-        when(commandManager.getCountUnderAThousend())
-                .thenThrow(RuntimeException.class);
-        when(defaultPeer.get()).thenReturn(pd);
+		GetMetaDataResult result = handler.execute(action, null);
 
-        GetMetaDataResult result = handler.execute(action, null);
+	}
 
-    }
+	@Test(expected = SecurityException.class)
+	public void forbidden() throws DispatchException {
+		doThrow(new SecurityException()).when(adminPermission)
+				.checkAdminPermission();
 
-    @Test(expected = SecurityException.class)
-    public void forbidden() throws DispatchException {
-        doThrow(new SecurityException()).when(adminPermission)
-                .checkAdminPermission();
-
-        GetMetaDataResult result = handler.execute(action, null);
-    }
+		GetMetaDataResult result = handler.execute(action, null);
+	}
 }

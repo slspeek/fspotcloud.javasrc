@@ -33,9 +33,9 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface MailFullsizeView extends IsWidget, StatusView {
-    ImageViewImpl getImageView();
+	ImageViewImpl getImageView();
 
-    interface MailFullsizePresenter extends Activity, IActionHandler {
-        MailFullsizePresenter withPlace(MailFullsizePlace place);
-    }
+	interface MailFullsizePresenter extends Activity, IActionHandler {
+		MailFullsizePresenter withPlace(MailFullsizePlace place);
+	}
 }

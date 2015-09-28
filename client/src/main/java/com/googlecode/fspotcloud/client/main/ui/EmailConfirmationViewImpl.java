@@ -38,35 +38,41 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 import java.util.logging.Logger;
 
+public class EmailConfirmationViewImpl extends Composite
+		implements
+			EmailConfirmationView {
+	private final Logger log = Logger.getLogger(EmailConfirmationViewImpl.class
+			.getName());
 
-public class EmailConfirmationViewImpl extends Composite implements EmailConfirmationView {
-    private final Logger log = Logger.getLogger(EmailConfirmationViewImpl.class.getName());
+	interface EmailConfirmationViewImplUiBinder
+			extends
+				UiBinder<Widget, EmailConfirmationViewImpl> {
+	}
 
-    interface EmailConfirmationViewImplUiBinder extends UiBinder<Widget, EmailConfirmationViewImpl> {
-    }
+	private static final EmailConfirmationViewImplUiBinder uiBinder = GWT
+			.create(EmailConfirmationViewImplUiBinder.class);
 
-    private static final EmailConfirmationViewImplUiBinder uiBinder = GWT.create(EmailConfirmationViewImplUiBinder.class);
+	private final ActionToolbar actionToolbar;
 
-    private final ActionToolbar actionToolbar;
+	@UiField
+	Label statusLabel;
 
-    @UiField
-    Label statusLabel;
+	@Inject
+	public EmailConfirmationViewImpl(
+			@EmailConfirmationToolbar ActionToolbar actionToolbar) {
+		this.actionToolbar = actionToolbar;
+		initWidget(uiBinder.createAndBindUi(this));
+		statusLabel.ensureDebugId("status");
+	}
 
-    @Inject
-    public EmailConfirmationViewImpl(@EmailConfirmationToolbar ActionToolbar actionToolbar) {
-        this.actionToolbar = actionToolbar;
-        initWidget(uiBinder.createAndBindUi(this));
-        statusLabel.ensureDebugId("status");
-    }
+	@UiFactory
+	ActionToolbar getToolbar() {
+		return actionToolbar;
+	}
 
-    @UiFactory
-    ActionToolbar getToolbar() {
-        return actionToolbar;
-    }
-
-    @Override
-    public void setStatusText(String text) {
-        statusLabel.setText(text);
-    }
+	@Override
+	public void setStatusText(String text) {
+		statusLabel.setText(text);
+	}
 
 }

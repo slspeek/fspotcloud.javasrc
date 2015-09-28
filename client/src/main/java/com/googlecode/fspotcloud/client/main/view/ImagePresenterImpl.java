@@ -36,77 +36,77 @@ import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class ImagePresenterImpl implements ImageView.ImagePresenter {
-    private final Logger log = Logger.getLogger(ImagePresenterImpl.class.getName());
-    private final ImageView imageView;
-    private final String tagId;
-    private final String photoId;
-    private final boolean thumb;
-    private final EventBus eventBus;
-    private final PhotoInfo info;
+	private final Logger log = Logger.getLogger(ImagePresenterImpl.class
+			.getName());
+	private final ImageView imageView;
+	private final String tagId;
+	private final String photoId;
+	private final boolean thumb;
+	private final EventBus eventBus;
+	private final PhotoInfo info;
 
-    @Inject
-    public ImagePresenterImpl(@Assisted
-                              String tagId, @Assisted
-                              ImageView imageView, @Assisted
-                              boolean thumb, @Assisted
-                              PhotoInfo info,
-                              EventBus eventBus) {
-        this.tagId = tagId;
-        photoId = info.getId();
-        this.imageView = imageView;
-        this.thumb = thumb;
-        this.eventBus = eventBus;
-        this.info = info;
-    }
+	@Inject
+	public ImagePresenterImpl(@Assisted String tagId,
+			@Assisted ImageView imageView, @Assisted boolean thumb,
+			@Assisted PhotoInfo info, EventBus eventBus) {
+		this.tagId = tagId;
+		photoId = info.getId();
+		this.imageView = imageView;
+		this.thumb = thumb;
+		this.eventBus = eventBus;
+		this.info = info;
+	}
 
-    @Override
-    public void init() {
-        imageView.setPresenter(this);
-        setImage();
-        imageView.hideLabelLater(4000);
-    }
+	@Override
+	public void init() {
+		imageView.setPresenter(this);
+		setImage();
+		imageView.hideLabelLater(4000);
+	}
 
-    public void setImage() {
-        log.log(Level.FINEST, "setImage imageId: " + photoId);
-        if (photoId != null) {
-            String date;
+	public void setImage() {
+		log.log(Level.FINEST, "setImage imageId: " + photoId);
+		if (photoId != null) {
+			String date;
 
-            if (thumb) {
-                date = DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM)
-                        .format(info.getDate());
-            } else {
-                date = DateTimeFormat.getFormat(PredefinedFormat.DATE_FULL)
-                        .format(info.getDate()) + " " +
-                        DateTimeFormat.getFormat(PredefinedFormat.TIME_MEDIUM)
-                                .format(info.getDate()) + "(v" +
-                        info.getVersion() + ")";
-            }
-            imageView.setDescription(date);
+			if (thumb) {
+				date = DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM)
+						.format(info.getDate());
+			} else {
+				date = DateTimeFormat.getFormat(PredefinedFormat.DATE_FULL)
+						.format(info.getDate())
+						+ " "
+						+ DateTimeFormat
+								.getFormat(PredefinedFormat.TIME_MEDIUM)
+								.format(info.getDate())
+						+ "(v"
+						+ info.getVersion() + ")";
+			}
+			imageView.setDescription(date);
 
-            String url = "image?id=" + photoId;
-            url += (thumb ? "&thumb=true" : "");
-            imageView.setImageUrl(url);
-            imageView.adjustSize();
-        } else {
-            log.warning("No photoId defined for tagId:  " + tagId);
-        }
-    }
+			String url = "image?id=" + photoId;
+			url += (thumb ? "&thumb=true" : "");
+			imageView.setImageUrl(url);
+			imageView.adjustSize();
+		} else {
+			log.warning("No photoId defined for tagId:  " + tagId);
+		}
+	}
 
-    @Override
-    public void adjustSize() {
-        imageView.adjustSize();
-    }
+	@Override
+	public void adjustSize() {
+		imageView.adjustSize();
+	}
 
-    @Override
-    public void imageClicked() {
-        log.log(Level.FINEST, "about to fire zoom event");
-        eventBus.fireEvent(new ZoomViewEvent(tagId, photoId));
-    }
+	@Override
+	public void imageClicked() {
+		log.log(Level.FINEST, "about to fire zoom event");
+		eventBus.fireEvent(new ZoomViewEvent(tagId, photoId));
+	}
 
-    @Override
-    public void setSelected(boolean selected) {
-        imageView.setSelected(selected);
-    }
+	@Override
+	public void setSelected(boolean selected) {
+		imageView.setSelected(selected);
+	}
 }

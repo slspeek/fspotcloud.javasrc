@@ -37,32 +37,35 @@ import com.googlecode.fspotcloud.client.enduseraction.slideshow.SlideshowBinder;
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionModule;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
-
 public class UserActionModule extends AbstractGinModule {
-    @Override
-    protected void configure() {
-        install(new KeyboardActionModule());
-        bind(CategoryDef.class).in(Singleton.class);
+	@Override
+	protected void configure() {
+		install(new KeyboardActionModule());
+		bind(CategoryDef.class).in(Singleton.class);
 
-        bind(DashboardHandler.class);
-        bind(HideControlsHandler.class);
-        bind(LoginHandler.class);
-        bind(LogoutHandler.class);
-        bind(TreeFocusHandler.class);
-        bind(ZoomInHandler.class);
-        bind(ZoomOutHandler.class);
-        bind(ApplicationBinder.class).in(Singleton.class);
+		bind(DashboardHandler.class);
+		bind(HideControlsHandler.class);
+		bind(LoginHandler.class);
+		bind(LogoutHandler.class);
+		bind(TreeFocusHandler.class);
+		bind(ZoomInHandler.class);
+		bind(ZoomOutHandler.class);
+		bind(ApplicationBinder.class).in(Singleton.class);
 
-        bind(NavigationActionHandler.class);
-        bind(NavigationActions.class).in(Singleton.class);
+		bind(NavigationActionHandler.class);
+		bind(NavigationActions.class).in(Singleton.class);
 
-        bind(RasterBinder.class).in(Singleton.class);
+		bind(RasterBinder.class).in(Singleton.class);
 
-        bind(SlideshowBinder.class).in(Singleton.class);
+		bind(SlideshowBinder.class).in(Singleton.class);
 
-        bind(ActionToolbar.class).annotatedWith(MainToolbar.class).toProvider(MainToolbarProvider.class);
-        bind(ActionToolbar.class).annotatedWith(SlideshowToolbar.class).toProvider(SlideshowToolbarProvider.class);
-        bind(ActionToolbar.class).annotatedWith(EmailConfirmationToolbar.class).toProvider(EmailConfirmationToolbarProvider.class);
-        install(new GinFactoryModuleBuilder().build(SetRasterHandlerFactory.class));
-    }
+		bind(ActionToolbar.class).annotatedWith(MainToolbar.class).toProvider(
+				MainToolbarProvider.class);
+		bind(ActionToolbar.class).annotatedWith(SlideshowToolbar.class)
+				.toProvider(SlideshowToolbarProvider.class);
+		bind(ActionToolbar.class).annotatedWith(EmailConfirmationToolbar.class)
+				.toProvider(EmailConfirmationToolbarProvider.class);
+		install(new GinFactoryModuleBuilder()
+				.build(SetRasterHandlerFactory.class));
+	}
 }

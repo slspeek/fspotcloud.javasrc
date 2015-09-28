@@ -29,33 +29,35 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
 @GwtCompatible
-public class SlideshowStatusEvent extends GwtEvent<SlideshowStatusEvent.Handler> {
-    public static final Type<SlideshowStatusEvent.Handler> TYPE = new Type<SlideshowStatusEvent.Handler>();
-    private final float delay;
-    private final boolean running;
+public class SlideshowStatusEvent
+		extends
+			GwtEvent<SlideshowStatusEvent.Handler> {
+	public static final Type<SlideshowStatusEvent.Handler> TYPE = new Type<SlideshowStatusEvent.Handler>();
+	private final float delay;
+	private final boolean running;
 
-    public SlideshowStatusEvent(boolean running, float delay) {
-        this.running = running;
-        this.delay = delay;
-    }
+	public SlideshowStatusEvent(boolean running, float delay) {
+		this.running = running;
+		this.delay = delay;
+	}
 
-    public Type<Handler> getAssociatedType() {
-        return TYPE;
-    }
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
 
-    protected void dispatch(Handler handler) {
-        handler.onEvent(this);
-    }
+	protected void dispatch(Handler handler) {
+		handler.onEvent(this);
+	}
 
-    public float getDelay() {
-        return delay;
-    }
+	public float getDelay() {
+		return delay;
+	}
 
-    public boolean isRunning() {
-        return running;
-    }
+	public boolean isRunning() {
+		return running;
+	}
 
-    public static interface Handler extends EventHandler {
-        void onEvent(SlideshowStatusEvent e);
-    }
+	public static interface Handler extends EventHandler {
+		void onEvent(SlideshowStatusEvent e);
+	}
 }

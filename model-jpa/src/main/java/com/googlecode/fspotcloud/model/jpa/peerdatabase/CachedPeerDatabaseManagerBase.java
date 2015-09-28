@@ -33,59 +33,61 @@ import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.logging.Logger;
 
-
 public abstract class CachedPeerDatabaseManagerBase<T extends PeerDatabase, U extends T>
-        extends CachedSimpleDAONamedIdImpl<PeerDatabase, U, String>
-        implements PeerDatabaseDao {
-    private static final String DEFAULT_PEER_ID = "1";
-    private final Logger log = Logger.getLogger(CachedPeerDatabaseManagerBase.class.getName());
+		extends
+			CachedSimpleDAONamedIdImpl<PeerDatabase, U, String>
+		implements
+			PeerDatabaseDao {
+	private static final String DEFAULT_PEER_ID = "1";
+	private final Logger log = Logger
+			.getLogger(CachedPeerDatabaseManagerBase.class.getName());
 
-    public T get() {
-        T peer;
-        peer = getInstance();
+	public T get() {
+		T peer;
+		peer = getInstance();
 
-        return peer;
-    }
+		return peer;
+	}
 
-    private T getInstance() {
-        EntityManager pm = entityManagerProvider.get();
-        pm.getTransaction().begin();
+	private T getInstance() {
+		EntityManager pm = entityManagerProvider.get();
+		pm.getTransaction().begin();
 
-        T peerDatabase;
-        peerDatabase = (T) pm.find(getEntityType(), DEFAULT_PEER_ID);
+		T peerDatabase;
+		peerDatabase = (T) pm.find(getEntityType(), DEFAULT_PEER_ID);
 
-        if (peerDatabase == null) {
-            log.info("Default peer not found, creating one.");
-            peerDatabase = newInstance();
-            peerDatabase.setId(DEFAULT_PEER_ID);
-            peerDatabase.setPeerPhotoCount(0);
-            peerDatabase.setPhotoCount(0);
-            peerDatabase.setTagCount(0);
-            peerDatabase.setPeerName("No given name");
-            peerDatabase.setPeerLastContact(new Date(0));
-            pm.persist(peerDatabase);
-        }
+		if (peerDatabase == null) {
+			log.info("Default peer not found, creating one.");
+			peerDatabase = newInstance();
+			peerDatabase.setId(DEFAULT_PEER_ID);
+			peerDatabase.setPeerPhotoCount(0);
+			peerDatabase.setPhotoCount(0);
+			peerDatabase.setTagCount(0);
+			peerDatabase.setPeerName("No given name");
+			peerDatabase.setPeerLastContact(new Date(0));
+			pm.persist(peerDatabase);
+		}
 
-        pm.getTransaction().commit();
+		pm.getTransaction().commit();
 
-        return peerDatabase;
-    }
+		return peerDatabase;
+	}
 
-    @Override
-    public void touchPeerContact() {
-        T dp = get();
-        dp.setPeerLastContact(new Date());
-        save(dp);
-    }
+	@Override
+	public void touchPeerContact() {
+		T dp = get();
+		dp.setPeerLastContact(new Date());
+		save(dp);
+	}
 
-    @Override
-    public void resetCachedTagTrees() {
-        T dp = get();
-        TagNode tree = dp.getCachedTagTree();
-        dp.setCachedTagTree(null);
-        dp.setCachedAdminTagTree(null);
-        save(dp);
-    }
+	@Override
+	public void resetCachedTagTrees() {
+		T dp = get();
+		TagNode tree = dp.getCachedTagTree();
+		dp.setCachedTagTree(null);
+		dp.setCachedAdminTagTree(null);
+		save(dp);
+	}
 
-    protected abstract T newInstance();
+	protected abstract T newInstance();
 }

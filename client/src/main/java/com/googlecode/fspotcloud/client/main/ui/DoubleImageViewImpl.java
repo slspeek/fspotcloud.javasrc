@@ -44,117 +44,122 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class DoubleImageViewImpl extends ResizeComposite implements DoubleImageView {
-    private final Logger log = Logger.getLogger(DoubleImageViewImpl.class.getName());
-    private static final DoubleImageViewImplUiBinder UI_BINDER_DOUBLE = GWT.create(DoubleImageViewImplUiBinder.class);
-    private final TimerInterface timer;
-    @UiField
-    Label info;
-    @UiField
-    FitImage image;
-    @UiField
-    FitImage previousImage;
-    @UiField
-    LayoutPanel layout;
-    protected ImagePresenter presenter;
-    protected final Resources resources;
-    private final FadeAnimationResources fadeAnimationResources;
-    private final AnimationStyle animationStyle;
+public class DoubleImageViewImpl extends ResizeComposite
+		implements
+			DoubleImageView {
+	private final Logger log = Logger.getLogger(DoubleImageViewImpl.class
+			.getName());
+	private static final DoubleImageViewImplUiBinder UI_BINDER_DOUBLE = GWT
+			.create(DoubleImageViewImplUiBinder.class);
+	private final TimerInterface timer;
+	@UiField
+	Label info;
+	@UiField
+	FitImage image;
+	@UiField
+	FitImage previousImage;
+	@UiField
+	LayoutPanel layout;
+	protected ImagePresenter presenter;
+	protected final Resources resources;
+	private final FadeAnimationResources fadeAnimationResources;
+	private final AnimationStyle animationStyle;
 
+	@Inject
+	public DoubleImageViewImpl(TimerInterface timer, Resources resources,
+			FadeAnimationResources fadeAnimationResources) {
+		this.timer = timer;
+		this.resources = resources;
+		this.fadeAnimationResources = fadeAnimationResources;
+		this.animationStyle = fadeAnimationResources.style();
+		initWidget(UI_BINDER_DOUBLE.createAndBindUi(this));
+		init();
+	}
 
-    @Inject
-    public DoubleImageViewImpl(TimerInterface timer, Resources resources, FadeAnimationResources fadeAnimationResources) {
-        this.timer = timer;
-        this.resources = resources;
-        this.fadeAnimationResources = fadeAnimationResources;
-        this.animationStyle = fadeAnimationResources.style();
-        initWidget(UI_BINDER_DOUBLE.createAndBindUi(this));
-        init();
-    }
+	private void init() {
+		getWidget().ensureDebugId("double-image-view");
+	}
 
-    private void init() {
-        getWidget().ensureDebugId("double-image-view");
-    }
+	@Override
+	public void setImageUrl(final String url) {
+		image.setUrl(url);
+	}
 
-    @Override
-    public void setImageUrl(final String url) {
-        image.setUrl(url);
-    }
+	@Override
+	public void setPreviousImageUrl(String url) {
+		previousImage.setUrl(url);
+	}
 
-    @Override
-    public void setPreviousImageUrl(String url) {
-        previousImage.setUrl(url);
-    }
+	@UiHandler("image")
+	public void imageClicked(ClickEvent event) {
+		log.log(Level.FINE, "double image view clicked ");
+		this.presenter.imageClicked();
+	}
 
-    @UiHandler("image")
-    public void imageClicked(ClickEvent event) {
-        log.log(Level.FINE, "double image view clicked ");
-        this.presenter.imageClicked();
-    }
+	@UiHandler("image")
+	public void infoHover(MouseMoveEvent event) {
+		showLabel();
+		hideLabelLater(3000);
+	}
 
-    @UiHandler("image")
-    public void infoHover(MouseMoveEvent event) {
-        showLabel();
-        hideLabelLater(3000);
-    }
+	private void showLabel() {
+		layout.setWidgetBottomHeight(info, 0, Unit.CM, 16, Unit.PX);
+		layout.animate(500);
+	}
 
-    private void showLabel() {
-        layout.setWidgetBottomHeight(info, 0, Unit.CM, 16, Unit.PX);
-        layout.animate(500);
-    }
+	public void hideLabelLater(final int duration) {
+		timer.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				layout.setWidgetBottomHeight(info, 0, Unit.CM, 0, Unit.PX);
+				layout.animate(500);
+			}
+		});
+		timer.schedule(duration);
+	}
 
-    public void hideLabelLater(final int duration) {
-        timer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                layout.setWidgetBottomHeight(info, 0, Unit.CM, 0, Unit.PX);
-                layout.animate(500);
-            }
-        });
-        timer.schedule(duration);
-    }
+	@Override
+	public void setPresenter(ImagePresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void setPresenter(ImagePresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setDescription(String text) {
+		info.setText(text);
+	}
 
-    @Override
-    public void setDescription(String text) {
-        info.setText(text);
-    }
+	@Override
+	public void addAnimationStyles() {
+		image.addStyleName(animationStyle.imageIn());
+		previousImage.addStyleName(animationStyle.imageOut());
+	}
 
-    @Override
-    public void addAnimationStyles() {
-        image.addStyleName(animationStyle.imageIn());
-        previousImage.addStyleName(animationStyle.imageOut());
-    }
+	@Override
+	public void removeAnimationStyles() {
+		image.removeStyleName(animationStyle.imageIn());
+		previousImage.removeStyleName(animationStyle.imageOut());
+	}
 
-    @Override
-    public void removeAnimationStyles() {
-        image.removeStyleName(animationStyle.imageIn());
-        previousImage.removeStyleName(animationStyle.imageOut());
-    }
+	@Override
+	public void setPreviousImageVisible(boolean visible) {
+		previousImage.setVisible(visible);
+	}
 
-    @Override
-    public void setPreviousImageVisible(boolean visible) {
-        previousImage.setVisible(visible);
-    }
+	@Override
+	public void onResize() {
+		image.setMaxSize(getOffsetWidth(), getOffsetHeight());
+		previousImage.setMaxSize(getOffsetWidth(), getOffsetHeight());
+		super.onResize();
+	}
 
+	@Override
+	public void adjustSize() {
+		log.log(Level.FINEST, "Called adjust size");
+		onResize();
+	}
 
-    @Override
-    public void onResize() {
-        image.setMaxSize(getOffsetWidth(), getOffsetHeight());
-        previousImage.setMaxSize(getOffsetWidth(), getOffsetHeight());
-        super.onResize();
-    }
-
-    @Override
-    public void adjustSize() {
-        log.log(Level.FINEST, "Called adjust size");
-        onResize();
-    }
-
-    interface DoubleImageViewImplUiBinder extends UiBinder<LayoutPanel, DoubleImageViewImpl> {
-    }
+	interface DoubleImageViewImplUiBinder
+			extends
+				UiBinder<LayoutPanel, DoubleImageViewImpl> {
+	}
 }

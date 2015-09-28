@@ -28,20 +28,22 @@ import com.googlecode.fspotcloud.model.jpa.usergroup.UserGroupManagerBase;
 import com.googlecode.fspotcloud.server.model.api.UserGroup;
 import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 
+public class UserGroupManager
+		extends
+			UserGroupManagerBase<UserGroup, UserGroupEntity>
+		implements
+			UserGroupDao {
+	@Override
+	protected UserGroup newUserGroup() {
+		return new UserGroupEntity();
+	}
 
-public class UserGroupManager extends UserGroupManagerBase<UserGroup, UserGroupEntity>
-        implements UserGroupDao {
-    @Override
-    protected UserGroup newUserGroup() {
-        return new UserGroupEntity();
-    }
+	protected Class<? extends UserGroup> getEntityClass() {
+		return UserGroupEntity.class;
+	}
 
-    protected Class<? extends UserGroup> getEntityClass() {
-        return UserGroupEntity.class;
-    }
-
-    @Override
-    public Class<UserGroupEntity> getEntityType() {
-        return UserGroupEntity.class;
-    }
+	@Override
+	public Class<UserGroupEntity> getEntityType() {
+		return UserGroupEntity.class;
+	}
 }

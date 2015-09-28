@@ -38,35 +38,41 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
 
+public class SendConfirmationEmailHandler
+		extends
+			SimpleActionHandler<SendConfirmationEmailAction, SendConfirmationEmailResult> {
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private Provider<IMail> mailerProvider;
+	@Inject
+	private MailGenerator mailGenerator;
+	@Inject
+	private Provider<SecretGenerator> secretGeneratorProvider;
 
-public class SendConfirmationEmailHandler extends SimpleActionHandler<SendConfirmationEmailAction, SendConfirmationEmailResult> {
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private Provider<IMail> mailerProvider;
-    @Inject
-    private MailGenerator mailGenerator;
-    @Inject
-    private Provider<SecretGenerator> secretGeneratorProvider;
+	@Override
+	public SendConfirmationEmailResult execute(
+			SendConfirmationEmailAction action, ExecutionContext context)
+			throws DispatchException {
+		final String email = action.getEmail();
+		User mayBeExisted = userDao.find(email);
 
-    @Override
-    public SendConfirmationEmailResult execute(SendConfirmationEmailAction action, ExecutionContext context) throws DispatchException {
-        final String email = action.getEmail();
-        User mayBeExisted = userDao.find(email);
+		if (mayBeExisted != null && mayBeExisted.hasRegistered()) {
+			final User registeredUser = mayBeExisted;
+			String emailConfirmationSecret = secretGeneratorProvider.get()
+					.getSecret(email);
+			registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
+			userDao.save(registeredUser);
 
-        if (mayBeExisted != null && mayBeExisted.hasRegistered()) {
-            final User registeredUser = mayBeExisted;
-            String emailConfirmationSecret = secretGeneratorProvider.get().getSecret(email);
-            registeredUser.setEmailVerificationSecret(emailConfirmationSecret);
-            userDao.save(registeredUser);
-
-            String confirmationMail = mailGenerator.getConfirmationMailBody(email,
-                    emailConfirmationSecret);
-            mailerProvider.get().send(email, "F-Spot Cloud email confirmation",
-                    confirmationMail);
-            return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.SUCCESS);
-        } else {
-            return new SendConfirmationEmailResult(SendConfirmationEmailResult.Code.NOT_REGISTERED);
-        }
-    }
+			String confirmationMail = mailGenerator.getConfirmationMailBody(
+					email, emailConfirmationSecret);
+			mailerProvider.get().send(email, "F-Spot Cloud email confirmation",
+					confirmationMail);
+			return new SendConfirmationEmailResult(
+					SendConfirmationEmailResult.Code.SUCCESS);
+		} else {
+			return new SendConfirmationEmailResult(
+					SendConfirmationEmailResult.Code.NOT_REGISTERED);
+		}
+	}
 }

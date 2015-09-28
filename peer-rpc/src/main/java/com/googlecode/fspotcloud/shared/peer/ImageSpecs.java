@@ -28,39 +28,38 @@ import com.openpojo.business.annotation.BusinessKey;
 
 import java.io.Serializable;
 
-
 public class ImageSpecs extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = 5812879917430846998L;
-    @BusinessKey
-    private final int width;
-    @BusinessKey
-    private final int height;
-    @BusinessKey
-    private final int thumbWidth;
-    @BusinessKey
-    private final int thumbHeight;
+	private static final long serialVersionUID = 5812879917430846998L;
+	@BusinessKey
+	private final int width;
+	@BusinessKey
+	private final int height;
+	@BusinessKey
+	private final int thumbWidth;
+	@BusinessKey
+	private final int thumbHeight;
 
-    public ImageSpecs(int width, int height, int thumbWidth, int thumbHeight) {
-        super();
-        this.width = width;
-        this.height = height;
-        this.thumbWidth = thumbWidth;
-        this.thumbHeight = thumbHeight;
-    }
+	public ImageSpecs(int width, int height, int thumbWidth, int thumbHeight) {
+		super();
+		this.width = width;
+		this.height = height;
+		this.thumbWidth = thumbWidth;
+		this.thumbHeight = thumbHeight;
+	}
 
-    public int getWidth() {
-        return width;
-    }
+	public int getWidth() {
+		return width;
+	}
 
-    public int getHeight() {
-        return height;
-    }
+	public int getHeight() {
+		return height;
+	}
 
-    public int getThumbWidth() {
-        return thumbWidth;
-    }
+	public int getThumbWidth() {
+		return thumbWidth;
+	}
 
-    public int getThumbHeight() {
-        return thumbHeight;
-    }
+	public int getThumbHeight() {
+		return thumbHeight;
+	}
 }

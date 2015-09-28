@@ -32,33 +32,33 @@ import net.customware.gwt.dispatch.shared.Action;
 import java.io.Serializable;
 import java.util.SortedSet;
 
-
 public class GetTagUpdateInstructionsAction extends BusinessBase
-        implements Action<TagUpdateInstructionsResult>,
-        Serializable {
-    private static final long serialVersionUID = -2428269504170714946L;
-    @BusinessKey
-    private final String tagId;
-    @BusinessKey
-    private final SortedSet<PhotoInfo> photosOnServer;
+		implements
+			Action<TagUpdateInstructionsResult>,
+			Serializable {
+	private static final long serialVersionUID = -2428269504170714946L;
+	@BusinessKey
+	private final String tagId;
+	@BusinessKey
+	private final SortedSet<PhotoInfo> photosOnServer;
 
-    public GetTagUpdateInstructionsAction(String tagId,
-                                          SortedSet<PhotoInfo> photosOnServer) {
-        super();
-        this.tagId = tagId;
-        this.photosOnServer = photosOnServer;
-    }
+	public GetTagUpdateInstructionsAction(String tagId,
+			SortedSet<PhotoInfo> photosOnServer) {
+		super();
+		this.tagId = tagId;
+		this.photosOnServer = photosOnServer;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public SortedSet<PhotoInfo> getPhotosOnServer() {
-        return photosOnServer;
-    }
+	public SortedSet<PhotoInfo> getPhotosOnServer() {
+		return photosOnServer;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("tag", tagId)
-                .add("photosOnServer", photosOnServer).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("tag", tagId)
+				.add("photosOnServer", photosOnServer).toString();
+	}
 }

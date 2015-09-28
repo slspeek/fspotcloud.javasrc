@@ -38,47 +38,48 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.util.Set;
 
+public class ApproveTagHandler
+		extends
+			SimpleActionHandler<ApproveTagAction, VoidResult> {
+	private final UserGroupDao userGroupDao;
+	private final TagDao tagDao;
+	private final IAdminPermission adminPermission;
 
-public class ApproveTagHandler extends SimpleActionHandler<ApproveTagAction, VoidResult> {
-    private final UserGroupDao userGroupDao;
-    private final TagDao tagDao;
-    private final IAdminPermission adminPermission;
+	@Inject
+	public ApproveTagHandler(UserGroupDao userGroupDao, TagDao tagDao,
+			IAdminPermission adminPermission) {
+		this.userGroupDao = userGroupDao;
+		this.tagDao = tagDao;
+		this.adminPermission = adminPermission;
+	}
 
-    @Inject
-    public ApproveTagHandler(UserGroupDao userGroupDao, TagDao tagDao,
-                             IAdminPermission adminPermission) {
-        this.userGroupDao = userGroupDao;
-        this.tagDao = tagDao;
-        this.adminPermission = adminPermission;
-    }
+	@Override
+	public VoidResult execute(ApproveTagAction action, ExecutionContext context)
+			throws DispatchException {
+		adminPermission.checkAdminPermission();
 
-    @Override
-    public VoidResult execute(ApproveTagAction action, ExecutionContext context)
-            throws DispatchException {
-        adminPermission.checkAdminPermission();
+		Tag tag = tagDao.find(action.getTagId());
+		if (tag != null) {
+			Set<Long> approvedGroups = tag.getApprovedUserGroups();
+			approvedGroups.add(action.getUsergroupId());
+			tag.setApprovedUserGroups(approvedGroups);
+			tagDao.save(tag);
 
-        Tag tag = tagDao.find(action.getTagId());
-        if (tag != null) {
-            Set<Long> approvedGroups = tag.getApprovedUserGroups();
-            approvedGroups.add(action.getUsergroupId());
-            tag.setApprovedUserGroups(approvedGroups);
-            tagDao.save(tag);
+		} else {
+			throw new TagNotFoundException();
+		}
 
-        } else {
-            throw new TagNotFoundException();
-        }
+		UserGroup userGroup = userGroupDao.find(action.getUsergroupId());
 
-        UserGroup userGroup = userGroupDao.find(action.getUsergroupId());
+		if (userGroup != null) {
+			Set<String> approvedTags = userGroup.getApprovedTagIds();
+			approvedTags.add(action.getTagId());
+			userGroup.setApprovedTagIds(approvedTags);
+			userGroupDao.save(userGroup);
+		} else {
+			throw new UsergroupNotFoundException();
+		}
 
-        if (userGroup != null) {
-            Set<String> approvedTags = userGroup.getApprovedTagIds();
-            approvedTags.add(action.getTagId());
-            userGroup.setApprovedTagIds(approvedTags);
-            userGroupDao.save(userGroup);
-        } else {
-            throw new UsergroupNotFoundException();
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

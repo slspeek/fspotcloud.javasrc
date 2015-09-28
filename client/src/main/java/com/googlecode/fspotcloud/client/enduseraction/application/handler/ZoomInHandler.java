@@ -10,15 +10,13 @@ import java.util.logging.Logger;
 public class ZoomInHandler implements IActionHandler
 
 {
-    private final Logger log = Logger.getLogger(ZoomInHandler.class.getName());
+	private final Logger log = Logger.getLogger(ZoomInHandler.class.getName());
 
-    @Inject
-    private IRasterer placeManager;
+	@Inject
+	private IRasterer placeManager;
 
-
-    @Override
-    public void performAction(String actionId) {
-        placeManager.zoom(Navigator.Zoom.IN);
-    }
+	@Override
+	public void performAction(String actionId) {
+		placeManager.zoom(Navigator.Zoom.IN);
+	}
 }
-

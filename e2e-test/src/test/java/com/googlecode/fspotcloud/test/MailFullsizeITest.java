@@ -33,28 +33,29 @@ import javax.inject.Inject;
 import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class MailFullsizeITest {
-    private static final String SLS = "slspeek@gmail.com";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private PeerRunner peerRunner;
-    @Inject
-    private LoginPage loginPage;
-    @Inject
-    private PhotoPage photoPage;
-    @Inject
-    private SignUpPage signUpPage;
+	private static final String SLS = "slspeek@gmail.com";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private PeerRunner peerRunner;
+	@Inject
+	private LoginPage loginPage;
+	@Inject
+	private PhotoPage photoPage;
+	@Inject
+	private SignUpPage signUpPage;
 
-    @Test
-    public void testMailImageToLeadDeveloper() throws Exception {
-        peerRunner.startPeer("../peer/src/test/resources/photos.db");
-        loginPage.open();
-        loginPage.fillForm(SLS, SLS);
-        loginPage.login();
-        photoPage.open();
-        photoPage.clickImage(0, 0);
-        photoPage.mailFullsize();
-        sleepShort(20);
-        peerRunner.stopPeer();
-    }
+	@Test
+	public void testMailImageToLeadDeveloper() throws Exception {
+		peerRunner.startPeer("../peer/src/test/resources/photos.db");
+		loginPage.open();
+		loginPage.fillForm(SLS, SLS);
+		loginPage.login();
+		photoPage.open();
+		photoPage.clickImage(0, 0);
+		photoPage.mailFullsize();
+		sleepShort(20);
+		peerRunner.stopPeer();
+	}
 }

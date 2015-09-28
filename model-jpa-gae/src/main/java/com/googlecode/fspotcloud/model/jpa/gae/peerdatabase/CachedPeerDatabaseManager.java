@@ -31,24 +31,26 @@ import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.simplejpadao.AbstractDAO;
 
+public class CachedPeerDatabaseManager
+		extends
+			CachedPeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity>
+		implements
+			PeerDatabaseDao {
+	@Inject
+	PeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity> delegate;
 
-public class CachedPeerDatabaseManager extends CachedPeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity>
-        implements PeerDatabaseDao {
-    @Inject
-    PeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity> delegate;
+	@Override
+	protected PeerDatabase newInstance() {
+		return new PeerDatabaseEntity();
+	}
 
-    @Override
-    protected PeerDatabase newInstance() {
-        return new PeerDatabaseEntity();
-    }
+	@Override
+	public Class<PeerDatabaseEntity> getEntityType() {
+		return PeerDatabaseEntity.class;
+	}
 
-    @Override
-    public Class<PeerDatabaseEntity> getEntityType() {
-        return PeerDatabaseEntity.class;
-    }
-
-    @Override
-    public AbstractDAO<PeerDatabase, String> getDelegate() {
-        return delegate;
-    }
+	@Override
+	public AbstractDAO<PeerDatabase, String> getDelegate() {
+		return delegate;
+	}
 }

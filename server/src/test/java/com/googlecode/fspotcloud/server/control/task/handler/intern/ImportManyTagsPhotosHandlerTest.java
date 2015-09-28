@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
 import com.google.inject.name.Names;
@@ -51,38 +51,35 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 @RunWith(JukitoRunner.class)
 public class ImportManyTagsPhotosHandlerTest {
-    @Inject
-    ImportManyTagsPhotosHandler instance;
-    ImportManyTagsPhotosAction action = new ImportManyTagsPhotosAction(newArrayList(
-            "1",
-            "2",
-            "3"));
-    ImportManyTagsPhotosAction secondAction = new ImportManyTagsPhotosAction(newArrayList(
-            "3"));
+	@Inject
+	ImportManyTagsPhotosHandler instance;
+	ImportManyTagsPhotosAction action = new ImportManyTagsPhotosAction(
+			newArrayList("1", "2", "3"));
+	ImportManyTagsPhotosAction secondAction = new ImportManyTagsPhotosAction(
+			newArrayList("3"));
 
-    /**
-     * Test of execute method, of class ImportManyTagsPhotosHandler.
-     */
-    @Test
-    public void testExecute(TaskQueueDispatch dispatchAsync)
-            throws Exception {
-        System.out.println("execute");
+	/**
+	 * Test of execute method, of class ImportManyTagsPhotosHandler.
+	 */
+	@Test
+	public void testExecute(TaskQueueDispatch dispatchAsync) throws Exception {
+		System.out.println("execute");
 
-        ExecutionContext context = null;
-        VoidResult expResult = new VoidResult();
-        VoidResult result = instance.execute(action, context);
-        assertEquals(expResult, result);
+		ExecutionContext context = null;
+		VoidResult expResult = new VoidResult();
+		VoidResult result = instance.execute(action, context);
+		assertEquals(expResult, result);
 
-        verify(dispatchAsync).execute(new UserImportsTagAction("1"));
-        verify(dispatchAsync).execute(new UserImportsTagAction("2"));
-        verify(dispatchAsync).execute(secondAction);
-        verifyNoMoreInteractions(dispatchAsync);
-    }
+		verify(dispatchAsync).execute(new UserImportsTagAction("1"));
+		verify(dispatchAsync).execute(new UserImportsTagAction("2"));
+		verify(dispatchAsync).execute(secondAction);
+		verifyNoMoreInteractions(dispatchAsync);
+	}
 
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
-            bind(Integer.class).annotatedWith(Names.named("maxTicks"))
-                    .toInstance(new Integer(2));
-        }
-    }
+	public static class Module extends JukitoModule {
+		protected void configureTest() {
+			bind(Integer.class).annotatedWith(Names.named("maxTicks"))
+					.toInstance(new Integer(2));
+		}
+	}
 }

@@ -39,202 +39,200 @@ import static com.google.common.collect.Sets.newHashSet;
 
 @GwtCompatible
 public class TagNode implements Serializable, Comparable<TagNode> {
-    private int count;
-    private String description = "";
-    private boolean importIssued;
-    private String id;
-    private TagNode parent;
-    private String parentId;
-    private String tagName = "";
-    private PhotoInfoStore cachedPhotoList = new PhotoInfoStore(Collections.EMPTY_LIST);
-    private List<TagNode> children = newArrayList();
-    private Set<Long> approvedUserGroups = newHashSet();
+	private int count;
+	private String description = "";
+	private boolean importIssued;
+	private String id;
+	private TagNode parent;
+	private String parentId;
+	private String tagName = "";
+	private PhotoInfoStore cachedPhotoList = new PhotoInfoStore(
+			Collections.EMPTY_LIST);
+	private List<TagNode> children = newArrayList();
+	private Set<Long> approvedUserGroups = newHashSet();
 
-    public TagNode() {
-    }
+	public TagNode() {
+	}
 
-    public TagNode(TagNode node) {
-        this.id = node.getId();
-        this.count = node.getCount();
-        this.description = node.getDescription();
-        this.importIssued = node.isImportIssued();
-        this.tagName = node.getTagName();
-        this.cachedPhotoList = node.getCachedPhotoList();
-        this.approvedUserGroups = node.getApprovedUserGroups();
-    }
+	public TagNode(TagNode node) {
+		this.id = node.getId();
+		this.count = node.getCount();
+		this.description = node.getDescription();
+		this.importIssued = node.isImportIssued();
+		this.tagName = node.getTagName();
+		this.cachedPhotoList = node.getCachedPhotoList();
+		this.approvedUserGroups = node.getApprovedUserGroups();
+	}
 
-    public TagNode(String id) {
-        this(id, null);
-    }
+	public TagNode(String id) {
+		this(id, null);
+	}
 
-    public TagNode(String id, String parentId) {
-        this.id = id;
-        this.parentId = parentId;
-    }
+	public TagNode(String id, String parentId) {
+		this.id = id;
+		this.parentId = parentId;
+	}
 
-    public Set<Long> getApprovedUserGroups() {
-        return approvedUserGroups;
-    }
+	public Set<Long> getApprovedUserGroups() {
+		return approvedUserGroups;
+	}
 
-    public void setApprovedUserGroups(Set<Long> approvedUserGroups) {
-        this.approvedUserGroups = approvedUserGroups;
-    }
+	public void setApprovedUserGroups(Set<Long> approvedUserGroups) {
+		this.approvedUserGroups = approvedUserGroups;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public int getCount() {
-        return count;
-    }
+	public int getCount() {
+		return count;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public TagNode getParent() {
-        return parent;
-    }
+	public TagNode getParent() {
+		return parent;
+	}
 
-    public String getParentId() {
-        return parentId;
-    }
+	public String getParentId() {
+		return parentId;
+	}
 
-    public String getTagName() {
-        return tagName;
-    }
+	public String getTagName() {
+		return tagName;
+	}
 
-    public void setCount(int count) {
-        this.count = count;
-    }
+	public void setCount(int count) {
+		this.count = count;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setParent(TagNode parent) {
-        this.parent = parent;
-    }
+	public void setParent(TagNode parent) {
+		this.parent = parent;
+	}
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
 
-    public void setChildren(List<TagNode> children) {
-        this.children = children;
-    }
+	public void setChildren(List<TagNode> children) {
+		this.children = children;
+	}
 
-    public List<TagNode> getChildren() {
-        return children;
-    }
+	public List<TagNode> getChildren() {
+		return children;
+	}
 
-    public void addChild(TagNode child) {
-        getChildren().add(child);
-    }
+	public void addChild(TagNode child) {
+		getChildren().add(child);
+	}
 
-    public boolean equals(Object other) {
-        if (!(other instanceof TagNode)) {
-            return false;
-        }
+	public boolean equals(Object other) {
+		if (!(other instanceof TagNode)) {
+			return false;
+		}
 
-        TagNode node = (TagNode) other;
+		TagNode node = (TagNode) other;
 
-        return equal(node.getId(), getId());
-    }
+		return equal(node.getId(), getId());
+	}
 
-    public int hashCode() {
-        return getId().hashCode();
-    }
+	public int hashCode() {
+		return getId().hashCode();
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this.getClass()).add("name", tagName)
-                .add("id", id)
-                .add("parent id", parentId)
-                .add("photos", cachedPhotoList)
-                .add("childrenCount", getChildren().size())
-                .omitNullValues()
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this.getClass()).add("name", tagName)
+				.add("id", id).add("parent id", parentId)
+				.add("photos", cachedPhotoList)
+				.add("childrenCount", getChildren().size()).omitNullValues()
+				.toString();
+	}
 
-    public void setCachedPhotoList(PhotoInfoStore cachedPhotoList) {
-        this.cachedPhotoList = cachedPhotoList;
-    }
+	public void setCachedPhotoList(PhotoInfoStore cachedPhotoList) {
+		this.cachedPhotoList = cachedPhotoList;
+	}
 
-    public PhotoInfoStore getCachedPhotoList() {
-        return cachedPhotoList;
-    }
+	public PhotoInfoStore getCachedPhotoList() {
+		return cachedPhotoList;
+	}
 
-    public void setImportIssued(boolean importIssued) {
-        this.importIssued = importIssued;
-    }
+	public void setImportIssued(boolean importIssued) {
+		this.importIssued = importIssued;
+	}
 
-    public boolean isImportIssued() {
-        return importIssued;
-    }
+	public boolean isImportIssued() {
+		return importIssued;
+	}
 
-    public List<TagNode> subTreeAsList() {
-        List<TagNode> result = newArrayList();
-        buildSubTreeList(result);
-        return result;
-    }
+	public List<TagNode> subTreeAsList() {
+		List<TagNode> result = newArrayList();
+		buildSubTreeList(result);
+		return result;
+	}
 
-    private void buildSubTreeList(List<TagNode> result) {
-        result.add(this);
-        for (TagNode child : children) {
-            child.buildSubTreeList(result);
-        }
-    }
+	private void buildSubTreeList(List<TagNode> result) {
+		result.add(this);
+		for (TagNode child : children) {
+			child.buildSubTreeList(result);
+		}
+	}
 
-    public TagNode findByTagId(String tagId) {
-        TagNode result = null;
-        for (TagNode node : subTreeAsList()) {
-            if (tagId.equals(node.getId())) {
-                result = node;
-                break;
-            }
-        }
-        return result;
-    }
+	public TagNode findByTagId(String tagId) {
+		TagNode result = null;
+		for (TagNode node : subTreeAsList()) {
+			if (tagId.equals(node.getId())) {
+				result = node;
+				break;
+			}
+		}
+		return result;
+	}
 
-    public static TagNode find(TagNode root, String tagId) {
-        TagNode result = root.findByTagId(tagId);
-        return result;
-    }
+	public static TagNode find(TagNode root, String tagId) {
+		TagNode result = root.findByTagId(tagId);
+		return result;
+	}
 
-    public List<Integer> pathTo(TagNode root) {
-        List<Integer> result = newArrayList();
-        if (!equals(root)) {
-            TagNode parent = getParent();
-            int index = -1;
-            if (parent != null) {
+	public List<Integer> pathTo(TagNode root) {
+		List<Integer> result = newArrayList();
+		if (!equals(root)) {
+			TagNode parent = getParent();
+			int index = -1;
+			if (parent != null) {
 
-                final List<TagNode> parentChildren = parent.getChildren();
-                for (int i = 0; i < parentChildren.size(); i++) {
-                    TagNode child = parentChildren.get(i);
-                    if (equals(child)) {
-                        index = i;
-                        break;
-                    }
-                }
-                result.addAll(parent.pathTo(root));
-                result.add(index);
-            }
-        }
-        return result;
-    }
+				final List<TagNode> parentChildren = parent.getChildren();
+				for (int i = 0; i < parentChildren.size(); i++) {
+					TagNode child = parentChildren.get(i);
+					if (equals(child)) {
+						index = i;
+						break;
+					}
+				}
+				result.addAll(parent.pathTo(root));
+				result.add(index);
+			}
+		}
+		return result;
+	}
 
-
-    @Override
-    public int compareTo(TagNode o) {
-        return ComparisonChain.start()
-                .compare(this.tagName, o.tagName).result();
-    }
+	@Override
+	public int compareTo(TagNode o) {
+		return ComparisonChain.start().compare(this.tagName, o.tagName)
+				.result();
+	}
 }

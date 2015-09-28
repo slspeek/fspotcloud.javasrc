@@ -39,43 +39,40 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Logger;
 
-
 public class FscServer {
-    private final Server server;
-    private final Logger log = Logger.getLogger(FscServer.class.getName());
+	private final Server server;
+	private final Logger log = Logger.getLogger(FscServer.class.getName());
 
-    public FscServer(int port) throws IOException, URISyntaxException {
-        server = new Server(port);
+	public FscServer(int port) throws IOException, URISyntaxException {
+		server = new Server(port);
 
-        final URL url = new File("build/exploded").getAbsoluteFile().toURI()
-                .toURL();
-        WebAppContext webApp = new WebAppContext();
-        webApp.setContextPath("/");
-        webApp.setWar(url.toExternalForm());
-        server.addHandler(webApp);
-        Context root = new Context(server, "/", Context.SESSIONS);
+		final URL url = new File("build/exploded").getAbsoluteFile().toURI()
+				.toURL();
+		WebAppContext webApp = new WebAppContext();
+		webApp.setContextPath("/");
+		webApp.setWar(url.toExternalForm());
+		server.addHandler(webApp);
+		Context root = new Context(server, "/", Context.SESSIONS);
 
-        root.addFilter(GuiceFilter.class, "/*", 0);
-        root.addServlet(DefaultServlet.class, "/");
-    }
+		root.addFilter(GuiceFilter.class, "/*", 0);
+		root.addServlet(DefaultServlet.class, "/");
+	}
 
-    protected Module getFscModule() {
-        return new J2eeTotalModule(10,
-                System.getProperty("bot.secret"),
-                "rms@example.com",
-                "smtp.xs4all.nl");
-    }
+	protected Module getFscModule() {
+		return new J2eeTotalModule(10, System.getProperty("bot.secret"),
+				"rms@example.com", "smtp.xs4all.nl");
+	}
 
-    public void start() {
-        try {
-            TestServerGuiceServletConfig.MODULE = getFscModule();
-            server.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public void start() {
+		try {
+			TestServerGuiceServletConfig.MODULE = getFscModule();
+			server.start();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public Injector getInjector() {
-        return TestServerGuiceServletConfig.INJECTOR;
-    }
+	public Injector getInjector() {
+		return TestServerGuiceServletConfig.INJECTOR;
+	}
 }

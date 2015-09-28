@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.server.model.api;
 
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public interface UserDao extends SimpleDAONamedId<User, String> {
-    User tryToLogin(String email, String credentials);
+	User tryToLogin(String email, String credentials);
 }

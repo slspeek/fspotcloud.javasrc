@@ -27,20 +27,18 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class SendPasswordResetAction implements Action<SendPasswordResetResult> {
-    private String email;
+	private String email;
 
+	public SendPasswordResetAction(String email) {
+		this.email = email;
+	}
 
-    public SendPasswordResetAction(String email) {
-        this.email = email;
-    }
+	public SendPasswordResetAction() {
+	}
 
-    public SendPasswordResetAction() {
-    }
-
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 }

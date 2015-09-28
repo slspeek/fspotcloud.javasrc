@@ -29,43 +29,42 @@ import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-
 public class HasOneWidgetAdapter implements HasOneWidget {
-    private final ComplexPanel panel;
-    private Widget currentWidget;
+	private final ComplexPanel panel;
+	private Widget currentWidget;
 
-    public HasOneWidgetAdapter(ComplexPanel panel) {
-        this.panel = panel;
-    }
+	public HasOneWidgetAdapter(ComplexPanel panel) {
+		this.panel = panel;
+	}
 
-    @Override
-    public void setWidget(IsWidget w) {
-        if (w == null) {
-            clear();
-        } else {
-            setWidget(w.asWidget());
-        }
-    }
+	@Override
+	public void setWidget(IsWidget w) {
+		if (w == null) {
+			clear();
+		} else {
+			setWidget(w.asWidget());
+		}
+	}
 
-    private void clear() {
-        if (currentWidget != null) {
-            panel.remove(currentWidget);
-            currentWidget = null;
-        }
-    }
+	private void clear() {
+		if (currentWidget != null) {
+			panel.remove(currentWidget);
+			currentWidget = null;
+		}
+	}
 
-    @Override
-    public Widget getWidget() {
-        return currentWidget;
-    }
+	@Override
+	public Widget getWidget() {
+		return currentWidget;
+	}
 
-    @Override
-    public void setWidget(Widget w) {
-        clear();
-        currentWidget = w;
+	@Override
+	public void setWidget(Widget w) {
+		clear();
+		currentWidget = w;
 
-        if (w != null) {
-            panel.add(w);
-        }
-    }
+		if (w != null) {
+			panel.add(w);
+		}
+	}
 }

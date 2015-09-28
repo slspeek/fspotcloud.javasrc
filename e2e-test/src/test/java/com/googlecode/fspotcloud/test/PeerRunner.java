@@ -30,64 +30,67 @@ import com.google.inject.Inject;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-
 /**
  * @author steven
  */
 public class PeerRunner {
-    private final Logger log = Logger.getLogger(PeerRunner.class.getName());
+	private final Logger log = Logger.getLogger(PeerRunner.class.getName());
 
-    private final String endpoint;
-    private final String secret;
-    private final String peerJar;
-    private final String stopPort;
-    private final boolean shotwell;
+	private final String endpoint;
+	private final String secret;
+	private final String peerJar;
+	private final String stopPort;
+	private final boolean shotwell;
 
+	@Inject
+	public PeerRunner() {
+		endpoint = System.getProperty("endpoint");
+		secret = System.getProperty("bot.secret");
+		peerJar = System.getProperty("peer.jar");
+		stopPort = System.getProperty("stop.port");
+		shotwell = Boolean.valueOf(System.getProperty("shotwell", "false"));
+	}
 
-    @Inject
-    public PeerRunner() {
-        endpoint = System.getProperty("endpoint");
-        secret = System.getProperty("bot.secret");
-        peerJar = System.getProperty("peer.jar");
-        stopPort = System.getProperty("stop.port");
-        shotwell = Boolean.valueOf(System.getProperty("shotwell", "false"));
-    }
+	public void startPeer(String db) throws IOException {
+		String[] command = getCommand(db);
+		Joiner joiner = Joiner.on(" ");
+		log.info("Peer started with: " + joiner.join(command));
+		Runtime.getRuntime().exec(command);
+	}
 
-    public void startPeer(String db) throws IOException {
-        String[] command = getCommand(db);
-        Joiner joiner = Joiner.on(" ");
-        log.info("Peer started with: " + joiner.join(command));
-        Runtime.getRuntime().exec(command);
-    }
+	public void stopPeer() throws IOException {
+		Runtime.getRuntime()
+				.exec(new String[]{"telnet", "localhost", stopPort});
+	}
 
-    public void stopPeer() throws IOException {
-        Runtime.getRuntime()
-                .exec(new String[]{"telnet", "localhost", stopPort});
-    }
+	private String[] getCommand(String db) {
+		String original;
+		if (shotwell) {
+			db = db.replace("photos", "shotwell");
+			original = "file:///home/fspot/Photos";
+		} else {
+			original = "file:///home/steven/Photos";
+		}
+		String[] cmd = new String[]{
+				"screen",
+				"-d",
+				"-m",
+				"java",
+				"-cp",
+				peerJar,
+				"-Djava.util.logging.config.file="
+						+ System.getProperty("java.util.logging.config.file"),
+				"-Ddb=" + db,
+				"-Dshotwell=" + shotwell,
+				"-Dendpoint=" + endpoint,
+				"-Dbot.secret=" + secret,
+				"-Dpause=2",
+				"-Dphoto.dir.original=" + original,
+				"-Dstop.port=" + stopPort,
+				"-Dphoto.dir.override=file://" + System.getProperty("user.dir")
+						+ "/../peer/src/test/resources/Photos",
+				"com.googlecode.fspotcloud.peer.Main"};
 
-    private String[] getCommand(String db) {
-			String original;
-    	if (shotwell) {
-    		db = db.replace("photos", "shotwell");
-				original = "file:///home/fspot/Photos";
-    	} else {
-				original = "file:///home/steven/Photos";
-			}
-        String[] cmd = new String[]{
-                "screen", "-d", "-m",
-                "java", "-cp", peerJar,
-                "-Djava.util.logging.config.file=" + System.getProperty("java.util.logging.config.file"),
-                "-Ddb=" + db,
-                "-Dshotwell="+ shotwell,
-                "-Dendpoint=" + endpoint, "-Dbot.secret=" + secret, "-Dpause=2",
-                "-Dphoto.dir.original=" + original,
-                "-Dstop.port=" + stopPort,
-                "-Dphoto.dir.override=file://" +
-                        System.getProperty("user.dir") +
-                        "/../peer/src/test/resources/Photos",
-                "com.googlecode.fspotcloud.peer.Main"
-        };
-
-        return cmd;
-    }
+		return cmd;
+	}
 }

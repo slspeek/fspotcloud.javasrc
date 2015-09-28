@@ -29,5 +29,5 @@ import com.google.gwt.event.shared.EventHandler;
 
 @GwtCompatible
 public interface IActionManager extends EventHandler {
-    void onEvent(KeyboardActionEvent event);
+	void onEvent(KeyboardActionEvent event);
 }

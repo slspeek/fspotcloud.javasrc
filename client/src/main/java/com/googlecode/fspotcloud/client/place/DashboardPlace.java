@@ -28,50 +28,49 @@ import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class DashboardPlace extends Place {
 
-    public static DashboardPlace DEFAULT = new DashboardPlace("");
+	public static DashboardPlace DEFAULT = new DashboardPlace("");
 
-    private final String tagId;
+	private final String tagId;
 
-    public DashboardPlace(String tagId) {
-        this.tagId = tagId;
-    }
+	public DashboardPlace(String tagId) {
+		this.tagId = tagId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof DashboardPlace) {
-            DashboardPlace basePlace = (DashboardPlace) other;
-            String tagId = basePlace.getTagId();
-            return Objects.equal(this.tagId, tagId);
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof DashboardPlace) {
+			DashboardPlace basePlace = (DashboardPlace) other;
+			String tagId = basePlace.getTagId();
+			return Objects.equal(this.tagId, tagId);
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(tagId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(tagId);
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("tagId", tagId).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("tagId", tagId).toString();
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<DashboardPlace> {
-        @Override
-        public DashboardPlace getPlace(String token) {
-            return new DashboardPlace(token);
-        }
+	public static class Tokenizer implements PlaceTokenizer<DashboardPlace> {
+		@Override
+		public DashboardPlace getPlace(String token) {
+			return new DashboardPlace(token);
+		}
 
-        @Override
-        public String getToken(DashboardPlace place) {
-            return place.getTagId();
-        }
-    }
+		@Override
+		public String getToken(DashboardPlace place) {
+			return place.getTagId();
+		}
+	}
 }

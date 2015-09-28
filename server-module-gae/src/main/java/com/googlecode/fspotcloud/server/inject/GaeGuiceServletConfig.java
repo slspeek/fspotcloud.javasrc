@@ -31,21 +31,21 @@ import com.googlecode.fspotcloud.server.main.PropertiesLoader;
 
 import java.util.Properties;
 
-
 public class GaeGuiceServletConfig extends GuiceServletContextListener {
-    final Properties p = new PropertiesLoader("properties.properties").loadProperties();
+	final Properties p = new PropertiesLoader("properties.properties")
+			.loadProperties();
 
-    @Override
-    protected Injector getInjector() {
-        System.setProperty("java.util.logging.config.file", "logging.properties");
+	@Override
+	protected Injector getInjector() {
+		System.setProperty("java.util.logging.config.file",
+				"logging.properties");
 
-        int maxTicks = Integer.valueOf(p.getProperty(
-                "fspotcloud.max.data.ticks",
-                "100"));
-        String botSecret = p.getProperty("fspotcloud.bot.secret");
-        String fromAddress = p.getProperty("fspotcloud.from.address");
-        Injector i = Guice.createInjector(new GaeTotalModule(maxTicks,
-                botSecret, fromAddress));
-        return i;
-    }
+		int maxTicks = Integer.valueOf(p.getProperty(
+				"fspotcloud.max.data.ticks", "100"));
+		String botSecret = p.getProperty("fspotcloud.bot.secret");
+		String fromAddress = p.getProperty("fspotcloud.from.address");
+		Injector i = Guice.createInjector(new GaeTotalModule(maxTicks,
+				botSecret, fromAddress));
+		return i;
+	}
 }

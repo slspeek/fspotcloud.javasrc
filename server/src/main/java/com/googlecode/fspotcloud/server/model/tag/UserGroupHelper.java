@@ -36,49 +36,49 @@ import java.util.Set;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class UserGroupHelper implements IUserGroupHelper {
-    @Inject
-    private Provider<LoginMetaData> metaData;
-    @Inject
-    private UserGroupDao userGroupDao;
+	@Inject
+	private Provider<LoginMetaData> metaData;
+	@Inject
+	private UserGroupDao userGroupDao;
 
-    @Override
-    public Set<String> getVisibleTagIds() {
-        Set<String> grantedTags = getPublicTags();
-        Set<Long> userGroupIds = metaData.get().getGrantedUserGroups();
+	@Override
+	public Set<String> getVisibleTagIds() {
+		Set<String> grantedTags = getPublicTags();
+		Set<Long> userGroupIds = metaData.get().getGrantedUserGroups();
 
-        for (Long id : userGroupIds) {
-            UserGroup userGroup = userGroupDao.find(id);
+		for (Long id : userGroupIds) {
+			UserGroup userGroup = userGroupDao.find(id);
 
-            if (userGroup != null) {
-                grantedTags.addAll(userGroup.getApprovedTagIds());
-            }
-        }
+			if (userGroup != null) {
+				grantedTags.addAll(userGroup.getApprovedTagIds());
+			}
+		}
 
-        return grantedTags;
-    }
+		return grantedTags;
+	}
 
-    @Override
-    public boolean containsOneOf(Set<String> tagIds) {
-        Set<String> visible = getVisibleTagIds();
+	@Override
+	public boolean containsOneOf(Set<String> tagIds) {
+		Set<String> visible = getVisibleTagIds();
 
-        for (String id : tagIds) {
-            if (visible.contains(id)) {
-                return true;
-            }
-        }
+		for (String id : tagIds) {
+			if (visible.contains(id)) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    private Set<String> getPublicTags() {
-        Set<String> publicTags = newHashSet();
-        List<UserGroup> publicUserGroups = userGroupDao.findAllWhere(1000,
-                "isPublic = true");
+	private Set<String> getPublicTags() {
+		Set<String> publicTags = newHashSet();
+		List<UserGroup> publicUserGroups = userGroupDao.findAllWhere(1000,
+				"isPublic = true");
 
-        for (UserGroup pGroup : publicUserGroups) {
-            publicTags.addAll(pGroup.getApprovedTagIds());
-        }
+		for (UserGroup pGroup : publicUserGroups) {
+			publicTags.addAll(pGroup.getApprovedTagIds());
+		}
 
-        return publicTags;
-    }
+		return publicTags;
+	}
 }

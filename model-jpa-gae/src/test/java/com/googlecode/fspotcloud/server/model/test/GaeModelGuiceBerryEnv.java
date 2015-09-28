@@ -28,12 +28,11 @@ import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.TestWrapper;
 import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 
-
 public class GaeModelGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-        install(new GaeCachedModelModule(100, "gae-test"));
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
+		install(new GaeCachedModelModule(100, "gae-test"));
+	}
 }

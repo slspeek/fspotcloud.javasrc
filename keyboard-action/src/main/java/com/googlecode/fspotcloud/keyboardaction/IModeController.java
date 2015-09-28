@@ -9,17 +9,17 @@ import java.util.Set;
 @GwtCompatible
 public interface IModeController extends PlaceChangeEvent.Handler {
 
-    Set<String>  getFlags();
+	Set<String> getFlags();
 
-    void setFlag(String flag);
+	void setFlag(String flag);
 
-    void unsetFlag(String flag);
+	void unsetFlag(String flag);
 
-    void clearFlags();
+	void clearFlags();
 
-     void initButtonEnableStates();
+	void initButtonEnableStates();
 
-    void setFlag(String name, boolean set);
+	void setFlag(String name, boolean set);
 
-    void setFlags(Map<String, Boolean> flags);
+	void setFlags(Map<String, Boolean> flags);
 }

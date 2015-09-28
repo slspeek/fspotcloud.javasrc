@@ -9,31 +9,29 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class AllPhotosHandler implements IActionHandler {
 
+	private final RasterState rasterState;
+	private final IPlaceController placeController;
 
-    private final RasterState rasterState;
-    private final IPlaceController placeController;
+	@Inject
+	public AllPhotosHandler(RasterState rasterState,
+			IPlaceController placeController) {
+		this.rasterState = rasterState;
+		this.placeController = placeController;
+	}
 
-    @Inject
-    public AllPhotosHandler(RasterState rasterState, IPlaceController placeController) {
-        this.rasterState = rasterState;
-        this.placeController = placeController;
-    }
-
-    @Override
-    public void performAction(String actionId) {
-        BasePlace basePlace = placeController.where();
-        BasePlace destPlace;
-        if (basePlace != null) {
-            PlaceBuilder converter = new PlaceBuilder(basePlace);
-            converter.setTagId("all");
-            destPlace = converter.place();
-        } else {
-            destPlace = new BasePlace("all",
-                    null,
-                    rasterState.getColumnCount(),
-                    rasterState.getRowCount(),
-                    rasterState.isAutoHide());
-        }
-        placeController.goTo(destPlace);
-    }
+	@Override
+	public void performAction(String actionId) {
+		BasePlace basePlace = placeController.where();
+		BasePlace destPlace;
+		if (basePlace != null) {
+			PlaceBuilder converter = new PlaceBuilder(basePlace);
+			converter.setTagId("all");
+			destPlace = converter.place();
+		} else {
+			destPlace = new BasePlace("all", null,
+					rasterState.getColumnCount(), rasterState.getRowCount(),
+					rasterState.isAutoHide());
+		}
+		placeController.goTo(destPlace);
+	}
 }

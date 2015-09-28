@@ -27,10 +27,9 @@ package com.googlecode.fspotcloud.client.main.ui;
 import com.google.gwt.user.client.Window;
 import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 
-
 public class OpenNewTabImpl implements OpenNewTab {
-    @Override
-    public void setLocation(String url) {
-        Window.open(url, "", "");
-    }
+	@Override
+	public void setLocation(String url) {
+		Window.open(url, "", "");
+	}
 }

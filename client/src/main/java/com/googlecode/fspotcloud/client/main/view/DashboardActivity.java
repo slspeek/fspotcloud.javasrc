@@ -42,71 +42,72 @@ import com.googlecode.fspotcloud.shared.main.UserInfo;
 
 import java.util.logging.Logger;
 
-
 public class DashboardActivity extends AbstractActivity
-        implements DashboardView.DashboardPresenter {
-    private final Logger log = Logger.getLogger(DashboardActivity.class.getName());
-    private final DashboardView dashboardView;
-    private final TreeView.TreePresenter treePresenter;
-    private final PeerActionsView.PeerActionsPresenter peerActionsPresenter;
-    private TagDetailsView.TagDetailsPresenter activity;
-    private final IClientLoginManager clientLoginManager;
-    private final IPlaceController placeController;
+		implements
+			DashboardView.DashboardPresenter {
+	private final Logger log = Logger.getLogger(DashboardActivity.class
+			.getName());
+	private final DashboardView dashboardView;
+	private final TreeView.TreePresenter treePresenter;
+	private final PeerActionsView.PeerActionsPresenter peerActionsPresenter;
+	private TagDetailsView.TagDetailsPresenter activity;
+	private final IClientLoginManager clientLoginManager;
+	private final IPlaceController placeController;
 
-    @Inject
-    public DashboardActivity(DashboardView dashboardView,
-                             @AdminTreeView TreeView.TreePresenter treePresenter,
-                             PeerActionsView.PeerActionsPresenter peerActionsPresenter,
-                             TagDetailsView.TagDetailsPresenter tagDetailsActivity,
-                             IClientLoginManager clientLoginManager,
-                             IPlaceController placeController) {
-        this.dashboardView = dashboardView;
-        this.treePresenter = treePresenter;
-        this.peerActionsPresenter = peerActionsPresenter;
-        this.activity = tagDetailsActivity;
-        this.clientLoginManager = clientLoginManager;
-        this.placeController = placeController;
-    }
+	@Inject
+	public DashboardActivity(DashboardView dashboardView,
+			@AdminTreeView TreeView.TreePresenter treePresenter,
+			PeerActionsView.PeerActionsPresenter peerActionsPresenter,
+			TagDetailsView.TagDetailsPresenter tagDetailsActivity,
+			IClientLoginManager clientLoginManager,
+			IPlaceController placeController) {
+		this.dashboardView = dashboardView;
+		this.treePresenter = treePresenter;
+		this.peerActionsPresenter = peerActionsPresenter;
+		this.activity = tagDetailsActivity;
+		this.clientLoginManager = clientLoginManager;
+		this.placeController = placeController;
+	}
 
-    @Override
-    public void init() {
-        clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                placeController.goTo(new HomePlace());
-            }
+	@Override
+	public void init() {
+		clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				placeController.goTo(new HomePlace());
+			}
 
-            @Override
-            public void onSuccess(UserInfo result) {
-                if (result.isLoggedIn() && result.isAdmin()) {
-                    treePresenter.init();
-                    peerActionsPresenter.init();
-                } else if (result.isLoggedIn()) {
-                    placeController.goTo(new HomePlace());
-                } else {
-                    clientLoginManager.redirectToLogin();
-                }
-            }
-        });
-    }
+			@Override
+			public void onSuccess(UserInfo result) {
+				if (result.isLoggedIn() && result.isAdmin()) {
+					treePresenter.init();
+					peerActionsPresenter.init();
+				} else if (result.isLoggedIn()) {
+					placeController.goTo(new HomePlace());
+				} else {
+					clientLoginManager.redirectToLogin();
+				}
+			}
+		});
+	}
 
-    @Override
-    public DashboardView.DashboardPresenter withPlace(DashboardPlace place) {
-        ((AdminTreePresenterImpl) treePresenter).setPlace(place);
-        activity.init();
-        return this;
-    }
+	@Override
+	public DashboardView.DashboardPresenter withPlace(DashboardPlace place) {
+		((AdminTreePresenterImpl) treePresenter).setPlace(place);
+		activity.init();
+		return this;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        dashboardView.setPresenter(this);
-        panel.setWidget(dashboardView);
-        init();
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		dashboardView.setPresenter(this);
+		panel.setWidget(dashboardView);
+		init();
+	}
 
-    @Override
-    public void onStop() {
-        peerActionsPresenter.stop();
-        super.onStop();
-    }
+	@Override
+	public void onStop() {
+		peerActionsPresenter.stop();
+		super.onStop();
+	}
 }

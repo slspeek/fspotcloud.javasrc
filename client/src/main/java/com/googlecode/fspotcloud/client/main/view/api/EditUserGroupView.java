@@ -32,22 +32,21 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 @GwtCompatible
 public interface EditUserGroupView extends IsWidget, StatusView {
 
-    void setName(String name);
+	void setName(String name);
 
-    String getName();
+	String getName();
 
-    void setDescription(String description);
+	void setDescription(String description);
 
-    String getDescription();
+	String getDescription();
 
-    void setIsPublic(boolean isPublic);
+	void setIsPublic(boolean isPublic);
 
-    boolean getIsPublic();
+	boolean getIsPublic();
 
-    void focusNameField();
+	void focusNameField();
 
-
-    interface EditUserGroupPresenter extends Activity, IActionHandler {
-        void setId(Long id);
-    }
+	interface EditUserGroupPresenter extends Activity, IActionHandler {
+		void setId(Long id);
+	}
 }

@@ -28,20 +28,18 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
-
 public interface HomeResources extends ClientBundle {
-    @Source("home.css")
-    Style style();
+	@Source("home.css")
+	Style style();
 
-    @Source("images/Welcome.png")
-    ImageResource welcomeIcon();
+	@Source("images/Welcome.png")
+	ImageResource welcomeIcon();
 
+	public interface Style extends CssResource {
+		String page();
 
-    public interface Style extends CssResource {
-        String page();
+		String welcome();
 
-        String welcome();
-
-        String waiting();
-    }
+		String waiting();
+	}
 }

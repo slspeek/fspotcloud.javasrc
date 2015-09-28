@@ -33,24 +33,25 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.openpojo.business.annotation.BusinessKey;
 
+public class PhotoDataResult extends BusinessBase
+		implements
+			Result,
+			Serializable {
+	private static final long serialVersionUID = -2531344462382063416L;
+	@BusinessKey
+	private final List<PhotoData> photoDataList;
 
-public class PhotoDataResult extends BusinessBase implements Result,
-        Serializable {
-    private static final long serialVersionUID = -2531344462382063416L;
-    @BusinessKey
-    private final List<PhotoData> photoDataList;
+	public PhotoDataResult(List<PhotoData> photoDataList) {
+		super();
+		this.photoDataList = photoDataList;
+	}
 
-    public PhotoDataResult(List<PhotoData> photoDataList) {
-        super();
-        this.photoDataList = photoDataList;
-    }
+	public List<PhotoData> getPhotoDataList() {
+		return photoDataList;
+	}
 
-    public List<PhotoData> getPhotoDataList() {
-        return photoDataList;
-    }
-
-    public String toString() {
-        return new ToStringBuilder(this).append("photos", photoDataList)
-                .toString();
-    }
+	public String toString() {
+		return new ToStringBuilder(this).append("photos", photoDataList)
+				.toString();
+	}
 }

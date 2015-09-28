@@ -28,11 +28,10 @@ import com.googlecode.fspotcloud.shared.peer.TagUpdate;
 
 import java.util.List;
 
-
 public class TagUpdateAction extends AbstractBatchAction<TagUpdate> {
-    private static final long serialVersionUID = -5470374310534233053L;
+	private static final long serialVersionUID = -5470374310534233053L;
 
-    public TagUpdateAction(List<TagUpdate> updates) {
-        super(updates);
-    }
+	public TagUpdateAction(List<TagUpdate> updates) {
+		super(updates);
+	}
 }

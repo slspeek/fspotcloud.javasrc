@@ -6,10 +6,10 @@ import static org.junit.Assert.assertEquals;
 
 public class WidgetRegistryEmptyTest {
 
-    WidgetRegistry registry = new WidgetRegistry();
+	WidgetRegistry registry = new WidgetRegistry();
 
-    @Test
-    public void testGet() throws Exception {
-        assertEquals(0, registry.get("foo").size());
-    }
+	@Test
+	public void testGet() throws Exception {
+		assertEquals(0, registry.get("foo").size());
+	}
 }

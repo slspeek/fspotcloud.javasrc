@@ -35,59 +35,59 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class TreeBuilderTest {
-    List<TagNode> nodes;
+	List<TagNode> nodes;
 
-    @Before
-    public void setUp() throws Exception {
-        TagNode root = new TagNode("1", "0");
-        root.setTagName("Root node");
-        TagNode level1_a = new TagNode("2", "1");
-        level1_a.setTagName("ZZAbelian groups");
-        TagNode level2_b = new TagNode("3", "1");
-        level2_b.setTagName("R as ring");
-        level2_b.setImportIssued(true);
+	@Before
+	public void setUp() throws Exception {
+		TagNode root = new TagNode("1", "0");
+		root.setTagName("Root node");
+		TagNode level1_a = new TagNode("2", "1");
+		level1_a.setTagName("ZZAbelian groups");
+		TagNode level2_b = new TagNode("3", "1");
+		level2_b.setTagName("R as ring");
+		level2_b.setImportIssued(true);
 
-        TagNode secondRoot = new TagNode("4", "0");
-        secondRoot.setTagName("Boolean algebra");
-        secondRoot.setImportIssued(true);
-        nodes = ImmutableList.of(root, level1_a, level2_b, secondRoot);
-    }
+		TagNode secondRoot = new TagNode("4", "0");
+		secondRoot.setTagName("Boolean algebra");
+		secondRoot.setImportIssued(true);
+		nodes = ImmutableList.of(root, level1_a, level2_b, secondRoot);
+	}
 
-    @Test
-    public void testVerySimpleTree() {
-        TreeBuilder builder = new TreeBuilder(nodes);
-        TagNode trees = builder.getFullTree();
-        assertEquals(2, trees.getChildren().size());
+	@Test
+	public void testVerySimpleTree() {
+		TreeBuilder builder = new TreeBuilder(nodes);
+		TagNode trees = builder.getFullTree();
+		assertEquals(2, trees.getChildren().size());
 
-        TagNode root = trees.getChildren().get(1);
-        assertEquals(trees, root.getParent());
-        List<TagNode> level_1s = root.getChildren();
-        assertEquals(2, level_1s.size());
-    }
+		TagNode root = trees.getChildren().get(1);
+		assertEquals(trees, root.getParent());
+		List<TagNode> level_1s = root.getChildren();
+		assertEquals(2, level_1s.size());
+	}
 
-    @Test
-    public void testVerySimpleTreeOrdering() {
-        TreeBuilder builder = new TreeBuilder(nodes);
-        TagNode trees = builder.getFullTree();
-        assertEquals(2, trees.getChildren().size());
-        System.out.println(trees.getChildren());
-        TagNode root = trees.getChildren().get(1);
-        assertEquals(trees, root.getParent());
-        List<TagNode> level_1s = root.getChildren();
-        assertEquals(2, level_1s.size());
-        System.out.println(level_1s);
-    }
+	@Test
+	public void testVerySimpleTreeOrdering() {
+		TreeBuilder builder = new TreeBuilder(nodes);
+		TagNode trees = builder.getFullTree();
+		assertEquals(2, trees.getChildren().size());
+		System.out.println(trees.getChildren());
+		TagNode root = trees.getChildren().get(1);
+		assertEquals(trees, root.getParent());
+		List<TagNode> level_1s = root.getChildren();
+		assertEquals(2, level_1s.size());
+		System.out.println(level_1s);
+	}
 
-    @Test
-    public void testPublicTreeSimpleTree() {
-        TreeBuilder builder = new TreeBuilder(nodes);
-        TagNode trees = builder.getPublicTree();
+	@Test
+	public void testPublicTreeSimpleTree() {
+		TreeBuilder builder = new TreeBuilder(nodes);
+		TagNode trees = builder.getPublicTree();
 
-        assertEquals(2, trees.getChildren().size());
+		assertEquals(2, trees.getChildren().size());
 
-        TagNode root = trees.getChildren().get(0);
-        assertEquals(trees, root.getParent());
-        List<TagNode> level_1s = root.getChildren();
-        assertEquals(0, level_1s.size());
-    }
+		TagNode root = trees.getChildren().get(0);
+		assertEquals(trees, root.getParent());
+		List<TagNode> level_1s = root.getChildren();
+		assertEquals(0, level_1s.size());
+	}
 }

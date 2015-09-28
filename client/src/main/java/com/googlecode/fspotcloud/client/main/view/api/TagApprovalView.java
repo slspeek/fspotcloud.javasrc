@@ -35,24 +35,24 @@ import java.util.Set;
 @GwtCompatible
 public interface TagApprovalView extends IsWidget {
 
-    void setStatusText(String status);
+	void setStatusText(String status);
 
-    void setApprovedGroups(Set<UserGroupInfo> approvedGroups);
+	void setApprovedGroups(Set<UserGroupInfo> approvedGroups);
 
-    void setOtherGroups(Set<UserGroupInfo> approvedGroups);
+	void setOtherGroups(Set<UserGroupInfo> approvedGroups);
 
-    void setTagName(String name);
+	void setTagName(String name);
 
-    UserGroupInfo getApprovedSelected();
+	UserGroupInfo getApprovedSelected();
 
-    UserGroupInfo getOtherSelected();
+	UserGroupInfo getOtherSelected();
 
-    void focusGrantedTable();
+	void focusGrantedTable();
 
-    void focusRevokedTable();
+	void focusRevokedTable();
 
-    interface TagApprovalPresenter extends Activity, IActionHandler {
+	interface TagApprovalPresenter extends Activity, IActionHandler {
 
-        void setTagId(String tagId);
-    }
+		void setTagId(String tagId);
+	}
 }

@@ -29,22 +29,21 @@ import com.openpojo.business.annotation.BusinessKey;
 
 import java.io.Serializable;
 
-
 public class TagRemovedFromPeer extends BusinessBase implements Serializable {
-    private static final long serialVersionUID = 2281991078733846131L;
-    @BusinessKey
-    private final String tagId;
+	private static final long serialVersionUID = 2281991078733846131L;
+	@BusinessKey
+	private final String tagId;
 
-    public TagRemovedFromPeer(String tagId) {
-        super();
-        this.tagId = tagId;
-    }
+	public TagRemovedFromPeer(String tagId) {
+		super();
+		this.tagId = tagId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this).add("id", tagId).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("id", tagId).toString();
+	}
 }

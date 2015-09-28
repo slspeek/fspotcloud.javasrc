@@ -28,25 +28,24 @@ import com.google.common.annotations.GwtCompatible;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class GrantUserAction implements Action<VoidResult> {
-    private String email;
-    private Long userGroupId;
+	private String email;
+	private Long userGroupId;
 
-    public GrantUserAction(String email, Long userGroupId) {
-        this.email = email;
-        this.userGroupId = userGroupId;
-    }
+	public GrantUserAction(String email, Long userGroupId) {
+		this.email = email;
+		this.userGroupId = userGroupId;
+	}
 
-    public GrantUserAction() {
-    }
+	public GrantUserAction() {
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Long getUserGroupId() {
-        return userGroupId;
-    }
+	public Long getUserGroupId() {
+		return userGroupId;
+	}
 }

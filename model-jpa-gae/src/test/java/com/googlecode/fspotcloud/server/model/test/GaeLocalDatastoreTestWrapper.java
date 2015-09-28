@@ -33,19 +33,19 @@ import com.google.guiceberry.TestWrapper;
 
 import javax.inject.Inject;
 
-
 public class GaeLocalDatastoreTestWrapper implements TestWrapper {
-    private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalBlobstoreServiceTestConfig(),
-            new LocalDatastoreServiceTestConfig());
-    @Inject
-    TearDownAccepter tearDownAccepter;
+	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
+			new LocalBlobstoreServiceTestConfig(),
+			new LocalDatastoreServiceTestConfig());
+	@Inject
+	TearDownAccepter tearDownAccepter;
 
-    public void toRunBeforeTest() {
-        helper.setUp();
-        tearDownAccepter.addTearDown(new TearDown() {
-            public void tearDown() throws Exception {
-                helper.tearDown();
-            }
-        });
-    }
+	public void toRunBeforeTest() {
+		helper.setUp();
+		tearDownAccepter.addTearDown(new TearDown() {
+			public void tearDown() throws Exception {
+				helper.tearDown();
+			}
+		});
+	}
 }

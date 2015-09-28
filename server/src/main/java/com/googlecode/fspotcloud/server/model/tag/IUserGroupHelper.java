@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.server.model.tag;
 
 import java.util.Set;
 
-
 /**
  * Created with IntelliJ IDEA.
  * User: steven
@@ -35,7 +34,7 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public interface IUserGroupHelper {
-    Set<String> getVisibleTagIds();
+	Set<String> getVisibleTagIds();
 
-    boolean containsOneOf(Set<String> tagIds);
+	boolean containsOneOf(Set<String> tagIds);
 }

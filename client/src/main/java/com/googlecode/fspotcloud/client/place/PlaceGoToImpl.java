@@ -32,72 +32,70 @@ import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class PlaceGoToImpl implements IPlaceController {
 
-    private final Logger log = Logger.getLogger(PlaceGoToImpl.class.getName());
-    protected final PlaceController placeController;
-    protected final MainPlaceHistoryMapper mainPlaceHistoryMapper;
-    private BasePlace lastBasePlace = null;
-    protected String activeTagId;
+	private final Logger log = Logger.getLogger(PlaceGoToImpl.class.getName());
+	protected final PlaceController placeController;
+	protected final MainPlaceHistoryMapper mainPlaceHistoryMapper;
+	private BasePlace lastBasePlace = null;
+	protected String activeTagId;
 
-    @Inject
-    public PlaceGoToImpl(PlaceController placeController,
-                         MainPlaceHistoryMapper mainPlaceHistoryMapper) {
-        this.placeController = placeController;
-        this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
-    }
+	@Inject
+	public PlaceGoToImpl(PlaceController placeController,
+			MainPlaceHistoryMapper mainPlaceHistoryMapper) {
+		this.placeController = placeController;
+		this.mainPlaceHistoryMapper = mainPlaceHistoryMapper;
+	}
 
-    @Override
-    public void goTo(Place place) {
-        if (place instanceof DashboardPlace) {
-            activeTagId = ((DashboardPlace) place).getTagId();
-        } else if (place instanceof BasePlace) {
-            activeTagId = ((BasePlace) place).getTagId();
-            setLastBasePlace((BasePlace) place);
-        }
-        placeController.goTo(place);
-    }
+	@Override
+	public void goTo(Place place) {
+		if (place instanceof DashboardPlace) {
+			activeTagId = ((DashboardPlace) place).getTagId();
+		} else if (place instanceof BasePlace) {
+			activeTagId = ((BasePlace) place).getTagId();
+			setLastBasePlace((BasePlace) place);
+		}
+		placeController.goTo(place);
+	}
 
-    @Override
-    public void goTo(String token) {
-        goTo(mainPlaceHistoryMapper.getPlace(token.substring(1)));
-    }
+	@Override
+	public void goTo(String token) {
+		goTo(mainPlaceHistoryMapper.getPlace(token.substring(1)));
+	}
 
-    public String getLastTagId() {
-        return activeTagId;
-    }
+	public String getLastTagId() {
+		return activeTagId;
+	}
 
-    protected BasePlace getLastBasePlace() {
-        log.log(Level.FINEST, "returning last base place:" + lastBasePlace);
-        return lastBasePlace;
-    }
+	protected BasePlace getLastBasePlace() {
+		log.log(Level.FINEST, "returning last base place:" + lastBasePlace);
+		return lastBasePlace;
+	}
 
-    protected void setLastBasePlace(BasePlace lastBasePlace) {
-        log.log(Level.FINEST, "last base place set to " + lastBasePlace);
-        this.lastBasePlace = lastBasePlace;
-    }
+	protected void setLastBasePlace(BasePlace lastBasePlace) {
+		log.log(Level.FINEST, "last base place set to " + lastBasePlace);
+		this.lastBasePlace = lastBasePlace;
+	}
 
+	@Override
+	public BasePlace where() {
+		Place place = placeController.getWhere();
+		//FIXME: We should listen to PlaceController events
+		if (place instanceof BasePlace) {
+			setLastBasePlace((BasePlace) place);
+		}
 
-    @Override
-    public BasePlace where() {
-        Place place = placeController.getWhere();
-        //FIXME: We should listen to PlaceController events
-        if (place instanceof BasePlace) {
-            setLastBasePlace((BasePlace) place);
-        }
+		return getLastBasePlace();
+	}
 
-        return getLastBasePlace();
-    }
+	@Override
+	public String whereToken() {
+		return "#" + mainPlaceHistoryMapper.getToken(getRawWhere());
+	}
 
-    @Override
-    public String whereToken() {
-        return "#" + mainPlaceHistoryMapper.getToken(getRawWhere());
-    }
-
-    @Override
-    public Place getRawWhere() {
-        Place place = placeController.getWhere();
-        return place;
-    }
+	@Override
+	public Place getRawWhere() {
+		Place place = placeController.getWhere();
+		return place;
+	}
 }

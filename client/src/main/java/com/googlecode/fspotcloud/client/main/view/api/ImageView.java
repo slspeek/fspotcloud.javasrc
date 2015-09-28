@@ -29,25 +29,25 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 @GwtCompatible
 public interface ImageView extends IsWidget {
-    void setSelected(boolean selected);
+	void setSelected(boolean selected);
 
-    void setImageUrl(String url);
+	void setImageUrl(String url);
 
-    void setPresenter(ImagePresenter presenter);
+	void setPresenter(ImagePresenter presenter);
 
-    void setDescription(String date);
+	void setDescription(String date);
 
-    void hideLabelLater(int visibleDuration);
+	void hideLabelLater(int visibleDuration);
 
-    void adjustSize();
+	void adjustSize();
 
-    interface ImagePresenter {
-        void init();
+	interface ImagePresenter {
+		void init();
 
-        void imageClicked();
+		void imageClicked();
 
-        void setSelected(boolean selected);
+		void setSelected(boolean selected);
 
-        void adjustSize();
-    }
+		void adjustSize();
+	}
 }

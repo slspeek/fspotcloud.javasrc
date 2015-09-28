@@ -16,30 +16,28 @@ import java.util.logging.Logger;
 
 public class EndUserActionFactory implements UIRegistrationBuilder {
 
-    private final Logger log = Logger.getLogger(EndUserActionFactory.class.getName());
+	private final Logger log = Logger.getLogger(EndUserActionFactory.class
+			.getName());
 
-    @Inject
-    public EndUserActionFactory(AboutBinder aboutBinder,
-                                ApplicationBinder applicationBinder,
-                                NavigationBinder navigationBinder,
-                                RasterBinder rasterBinder,
-                                SlideshowBinder slideshowBinder,
-                                DashboardBinder dashboardBinder,
-                                UserBinder userBinder,
-                                GroupBinder groupBinder) {
-        aboutBinder.build();
-        applicationBinder.build();
-        navigationBinder.build();
-        rasterBinder.build();
-        slideshowBinder.build();
-        dashboardBinder.build();
-        userBinder.build();
-        groupBinder.build();
-        log.log(Level.FINEST, "Done executing Keyboard Actions early bindings");
-    }
+	@Inject
+	public EndUserActionFactory(AboutBinder aboutBinder,
+			ApplicationBinder applicationBinder,
+			NavigationBinder navigationBinder, RasterBinder rasterBinder,
+			SlideshowBinder slideshowBinder, DashboardBinder dashboardBinder,
+			UserBinder userBinder, GroupBinder groupBinder) {
+		aboutBinder.build();
+		applicationBinder.build();
+		navigationBinder.build();
+		rasterBinder.build();
+		slideshowBinder.build();
+		dashboardBinder.build();
+		userBinder.build();
+		groupBinder.build();
+		log.log(Level.FINEST, "Done executing Keyboard Actions early bindings");
+	}
 
-    @Override
-    public void build() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public void build() {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
 }

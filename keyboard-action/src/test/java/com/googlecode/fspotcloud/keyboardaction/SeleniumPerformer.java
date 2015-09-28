@@ -5,11 +5,10 @@ import com.thoughtworks.selenium.Selenium;
 
 public class SeleniumPerformer {
 
-    @Inject
-    private Selenium selenium;
+	@Inject
+	private Selenium selenium;
 
-
-    public void performAction(ActionUIDef def) {
-        selenium.click("gwt-debug-" + def.getId());
-    }
+	public void performAction(ActionUIDef def) {
+		selenium.click("gwt-debug-" + def.getId());
+	}
 }

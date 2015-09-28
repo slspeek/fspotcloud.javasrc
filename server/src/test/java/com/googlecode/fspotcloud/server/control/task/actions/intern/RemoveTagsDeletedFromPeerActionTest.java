@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
 import com.googlecode.fspotcloud.shared.peer.TagRemovedFromPeer;
@@ -39,22 +39,24 @@ import static com.google.common.collect.Lists.newArrayList;
  * @author steven
  */
 @RunWith(JukitoRunner.class)
-public class RemoveTagsDeletedFromPeerActionTest extends EqualsTest<RemoveTagsDeletedFromPeerAction> {
-    @Override
-    protected RemoveTagsDeletedFromPeerAction getOne() {
-        return new RemoveTagsDeletedFromPeerAction(newArrayList(
-                new TagRemovedFromPeer("1")));
-    }
+public class RemoveTagsDeletedFromPeerActionTest
+		extends
+			EqualsTest<RemoveTagsDeletedFromPeerAction> {
+	@Override
+	protected RemoveTagsDeletedFromPeerAction getOne() {
+		return new RemoveTagsDeletedFromPeerAction(
+				newArrayList(new TagRemovedFromPeer("1")));
+	}
 
-    @Override
-    protected RemoveTagsDeletedFromPeerAction getTheOther() {
-        return new RemoveTagsDeletedFromPeerAction(newArrayList(
-                new TagRemovedFromPeer("1")));
-    }
+	@Override
+	protected RemoveTagsDeletedFromPeerAction getTheOther() {
+		return new RemoveTagsDeletedFromPeerAction(
+				newArrayList(new TagRemovedFromPeer("1")));
+	}
 
-    @Override
-    protected RemoveTagsDeletedFromPeerAction getDifferentOne() {
-        return new RemoveTagsDeletedFromPeerAction(newArrayList(
-                new TagRemovedFromPeer("2")));
-    }
+	@Override
+	protected RemoveTagsDeletedFromPeerAction getDifferentOne() {
+		return new RemoveTagsDeletedFromPeerAction(
+				newArrayList(new TagRemovedFromPeer("2")));
+	}
 }

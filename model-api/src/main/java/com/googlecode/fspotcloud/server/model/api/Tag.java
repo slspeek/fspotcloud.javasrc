@@ -31,33 +31,32 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-
 public interface Tag extends HasSetKey<String>, Serializable {
-    void setParent(String parent);
+	void setParent(String parent);
 
-    String getParent();
+	String getParent();
 
-    void setCount(int count);
+	void setCount(int count);
 
-    int getCount();
+	int getCount();
 
-    void setTagName(String tagName);
+	void setTagName(String tagName);
 
-    String getTagName();
+	String getTagName();
 
-    void setParentId(String parentId);
+	void setParentId(String parentId);
 
-    String getParentId();
+	String getParentId();
 
-    void setCachedPhotoList(TreeSet<PhotoInfo> cachedPhotoList);
+	void setCachedPhotoList(TreeSet<PhotoInfo> cachedPhotoList);
 
-    TreeSet<PhotoInfo> getCachedPhotoList();
+	TreeSet<PhotoInfo> getCachedPhotoList();
 
-    void setImportIssued(boolean importIssued);
+	void setImportIssued(boolean importIssued);
 
-    boolean isImportIssued();
+	boolean isImportIssued();
 
-    void setApprovedUserGroups(Set<Long> keySet);
+	void setApprovedUserGroups(Set<Long> keySet);
 
-    Set<Long> getApprovedUserGroups();
+	Set<Long> getApprovedUserGroups();
 }

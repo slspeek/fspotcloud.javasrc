@@ -29,27 +29,24 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import java.io.Serializable;
 
+public class DeleteAllPhotosAction implements Action<VoidResult>, Serializable {
+	private static final long serialVersionUID = 84293907017230375L;
+	public static final int ANSWER_TO_EVERTHING = 42;
 
-public class DeleteAllPhotosAction implements Action<VoidResult>,
-        Serializable {
-    private static final long serialVersionUID = 84293907017230375L;
-    public static final int ANSWER_TO_EVERTHING = 42;
+	public DeleteAllPhotosAction() {
+		super();
+	}
 
-    public DeleteAllPhotosAction() {
-        super();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof DeleteAllPhotosAction) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof DeleteAllPhotosAction) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public int hashCode() {
-        return ANSWER_TO_EVERTHING; // any arbitrary constant will do
-    }
+	public int hashCode() {
+		return ANSWER_TO_EVERTHING; // any arbitrary constant will do
+	}
 }

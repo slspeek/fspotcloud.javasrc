@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.hook;
 
 import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
@@ -47,19 +47,19 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(JukitoRunner.class)
 public class TimeLoggingControllerHookTest {
-    @Inject
-    private TimeLoggingControllerHook instance;
-    private PeerDatabase peer = new PeerDatabaseEntity();
+	@Inject
+	private TimeLoggingControllerHook instance;
+	private PeerDatabase peer = new PeerDatabaseEntity();
 
-    @Test
-    public void testPreprocess(PeerDatabaseDao peers) {
-        Date now = new Date();
-        when(peers.get()).thenReturn(peer);
+	@Test
+	public void testPreprocess(PeerDatabaseDao peers) {
+		Date now = new Date();
+		when(peers.get()).thenReturn(peer);
 
-        long id = 0L;
-        byte[] result_2 = null;
-        instance.preprocess(id, result_2);
-        verify(peers).save(peer);
-        assertTrue(peer.getPeerLastContact().compareTo(now) != -1);
-    }
+		long id = 0L;
+		byte[] result_2 = null;
+		instance.preprocess(id, result_2);
+		verify(peers).save(peer);
+		assertTrue(peer.getPeerLastContact().compareTo(now) != -1);
+	}
 }

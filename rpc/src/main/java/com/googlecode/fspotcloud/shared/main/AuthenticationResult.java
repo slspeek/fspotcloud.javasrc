@@ -30,41 +30,38 @@ import net.customware.gwt.dispatch.shared.Result;
 
 import static com.google.common.base.Objects.equal;
 
-
 @GwtCompatible
 public class AuthenticationResult implements Result {
-    private boolean success;
+	private boolean success;
 
-    public AuthenticationResult() {
-    }
+	public AuthenticationResult() {
+	}
 
-    public AuthenticationResult(boolean success) {
-        this.success = success;
-    }
+	public AuthenticationResult(boolean success) {
+		this.success = success;
+	}
 
-    public boolean getSuccess() {
-        return success;
-    }
+	public boolean getSuccess() {
+		return success;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof AuthenticationResult) {
-            AuthenticationResult other = (AuthenticationResult) obj;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AuthenticationResult) {
+			AuthenticationResult other = (AuthenticationResult) obj;
 
-            return equal(other.success, getSuccess());
-        } else {
-            return false;
-        }
-    }
+			return equal(other.success, getSuccess());
+		} else {
+			return false;
+		}
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("success", success)
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("success", success).toString();
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(success);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(success);
+	}
 }

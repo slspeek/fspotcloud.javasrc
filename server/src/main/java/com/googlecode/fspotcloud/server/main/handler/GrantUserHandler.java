@@ -38,45 +38,45 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.util.Set;
 
+public class GrantUserHandler
+		extends
+			SimpleActionHandler<GrantUserAction, VoidResult> {
+	private final UserGroupDao userGroupDao;
+	private final UserDao userDao;
+	private final IAdminPermission adminPermission;
 
-public class GrantUserHandler extends SimpleActionHandler<GrantUserAction, VoidResult> {
-    private final UserGroupDao userGroupDao;
-    private final UserDao userDao;
-    private final IAdminPermission adminPermission;
+	@Inject
+	public GrantUserHandler(UserGroupDao userGroupDao, UserDao userDao,
+			IAdminPermission adminPermission) {
+		this.userGroupDao = userGroupDao;
+		this.userDao = userDao;
+		this.adminPermission = adminPermission;
+	}
 
-    @Inject
-    public GrantUserHandler(UserGroupDao userGroupDao, UserDao userDao,
-                            IAdminPermission adminPermission) {
-        this.userGroupDao = userGroupDao;
-        this.userDao = userDao;
-        this.adminPermission = adminPermission;
-    }
+	@Override
+	public VoidResult execute(GrantUserAction action, ExecutionContext context)
+			throws DispatchException {
+		adminPermission.checkAdminPermission();
 
-    @Override
-    public VoidResult execute(GrantUserAction action, ExecutionContext context)
-            throws DispatchException {
-        adminPermission.checkAdminPermission();
+		User user = userDao.findOrNew(action.getEmail());
+		Set<Long> grantedToUser = user.getGrantedUserGroups();
+		grantedToUser.add(action.getUserGroupId());
+		user.setGrantedUserGroups(grantedToUser);
+		userDao.save(user);
 
-        User user = userDao.findOrNew(action.getEmail());
-        Set<Long> grantedToUser = user.getGrantedUserGroups();
-        grantedToUser.add(action.getUserGroupId());
-        user.setGrantedUserGroups(grantedToUser);
-        userDao.save(user);
+		UserGroup group = userGroupDao.find(action.getUserGroupId());
+		if (group != null) {
 
+			Set<String> usergroup = group.getGrantedUsers();
+			usergroup.add(action.getEmail());
+			group.setGrantedUsers(usergroup);
+			userGroupDao.save(group);
+		} else {
+			throw new DispatchException("Usergroup for id: "
+					+ action.getUserGroupId() + " does not exist.") {
+			};
+		}
 
-        UserGroup group = userGroupDao.find(action.getUserGroupId());
-        if (group != null) {
-
-            Set<String> usergroup = group.getGrantedUsers();
-            usergroup.add(action.getEmail());
-            group.setGrantedUsers(usergroup);
-            userGroupDao.save(group);
-        } else {
-            throw new DispatchException("Usergroup for id: " + action.getUserGroupId() + " does not exist.") {
-            };
-        }
-
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

@@ -32,43 +32,40 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-
 public class ImageDataTest extends TestCase {
-    private ImageData target;
-    private String cwd;
+	private ImageData target;
+	private String cwd;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        target = new ImageData();
-        cwd = System.getProperty("user.dir");
-    }
+	protected void setUp() throws Exception {
+		super.setUp();
+		target = new ImageData();
+		cwd = System.getProperty("user.dir");
+	}
 
+	public final void testGetScaledImageData() throws Exception {
+		String imgPath = "/src/test/resources/images/img_0659 (Gewijzigd).jpg";
+		String path = cwd + imgPath;
 
-    public final void testGetScaledImageData() throws Exception {
-        String imgPath = "/src/test/resources/images/img_0659 (Gewijzigd).jpg";
-        String path = cwd + imgPath;
+		Dimension size = new Dimension(200, 100);
+		byte[] data = target.getScaledImageData(path, size);
+		InputStream dataStream = new ByteArrayInputStream(data);
+		BufferedImage img = ImageIO.read(dataStream);
+		int w = img.getWidth();
+		int h = img.getHeight();
+		assertEquals(133, w);
+		assertEquals(100, h);
+	}
 
-        Dimension size = new Dimension(200, 100);
-        byte[] data = target.getScaledImageData(path, size);
-        InputStream dataStream = new ByteArrayInputStream(data);
-        BufferedImage img = ImageIO.read(dataStream);
-        int w = img.getWidth();
-        int h = img.getHeight();
-        assertEquals(133, w);
-        assertEquals(100, h);
-    }
-
-    public final void testGetScaledImageDataPortrait()
-            throws Exception {
-        String urlString = cwd +
-                "/src/test/resources/Photos/2010/06/04/Mac-classic.jpg";
-        Dimension size = new Dimension(200, 100);
-        byte[] data = target.getScaledImageData(urlString, size);
-        InputStream dataStream = new ByteArrayInputStream(data);
-        BufferedImage img = ImageIO.read(dataStream);
-        int w = img.getWidth();
-        int h = img.getHeight();
-        assertEquals(75, w);
-        assertEquals(100, h);
-    }
+	public final void testGetScaledImageDataPortrait() throws Exception {
+		String urlString = cwd
+				+ "/src/test/resources/Photos/2010/06/04/Mac-classic.jpg";
+		Dimension size = new Dimension(200, 100);
+		byte[] data = target.getScaledImageData(urlString, size);
+		InputStream dataStream = new ByteArrayInputStream(data);
+		BufferedImage img = ImageIO.read(dataStream);
+		int w = img.getWidth();
+		int h = img.getHeight();
+		assertEquals(75, w);
+		assertEquals(100, h);
+	}
 }

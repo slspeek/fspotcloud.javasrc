@@ -27,20 +27,11 @@ package com.googlecode.fspotcloud.test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-        SimpleSignUpITest.class,
-        UserGroupITest.class,
-        DashboardITest.class,
-        TabularITest.class,
-        PrivateAccessITest.class,
-        ChangePasswordITest.class,
-        ChangePasswordResetITest.class,
-        IntersectionDeleteITest.class,
-        DeleteITest.class,
-        TagRenamingITest.class,
-        DeleteITest.class,
-        ThreeFaseITest.class})
+@Suite.SuiteClasses({SimpleSignUpITest.class, UserGroupITest.class,
+		DashboardITest.class, TabularITest.class, PrivateAccessITest.class,
+		ChangePasswordITest.class, ChangePasswordResetITest.class,
+		IntersectionDeleteITest.class, DeleteITest.class,
+		TagRenamingITest.class, DeleteITest.class, ThreeFaseITest.class})
 public class LocalSuite {
 }

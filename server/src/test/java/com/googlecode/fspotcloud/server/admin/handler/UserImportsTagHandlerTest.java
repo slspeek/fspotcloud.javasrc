@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
@@ -51,48 +51,48 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class UserImportsTagHandlerTest {
-    private final String TAG_ID = "1";
-    @Inject
-    UserImportsTagHandler handler;
-    UserImportsTagAction action = new UserImportsTagAction("1");
-    Tag tagOne;
-    @Inject
-    private PeerDatabaseDao peerDatabaseDao;
+	private final String TAG_ID = "1";
+	@Inject
+	UserImportsTagHandler handler;
+	UserImportsTagAction action = new UserImportsTagAction("1");
+	Tag tagOne;
+	@Inject
+	private PeerDatabaseDao peerDatabaseDao;
 
-    @Before
-    public void setup() {
-        tagOne = new TagEntity();
-        tagOne.setId(TAG_ID);
-    }
+	@Before
+	public void setup() {
+		tagOne = new TagEntity();
+		tagOne.setId(TAG_ID);
+	}
 
-    @Test
-    public void testNormalExecute(TagDao tagManager,
-                                  ControllerDispatchAsync dispatchAsync,
-                                  ArgumentCaptor<GetTagUpdateInstructionsAction> actionCaptor,
-                                  ArgumentCaptor<TagUpdateInstructionsCallback> callbackCaptor)
-            throws Exception {
-        when(tagManager.find(TAG_ID)).thenReturn(tagOne);
+	@Test
+	public void testNormalExecute(TagDao tagManager,
+			ControllerDispatchAsync dispatchAsync,
+			ArgumentCaptor<GetTagUpdateInstructionsAction> actionCaptor,
+			ArgumentCaptor<TagUpdateInstructionsCallback> callbackCaptor)
+			throws Exception {
+		when(tagManager.find(TAG_ID)).thenReturn(tagOne);
 
-        VoidResult result = handler.execute(action, null);
-        verify(peerDatabaseDao).resetCachedTagTrees();
-        verify(dispatchAsync)
-                .execute(actionCaptor.capture(), callbackCaptor.capture());
+		VoidResult result = handler.execute(action, null);
+		verify(peerDatabaseDao).resetCachedTagTrees();
+		verify(dispatchAsync).execute(actionCaptor.capture(),
+				callbackCaptor.capture());
 
-        GetTagUpdateInstructionsAction action = actionCaptor.getValue();
-        assertTrue(action.getPhotosOnServer().isEmpty());
+		GetTagUpdateInstructionsAction action = actionCaptor.getValue();
+		assertTrue(action.getPhotosOnServer().isEmpty());
 
-        TagUpdateInstructionsCallback callback = callbackCaptor.getValue();
-        assertEquals(TAG_ID, action.getTagId());
-    }
+		TagUpdateInstructionsCallback callback = callbackCaptor.getValue();
+		assertEquals(TAG_ID, action.getTagId());
+	}
 
-    //FIXME: Must be open as it is called from within
-    //@Test(expected = SecurityException.class)
-    public void testUnAuthorizedExecute(IAdminPermission adminPermission)
-            throws Exception {
-        doThrow(new SecurityException()).when(adminPermission)
-                .checkAdminPermission();
+	//FIXME: Must be open as it is called from within
+	//@Test(expected = SecurityException.class)
+	public void testUnAuthorizedExecute(IAdminPermission adminPermission)
+			throws Exception {
+		doThrow(new SecurityException()).when(adminPermission)
+				.checkAdminPermission();
 
-        VoidResult result = handler.execute(action, null);
-        fail();
-    }
+		VoidResult result = handler.execute(action, null);
+		fail();
+	}
 }

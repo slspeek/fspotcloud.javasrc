@@ -26,9 +26,8 @@ package com.googlecode.fspotcloud.user;
 
 import com.googlecode.fspotcloud.server.model.api.User;
 
-
 public interface ILoginMetaDataUpdater {
-    void doUpdate(User user, LoginMetaData.Type type);
+	void doUpdate(User user, LoginMetaData.Type type);
 
-    void clear();
+	void clear();
 }

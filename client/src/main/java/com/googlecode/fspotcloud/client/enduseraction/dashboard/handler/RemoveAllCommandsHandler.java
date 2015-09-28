@@ -14,31 +14,36 @@ import java.util.logging.Logger;
 
 public class RemoveAllCommandsHandler implements IActionHandler {
 
-    private final DispatchAsync dispatcher;
-    private final StatusView statusView;
-    private Logger log = Logger.getLogger(RemoveAllCommandsHandler.class.getName());
+	private final DispatchAsync dispatcher;
+	private final StatusView statusView;
+	private Logger log = Logger.getLogger(RemoveAllCommandsHandler.class
+			.getName());
 
-    @Inject
-    public RemoveAllCommandsHandler(DispatchAsync dispatcher, @Dashboard StatusView statusView) {
-        this.dispatcher = dispatcher;
-        this.statusView = statusView;
-    }
+	@Inject
+	public RemoveAllCommandsHandler(DispatchAsync dispatcher,
+			@Dashboard StatusView statusView) {
+		this.dispatcher = dispatcher;
+		this.statusView = statusView;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        statusView.setStatusText("Requesting the server to delete all pending commands");
-        dispatcher.execute(new UserDeletesAllCommandsAction(),
-                new AsyncCallback<VoidResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        statusView.setStatusText("Server was not able to delete all pending commands due to an error");
-                        log.log(Level.SEVERE, "Action Exception ", caught);
-                    }
+	@Override
+	public void performAction(String actionId) {
+		statusView
+				.setStatusText("Requesting the server to delete all pending commands");
+		dispatcher.execute(new UserDeletesAllCommandsAction(),
+				new AsyncCallback<VoidResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						statusView
+								.setStatusText("Server was not able to delete all pending commands due to an error");
+						log.log(Level.SEVERE, "Action Exception ", caught);
+					}
 
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        statusView.setStatusText("Server will delete all pending commands");
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(VoidResult result) {
+						statusView
+								.setStatusText("Server will delete all pending commands");
+					}
+				});
+	}
 }

@@ -48,35 +48,35 @@ import com.googlecode.simpleblobstore.gae.GaeSimpleBlobstoreModule;
 import com.googlecode.simplejpadao.EntityModule;
 import net.sf.jsr107cache.Cache;
 
-
 public class GaeCachedModelModule extends AbstractModule {
-    private final int maxDelete;
-    private final String persistenceUnit;
+	private final int maxDelete;
+	private final String persistenceUnit;
 
-    public GaeCachedModelModule(int maxDelete, String persistenceUnit) {
-        this.maxDelete = maxDelete;
-        this.persistenceUnit = persistenceUnit;
-    }
+	public GaeCachedModelModule(int maxDelete, String persistenceUnit) {
+		this.maxDelete = maxDelete;
+		this.persistenceUnit = persistenceUnit;
+	}
 
-    @Override
-    protected void configure() {
-        bind(new TypeLiteral<PhotoManagerBase<Photo, PhotoEntity>>() {
-        }).to(PhotoManager.class);
-        bind(new TypeLiteral<TagManagerBase<Tag, TagEntity>>() {
-        }).to(TagManager.class);
-        bind(new TypeLiteral<PeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity>>() {
-        }).to(PeerDatabaseManager.class);
+	@Override
+	protected void configure() {
+		bind(new TypeLiteral<PhotoManagerBase<Photo, PhotoEntity>>() {
+		}).to(PhotoManager.class);
+		bind(new TypeLiteral<TagManagerBase<Tag, TagEntity>>() {
+		}).to(TagManager.class);
+		bind(
+				new TypeLiteral<PeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity>>() {
+				}).to(PeerDatabaseManager.class);
 
-        bind(PhotoDao.class).to(CachedPhotoManager.class).in(Singleton.class);
-        bind(PeerDatabaseDao.class).to(CachedPeerDatabaseManager.class)
-                .in(Singleton.class);
-        bind(TagDao.class).to(CachedTagManager.class).in(Singleton.class);
-        bind(UserDao.class).to(UserManager.class).in(Singleton.class);
-        bind(UserGroupDao.class).to(UserGroupManager.class).in(Singleton.class);
-        bind(Integer.class).annotatedWith(Names.named("maxDelete"))
-                .toInstance(maxDelete);
-        bind(Cache.class).toProvider(GaeCacheProvider.class); //.in(Singleton.class);
-        install(new GaeSimpleBlobstoreModule());
-        install(new EntityModule(persistenceUnit));
-    }
+		bind(PhotoDao.class).to(CachedPhotoManager.class).in(Singleton.class);
+		bind(PeerDatabaseDao.class).to(CachedPeerDatabaseManager.class).in(
+				Singleton.class);
+		bind(TagDao.class).to(CachedTagManager.class).in(Singleton.class);
+		bind(UserDao.class).to(UserManager.class).in(Singleton.class);
+		bind(UserGroupDao.class).to(UserGroupManager.class).in(Singleton.class);
+		bind(Integer.class).annotatedWith(Names.named("maxDelete")).toInstance(
+				maxDelete);
+		bind(Cache.class).toProvider(GaeCacheProvider.class); //.in(Singleton.class);
+		install(new GaeSimpleBlobstoreModule());
+		install(new EntityModule(persistenceUnit));
+	}
 }

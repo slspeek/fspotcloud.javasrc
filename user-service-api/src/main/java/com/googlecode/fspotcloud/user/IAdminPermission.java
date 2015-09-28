@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.user;
 
-
 /**
  * Created by IntelliJ IDEA.
  * User: steven
@@ -33,5 +32,5 @@ package com.googlecode.fspotcloud.user;
  * To change this template use File | Settings | File Templates.
  */
 public interface IAdminPermission {
-    void checkAdminPermission();
+	void checkAdminPermission();
 }

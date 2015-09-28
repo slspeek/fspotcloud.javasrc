@@ -12,15 +12,15 @@ import static org.junit.Assert.assertNotNull;
 @GwtModule("com.googlecode.fspotcloud.FSpotCloud")
 public class GinJectorTest extends GwtTest {
 
-    @Before
-    public void setupGIN() {
-        addGwtCreateHandler(new GInjectorCreateHandler());
-    }
+	@Before
+	public void setupGIN() {
+		addGwtCreateHandler(new GInjectorCreateHandler());
+	}
 
-    @Test
-    public void testInjectorCreation() throws Exception {
-        final AppGinjector injector = GWT.create(AppGinjector.class);
-        assertNotNull(injector);
+	@Test
+	public void testInjectorCreation() throws Exception {
+		final AppGinjector injector = GWT.create(AppGinjector.class);
+		assertNotNull(injector);
 
-    }
+	}
 }

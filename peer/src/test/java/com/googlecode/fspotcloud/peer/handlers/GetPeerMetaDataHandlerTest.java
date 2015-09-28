@@ -34,24 +34,23 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.net.URL;
 
-
 public class GetPeerMetaDataHandlerTest extends TestCase {
-    final GetPeerMetaDataAction action = new GetPeerMetaDataAction();
-    Backend data;
-    GetPeerMetaDataHandler handler;
+	final GetPeerMetaDataAction action = new GetPeerMetaDataAction();
+	Backend data;
+	GetPeerMetaDataHandler handler;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+	protected void setUp() throws Exception {
+		super.setUp();
 
-        URL testDatabase = ClassLoader.getSystemResource("photos.db");
-        String path = testDatabase.getPath();
-        data = new FSpotBackend("jdbc:sqlite:" + path, null);
-        handler = new GetPeerMetaDataHandler(data);
-    }
+		URL testDatabase = ClassLoader.getSystemResource("photos.db");
+		String path = testDatabase.getPath();
+		data = new FSpotBackend("jdbc:sqlite:" + path, null);
+		handler = new GetPeerMetaDataHandler(data);
+	}
 
-    public void testExecute() throws DispatchException {
-        PeerMetaDataResult result = handler.execute(action, null);
-        assertEquals(5, result.getTagCount());
-        assertEquals(28, result.getPhotoCount());
-    }
+	public void testExecute() throws DispatchException {
+		PeerMetaDataResult result = handler.execute(action, null);
+		assertEquals(5, result.getTagCount());
+		assertEquals(28, result.getPhotoCount());
+	}
 }

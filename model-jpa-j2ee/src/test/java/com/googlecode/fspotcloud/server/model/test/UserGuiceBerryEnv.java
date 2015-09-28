@@ -30,17 +30,16 @@ import com.googlecode.fspotcloud.model.jpa.user.UserManager;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public class UserGuiceBerryEnv extends GuiceBerryModule {
 
-    public static final int MAX_DELETE = 1000;
-    public static final String PERSISTENCE_UNIT = "derby-test";
+	public static final int MAX_DELETE = 1000;
+	public static final String PERSISTENCE_UNIT = "derby-test";
 
-    @Override
-    protected void configure() {
-        super.configure();
-        install(new J2eeModelModule(MAX_DELETE, PERSISTENCE_UNIT));
-        install(new J2eeSimpleBlobstoreServletModule());
-        bind(SimpleDAONamedId.class).to(UserManager.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		install(new J2eeModelModule(MAX_DELETE, PERSISTENCE_UNIT));
+		install(new J2eeSimpleBlobstoreServletModule());
+		bind(SimpleDAONamedId.class).to(UserManager.class);
+	}
 }

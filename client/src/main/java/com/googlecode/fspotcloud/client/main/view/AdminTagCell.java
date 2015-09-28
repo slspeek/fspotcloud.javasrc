@@ -37,25 +37,25 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class AdminTagCell extends AbstractCell<TagNode> {
-    private final Logger log = Logger.getLogger(TagCell.class.getName());
-    private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
-    private final AdminResources resources = GWT.create(AdminResources.class);
+	private final Logger log = Logger.getLogger(TagCell.class.getName());
+	private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
+	private final AdminResources resources = GWT.create(AdminResources.class);
 
-    @Override
-    public void render(com.google.gwt.cell.client.Cell.Context arg0,
-                       TagNode value, SafeHtmlBuilder sb) {
-        String styleName;
-        if (value.isImportIssued()) {
-            styleName = resources.style().importedTag();
-        } else {
-            styleName = resources.style().tag();
-        }
-        SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(), styleName);
-        sb.append(snippetHtml);
-    }
+	@Override
+	public void render(com.google.gwt.cell.client.Cell.Context arg0,
+			TagNode value, SafeHtmlBuilder sb) {
+		String styleName;
+		if (value.isImportIssued()) {
+			styleName = resources.style().importedTag();
+		} else {
+			styleName = resources.style().tag();
+		}
+		SafeHtml snippetHtml = TEMPLATES.message(value.getTagName(), styleName);
+		sb.append(snippetHtml);
+	}
 
-    public interface MyTemplates extends SafeHtmlTemplates {
-        @Template("<span class=\"{1}\">{0}</span>")
-        SafeHtml message(String message, String style);
-    }
+	public interface MyTemplates extends SafeHtmlTemplates {
+		@Template("<span class=\"{1}\">{0}</span>")
+		SafeHtml message(String message, String style);
+	}
 }

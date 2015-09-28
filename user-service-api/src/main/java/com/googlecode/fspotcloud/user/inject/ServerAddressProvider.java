@@ -28,16 +28,15 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 
-
 public class ServerAddressProvider implements Provider<String> {
-    @Inject
-    Provider<HttpServletRequest> requestProvider;
+	@Inject
+	Provider<HttpServletRequest> requestProvider;
 
-    public String get() {
-        HttpServletRequest request = requestProvider.get();
-        String result = request.getScheme() + "://" + request.getServerName() +
-                ":" + request.getServerPort() + request.getContextPath();
+	public String get() {
+		HttpServletRequest request = requestProvider.get();
+		String result = request.getScheme() + "://" + request.getServerName()
+				+ ":" + request.getServerPort() + request.getContextPath();
 
-        return result;
-    }
+		return result;
+	}
 }

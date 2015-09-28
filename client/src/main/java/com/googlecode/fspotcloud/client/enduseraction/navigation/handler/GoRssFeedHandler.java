@@ -11,17 +11,18 @@ import java.util.logging.Logger;
 
 public class GoRssFeedHandler implements IActionHandler {
 
-    private final Logger log = Logger.getLogger(GoRssFeedHandler.class.getName());
-    @Inject
-    private IPlaceController placeController;
-    @Inject
-    private OpenNewTab loader;
+	private final Logger log = Logger.getLogger(GoRssFeedHandler.class
+			.getName());
+	@Inject
+	private IPlaceController placeController;
+	@Inject
+	private OpenNewTab loader;
 
-    @Override
-    public void performAction(String actionId) {
-        BasePlace basePlace = placeController.where();
-        log.log(Level.FINE, "Rss for place: " + basePlace);
-        String tagId = basePlace.getTagId();
-        loader.setLocation("/rss?tag=" + tagId);
-    }
+	@Override
+	public void performAction(String actionId) {
+		BasePlace basePlace = placeController.where();
+		log.log(Level.FINE, "Rss for place: " + basePlace);
+		String tagId = basePlace.getTagId();
+		loader.setLocation("/rss?tag=" + tagId);
+	}
 }

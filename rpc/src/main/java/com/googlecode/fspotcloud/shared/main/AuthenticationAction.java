@@ -28,32 +28,29 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class AuthenticationAction implements Action<AuthenticationResult> {
-    private String userName;
-    private String password;
+	private String userName;
+	private String password;
 
-    public AuthenticationAction() {
-    }
+	public AuthenticationAction() {
+	}
 
-    public AuthenticationAction(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
+	public AuthenticationAction(String userName, String password) {
+		this.userName = userName;
+		this.password = password;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("username", userName)
-                .add("password not null", password != null)
-                .toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("username", userName)
+				.add("password not null", password != null).toString();
+	}
 }

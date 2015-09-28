@@ -30,32 +30,32 @@ import com.google.gwt.event.shared.GwtEvent;
 
 @GwtCompatible
 public class ZoomViewEvent extends GwtEvent<ZoomViewEvent.Handler> {
-    public static final Type<ZoomViewEvent.Handler> TYPE = new Type<ZoomViewEvent.Handler>();
-    private final String photoId;
-    private final String tagId;
+	public static final Type<ZoomViewEvent.Handler> TYPE = new Type<ZoomViewEvent.Handler>();
+	private final String photoId;
+	private final String tagId;
 
-    public ZoomViewEvent(String tagId, String photoId) {
-        this.tagId = tagId;
-        this.photoId = photoId;
-    }
+	public ZoomViewEvent(String tagId, String photoId) {
+		this.tagId = tagId;
+		this.photoId = photoId;
+	}
 
-    public Type<Handler> getAssociatedType() {
-        return TYPE;
-    }
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
 
-    protected void dispatch(Handler handler) {
-        handler.onEvent(this);
-    }
+	protected void dispatch(Handler handler) {
+		handler.onEvent(this);
+	}
 
-    public String getPhotoId() {
-        return photoId;
-    }
+	public String getPhotoId() {
+		return photoId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public static interface Handler extends EventHandler {
-        void onEvent(ZoomViewEvent e);
-    }
+	public static interface Handler extends EventHandler {
+		void onEvent(ZoomViewEvent e);
+	}
 }

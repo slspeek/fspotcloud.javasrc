@@ -30,13 +30,14 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import java.io.Serializable;
 
+public class GetPeerMetaDataAction extends BusinessBase
+		implements
+			Action<PeerMetaDataResult>,
+			Serializable {
+	@BusinessKey
+	private static final long serialVersionUID = 3730836943695700527L;
 
-public class GetPeerMetaDataAction extends BusinessBase implements Action<PeerMetaDataResult>,
-        Serializable {
-    @BusinessKey
-    private static final long serialVersionUID = 3730836943695700527L;
-
-    public String toString() {
-        return Objects.toStringHelper(this).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).toString();
+	}
 }

@@ -32,12 +32,12 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 @GwtCompatible
 public interface SendConfirmationView extends IsWidget {
 
-    public String getEmailField();
+	public String getEmailField();
 
-    public void setStatusText(String text);
+	public void setStatusText(String text);
 
-    void clearEmailField();
+	void clearEmailField();
 
-    interface SendConfirmationPresenter extends Activity, IActionHandler {
-    }
+	interface SendConfirmationPresenter extends Activity, IActionHandler {
+	}
 }

@@ -15,21 +15,22 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class KeyboardPreferencesGetTest {
 
-    public static final String ACTION_ID = "ACTION";
-    @Inject
-    private
-    KeyboardPreferences preferences;
+	public static final String ACTION_ID = "ACTION";
+	@Inject
+	private KeyboardPreferences preferences;
 
-    private PlaceContext homeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet());
+	private PlaceContext homeContext = new PlaceContext(HomePlace.class,
+			Sets.<String> newHashSet());
 
-    @Before
-    public void setUp() throws Exception {
-        preferences.bind(ACTION_ID, new Relevance().addDefaultKeys(KeyStroke.ESC));
-    }
+	@Before
+	public void setUp() throws Exception {
+		preferences.bind(ACTION_ID,
+				new Relevance().addDefaultKeys(KeyStroke.ESC));
+	}
 
-    @Test
-    public void testName() throws Exception {
-        List<String> actionIds = preferences.get(homeContext, KeyStroke.ESC);
-        assertEquals(ACTION_ID, actionIds.get(0));
-    }
+	@Test
+	public void testName() throws Exception {
+		List<String> actionIds = preferences.get(homeContext, KeyStroke.ESC);
+		assertEquals(ACTION_ID, actionIds.get(0));
+	}
 }

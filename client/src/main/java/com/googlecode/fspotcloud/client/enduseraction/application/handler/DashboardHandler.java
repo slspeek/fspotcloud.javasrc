@@ -8,22 +8,22 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class DashboardHandler implements IActionHandler {
 
-    private final IPlaceController placeController;
+	private final IPlaceController placeController;
 
-    @Inject
-    public DashboardHandler(IPlaceController placeController) {
-        this.placeController = placeController;
-    }
+	@Inject
+	public DashboardHandler(IPlaceController placeController) {
+		this.placeController = placeController;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        BasePlace lastBasePlace = placeController.where();
-        DashboardPlace destDashboardPlace;
-        if (lastBasePlace != null) {
-            destDashboardPlace = new DashboardPlace(lastBasePlace.getTagId());
-        } else {
-            destDashboardPlace = DashboardPlace.DEFAULT;
-        }
-        placeController.goTo(destDashboardPlace);
-    }
+	@Override
+	public void performAction(String actionId) {
+		BasePlace lastBasePlace = placeController.where();
+		DashboardPlace destDashboardPlace;
+		if (lastBasePlace != null) {
+			destDashboardPlace = new DashboardPlace(lastBasePlace.getTagId());
+		} else {
+			destDashboardPlace = DashboardPlace.DEFAULT;
+		}
+		placeController.goTo(destDashboardPlace);
+	}
 }

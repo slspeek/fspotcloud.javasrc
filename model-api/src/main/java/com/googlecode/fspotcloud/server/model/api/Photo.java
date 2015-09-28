@@ -30,31 +30,30 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
 public interface Photo extends HasSetKey<String>, Serializable {
-    void setId(String name);
+	void setId(String name);
 
-    void setDescription(String description);
+	void setDescription(String description);
 
-    String getDescription();
+	String getDescription();
 
-    void setTagList(List<String> tagList);
+	void setTagList(List<String> tagList);
 
-    List<String> getTagList();
+	List<String> getTagList();
 
-    void setDate(Date date);
+	void setDate(Date date);
 
-    Date getDate();
+	Date getDate();
 
-    String getImageBlobKey();
+	String getImageBlobKey();
 
-    void setImageBlobKey(String key);
+	void setImageBlobKey(String key);
 
-    void setThumbBlobKey(String key);
+	void setThumbBlobKey(String key);
 
-    String getThumbBlobKey();
+	String getThumbBlobKey();
 
-    String getFullsizeImageBlobKey();
+	String getFullsizeImageBlobKey();
 
-    void setFullsizeImageBlobKey(String key);
+	void setFullsizeImageBlobKey(String key);
 }

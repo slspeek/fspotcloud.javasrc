@@ -34,72 +34,71 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-
 @RunWith(JukitoRunner.class)
 public class RasterStateTest {
 
-    @Inject
-    private RasterState state;
-    final int WIDTH = 3;
-    final int HEIGHT = 2;
+	@Inject
+	private RasterState state;
+	final int WIDTH = 3;
+	final int HEIGHT = 2;
 
-    public static class Module extends JukitoModule {
+	public static class Module extends JukitoModule {
 
-        @Override
-        protected void configureTest() {
-            bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(5);
-            bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(4);
-        }
-    }
+		@Override
+		protected void configureTest() {
+			bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(5);
+			bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(4);
+		}
+	}
 
-    @Test
-    public void testSetWidth() {
-        state.setColumnCount(WIDTH);
-        assertEquals(WIDTH, state.getColumnCount());
-    }
+	@Test
+	public void testSetWidth() {
+		state.setColumnCount(WIDTH);
+		assertEquals(WIDTH, state.getColumnCount());
+	}
 
-    @Test
-    public void testSetHeight() {
-        state.setRowCount(HEIGHT);
-        assertEquals(HEIGHT, state.getRowCount());
-    }
+	@Test
+	public void testSetHeight() {
+		state.setRowCount(HEIGHT);
+		assertEquals(HEIGHT, state.getRowCount());
+	}
 
-    @Test
-    public void testResetHeightOne() {
-        testSetHeight();
-        testSetWidth();
-        state.setRowCount(1);
-        assertEquals(1, state.getRowCount());
-    }
+	@Test
+	public void testResetHeightOne() {
+		testSetHeight();
+		testSetWidth();
+		state.setRowCount(1);
+		assertEquals(1, state.getRowCount());
+	}
 
-    @Test
-    public void testResetWidthOne() {
-        testSetHeight();
-        testSetWidth();
-        state.setColumnCount(1);
-        assertEquals(1, state.getColumnCount());
-    }
+	@Test
+	public void testResetWidthOne() {
+		testSetHeight();
+		testSetWidth();
+		state.setColumnCount(1);
+		assertEquals(1, state.getColumnCount());
+	}
 
-    @Test
-    public void testSetWidthOne() {
-        state.setColumnCount(1);
-        assertEquals(1, state.getColumnCount());
-    }
+	@Test
+	public void testSetWidthOne() {
+		state.setColumnCount(1);
+		assertEquals(1, state.getColumnCount());
+	}
 
-    @Test
-    public void testTryOneByOne() {
-        state.setColumnCount(1);
-        assertEquals(1, state.getColumnCount());
-        state.setRowCount(1);
-        assertEquals(state.rasterHeight, state.getRowCount());
-    }
+	@Test
+	public void testTryOneByOne() {
+		state.setColumnCount(1);
+		assertEquals(1, state.getColumnCount());
+		state.setRowCount(1);
+		assertEquals(state.rasterHeight, state.getRowCount());
+	}
 
-    @Test
-    public void testAutoHide() throws Exception {
-        state.setAutoHide(true);
-        assertTrue(state.isAutoHide());
-        state.setAutoHide(false);
-        assertFalse(state.isAutoHide());
+	@Test
+	public void testAutoHide() throws Exception {
+		state.setAutoHide(true);
+		assertTrue(state.isAutoHide());
+		state.setAutoHide(false);
+		assertFalse(state.isAutoHide());
 
-    }
+	}
 }

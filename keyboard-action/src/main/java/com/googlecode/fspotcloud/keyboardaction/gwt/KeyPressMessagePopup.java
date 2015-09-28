@@ -9,31 +9,32 @@ import com.googlecode.fspotcloud.keyboardaction.HelpResources;
 import java.util.logging.Logger;
 
 public class KeyPressMessagePopup extends PopupPanel {
-    private final Logger log = Logger.getLogger(KeyPressMessagePopup.class.getName());
+	private final Logger log = Logger.getLogger(KeyPressMessagePopup.class
+			.getName());
 
-    private final HelpResources resources;
+	private final HelpResources resources;
 
-    private final HTML htmlBody = new HTML();
+	private final HTML htmlBody = new HTML();
 
-    @Inject
-    public KeyPressMessagePopup(HelpResources resources) {
-        this.resources = resources;
-        addStyleName(resources.style().keyPressPopup());
-        setWidget(htmlBody);
-        setAutoHideEnabled(true);
-    }
+	@Inject
+	public KeyPressMessagePopup(HelpResources resources) {
+		this.resources = resources;
+		addStyleName(resources.style().keyPressPopup());
+		setWidget(htmlBody);
+		setAutoHideEnabled(true);
+	}
 
-    public void setSafeHtml(SafeHtml safeHtml) {
-        htmlBody.setHTML(safeHtml);
-        htmlBody.addStyleName(resources.style().keyPressBody());
-    }
+	public void setSafeHtml(SafeHtml safeHtml) {
+		htmlBody.setHTML(safeHtml);
+		htmlBody.addStyleName(resources.style().keyPressBody());
+	}
 
-    public void setNotFound(boolean notFound) {
-        if(notFound) {
-            htmlBody.addStyleName(resources.style().notFoundBody());
-        } else {
-            htmlBody.removeStyleName(resources.style().notFoundBody());
+	public void setNotFound(boolean notFound) {
+		if (notFound) {
+			htmlBody.addStyleName(resources.style().notFoundBody());
+		} else {
+			htmlBody.removeStyleName(resources.style().notFoundBody());
 
-        }
-    }
+		}
+	}
 }

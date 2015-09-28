@@ -34,40 +34,42 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class SaveUserGroupHandler
+		extends
+			SimpleActionHandler<SaveUserGroupAction, VoidResult> {
+	private final UserService userService;
+	private final UserGroupDao userGroupDao;
 
-public class SaveUserGroupHandler extends SimpleActionHandler<SaveUserGroupAction, VoidResult> {
-    private final UserService userService;
-    private final UserGroupDao userGroupDao;
+	@Inject
+	public SaveUserGroupHandler(UserService userService,
+			UserGroupDao userGroupDao) {
+		this.userService = userService;
+		this.userGroupDao = userGroupDao;
+	}
 
-    @Inject
-    public SaveUserGroupHandler(UserService userService,
-                                UserGroupDao userGroupDao) {
-        this.userService = userService;
-        this.userGroupDao = userGroupDao;
-    }
-
-    @Override
-    public VoidResult execute(SaveUserGroupAction action,
-                              ExecutionContext context) throws DispatchException {
-        if (userService.isUserLoggedIn()) {
-            String userName = userService.getEmail();
-            UserGroup userGroup = userGroupDao.find(action.getInfoToSave()
-                    .getId());
-            if (userGroup != null) {
-                if (userName.equals(userGroup.getOwner())) {
-                    userGroup.setName(action.getInfoToSave().getName());
-                    userGroup.setDescription(action.getInfoToSave().getDescription());
-                    userGroup.setPublic(action.getInfoToSave().isPublic());
-                    userGroupDao.save(userGroup);
-                } else {
-                    throw new UserIsNotOwnerException();
-                }
-            } else {
-                throw new UsergroupNotFoundException();
-            }
-        } else {
-            throw new UserIsNotLoggedOnException();
-        }
-        return new VoidResult();
-    }
+	@Override
+	public VoidResult execute(SaveUserGroupAction action,
+			ExecutionContext context) throws DispatchException {
+		if (userService.isUserLoggedIn()) {
+			String userName = userService.getEmail();
+			UserGroup userGroup = userGroupDao.find(action.getInfoToSave()
+					.getId());
+			if (userGroup != null) {
+				if (userName.equals(userGroup.getOwner())) {
+					userGroup.setName(action.getInfoToSave().getName());
+					userGroup.setDescription(action.getInfoToSave()
+							.getDescription());
+					userGroup.setPublic(action.getInfoToSave().isPublic());
+					userGroupDao.save(userGroup);
+				} else {
+					throw new UserIsNotOwnerException();
+				}
+			} else {
+				throw new UsergroupNotFoundException();
+			}
+		} else {
+			throw new UserIsNotLoggedOnException();
+		}
+		return new VoidResult();
+	}
 }

@@ -23,8 +23,8 @@ import com.googlecode.simpleblobstore.gae.GaeSimpleBlobstoreModule;
 @Singleton
 public class GaeDefaultAfterUploadServlet extends HttpServlet {
 
-	
-	BlobService blobService = Guice.createInjector(new GaeSimpleBlobstoreModule()).getInstance(BlobService.class);
+	BlobService blobService = Guice.createInjector(
+			new GaeSimpleBlobstoreModule()).getInstance(BlobService.class);
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

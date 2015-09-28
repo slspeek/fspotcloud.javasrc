@@ -32,19 +32,19 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class TimerImpl extends Timer implements TimerInterface {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(TimerImpl.class.getName());
-    private Runnable runnable;
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(TimerImpl.class.getName());
+	private Runnable runnable;
 
-    public TimerImpl() {
-    }
+	public TimerImpl() {
+	}
 
-    public void run() {
-        runnable.run();
-    }
+	public void run() {
+		runnable.run();
+	}
 
-    @Override
-    public void setRunnable(Runnable runnable) {
-        this.runnable = runnable;
-    }
+	@Override
+	public void setRunnable(Runnable runnable) {
+		this.runnable = runnable;
+	}
 }

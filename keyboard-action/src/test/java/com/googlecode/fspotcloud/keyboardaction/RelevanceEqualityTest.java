@@ -10,62 +10,60 @@ import java.util.List;
 import static com.google.common.collect.Lists.newArrayList;
 
 public class RelevanceEqualityTest extends EqualityTest {
-    private FlagsRule fooRule = FlagsRule.needing("Foo");
-    private FlagsRule barRule = FlagsRule.needing("Bar");
-    private FlagsRule aRule = FlagsRule.excluding("Bar");
+	private FlagsRule fooRule = FlagsRule.needing("Foo");
+	private FlagsRule barRule = FlagsRule.needing("Bar");
+	private FlagsRule aRule = FlagsRule.excluding("Bar");
 
+	@Override
+	protected List<Provider<Object>> getUniqueObjects() {
+		List<Provider<Object>> result = newArrayList();
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				Relevance relevance = new Relevance();
+				return relevance;
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
 
-    @Override
-    protected List<Provider<Object>> getUniqueObjects() {
-        List<Provider<Object>> result = newArrayList();
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                Relevance relevance = new Relevance();
-                return relevance;
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
+				Relevance relevance = new Relevance(fooRule);
+				return relevance;
+			}
+		});
 
-                Relevance relevance = new Relevance(fooRule);
-                return relevance;
-            }
-        });
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
 
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
+				Relevance relevance = new Relevance(fooRule);
+				relevance.addDefaultKeys(KeyStroke.ESC);
+				return relevance;
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
 
-                Relevance relevance = new Relevance(fooRule);
-                relevance.addDefaultKeys(KeyStroke.ESC);
-                return relevance;
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
+				Relevance relevance = new Relevance(fooRule);
+				relevance.addDefaultKeys(KeyStroke.ESC);
+				relevance.addRule(HomePlace.class, aRule, KeyStroke.F);
+				return relevance;
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
 
-                Relevance relevance = new Relevance(fooRule);
-                relevance.addDefaultKeys(KeyStroke.ESC);
-                relevance.addRule(HomePlace.class, aRule, KeyStroke.F);
-                return relevance;
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-
-                Relevance relevance = new Relevance(fooRule);
-                relevance.addDefaultKeys(KeyStroke.ESC);
-                relevance.addRule(HomePlace.class, aRule, KeyStroke.F);
-                relevance.addRule(OutPlace.class, barRule, KeyStroke.F);
-                return relevance;
-            }
-        });
-        return result;
-    }
-
+				Relevance relevance = new Relevance(fooRule);
+				relevance.addDefaultKeys(KeyStroke.ESC);
+				relevance.addRule(HomePlace.class, aRule, KeyStroke.F);
+				relevance.addRule(OutPlace.class, barRule, KeyStroke.F);
+				return relevance;
+			}
+		});
+		return result;
+	}
 
 }

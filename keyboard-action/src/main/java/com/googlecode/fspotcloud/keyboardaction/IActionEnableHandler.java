@@ -29,5 +29,5 @@ import com.google.gwt.event.shared.EventHandler;
 
 @GwtCompatible
 interface IActionEnableHandler extends EventHandler {
-    void onEvent(ActionStateEvent event);
+	void onEvent(ActionStateEvent event);
 }

@@ -23,14 +23,13 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.user.openid;
 
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.user.UserServiceBase;
-
 
 /**
  * DOCUMENT ME!
@@ -38,24 +37,24 @@ import com.googlecode.fspotcloud.user.UserServiceBase;
  * @author steven
  */
 public class OpenIdUserService extends UserServiceBase {
-    @Inject
-    @AdminEmail
-    String adminEmail;
+	@Inject
+	@AdminEmail
+	String adminEmail;
 
-    @Override
-    public String getThirdPartyLoginURL(String nextUrl) {
-        nextUrl = urlUtil.toAbsoluteURL(nextUrl);
-        return "index.jsp?dest=" + nextUrl;
-    }
+	@Override
+	public String getThirdPartyLoginURL(String nextUrl) {
+		nextUrl = urlUtil.toAbsoluteURL(nextUrl);
+		return "index.jsp?dest=" + nextUrl;
+	}
 
-    @Override
-    public String getThirdPartyLogoutURL(String nextUrl) {
-        nextUrl = urlUtil.toAbsoluteURL(nextUrl);
-        return "index.jsp?logout=true&dest=" + nextUrl;
-    }
+	@Override
+	public String getThirdPartyLogoutURL(String nextUrl) {
+		nextUrl = urlUtil.toAbsoluteURL(nextUrl);
+		return "index.jsp?logout=true&dest=" + nextUrl;
+	}
 
-    @Override
-    public boolean isUserAdmin() {
-        return adminEmail.equals(getEmail());
-    }
+	@Override
+	public boolean isUserAdmin() {
+		return adminEmail.equals(getEmail());
+	}
 }

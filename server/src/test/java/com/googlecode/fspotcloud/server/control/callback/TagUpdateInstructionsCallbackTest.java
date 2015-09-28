@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.callback;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.PhotoUpdateAction;
@@ -57,37 +57,38 @@ import static org.mockito.Mockito.verify;
  */
 @RunWith(JukitoRunner.class)
 public class TagUpdateInstructionsCallbackTest {
-    public static final String TAG_ID = "1";
-    public static final String PHOTO_UPDATE_ID = "55";
-    public static final String PHOTO_DELETE_ID = "5";
-    TagUpdateInstructionsCallback callback;
+	public static final String TAG_ID = "1";
+	public static final String PHOTO_UPDATE_ID = "55";
+	public static final String PHOTO_DELETE_ID = "5";
+	TagUpdateInstructionsCallback callback;
 
-    @Before
-    public void createCallback(TaskQueueDispatch dispatchAsync) {
-        callback = new TagUpdateInstructionsCallback(TAG_ID, dispatchAsync);
-        callback.log = Logger.getAnonymousLogger();
-    }
+	@Before
+	public void createCallback(TaskQueueDispatch dispatchAsync) {
+		callback = new TagUpdateInstructionsCallback(TAG_ID, dispatchAsync);
+		callback.log = Logger.getAnonymousLogger();
+	}
 
-    @Test
-    public void testNormalExecute(TaskQueueDispatch dispatchAsync,
-                                  ArgumentCaptor<GetPeerUpdateInstructionsAction> actionCaptor,
-                                  ArgumentCaptor<PeerUpdateInstructionsCallback> callbackCaptor,
-                                  ArgumentCaptor<Action> updateCaptor) throws Exception {
-        List<PhotoUpdate> toBoUpdated = newArrayList(new PhotoUpdate(
-                PHOTO_UPDATE_ID));
-        List<PhotoRemovedFromTag> toBoRemovedFromTag = newArrayList(new PhotoRemovedFromTag(
-                PHOTO_DELETE_ID));
-        TagUpdateInstructionsResult result = new TagUpdateInstructionsResult(toBoUpdated,
-                toBoRemovedFromTag);
-        System.out.println("Caal" + callback);
-        callback.onSuccess(result);
-        verify(dispatchAsync, times(2)).execute(updateCaptor.capture());
+	@Test
+	public void testNormalExecute(TaskQueueDispatch dispatchAsync,
+			ArgumentCaptor<GetPeerUpdateInstructionsAction> actionCaptor,
+			ArgumentCaptor<PeerUpdateInstructionsCallback> callbackCaptor,
+			ArgumentCaptor<Action> updateCaptor) throws Exception {
+		List<PhotoUpdate> toBoUpdated = newArrayList(new PhotoUpdate(
+				PHOTO_UPDATE_ID));
+		List<PhotoRemovedFromTag> toBoRemovedFromTag = newArrayList(new PhotoRemovedFromTag(
+				PHOTO_DELETE_ID));
+		TagUpdateInstructionsResult result = new TagUpdateInstructionsResult(
+				toBoUpdated, toBoRemovedFromTag);
+		System.out.println("Caal" + callback);
+		callback.onSuccess(result);
+		verify(dispatchAsync, times(2)).execute(updateCaptor.capture());
 
-        List<Action> actions = updateCaptor.getAllValues();
-        PhotoUpdateAction update = (PhotoUpdateAction) actions.get(1);
-        RemovePhotosFromTagAction photoRemove = (RemovePhotosFromTagAction) actions.get(0);
-        assertEquals(PHOTO_DELETE_ID, photoRemove.getWorkLoad().get(0));
-        //assertEquals(PHOTO_DELETE_ID, photoRemove.getToBeDeleted().get(0));
-        assertEquals(PHOTO_UPDATE_ID, update.getWorkLoad().get(0).getPhotoId());
-    }
+		List<Action> actions = updateCaptor.getAllValues();
+		PhotoUpdateAction update = (PhotoUpdateAction) actions.get(1);
+		RemovePhotosFromTagAction photoRemove = (RemovePhotosFromTagAction) actions
+				.get(0);
+		assertEquals(PHOTO_DELETE_ID, photoRemove.getWorkLoad().get(0));
+		//assertEquals(PHOTO_DELETE_ID, photoRemove.getToBeDeleted().get(0));
+		assertEquals(PHOTO_UPDATE_ID, update.getWorkLoad().get(0).getPhotoId());
+	}
 }

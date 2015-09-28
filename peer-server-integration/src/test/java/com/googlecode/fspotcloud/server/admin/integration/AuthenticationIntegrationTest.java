@@ -48,48 +48,50 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class AuthenticationIntegrationTest {
-    static final Logger log = Logger.getLogger(AuthenticationIntegrationTest.class.getName());
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    private TearDown toTearDown;
-    @Inject
-    UserDao userDao;
-    @Inject
-    Dispatch dispatch;
-    @Inject
-    UserService userService;
+	static final Logger log = Logger
+			.getLogger(AuthenticationIntegrationTest.class.getName());
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	private TearDown toTearDown;
+	@Inject
+	UserDao userDao;
+	@Inject
+	Dispatch dispatch;
+	@Inject
+	UserService userService;
 
-    @BeforeMethod
-    public void setUp(Method m) throws SQLException {
-        // Make this the call to TestNgGuiceBerry.setUp as early as possible
-        toTearDown = TestNgGuiceBerry.setUp(this, m,
-                PlaceHolderIntegrationModule.class);
+	@BeforeMethod
+	public void setUp(Method m) throws SQLException {
+		// Make this the call to TestNgGuiceBerry.setUp as early as possible
+		toTearDown = TestNgGuiceBerry.setUp(this, m,
+				PlaceHolderIntegrationModule.class);
 
-        userDao.deleteBulk(100);
-        assertTrue(userDao.isEmpty());
-    }
+		userDao.deleteBulk(100);
+		assertTrue(userDao.isEmpty());
+	}
 
-    @AfterMethod
-    public void tearDown() throws Exception {
-        // Make this the call to TestNgGuiceBerry.tearDown as late as possible
-        toTearDown.tearDown();
-    }
+	@AfterMethod
+	public void tearDown() throws Exception {
+		// Make this the call to TestNgGuiceBerry.tearDown as late as possible
+		toTearDown.tearDown();
+	}
 
-    @Test
-    public void signUpAndLogin() throws Exception {
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG, "ihp", "rms");
-        SignUpResult result = dispatch.execute(action);
-        assertTrue(result.getSuccess());
+	@Test
+	public void signUpAndLogin() throws Exception {
+		SignUpAction action = new SignUpAction(RMS_FSF_ORG, "ihp", "rms");
+		SignUpResult result = dispatch.execute(action);
+		assertTrue(result.getSuccess());
 
-        //Bypassing email-confirmation
-        User rms = userDao.find(RMS_FSF_ORG);
-        rms.setEnabled(true);
-        userDao.save(rms);
+		//Bypassing email-confirmation
+		User rms = userDao.find(RMS_FSF_ORG);
+		rms.setEnabled(true);
+		userDao.save(rms);
 
-        AuthenticationAction authenticationAction = new AuthenticationAction(RMS_FSF_ORG,
-                "ihp");
-        AuthenticationResult authenticationResult = dispatch.execute(authenticationAction);
-        assertTrue(authenticationResult.getSuccess());
-        assertEquals(RMS_FSF_ORG, userService.getEmail());
-        Assert.assertTrue(userService.isUserAdmin());
-    }
+		AuthenticationAction authenticationAction = new AuthenticationAction(
+				RMS_FSF_ORG, "ihp");
+		AuthenticationResult authenticationResult = dispatch
+				.execute(authenticationAction);
+		assertTrue(authenticationResult.getSuccess());
+		assertEquals(RMS_FSF_ORG, userService.getEmail());
+		Assert.assertTrue(userService.isUserAdmin());
+	}
 }

@@ -44,58 +44,58 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class AuthenticationHandlerTest {
-    @Inject
-    AuthenticationHandler handler;
+	@Inject
+	AuthenticationHandler handler;
 
-    @Test
-    public void testExecuteFailureAsUserNonexistent(UserDao userDao)
-            throws Exception {
-        AuthenticationAction action = new AuthenticationAction("foo", "secret");
-        AuthenticationResult result = handler.execute(action, null);
-        assertFalse(result.getSuccess());
-        verify(userDao).find("foo");
-        verifyNoMoreInteractions(userDao);
-    }
+	@Test
+	public void testExecuteFailureAsUserNonexistent(UserDao userDao)
+			throws Exception {
+		AuthenticationAction action = new AuthenticationAction("foo", "secret");
+		AuthenticationResult result = handler.execute(action, null);
+		assertFalse(result.getSuccess());
+		verify(userDao).find("foo");
+		verifyNoMoreInteractions(userDao);
+	}
 
-    @Test
-    public void testExecuteFailureWrongPassword(UserDao userDao)
-            throws Exception {
-        User user = new UserEntity("foo");
-        user.setCredentials(hash("foo", "Set"));
-        when(userDao.find("foo")).thenReturn(user);
+	@Test
+	public void testExecuteFailureWrongPassword(UserDao userDao)
+			throws Exception {
+		User user = new UserEntity("foo");
+		user.setCredentials(hash("foo", "Set"));
+		when(userDao.find("foo")).thenReturn(user);
 
-        AuthenticationAction action = new AuthenticationAction("foo", "secret");
-        AuthenticationResult result = handler.execute(action, null);
-        assertFalse(result.getSuccess());
-        verify(userDao).find("foo");
-        verifyNoMoreInteractions(userDao);
-    }
+		AuthenticationAction action = new AuthenticationAction("foo", "secret");
+		AuthenticationResult result = handler.execute(action, null);
+		assertFalse(result.getSuccess());
+		verify(userDao).find("foo");
+		verifyNoMoreInteractions(userDao);
+	}
 
-    @Test
-    public void testExecuteFailureEmptyUsername(UserDao userDao)
-            throws Exception {
-        verifyNoMoreInteractions(userDao);
+	@Test
+	public void testExecuteFailureEmptyUsername(UserDao userDao)
+			throws Exception {
+		verifyNoMoreInteractions(userDao);
 
-        AuthenticationAction action = new AuthenticationAction("", "secret");
-        AuthenticationResult result = handler.execute(action, null);
-        assertFalse(result.getSuccess());
-        verifyNoMoreInteractions(userDao);
-    }
+		AuthenticationAction action = new AuthenticationAction("", "secret");
+		AuthenticationResult result = handler.execute(action, null);
+		assertFalse(result.getSuccess());
+		verifyNoMoreInteractions(userDao);
+	}
 
-    @Test
-    public void success(UserDao userDao, ILoginMetaDataUpdater updater)
-            throws Exception {
-        User user = new UserEntity("foo");
-        user.setEnabled(true);
-        String newHashedPassword = hash("foo", "secret");
-        user.setCredentials(newHashedPassword);
-        when(userDao.find("foo")).thenReturn(user);
+	@Test
+	public void success(UserDao userDao, ILoginMetaDataUpdater updater)
+			throws Exception {
+		User user = new UserEntity("foo");
+		user.setEnabled(true);
+		String newHashedPassword = hash("foo", "secret");
+		user.setCredentials(newHashedPassword);
+		when(userDao.find("foo")).thenReturn(user);
 
-        AuthenticationAction action = new AuthenticationAction("foo", "secret");
-        AuthenticationResult result = handler.execute(action, null);
-        assertTrue(result.getSuccess());
-        verify(userDao).find("foo");
-        verify(updater).doUpdate(user, LoginMetaData.Type.REGULAR_LOGIN);
-        verifyNoMoreInteractions(userDao);
-    }
+		AuthenticationAction action = new AuthenticationAction("foo", "secret");
+		AuthenticationResult result = handler.execute(action, null);
+		assertTrue(result.getSuccess());
+		verify(userDao).find("foo");
+		verify(updater).doUpdate(user, LoginMetaData.Type.REGULAR_LOGIN);
+		verifyNoMoreInteractions(userDao);
+	}
 }

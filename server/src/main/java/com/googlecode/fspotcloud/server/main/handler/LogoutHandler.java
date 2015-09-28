@@ -32,20 +32,21 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class LogoutHandler
+		extends
+			SimpleActionHandler<LogoutAction, VoidResult> {
+	private final ILoginMetaDataUpdater loginMetaDataUpdater;
 
-public class LogoutHandler extends SimpleActionHandler<LogoutAction, VoidResult> {
-    private final ILoginMetaDataUpdater loginMetaDataUpdater;
+	@Inject
+	public LogoutHandler(ILoginMetaDataUpdater loginMetaDataUpdater) {
+		this.loginMetaDataUpdater = loginMetaDataUpdater;
+	}
 
-    @Inject
-    public LogoutHandler(ILoginMetaDataUpdater loginMetaDataUpdater) {
-        this.loginMetaDataUpdater = loginMetaDataUpdater;
-    }
+	@Override
+	public VoidResult execute(LogoutAction action, ExecutionContext context)
+			throws DispatchException {
+		loginMetaDataUpdater.clear();
 
-    @Override
-    public VoidResult execute(LogoutAction action, ExecutionContext context)
-            throws DispatchException {
-        loginMetaDataUpdater.clear();
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

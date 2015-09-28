@@ -5,14 +5,14 @@ import com.google.inject.Provider;
 
 public class PlaceContextProvider implements Provider<PlaceContext> {
 
-    @Inject
-    private IModeController modeController;
-    @Inject
-    private IPlaceController placeController;
+	@Inject
+	private IModeController modeController;
+	@Inject
+	private IPlaceController placeController;
 
-
-    @Override
-    public PlaceContext get() {
-        return new PlaceContext(placeController.getWhere().getClass(), modeController.getFlags());
-    }
+	@Override
+	public PlaceContext get() {
+		return new PlaceContext(placeController.getWhere().getClass(),
+				modeController.getFlags());
+	}
 }

@@ -27,9 +27,8 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class NewUserGroupAction implements Action<GetUserGroupResult> {
-    public NewUserGroupAction() {
-    }
+	public NewUserGroupAction() {
+	}
 }

@@ -27,20 +27,20 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
-public class SendConfirmationEmailAction implements Action<SendConfirmationEmailResult> {
-    private String email;
+public class SendConfirmationEmailAction
+		implements
+			Action<SendConfirmationEmailResult> {
+	private String email;
 
+	public SendConfirmationEmailAction(String email) {
+		this.email = email;
+	}
 
-    public SendConfirmationEmailAction(String email) {
-        this.email = email;
-    }
+	public SendConfirmationEmailAction() {
+	}
 
-    public SendConfirmationEmailAction() {
-    }
-
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 }

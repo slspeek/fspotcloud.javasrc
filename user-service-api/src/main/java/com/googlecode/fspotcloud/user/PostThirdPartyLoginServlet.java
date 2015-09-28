@@ -34,17 +34,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @Singleton
 public class PostThirdPartyLoginServlet extends HttpServlet {
-    @VisibleForTesting
-    @Inject
-    PostThirdPartyLoginWorker worker;
+	@VisibleForTesting
+	@Inject
+	PostThirdPartyLoginWorker worker;
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        worker.doWork();
-        response.sendRedirect("FSpotCloud.html");
-    }
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		worker.doWork();
+		response.sendRedirect("FSpotCloud.html");
+	}
 }

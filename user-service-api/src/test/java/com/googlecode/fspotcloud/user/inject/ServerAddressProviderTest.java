@@ -37,19 +37,19 @@ import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class ServerAddressProviderTest {
-    @Inject
-    ServerAddressProvider provider;
+	@Inject
+	ServerAddressProvider provider;
 
-    @Before
-    public void setUp(HttpServletRequest request) throws Exception {
-        when(request.getScheme()).thenReturn("http");
-        when(request.getContextPath()).thenReturn("/context");
-        when(request.getServerPort()).thenReturn(8080);
-        when(request.getServerName()).thenReturn("localhost");
-    }
+	@Before
+	public void setUp(HttpServletRequest request) throws Exception {
+		when(request.getScheme()).thenReturn("http");
+		when(request.getContextPath()).thenReturn("/context");
+		when(request.getServerPort()).thenReturn(8080);
+		when(request.getServerName()).thenReturn("localhost");
+	}
 
-    @Test
-    public void testName() throws Exception {
-        assertEquals("http://localhost:8080/context", provider.get());
-    }
+	@Test
+	public void testName() throws Exception {
+		assertEquals("http://localhost:8080/context", provider.get());
+	}
 }

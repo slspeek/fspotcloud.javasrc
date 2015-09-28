@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.user.gae;
 
 import com.googlecode.fspotcloud.user.ILoginMetaData;
@@ -49,62 +49,61 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(JukitoRunner.class)
 public class UserServiceGaeTest {
-    public static final String FOO_FSF_ORG = "foo@fsf.org";
-    @Inject
-    UserServiceGae userService;
-    @Inject
-    ILoginMetaData metaData;
+	public static final String FOO_FSF_ORG = "foo@fsf.org";
+	@Inject
+	UserServiceGae userService;
+	@Inject
+	ILoginMetaData metaData;
 
-    @Before
-    public void setUp() {
-        when(metaData.getEmail()).thenReturn(FOO_FSF_ORG);
-    }
+	@Before
+	public void setUp() {
+		when(metaData.getEmail()).thenReturn(FOO_FSF_ORG);
+	}
 
-    @Test
-    public void isUserLoggedInRegular() {
-        Assert.assertTrue(userService.isUserLoggedIn());
-    }
+	@Test
+	public void isUserLoggedInRegular() {
+		Assert.assertTrue(userService.isUserLoggedIn());
+	}
 
-    @Test
-    public void emailInRegular() {
-        assertEquals(FOO_FSF_ORG, userService.getEmail());
-    }
+	@Test
+	public void emailInRegular() {
+		assertEquals(FOO_FSF_ORG, userService.getEmail());
+	}
 
-    @Test
-    public void createLoginURL(
-            com.google.appengine.api.users.UserService delegate) {
-        when(delegate.createLoginURL("http://localhost:8080/context/"))
-                .thenReturn("url");
-        Assert.assertEquals("url", userService.getThirdPartyLoginURL(""));
-    }
+	@Test
+	public void createLoginURL(
+			com.google.appengine.api.users.UserService delegate) {
+		when(delegate.createLoginURL("http://localhost:8080/context/"))
+				.thenReturn("url");
+		Assert.assertEquals("url", userService.getThirdPartyLoginURL(""));
+	}
 
-    @Test
-    public void createLogoutURL(
-            com.google.appengine.api.users.UserService delegate) {
-        when(delegate.createLogoutURL(
-                "http://localhost:8080/context/"))
-                .thenReturn("url");
-        Assert.assertEquals("url", userService.getThirdPartyLogoutURL(""));
-    }
+	@Test
+	public void createLogoutURL(
+			com.google.appengine.api.users.UserService delegate) {
+		when(delegate.createLogoutURL("http://localhost:8080/context/"))
+				.thenReturn("url");
+		Assert.assertEquals("url", userService.getThirdPartyLogoutURL(""));
+	}
 
-    @Test
-    public void isUserAdmin(com.google.appengine.api.users.UserService delegate) {
-        when(delegate.isUserLoggedIn()).thenReturn(Boolean.TRUE);
-        when(delegate.isUserAdmin()).thenReturn(Boolean.TRUE);
-        Assert.assertTrue(userService.isUserAdmin());
-    }
+	@Test
+	public void isUserAdmin(com.google.appengine.api.users.UserService delegate) {
+		when(delegate.isUserLoggedIn()).thenReturn(Boolean.TRUE);
+		when(delegate.isUserAdmin()).thenReturn(Boolean.TRUE);
+		Assert.assertTrue(userService.isUserAdmin());
+	}
 
-    @Test
-    public void emailReturnsNull(
-            com.google.appengine.api.users.UserService delegate) {
-        when(metaData.getEmail()).thenReturn(null);
-        Assert.assertNull(userService.getEmail());
-    }
+	@Test
+	public void emailReturnsNull(
+			com.google.appengine.api.users.UserService delegate) {
+		when(metaData.getEmail()).thenReturn(null);
+		Assert.assertNull(userService.getEmail());
+	}
 
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
-            bind(String.class).annotatedWith(ServerAddress.class)
-                    .toInstance("http://localhost:8080/context");
-        }
-    }
+	public static class Module extends JukitoModule {
+		protected void configureTest() {
+			bind(String.class).annotatedWith(ServerAddress.class).toInstance(
+					"http://localhost:8080/context");
+		}
+	}
 }

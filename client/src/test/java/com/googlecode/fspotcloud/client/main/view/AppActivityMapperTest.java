@@ -27,11 +27,10 @@ package com.googlecode.fspotcloud.client.main.view;
 import junit.framework.TestCase;
 import org.jmock.Mockery;
 
-
 public class AppActivityMapperTest extends TestCase {
-    MainWindowActivityMapper mapper;
-    Mockery context = new Mockery();
+	MainWindowActivityMapper mapper;
+	Mockery context = new Mockery();
 
-    public void testGetTagActivity() {
-    }
+	public void testGetTagActivity() {
+	}
 }

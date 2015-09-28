@@ -37,48 +37,50 @@ import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class GetMetaDataHandler
+		extends
+			SimpleActionHandler<GetMetaDataAction, GetMetaDataResult> {
+	private final Commands commandManager;
+	private final PeerDatabaseDao defaultPeer;
+	private final IAdminPermission adminPermission;
 
-public class GetMetaDataHandler extends SimpleActionHandler<GetMetaDataAction, GetMetaDataResult> {
-    private final Commands commandManager;
-    private final PeerDatabaseDao defaultPeer;
-    private final IAdminPermission adminPermission;
+	@Inject
+	public GetMetaDataHandler(Commands commandManager,
+			PeerDatabaseDao defaultPeer, IAdminPermission IAdminPermission) {
+		super();
+		this.commandManager = commandManager;
+		this.defaultPeer = defaultPeer;
+		this.adminPermission = IAdminPermission;
+	}
 
-    @Inject
-    public GetMetaDataHandler(Commands commandManager,
-                              PeerDatabaseDao defaultPeer, IAdminPermission IAdminPermission) {
-        super();
-        this.commandManager = commandManager;
-        this.defaultPeer = defaultPeer;
-        this.adminPermission = IAdminPermission;
-    }
+	@Override
+	public GetMetaDataResult execute(GetMetaDataAction action,
+			ExecutionContext context) throws DispatchException {
+		adminPermission.checkAdminPermission();
 
-    @Override
-    public GetMetaDataResult execute(GetMetaDataAction action,
-                                     ExecutionContext context) throws DispatchException {
-        adminPermission.checkAdminPermission();
+		GetMetaDataResult dataInfo = new GetMetaDataResult();
 
-        GetMetaDataResult dataInfo = new GetMetaDataResult();
+		try {
+			PeerDatabase peerDatabase = defaultPeer.get();
+			dataInfo.setInstanceName(peerDatabase.getPeerName());
+			dataInfo.setPeerLastSeen(peerDatabase.getPeerLastContact());
+			dataInfo.setPeerPhotoCount(peerDatabase.getPeerPhotoCount());
+			dataInfo.setPhotoCount(peerDatabase.getPhotoCount());
+			dataInfo.setTagCount(peerDatabase.getTagCount());
+			dataInfo.setPendingCommandCount(getPendingCommandCount());
+			DigestTool tool = new DigestTool();
+			dataInfo.setAdminTreeHash(tool.getHash(peerDatabase
+					.getCachedAdminTagTree()));
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-        try {
-            PeerDatabase peerDatabase = defaultPeer.get();
-            dataInfo.setInstanceName(peerDatabase.getPeerName());
-            dataInfo.setPeerLastSeen(peerDatabase.getPeerLastContact());
-            dataInfo.setPeerPhotoCount(peerDatabase.getPeerPhotoCount());
-            dataInfo.setPhotoCount(peerDatabase.getPhotoCount());
-            dataInfo.setTagCount(peerDatabase.getTagCount());
-            dataInfo.setPendingCommandCount(getPendingCommandCount());
-            DigestTool tool = new DigestTool();
-            dataInfo.setAdminTreeHash(tool.getHash(peerDatabase.getCachedAdminTagTree()));
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
+		return dataInfo;
+	}
 
-        return dataInfo;
-    }
+	private int getPendingCommandCount() {
+		int result = commandManager.getCountUnderAThousend();
 
-    private int getPendingCommandCount() {
-        int result = commandManager.getCountUnderAThousend();
-
-        return result;
-    }
+		return result;
+	}
 }

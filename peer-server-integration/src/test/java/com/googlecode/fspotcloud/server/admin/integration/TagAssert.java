@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.server.admin.integration;
 
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -34,33 +33,32 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import org.testng.Assert;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class TagAssert {
-    @Inject
-    TagDao tagDao;
+	@Inject
+	TagDao tagDao;
 
-    public void assertTagLoaded(String id) {
-        Assert.assertNotNull(tagDao.find(id));
-    }
+	public void assertTagLoaded(String id) {
+		Assert.assertNotNull(tagDao.find(id));
+	}
 
-    public void assertTagsLoaded(String... allIds) {
-        for (String id : allIds) {
-            assertTagLoaded(id);
-        }
-    }
+	public void assertTagsLoaded(String... allIds) {
+		for (String id : allIds) {
+			assertTagLoaded(id);
+		}
+	}
 
-    public void assertTagsRemoved(String... allIds) {
-        for (String id : allIds) {
-            verifyTagRemoved(id);
-        }
-    }
+	public void assertTagsRemoved(String... allIds) {
+		for (String id : allIds) {
+			verifyTagRemoved(id);
+		}
+	}
 
-    public void verifyTagRemoved(String id) {
-        Assert.assertNull(tagDao.find(id));
-    }
+	public void verifyTagRemoved(String id) {
+		Assert.assertNull(tagDao.find(id));
+	}
 }

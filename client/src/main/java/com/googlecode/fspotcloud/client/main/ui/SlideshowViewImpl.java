@@ -42,72 +42,76 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 import java.util.logging.Logger;
 
+public class SlideshowViewImpl extends Composite
+		implements
+			SlideshowView,
+			MouseMoveHandler {
+	private final Logger log = Logger.getLogger(SlideshowViewImpl.class
+			.getName());
+	private static final SlideshowViewImplUiBinder uiBinder = GWT
+			.create(SlideshowViewImplUiBinder.class);
+	private final ActionToolbar actionToolbar;
+	private final DoubleImageView doubleImageView;
+	private final TimerInterface timer;
+	@UiField
+	LayoutPanel layout;
+	private SlideshowPresenter presenter;
 
-public class SlideshowViewImpl extends Composite implements SlideshowView,
-        MouseMoveHandler {
-    private final Logger log = Logger.getLogger(SlideshowViewImpl.class.getName());
-    private static final SlideshowViewImplUiBinder uiBinder = GWT.create(SlideshowViewImplUiBinder.class);
-    private final ActionToolbar actionToolbar;
-    private final DoubleImageView doubleImageView;
-    private final TimerInterface timer;
-    @UiField
-    LayoutPanel layout;
-    private SlideshowPresenter presenter;
+	@Inject
+	public SlideshowViewImpl(DoubleImageView imageView,
+			@SlideshowToolbar ActionToolbar actionToolbar, TimerInterface timer) {
+		this.actionToolbar = actionToolbar;
+		this.timer = timer;
+		this.doubleImageView = imageView;
+		initWidget(uiBinder.createAndBindUi(this));
+		layout.addDomHandler(this, MouseMoveEvent.getType());
+		log.info("created");
+	}
 
-    @Inject
-    public SlideshowViewImpl(DoubleImageView imageView,
-                             @SlideshowToolbar ActionToolbar actionToolbar,
-                             TimerInterface timer) {
-        this.actionToolbar = actionToolbar;
-        this.timer = timer;
-        this.doubleImageView = imageView;
-        initWidget(uiBinder.createAndBindUi(this));
-        layout.addDomHandler(this, MouseMoveEvent.getType());
-        log.info("created");
-    }
+	@UiFactory
+	public ActionToolbar getButtonPanelView() {
+		return actionToolbar;
+	}
 
-    @UiFactory
-    public ActionToolbar getButtonPanelView() {
-        return actionToolbar;
-    }
+	@UiFactory
+	public DoubleImageViewImpl getDoubleImageView() {
+		return (DoubleImageViewImpl) doubleImageView;
+	}
 
-    @UiFactory
-    public DoubleImageViewImpl getDoubleImageView() {
-        return (DoubleImageViewImpl) doubleImageView;
-    }
+	public void showControls(int duration) {
+		layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 80, Unit.PX);
+		layout.animate(duration);
+	}
 
-    public void showControls(int duration) {
-        layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 80, Unit.PX);
-        layout.animate(duration);
-    }
+	public void hideControls(int duration) {
+		layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 0, Unit.PX);
+		layout.animate(duration);
+	}
 
-    public void hideControls(int duration) {
-        layout.setWidgetBottomHeight(actionToolbar, 0, Unit.CM, 0, Unit.PX);
-        layout.animate(duration);
-    }
+	@Override
+	public void hideControlsLater(int visibleDuration) {
+		timer.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				hideControls(1000);
+			}
+		});
+		timer.schedule(visibleDuration);
+	}
 
-    @Override
-    public void hideControlsLater(int visibleDuration) {
-        timer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                hideControls(1000);
-            }
-        });
-        timer.schedule(visibleDuration);
-    }
+	@Override
+	public void onMouseMove(MouseMoveEvent event) {
+		showControls(600);
+		hideControlsLater(6000);
+	}
 
-    @Override
-    public void onMouseMove(MouseMoveEvent event) {
-        showControls(600);
-        hideControlsLater(6000);
-    }
+	@Override
+	public void setPresenter(SlideshowPresenter slideshowActivity) {
+		this.presenter = slideshowActivity;
+	}
 
-    @Override
-    public void setPresenter(SlideshowPresenter slideshowActivity) {
-        this.presenter = slideshowActivity;
-    }
-
-    interface SlideshowViewImplUiBinder extends UiBinder<LayoutPanel, SlideshowViewImpl> {
-    }
+	interface SlideshowViewImplUiBinder
+			extends
+				UiBinder<LayoutPanel, SlideshowViewImpl> {
+	}
 }

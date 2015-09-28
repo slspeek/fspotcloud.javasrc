@@ -8,18 +8,21 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class UsersHelpHandler implements IActionHandler {
 
-    private final IActionHandler delegate;
+	private final IActionHandler delegate;
 
-    @Inject
-    public UsersHelpHandler(HelpActionsFactory helpActionsFactory, CategoryDef categoryDef) {
-        final HelpConfig helpConfig = new HelpConfig("Keyboard help");
-        helpConfig.addToFirstColumn(categoryDef.APPLICATION,  categoryDef.RASTER);
-        helpConfig.addToSecondColumn(categoryDef.NAVIGATION, categoryDef.SLIDESHOW, categoryDef.USER);
-        delegate = helpActionsFactory.getHelpAction(helpConfig);
-    }
+	@Inject
+	public UsersHelpHandler(HelpActionsFactory helpActionsFactory,
+			CategoryDef categoryDef) {
+		final HelpConfig helpConfig = new HelpConfig("Keyboard help");
+		helpConfig
+				.addToFirstColumn(categoryDef.APPLICATION, categoryDef.RASTER);
+		helpConfig.addToSecondColumn(categoryDef.NAVIGATION,
+				categoryDef.SLIDESHOW, categoryDef.USER);
+		delegate = helpActionsFactory.getHelpAction(helpConfig);
+	}
 
-    @Override
-        public void performAction(String actionId) {
-        delegate.performAction(actionId);
-    }
+	@Override
+	public void performAction(String actionId) {
+		delegate.performAction(actionId);
+	}
 }

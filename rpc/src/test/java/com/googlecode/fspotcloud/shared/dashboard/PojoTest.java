@@ -41,47 +41,46 @@ import java.util.List;
 import static com.google.common.collect.Lists.newArrayList;
 
 public class PojoTest {
-    // Configured for expectation, so we know when a class gets added or removed.
-    private static final int EXPECTED_CLASS_COUNT = 9;
+	// Configured for expectation, so we know when a class gets added or removed.
+	private static final int EXPECTED_CLASS_COUNT = 9;
 
-    // The package to test
-    private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
-    private List<PojoClass> pojoClasses;
-    private PojoValidator pojoValidator;
-    private final Class<?>[] POJO_CLASSES = new Class<?>[]{
-            GetAdminTagTreeAction.class, GetMetaDataAction.class,
-            GetMetaDataResult.class, UserDeletesAllAction.class,
-            UserDeletesAllCommandsAction.class, UserImportsTagAction.class,
-            UserSynchronizesPeerAction.class, UserUnImportsTagAction.class,
-            VoidResult.class
-    };
+	// The package to test
+	private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
+	private List<PojoClass> pojoClasses;
+	private PojoValidator pojoValidator;
+	private final Class<?>[] POJO_CLASSES = new Class<?>[]{
+			GetAdminTagTreeAction.class, GetMetaDataAction.class,
+			GetMetaDataResult.class, UserDeletesAllAction.class,
+			UserDeletesAllCommandsAction.class, UserImportsTagAction.class,
+			UserSynchronizesPeerAction.class, UserUnImportsTagAction.class,
+			VoidResult.class};
 
-    @Before
-    public void setup() {
-        pojoClasses = newArrayList();
+	@Before
+	public void setup() {
+		pojoClasses = newArrayList();
 
-        for (Class pojo : POJO_CLASSES) {
-            pojoClasses.add(PojoClassFactory.getPojoClass(pojo));
-        }
+		for (Class pojo : POJO_CLASSES) {
+			pojoClasses.add(PojoClassFactory.getPojoClass(pojo));
+		}
 
-        pojoValidator = new PojoValidator();
-        pojoValidator.addRule(new NoPublicFieldsRule());
-        pojoValidator.addRule(new GetterMustExistRule());
-        pojoValidator.addRule(new NoNestedClassRule());
-        pojoValidator.addTester(new SetterTester());
-        pojoValidator.addTester(new GetterTester());
-    }
+		pojoValidator = new PojoValidator();
+		pojoValidator.addRule(new NoPublicFieldsRule());
+		pojoValidator.addRule(new GetterMustExistRule());
+		pojoValidator.addRule(new NoNestedClassRule());
+		pojoValidator.addTester(new SetterTester());
+		pojoValidator.addTester(new GetterTester());
+	}
 
-    @Test
-    public void ensureExpectedPojoCount() {
-        Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT,
-                pojoClasses.size());
-    }
+	@Test
+	public void ensureExpectedPojoCount() {
+		Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT,
+				pojoClasses.size());
+	}
 
-    @Test
-    public void testPojoStructureAndBehavior() {
-        for (PojoClass pojoClass : pojoClasses) {
-            pojoValidator.runValidation(pojoClass);
-        }
-    }
+	@Test
+	public void testPojoStructureAndBehavior() {
+		for (PojoClass pojoClass : pojoClasses) {
+			pojoValidator.runValidation(pojoClass);
+		}
+	}
 }

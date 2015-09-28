@@ -41,116 +41,117 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class PhotoManagerTest {
-    public static final String TEST_ID = "1";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private PhotoDao photoManager;
+	public static final String TEST_ID = "1";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private PhotoDao photoManager;
 
-    @After
-    public void cleanUp() {
-        photoManager.deleteBulk(100);
-    }
+	@After
+	public void cleanUp() {
+		photoManager.deleteBulk(100);
+	}
 
-    public Date getDate(int year, int month, int date) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DATE, date);
+	public Date getDate(int year, int month, int date) {
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DATE, date);
 
-        return cal.getTime();
-    }
+		return cal.getTime();
+	}
 
-    @Test
-    public void simple() {
-        Photo photo = photoManager.findOrNew(TEST_ID);
+	@Test
+	public void simple() {
+		Photo photo = photoManager.findOrNew(TEST_ID);
 
-        if (photoManager.find(TEST_ID) != null) {
-            fail();
-        }
+		if (photoManager.find(TEST_ID) != null) {
+			fail();
+		}
 
-        photoManager.save(photo);
+		photoManager.save(photo);
 
-        //photoManager.delete(TEST_ID);
-    }
+		//photoManager.delete(TEST_ID);
+	}
 
-    @Test
-    public void simpleDescr() {
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setDescription("Test desc");
+	@Test
+	public void simpleDescr() {
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setDescription("Test desc");
 
-        if (photoManager.find(TEST_ID) != null) {
-            fail();
-        }
+		if (photoManager.find(TEST_ID) != null) {
+			fail();
+		}
 
-        photoManager.save(photo);
-        photo = null;
-        photo = photoManager.findOrNew(TEST_ID);
-        assertEquals("Test desc", photo.getDescription());
+		photoManager.save(photo);
+		photo = null;
+		photo = photoManager.findOrNew(TEST_ID);
+		assertEquals("Test desc", photo.getDescription());
 
-        //photoManager.delete(TEST_ID);
-    }
+		//photoManager.delete(TEST_ID);
+	}
 
-    @Test
-    public void testGetOrNew() {
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        assertNull(photo.getFullsizeImageBlobKey());
-        assertNull(photo.getImageBlobKey());
-        assertNull(photo.getThumbBlobKey());
-        assertNotNull(photo.getTagList());
+	@Test
+	public void testGetOrNew() {
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		assertNull(photo.getFullsizeImageBlobKey());
+		assertNull(photo.getImageBlobKey());
+		assertNull(photo.getThumbBlobKey());
+		assertNotNull(photo.getTagList());
 
-        if (photoManager.find(TEST_ID) != null) {
-            fail();
-        }
-    }
+		if (photoManager.find(TEST_ID) != null) {
+			fail();
+		}
+	}
 
-    @Test
-    public void testCreateLoadModify() {
-        Photo photo;
-        Photo retrieved;
-        photo = photoManager.findOrNew(TEST_ID);
-        photo.setId(TEST_ID);
-        photoManager.save(photo);
-        retrieved = photoManager.findOrNew(TEST_ID);
-        retrieved.setDescription("Nice");
-        photoManager.save(retrieved);
-        retrieved = photoManager.findOrNew(TEST_ID);
-        assertEquals("Nice", retrieved.getDescription());
+	@Test
+	public void testCreateLoadModify() {
+		Photo photo;
+		Photo retrieved;
+		photo = photoManager.findOrNew(TEST_ID);
+		photo.setId(TEST_ID);
+		photoManager.save(photo);
+		retrieved = photoManager.findOrNew(TEST_ID);
+		retrieved.setDescription("Nice");
+		photoManager.save(retrieved);
+		retrieved = photoManager.findOrNew(TEST_ID);
+		assertEquals("Nice", retrieved.getDescription());
 
-        //photoManager.delete(TEST_ID);
-    }
+		//photoManager.delete(TEST_ID);
+	}
 
-    @Test
-    public void testSave() {
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setDescription("Nice");
-        photoManager.save(photo);
+	@Test
+	public void testSave() {
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setDescription("Nice");
+		photoManager.save(photo);
 
-        Photo retrieved = photoManager.findOrNew(TEST_ID);
-        assertEquals("Nice", retrieved.getDescription());
+		Photo retrieved = photoManager.findOrNew(TEST_ID);
+		assertEquals("Nice", retrieved.getDescription());
 
-        //photoManager.delete(TEST_ID);
-    }
+		//photoManager.delete(TEST_ID);
+	}
 
-    @Test
-    public void testDelete() {
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setDescription("Nice");
-        photoManager.save(photo);
+	@Test
+	public void testDelete() {
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setDescription("Nice");
+		photoManager.save(photo);
 
-        //photoManager.delete(TEST_ID);
-    }
+		//photoManager.delete(TEST_ID);
+	}
 
-    @Test
-    public void tagListPersists() {
-        List abc = ImmutableList.of("a", "b", "c");
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setTagList(abc);
-        photoManager.save(photo);
-        photo = null;
+	@Test
+	public void tagListPersists() {
+		List abc = ImmutableList.of("a", "b", "c");
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setTagList(abc);
+		photoManager.save(photo);
+		photo = null;
 
-        photo = photoManager.find(TEST_ID);
-        assertEquals(abc, photo.getTagList());
-    }
+		photo = photoManager.find(TEST_ID);
+		assertEquals(abc, photo.getTagList());
+	}
 }

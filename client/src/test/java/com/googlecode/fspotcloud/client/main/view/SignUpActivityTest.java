@@ -43,44 +43,42 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class SignUpActivityTest {
-    public static final String SECRET = "Secret";
-    public static final String ADMIN = "Admin";
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    @Inject
-    SignUpActivity presenter;
+	public static final String SECRET = "Secret";
+	public static final String ADMIN = "Admin";
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	@Inject
+	SignUpActivity presenter;
 
-    @Before
-    public void train(SignUpView signUpView) throws Exception {
-        when(signUpView.getPasswordField()).thenReturn(SECRET);
-        when(signUpView.getPasswordAgainField()).thenReturn(SECRET);
-        when(signUpView.getEmailField()).thenReturn(RMS_FSF_ORG);
-    }
+	@Before
+	public void train(SignUpView signUpView) throws Exception {
+		when(signUpView.getPasswordField()).thenReturn(SECRET);
+		when(signUpView.getPasswordAgainField()).thenReturn(SECRET);
+		when(signUpView.getEmailField()).thenReturn(RMS_FSF_ORG);
+	}
 
-    @Test
-    public void testStart(SignUpView signUpView, DispatchAsync dispatch,
-                          AcceptsOneWidget panel) throws Exception {
-        presenter.start(panel, null);
-        verify(signUpView).focusEmailField();
-        verify(panel).setWidget(signUpView);
-        verifyNoMoreInteractions(panel, signUpView, dispatch);
-    }
+	@Test
+	public void testStart(SignUpView signUpView, DispatchAsync dispatch,
+			AcceptsOneWidget panel) throws Exception {
+		presenter.start(panel, null);
+		verify(signUpView).focusEmailField();
+		verify(panel).setWidget(signUpView);
+		verifyNoMoreInteractions(panel, signUpView, dispatch);
+	}
 
-    @Test
-    public void testSignUp(SignUpView signUpView, DispatchAsync dispatch,
-                           ArgumentCaptor<AsyncCallback<SignUpResult>> callbackArgumentCaptor,
-                           ArgumentCaptor<SignUpAction> actionArgumentCaptor)
-            throws Exception {
-        presenter.signUp();
-        verify(signUpView).getEmailField();
-        verify(signUpView).getPasswordField();
-        verify(signUpView).getPasswordAgainField();
+	@Test
+	public void testSignUp(SignUpView signUpView, DispatchAsync dispatch,
+			ArgumentCaptor<AsyncCallback<SignUpResult>> callbackArgumentCaptor,
+			ArgumentCaptor<SignUpAction> actionArgumentCaptor) throws Exception {
+		presenter.signUp();
+		verify(signUpView).getEmailField();
+		verify(signUpView).getPasswordField();
+		verify(signUpView).getPasswordAgainField();
 
-        verify(dispatch)
-                .execute(actionArgumentCaptor.capture(),
-                        callbackArgumentCaptor.capture());
+		verify(dispatch).execute(actionArgumentCaptor.capture(),
+				callbackArgumentCaptor.capture());
 
-        SignUpAction action = actionArgumentCaptor.getValue();
-        assertEquals(SECRET, action.getPassword());
-        assertEquals(RMS_FSF_ORG, action.getEmail());
-    }
+		SignUpAction action = actionArgumentCaptor.getValue();
+		assertEquals(SECRET, action.getPassword());
+		assertEquals(RMS_FSF_ORG, action.getEmail());
+	}
 }

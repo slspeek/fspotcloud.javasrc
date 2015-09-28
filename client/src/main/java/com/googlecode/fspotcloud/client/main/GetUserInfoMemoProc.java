@@ -9,15 +9,15 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 
 public class GetUserInfoMemoProc extends MemoProcAsync<UserInfo> {
 
-    final private DispatchAsync dispatchAsync;
+	final private DispatchAsync dispatchAsync;
 
-    @Inject
-    public GetUserInfoMemoProc(DispatchAsync dispatchAsync) {
-        this.dispatchAsync = dispatchAsync;
-    }
+	@Inject
+	public GetUserInfoMemoProc(DispatchAsync dispatchAsync) {
+		this.dispatchAsync = dispatchAsync;
+	}
 
-    @Override
-    public void getAsyncImpl(AsyncCallback<UserInfo> callback) {
-        dispatchAsync.execute(new GetUserInfo(""), callback);
-    }
+	@Override
+	public void getAsyncImpl(AsyncCallback<UserInfo> callback) {
+		dispatchAsync.execute(new GetUserInfo(""), callback);
+	}
 }

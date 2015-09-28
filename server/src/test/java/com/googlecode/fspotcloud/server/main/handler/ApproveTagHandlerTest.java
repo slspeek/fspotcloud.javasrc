@@ -27,58 +27,59 @@ import static org.mockito.Mockito.*;
 @RunWith(JukitoRunner.class)
 public class ApproveTagHandlerTest {
 
-    public static final String TAG_ID = "1";
-    public static final long USER_GROUP_ID = 1L;
-    @Inject
-    ApproveTagHandler handler;
+	public static final String TAG_ID = "1";
+	public static final long USER_GROUP_ID = 1L;
+	@Inject
+	ApproveTagHandler handler;
 
-    @Inject
-    UserGroupDao userGroupDao;
-    @Inject
-    TagDao tagDao;
-    @Inject
-    IAdminPermission adminPermission;
-    private final ApproveTagAction action = new ApproveTagAction(TAG_ID, USER_GROUP_ID);
-    private final Tag tag = new TagEntity();
-    private final UserGroup userGroup = new UserGroupEntity();
+	@Inject
+	UserGroupDao userGroupDao;
+	@Inject
+	TagDao tagDao;
+	@Inject
+	IAdminPermission adminPermission;
+	private final ApproveTagAction action = new ApproveTagAction(TAG_ID,
+			USER_GROUP_ID);
+	private final Tag tag = new TagEntity();
+	private final UserGroup userGroup = new UserGroupEntity();
 
+	@Test
+	public void testExecute() throws Exception {
+		when(userGroupDao.find(USER_GROUP_ID)).thenReturn(userGroup);
+		when(tagDao.find(TAG_ID)).thenReturn(tag);
+		handler.execute(action, null);
+		assertTrue(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
+		assertTrue(userGroup.getApprovedTagIds().contains(TAG_ID));
+		verify(tagDao).find(TAG_ID);
+		verify(userGroupDao).find(USER_GROUP_ID);
+		verify(tagDao).save(tag);
+		verify(userGroupDao).save(userGroup);
+		verifyNoMoreInteractions(tagDao, userGroupDao);
 
-    @Test
-    public void testExecute() throws Exception {
-        when(userGroupDao.find(USER_GROUP_ID)).thenReturn(userGroup);
-        when(tagDao.find(TAG_ID)).thenReturn(tag);
-        handler.execute(action, null);
-        assertTrue(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
-        assertTrue(userGroup.getApprovedTagIds().contains(TAG_ID));
-        verify(tagDao).find(TAG_ID);
-        verify(userGroupDao).find(USER_GROUP_ID);
-        verify(tagDao).save(tag);
-        verify(userGroupDao).save(userGroup);
-        verifyNoMoreInteractions(tagDao, userGroupDao);
+	}
 
-    }
+	@Test(expected = UsergroupNotFoundException.class)
+	public void testUsergroupNull() throws Exception {
+		when(tagDao.find(TAG_ID)).thenReturn(tag);
+		handler.execute(action, null);
+		assertFalse(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
+		assertFalse(userGroup.getApprovedTagIds().contains(TAG_ID));
+	}
 
-    @Test(expected = UsergroupNotFoundException.class)
-    public void testUsergroupNull() throws Exception {
-        when(tagDao.find(TAG_ID)).thenReturn(tag);
-        handler.execute(action, null);
-        assertFalse(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
-        assertFalse(userGroup.getApprovedTagIds().contains(TAG_ID));
-    }
+	@Test(expected = TagNotFoundException.class)
+	public void testTagNull() throws Exception {
+		when(userGroupDao.find(USER_GROUP_ID)).thenReturn(userGroup);
+		handler.execute(action, null);
+		assertFalse(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
+		assertFalse(userGroup.getApprovedTagIds().contains(TAG_ID));
+	}
 
-    @Test(expected = TagNotFoundException.class)
-    public void testTagNull() throws Exception {
-        when(userGroupDao.find(USER_GROUP_ID)).thenReturn(userGroup);
-        handler.execute(action, null);
-        assertFalse(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
-        assertFalse(userGroup.getApprovedTagIds().contains(TAG_ID));
-    }
-
-    @Test(expected = SecurityException.class)
-    public void testExecuteNXS() throws Exception {
-        doThrow(new SecurityException()).when(adminPermission).checkAdminPermission();
-        handler.execute(action, null);
-        assertFalse(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
-        assertFalse(userGroup.getApprovedTagIds().contains(TAG_ID));
-    }
+	@Test(expected = SecurityException.class)
+	public void testExecuteNXS() throws Exception {
+		doThrow(new SecurityException()).when(adminPermission)
+				.checkAdminPermission();
+		handler.execute(action, null);
+		assertFalse(tag.getApprovedUserGroups().contains(USER_GROUP_ID));
+		assertFalse(userGroup.getApprovedTagIds().contains(TAG_ID));
+	}
 }

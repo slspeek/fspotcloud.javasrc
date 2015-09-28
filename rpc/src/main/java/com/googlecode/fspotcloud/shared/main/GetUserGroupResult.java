@@ -27,19 +27,18 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Result;
 
-
 @GwtCompatible
 public class GetUserGroupResult implements Result {
-    private UserGroupInfo info;
+	private UserGroupInfo info;
 
-    public GetUserGroupResult(UserGroupInfo info) {
-        this.info = info;
-    }
+	public GetUserGroupResult(UserGroupInfo info) {
+		this.info = info;
+	}
 
-    public GetUserGroupResult() {
-    }
+	public GetUserGroupResult() {
+	}
 
-    public UserGroupInfo getInfo() {
-        return info;
-    }
+	public UserGroupInfo getInfo() {
+		return info;
+	}
 }

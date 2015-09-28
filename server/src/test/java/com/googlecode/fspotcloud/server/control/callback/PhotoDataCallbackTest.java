@@ -55,69 +55,71 @@ import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
 
 public class PhotoDataCallbackTest {
-    private static final int VERSION = 15;
-    private static final String DESCRIPTION = "description";
-    private static final String PHOTO_ID = "1";
-    private static final String TAG_ID = "fooMock";
-    PhotoDao photoManager;
-    PeerDatabaseDao peerDatabaseDao;
-    PeerDatabase peer;
-    TagDao tagManager;
-    Photo photo1;
-    PhotoDataResult result;
-    PhotoData data;
-    Date date = new Date(10);
-    PhotoDataCallback callback;
-    @SuppressWarnings("unchecked")
-	ArgumentCaptor<List<Photo>> argumentCaptor = (ArgumentCaptor<List<Photo>>) (Object) ArgumentCaptor.forClass(List.class);
-    private ArrayList<PhotoData> dataList;
-    private Tag tag1;
+	private static final int VERSION = 15;
+	private static final String DESCRIPTION = "description";
+	private static final String PHOTO_ID = "1";
+	private static final String TAG_ID = "fooMock";
+	PhotoDao photoManager;
+	PeerDatabaseDao peerDatabaseDao;
+	PeerDatabase peer;
+	TagDao tagManager;
+	Photo photo1;
+	PhotoDataResult result;
+	PhotoData data;
+	Date date = new Date(10);
+	PhotoDataCallback callback;
+	@SuppressWarnings("unchecked")
+	ArgumentCaptor<List<Photo>> argumentCaptor = (ArgumentCaptor<List<Photo>>) (Object) ArgumentCaptor
+			.forClass(List.class);
+	private ArrayList<PhotoData> dataList;
+	private Tag tag1;
 
-    @Before
-    public void setUp() throws Exception {
-        photoManager = mock(PhotoDao.class);
-        tagManager = mock(TagDao.class);
-        photo1 = new PhotoEntity();
-        tag1 = new TagEntity();
-        tag1.setId(TAG_ID);
-        photo1.setId(PHOTO_ID);
-        data = new PhotoData(PHOTO_ID, DESCRIPTION, date, ImmutableList.of(TAG_ID), VERSION);
-        dataList = new ArrayList<PhotoData>();
-        dataList.add(data);
-        result = new PhotoDataResult(dataList);
-        when(photoManager.findOrNew(PHOTO_ID)).thenReturn(photo1);
-        when(tagManager.find(TAG_ID)).thenReturn(tag1);
-        peer = new PeerDatabaseEntity();
-        peerDatabaseDao = mock(PeerDatabaseDao.class);
-        when(peerDatabaseDao.get()).thenReturn(peer);
-        callback = new PhotoDataCallback(photoManager, 
-                tagManager, peerDatabaseDao);
-    }
+	@Before
+	public void setUp() throws Exception {
+		photoManager = mock(PhotoDao.class);
+		tagManager = mock(TagDao.class);
+		photo1 = new PhotoEntity();
+		tag1 = new TagEntity();
+		tag1.setId(TAG_ID);
+		photo1.setId(PHOTO_ID);
+		data = new PhotoData(PHOTO_ID, DESCRIPTION, date,
+				ImmutableList.of(TAG_ID), VERSION);
+		dataList = new ArrayList<PhotoData>();
+		dataList.add(data);
+		result = new PhotoDataResult(dataList);
+		when(photoManager.findOrNew(PHOTO_ID)).thenReturn(photo1);
+		when(tagManager.find(TAG_ID)).thenReturn(tag1);
+		peer = new PeerDatabaseEntity();
+		peerDatabaseDao = mock(PeerDatabaseDao.class);
+		when(peerDatabaseDao.get()).thenReturn(peer);
+		callback = new PhotoDataCallback(photoManager, tagManager,
+				peerDatabaseDao);
+	}
 
-    @Test
-    public void testSerialize() throws Exception {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bos);
-        out.writeObject(callback);
-        out.close();
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream out = new ObjectOutputStream(bos);
+		out.writeObject(callback);
+		out.close();
+	}
 
-    @Test
-    public void testOnSuccess() {
-        peer.setCachedTagTree(new TagNode());
-        callback.onSuccess(result);
-        assertEquals(date, photo1.getDate());
-        assertEquals(DESCRIPTION, photo1.getDescription());
-        verify(photoManager).saveAll(argumentCaptor.capture());
-        assertEquals(photo1, argumentCaptor.getValue().get(0));
+	@Test
+	public void testOnSuccess() {
+		peer.setCachedTagTree(new TagNode());
+		callback.onSuccess(result);
+		assertEquals(date, photo1.getDate());
+		assertEquals(DESCRIPTION, photo1.getDescription());
+		verify(photoManager).saveAll(argumentCaptor.capture());
+		assertEquals(photo1, argumentCaptor.getValue().get(0));
 
-        //        assertEquals(IMAGE_DATA, photo1.getImage());
-        //        assertEquals(THUMB_DATA, photo1.getThumb());
-        //        assertTrue(photo1.isThumbLoaded());
-        //        assertTrue(photo1.isImageLoaded());
-        PhotoInfo info = tag1.getCachedPhotoList().first();
-        assertEquals(PHOTO_ID, info.getId());
-        assertEquals(VERSION, info.getVersion());
-        verify(peerDatabaseDao).resetCachedTagTrees();
-    }
+		//        assertEquals(IMAGE_DATA, photo1.getImage());
+		//        assertEquals(THUMB_DATA, photo1.getThumb());
+		//        assertTrue(photo1.isThumbLoaded());
+		//        assertTrue(photo1.isImageLoaded());
+		PhotoInfo info = tag1.getCachedPhotoList().first();
+		assertEquals(PHOTO_ID, info.getId());
+		assertEquals(VERSION, info.getVersion());
+		verify(peerDatabaseDao).resetCachedTagTrees();
+	}
 }

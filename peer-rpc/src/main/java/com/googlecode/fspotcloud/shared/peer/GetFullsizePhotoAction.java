@@ -32,23 +32,24 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.openpojo.business.annotation.BusinessKey;
 
+public class GetFullsizePhotoAction extends BusinessBase
+		implements
+			Action<FullsizePhotoResult>,
+			Serializable {
+	private static final long serialVersionUID = 8674836943695700527L;
+	@BusinessKey
+	private final String imageKey;
 
-public class GetFullsizePhotoAction extends BusinessBase implements Action<FullsizePhotoResult>,
-        Serializable {
-    private static final long serialVersionUID = 8674836943695700527L;
-    @BusinessKey
-    private final String imageKey;
+	public GetFullsizePhotoAction(String imageKey) {
+		super();
+		this.imageKey = imageKey;
+	}
 
-    public GetFullsizePhotoAction(String imageKey) {
-        super();
-        this.imageKey = imageKey;
-    }
+	public String getImageKey() {
+		return imageKey;
+	}
 
-    public String getImageKey() {
-        return imageKey;
-    }
-
-    public String toString() {
-        return new ToStringBuilder(this).append("id", imageKey).toString();
-    }
+	public String toString() {
+		return new ToStringBuilder(this).append("id", imageKey).toString();
+	}
 }

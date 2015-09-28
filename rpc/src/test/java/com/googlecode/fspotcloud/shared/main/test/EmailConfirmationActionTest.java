@@ -12,38 +12,39 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class EmailConfirmationActionTest extends EqualityTest {
-    @Test
-    public void testToString() throws Exception {
-        assertEquals("EmailConfirmationAction{email=null, secret=null}", new EmailConfirmationAction(null, null).toString());
-    }
+	@Test
+	public void testToString() throws Exception {
+		assertEquals("EmailConfirmationAction{email=null, secret=null}",
+				new EmailConfirmationAction(null, null).toString());
+	}
 
-    @Override
-    protected List<Provider<Object>> getUniqueObjects() {
-        List<Provider<Object>> result = newArrayList();
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new EmailConfirmationAction(null, null);
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new EmailConfirmationAction("", null);
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new EmailConfirmationAction("", "");
-            }
-        });
-        result.add(new Provider<Object>() {
-            @Override
-            public Object get() {
-                return new EmailConfirmationAction("foo", "");
-            }
-        });
-        return result;
-    }
+	@Override
+	protected List<Provider<Object>> getUniqueObjects() {
+		List<Provider<Object>> result = newArrayList();
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new EmailConfirmationAction(null, null);
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new EmailConfirmationAction("", null);
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new EmailConfirmationAction("", "");
+			}
+		});
+		result.add(new Provider<Object>() {
+			@Override
+			public Object get() {
+				return new EmailConfirmationAction("foo", "");
+			}
+		});
+		return result;
+	}
 }

@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import org.apache.commons.lang.SerializationUtils;
@@ -38,9 +38,9 @@ import static org.junit.Assert.assertNotNull;
  * @author steven
  */
 public class Serialization {
-    public static <T> void testSerialization(T underTest) {
-        byte[] data = SerializationUtils.serialize((Serializable) underTest);
-        T readBack = (T) SerializationUtils.deserialize(data);
-        assertNotNull(readBack);
-    }
+	public static <T> void testSerialization(T underTest) {
+		byte[] data = SerializationUtils.serialize((Serializable) underTest);
+		T readBack = (T) SerializationUtils.deserialize(data);
+		assertNotNull(readBack);
+	}
 }

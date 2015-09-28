@@ -28,44 +28,46 @@ import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class ManageUsersPlace extends Place {
-    private final long userGroupId;
+	private final long userGroupId;
 
-    public ManageUsersPlace(long userGroupId) {
-        this.userGroupId = userGroupId;
-    }
+	public ManageUsersPlace(long userGroupId) {
+		this.userGroupId = userGroupId;
+	}
 
-    public long getUserGroupId() {
-        return userGroupId;
-    }
+	public long getUserGroupId() {
+		return userGroupId;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ManageUsersPlace)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof ManageUsersPlace))
+			return false;
 
-        ManageUsersPlace place = (ManageUsersPlace) o;
+		ManageUsersPlace place = (ManageUsersPlace) o;
 
-        if (userGroupId != place.userGroupId) return false;
+		if (userGroupId != place.userGroupId)
+			return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(userGroupId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(userGroupId);
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<ManageUsersPlace> {
-        @Override
-        public ManageUsersPlace getPlace(String token) {
-            return new ManageUsersPlace(Long.parseLong(token));
-        }
+	public static class Tokenizer implements PlaceTokenizer<ManageUsersPlace> {
+		@Override
+		public ManageUsersPlace getPlace(String token) {
+			return new ManageUsersPlace(Long.parseLong(token));
+		}
 
-        @Override
-        public String getToken(ManageUsersPlace place) {
-            return String.valueOf(place.getUserGroupId());
-        }
-    }
+		@Override
+		public String getToken(ManageUsersPlace place) {
+			return String.valueOf(place.getUserGroupId());
+		}
+	}
 }

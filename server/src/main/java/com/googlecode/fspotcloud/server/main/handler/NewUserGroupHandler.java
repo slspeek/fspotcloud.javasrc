@@ -35,36 +35,37 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class NewUserGroupHandler
+		extends
+			SimpleActionHandler<NewUserGroupAction, GetUserGroupResult> {
+	public static final String NO_DESCRIPTION = "No description";
+	public static final String NEW_GROUP = "New group";
+	private final UserGroupDao userGroupDao;
+	private final UserService userService;
 
-public class NewUserGroupHandler extends SimpleActionHandler<NewUserGroupAction, GetUserGroupResult> {
-    public static final String NO_DESCRIPTION = "No description";
-    public static final String NEW_GROUP = "New group";
-    private final UserGroupDao userGroupDao;
-    private final UserService userService;
+	@Inject
+	public NewUserGroupHandler(UserGroupDao userGroupDao,
+			UserService userService) {
+		this.userGroupDao = userGroupDao;
+		this.userService = userService;
+	}
 
-    @Inject
-    public NewUserGroupHandler(UserGroupDao userGroupDao,
-                               UserService userService) {
-        this.userGroupDao = userGroupDao;
-        this.userService = userService;
-    }
+	@Override
+	public GetUserGroupResult execute(NewUserGroupAction action,
+			ExecutionContext context) throws DispatchException {
+		UserGroupInfo info = null;
 
-    @Override
-    public GetUserGroupResult execute(NewUserGroupAction action,
-                                      ExecutionContext context) throws DispatchException {
-        UserGroupInfo info = null;
-
-        if (userService.isUserLoggedIn()) {
-            String userName = userService.getEmail();
-            UserGroup newGroup = userGroupDao.newEntity();
-            newGroup.setOwner(userName);
-            newGroup.setDescription(NO_DESCRIPTION);
-            newGroup.setName(NEW_GROUP);
-            userGroupDao.save(newGroup);
-            info = GetUserGroupHandler.get(newGroup);
-        } else {
-            throw new UserIsNotLoggedOnException();
-        }
-        return new GetUserGroupResult(info);
-    }
+		if (userService.isUserLoggedIn()) {
+			String userName = userService.getEmail();
+			UserGroup newGroup = userGroupDao.newEntity();
+			newGroup.setOwner(userName);
+			newGroup.setDescription(NO_DESCRIPTION);
+			newGroup.setName(NEW_GROUP);
+			userGroupDao.save(newGroup);
+			info = GetUserGroupHandler.get(newGroup);
+		} else {
+			throw new UserIsNotLoggedOnException();
+		}
+		return new GetUserGroupResult(info);
+	}
 }

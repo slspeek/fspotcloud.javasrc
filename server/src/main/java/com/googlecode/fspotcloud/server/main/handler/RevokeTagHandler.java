@@ -38,40 +38,41 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.util.Set;
 
+public class RevokeTagHandler
+		extends
+			SimpleActionHandler<RevokeTagAction, VoidResult> {
+	private final UserGroupDao userGroupDao;
+	private final TagDao tagDao;
+	private final IAdminPermission adminPermission;
 
-public class RevokeTagHandler extends SimpleActionHandler<RevokeTagAction, VoidResult> {
-    private final UserGroupDao userGroupDao;
-    private final TagDao tagDao;
-    private final IAdminPermission adminPermission;
+	@Inject
+	public RevokeTagHandler(UserGroupDao userGroupDao, TagDao tagDao,
+			IAdminPermission adminPermission) {
+		this.userGroupDao = userGroupDao;
+		this.tagDao = tagDao;
+		this.adminPermission = adminPermission;
+	}
 
-    @Inject
-    public RevokeTagHandler(UserGroupDao userGroupDao, TagDao tagDao,
-                            IAdminPermission adminPermission) {
-        this.userGroupDao = userGroupDao;
-        this.tagDao = tagDao;
-        this.adminPermission = adminPermission;
-    }
+	@Override
+	public VoidResult execute(RevokeTagAction action, ExecutionContext context)
+			throws DispatchException {
+		adminPermission.checkAdminPermission();
 
-    @Override
-    public VoidResult execute(RevokeTagAction action, ExecutionContext context)
-            throws DispatchException {
-        adminPermission.checkAdminPermission();
+		Tag tag = tagDao.findOrNew(action.getTagId());
+		Set<Long> approvedGroups = tag.getApprovedUserGroups();
+		approvedGroups.remove(action.getUserGroupId());
+		tag.setApprovedUserGroups(approvedGroups);
+		tagDao.save(tag);
 
-        Tag tag = tagDao.findOrNew(action.getTagId());
-        Set<Long> approvedGroups = tag.getApprovedUserGroups();
-        approvedGroups.remove(action.getUserGroupId());
-        tag.setApprovedUserGroups(approvedGroups);
-        tagDao.save(tag);
+		UserGroup userGroup = userGroupDao.find(action.getUserGroupId());
 
-        UserGroup userGroup = userGroupDao.find(action.getUserGroupId());
+		if (userGroup != null) {
+			Set<String> approvedTags = userGroup.getApprovedTagIds();
+			approvedTags.remove(action.getTagId());
+			userGroup.setApprovedTagIds(approvedTags);
+			userGroupDao.save(userGroup);
+		}
 
-        if (userGroup != null) {
-            Set<String> approvedTags = userGroup.getApprovedTagIds();
-            approvedTags.remove(action.getTagId());
-            userGroup.setApprovedTagIds(approvedTags);
-            userGroupDao.save(userGroup);
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

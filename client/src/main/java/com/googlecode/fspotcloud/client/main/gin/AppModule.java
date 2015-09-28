@@ -54,43 +54,47 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.TimerImpl;
 
 public class AppModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
+	@Override
+	protected void configure() {
 
-        bind(TimerInterface.class).to(TimerImpl.class);
-        bind(IScheduler.class).to(SchedulerImpl.class);
-        bind(IClientLoginManager.class).to(ClientLoginManager.class).in(Singleton.class);
-        bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
-        bind(NavigationFlagsHelper.class).in(Singleton.class);
-        bind(RasterState.class).in(Singleton.class);
-        bind(IRasterer.class).to(Rasterer.class).in(Singleton.class);
-        bind(IPlaceController.class).to(PlaceGoToImpl.class).in(Singleton.class);
-        bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
-        bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
-        bind(OpenNewTab.class).to(OpenNewTabImpl.class);
-        bind(ReplaceLocation.class).to(ReplaceLocationImpl.class);
+		bind(TimerInterface.class).to(TimerImpl.class);
+		bind(IScheduler.class).to(SchedulerImpl.class);
+		bind(IClientLoginManager.class).to(ClientLoginManager.class).in(
+				Singleton.class);
+		bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
+		bind(NavigationFlagsHelper.class).in(Singleton.class);
+		bind(RasterState.class).in(Singleton.class);
+		bind(IRasterer.class).to(Rasterer.class).in(Singleton.class);
+		bind(IPlaceController.class).to(PlaceGoToImpl.class)
+				.in(Singleton.class);
+		bind(Navigator.class).to(NavigatorImpl.class).in(Singleton.class);
+		bind(Slideshow.class).to(SlideshowImpl.class).in(Singleton.class);
+		bind(OpenNewTab.class).to(OpenNewTabImpl.class);
+		bind(ReplaceLocation.class).to(ReplaceLocationImpl.class);
 
-        bind(MVPSetup.class).in(Singleton.class);
-        bind(ActionButton.class).annotatedWith(BigToPhotos.class).toProvider(BigToPhotosButtonProvider.class);
-        bind(UIRegistrationBuilder.class).to(EndUserActionFactory.class);
-        bind(MainWindowActivityMapper.class).in(Singleton.class);
-        install(new GinMvpModule(MainWindowActivityMapper.class, HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
+		bind(MVPSetup.class).in(Singleton.class);
+		bind(ActionButton.class).annotatedWith(BigToPhotos.class).toProvider(
+				BigToPhotosButtonProvider.class);
+		bind(UIRegistrationBuilder.class).to(EndUserActionFactory.class);
+		bind(MainWindowActivityMapper.class).in(Singleton.class);
+		install(new GinMvpModule(MainWindowActivityMapper.class,
+				HomePlace.class, MvpDisplay.class, MainPlaceHistoryMapper.class));
 
-        install(new ImageViewingMVPModule());
-        install(new DashboardMVPModule());
-        install(new UserMVPModule());
-    }
+		install(new ImageViewingMVPModule());
+		install(new DashboardMVPModule());
+		install(new UserMVPModule());
+	}
 
-    @Provides
-    @RasterWidth
-    public int getRasterWidth() {
-        return 5;
-    }
+	@Provides
+	@RasterWidth
+	public int getRasterWidth() {
+		return 5;
+	}
 
-    @Provides
-    @RasterHeight
-    public int getRasterHeight() {
-        return 4;
-    }
+	@Provides
+	@RasterHeight
+	public int getRasterHeight() {
+		return 4;
+	}
 
 }

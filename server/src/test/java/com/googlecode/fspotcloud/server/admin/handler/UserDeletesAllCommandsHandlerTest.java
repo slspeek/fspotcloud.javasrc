@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.googlecode.botdispatch.model.api.Commands;
@@ -48,52 +48,52 @@ import static org.mockito.Mockito.*;
  * @author steven
  */
 public class UserDeletesAllCommandsHandlerTest {
-    @Mock
-    Commands commandManager;
-    @Mock
-    UserService userService;
-    UserDeletesAllCommandsHandler handler;
+	@Mock
+	Commands commandManager;
+	@Mock
+	UserService userService;
+	UserDeletesAllCommandsHandler handler;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
 
-        Provider<UserService> userServiceProvider = new Provider<UserService>() {
-            @Override
-            public UserService get() {
-                return userService;
-            }
-        };
+		Provider<UserService> userServiceProvider = new Provider<UserService>() {
+			@Override
+			public UserService get() {
+				return userService;
+			}
+		};
 
-        handler = new UserDeletesAllCommandsHandler(commandManager,
-                userServiceProvider);
-    }
+		handler = new UserDeletesAllCommandsHandler(commandManager,
+				userServiceProvider);
+	}
 
-    /**
-     * Test of execute method, of class UserDeletesAllCommandsHandler.
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    @Test(expected = SecurityException.class)
-    public void testExecuteNotBeingAdmin() throws Exception {
-        when(userService.isUserAdmin()).thenReturn(Boolean.FALSE);
-        handler.execute(new UserDeletesAllCommandsAction(), null);
-        verifyNoMoreInteractions(commandManager, userService);
-    }
+	/**
+	 * Test of execute method, of class UserDeletesAllCommandsHandler.
+	 *
+	 * @throws Exception DOCUMENT ME!
+	 */
+	@Test(expected = SecurityException.class)
+	public void testExecuteNotBeingAdmin() throws Exception {
+		when(userService.isUserAdmin()).thenReturn(Boolean.FALSE);
+		handler.execute(new UserDeletesAllCommandsAction(), null);
+		verifyNoMoreInteractions(commandManager, userService);
+	}
 
-    @Test
-    public void execute() throws DispatchException {
-        when(userService.isUserAdmin()).thenReturn(Boolean.TRUE);
-        handler.execute(new UserDeletesAllCommandsAction(), null);
-        verify(commandManager).deleteAll();
-        verifyNoMoreInteractions(commandManager);
-        verify(userService).isUserAdmin();
-    }
+	@Test
+	public void execute() throws DispatchException {
+		when(userService.isUserAdmin()).thenReturn(Boolean.TRUE);
+		handler.execute(new UserDeletesAllCommandsAction(), null);
+		verify(commandManager).deleteAll();
+		verifyNoMoreInteractions(commandManager);
+		verify(userService).isUserAdmin();
+	}
 
-    @Test(expected = ActionException.class)
-    public void commandManagerFails() throws DispatchException {
-        when(userService.isUserAdmin()).thenReturn(Boolean.TRUE);
-        doThrow(new RuntimeException()).when(commandManager).deleteAll();
-        handler.execute(new UserDeletesAllCommandsAction(), null);
-    }
+	@Test(expected = ActionException.class)
+	public void commandManagerFails() throws DispatchException {
+		when(userService.isUserAdmin()).thenReturn(Boolean.TRUE);
+		doThrow(new RuntimeException()).when(commandManager).deleteAll();
+		handler.execute(new UserDeletesAllCommandsAction(), null);
+	}
 }

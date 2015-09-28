@@ -33,27 +33,26 @@ import com.googlecode.fspotcloud.user.PostThirdPartyLoginWorker;
 import com.googlecode.fspotcloud.user.SessionEmail;
 import com.googlecode.fspotcloud.user.inject.AbstractUserModule;
 
-
 public class UserModuleGae extends AbstractUserModule {
-    @Override
-    protected void configure() {
-        super.configure();
+	@Override
+	protected void configure() {
+		super.configure();
 
-        bind(com.googlecode.fspotcloud.user.UserService.class)
-                .to(com.googlecode.fspotcloud.user.gae.UserServiceGae.class);
-        bind(ISessionEmail.class).to(SessionEmail.class);
-        bind(PostThirdPartyLoginWorker.class).to(PostGoogleLoginWorker.class);
-        install(new UserServletModule());
-    }
+		bind(com.googlecode.fspotcloud.user.UserService.class).to(
+				com.googlecode.fspotcloud.user.gae.UserServiceGae.class);
+		bind(ISessionEmail.class).to(SessionEmail.class);
+		bind(PostThirdPartyLoginWorker.class).to(PostGoogleLoginWorker.class);
+		install(new UserServletModule());
+	}
 
-    @Provides
-    com.google.appengine.api.users.UserService getService() {
-        return UserServiceFactory.getUserService();
-    }
+	@Provides
+	com.google.appengine.api.users.UserService getService() {
+		return UserServiceFactory.getUserService();
+	}
 
-    private class UserServletModule extends ServletModule {
-        protected void configureServlets() {
-            serve("/post-login").with(PostThirdPartyLoginServlet.class);
-        }
-    }
+	private class UserServletModule extends ServletModule {
+		protected void configureServlets() {
+			serve("/post-login").with(PostThirdPartyLoginServlet.class);
+		}
+	}
 }

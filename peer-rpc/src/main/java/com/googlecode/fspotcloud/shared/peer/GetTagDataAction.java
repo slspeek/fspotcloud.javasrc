@@ -31,22 +31,23 @@ import net.customware.gwt.dispatch.shared.Action;
 import java.io.Serializable;
 import java.util.List;
 
+public class GetTagDataAction extends BusinessBase
+		implements
+			Action<TagDataResult>,
+			Serializable {
+	private static final long serialVersionUID = -2428269504170714946L;
+	@BusinessKey
+	private final List<String> tagIdList;
 
-public class GetTagDataAction extends BusinessBase implements Action<TagDataResult>,
-        Serializable {
-    private static final long serialVersionUID = -2428269504170714946L;
-    @BusinessKey
-    private final List<String> tagIdList;
+	public GetTagDataAction(List<String> tagIdList) {
+		this.tagIdList = tagIdList;
+	}
 
-    public GetTagDataAction(List<String> tagIdList) {
-        this.tagIdList = tagIdList;
-    }
+	public List<String> getTagIdList() {
+		return tagIdList;
+	}
 
-    public List<String> getTagIdList() {
-        return tagIdList;
-    }
-
-    public String toString() {
-        return Objects.toStringHelper(this).add("tags", tagIdList).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("tags", tagIdList).toString();
+	}
 }

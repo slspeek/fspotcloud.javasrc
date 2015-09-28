@@ -28,12 +28,11 @@ import com.google.guiceberry.GuiceBerryModule;
 import com.googlecode.fspotcloud.model.jpa.J2eeModelModule;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 
-
 public class J2eeModelGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        install(new J2eeModelModule(100, "derby-test"));
-        install(new J2eeSimpleBlobstoreServletModule());
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		install(new J2eeModelModule(100, "derby-test"));
+		install(new J2eeSimpleBlobstoreServletModule());
+	}
 }

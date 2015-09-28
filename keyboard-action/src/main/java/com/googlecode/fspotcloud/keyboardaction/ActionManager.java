@@ -32,23 +32,21 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class ActionManager implements IActionManager {
-    private final Logger log = Logger.getLogger(ActionManager.class.getName());
-    private final ActionHandlerRegistry actionHandlerRegistry;
+	private final Logger log = Logger.getLogger(ActionManager.class.getName());
+	private final ActionHandlerRegistry actionHandlerRegistry;
 
-    @Inject
-    private ActionManager(ActionHandlerRegistry actionHandlerRegistry
-    ) {
-        this.actionHandlerRegistry = actionHandlerRegistry;
-    }
+	@Inject
+	private ActionManager(ActionHandlerRegistry actionHandlerRegistry) {
+		this.actionHandlerRegistry = actionHandlerRegistry;
+	}
 
-
-    @Override
-    public void onEvent(KeyboardActionEvent event) {
-        log.log(Level.FINEST, "onEvent for: " + event.getActionId());
-        String actionId = event.getActionId();
-        IActionHandler handler = actionHandlerRegistry.getAction(actionId);
-        if (handler != null) {
-            handler.performAction(actionId);
-        }
-    }
+	@Override
+	public void onEvent(KeyboardActionEvent event) {
+		log.log(Level.FINEST, "onEvent for: " + event.getActionId());
+		String actionId = event.getActionId();
+		IActionHandler handler = actionHandlerRegistry.getAction(actionId);
+		if (handler != null) {
+			handler.performAction(actionId);
+		}
+	}
 }

@@ -36,72 +36,73 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
 
 public class PhotoDataTest {
-    private static final int VERSION = 17;
-    private static final String TAG = "TAG";
-    private static final Date LONG_TIME_AGO = new Date(10);
-    private static final String DESCR = "Story";
-    private static final String PHOTO_ID = "1";
-    private static final String IMAGE_BLOBKEY= "42";
-    private static final String THUMB_BLOBKEY= "24";
-    
-    PhotoData data;
+	private static final int VERSION = 17;
+	private static final String TAG = "TAG";
+	private static final Date LONG_TIME_AGO = new Date(10);
+	private static final String DESCR = "Story";
+	private static final String PHOTO_ID = "1";
+	private static final String IMAGE_BLOBKEY = "42";
+	private static final String THUMB_BLOBKEY = "24";
 
-    @Before
-    public void setUp() throws Exception {
-        List<String> tags = newArrayList(TAG);
-        data = new PhotoData(PHOTO_ID, DESCR, LONG_TIME_AGO, tags, VERSION);
-        data.setThumbBlobKey(THUMB_BLOBKEY);
-        data.setImageBlobKey(IMAGE_BLOBKEY);
-    }
+	PhotoData data;
 
-    @Test 
-    public void nullDescription() {
-    	List<String> tags = newArrayList(TAG);
-    	PhotoData d = new PhotoData(PHOTO_ID, null, LONG_TIME_AGO, tags, VERSION);
-    	Assert.assertNotNull(d.getDescription());
-    }
-    
-    @Test
-    public void print() {
-        System.out.println(data);
-    }
+	@Before
+	public void setUp() throws Exception {
+		List<String> tags = newArrayList(TAG);
+		data = new PhotoData(PHOTO_ID, DESCR, LONG_TIME_AGO, tags, VERSION);
+		data.setThumbBlobKey(THUMB_BLOBKEY);
+		data.setImageBlobKey(IMAGE_BLOBKEY);
+	}
 
-    @Test
-    public void testSerialize() throws Exception {
-        testSerialization(data);
-    }
+	@Test
+	public void nullDescription() {
+		List<String> tags = newArrayList(TAG);
+		PhotoData d = new PhotoData(PHOTO_ID, null, LONG_TIME_AGO, tags,
+				VERSION);
+		Assert.assertNotNull(d.getDescription());
+	}
 
-    @Test
-    public void testGetPhotoId() {
-        assertEquals(PHOTO_ID, data.getPhotoId());
-    }
+	@Test
+	public void print() {
+		System.out.println(data);
+	}
 
-    @Test
-    public void testGetDesscription() {
-        assertEquals(DESCR, data.getDescription());
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		testSerialization(data);
+	}
 
-    @Test
-    public void testGetDate() {
-        assertEquals(LONG_TIME_AGO, data.getDate());
-    }
+	@Test
+	public void testGetPhotoId() {
+		assertEquals(PHOTO_ID, data.getPhotoId());
+	}
 
-    @Test
-    public void testGetTagList() {
-        assertEquals(TAG, data.getTagList().get(0));
-    }
+	@Test
+	public void testGetDesscription() {
+		assertEquals(DESCR, data.getDescription());
+	}
 
-    @Test
-    public void testGetVersion() {
-        assertEquals(VERSION, data.getVersion());
-    }
-    
-    @Test
-    public void testGetThumbBlobKey() {
-        assertEquals(THUMB_BLOBKEY, data.getThumbBlobKey());
-    }
-    @Test
-    public void testGetImageBlobKey() {
-        assertEquals(IMAGE_BLOBKEY, data.getImageBlobKey());
-    }
+	@Test
+	public void testGetDate() {
+		assertEquals(LONG_TIME_AGO, data.getDate());
+	}
+
+	@Test
+	public void testGetTagList() {
+		assertEquals(TAG, data.getTagList().get(0));
+	}
+
+	@Test
+	public void testGetVersion() {
+		assertEquals(VERSION, data.getVersion());
+	}
+
+	@Test
+	public void testGetThumbBlobKey() {
+		assertEquals(THUMB_BLOBKEY, data.getThumbBlobKey());
+	}
+	@Test
+	public void testGetImageBlobKey() {
+		assertEquals(IMAGE_BLOBKEY, data.getImageBlobKey());
+	}
 }

@@ -12,19 +12,19 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
  * To change this template use File | Settings | File Templates.
  */
 public class WebDriverBackedSeleniumExt extends WebDriverBackedSelenium {
-    private String baseUrl;
+	private String baseUrl;
 
-    public WebDriverBackedSeleniumExt(Supplier<WebDriver> maker, String baseUrl) {
-        super(maker, baseUrl);
-        this.baseUrl = baseUrl;
-    }
+	public WebDriverBackedSeleniumExt(Supplier<WebDriver> maker, String baseUrl) {
+		super(maker, baseUrl);
+		this.baseUrl = baseUrl;
+	}
 
-    public WebDriverBackedSeleniumExt(WebDriver baseDriver, String baseUrl) {
-        super(baseDriver, baseUrl);
-        this.baseUrl = baseUrl;
-    }
+	public WebDriverBackedSeleniumExt(WebDriver baseDriver, String baseUrl) {
+		super(baseDriver, baseUrl);
+		this.baseUrl = baseUrl;
+	}
 
-    public void open(String url) {
-        super.open(baseUrl + url);
-    }
+	public void open(String url) {
+		super.open(baseUrl + url);
+	}
 }

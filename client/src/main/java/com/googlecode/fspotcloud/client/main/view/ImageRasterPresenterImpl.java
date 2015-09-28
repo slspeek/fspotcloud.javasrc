@@ -42,142 +42,143 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class ImageRasterPresenterImpl
+		implements
+			ImageRasterView.ImageRasterPresenter {
+	private final Logger log = Logger.getLogger(ImageRasterPresenterImpl.class
+			.getName());
+	private final String tagId;
+	private final String photoId;
+	private final int columnCount;
+	private final int rowCount;
+	private final int pageSize;
+	private final boolean thumb;
+	private final Provider<IScheduler> schedulerProvider;
+	protected final ImageRasterView imageRasterView;
+	private final Navigator navigator;
+	private final ImagePresenterFactory imagePresenterFactory;
+	private final IPlaceController placeController;
+	List<ImageView> imageViewList;
+	final List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
 
-public class ImageRasterPresenterImpl implements ImageRasterView.ImageRasterPresenter {
-    private final Logger log = Logger.getLogger(ImageRasterPresenterImpl.class.getName());
-    private final String tagId;
-    private final String photoId;
-    private final int columnCount;
-    private final int rowCount;
-    private final int pageSize;
-    private final boolean thumb;
-    private final Provider<IScheduler> schedulerProvider;
-    protected final ImageRasterView imageRasterView;
-    private final Navigator navigator;
-    private final ImagePresenterFactory imagePresenterFactory;
-    private final IPlaceController placeController;
-    List<ImageView> imageViewList;
-    final List<ImageView.ImagePresenter> imagePresenterList = new ArrayList<ImageView.ImagePresenter>();
+	@Inject
+	public ImageRasterPresenterImpl(@Assisted BasePlace place,
+			@Assisted ImageRasterView imageRasterView, Navigator navigator,
+			ImagePresenterFactory imagePresenterFactory,
+			Provider<IScheduler> schedulerProvider,
+			IPlaceController placeController) {
+		this.schedulerProvider = schedulerProvider;
+		this.placeController = placeController;
+		tagId = place.getTagId();
+		photoId = place.getPhotoId();
+		columnCount = place.getColumnCount();
+		rowCount = place.getRowCount();
+		pageSize = columnCount * rowCount;
+		thumb = pageSize > 1;
+		this.navigator = navigator;
+		this.imageRasterView = imageRasterView;
+		this.imagePresenterFactory = imagePresenterFactory;
+	}
 
-    @Inject
-    public ImageRasterPresenterImpl(@Assisted
-                                    BasePlace place, @Assisted
-                                    ImageRasterView imageRasterView,
-                                    Navigator navigator,
-                                    ImagePresenterFactory imagePresenterFactory,
-                                    Provider<IScheduler> schedulerProvider,
-                                    IPlaceController placeController) {
-        this.schedulerProvider = schedulerProvider;
-        this.placeController = placeController;
-        tagId = place.getTagId();
-        photoId = place.getPhotoId();
-        columnCount = place.getColumnCount();
-        rowCount = place.getRowCount();
-        pageSize = columnCount * rowCount;
-        thumb = pageSize > 1;
-        this.navigator = navigator;
-        this.imageRasterView = imageRasterView;
-        this.imagePresenterFactory = imagePresenterFactory;
-    }
+	public void init() {
+		imageRasterView.setPresenter(this);
+		setImages();
+	}
 
-    public void init() {
-        imageRasterView.setPresenter(this);
-        setImages();
-    }
+	public void setImages() {
+		log.log(Level.FINEST, "setImages public");
+		navigator.getPageAsync(tagId, photoId, pageSize,
+				new AsyncCallback<List<PhotoInfo>>() {
+					@Override
+					public void onSuccess(List<PhotoInfo> result) {
+						log.log(Level.FINEST, "onSucces: " + result);
+						imageViewList = imageRasterView.buildRaster(rowCount,
+								columnCount);
+						setImages(result);
+						navigator.getPageRelativePositionAsync(tagId, photoId,
+								pageSize, new AsyncCallback<Integer[]>() {
+									@Override
+									public void onFailure(Throwable caught) {
+										imageRasterView.setPagingText(caught
+												.getMessage());
+									}
 
-    public void setImages() {
-        log.log(Level.FINEST, "setImages public");
-        navigator.getPageAsync(tagId, photoId, pageSize,
-                new AsyncCallback<List<PhotoInfo>>() {
-                    @Override
-                    public void onSuccess(List<PhotoInfo> result) {
-                        log.log(Level.FINEST, "onSucces: " + result);
-                        imageViewList = imageRasterView.buildRaster(rowCount,
-                                columnCount);
-                        setImages(result);
-                        navigator.getPageRelativePositionAsync(tagId, photoId,
-                                pageSize,
-                                new AsyncCallback<Integer[]>() {
-                                    @Override
-                                    public void onFailure(Throwable caught) {
-                                        imageRasterView.setPagingText(caught.getMessage());
-                                    }
+									@Override
+									public void onSuccess(Integer[] result) {
+										String label = (result[0] + 1) + " of "
+												+ result[1];
+										imageRasterView.setPagingText(label);
+									}
+								});
+					}
 
-                                    @Override
-                                    public void onSuccess(Integer[] result) {
-                                        String label = (result[0] + 1) + " of " +
-                                                result[1];
-                                        imageRasterView.setPagingText(label);
-                                    }
-                                });
-                    }
+					@Override
+					public void onFailure(Throwable caught) {
+						log.log(Level.FINEST, "setImages caught an error",
+								caught);
+					}
+				});
+		log.log(Level.FINEST, "setImages public exiting");
+	}
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.FINEST, "setImages caught an error", caught);
-                    }
-                });
-        log.log(Level.FINEST, "setImages public exiting");
-    }
+	@Override
+	public void adjustSizes() {
+		for (ImageView.ImagePresenter presenter : imagePresenterList) {
+			adjustSize(presenter);
+		}
+	}
 
-    @Override
-    public void adjustSizes() {
-        for (ImageView.ImagePresenter presenter : imagePresenterList) {
-            adjustSize(presenter);
-        }
-    }
+	private void adjustSize(final ImageView.ImagePresenter presenter) {
+		schedulerProvider.get().schedule(new Runnable() {
+			@Override
+			public void run() {
+				presenter.adjustSize();
+			}
+		});
+	}
 
-    private void adjustSize(final ImageView.ImagePresenter presenter) {
-        schedulerProvider.get().schedule(new Runnable() {
-            @Override
-            public void run() {
-                presenter.adjustSize();
-            }
-        });
-    }
+	private void setImages(List<PhotoInfo> result) {
+		imagePresenterList.clear();
+		int i = 0;
 
-    private void setImages(List<PhotoInfo> result) {
-        imagePresenterList.clear();
-        int i = 0;
+		for (; i < result.size(); i++) {
+			ImageView view = imageViewList.get(i);
+			view.asWidget().setVisible(true);
 
-        for (; i < result.size(); i++) {
-            ImageView view = imageViewList.get(i);
-            view.asWidget().setVisible(true);
+			final ImageView.ImagePresenter presenter = imagePresenterFactory
+					.get(tagId, result.get(i), view, thumb);
 
-            final ImageView.ImagePresenter presenter = imagePresenterFactory.get(tagId,
-                    result.get(i), view, thumb);
+			if (result.get(i).getId().equals(photoId) && (pageSize > 1)) {
+				presenter.setSelected(true);
+			} else {
+				presenter.setSelected(false);
+			}
 
-            if (result.get(i).getId().equals(photoId) && (pageSize > 1)) {
-                presenter.setSelected(true);
-            } else {
-                presenter.setSelected(false);
-            }
+			imagePresenterList.add(presenter);
+			schedulerProvider.get().schedule(new Runnable() {
+				@Override
+				public void run() {
+					presenter.init();
+				}
+			});
+		}
 
-            imagePresenterList.add(presenter);
-            schedulerProvider.get().schedule(new Runnable() {
-                @Override
-                public void run() {
-                    presenter.init();
-                }
-            });
-        }
+		for (; i < pageSize; i++) {
+			ImageView view = imageViewList.get(i);
+			view.setImageUrl("");
+			view.setSelected(false);
+			view.setDescription("");
+			view.asWidget().setVisible(false);
+		}
+	}
 
-        for (; i < pageSize; i++) {
-            ImageView view = imageViewList.get(i);
-            view.setImageUrl("");
-            view.setSelected(false);
-            view.setDescription("");
-            view.asWidget().setVisible(false);
-        }
-    }
+	@Override
+	public void onMouseWheelNorth() {
+		navigator.goAsync(Navigator.Direction.BACKWARD, Navigator.Unit.PAGE);
+	}
 
-    @Override
-    public void onMouseWheelNorth() {
-        navigator.goAsync(Navigator.Direction.BACKWARD, Navigator.Unit.PAGE);
-    }
-
-    @Override
-    public void onMouseWheelSouth() {
-        navigator.goAsync(Navigator.Direction.FORWARD, Navigator.Unit.PAGE);
-    }
+	@Override
+	public void onMouseWheelSouth() {
+		navigator.goAsync(Navigator.Direction.FORWARD, Navigator.Unit.PAGE);
+	}
 }

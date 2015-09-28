@@ -31,18 +31,17 @@ import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
 
-
 public class SeleniumTestWrapper implements TestWrapper {
-    @Inject
-    Selenium selenium;
-    @Inject
-    TearDownAccepter tearDownAccepter;
+	@Inject
+	Selenium selenium;
+	@Inject
+	TearDownAccepter tearDownAccepter;
 
-    public void toRunBeforeTest() {
-        tearDownAccepter.addTearDown(new TearDown() {
-            public void tearDown() throws Exception {
-                selenium.close();
-            }
-        });
-    }
+	public void toRunBeforeTest() {
+		tearDownAccepter.addTearDown(new TearDown() {
+			public void tearDown() throws Exception {
+				selenium.close();
+			}
+		});
+	}
 }

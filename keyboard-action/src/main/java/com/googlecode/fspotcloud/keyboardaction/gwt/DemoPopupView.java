@@ -6,15 +6,15 @@ import com.googlecode.fspotcloud.keyboardaction.Demo;
 
 public interface DemoPopupView extends HasVisibility {
 
-    void setSafeHtml(SafeHtml text);
+	void setSafeHtml(SafeHtml text);
 
-    void setTitle(String text);
+	void setTitle(String text);
 
-    void setPopupPosition(int i, int i1);
+	void setPopupPosition(int i, int i1);
 
-    void show();
+	void show();
 
-    void hide();
+	void hide();
 
-    void setDemo(Demo demo);
+	void setDemo(Demo demo);
 }

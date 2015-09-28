@@ -42,95 +42,96 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class ChangePasswordActivity extends AbstractActivity implements ChangePasswordView.ChangePasswordPresenter {
-    public static final String YOUR_PASSWORD_WAS_CHANGED = "Your password was changed";
-    public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
-    private final Logger log = Logger.getLogger(ChangePasswordActivity.class.getName());
-    private final ChangePasswordView view;
-    private final UserActions userActions;
-    private final DispatchAsync dispatchAsync;
-    private ChangePasswordPlace place;
+public class ChangePasswordActivity extends AbstractActivity
+		implements
+			ChangePasswordView.ChangePasswordPresenter {
+	public static final String YOUR_PASSWORD_WAS_CHANGED = "Your password was changed";
+	public static final String AN_ERROR_PROHIBITED_CHANGING_PASSWORDS = "An error occured, password was not changed.";
+	private final Logger log = Logger.getLogger(ChangePasswordActivity.class
+			.getName());
+	private final ChangePasswordView view;
+	private final UserActions userActions;
+	private final DispatchAsync dispatchAsync;
+	private ChangePasswordPlace place;
 
-    @Inject
-    public ChangePasswordActivity(ChangePasswordView view,
-                                  UserActions userActions,
-                                  DispatchAsync dispatchAsync) {
-        this.view = view;
-        this.userActions = userActions;
-        this.dispatchAsync = dispatchAsync;
-    }
+	@Inject
+	public ChangePasswordActivity(ChangePasswordView view,
+			UserActions userActions, DispatchAsync dispatchAsync) {
+		this.view = view;
+		this.userActions = userActions;
+		this.dispatchAsync = dispatchAsync;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(view);
-    }
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		panel.setWidget(view);
+	}
 
-    private void updateAccount() {
-        String password = verifyPasswords();
-        if (password == null) {
-            view.setStatusText("Passwords do not match");
-        } else {
-            ResetPasswordAction action = new ResetPasswordAction(place.getEmail(),
-                    place.getSecret(), password);
-            send(action);
-        }
-    }
+	private void updateAccount() {
+		String password = verifyPasswords();
+		if (password == null) {
+			view.setStatusText("Passwords do not match");
+		} else {
+			ResetPasswordAction action = new ResetPasswordAction(
+					place.getEmail(), place.getSecret(), password);
+			send(action);
+		}
+	}
 
-    private void send(ResetPasswordAction action) {
-        dispatchAsync.execute(action,
-                new AsyncCallback<ResetPasswordResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.setStatusText(AN_ERROR_PROHIBITED_CHANGING_PASSWORDS);
-                        log.log(Level.WARNING, "Reset password failed ", caught);
-                    }
+	private void send(ResetPasswordAction action) {
+		dispatchAsync.execute(action, new AsyncCallback<ResetPasswordResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				view.setStatusText(AN_ERROR_PROHIBITED_CHANGING_PASSWORDS);
+				log.log(Level.WARNING, "Reset password failed ", caught);
+			}
 
-                    @Override
-                    public void onSuccess(ResetPasswordResult result) {
-                        switch (result.getCode()) {
-                            case SUCCESS:
-                                view.setStatusText(YOUR_PASSWORD_WAS_CHANGED);
-                                break;
-                            case NOT_REGISTERED:
-                                view.setStatusText("Failed. Please register first.");
-                                break;
-                            case NOT_VERIFIED:
-                                view.setStatusText("Failed. Please verify your account first.");
-                                break;
-                            case WRONG_CODE:
-                                view.setStatusText("Failed; you had the wrong code, try it again.");
-                                break;
-                        }
-                    }
-                });
-    }
+			@Override
+			public void onSuccess(ResetPasswordResult result) {
+				switch (result.getCode()) {
+					case SUCCESS :
+						view.setStatusText(YOUR_PASSWORD_WAS_CHANGED);
+						break;
+					case NOT_REGISTERED :
+						view.setStatusText("Failed. Please register first.");
+						break;
+					case NOT_VERIFIED :
+						view.setStatusText("Failed. Please verify your account first.");
+						break;
+					case WRONG_CODE :
+						view.setStatusText("Failed; you had the wrong code, try it again.");
+						break;
+				}
+			}
+		});
+	}
 
+	@Override
+	public void onStop() {
+		super.onStop();
+		view.clearFields();
+	}
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        view.clearFields();
-    }
+	private String verifyPasswords() {
+		String password = view.getPasswordField();
+		if (Objects.equal(password, view.getPasswordAgainField())) {
+			return password;
+		} else {
+			return null;
+		}
+	}
 
-    private String verifyPasswords() {
-        String password = view.getPasswordField();
-        if (Objects.equal(password, view.getPasswordAgainField())) {
-            return password;
-        } else {
-            return null;
-        }
-    }
+	@Override
+	public void performAction(String actionId) {
+		if (userActions.doPasswordReset.getId().equals(actionId)) {
+			updateAccount();
+		}
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        if (userActions.doPasswordReset.getId().equals(actionId)) {
-            updateAccount();
-        }
-    }
-
-    @Override
-    public ChangePasswordView.ChangePasswordPresenter withPlace(ChangePasswordPlace place) {
-        this.place = place;
-        return this;
-    }
+	@Override
+	public ChangePasswordView.ChangePasswordPresenter withPlace(
+			ChangePasswordPlace place) {
+		this.place = place;
+		return this;
+	}
 }

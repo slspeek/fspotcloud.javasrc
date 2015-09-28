@@ -32,24 +32,24 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 import java.util.logging.Logger;
 
-
 public class ReloadTreeHandler implements IActionHandler {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(ReloadTreeHandler.class.getName());
-    private final TreeView.TreePresenter treePresenter;
-    private final DataManager dataManager;
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(ReloadTreeHandler.class
+			.getName());
+	private final TreeView.TreePresenter treePresenter;
+	private final DataManager dataManager;
 
+	@Inject
+	public ReloadTreeHandler(
+			@BasicTreeView TreeView.TreePresenter treePresenter,
+			DataManager dataManager) {
+		this.treePresenter = treePresenter;
+		this.dataManager = dataManager;
+	}
 
-    @Inject
-    public ReloadTreeHandler(@BasicTreeView TreeView.TreePresenter treePresenter, DataManager dataManager) {
-        this.treePresenter = treePresenter;
-        this.dataManager = dataManager;
-    }
-
-
-    @Override
-    public void performAction(String actionId) {
-        dataManager.reset();
-        treePresenter.reloadTree();
-    }
+	@Override
+	public void performAction(String actionId) {
+		dataManager.reset();
+		treePresenter.reloadTree();
+	}
 }

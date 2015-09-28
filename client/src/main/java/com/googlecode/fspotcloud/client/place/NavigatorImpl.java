@@ -45,394 +45,393 @@ import java.util.logging.Logger;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 
-
 public class NavigatorImpl implements Navigator {
-    private final Logger log = Logger.getLogger(NavigatorImpl.class.getName());
-    private final IPlaceController placeController;
-    private final DataManager dataManager;
-    private final RasterState rasterState;
-    private final IClientLoginManager clientLoginManager;
-    private final LatestTagHelper latestTagHelper;
+	private final Logger log = Logger.getLogger(NavigatorImpl.class.getName());
+	private final IPlaceController placeController;
+	private final DataManager dataManager;
+	private final RasterState rasterState;
+	private final IClientLoginManager clientLoginManager;
+	private final LatestTagHelper latestTagHelper;
 
-    @Inject
-    public NavigatorImpl(
-            IPlaceController placeController,
-            DataManager dataManager,
-            RasterState rasterState, IClientLoginManager clientLoginManager,
-            LatestTagHelper latestTagHelper) {
-        this.placeController = placeController;
-        this.rasterState = rasterState;
-        this.dataManager = dataManager;
-        this.clientLoginManager = clientLoginManager;
-        this.latestTagHelper = latestTagHelper;
-    }
+	@Inject
+	public NavigatorImpl(IPlaceController placeController,
+			DataManager dataManager, RasterState rasterState,
+			IClientLoginManager clientLoginManager,
+			LatestTagHelper latestTagHelper) {
+		this.placeController = placeController;
+		this.rasterState = rasterState;
+		this.dataManager = dataManager;
+		this.clientLoginManager = clientLoginManager;
+		this.latestTagHelper = latestTagHelper;
+	}
 
-    @Override
-    public void goAsync(Direction direction, Unit step) {
-        final BasePlace where = placeController.where();
-        if (where != null) {
-            goAsyncImpl(direction, step, where);
-        }
-    }
+	@Override
+	public void goAsync(Direction direction, Unit step) {
+		final BasePlace where = placeController.where();
+		if (where != null) {
+			goAsyncImpl(direction, step, where);
+		}
+	}
 
-    @Override
-    public void canGoAsync(final Direction direction, final Unit step,
-                           final AsyncCallback<Boolean> callback) {
-        final BasePlace place = placeController.where();
-        dataManager.getTagNode(place.getTagId(),
-                new TagNodeCallback(callback) {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        PhotoInfoStore store = result.getCachedPhotoList();
-                        callback.onSuccess(canGo(direction, step, place, store));
-                    }
-                });
-    }
+	@Override
+	public void canGoAsync(final Direction direction, final Unit step,
+			final AsyncCallback<Boolean> callback) {
+		final BasePlace place = placeController.where();
+		dataManager.getTagNode(place.getTagId(), new TagNodeCallback(callback) {
+			@Override
+			public void onSuccess(TagNode result) {
+				PhotoInfoStore store = result.getCachedPhotoList();
+				callback.onSuccess(canGo(direction, step, place, store));
+			}
+		});
+	}
 
-    @Override
-    public void getPossibleMoves(final AsyncCallback<Map<Move, Boolean>> movesCallback) {
-        final BasePlace place = placeController.where();
-        dataManager.getTagNode(place.getTagId(),
-                new TagNodeCallback(movesCallback) {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        PhotoInfoStore store = result.getCachedPhotoList();
-                        movesCallback.onSuccess(getPossibleMoveImpl(place, store));
-                    }
-                });
-    }
+	@Override
+	public void getPossibleMoves(
+			final AsyncCallback<Map<Move, Boolean>> movesCallback) {
+		final BasePlace place = placeController.where();
+		dataManager.getTagNode(place.getTagId(), new TagNodeCallback(
+				movesCallback) {
+			@Override
+			public void onSuccess(TagNode result) {
+				PhotoInfoStore store = result.getCachedPhotoList();
+				movesCallback.onSuccess(getPossibleMoveImpl(place, store));
+			}
+		});
+	}
 
-    private Map<Move, Boolean> getPossibleMoveImpl(BasePlace place, PhotoInfoStore store) {
-        Map<Move, Boolean> result = newHashMap();
-        for (Unit unit : Unit.values()) {
-            for (Direction direction : Direction.values()) {
-                result.put(new Move(direction, unit), canGo(direction, unit, place, store));
-            }
-        }
-        return result;
-    }
+	private Map<Move, Boolean> getPossibleMoveImpl(BasePlace place,
+			PhotoInfoStore store) {
+		Map<Move, Boolean> result = newHashMap();
+		for (Unit unit : Unit.values()) {
+			for (Direction direction : Direction.values()) {
+				result.put(new Move(direction, unit),
+						canGo(direction, unit, place, store));
+			}
+		}
+		return result;
+	}
 
-    private int indexOf(BasePlace place, PhotoInfoStore store) {
-        return store.indexOf(place.getPhotoId());
-    }
+	private int indexOf(BasePlace place, PhotoInfoStore store) {
+		return store.indexOf(place.getPhotoId());
+	}
 
-    private void goAsyncImpl(final Direction direction, final Unit step,
-                             final BasePlace place) {
-        dataManager.getTagNode(place.getTagId(),
-                new TagNodeCallback() {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        PhotoInfoStore store = result.getCachedPhotoList();
-                        go(direction, step, place, store);
-                    }
-                });
-    }
+	private void goAsyncImpl(final Direction direction, final Unit step,
+			final BasePlace place) {
+		dataManager.getTagNode(place.getTagId(), new TagNodeCallback() {
+			@Override
+			public void onSuccess(TagNode result) {
+				PhotoInfoStore store = result.getCachedPhotoList();
+				go(direction, step, place, store);
+			}
+		});
+	}
 
-    private int stepSize(Unit unit, BasePlace place) {
-        int stepSize = 0;
+	private int stepSize(Unit unit, BasePlace place) {
+		int stepSize = 0;
 
-        switch (unit) {
-            case SINGLE:
-                stepSize = 1;
-                break;
+		switch (unit) {
+			case SINGLE :
+				stepSize = 1;
+				break;
 
-            case ROW:
-                stepSize = place.getColumnCount();
-                break;
+			case ROW :
+				stepSize = place.getColumnCount();
+				break;
 
-            case PAGE:
-                stepSize = place.getColumnCount() * place.getRowCount();
-                break;
-        }
+			case PAGE :
+				stepSize = place.getColumnCount() * place.getRowCount();
+				break;
+		}
 
-        return stepSize;
-    }
+		return stepSize;
+	}
 
-    private void go(final Direction direction, final Unit step,
-                    BasePlace place, PhotoInfoStore store) {
-        if (step == Unit.BORDER) {
-            if (!store.isEmpty()) {
-                String photoId;
-                if (direction == Direction.BACKWARD) {
-                    photoId = store.get(0).getId();
-                } else {
-                    photoId = store.last().getId();
-                }
-                goToPhoto(place, place.getTagId(), photoId);
-            }
-        } else {
-            int position = indexOf(place, store);
-            int stepSize = stepSize(step, place);
-            if (canGo(direction, step, place, store)) {
-                int nextIndex = position +
-                        (stepSize * ((direction == Direction.FORWARD) ? 1 : (-1)));
-                String photoId = store.get(nextIndex).getId();
-                goToPhoto(place, place.getTagId(), photoId);
-            }
-        }
-    }
+	private void go(final Direction direction, final Unit step,
+			BasePlace place, PhotoInfoStore store) {
+		if (step == Unit.BORDER) {
+			if (!store.isEmpty()) {
+				String photoId;
+				if (direction == Direction.BACKWARD) {
+					photoId = store.get(0).getId();
+				} else {
+					photoId = store.last().getId();
+				}
+				goToPhoto(place, place.getTagId(), photoId);
+			}
+		} else {
+			int position = indexOf(place, store);
+			int stepSize = stepSize(step, place);
+			if (canGo(direction, step, place, store)) {
+				int nextIndex = position
+						+ (stepSize * ((direction == Direction.FORWARD)
+								? 1
+								: (-1)));
+				String photoId = store.get(nextIndex).getId();
+				goToPhoto(place, place.getTagId(), photoId);
+			}
+		}
+	}
 
-    private boolean canGo(final Direction direction, final Unit step,
-                          BasePlace fromPlace, PhotoInfoStore store) {
-        int position = indexOf(fromPlace, store);
-        if (position < 0) {
-            return false;
-        }
-        if (step == Unit.BORDER) {
-            if (direction == Direction.FORWARD) {
-                if (position != store.lastIndex()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                if (position == 0) {
-                    return false;
-                }  else {
-                    return true;
-                }
-            }
+	private boolean canGo(final Direction direction, final Unit step,
+			BasePlace fromPlace, PhotoInfoStore store) {
+		int position = indexOf(fromPlace, store);
+		if (position < 0) {
+			return false;
+		}
+		if (step == Unit.BORDER) {
+			if (direction == Direction.FORWARD) {
+				if (position != store.lastIndex()) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				if (position == 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 
-        }
+		}
 
-        int stepSize = stepSize(step, fromPlace);
+		int stepSize = stepSize(step, fromPlace);
 
-        if (direction == Direction.FORWARD) {
-            return (position + stepSize) < store.size();
-        } else {
-            return (position - stepSize) >= 0;
-        }
-    }
+		if (direction == Direction.FORWARD) {
+			return (position + stepSize) < store.size();
+		} else {
+			return (position - stepSize) >= 0;
+		}
+	}
 
-    protected void goToPhoto(BasePlace oldPlace, String tagId, String photoId) {
-        BasePlace newPlace;
+	protected void goToPhoto(BasePlace oldPlace, String tagId, String photoId) {
+		BasePlace newPlace;
 
-        if (oldPlace instanceof SlideshowPlace) {
-            newPlace = new SlideshowPlace(tagId, photoId);
-        } else {
-            newPlace = new BasePlace(tagId, photoId, oldPlace.getColumnCount(),
-                    oldPlace.getRowCount(), oldPlace.isAutoHide());
-        }
+		if (oldPlace instanceof SlideshowPlace) {
+			newPlace = new SlideshowPlace(tagId, photoId);
+		} else {
+			newPlace = new BasePlace(tagId, photoId, oldPlace.getColumnCount(),
+					oldPlace.getRowCount(), oldPlace.isAutoHide());
+		}
 
-        log.log(Level.FINE, "About to go to: " + newPlace + " from: " +
-                oldPlace);
-        placeController.goTo(newPlace);
-    }
+		log.log(Level.FINE, "About to go to: " + newPlace + " from: "
+				+ oldPlace);
+		placeController.goTo(newPlace);
+	}
 
-    @Override
-    public void getPageCountAsync(String tagId, final int pageSize,
-                                  final AsyncCallback<Integer> callback) {
-        log.log(Level.FINE, "getPageCountAsync for: " + tagId);
-        dataManager.getTagNode(tagId,
-                new TagNodeCallback(callback) {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        getPageCount(result, pageSize, callback);
-                    }
-                });
-    }
+	@Override
+	public void getPageCountAsync(String tagId, final int pageSize,
+			final AsyncCallback<Integer> callback) {
+		log.log(Level.FINE, "getPageCountAsync for: " + tagId);
+		dataManager.getTagNode(tagId, new TagNodeCallback(callback) {
+			@Override
+			public void onSuccess(TagNode result) {
+				getPageCount(result, pageSize, callback);
+			}
+		});
+	}
 
-    private void getPageCount(TagNode node, int pageSize,
-                              AsyncCallback<Integer> callback) {
-        PhotoInfoStore store = node.getCachedPhotoList();
-        int result = store.size() / pageSize;
+	private void getPageCount(TagNode node, int pageSize,
+			AsyncCallback<Integer> callback) {
+		PhotoInfoStore store = node.getCachedPhotoList();
+		int result = store.size() / pageSize;
 
-        if ((store.size() % pageSize) != 0) {
-            result++;
-        }
+		if ((store.size() % pageSize) != 0) {
+			result++;
+		}
 
-        callback.onSuccess(result);
-    }
+		callback.onSuccess(result);
+	}
 
-    private abstract class TagNodeCallback implements AsyncCallback<TagNode> {
+	private abstract class TagNodeCallback implements AsyncCallback<TagNode> {
 
-        private final AsyncCallback<?> callback;
+		private final AsyncCallback<?> callback;
 
-        public TagNodeCallback(AsyncCallback<?> callback) {
-            this.callback = callback;
+		public TagNodeCallback(AsyncCallback<?> callback) {
+			this.callback = callback;
 
-        }
+		}
 
-        public TagNodeCallback() {
-            this(new AsyncCallback<Object>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                }
+		public TagNodeCallback() {
+			this(new AsyncCallback<Object>() {
+				@Override
+				public void onFailure(Throwable caught) {
+				}
 
-                @Override
-                public void onSuccess(Object result) {
-                }
-            });
-        }
+				@Override
+				public void onSuccess(Object result) {
+				}
+			});
+		}
 
-        @Override
-        public void onFailure(Throwable caught) {
-            callback.onFailure(caught);
-        }
-    }
+		@Override
+		public void onFailure(Throwable caught) {
+			callback.onFailure(caught);
+		}
+	}
 
-    @Override
-    public void getPageAsync(String tagId, final int pageSize,
-                             final int pageNumber, final AsyncCallback<List<PhotoInfo>> callback) {
-        log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " " + pageNumber);
-        if (pageNumber < 0) {
-            return;
-        }
-        dataManager.getTagNode(tagId,
-                new TagNodeCallback(callback) {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        getPage(result, pageSize, pageNumber, callback);
-                    }
-                });
-    }
+	@Override
+	public void getPageAsync(String tagId, final int pageSize,
+			final int pageNumber, final AsyncCallback<List<PhotoInfo>> callback) {
+		log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " "
+				+ pageNumber);
+		if (pageNumber < 0) {
+			return;
+		}
+		dataManager.getTagNode(tagId, new TagNodeCallback(callback) {
+			@Override
+			public void onSuccess(TagNode result) {
+				getPage(result, pageSize, pageNumber, callback);
+			}
+		});
+	}
 
-    private void getPage(TagNode node, int pageSize, int pageNumber,
-                         AsyncCallback<List<PhotoInfo>> callback) {
-        PhotoInfoStore store = getSafePhotoInfoStore(node);
-        int offset = pageNumber * pageSize;
-        List<PhotoInfo> result = new ArrayList<PhotoInfo>();
+	private void getPage(TagNode node, int pageSize, int pageNumber,
+			AsyncCallback<List<PhotoInfo>> callback) {
+		PhotoInfoStore store = getSafePhotoInfoStore(node);
+		int offset = pageNumber * pageSize;
+		List<PhotoInfo> result = new ArrayList<PhotoInfo>();
 
-        for (int i = offset; i < (offset + pageSize); i++) {
-            if (i <= store.lastIndex()) {
-                result.add(store.get(i));
-            } else {
-                break;
-            }
-        }
+		for (int i = offset; i < (offset + pageSize); i++) {
+			if (i <= store.lastIndex()) {
+				result.add(store.get(i));
+			} else {
+				break;
+			}
+		}
 
-        callback.onSuccess(result);
-    }
+		callback.onSuccess(result);
+	}
 
-    private PhotoInfoStore getSafePhotoInfoStore(TagNode node) {
-        PhotoInfoStore store;
-        if (node == null) {
-            List<PhotoInfo> empty = newArrayList();
-            store = new PhotoInfoStore(empty);
+	private PhotoInfoStore getSafePhotoInfoStore(TagNode node) {
+		PhotoInfoStore store;
+		if (node == null) {
+			List<PhotoInfo> empty = newArrayList();
+			store = new PhotoInfoStore(empty);
 
+		} else {
+			store = node.getCachedPhotoList();
+		}
+		return store;
+	}
 
-        } else {
-            store = node.getCachedPhotoList();
-        }
-        return store;
-    }
+	@Override
+	public void getPageAsync(final String tagId, final String photoId,
+			final int pageSize, final AsyncCallback<List<PhotoInfo>> callback) {
+		log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize
+				+ " photoId: " + photoId);
+		dataManager.getTagNode(tagId, new TagNodeCallback(callback) {
+			@Override
+			public void onSuccess(TagNode result) {
+				PhotoInfoStore store = getSafePhotoInfoStore(result);
+				int pageNumber = 0;
+				int index = store.indexOf(photoId);
+				if (index == -1) {
+					callback.onFailure(new RuntimeException("photoId "
+							+ photoId + " could not be found in tag: " + tagId));
+				} else {
+					pageNumber = index / pageSize;
+				}
+				getPage(result, pageSize, pageNumber, callback);
+			}
+		});
+	}
 
-    @Override
-    public void getPageAsync(final String tagId, final String photoId,
-                             final int pageSize, final AsyncCallback<List<PhotoInfo>> callback) {
-        log.log(Level.FINER, "getPageAsync: " + tagId + " " + pageSize + " photoId: " + photoId);
-        dataManager.getTagNode(tagId,
-                new TagNodeCallback(callback) {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        PhotoInfoStore store = getSafePhotoInfoStore(result);
-                        int pageNumber = 0;
-                        int index = store.indexOf(photoId);
-                        if (index == -1) {
-                           callback.onFailure(new RuntimeException("photoId " + photoId + " could not be found in tag: " +tagId));
-                        } else {
-                            pageNumber = index / pageSize;
-                        }
-                        getPage(result, pageSize, pageNumber, callback);
-                    }
-                });
-    }
+	@Override
+	public void goToTag(String otherTagId, PhotoInfoStore store) {
+		goToTag(otherTagId, store, Direction.BACKWARD);
+	}
 
-    @Override
-    public void goToTag(String otherTagId, PhotoInfoStore store) {
-        goToTag(otherTagId, store, Direction.BACKWARD);
-    }
+	@Override
+	public void goToTag(String otherTagId, PhotoInfoStore store,
+			Direction direction) {
+		go(direction, Unit.BORDER,
+				new BasePlace(otherTagId, null, rasterState.getColumnCount(),
+						rasterState.getRowCount(), rasterState.isAutoHide()),
+				store);
+	}
 
-    @Override
-    public void goToTag(String otherTagId, PhotoInfoStore store, Direction direction) {
-        go(direction, Unit.BORDER,
-                new BasePlace(otherTagId, null, rasterState.getColumnCount(),
-                        rasterState.getRowCount(), rasterState.isAutoHide()), store);
-    }
+	@Override
+	public void goToLatestTag() {
+		goToLatestTag(new AsyncCallback<String>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.WARNING, "goToLatestTag failed because: ", caught);
+			}
 
+			@Override
+			public void onSuccess(String result) {
+				//no op
+			}
+		});
+	}
 
-    @Override
-    public void goToLatestTag() {
-        goToLatestTag(new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                log.log(Level.WARNING, "goToLatestTag failed because: ", caught);
-            }
+	@Override
+	public void goToLatestTag(final AsyncCallback<String> report) {
+		dataManager.getTagTree(new AsyncCallback<TagNode>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				report.onFailure(caught);
+			}
 
-            @Override
-            public void onSuccess(String result) {
-                //no op
-            }
-        });
-    }
+			@Override
+			public void onSuccess(TagNode result) {
+				TagNode latestNode = latestTagHelper.getLatestNode(result);
+				if (latestNode != null) {
+					goToTag(latestNode.getId(),
+							latestNode.getCachedPhotoList(), Direction.FORWARD);
+					report.onSuccess("Success");
+				} else {
+					handleNoTagsPublic(report);
+				}
+			}
+		});
+	}
 
-    @Override
-    public void goToLatestTag(final AsyncCallback<String> report) {
-        dataManager.getTagTree(new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                report.onFailure(caught);
-            }
+	private void handleNoTagsPublic(final AsyncCallback<String> report) {
+		clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.WARNING, "No user info because: ", caught);
+				report.onFailure(caught);
+			}
 
-            @Override
-            public void onSuccess(TagNode result) {
-                TagNode latestNode = latestTagHelper.getLatestNode(result);
-                if (latestNode != null) {
-                    goToTag(latestNode.getId(), latestNode.getCachedPhotoList(), Direction.FORWARD);
-                    report.onSuccess("Success");
-                } else {
-                    handleNoTagsPublic(report);
-                }
-            }
-        });
-    }
+			@Override
+			public void onSuccess(UserInfo result) {
+				if (result.isAdmin()) {
+					placeController.goTo(DashboardPlace.DEFAULT);
+					report.onSuccess("To dashboard");
+				} else if (!result.isLoggedIn()) {
+					clientLoginManager.redirectToLogin();
+					report.onSuccess("Redirect to login");
+				} else {
+					report.onSuccess("Sorry no public labels to view yet");
+				}
+			}
+		});
+	}
 
-    private void handleNoTagsPublic(final AsyncCallback<String> report) {
-        clientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                log.log(Level.WARNING, "No user info because: ", caught);
-                report.onFailure(caught);
-            }
-
-            @Override
-            public void onSuccess(UserInfo result) {
-                if (result.isAdmin()) {
-                    placeController.goTo(DashboardPlace.DEFAULT);
-                    report.onSuccess("To dashboard");
-                } else if (!result.isLoggedIn()) {
-                    clientLoginManager.redirectToLogin();
-                    report.onSuccess("Redirect to login");
-                } else {
-                    report.onSuccess("Sorry no public labels to view yet");
-                }
-            }
-        });
-    }
-
-
-
-    @Override
-    public void getPageRelativePositionAsync(String tagId,
-                                             final String photoId, final int pageSize,
-                                             final AsyncCallback<Integer[]> callback) {
-        dataManager.getTagNode(tagId,
-                new TagNodeCallback(callback) {
-                    @Override
-                    public void onSuccess(TagNode result) {
-                        if (result != null) {
-                            int total = result.getCount();
-                            int photoIndex = result.getCachedPhotoList()
-                                    .indexOf(photoId);
-                            int noOfPages = (int) Math.ceil((float) total / (float) pageSize);
-                            int pageNumber = photoIndex / pageSize;
-                            callback.onSuccess(new Integer[]{pageNumber, noOfPages});
-                        } else {
-                            callback.onFailure(new RuntimeException(
-                                    "label not found."));
-                            clientLoginManager.redirectToLogin();
-                        }
-                    }
-                });
-    }
+	@Override
+	public void getPageRelativePositionAsync(String tagId,
+			final String photoId, final int pageSize,
+			final AsyncCallback<Integer[]> callback) {
+		dataManager.getTagNode(tagId, new TagNodeCallback(callback) {
+			@Override
+			public void onSuccess(TagNode result) {
+				if (result != null) {
+					int total = result.getCount();
+					int photoIndex = result.getCachedPhotoList().indexOf(
+							photoId);
+					int noOfPages = (int) Math.ceil((float) total
+							/ (float) pageSize);
+					int pageNumber = photoIndex / pageSize;
+					callback.onSuccess(new Integer[]{pageNumber, noOfPages});
+				} else {
+					callback.onFailure(new RuntimeException("label not found."));
+					clientLoginManager.redirectToLogin();
+				}
+			}
+		});
+	}
 }

@@ -31,19 +31,20 @@ import com.googlecode.fspotcloud.server.model.api.TagDao;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
+public class TagManager extends TagManagerBase<Tag, TagEntity>
+		implements
+			TagDao {
+	private final Logger log = Logger.getLogger(TagManager.class.getName());
+	@Inject
+	TagManagerBase<Tag, TagEntity> delegate;
 
-public class TagManager extends TagManagerBase<Tag, TagEntity> implements TagDao {
-    private final Logger log = Logger.getLogger(TagManager.class.getName());
-    @Inject
-    TagManagerBase<Tag, TagEntity> delegate;
+	@Override
+	protected Tag newTag() {
+		return new TagEntity();
+	}
 
-    @Override
-    protected Tag newTag() {
-        return new TagEntity();
-    }
-
-    @Override
-    public Class<TagEntity> getEntityType() {
-        return TagEntity.class;
-    }
+	@Override
+	public Class<TagEntity> getEntityType() {
+		return TagEntity.class;
+	}
 }

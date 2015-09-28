@@ -6,8 +6,8 @@ import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 
 public class BuildServerHandler extends LoadNewLocationAction {
 
-    @Inject
-    private BuildServerHandler(OpenNewTab loader) {
-        super(loader, "http://188.200.115.158:9000/");
-    }
+	@Inject
+	private BuildServerHandler(OpenNewTab loader) {
+		super(loader, "http://188.200.115.158:9000/");
+	}
 }

@@ -27,36 +27,35 @@ package com.googlecode.fspotcloud.testharness;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class OutPlace extends Place {
 
-    public OutPlace() {
-    }
+	public OutPlace() {
+	}
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof OutPlace) {
-            return true;
-        } else {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof OutPlace) {
+			return true;
+		} else {
+			return false;
+		}
 
-    }
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<OutPlace> {
-        @Override
-        public OutPlace getPlace(String token) {
-            return new OutPlace();
-        }
+	public static class Tokenizer implements PlaceTokenizer<OutPlace> {
+		@Override
+		public OutPlace getPlace(String token) {
+			return new OutPlace();
+		}
 
-        @Override
-        public String getToken(OutPlace place) {
-            return "";
-        }
-    }
+		@Override
+		public String getToken(OutPlace place) {
+			return "";
+		}
+	}
 }

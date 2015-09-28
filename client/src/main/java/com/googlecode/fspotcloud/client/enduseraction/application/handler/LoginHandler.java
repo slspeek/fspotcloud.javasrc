@@ -9,17 +9,16 @@ import java.util.logging.Logger;
 public class LoginHandler implements IActionHandler
 
 {
-    private final Logger log = Logger.getLogger(LoginHandler.class.getName());
-    private final IClientLoginManager clientLoginManager;
+	private final Logger log = Logger.getLogger(LoginHandler.class.getName());
+	private final IClientLoginManager clientLoginManager;
 
+	@Inject
+	public LoginHandler(IClientLoginManager clientLoginManager) {
+		this.clientLoginManager = clientLoginManager;
+	}
 
-    @Inject
-    public LoginHandler(IClientLoginManager clientLoginManager) {
-        this.clientLoginManager = clientLoginManager;
-    }
-
-    @Override
-    public void performAction(String actionId) {
-        clientLoginManager.redirectToLogin();
-    }
+	@Override
+	public void performAction(String actionId) {
+		clientLoginManager.redirectToLogin();
+	}
 }

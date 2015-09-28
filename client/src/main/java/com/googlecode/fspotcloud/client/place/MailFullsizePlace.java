@@ -28,53 +28,51 @@ import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class MailFullsizePlace extends Place {
 
-    private String photoId;
-    private String tagId;
+	private String photoId;
+	private String tagId;
 
-    public MailFullsizePlace(String tagId, String photoId) {
-        this.photoId = photoId;
-        this.tagId = tagId;
-    }
+	public MailFullsizePlace(String tagId, String photoId) {
+		this.photoId = photoId;
+		this.tagId = tagId;
+	}
 
-    public String getPhotoId() {
-        return photoId;
-    }
+	public String getPhotoId() {
+		return photoId;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(
-                photoId, tagId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(photoId, tagId);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof MailFullsizePlace) {
-            MailFullsizePlace mailFullsizePlace = (MailFullsizePlace) obj;
-            return Objects.equal(mailFullsizePlace.photoId, photoId) &&
-                    Objects.equal(mailFullsizePlace.tagId, tagId);
-        } else {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof MailFullsizePlace) {
+			MailFullsizePlace mailFullsizePlace = (MailFullsizePlace) obj;
+			return Objects.equal(mailFullsizePlace.photoId, photoId)
+					&& Objects.equal(mailFullsizePlace.tagId, tagId);
+		} else {
+			return false;
+		}
 
-    }
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<MailFullsizePlace> {
-        @Override
-        public MailFullsizePlace getPlace(String token) {
-            String[] splitted = token.split(":");
-            return new MailFullsizePlace(splitted[0], splitted[1]);
-        }
+	public static class Tokenizer implements PlaceTokenizer<MailFullsizePlace> {
+		@Override
+		public MailFullsizePlace getPlace(String token) {
+			String[] splitted = token.split(":");
+			return new MailFullsizePlace(splitted[0], splitted[1]);
+		}
 
-        @Override
-        public String getToken(MailFullsizePlace place) {
-            return place.getTagId() + ":" + place.getPhotoId();
-        }
-    }
+		@Override
+		public String getToken(MailFullsizePlace place) {
+			return place.getTagId() + ":" + place.getPhotoId();
+		}
+	}
 }

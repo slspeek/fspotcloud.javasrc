@@ -25,5 +25,5 @@
 package com.googlecode.fspotcloud.user;
 
 public interface PostThirdPartyLoginWorker {
-    void doWork();
+	void doWork();
 }

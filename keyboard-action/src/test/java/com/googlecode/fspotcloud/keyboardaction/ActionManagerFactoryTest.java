@@ -15,29 +15,31 @@ import static org.mockito.Mockito.verify;
 @RunWith(JukitoRunner.class)
 public class ActionManagerFactoryTest {
 
+	public static class Module extends JukitoModule {
 
-    public static class Module extends JukitoModule {
+		@Override
+		protected void configureTest() {
+			bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+			bind(ActionHandlerRegistry.class).in(Singleton.class);
+		}
+	}
 
-        @Override
-        protected void configureTest() {
-            bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
-            bind(ActionHandlerRegistry.class).in(Singleton.class);
-        }
-    }
+	@Inject
+	private ActionManagerFactory factory;
 
-    @Inject
-    private ActionManagerFactory factory;
+	@Inject
+	private EventBus eventBus;
+	@Inject
+	private ActionHandlerRegistry registry;
+	@Inject
+	private IActionHandler iActionHandler;
 
-    @Inject private EventBus eventBus;
-    @Inject private ActionHandlerRegistry registry;
-    @Inject private IActionHandler iActionHandler;
-
-    @Test
-    public void testIsConnected() throws Exception {
-        IActionManager manager = factory.get();
-        assertNotNull(manager);
-        registry.putAction("1", iActionHandler);
-        eventBus.fireEvent(new KeyboardActionEvent("1"));
-        verify(iActionHandler).performAction("1");
-    }
+	@Test
+	public void testIsConnected() throws Exception {
+		IActionManager manager = factory.get();
+		assertNotNull(manager);
+		registry.putAction("1", iActionHandler);
+		eventBus.fireEvent(new KeyboardActionEvent("1"));
+		verify(iActionHandler).performAction("1");
+	}
 }

@@ -15,36 +15,38 @@ import static org.junit.Assert.assertFalse;
 @RunWith(JukitoRunner.class)
 public class KeyboardPreferencesTest {
 
-    public static final String ACTION_ID = "ACTION";
+	public static final String ACTION_ID = "ACTION";
 
-    @Inject
-    private KeyboardPreferences preferences;
+	@Inject
+	private KeyboardPreferences preferences;
 
-    private PlaceContext homeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet());
+	private PlaceContext homeContext = new PlaceContext(HomePlace.class,
+			Sets.<String> newHashSet());
 
-    @Test
-    public void testIsRelevantShouldBeFalse() throws Exception {
-        assertFalse(preferences.isRelevant(ACTION_ID, homeContext));
-    }
+	@Test
+	public void testIsRelevantShouldBeFalse() throws Exception {
+		assertFalse(preferences.isRelevant(ACTION_ID, homeContext));
+	}
 
-    @Test
-    public void testGetKeysForAction() throws Exception {
-        final List<KeyStroke> keysForAction = preferences.getKeysForAction(homeContext, ACTION_ID);
-        assertEquals(0, keysForAction.size());
-    }
+	@Test
+	public void testGetKeysForAction() throws Exception {
+		final List<KeyStroke> keysForAction = preferences.getKeysForAction(
+				homeContext, ACTION_ID);
+		assertEquals(0, keysForAction.size());
+	}
 
-    @Test
-    public void testAllActions() throws Exception {
-        assertEquals(0, preferences.allActions().size());
-    }
+	@Test
+	public void testAllActions() throws Exception {
+		assertEquals(0, preferences.allActions().size());
+	}
 
-    @Test
-    public void testGetDefaultKeysForAction() throws Exception {
-        assertEquals(0, preferences.getDefaultKeysForAction(ACTION_ID).size());
-    }
+	@Test
+	public void testGetDefaultKeysForAction() throws Exception {
+		assertEquals(0, preferences.getDefaultKeysForAction(ACTION_ID).size());
+	}
 
-    @Test
-    public void testAllRelevantActions() throws Exception {
-        assertEquals(0, preferences.allRelevantActions(homeContext).size());
-    }
+	@Test
+	public void testAllRelevantActions() throws Exception {
+		assertEquals(0, preferences.allRelevantActions(homeContext).size());
+	}
 }

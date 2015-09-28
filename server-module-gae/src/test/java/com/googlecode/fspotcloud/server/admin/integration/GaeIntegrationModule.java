@@ -41,40 +41,39 @@ import javax.servlet.http.HttpSession;
 import static org.mockito.Mockito.mock;
 
 public class GaeIntegrationModule extends GuiceBerryModule {
-	
-	
-    @Override
-    protected void configure() {
-        super.configure();
-        if (Boolean.valueOf(System.getProperty("fspotcloud.test.shotwell",
+
+	@Override
+	protected void configure() {
+		super.configure();
+		if (Boolean.valueOf(System.getProperty("fspotcloud.test.shotwell",
 				"false"))) {
-        	System.setProperty("photo.dir.original", "//home/fspot/Photos");
+			System.setProperty("photo.dir.original", "//home/fspot/Photos");
 		} else {
 			System.setProperty("photo.dir.original", "//home/steven/Photos");
 		}
-        
-        System.setProperty("photo.dir.override",
-                "" + System.getProperty("user.dir") +
-                        "/../peer/src/test/resources/Photos");
 
-        Module firstOverride = Modules.override(new GaeTotalModule(3, "",
-                "rms@example.com"))
-                .with(new OpenIdUserModule(
-                        "rms@example.com"), new LocalControllerModule());
-        Module secondOverride = Modules.override(firstOverride)
-                .with(new ModuleOverrides());
-        install(secondOverride);
-        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-    }
+		System.setProperty("photo.dir.override",
+				"" + System.getProperty("user.dir")
+						+ "/../peer/src/test/resources/Photos");
 
-    private static class ModuleOverrides extends AbstractModule {
-        @Override
-        public void configure() {
-            bind(IMail.class).toInstance(mock(IMail.class));
-            bind(HttpSession.class).to(FakeHttpServletSession.class)
-                    .in(TestScoped.class);
-            bind(String.class).annotatedWith(ServerAddress.class)
-                    .toInstance("http://localhost");
-        }
-    }
+		Module firstOverride = Modules.override(
+				new GaeTotalModule(3, "", "rms@example.com")).with(
+				new OpenIdUserModule("rms@example.com"),
+				new LocalControllerModule());
+		Module secondOverride = Modules.override(firstOverride).with(
+				new ModuleOverrides());
+		install(secondOverride);
+		bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
+	}
+
+	private static class ModuleOverrides extends AbstractModule {
+		@Override
+		public void configure() {
+			bind(IMail.class).toInstance(mock(IMail.class));
+			bind(HttpSession.class).to(FakeHttpServletSession.class).in(
+					TestScoped.class);
+			bind(String.class).annotatedWith(ServerAddress.class).toInstance(
+					"http://localhost");
+		}
+	}
 }

@@ -47,13 +47,14 @@ public class FSpotBackend extends GenericBackend implements Backend {
 	static final Logger LOGGER = Logger.getLogger(FSpotBackend.class.getName());
 
 	@Inject
-	public FSpotBackend(@Named("JDBC URL") String jdbcURL, BlobstoreClient blobClient) {
+	public FSpotBackend(@Named("JDBC URL") String jdbcURL,
+			BlobstoreClient blobClient) {
 		super(jdbcURL, blobClient);
 	}
 
 	@Override
 	public Object[] getMetaData() throws SQLException {
-		return new Object[] { getCount("photos"), getCount("tags") };
+		return new Object[]{getCount("photos"), getCount("tags")};
 	}
 
 	@Override

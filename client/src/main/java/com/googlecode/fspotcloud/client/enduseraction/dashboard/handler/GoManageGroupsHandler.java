@@ -7,11 +7,11 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class GoManageGroupsHandler implements IActionHandler {
 
-    @Inject
-    private IPlaceController IPlaceController;
+	@Inject
+	private IPlaceController IPlaceController;
 
-    @Override
-    public void performAction(String actionId) {
-        IPlaceController.goTo(new ManageGroupsPlace());
-    }
+	@Override
+	public void performAction(String actionId) {
+		IPlaceController.goTo(new ManageGroupsPlace());
+	}
 }

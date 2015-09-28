@@ -16,38 +16,39 @@ import static org.mockito.Mockito.verify;
 @RunWith(JukitoRunner.class)
 public class HomeActivityTest {
 
-    public static final String RESULT = "Foo";
-    @Inject private HomeActivity activity;
+	public static final String RESULT = "Foo";
+	@Inject
+	private HomeActivity activity;
 
-    @Inject
-    private HomeView homeView;
-    @Inject
-    private  Navigator navigator;
+	@Inject
+	private HomeView homeView;
+	@Inject
+	private Navigator navigator;
 
-    @Inject
-    SimpleEventBus eventBus;
-    @Inject
-    private AcceptsOneWidget acceptsOneWidget;
-    @Inject
-    ArgumentCaptor<AsyncCallback<String>> captor;
+	@Inject
+	SimpleEventBus eventBus;
+	@Inject
+	private AcceptsOneWidget acceptsOneWidget;
+	@Inject
+	ArgumentCaptor<AsyncCallback<String>> captor;
 
-    @Test
-    public void testStartSuccess() throws Exception {
-        activity.start(acceptsOneWidget, eventBus);
-        verify(navigator).goToLatestTag(captor.capture());
-        captor.getValue().onSuccess(RESULT);
-        verify(homeView).setStatusText(RESULT);
-        verify(acceptsOneWidget).setWidget(homeView);
+	@Test
+	public void testStartSuccess() throws Exception {
+		activity.start(acceptsOneWidget, eventBus);
+		verify(navigator).goToLatestTag(captor.capture());
+		captor.getValue().onSuccess(RESULT);
+		verify(homeView).setStatusText(RESULT);
+		verify(acceptsOneWidget).setWidget(homeView);
 
-    }
+	}
 
-    @Test
-    public void testStartFailure() throws Exception {
-        activity.start(acceptsOneWidget, eventBus);
-        verify(navigator).goToLatestTag(captor.capture());
-        captor.getValue().onFailure(new Exception("Foo"));
-        verify(homeView).setStatusText(HomeActivity.SERVER_ERROR + "Foo");
-        verify(acceptsOneWidget).setWidget(homeView);
+	@Test
+	public void testStartFailure() throws Exception {
+		activity.start(acceptsOneWidget, eventBus);
+		verify(navigator).goToLatestTag(captor.capture());
+		captor.getValue().onFailure(new Exception("Foo"));
+		verify(homeView).setStatusText(HomeActivity.SERVER_ERROR + "Foo");
+		verify(acceptsOneWidget).setWidget(homeView);
 
-    }
+	}
 }

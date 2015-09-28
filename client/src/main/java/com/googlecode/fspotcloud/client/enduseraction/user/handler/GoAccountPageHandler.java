@@ -8,13 +8,13 @@ import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 
 public class GoAccountPageHandler extends PlaceMoverBase {
 
-    @Inject
-    public GoAccountPageHandler(IPlaceController IPlaceController) {
-        super(IPlaceController);
-    }
+	@Inject
+	public GoAccountPageHandler(IPlaceController IPlaceController) {
+		super(IPlaceController);
+	}
 
-    @Override
-    public Place getPlace() {
-        return new UserAccountPlace();
-    }
+	@Override
+	public Place getPlace() {
+		return new UserAccountPlace();
+	}
 }

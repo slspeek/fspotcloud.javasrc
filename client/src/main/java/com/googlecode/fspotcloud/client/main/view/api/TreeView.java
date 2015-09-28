@@ -32,22 +32,22 @@ import com.googlecode.fspotcloud.client.place.BasePlace;
 
 @GwtCompatible
 public interface TreeView extends IsWidget {
-    void setTreeModel(TreeViewModel model);
+	void setTreeModel(TreeViewModel model);
 
-    TreeNode getRootNode();
+	TreeNode getRootNode();
 
-    void requestFocus();
+	void requestFocus();
 
-    void requestBlur();
+	void requestBlur();
 
-    void setUserInfo(String info);
+	void setUserInfo(String info);
 
-    interface TreePresenter {
+	interface TreePresenter {
 
-        void init();
+		void init();
 
-        void setPlace(BasePlace place);
+		void setPlace(BasePlace place);
 
-        void reloadTree();
-    }
+		void reloadTree();
+	}
 }

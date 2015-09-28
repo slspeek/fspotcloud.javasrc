@@ -43,35 +43,38 @@ import static org.mockito.Mockito.verify;
 
 public class SendPasswordResetITest {
 
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private SendPasswordResetPage sendPasswordResetPage;
-    @Inject
-    private InjectionController<IMail> mailInjectionController;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private SendPasswordResetPage sendPasswordResetPage;
+	@Inject
+	private InjectionController<IMail> mailInjectionController;
 
-    @Inject
-    private UserDao userDao;
+	@Inject
+	private UserDao userDao;
 
-    private ArgumentCaptor<String> recipient = ArgumentCaptor.forClass(String.class);
-    private ArgumentCaptor<String> subject = ArgumentCaptor.forClass(String.class);
-    private ArgumentCaptor<String> body = ArgumentCaptor.forClass(String.class);
+	private ArgumentCaptor<String> recipient = ArgumentCaptor
+			.forClass(String.class);
+	private ArgumentCaptor<String> subject = ArgumentCaptor
+			.forClass(String.class);
+	private ArgumentCaptor<String> body = ArgumentCaptor.forClass(String.class);
 
-
-    @Test
-    public void testReset() throws Exception {
-        //emailConfirmationITest.testEmailConfirmation();
-        User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
-        rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
-        rms.setRegistered(true);
-        rms.setEnabled(true);
-        userDao.save(rms);
-        IMail mailerMock = mock(IMail.class);
-        mailInjectionController.setOverride(mailerMock);
-        sendPasswordResetPage.open();
-        sendPasswordResetPage.submitEmail(ILogin.RMS_FSF_ORG);
-        sleepShort();
-        verify(mailerMock).send(recipient.capture(), subject.capture(), body.capture());
-        Assert.assertEquals(ILogin.RMS_FSF_ORG, recipient.getValue());
-    }
+	@Test
+	public void testReset() throws Exception {
+		//emailConfirmationITest.testEmailConfirmation();
+		User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
+		rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
+		rms.setRegistered(true);
+		rms.setEnabled(true);
+		userDao.save(rms);
+		IMail mailerMock = mock(IMail.class);
+		mailInjectionController.setOverride(mailerMock);
+		sendPasswordResetPage.open();
+		sendPasswordResetPage.submitEmail(ILogin.RMS_FSF_ORG);
+		sleepShort();
+		verify(mailerMock).send(recipient.capture(), subject.capture(),
+				body.capture());
+		Assert.assertEquals(ILogin.RMS_FSF_ORG, recipient.getValue());
+	}
 }

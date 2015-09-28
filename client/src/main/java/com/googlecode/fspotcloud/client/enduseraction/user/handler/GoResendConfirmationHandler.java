@@ -8,13 +8,13 @@ import com.googlecode.fspotcloud.client.place.api.IPlaceController;
 
 public class GoResendConfirmationHandler extends PlaceMoverBase {
 
-    @Inject
-    public GoResendConfirmationHandler(IPlaceController IPlaceController) {
-        super(IPlaceController);
-    }
+	@Inject
+	public GoResendConfirmationHandler(IPlaceController IPlaceController) {
+		super(IPlaceController);
+	}
 
-    @Override
-    public Place getPlace() {
-        return new SendConfirmationPlace();
-    }
+	@Override
+	public Place getPlace() {
+		return new SendConfirmationPlace();
+	}
 }

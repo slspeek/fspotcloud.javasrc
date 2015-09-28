@@ -27,24 +27,22 @@ package com.googlecode.fspotcloud.keyboardaction;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-
 public interface ActionMenuResources extends ClientBundle {
 
-    @Source("actionmenu.css")
-    Style style();
+	@Source("actionmenu.css")
+	Style style();
 
+	public interface Style extends CssResource {
+		String popUpMenu();
 
-    public interface Style extends CssResource {
-        String popUpMenu();
+		String menuItem();
 
-        String menuItem();
+		String menuButton();
 
-        String menuButton();
+		String menuItemText();
 
-        String menuItemText();
+		String helpActionIcon();
 
-        String helpActionIcon();
-
-        String menuItemShortcut();
-    }
+		String menuItemShortcut();
+	}
 }

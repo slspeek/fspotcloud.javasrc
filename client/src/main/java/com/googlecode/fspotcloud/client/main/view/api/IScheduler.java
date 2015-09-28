@@ -4,5 +4,5 @@ import com.google.common.annotations.GwtCompatible;
 
 @GwtCompatible
 public interface IScheduler {
-    void schedule(Runnable command);
+	void schedule(Runnable command);
 }

@@ -32,19 +32,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-
 public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final TestharnessGInjector injector = GWT.create(TestharnessGInjector.class);
+	private final Logger log = Logger.getLogger(Main.class.getName());
+	private final TestharnessGInjector injector = GWT
+			.create(TestharnessGInjector.class);
 
-    @Override
-    public void onModuleLoad() {
-        log.info("Test harness  loading");
-        try {
-           MVPSetup mvpSetup = injector.getSetup();
-           mvpSetup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Uncaught exception in main setup", e);
-        }
-    }
+	@Override
+	public void onModuleLoad() {
+		log.info("Test harness  loading");
+		try {
+			MVPSetup mvpSetup = injector.getSetup();
+			mvpSetup.setup();
+		} catch (Throwable e) {
+			log.log(Level.SEVERE, "Uncaught exception in main setup", e);
+		}
+	}
 }

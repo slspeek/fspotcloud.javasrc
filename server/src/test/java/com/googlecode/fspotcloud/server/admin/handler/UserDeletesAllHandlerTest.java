@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllPhotosAction;
@@ -47,30 +47,30 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)
 public class UserDeletesAllHandlerTest {
-    @Inject
-    UserDeletesAllHandler handler;
+	@Inject
+	UserDeletesAllHandler handler;
 
-    @Test
-    public void testNormalExecute(TaskQueueDispatch dispatchAsync,
-                                  IAdminPermission IAdminPermission, PeerDatabaseDao peerDatabaseManager)
-            throws Exception {
-        UserDeletesAllAction action = new UserDeletesAllAction();
-        VoidResult result = handler.execute(action, null);
+	@Test
+	public void testNormalExecute(TaskQueueDispatch dispatchAsync,
+			IAdminPermission IAdminPermission,
+			PeerDatabaseDao peerDatabaseManager) throws Exception {
+		UserDeletesAllAction action = new UserDeletesAllAction();
+		VoidResult result = handler.execute(action, null);
 
-        verify(peerDatabaseManager).deleteBulk(1);
-        verify(dispatchAsync).execute(new DeleteAllTagsAction());
-        verify(dispatchAsync).execute(new DeleteAllPhotosAction());
-    }
+		verify(peerDatabaseManager).deleteBulk(1);
+		verify(dispatchAsync).execute(new DeleteAllTagsAction());
+		verify(dispatchAsync).execute(new DeleteAllPhotosAction());
+	}
 
-    @Test(expected = SecurityException.class)
-    public void testUnAuthorizedExecute(TaskQueueDispatch dispatchAsync,
-                                        IAdminPermission iAdminPermission, PeerDatabaseDao peerDatabaseManager)
-            throws Exception {
-        doThrow(new SecurityException()).when(iAdminPermission)
-                .checkAdminPermission();
+	@Test(expected = SecurityException.class)
+	public void testUnAuthorizedExecute(TaskQueueDispatch dispatchAsync,
+			IAdminPermission iAdminPermission,
+			PeerDatabaseDao peerDatabaseManager) throws Exception {
+		doThrow(new SecurityException()).when(iAdminPermission)
+				.checkAdminPermission();
 
-        UserDeletesAllAction action = new UserDeletesAllAction();
-        VoidResult result = handler.execute(action, null);
-        fail();
-    }
+		UserDeletesAllAction action = new UserDeletesAllAction();
+		VoidResult result = handler.execute(action, null);
+		fail();
+	}
 }

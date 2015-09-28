@@ -28,15 +28,14 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
-
 public interface ActionToolbarResources extends ClientBundle {
 
-    @Source("toolbar.css")
-    Style style();
+	@Source("toolbar.css")
+	Style style();
 
-    public interface Style extends CssResource {
+	public interface Style extends CssResource {
 
-        String toolbar();
+		String toolbar();
 
-    }
+	}
 }

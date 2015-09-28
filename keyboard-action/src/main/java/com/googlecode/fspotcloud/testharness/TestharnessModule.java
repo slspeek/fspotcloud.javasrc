@@ -9,19 +9,18 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
 public class TestharnessModule extends AbstractGinModule {
 
-    @Override
-    public void configure() {
-        install(new GinMvpModule(
-                HarnessActivityMapper.class,
-                HomePlace.class,
-                MvpDisplay.class,
-                HarnessPlaceHistoryMapper.class));
-        bind(UIRegistrationBuilder.class).to(MainBuilder.class);
-        bind(ActionToolbar.class).toProvider(ToolbarProvider.class);
-        bind(HomeView.class).to(HomeViewImpl.class).in(Singleton.class);
-        bind(HomeView.HomePresenter.class).to(HomeActivity.class).in(Singleton.class);
-        bind(OutView.class).to(OutViewImpl.class).in(Singleton.class);
-        bind(OutView.OutPresenter.class).to(OutActivity.class).in(Singleton.class);
-        install(new KeyboardActionModule());
-    }
+	@Override
+	public void configure() {
+		install(new GinMvpModule(HarnessActivityMapper.class, HomePlace.class,
+				MvpDisplay.class, HarnessPlaceHistoryMapper.class));
+		bind(UIRegistrationBuilder.class).to(MainBuilder.class);
+		bind(ActionToolbar.class).toProvider(ToolbarProvider.class);
+		bind(HomeView.class).to(HomeViewImpl.class).in(Singleton.class);
+		bind(HomeView.HomePresenter.class).to(HomeActivity.class).in(
+				Singleton.class);
+		bind(OutView.class).to(OutViewImpl.class).in(Singleton.class);
+		bind(OutView.OutPresenter.class).to(OutActivity.class).in(
+				Singleton.class);
+		install(new KeyboardActionModule());
+	}
 }

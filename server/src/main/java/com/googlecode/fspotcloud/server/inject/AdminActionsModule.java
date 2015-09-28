@@ -28,18 +28,17 @@ import com.googlecode.fspotcloud.server.admin.handler.*;
 import com.googlecode.fspotcloud.shared.dashboard.*;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
-
 public class AdminActionsModule extends ActionHandlerModule {
-    @Override
-    protected void configureHandlers() {
-        bindHandler(GetMetaDataAction.class, GetMetaDataHandler.class);
-        bindHandler(UserDeletesAllAction.class, UserDeletesAllHandler.class);
-        bindHandler(UserDeletesAllCommandsAction.class,
-                UserDeletesAllCommandsHandler.class);
-        bindHandler(UserImportsTagAction.class, UserImportsTagHandler.class);
-        bindHandler(UserUnImportsTagAction.class, UserUnImportsTagHandler.class);
-        bindHandler(UserSynchronizesPeerAction.class,
-                UserSynchronizesPeerHandler.class);
-        bindHandler(GetAdminTagTreeAction.class, GetAdminTagTreeHandler.class);
-    }
+	@Override
+	protected void configureHandlers() {
+		bindHandler(GetMetaDataAction.class, GetMetaDataHandler.class);
+		bindHandler(UserDeletesAllAction.class, UserDeletesAllHandler.class);
+		bindHandler(UserDeletesAllCommandsAction.class,
+				UserDeletesAllCommandsHandler.class);
+		bindHandler(UserImportsTagAction.class, UserImportsTagHandler.class);
+		bindHandler(UserUnImportsTagAction.class, UserUnImportsTagHandler.class);
+		bindHandler(UserSynchronizesPeerAction.class,
+				UserSynchronizesPeerHandler.class);
+		bindHandler(GetAdminTagTreeAction.class, GetAdminTagTreeHandler.class);
+	}
 }

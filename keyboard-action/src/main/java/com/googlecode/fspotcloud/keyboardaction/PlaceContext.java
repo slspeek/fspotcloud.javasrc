@@ -9,49 +9,52 @@ import static com.google.common.collect.Sets.newHashSet;
 
 public class PlaceContext {
 
-    private static final Set<String> emptySet = newHashSet();
-    private final Class<? extends Place> place;
-    private final Set<String> flags;
+	private static final Set<String> emptySet = newHashSet();
+	private final Class<? extends Place> place;
+	private final Set<String> flags;
 
-    public PlaceContext(Class<? extends Place> place, Set<String> flags) {
-        this.place = place;
-        this.flags = flags;
-    }
+	public PlaceContext(Class<? extends Place> place, Set<String> flags) {
+		this.place = place;
+		this.flags = flags;
+	}
 
-    public PlaceContext(Class<? extends Place> place) {
-        this(place, emptySet);
-    }
+	public PlaceContext(Class<? extends Place> place) {
+		this(place, emptySet);
+	}
 
-    public Class<? extends Place> getPlace() {
-        return place;
-    }
+	public Class<? extends Place> getPlace() {
+		return place;
+	}
 
-    public Set<String> getFlags() {
-        return flags;
-    }
+	public Set<String> getFlags() {
+		return flags;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PlaceContext)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof PlaceContext))
+			return false;
 
-        PlaceContext that = (PlaceContext) o;
+		PlaceContext that = (PlaceContext) o;
 
-        if (!flags.equals(that.flags)) return false;
-        if (!place.equals(that.place)) return false;
+		if (!flags.equals(that.flags))
+			return false;
+		if (!place.equals(that.place))
+			return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(place, flags);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(place, flags);
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("place-class", place)
-                .add("flags", flags).toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("place-class", place)
+				.add("flags", flags).toString();
+	}
 }

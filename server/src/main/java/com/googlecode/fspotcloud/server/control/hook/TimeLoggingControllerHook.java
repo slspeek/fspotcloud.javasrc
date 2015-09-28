@@ -29,20 +29,19 @@ import com.googlecode.botdispatch.controller.callback.ControllerHook;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 
-
 public class TimeLoggingControllerHook implements ControllerHook {
-    private final PeerDatabaseDao defaultPeer;
+	private final PeerDatabaseDao defaultPeer;
 
-    @Inject
-    public TimeLoggingControllerHook(PeerDatabaseDao defaultPeer) {
-        super();
-        this.defaultPeer = defaultPeer;
-    }
+	@Inject
+	public TimeLoggingControllerHook(PeerDatabaseDao defaultPeer) {
+		super();
+		this.defaultPeer = defaultPeer;
+	}
 
-    @Override
-    public void preprocess(long id, byte[] result) {
-        PeerDatabase peer = defaultPeer.get();
-        peer.touchPeerContact();
-        defaultPeer.save(peer);
-    }
+	@Override
+	public void preprocess(long id, byte[] result) {
+		PeerDatabase peer = defaultPeer.get();
+		peer.touchPeerContact();
+		defaultPeer.save(peer);
+	}
 }

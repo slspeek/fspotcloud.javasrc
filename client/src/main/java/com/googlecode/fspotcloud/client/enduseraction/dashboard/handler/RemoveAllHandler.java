@@ -14,37 +14,38 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RemoveAllHandler implements IActionHandler {
-    private final DispatchAsync dispatcher;
-    private final Logger log = Logger.getLogger(RemoveAllHandler.class.getName());
-    private final ConfirmationDialogBox box;
+	private final DispatchAsync dispatcher;
+	private final Logger log = Logger.getLogger(RemoveAllHandler.class
+			.getName());
+	private final ConfirmationDialogBox box;
 
-    @Inject
-    public RemoveAllHandler(DispatchAsync dispatcher,
-                            ConfirmationDialogBox box) {
-        this.dispatcher = dispatcher;
-        this.box = box;
-    }
+	@Inject
+	public RemoveAllHandler(DispatchAsync dispatcher, ConfirmationDialogBox box) {
+		this.dispatcher = dispatcher;
+		this.box = box;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        box.setText("Confirm remove all");
-        box.center();
-        box.setConfirmAction(new Runnable() {
-            @Override
-            public void run() {
-                dispatcher.execute(new UserDeletesAllAction(),
-                        new AsyncCallback<VoidResult>() {
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                log.log(Level.SEVERE, "Action Exception ", caught);
-                            }
+	@Override
+	public void performAction(String actionId) {
+		box.setText("Confirm remove all");
+		box.center();
+		box.setConfirmAction(new Runnable() {
+			@Override
+			public void run() {
+				dispatcher.execute(new UserDeletesAllAction(),
+						new AsyncCallback<VoidResult>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								log.log(Level.SEVERE, "Action Exception ",
+										caught);
+							}
 
-                            @Override
-                            public void onSuccess(VoidResult result) {
-                            }
-                        });
-            }
-        });
+							@Override
+							public void onSuccess(VoidResult result) {
+							}
+						});
+			}
+		});
 
-    }
+	}
 }

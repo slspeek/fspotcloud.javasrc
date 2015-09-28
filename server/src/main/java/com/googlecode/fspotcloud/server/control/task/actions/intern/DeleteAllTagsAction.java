@@ -29,26 +29,24 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import java.io.Serializable;
 
+public class DeleteAllTagsAction implements Action<VoidResult>, Serializable {
+	private static final long serialVersionUID = 8429390701736230375L;
 
-public class DeleteAllTagsAction implements Action<VoidResult>,
-        Serializable {
-    private static final long serialVersionUID = 8429390701736230375L;
+	public DeleteAllTagsAction() {
+		super();
+	}
 
-    public DeleteAllTagsAction() {
-        super();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof DeleteAllTagsAction) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof DeleteAllTagsAction) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 }

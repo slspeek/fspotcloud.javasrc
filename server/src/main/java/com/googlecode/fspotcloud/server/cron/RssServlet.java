@@ -37,28 +37,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @SuppressWarnings("serial")
 @Singleton
 public class RssServlet extends HttpServlet {
-    @Inject
-    @VisibleForTesting
-    Dispatch dispatch;
+	@Inject
+	@VisibleForTesting
+	Dispatch dispatch;
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        try {
-            String tagId = request.getParameter("tag");
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		try {
+			String tagId = request.getParameter("tag");
 
-            StringResult rss = dispatch.execute(new RssFeedAction(tagId));
-            response.setContentType("application/rss+xml");
-            response.getOutputStream().print(rss.get());
+			StringResult rss = dispatch.execute(new RssFeedAction(tagId));
+			response.setContentType("application/rss+xml");
+			response.getOutputStream().print(rss.get());
 
-        } catch (DispatchException e) {
-            response.getOutputStream().println(e.getMessage());
-        } finally {
-            response.getOutputStream().close();
-        }
+		} catch (DispatchException e) {
+			response.getOutputStream().println(e.getMessage());
+		} finally {
+			response.getOutputStream().close();
+		}
 
-    }
+	}
 }

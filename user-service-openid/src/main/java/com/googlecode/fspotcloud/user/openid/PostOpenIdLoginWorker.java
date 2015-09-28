@@ -33,22 +33,22 @@ import com.googlecode.fspotcloud.user.PostThirdPartyLoginWorker;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-
 public class PostOpenIdLoginWorker implements PostThirdPartyLoginWorker {
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private LoginMetaDataUpdater metaDataUpdater;
-    @Inject
-    private Provider<ISessionEmail> sessionEmail;
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private LoginMetaDataUpdater metaDataUpdater;
+	@Inject
+	private Provider<ISessionEmail> sessionEmail;
 
-    @Override
-    public void doWork() {
-        String email = sessionEmail.get().getEmail();
+	@Override
+	public void doWork() {
+		String email = sessionEmail.get().getEmail();
 
-        if (email != null) {
-            com.googlecode.fspotcloud.server.model.api.User user = userDao.findOrNew(email);
-            metaDataUpdater.doUpdate(user, LoginMetaData.Type.OPEN_ID_LOGIN);
-        }
-    }
+		if (email != null) {
+			com.googlecode.fspotcloud.server.model.api.User user = userDao
+					.findOrNew(email);
+			metaDataUpdater.doUpdate(user, LoginMetaData.Type.OPEN_ID_LOGIN);
+		}
+	}
 }

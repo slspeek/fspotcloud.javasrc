@@ -26,6 +26,5 @@ package com.googlecode.fspotcloud.server.model.api;
 
 import com.googlecode.simplejpadao.SimpleDAOGenId;
 
-
 public interface UserGroupDao extends SimpleDAOGenId<UserGroup, Long> {
 }

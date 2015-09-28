@@ -25,46 +25,46 @@
 package com.googlecode.fspotcloud.client.place;
 
 public class PlaceBuilder {
-    private String tagId;
-    private String photoId;
-    private int columnCount;
-    private int rowCount;
-    private boolean autoHide;
+	private String tagId;
+	private String photoId;
+	private int columnCount;
+	private int rowCount;
+	private boolean autoHide;
 
-    public PlaceBuilder(BasePlace fromPlace) {
-        this.tagId = fromPlace.getTagId();
-        this.photoId = fromPlace.getPhotoId();
-        this.columnCount = fromPlace.getColumnCount();
-        this.rowCount = fromPlace.getRowCount();
-        this.autoHide = fromPlace.isAutoHide();
-    }
+	public PlaceBuilder(BasePlace fromPlace) {
+		this.tagId = fromPlace.getTagId();
+		this.photoId = fromPlace.getPhotoId();
+		this.columnCount = fromPlace.getColumnCount();
+		this.rowCount = fromPlace.getRowCount();
+		this.autoHide = fromPlace.isAutoHide();
+	}
 
-    public BasePlace place() {
-        return new BasePlace(tagId, photoId, columnCount, rowCount, autoHide);
-    }
+	public BasePlace place() {
+		return new BasePlace(tagId, photoId, columnCount, rowCount, autoHide);
+	}
 
-    public PlaceBuilder setTagId(String tagId) {
-        this.tagId = tagId;
-        return this;
-    }
+	public PlaceBuilder setTagId(String tagId) {
+		this.tagId = tagId;
+		return this;
+	}
 
-    public PlaceBuilder setPhotoId(String photoId) {
-        this.photoId = photoId;
-        return this;
-    }
+	public PlaceBuilder setPhotoId(String photoId) {
+		this.photoId = photoId;
+		return this;
+	}
 
-    public PlaceBuilder setColumnCount(int columnCount) {
-        this.columnCount = columnCount;
-        return this;
-    }
+	public PlaceBuilder setColumnCount(int columnCount) {
+		this.columnCount = columnCount;
+		return this;
+	}
 
-    public PlaceBuilder setRowCount(int rowCount) {
-        this.rowCount = rowCount;
-        return this;
-    }
+	public PlaceBuilder setRowCount(int rowCount) {
+		this.rowCount = rowCount;
+		return this;
+	}
 
-    public PlaceBuilder setAutoHide(boolean autoHide) {
-        this.autoHide = autoHide;
-        return this;
-    }
+	public PlaceBuilder setAutoHide(boolean autoHide) {
+		this.autoHide = autoHide;
+		return this;
+	}
 }

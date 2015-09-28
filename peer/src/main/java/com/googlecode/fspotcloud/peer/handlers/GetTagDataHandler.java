@@ -34,27 +34,28 @@ import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class GetTagDataHandler
+		extends
+			SimpleActionHandler<GetTagDataAction, TagDataResult> {
+	private final Backend data;
 
-public class GetTagDataHandler extends SimpleActionHandler<GetTagDataAction, TagDataResult> {
-    private final Backend data;
+	@Inject
+	public GetTagDataHandler(Backend data) {
+		super();
+		this.data = data;
+	}
 
-    @Inject
-    public GetTagDataHandler(Backend data) {
-        super();
-        this.data = data;
-    }
+	@Override
+	public TagDataResult execute(GetTagDataAction action,
+			ExecutionContext context) throws DispatchException {
+		TagDataResult result;
 
-    @Override
-    public TagDataResult execute(GetTagDataAction action,
-                                 ExecutionContext context) throws DispatchException {
-        TagDataResult result;
+		try {
+			result = new TagDataResult(data.getTagData(action.getTagIdList()));
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-        try {
-            result = new TagDataResult(data.getTagData(action.getTagIdList()));
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

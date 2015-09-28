@@ -39,85 +39,81 @@ import java.util.logging.Logger;
 @GwtCompatible
 public class ActionButton extends PushButton implements ActionWidget {
 
-    private final Logger log = Logger.getLogger(ActionButton.class.getName());
-    private final ActionUIDef actionUIDef;
-    private final EventBus eventBus;
-    private final ActionButtonResources resources;
+	private final Logger log = Logger.getLogger(ActionButton.class.getName());
+	private final ActionUIDef actionUIDef;
+	private final EventBus eventBus;
+	private final ActionButtonResources resources;
 
-    public ActionButton(ActionUIDef actionUIDef,
-                        EventBus eventBus,
-                        ActionButtonResources resources,
-                        String primaryStyleName) {
-        this.actionUIDef = actionUIDef;
-        this.eventBus = eventBus;
-        this.resources = resources;
-        log.log(Level.FINEST, "set style name " + primaryStyleName);
-        setStylePrimaryName(primaryStyleName);
-        initialize();
-    }
+	public ActionButton(ActionUIDef actionUIDef, EventBus eventBus,
+			ActionButtonResources resources, String primaryStyleName) {
+		this.actionUIDef = actionUIDef;
+		this.eventBus = eventBus;
+		this.resources = resources;
+		log.log(Level.FINEST, "set style name " + primaryStyleName);
+		setStylePrimaryName(primaryStyleName);
+		initialize();
+	}
 
-    public ActionButton(ActionUIDef actionUIDef,
-                        EventBus eventBus,
-                        ActionButtonResources resources) {
-        this(actionUIDef,
-                eventBus,
-                resources,
-                "gwt-PushButton");
+	public ActionButton(ActionUIDef actionUIDef, EventBus eventBus,
+			ActionButtonResources resources) {
+		this(actionUIDef, eventBus, resources, "gwt-PushButton");
 
-    }
+	}
 
-    private void initialize() {
-        addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " pressed.");
-                eventBus.fireEvent(new KeyboardActionEvent(actionUIDef.getId()));
-            }
-        });
-        setTooltip(actionUIDef.getDescription());
-        setDebugId(actionUIDef.getId());
-        final ImageResource imageResource = actionUIDef.getIcon();
-        if (imageResource != null) {
-            getUpFace().setImage(new Image(imageResource));
-            addStyleName(resources.style().button());
-        } else {
-            addStyleName(resources.style().button());
-            setCaption(actionUIDef.getName());
-        }
+	private void initialize() {
+		addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				log.log(Level.FINEST, "Button: " + actionUIDef.getId()
+						+ " pressed.");
+				eventBus.fireEvent(new KeyboardActionEvent(actionUIDef.getId()));
+			}
+		});
+		setTooltip(actionUIDef.getDescription());
+		setDebugId(actionUIDef.getId());
+		final ImageResource imageResource = actionUIDef.getIcon();
+		if (imageResource != null) {
+			getUpFace().setImage(new Image(imageResource));
+			addStyleName(resources.style().button());
+		} else {
+			addStyleName(resources.style().button());
+			setCaption(actionUIDef.getName());
+		}
 
-    }
+	}
 
-    public void setCaption(String caption) {
-        setText(caption);
-    }
+	public void setCaption(String caption) {
+		setText(caption);
+	}
 
-    public void setTooltip(String tooltip) {
-        asWidget().setTitle(tooltip);
-    }
+	public void setTooltip(String tooltip) {
+		asWidget().setTitle(tooltip);
+	}
 
-    public void setDebugId(String id) {
-        ensureDebugId(id);
-    }
+	public void setDebugId(String id) {
+		ensureDebugId(id);
+	}
 
-    @Override
-    public void onEvent(ActionStateEvent event) {
-        log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " onEvent:" + event);
-        setEnabled(event.getState());
-        //setVisible(event.getState());
-        if (event.getState()) {
-            String keys = event.getAcceleratorString();
-            setTooltip(actionUIDef.getDescription() + " (" + keys + ")");
-        }
-    }
+	@Override
+	public void onEvent(ActionStateEvent event) {
+		log.log(Level.FINEST, "Button: " + actionUIDef.getId() + " onEvent:"
+				+ event);
+		setEnabled(event.getState());
+		//setVisible(event.getState());
+		if (event.getState()) {
+			String keys = event.getAcceleratorString();
+			setTooltip(actionUIDef.getDescription() + " (" + keys + ")");
+		}
+	}
 
-    @Override
-    public void onEvent(ActionDemoEvent event) {
-        if (event.getActionId().equals(actionUIDef.getId())) {
-            if (event.getState()) {
-                addStyleName(resources.style().demoing());
-            } else {
-                removeStyleName(resources.style().demoing());
-            }
-        }
+	@Override
+	public void onEvent(ActionDemoEvent event) {
+		if (event.getActionId().equals(actionUIDef.getId())) {
+			if (event.getState()) {
+				addStyleName(resources.style().demoing());
+			} else {
+				removeStyleName(resources.style().demoing());
+			}
+		}
 
-    }
+	}
 }

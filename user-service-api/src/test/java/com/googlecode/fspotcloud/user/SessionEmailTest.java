@@ -37,18 +37,18 @@ import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class SessionEmailTest {
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    public static final String EMAIL = "email";
-    @Inject
-    SessionEmail sessionEmail;
-    @Inject
-    HttpSession session;
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	public static final String EMAIL = "email";
+	@Inject
+	SessionEmail sessionEmail;
+	@Inject
+	HttpSession session;
 
-    @Test
-    public void testGetEmail() throws Exception {
-        when(session.getAttribute(EMAIL)).thenReturn(newArrayList(RMS_FSF_ORG));
+	@Test
+	public void testGetEmail() throws Exception {
+		when(session.getAttribute(EMAIL)).thenReturn(newArrayList(RMS_FSF_ORG));
 
-        String email = sessionEmail.getEmail();
-        assertEquals(RMS_FSF_ORG, email);
-    }
+		String email = sessionEmail.getEmail();
+		assertEquals(RMS_FSF_ORG, email);
+	}
 }

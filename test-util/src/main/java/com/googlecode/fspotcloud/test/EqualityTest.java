@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.google.inject.Provider;
@@ -42,85 +42,86 @@ import static org.junit.Assert.*;
  */
 public abstract class EqualityTest {
 
-    private Object obj = new Object();
+	private Object obj = new Object();
 
-    protected abstract List<Provider<Object>> getUniqueObjects();
+	protected abstract List<Provider<Object>> getUniqueObjects();
 
+	private List<Object> uniqueElementsA = newArrayList();
+	private List<Object> uniqueElementsB = newArrayList();
 
-    private List<Object> uniqueElementsA = newArrayList();
-    private List<Object> uniqueElementsB = newArrayList();
+	@Before
+	public void createTestObjects() {
+		for (Provider<Object> provider : getUniqueObjects()) {
+			uniqueElementsA.add(provider.get());
+			uniqueElementsB.add(provider.get());
+		}
+	}
 
-    @Before
-    public void createTestObjects() {
-        for (Provider<Object> provider : getUniqueObjects()) {
-            uniqueElementsA.add(provider.get());
-            uniqueElementsB.add(provider.get());
-        }
-    }
+	@Test
+	public void testEqualsIsSymmetrical() {
+		for (int i = 0; i < getUniqueObjects().size(); i++) {
+			Object a = uniqueElementsA.get(i);
+			Object b = uniqueElementsA.get(i);
+			assertEquals(a, b);
+			assertEquals(b, a);
+		}
+	}
 
-    @Test
-    public void testEqualsIsSymmetrical() {
-        for (int i = 0; i < getUniqueObjects().size(); i++) {
-            Object a = uniqueElementsA.get(i);
-            Object b = uniqueElementsA.get(i);
-            assertEquals(a, b);
-            assertEquals(b, a);
-        }
-    }
+	@Test
+	public void testSameImpliesEquals() {
+		for (Object a : uniqueElementsA) {
+			assertEquals(a, a);
+		}
+	}
 
-    @Test
-    public void testSameImpliesEquals() {
-        for (Object a : uniqueElementsA) {
-            assertEquals(a, a);
-        }
-    }
+	@Test
+	public void shouldNotBeEqualToAnObject() {
+		for (Object a : uniqueElementsA) {
+			assertFalse(a.equals(obj));
+		}
+	}
 
-    @Test
-    public void shouldNotBeEqualToAnObject() {
-        for (Object a : uniqueElementsA) {
-            assertFalse(a.equals(obj));
-        }
-    }
+	@Test
+	public void shouldNotEqual() {
+		int count = getUniqueObjects().size();
+		for (int i = 0; i < count; i++) {
+			for (int j = 0; j < count; j++) {
+				if (i != j) {
+					Object one = uniqueElementsA.get(i);
+					Object other = uniqueElementsB.get(j);
+					if (one.equals(other)) {
+						System.out.println("Failing " + one + " " + other
+								+ " should not be equal");
+						fail();
+					}
+					if (other.equals(one)) {
+						System.out.println("Failing " + other + " " + one
+								+ " should not be equal");
+						fail();
+					}
+				}
+			}
+		}
+	}
 
-    @Test
-    public void shouldNotEqual() {
-        int count = getUniqueObjects().size();
-        for (int i = 0; i < count; i++) {
-            for (int j = 0; j < count; j++) {
-                if (i != j) {
-                    Object one = uniqueElementsA.get(i);
-                    Object other = uniqueElementsB.get(j);
-                    if (one.equals(other)) {
-                        System.out.println("Failing " + one + " " + other + " should not be equal");
-                        fail();
-                    }
-                    if (other.equals(one)) {
-                        System.out.println("Failing " + other + " " + one + " should not be equal");
-                        fail();
-                    }
-                }
-            }
-        }
-    }
+	@Test
+	public void shouldNotEqualNull() {
+		for (Object a : uniqueElementsA) {
+			assertFalse(a.equals(null));
+		}
+	}
 
-    @Test
-    public void shouldNotEqualNull() {
-        for (Object a : uniqueElementsA) {
-            assertFalse(a.equals(null));
-        }
-    }
-
-    @Test
-    public void hashCodeContract() {
-        for (int i = 0; i < getUniqueObjects().size(); i++) {
-            Object one = uniqueElementsA.get(i);
-            Object theOther = uniqueElementsB.get(i);
-            if (!(one.hashCode() == theOther.hashCode())) {
-                System.out.println("Failing: hashcodes differ for: ");
-                System.out.println(one);
-                System.out.println(theOther);
-                fail();
-            }
-        }
-    }
+	@Test
+	public void hashCodeContract() {
+		for (int i = 0; i < getUniqueObjects().size(); i++) {
+			Object one = uniqueElementsA.get(i);
+			Object theOther = uniqueElementsB.get(i);
+			if (!(one.hashCode() == theOther.hashCode())) {
+				System.out.println("Failing: hashcodes differ for: ");
+				System.out.println(one);
+				System.out.println(theOther);
+				fail();
+			}
+		}
+	}
 }

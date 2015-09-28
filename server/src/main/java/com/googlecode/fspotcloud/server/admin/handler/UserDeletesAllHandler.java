@@ -38,38 +38,40 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import javax.inject.Inject;
 
+public class UserDeletesAllHandler
+		extends
+			SimpleActionHandler<UserDeletesAllAction, VoidResult> {
+	private final TaskQueueDispatch dispatchAsync;
+	private final IAdminPermission IAdminPermission;
+	private final PeerDatabaseDao peerDatabaseManager;
 
-public class UserDeletesAllHandler extends SimpleActionHandler<UserDeletesAllAction, VoidResult> {
-    private final TaskQueueDispatch dispatchAsync;
-    private final IAdminPermission IAdminPermission;
-    private final PeerDatabaseDao peerDatabaseManager;
+	@Inject
+	public UserDeletesAllHandler(TaskQueueDispatch dispatchAsync,
+			IAdminPermission IAdminPermission,
+			PeerDatabaseDao peerDatabaseManager) {
+		super();
+		this.dispatchAsync = dispatchAsync;
+		this.IAdminPermission = IAdminPermission;
+		this.peerDatabaseManager = peerDatabaseManager;
+	}
 
-    @Inject
-    public UserDeletesAllHandler(TaskQueueDispatch dispatchAsync,
-                                 IAdminPermission IAdminPermission, PeerDatabaseDao peerDatabaseManager) {
-        super();
-        this.dispatchAsync = dispatchAsync;
-        this.IAdminPermission = IAdminPermission;
-        this.peerDatabaseManager = peerDatabaseManager;
-    }
+	@Override
+	public VoidResult execute(UserDeletesAllAction action,
+			ExecutionContext context) throws DispatchException {
+		IAdminPermission.checkAdminPermission();
 
-    @Override
-    public VoidResult execute(UserDeletesAllAction action,
-                              ExecutionContext context) throws DispatchException {
-        IAdminPermission.checkAdminPermission();
+		try {
+			dispatchAsync.execute(new DeleteAllTagsAction());
+			dispatchAsync.execute(new DeleteAllPhotosAction());
+			clearPeer();
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-        try {
-            dispatchAsync.execute(new DeleteAllTagsAction());
-            dispatchAsync.execute(new DeleteAllPhotosAction());
-            clearPeer();
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
+		return new VoidResult();
+	}
 
-        return new VoidResult();
-    }
-
-    private void clearPeer() {
-        peerDatabaseManager.deleteBulk(1);
-    }
+	private void clearPeer() {
+		peerDatabaseManager.deleteBulk(1);
+	}
 }

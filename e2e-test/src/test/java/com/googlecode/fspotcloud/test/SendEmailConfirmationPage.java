@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.googlecode.fspotcloud.client.enduseraction.user.UserActions;
@@ -38,22 +38,20 @@ import javax.inject.Inject;
  * @author steven
  */
 public class SendEmailConfirmationPage {
-    @Inject
-    private Selenium selenium;
-    @Inject
-    private UserActions userActions;
-    @Inject
-    private SeleniumPerformer performer;
+	@Inject
+	private Selenium selenium;
+	@Inject
+	private UserActions userActions;
+	@Inject
+	private SeleniumPerformer performer;
 
+	public void open() {
+		selenium.open("#SendConfirmationPlace:");
+		selenium.waitForPageToLoad("30000");
+	}
 
-
-    public void open() {
-        selenium.open("#SendConfirmationPlace:");
-        selenium.waitForPageToLoad("30000");
-    }
-
-    public void submitEmail(String email) {
-        selenium.type("id=gwt-debug-email", email);
-        performer.performAction(userActions.doSendEmailConfirmation);
-    }
+	public void submitEmail(String email) {
+		selenium.type("id=gwt-debug-email", email);
+		performer.performAction(userActions.doSendEmailConfirmation);
+	}
 }

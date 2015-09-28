@@ -37,36 +37,38 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Provider;
 import java.util.logging.Logger;
 
+public class UserDeletesAllCommandsHandler
+		extends
+			SimpleActionHandler<UserDeletesAllCommandsAction, VoidResult> {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger
+			.getLogger(UserDeletesAllCommandsHandler.class.getName());
+	private final Commands commandManager;
+	private final Provider<UserService> userServiceProvider;
 
-public class UserDeletesAllCommandsHandler extends SimpleActionHandler<UserDeletesAllCommandsAction, VoidResult> {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(UserDeletesAllCommandsHandler.class.getName());
-    private final Commands commandManager;
-    private final Provider<UserService> userServiceProvider;
+	@Inject
+	public UserDeletesAllCommandsHandler(Commands commandManager,
+			Provider<UserService> userServiceProvider) {
+		super();
+		this.commandManager = commandManager;
+		this.userServiceProvider = userServiceProvider;
+	}
 
-    @Inject
-    public UserDeletesAllCommandsHandler(Commands commandManager,
-                                         Provider<UserService> userServiceProvider) {
-        super();
-        this.commandManager = commandManager;
-        this.userServiceProvider = userServiceProvider;
-    }
+	@Override
+	public VoidResult execute(UserDeletesAllCommandsAction action,
+			ExecutionContext context) throws DispatchException {
+		UserService userService = userServiceProvider.get();
 
-    @Override
-    public VoidResult execute(UserDeletesAllCommandsAction action,
-                              ExecutionContext context) throws DispatchException {
-        UserService userService = userServiceProvider.get();
+		if (!userService.isUserAdmin()) {
+			throw new SecurityException("Not admin");
+		}
 
-        if (!userService.isUserAdmin()) {
-            throw new SecurityException("Not admin");
-        }
+		try {
+			commandManager.deleteAll();
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-        try {
-            commandManager.deleteAll();
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

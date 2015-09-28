@@ -27,19 +27,18 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Result;
 
-
 @GwtCompatible
 public class TagNodeResult implements Result {
-    private TagNode info;
+	private TagNode info;
 
-    public TagNodeResult(TagNode info) {
-        this.info = info;
-    }
+	public TagNodeResult(TagNode info) {
+		this.info = info;
+	}
 
-    public TagNodeResult() {
-    }
+	public TagNodeResult() {
+	}
 
-    public TagNode getInfo() {
-        return info;
-    }
+	public TagNode getInfo() {
+		return info;
+	}
 }

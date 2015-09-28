@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.shared.main;
 
 import com.google.common.annotations.GwtCompatible;
@@ -35,7 +35,6 @@ import net.customware.gwt.dispatch.shared.Result;
 import java.io.Serializable;
 import java.util.Date;
 
-
 /**
  * DOCUMENT ME!
  *
@@ -43,79 +42,73 @@ import java.util.Date;
  */
 @GwtCompatible
 public class UserInfo implements Result, IsSerializable, Serializable {
-    private String email;
-    private boolean isAdmin;
-    private boolean isLoggedIn;
-    private String logoutUrl;
-    private String loginUrl;
-    private Date lastLoginTime;
-    private String loginType;
+	private String email;
+	private boolean isAdmin;
+	private boolean isLoggedIn;
+	private String logoutUrl;
+	private String loginUrl;
+	private Date lastLoginTime;
+	private String loginType;
 
+	public UserInfo(String email, boolean isAdmin, boolean isLoggedIn) {
+		this(email, isAdmin, isLoggedIn, "", "", new Date(), "GAE");
+	}
 
-    public UserInfo(String email,
-                    boolean isAdmin,
-                    boolean isLoggedIn) {
-        this(email, isAdmin, isLoggedIn, "", "", new Date(), "GAE");
-    }
+	public UserInfo(String email, boolean isAdmin, boolean isLoggedIn,
+			String loginUrl, String logoutUrl, Date loginTime, String loginType) {
+		this.email = email;
+		this.isAdmin = isAdmin;
+		this.isLoggedIn = isLoggedIn;
+		this.loginUrl = loginUrl;
+		this.logoutUrl = logoutUrl;
+		lastLoginTime = loginTime;
+		this.loginType = loginType;
+	}
 
-    public UserInfo(String email,
-                    boolean isAdmin,
-                    boolean isLoggedIn,
-                    String loginUrl, String logoutUrl,
-                    Date loginTime, String loginType) {
-        this.email = email;
-        this.isAdmin = isAdmin;
-        this.isLoggedIn = isLoggedIn;
-        this.loginUrl = loginUrl;
-        this.logoutUrl = logoutUrl;
-        lastLoginTime = loginTime;
-        this.loginType = loginType;
-    }
+	UserInfo() {
+	}
 
-    UserInfo() {
-    }
+	public String getLoginType() {
+		return loginType;
+	}
 
-    public String getLoginType() {
-        return loginType;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public boolean isAdmin() {
+		return isAdmin;
+	}
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
 
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
+	public String getLogoutUrl() {
+		return logoutUrl;
+	}
 
-    public String getLogoutUrl() {
-        return logoutUrl;
-    }
+	public String getLoginUrl() {
+		return loginUrl;
+	}
 
-    public String getLoginUrl() {
-        return loginUrl;
-    }
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
 
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("UserInfo");
+		sb.append("{email='").append(email).append('\'');
+		sb.append(", isAdmin=").append(isAdmin);
+		sb.append(", isLoggedIn=").append(isLoggedIn);
+		sb.append(", logoutUrl='").append(logoutUrl).append('\'');
+		sb.append(", loginUrl='").append(loginUrl).append('\'');
+		sb.append(", lastLoginTime=").append(lastLoginTime);
+		sb.append(", loginType='").append(loginType).append('\'');
+		sb.append('}');
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("UserInfo");
-        sb.append("{email='").append(email).append('\'');
-        sb.append(", isAdmin=").append(isAdmin);
-        sb.append(", isLoggedIn=").append(isLoggedIn);
-        sb.append(", logoutUrl='").append(logoutUrl).append('\'');
-        sb.append(", loginUrl='").append(loginUrl).append('\'');
-        sb.append(", lastLoginTime=").append(lastLoginTime);
-        sb.append(", loginType='").append(loginType).append('\'');
-        sb.append('}');
-
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 }

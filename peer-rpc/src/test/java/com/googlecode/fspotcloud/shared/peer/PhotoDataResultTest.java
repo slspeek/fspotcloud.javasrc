@@ -35,27 +35,26 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
 
 public class PhotoDataResultTest {
-    private static final String PHOTO_ID = "1";
-    PhotoDataResult result;
+	private static final String PHOTO_ID = "1";
+	PhotoDataResult result;
 
-    @Before
-    public void setUp() throws Exception {
-        List<String> tags = newArrayList("TAG");
-        PhotoData p1 = new PhotoData(PHOTO_ID, "Story", new Date(10),
-                tags, 10);
-        List<PhotoData> list = newArrayList(p1);
-        list.add(p1);
-        result = new PhotoDataResult(list);
-    }
+	@Before
+	public void setUp() throws Exception {
+		List<String> tags = newArrayList("TAG");
+		PhotoData p1 = new PhotoData(PHOTO_ID, "Story", new Date(10), tags, 10);
+		List<PhotoData> list = newArrayList(p1);
+		list.add(p1);
+		result = new PhotoDataResult(list);
+	}
 
-    @Test
-    public void testSerialize() throws Exception {
-        testSerialization(result);
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		testSerialization(result);
+	}
 
-    @Test
-    public void testData() {
-        String id = result.getPhotoDataList().get(0).getPhotoId();
-        assertEquals(PHOTO_ID, id);
-    }
+	@Test
+	public void testData() {
+		String id = result.getPhotoDataList().get(0).getPhotoId();
+		assertEquals(PHOTO_ID, id);
+	}
 }

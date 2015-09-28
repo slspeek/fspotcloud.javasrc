@@ -44,85 +44,79 @@ import java.net.URISyntaxException;
 
 import static org.mockito.Mockito.mock;
 
-
 public class IntegrationGuiceBerryEnv extends AbstractModule {
-    public static final int PORT = 8000;
+	public static final int PORT = 8000;
 
-    private Injector injector;
+	private Injector injector;
 
+	@Provides
+	@Singleton
+	@PortNumber
+	int getPortNumber() {
+		return 8000;
+	}
 
+	@Provides
+	@TestScoped
+	Selenium getWebDriver(@PortNumber int portNumber, TestId testId) {
+		WebDriver driver = new FirefoxDriver();
+		final String baseUrl = "http://localhost:" + portNumber;
+		driver.get(baseUrl);
+		driver.manage().addCookie(
+				new Cookie(TestId.COOKIE_NAME, testId.toString()));
+		return new WebDriverBackedSelenium(driver, baseUrl);
+	}
 
-    @Provides
-    @Singleton
-    @PortNumber
-    int getPortNumber() {
-        return 8000;
-    }
+	private IcMaster icMaster;
 
-    @Provides
-    @TestScoped
-    Selenium getWebDriver(@PortNumber int portNumber, TestId testId) {
-        WebDriver driver = new FirefoxDriver();
-        final String baseUrl = "http://localhost:" + portNumber;
-        driver.get(baseUrl);
-        driver.manage().addCookie(new Cookie(TestId.COOKIE_NAME, testId.toString()));
-        return new WebDriverBackedSelenium(driver, baseUrl);
-    }
+	@Provides
+	@Singleton
+	FscServer buildServer(@PortNumber int portNumber) {
+		FscServer result = null;
+		try {
+			result = new FscServer(portNumber) {
+				@Override
+				protected Module getFscModule() {
+					// !!! HERE !!!
+					Module module = icMaster.buildServerModule(
+							new TestIdServerModule(), super.getFscModule());
 
+					return module;
+				}
+			};
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
-    private IcMaster icMaster;
+	@Override
+	protected void configure() {
+		install(new GuiceBerryModule());
+		bind(GuiceBerryEnvMain.class).to(ServerStarter.class);
+		bind(TestWrapper.class).to(SeleniumTestWrapper.class);
+		bind(ILogin.class).to(RegularLoginBot.class);
+		bind(UserDao.class).toProvider(UserDaoProvider.class);
+		// !!!! HERE !!!!
+		icMaster = new IcMaster().thatControls(
+				StaticMapInjectionController.strategy(),
+				Key.get(SecretGenerator.class)).thatControls(
+				StaticMapInjectionController.strategy(), Key.get(IMail.class));
+		install(icMaster.buildClientModule());
+	}
 
-    @Provides
-    @Singleton
-    FscServer buildServer(@PortNumber int portNumber) {
-        FscServer result = null;
-        try {
-            result = new FscServer(portNumber) {
-                @Override
-                protected Module getFscModule() {
-                    // !!! HERE !!!
-                    Module module = icMaster.buildServerModule(
-                            new TestIdServerModule(),
-                            super.getFscModule());
+	@Provides
+	Resources getResource() {
+		return mock(Resources.class);
+	}
+	private static final class ServerStarter implements GuiceBerryEnvMain {
+		@Inject
+		private FscServer server;
 
-                    return module;
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    @Override
-    protected void configure() {
-        install(new GuiceBerryModule());
-        bind(GuiceBerryEnvMain.class).to(ServerStarter.class);
-        bind(TestWrapper.class).to(SeleniumTestWrapper.class);
-        bind(ILogin.class).to(RegularLoginBot.class);
-        bind(UserDao.class).toProvider(UserDaoProvider.class);
-        // !!!! HERE !!!!
-        icMaster = new IcMaster()
-                .thatControls(StaticMapInjectionController.strategy(),
-                        Key.get(SecretGenerator.class))
-                .thatControls(StaticMapInjectionController.strategy(),
-                        Key.get(IMail.class));
-        install(icMaster.buildClientModule());
-    }
-
-
-    @Provides
-    Resources getResource() {
-        return mock(Resources.class);
-    }
-    private static final class ServerStarter implements GuiceBerryEnvMain {
-        @Inject
-        private FscServer server;
-
-        public void run() {
-            server.start();
-        }
-    }
+		public void run() {
+			server.start();
+		}
+	}
 }

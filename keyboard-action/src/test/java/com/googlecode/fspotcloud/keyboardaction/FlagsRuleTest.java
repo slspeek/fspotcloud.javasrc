@@ -11,21 +11,20 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JukitoRunner.class)
 public class FlagsRuleTest {
 
-    FlagsRule flagsRule = new FlagsRule();
+	FlagsRule flagsRule = new FlagsRule();
 
+	@Test
+	public void testExclude() throws Exception {
+		flagsRule.excludes("Nah");
+		assertTrue(flagsRule.holds(newHashSet("Foo")));
+		assertFalse(flagsRule.holds(newHashSet("Nah")));
+	}
 
-    @Test
-    public void testExclude() throws Exception {
-        flagsRule.excludes("Nah");
-        assertTrue(flagsRule.holds(newHashSet("Foo")));
-        assertFalse(flagsRule.holds(newHashSet("Nah")));
-    }
-
-    @Test
-    public void testInclude() throws Exception {
-        flagsRule.needs("Foo");
-        assertTrue(flagsRule.holds(newHashSet("Foo")));
-        assertFalse(flagsRule.holds(newHashSet("Nah")));
-        assertTrue(flagsRule.holds(newHashSet("Boe", "Foo")));
-    }
+	@Test
+	public void testInclude() throws Exception {
+		flagsRule.needs("Foo");
+		assertTrue(flagsRule.holds(newHashSet("Foo")));
+		assertFalse(flagsRule.holds(newHashSet("Nah")));
+		assertTrue(flagsRule.holds(newHashSet("Boe", "Foo")));
+	}
 }

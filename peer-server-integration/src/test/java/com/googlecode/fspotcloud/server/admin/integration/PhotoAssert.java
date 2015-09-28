@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.server.admin.integration;
 
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -34,37 +33,36 @@ import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import org.testng.Assert;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class PhotoAssert {
-    @Inject
-    PhotoDao photoDao;
+	@Inject
+	PhotoDao photoDao;
 
-    public boolean isEmpty() {
-        return photoDao.isEmpty();
-    }
+	public boolean isEmpty() {
+		return photoDao.isEmpty();
+	}
 
-    public void verifyPhotoRemoved(String id) {
-        Assert.assertNull(photoDao.find(id));
-    }
+	public void verifyPhotoRemoved(String id) {
+		Assert.assertNull(photoDao.find(id));
+	}
 
-    public void assertPhotoLoaded(String id) {
-        Assert.assertNotNull(photoDao.find(id));
-    }
+	public void assertPhotoLoaded(String id) {
+		Assert.assertNotNull(photoDao.find(id));
+	}
 
-    public void assertPhotosRemoved(String... allIds) {
-        for (String id : allIds) {
-            verifyPhotoRemoved(id);
-        }
-    }
+	public void assertPhotosRemoved(String... allIds) {
+		for (String id : allIds) {
+			verifyPhotoRemoved(id);
+		}
+	}
 
-    public void assertPhotosLoaded(String... allIds) {
-        for (String id : allIds) {
-            assertPhotoLoaded(id);
-        }
-    }
+	public void assertPhotosLoaded(String... allIds) {
+		for (String id : allIds) {
+			assertPhotoLoaded(id);
+		}
+	}
 }

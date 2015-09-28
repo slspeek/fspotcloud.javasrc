@@ -30,39 +30,38 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-
 public interface User extends HasSetKey<String>, Serializable {
-    String getEmail();
+	String getEmail();
 
-    void setEmail(String email);
+	void setEmail(String email);
 
-    String getNickname();
+	String getNickname();
 
-    void setNickname(String nickname);
+	void setNickname(String nickname);
 
-    String getCredentials();
+	String getCredentials();
 
-    void setCredentials(String credentials);
+	void setCredentials(String credentials);
 
-    boolean getEnabled();
+	boolean getEnabled();
 
-    void setEnabled(boolean enabled);
+	void setEnabled(boolean enabled);
 
-    Set<Long> getGrantedUserGroups();
+	Set<Long> getGrantedUserGroups();
 
-    void setGrantedUserGroups(Set<Long> userGroups);
+	void setGrantedUserGroups(Set<Long> userGroups);
 
-    Date getLastLoginTime();
+	Date getLastLoginTime();
 
-    void setLastLoginTime(Date loginTime);
+	void setLastLoginTime(Date loginTime);
 
-    void touchLastLoginTime();
+	void touchLastLoginTime();
 
-    String emailVerificationSecret();
+	String emailVerificationSecret();
 
-    void setEmailVerificationSecret(String secret);
+	void setEmailVerificationSecret(String secret);
 
-    boolean hasRegistered();
+	boolean hasRegistered();
 
-    void setRegistered(boolean registered);
+	void setRegistered(boolean registered);
 }

@@ -39,7 +39,6 @@ import java.util.List;
 
 import static com.googlecode.fspotcloud.server.model.api.DateUtil.cloneDate;
 
-
 /**
  * DOCUMENT ME!
  *
@@ -47,78 +46,77 @@ import static com.googlecode.fspotcloud.server.model.api.DateUtil.cloneDate;
  */
 @Entity
 public class PhotoEntity implements Photo, Serializable {
-    @Id
-    private String id;
-    private String description;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date date;
-    private ArrayList<String> tagList = new ArrayList<String>();
-    private String fullsizeImageBlobKey;
-    private String imageBlobKey;
-    private String thumbBlobKey;
+	@Id
+	private String id;
+	private String description;
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date date;
+	private ArrayList<String> tagList = new ArrayList<String>();
+	private String fullsizeImageBlobKey;
+	private String imageBlobKey;
+	private String thumbBlobKey;
 
-    public String getImageBlobKey() {
-        return imageBlobKey;
-    }
+	public String getImageBlobKey() {
+		return imageBlobKey;
+	}
 
-    public void setImageBlobKey(String imageBlobKey) {
-        this.imageBlobKey = imageBlobKey;
-    }
+	public void setImageBlobKey(String imageBlobKey) {
+		this.imageBlobKey = imageBlobKey;
+	}
 
-    public String getThumbBlobKey() {
-        return thumbBlobKey;
-    }
+	public String getThumbBlobKey() {
+		return thumbBlobKey;
+	}
 
-    public void setThumbBlobKey(String thumbBlobKey) {
-        this.thumbBlobKey = thumbBlobKey;
-    }
+	public void setThumbBlobKey(String thumbBlobKey) {
+		this.thumbBlobKey = thumbBlobKey;
+	}
 
-    public String getFullsizeImageBlobKey() {
-        return fullsizeImageBlobKey;
-    }
+	public String getFullsizeImageBlobKey() {
+		return fullsizeImageBlobKey;
+	}
 
-    public void setFullsizeImageBlobKey(String fullsizeImageBlobKey) {
-        this.fullsizeImageBlobKey = fullsizeImageBlobKey;
-    }
+	public void setFullsizeImageBlobKey(String fullsizeImageBlobKey) {
+		this.fullsizeImageBlobKey = fullsizeImageBlobKey;
+	}
 
-    @Override
-    public void setId(String name) {
-        this.id = name;
-    }
+	@Override
+	public void setId(String name) {
+		this.id = name;
+	}
 
-    @Override
-    public String getId() {
-        return id;
-    }
+	@Override
+	public String getId() {
+		return id;
+	}
 
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
+	@Override
+	public String getDescription() {
+		return description;
+	}
 
-    @Override
-    public void setTagList(List<String> tagList) {
-        this.tagList = new ArrayList(tagList);
-    }
+	@Override
+	public void setTagList(List<String> tagList) {
+		this.tagList = new ArrayList(tagList);
+	}
 
-    @Override
-    public List<String> getTagList() {
-        return tagList;
-    }
+	@Override
+	public List<String> getTagList() {
+		return tagList;
+	}
 
+	@Override
+	public void setDate(Date date) {
+		this.date = cloneDate(date);
+	}
 
-    @Override
-    public void setDate(Date date) {
-        this.date = cloneDate(date);
-    }
-
-    @Override
-    public Date getDate() {
-        return cloneDate(date);
-    }
+	@Override
+	public Date getDate() {
+		return cloneDate(date);
+	}
 }

@@ -27,24 +27,23 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class GetTagTreeAction implements Action<TagTreeResult> {
-    public GetTagTreeAction() {
-    }
+	public GetTagTreeAction() {
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof GetTagTreeAction) {
-            return true;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof GetTagTreeAction) {
+			return true;
 
-        } else {
-            return false;
-        }
-    }
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return 42;
-    }
+	@Override
+	public int hashCode() {
+		return 42;
+	}
 }

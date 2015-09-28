@@ -7,16 +7,15 @@ import com.googlecode.fspotcloud.keyboardaction.IModeController;
 
 public class BasicTreeViewProvider implements Provider<TreeView> {
 
-    @Inject
-    private BasicCellTreeFactory basicCellTreeFactory;
-    @Inject
-    private IModeController modeController;
-    @Inject
-    private Resources resources;
+	@Inject
+	private BasicCellTreeFactory basicCellTreeFactory;
+	@Inject
+	private IModeController modeController;
+	@Inject
+	private Resources resources;
 
-
-    @Override
-    public TreeView get() {
-        return new TreeViewImpl(basicCellTreeFactory, modeController, resources);
-    }
+	@Override
+	public TreeView get() {
+		return new TreeViewImpl(basicCellTreeFactory, modeController, resources);
+	}
 }

@@ -31,21 +31,21 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface LoginView extends IsWidget, StatusView {
-    void setPresenter(LoginPresenter presenter);
+	void setPresenter(LoginPresenter presenter);
 
-    public String getUserNameField();
+	public String getUserNameField();
 
-    public String getPasswordField();
+	public String getPasswordField();
 
-    public void focusUserNameField();
+	public void focusUserNameField();
 
-    public void focusPasswordField();
+	public void focusPasswordField();
 
-    void clearFields();
+	void clearFields();
 
-    interface LoginPresenter extends Activity, IActionHandler {
-        public void onUserFieldKeyUp(int keyCode);
+	interface LoginPresenter extends Activity, IActionHandler {
+		public void onUserFieldKeyUp(int keyCode);
 
-        public void onPasswordFieldKeyUp(int keyCode);
-    }
+		public void onPasswordFieldKeyUp(int keyCode);
+	}
 }

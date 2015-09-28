@@ -16,43 +16,46 @@ import static org.mockito.Mockito.verify;
 @RunWith(JukitoRunner.class)
 public class ActionDemoStepTest {
 
-    private SimpleEventBus simpleEventBus = new SimpleEventBus();
-    private ActionDemoStep step = new ActionDemoStep(MainBuilder.LOGIN_DEF, simpleEventBus , 3000, new SafeHtml() {
-        @Override
-        public String asString() {
-            return "";
-        }
-    });
+	private SimpleEventBus simpleEventBus = new SimpleEventBus();
+	private ActionDemoStep step = new ActionDemoStep(MainBuilder.LOGIN_DEF,
+			simpleEventBus, 3000, new SafeHtml() {
+				@Override
+				public String asString() {
+					return "";
+				}
+			});
 
-    @Inject private IActionManager actionManager ;
-    @Inject private ArgumentCaptor<KeyboardActionEvent> eventCaptor;
+	@Inject
+	private IActionManager actionManager;
+	@Inject
+	private ArgumentCaptor<KeyboardActionEvent> eventCaptor;
 
-    @Before
-    public void setUp() throws Exception {
-        simpleEventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
-    }
+	@Before
+	public void setUp() throws Exception {
+		simpleEventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
+	}
 
-    @Test
-    public void testGetActionId() throws Exception {
-       assertEquals(MainBuilder.LOGIN_DEF.getId(), step.getActionId());
-    }
+	@Test
+	public void testGetActionId() throws Exception {
+		assertEquals(MainBuilder.LOGIN_DEF.getId(), step.getActionId());
+	}
 
-    @Test
-    public void testGetAction() throws Exception {
-        Runnable runnable = step.getAction();
-        runnable.run();
-        verify(actionManager).onEvent(eventCaptor.capture());
-        KeyboardActionEvent event = eventCaptor.getValue();
-        assertEquals(MainBuilder.LOGIN_DEF.getId(), event.getActionId());
-    }
+	@Test
+	public void testGetAction() throws Exception {
+		Runnable runnable = step.getAction();
+		runnable.run();
+		verify(actionManager).onEvent(eventCaptor.capture());
+		KeyboardActionEvent event = eventCaptor.getValue();
+		assertEquals(MainBuilder.LOGIN_DEF.getId(), event.getActionId());
+	}
 
-    @Test
-    public void testPauseTime() throws Exception {
-        assertEquals(3000, step.pauseTime());
-    }
+	@Test
+	public void testPauseTime() throws Exception {
+		assertEquals(3000, step.pauseTime());
+	}
 
-    @Test
-    public void testGetContent() throws Exception {
-        assertEquals("", step.getContent().asString());
-    }
+	@Test
+	public void testGetContent() throws Exception {
+		assertEquals("", step.getContent().asString());
+	}
 }

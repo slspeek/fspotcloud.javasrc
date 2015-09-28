@@ -28,44 +28,46 @@ import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class EditUserGroupPlace extends Place {
-    private final long userGroupId;
+	private final long userGroupId;
 
-    public EditUserGroupPlace(long userGroupId) {
-        this.userGroupId = userGroupId;
-    }
+	public EditUserGroupPlace(long userGroupId) {
+		this.userGroupId = userGroupId;
+	}
 
-    public long getUserGroupId() {
-        return userGroupId;
-    }
+	public long getUserGroupId() {
+		return userGroupId;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(userGroupId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(userGroupId);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EditUserGroupPlace)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof EditUserGroupPlace))
+			return false;
 
-        EditUserGroupPlace that = (EditUserGroupPlace) o;
+		EditUserGroupPlace that = (EditUserGroupPlace) o;
 
-        if (userGroupId != that.userGroupId) return false;
+		if (userGroupId != that.userGroupId)
+			return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<EditUserGroupPlace> {
-        @Override
-        public EditUserGroupPlace getPlace(String token) {
-            return new EditUserGroupPlace(Long.parseLong(token));
-        }
+	public static class Tokenizer implements PlaceTokenizer<EditUserGroupPlace> {
+		@Override
+		public EditUserGroupPlace getPlace(String token) {
+			return new EditUserGroupPlace(Long.parseLong(token));
+		}
 
-        @Override
-        public String getToken(EditUserGroupPlace place) {
-            return String.valueOf(place.getUserGroupId());
-        }
-    }
+		@Override
+		public String getToken(EditUserGroupPlace place) {
+			return String.valueOf(place.getUserGroupId());
+		}
+	}
 }

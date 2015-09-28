@@ -33,29 +33,28 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
-
 public class HomeViewImpl extends Composite implements HomeView {
 
+	private static final HomeViewImplUiBinder uiBinder = GWT
+			.create(HomeViewImplUiBinder.class);
 
-    private static final HomeViewImplUiBinder uiBinder = GWT.create(HomeViewImplUiBinder.class);
+	@UiField(provided = true)
+	TextArea messageBox;
+	@UiField(provided = true)
+	ActionToolbar toolbar;
 
-    @UiField(provided = true)
-    TextArea messageBox;
-    @UiField(provided = true)
-    ActionToolbar toolbar;
+	@Inject
+	public HomeViewImpl(ActionToolbar actionToolbar) {
+		toolbar = actionToolbar;
+		messageBox = MainFactory.messageBoard;
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 
-    @Inject
-    public HomeViewImpl(ActionToolbar actionToolbar) {
-        toolbar = actionToolbar;
-        messageBox = MainFactory.messageBoard;
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+	@Override
+	public void setStatusText(String result) {
+		messageBox.setText(result);
+	}
 
-    @Override
-    public void setStatusText(String result) {
-        messageBox.setText(result);
-    }
-
-    interface HomeViewImplUiBinder extends UiBinder<Widget, HomeViewImpl> {
-    }
+	interface HomeViewImplUiBinder extends UiBinder<Widget, HomeViewImpl> {
+	}
 }

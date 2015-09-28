@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.shared.main.test;
 
 import com.google.inject.Provider;
@@ -46,45 +46,47 @@ import static org.junit.Assert.assertEquals;
  * @author steven
  */
 public class UserInfoTest {
-    /**
-     * Test of isLoggedIn method, of class UserInfo.
-     */
-    public static final UserInfo instance = new UserInfo("foo@bar.com", true, true,
-            "index.jsp?dest=", "index.jsp?action=logout&dest=",
-            new Date(1234567), "GAE_LOGIN");
+	/**
+	 * Test of isLoggedIn method, of class UserInfo.
+	 */
+	public static final UserInfo instance = new UserInfo("foo@bar.com", true,
+			true, "index.jsp?dest=", "index.jsp?action=logout&dest=", new Date(
+					1234567), "GAE_LOGIN");
 
-    @Test
-    public void testIsLoggedIn() {
-        boolean expResult = true;
-        boolean result = instance.isLoggedIn();
-        assertEquals(expResult, result);
-    }
+	@Test
+	public void testIsLoggedIn() {
+		boolean expResult = true;
+		boolean result = instance.isLoggedIn();
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of getLogoutUrl method, of class UserInfo.
-     */
-    @Test
-    public void testCreateLogoutUrl() {
-        String dest = "dest";
-        String expResult = "index.jsp?action=logout&dest=";
-        String result = instance.getLogoutUrl();
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Test of getLogoutUrl method, of class UserInfo.
+	 */
+	@Test
+	public void testCreateLogoutUrl() {
+		String dest = "dest";
+		String expResult = "index.jsp?action=logout&dest=";
+		String result = instance.getLogoutUrl();
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of getLoginUrl method, of class UserInfo.
-     */
-    @Test
-    public void testCreateLoginUrl() {
-        String dest = "dest";
-        String expResult = "index.jsp?dest=";
-        String result = instance.getLoginUrl();
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Test of getLoginUrl method, of class UserInfo.
+	 */
+	@Test
+	public void testCreateLoginUrl() {
+		String dest = "dest";
+		String expResult = "index.jsp?dest=";
+		String result = instance.getLoginUrl();
+		assertEquals(expResult, result);
+	}
 
-
-    @Test
-    public void testToString() throws Exception {
-        assertEquals("UserInfo{email='null', isAdmin=false, isLoggedIn=false, logoutUrl='null', loginUrl='null', lastLoginTime=null, loginType='null'}", new UserInfo(null, false,false, null, null, null, null).toString());
-    }
+	@Test
+	public void testToString() throws Exception {
+		assertEquals(
+				"UserInfo{email='null', isAdmin=false, isLoggedIn=false, logoutUrl='null', loginUrl='null', lastLoginTime=null, loginType='null'}",
+				new UserInfo(null, false, false, null, null, null, null)
+						.toString());
+	}
 }

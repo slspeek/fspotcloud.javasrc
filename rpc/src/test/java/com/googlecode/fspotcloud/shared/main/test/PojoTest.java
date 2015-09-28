@@ -39,83 +39,66 @@ import java.util.List;
 import static com.google.common.collect.Lists.newArrayList;
 
 public class PojoTest {
-    // Configured for expectation, so we know when a class gets added or removed.
-    private static final int EXPECTED_CLASS_COUNT = 40;
+	// Configured for expectation, so we know when a class gets added or removed.
+	private static final int EXPECTED_CLASS_COUNT = 40;
 
-    // The package to test
-    private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
-    private List<PojoClass> pojoClasses;
-    private PojoValidator pojoValidator;
-    private final Class<?>[] POJO_CLASSES = new Class<?>[]{
+	// The package to test
+	private static final String POJO_PACKAGE = "com.googlecode.fspotcloud.shared.peer.rpc.actions";
+	private List<PojoClass> pojoClasses;
+	private PojoValidator pojoValidator;
+	private final Class<?>[] POJO_CLASSES = new Class<?>[]{
 
-            AuthenticationAction.class,
-            AuthenticationResult.class,
-            DeleteGroupAction.class,
-            EmailConfirmationAction.class,
-            GetMyUserGroupsAction.class,
-            GetMyUserGroupsResult.class,
-            GetTagTreeAction.class,
-            GetUserGroupAction.class,
-            GetUserGroupResult.class,
-            GetUserInfo.class,
-            GrantUserAction.class,
-            LogoutAction.class,
-            NewUserGroupAction.class,
-            PhotoInfo.class,
-            PhotoInfoStore.class,
-            RequestFullsizeImageAction.class,
-            ResetPasswordAction.class,
-            RevokeTagAction.class,
-            RevokeUserAction.class,
-            SaveUserGroupAction.class,
-            SendConfirmationEmailAction.class,
-            SendPasswordResetAction.class,
-            SignUpAction.class,
-            SignUpResult.class,
-            TagNode.class,
-            TagTreeResult.class,
-            UpdateUserAction.class,
-            UpdateUserResult.class,
-            UserGroupInfo.class,
-            UserInfo.class,
-    };
+	AuthenticationAction.class, AuthenticationResult.class,
+			DeleteGroupAction.class, EmailConfirmationAction.class,
+			GetMyUserGroupsAction.class, GetMyUserGroupsResult.class,
+			GetTagTreeAction.class, GetUserGroupAction.class,
+			GetUserGroupResult.class, GetUserInfo.class, GrantUserAction.class,
+			LogoutAction.class, NewUserGroupAction.class, PhotoInfo.class,
+			PhotoInfoStore.class, RequestFullsizeImageAction.class,
+			ResetPasswordAction.class, RevokeTagAction.class,
+			RevokeUserAction.class, SaveUserGroupAction.class,
+			SendConfirmationEmailAction.class, SendPasswordResetAction.class,
+			SignUpAction.class, SignUpResult.class, TagNode.class,
+			TagTreeResult.class, UpdateUserAction.class,
+			UpdateUserResult.class, UserGroupInfo.class, UserInfo.class,};
 
-    @Before
-    public void setup() {
-        pojoClasses = PojoClassFactory.getPojoClasses("com.googlecode.fspotcloud.shared.main");
+	@Before
+	public void setup() {
+		pojoClasses = PojoClassFactory
+				.getPojoClasses("com.googlecode.fspotcloud.shared.main");
 
-//        for (Class pojo : POJO_CLASSES) {
-//            pojoClasses.add(PojoClassFactory.getPojoClass(pojo));
-//        }
+		//        for (Class pojo : POJO_CLASSES) {
+		//            pojoClasses.add(PojoClassFactory.getPojoClass(pojo));
+		//        }
 
-        pojoValidator = new PojoValidator();
-        // Create Rules to validate structure for POJO_PACKAGE
-        //pojoValidator.addRule(new NoPublicFieldsRule());
-        //pojoValidator.addRule(new NoPrimitivesRule());
-        //pojoValidator.addRule(new NoStaticExceptFinalRule());
-        //pojoValidator.addRule(new GetterMustExistRule());
-        //pojoValidator.addRule(new SetterMustExistRule());
-        //pojoValidator.addRule(new NoNestedClassRule());
-        //pojoValidator.addRule(new BusinessKeyMustExistRule());
+		pojoValidator = new PojoValidator();
+		// Create Rules to validate structure for POJO_PACKAGE
+		//pojoValidator.addRule(new NoPublicFieldsRule());
+		//pojoValidator.addRule(new NoPrimitivesRule());
+		//pojoValidator.addRule(new NoStaticExceptFinalRule());
+		//pojoValidator.addRule(new GetterMustExistRule());
+		//pojoValidator.addRule(new SetterMustExistRule());
+		//pojoValidator.addRule(new NoNestedClassRule());
+		//pojoValidator.addRule(new BusinessKeyMustExistRule());
 
-        // Create Testers to validate behaviour for POJO_PACKAGE
-        //pojoValidator.addTester(new DefaultValuesNullTester());
-        pojoValidator.addTester(new SetterTester());
-        pojoValidator.addTester(new GetterTester());
+		// Create Testers to validate behaviour for POJO_PACKAGE
+		//pojoValidator.addTester(new DefaultValuesNullTester());
+		pojoValidator.addTester(new SetterTester());
+		pojoValidator.addTester(new GetterTester());
 
-        //pojoValidator.addTester(new BusinessIdentityTester());
-    }
+		//pojoValidator.addTester(new BusinessIdentityTester());
+	}
 
-    @Test
-    public void ensureExpectedPojoCount() {
-        Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT,
-                pojoClasses.size());
-    }
+	@Test
+	public void ensureExpectedPojoCount() {
+		Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT,
+				pojoClasses.size());
+	}
 
-    @Test
-    public void testPojoStructureAndBehavior() {
-        for (PojoClass pojoClass : pojoClasses) {
-            pojoValidator.runValidation(pojoClass);
-        }
-    }
+	@Test
+	public void testPojoStructureAndBehavior() {
+		for (PojoClass pojoClass : pojoClasses) {
+			pojoValidator.runValidation(pojoClass);
+		}
+	}
 }

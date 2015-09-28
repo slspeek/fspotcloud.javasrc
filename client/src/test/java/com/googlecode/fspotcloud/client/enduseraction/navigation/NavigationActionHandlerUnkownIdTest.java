@@ -11,16 +11,15 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @RunWith(JukitoRunner.class)
 public class NavigationActionHandlerUnkownIdTest {
 
-    @Inject
-    private NavigationActionHandler handler;
+	@Inject
+	private NavigationActionHandler handler;
 
-    @Inject
-    private Navigator navigator;
+	@Inject
+	private Navigator navigator;
 
-
-    @Test
-    public void testPerformAction() throws Exception {
-           handler.performAction("UNKNOWN CODE");
-        verifyNoMoreInteractions(navigator);
-    }
+	@Test
+	public void testPerformAction() throws Exception {
+		handler.performAction("UNKNOWN CODE");
+		verifyNoMoreInteractions(navigator);
+	}
 }

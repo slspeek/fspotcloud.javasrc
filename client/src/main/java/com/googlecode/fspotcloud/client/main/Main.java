@@ -32,29 +32,28 @@ import com.googlecode.fspotcloud.client.main.ui.StylesSetup;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class Main implements EntryPoint {
-    private final Logger log = Logger.getLogger(Main.class.getName());
-    private final AppGinjector injector = GWT.create(AppGinjector.class);
+	private final Logger log = Logger.getLogger(Main.class.getName());
+	private final AppGinjector injector = GWT.create(AppGinjector.class);
 
-    @Override
-    public void onModuleLoad() {
-        log.info("F-SpotCloud loading");
-        MVPSetup setup;
+	@Override
+	public void onModuleLoad() {
+		log.info("F-SpotCloud loading");
+		MVPSetup setup;
 
-        try {
-            StylesSetup stylesSetup = injector.getStylesSetup();
-            stylesSetup.injectStyles();
-            setup = injector.getMVPSetup();
-            log.info("Gin finished the construction of the application graph!");
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "Gin could not constructed object graph", e);
-            return;
-        }
-        try {
-            setup.setup();
-        } catch (Throwable e) {
-            log.log(Level.SEVERE, "MVP setup failed", e);
-        }
-    }
+		try {
+			StylesSetup stylesSetup = injector.getStylesSetup();
+			stylesSetup.injectStyles();
+			setup = injector.getMVPSetup();
+			log.info("Gin finished the construction of the application graph!");
+		} catch (Throwable e) {
+			log.log(Level.SEVERE, "Gin could not constructed object graph", e);
+			return;
+		}
+		try {
+			setup.setup();
+		} catch (Throwable e) {
+			log.log(Level.SEVERE, "MVP setup failed", e);
+		}
+	}
 }

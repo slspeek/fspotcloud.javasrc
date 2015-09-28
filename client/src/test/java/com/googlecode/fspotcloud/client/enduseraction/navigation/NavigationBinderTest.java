@@ -16,18 +16,18 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class NavigationBinderTest {
 
-    @Inject
-    private NavigationBinder binder;
+	@Inject
+	private NavigationBinder binder;
 
-    @Inject
-    KeyboardPreferences keyboardPreferences;
+	@Inject
+	KeyboardPreferences keyboardPreferences;
 
-
-    @Test
-    public void testBuild() throws Exception {
-        binder.build();
-        List<KeyStroke> keys = keyboardPreferences.getDefaultKeysForAction(NavigationActions.HOME_ID);
-        assertEquals(3, keys.size());
-    }
+	@Test
+	public void testBuild() throws Exception {
+		binder.build();
+		List<KeyStroke> keys = keyboardPreferences
+				.getDefaultKeysForAction(NavigationActions.HOME_ID);
+		assertEquals(3, keys.size());
+	}
 
 }

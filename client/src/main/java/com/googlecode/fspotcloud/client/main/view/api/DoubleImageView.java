@@ -30,27 +30,27 @@ import com.google.gwt.user.client.ui.IsWidget;
 @GwtCompatible
 public interface DoubleImageView extends IsWidget {
 
-    void setImageUrl(String url);
+	void setImageUrl(String url);
 
-    void setPreviousImageUrl(String url);
+	void setPreviousImageUrl(String url);
 
-    void setPresenter(ImagePresenter presenter);
+	void setPresenter(ImagePresenter presenter);
 
-    void setDescription(String date);
+	void setDescription(String date);
 
-    void hideLabelLater(int visibleDuration);
+	void hideLabelLater(int visibleDuration);
 
-    void adjustSize();
+	void adjustSize();
 
-    void addAnimationStyles();
+	void addAnimationStyles();
 
-    void removeAnimationStyles();
+	void removeAnimationStyles();
 
-    void setPreviousImageVisible(boolean visible);
+	void setPreviousImageVisible(boolean visible);
 
-    interface ImagePresenter {
-        void imageClicked();
+	interface ImagePresenter {
+		void imageClicked();
 
-        void init();
-    }
+		void init();
+	}
 }

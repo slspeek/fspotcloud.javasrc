@@ -4,5 +4,5 @@ import com.google.common.annotations.GwtCompatible;
 
 @GwtCompatible
 public interface StatusView {
-    void setStatusText(String status);
+	void setStatusText(String status);
 }

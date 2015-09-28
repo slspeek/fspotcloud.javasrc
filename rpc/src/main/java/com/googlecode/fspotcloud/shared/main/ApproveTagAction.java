@@ -31,49 +31,46 @@ import net.customware.gwt.dispatch.shared.Action;
 
 import static com.google.common.base.Objects.equal;
 
-
 @GwtCompatible
 public class ApproveTagAction implements Action<VoidResult> {
-    private String tagId;
-    private Long userGroupId;
+	private String tagId;
+	private Long userGroupId;
 
-    public ApproveTagAction(String tagId, Long userGroupId) {
-        this.tagId = tagId;
-        this.userGroupId = userGroupId;
-    }
+	public ApproveTagAction(String tagId, Long userGroupId) {
+		this.tagId = tagId;
+		this.userGroupId = userGroupId;
+	}
 
-    public ApproveTagAction() {
-    }
+	public ApproveTagAction() {
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public Long getUsergroupId() {
-        return userGroupId;
-    }
+	public Long getUsergroupId() {
+		return userGroupId;
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("tagId", tagId)
-                .add("usergroupId", userGroupId)
-                .toString();
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("tagId", tagId)
+				.add("usergroupId", userGroupId).toString();
 
-    }
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(tagId, userGroupId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(tagId, userGroupId);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ApproveTagAction) {
-            ApproveTagAction other = (ApproveTagAction) obj;
-            return equal(tagId, other.getTagId())
-                    && equal(userGroupId, other.getUsergroupId());
-        }
-        return false;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ApproveTagAction) {
+			ApproveTagAction other = (ApproveTagAction) obj;
+			return equal(tagId, other.getTagId())
+					&& equal(userGroupId, other.getUsergroupId());
+		}
+		return false;
+	}
 }

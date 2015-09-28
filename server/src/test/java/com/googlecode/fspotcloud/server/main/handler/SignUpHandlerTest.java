@@ -42,30 +42,30 @@ import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class SignUpHandlerTest {
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    @Inject
-    SignUpHandler handler;
-    User user;
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	@Inject
+	SignUpHandler handler;
+	User user;
 
-    @Before
-    public void setUp(UserDao userDao) throws Exception {
-        user = new UserEntity(RMS_FSF_ORG);
-        when(userDao.findOrNew(RMS_FSF_ORG)).thenReturn(user);
-    }
+	@Before
+	public void setUp(UserDao userDao) throws Exception {
+		user = new UserEntity(RMS_FSF_ORG);
+		when(userDao.findOrNew(RMS_FSF_ORG)).thenReturn(user);
+	}
 
-    @Test
-    public void testExecute(UserDao userDao) throws Exception {
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG, "np", "rms");
-        SignUpResult result = handler.execute(action, null);
-        assertTrue(result.getSuccess());
-    }
+	@Test
+	public void testExecute(UserDao userDao) throws Exception {
+		SignUpAction action = new SignUpAction(RMS_FSF_ORG, "np", "rms");
+		SignUpResult result = handler.execute(action, null);
+		assertTrue(result.getSuccess());
+	}
 
-    @Test
-    public void userExists(UserDao userDao) throws Exception {
-        user.setRegistered(true);
+	@Test
+	public void userExists(UserDao userDao) throws Exception {
+		user.setRegistered(true);
 
-        SignUpAction action = new SignUpAction(RMS_FSF_ORG, "np", "rms");
-        SignUpResult result = handler.execute(action, null);
-        assertFalse(result.getSuccess());
-    }
+		SignUpAction action = new SignUpAction(RMS_FSF_ORG, "np", "rms");
+		SignUpResult result = handler.execute(action, null);
+		assertFalse(result.getSuccess());
+	}
 }

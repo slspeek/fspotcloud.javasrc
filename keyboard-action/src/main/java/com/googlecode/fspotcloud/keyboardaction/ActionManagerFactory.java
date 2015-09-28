@@ -6,17 +6,17 @@ import com.google.web.bindery.event.shared.EventBus;
 
 public class ActionManagerFactory implements Provider<IActionManager> {
 
-    private final EventBus eventBus;
-    private final ActionManager actionManager;
+	private final EventBus eventBus;
+	private final ActionManager actionManager;
 
-    @Inject
-    private ActionManagerFactory(EventBus eventBus, ActionManager actionManager) {
-        this.eventBus = eventBus;
-        this.actionManager = actionManager;
-    }
+	@Inject
+	private ActionManagerFactory(EventBus eventBus, ActionManager actionManager) {
+		this.eventBus = eventBus;
+		this.actionManager = actionManager;
+	}
 
-    public IActionManager get() {
-        eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
-        return actionManager;
-    }
+	public IActionManager get() {
+		eventBus.addHandler(KeyboardActionEvent.TYPE, actionManager);
+		return actionManager;
+	}
 }

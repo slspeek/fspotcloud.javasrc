@@ -6,16 +6,16 @@ import com.googlecode.fspotcloud.client.main.view.api.StatusView;
 
 public class StatusViewImpl extends Label implements StatusView {
 
-    private final AdminResources resources;
+	private final AdminResources resources;
 
-    @Inject
-    public StatusViewImpl(AdminResources resources) {
-        this.resources = resources;
-        addStyleName(resources.style().status());
-    }
+	@Inject
+	public StatusViewImpl(AdminResources resources) {
+		this.resources = resources;
+		addStyleName(resources.style().status());
+	}
 
-    @Override
-    public void setStatusText(String status) {
-        setText(status);
-    }
+	@Override
+	public void setStatusText(String status) {
+		setText(status);
+	}
 }

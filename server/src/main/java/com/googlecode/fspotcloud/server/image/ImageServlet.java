@@ -55,63 +55,64 @@ import com.googlecode.simpleblobstore.BlobService;
 @SuppressWarnings("serial")
 @Singleton
 public class ImageServlet extends HttpServlet {
-    @VisibleForTesting
-    @Inject
-    PhotoDao photoManager;
-    @Inject
-    IUserGroupHelper userGroupHelper;
-    @Inject
-    UserService userService;
-    @Inject
-    BlobService blobService;
+	@VisibleForTesting
+	@Inject
+	PhotoDao photoManager;
+	@Inject
+	IUserGroupHelper userGroupHelper;
+	@Inject
+	UserService userService;
+	@Inject
+	BlobService blobService;
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String id = request.getParameter("id");
-        boolean thumb = request.getParameter("thumb") != null;
-        boolean fullSize = request.getParameter("fs") != null;
-        Photo photo = photoManager.find(id);
-        if (photo == null) {
-        	response.sendError(404);
-        	return;
-        }
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		boolean thumb = request.getParameter("thumb") != null;
+		boolean fullSize = request.getParameter("fs") != null;
+		Photo photo = photoManager.find(id);
+		if (photo == null) {
+			response.sendError(404);
+			return;
+		}
 
-        if (userService.isUserAdmin() ||
-                userGroupHelper.containsOneOf(newHashSet(photo.getTagList()))) {
-            String blobKey;
+		if (userService.isUserAdmin()
+				|| userGroupHelper
+						.containsOneOf(newHashSet(photo.getTagList()))) {
+			String blobKey;
 
-            if (thumb) {
-                blobKey = photo.getThumbBlobKey();
-            } else if (fullSize) {
-            	blobKey = photo.getFullsizeImageBlobKey();
-            } else {
-            	blobKey = photo.getImageBlobKey();
-            }
+			if (thumb) {
+				blobKey = photo.getThumbBlobKey();
+			} else if (fullSize) {
+				blobKey = photo.getFullsizeImageBlobKey();
+			} else {
+				blobKey = photo.getImageBlobKey();
+			}
 
-            response.setContentType("image/jpeg");
-            setCacheExpireDate(response, 3600 * 24 * 30);
-            blobService.serve(new BlobKey(blobKey), response);
-        }
-    }
+			response.setContentType("image/jpeg");
+			setCacheExpireDate(response, 3600 * 24 * 30);
+			blobService.serve(new BlobKey(blobKey), response);
+		}
+	}
 
-    public static void setCacheExpireDate(HttpServletResponse response,
-                                          int seconds) {
-        if (response != null) {
-            Calendar cal = new GregorianCalendar();
-            cal.roll(Calendar.SECOND, seconds);
-            response.setHeader("Cache-Control",
-                    "PUBLIC, max-age=" + seconds + ", must-revalidate");
-            response.setHeader("Expires",
-                    htmlExpiresDateFormat().format(cal.getTime()));
-        }
-    }
+	public static void setCacheExpireDate(HttpServletResponse response,
+			int seconds) {
+		if (response != null) {
+			Calendar cal = new GregorianCalendar();
+			cal.roll(Calendar.SECOND, seconds);
+			response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds
+					+ ", must-revalidate");
+			response.setHeader("Expires",
+					htmlExpiresDateFormat().format(cal.getTime()));
+		}
+	}
 
-    public static DateFormat htmlExpiresDateFormat() {
-        DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
-                Locale.US);
-        httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+	public static DateFormat htmlExpiresDateFormat() {
+		DateFormat httpDateFormat = new SimpleDateFormat(
+				"EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+		httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        return httpDateFormat;
-    }
+		return httpDateFormat;
+	}
 }

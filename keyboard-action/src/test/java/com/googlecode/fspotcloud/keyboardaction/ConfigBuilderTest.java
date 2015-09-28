@@ -18,54 +18,57 @@ import static org.junit.Assert.assertSame;
 @RunWith(JukitoRunner.class)
 public class ConfigBuilderTest {
 
-    public static class Module extends JukitoModule {
+	public static class Module extends JukitoModule {
 
-        @Override
-        protected void configureTest() {
-            bind(new TypeLiteral<List<ActionCategory>>() {
-            }).toInstance(Lists.<ActionCategory>newArrayList());
-        }
-    }
+		@Override
+		protected void configureTest() {
+			bind(new TypeLiteral<List<ActionCategory>>() {
+			}).toInstance(Lists.<ActionCategory> newArrayList());
+		}
+	}
 
-    @Inject
-    private ConfigBuilder configBuilder;
-    @Inject
-    private ActionHandlerRegistry actionHandlerRegistry;
-    @Inject
-    private KeyboardPreferences keyboardPreferences;
-    @Inject
-    private ActionUIRegistry actionUIRegistry;
+	@Inject
+	private ConfigBuilder configBuilder;
+	@Inject
+	private ActionHandlerRegistry actionHandlerRegistry;
+	@Inject
+	private KeyboardPreferences keyboardPreferences;
+	@Inject
+	private ActionUIRegistry actionUIRegistry;
 
-    private ActionCategory category;
-    private IActionHandler dummy = new IActionHandler() {
-        @Override
-        public void performAction(String actionId) {
+	private ActionCategory category;
+	private IActionHandler dummy = new IActionHandler() {
+		@Override
+		public void performAction(String actionId) {
 
-        }
-    };
-    private Relevance relevance = new Relevance().addDefaultKeys(KeyStroke.ESC);
+		}
+	};
+	private Relevance relevance = new Relevance().addDefaultKeys(KeyStroke.ESC);
 
-    @Before
-    public void setUp() throws Exception {
-        category = configBuilder.createCategory("test");
-    }
+	@Before
+	public void setUp() throws Exception {
+		category = configBuilder.createCategory("test");
+	}
 
-    @Test
-    public void testAddBinding() throws Exception {
-        configBuilder.addBinding(category, MainBuilder.LOGIN_DEF, dummy, relevance);
-        assertSame(dummy, actionHandlerRegistry.getAction(MainBuilder.LOGIN));
-        doVerification();
-    }
+	@Test
+	public void testAddBinding() throws Exception {
+		configBuilder.addBinding(category, MainBuilder.LOGIN_DEF, dummy,
+				relevance);
+		assertSame(dummy, actionHandlerRegistry.getAction(MainBuilder.LOGIN));
+		doVerification();
+	}
 
-    private void doVerification() {
-        assertEquals(MainBuilder.LOGIN_DEF, actionUIRegistry.getAction(MainBuilder.LOGIN));
-        final List<KeyStroke> defaultKeysForAction = keyboardPreferences.getDefaultKeysForAction(MainBuilder.LOGIN);
-        assertEquals(1, defaultKeysForAction.size());
-    }
+	private void doVerification() {
+		assertEquals(MainBuilder.LOGIN_DEF,
+				actionUIRegistry.getAction(MainBuilder.LOGIN));
+		final List<KeyStroke> defaultKeysForAction = keyboardPreferences
+				.getDefaultKeysForAction(MainBuilder.LOGIN);
+		assertEquals(1, defaultKeysForAction.size());
+	}
 
-    @Test
-    public void testRegister() throws Exception {
-        configBuilder.register(category, MainBuilder.LOGIN_DEF, relevance);
-        doVerification();
-    }
+	@Test
+	public void testRegister() throws Exception {
+		configBuilder.register(category, MainBuilder.LOGIN_DEF, relevance);
+		doVerification();
+	}
 }

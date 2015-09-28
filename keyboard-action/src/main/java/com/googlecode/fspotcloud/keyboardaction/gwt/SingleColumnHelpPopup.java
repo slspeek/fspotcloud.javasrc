@@ -41,54 +41,57 @@ import com.googlecode.fspotcloud.keyboardaction.HelpResources;
 
 import java.util.logging.Logger;
 
-
 public class SingleColumnHelpPopup extends PopupPanel {
-    private final Logger log = Logger.getLogger(SingleColumnHelpPopup.class.getName());
-    private static final HelpPopupUiBinder uiBinder = GWT.create(HelpPopupUiBinder.class);
-    @UiField
-    Anchor closeAnchor;
-    @UiField
-    DivElement helpBodyLeft;
-    @UiField
-    DivElement optionalContentDiv;
-    @UiField
-    Label titleLabel;
-    private final HelpResources helpResources;
-    private HelpConfig helpConfig;
+	private final Logger log = Logger.getLogger(SingleColumnHelpPopup.class
+			.getName());
+	private static final HelpPopupUiBinder uiBinder = GWT
+			.create(HelpPopupUiBinder.class);
+	@UiField
+	Anchor closeAnchor;
+	@UiField
+	DivElement helpBodyLeft;
+	@UiField
+	DivElement optionalContentDiv;
+	@UiField
+	Label titleLabel;
+	private final HelpResources helpResources;
+	private HelpConfig helpConfig;
 
-    @Inject
-    private SingleColumnHelpPopup(HelpResources helpResources) {
-        super(true);
-        this.helpResources = helpResources;
+	@Inject
+	private SingleColumnHelpPopup(HelpResources helpResources) {
+		super(true);
+		this.helpResources = helpResources;
 
-        setWidget(uiBinder.createAndBindUi(this));
+		setWidget(uiBinder.createAndBindUi(this));
 
-        addStyleName(helpResources.style().helpPopup());
-    }
+		addStyleName(helpResources.style().helpPopup());
+	}
 
-    public void setHelpConfig(HelpConfig helpConfig) {
-        this.helpConfig = helpConfig;
-        setTitle(helpConfig.getTitle());
-    }
+	public void setHelpConfig(HelpConfig helpConfig) {
+		this.helpConfig = helpConfig;
+		setTitle(helpConfig.getTitle());
+	}
 
-    public void setLeft(SafeHtml text) {
-        helpBodyLeft.setInnerSafeHtml(text);
-    }
+	public void setLeft(SafeHtml text) {
+		helpBodyLeft.setInnerSafeHtml(text);
+	}
 
-    public void setTitle(String text) {
-        titleLabel.setText(text);
-    }
+	public void setTitle(String text) {
+		titleLabel.setText(text);
+	}
 
-    public void setOptionalContentDiv(SafeHtml optionalContentDiv) {
-        this.optionalContentDiv.setInnerSafeHtml(optionalContentDiv);
-    }
+	public void setOptionalContentDiv(SafeHtml optionalContentDiv) {
+		this.optionalContentDiv.setInnerSafeHtml(optionalContentDiv);
+	}
 
-    interface HelpPopupUiBinder extends UiBinder<HTMLPanel, SingleColumnHelpPopup> {
-    }
+	interface HelpPopupUiBinder
+			extends
+				UiBinder<HTMLPanel, SingleColumnHelpPopup> {
+	}
 
-    @UiHandler("closeAnchor")
-    public void handleClose(ClickEvent clickEvent) {
-        hide();
-    }
+	@UiHandler("closeAnchor")
+	public void handleClose(ClickEvent clickEvent) {
+		hide();
+	}
 
 }

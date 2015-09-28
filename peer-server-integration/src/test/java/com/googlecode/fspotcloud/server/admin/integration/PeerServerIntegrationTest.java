@@ -41,148 +41,149 @@ import java.sql.SQLException;
 import static org.testng.AssertJUnit.*;
 
 public class PeerServerIntegrationTest extends PeerServerEnvironment {
-    private TearDown toTearDown;
+	private TearDown toTearDown;
 
-    @BeforeMethod
-    public void setUp(Method m) throws SQLException {
-        // Make this the call to TestNgGuiceBerry.setUp as early as possible
-        toTearDown = TestNgGuiceBerry.setUp(this, m,
-                NoAuthPlaceHolderIntegrationModule.class);
-        tagDao.deleteBulk(1000);
-        photoDao.deleteBulk(1000);
-        peers.deleteBulk(1000);
-        setUpPeer();
-    }
+	@BeforeMethod
+	public void setUp(Method m) throws SQLException {
+		// Make this the call to TestNgGuiceBerry.setUp as early as possible
+		toTearDown = TestNgGuiceBerry.setUp(this, m,
+				NoAuthPlaceHolderIntegrationModule.class);
+		tagDao.deleteBulk(1000);
+		photoDao.deleteBulk(1000);
+		peers.deleteBulk(1000);
+		setUpPeer();
+	}
 
-    @AfterMethod
-    public void tearDown() throws Exception {
-       
-        // Make this the call to TestNgGuiceBerry.tearDown as late as possible
-        toTearDown.tearDown();
-    }
+	@AfterMethod
+	public void tearDown() throws Exception {
 
-    @Test
-    public void shouldRemoveSomeFurniture() throws Exception {
-        testImportAllTags();
-        importTag("1");
-        verfiyFurnitureIsLoaded();
-        setPeerTestDatabase("photos_smaller.db");
-        synchronizePeer();
-        synchronizePeer();
-        verifyImagesWereRemoved();
-        verfiyFurnitureFirstPhaseIsLoaded();
-    }
+		// Make this the call to TestNgGuiceBerry.tearDown as late as possible
+		toTearDown.tearDown();
+	}
 
-    @Test
-    public void testImportFurnitureInThreePhases() throws Exception {
-        testImportAllTags();
-        setPeerTestDatabase("photos_smaller.db");
-        importTag("1");
-        verfiyFurnitureFirstPhaseIsLoaded();
-        setUpPeer();
-        synchronizePeer();
-        verfiyFurnitureIsLoaded();
-        setPeerTestDatabase("photos_smaller.db");
-        synchronizePeer();
-        verifyImagesWereRemoved();
-        photoInfo.assertPhotosRemoved("6");
-        verfiyFurnitureFirstPhaseIsLoaded();
-    }
+	@Test
+	public void shouldRemoveSomeFurniture() throws Exception {
+		testImportAllTags();
+		importTag("1");
+		verfiyFurnitureIsLoaded();
+		setPeerTestDatabase("photos_smaller.db");
+		synchronizePeer();
+		synchronizePeer();
+		verifyImagesWereRemoved();
+		verfiyFurnitureFirstPhaseIsLoaded();
+	}
 
-    @Test
-    public void getTagTreeSimple() throws Exception {
-        setUpPeer();
+	@Test
+	public void testImportFurnitureInThreePhases() throws Exception {
+		testImportAllTags();
+		setPeerTestDatabase("photos_smaller.db");
+		importTag("1");
+		verfiyFurnitureFirstPhaseIsLoaded();
+		setUpPeer();
+		synchronizePeer();
+		verfiyFurnitureIsLoaded();
+		setPeerTestDatabase("photos_smaller.db");
+		synchronizePeer();
+		verifyImagesWereRemoved();
+		photoInfo.assertPhotosRemoved("6");
+		verfiyFurnitureFirstPhaseIsLoaded();
+	}
 
-        TagTreeResult result = fetchTagTree();
-        assertTrue(result.getTree().getChildren().isEmpty());
-    }
+	@Test
+	public void getTagTreeSimple() throws Exception {
+		setUpPeer();
 
-    @Test
-    public void getAdminTagTreeSimple() throws Exception {
-        setUpPeer();
+		TagTreeResult result = fetchTagTree();
+		assertTrue(result.getTree().getChildren().isEmpty());
+	}
 
-        TagTreeResult result = fetchAdminTagTree();
-        assertTrue(result.getTree().getChildren().isEmpty());
-    }
+	@Test
+	public void getAdminTagTreeSimple() throws Exception {
+		setUpPeer();
 
-    @Test
-    public void getAdminTagTree() throws Exception {
-        setUpPeer();
-        synchronizePeer();
-        importTag("1");
+		TagTreeResult result = fetchAdminTagTree();
+		assertTrue(result.getTree().getChildren().isEmpty());
+	}
 
-        TagTreeResult result = fetchAdminTagTree();
-        assertFalse(result.getTree().getChildren().isEmpty());
-    }
+	@Test
+	public void getAdminTagTree() throws Exception {
+		setUpPeer();
+		synchronizePeer();
+		importTag("1");
 
-    @Test
-    public void testGetPeerMetaData() throws DispatchException, SQLException {
-        setUpPeer();
+		TagTreeResult result = fetchAdminTagTree();
+		assertFalse(result.getTree().getChildren().isEmpty());
+	}
 
-        PeerMetaDataResult result = dispatch.execute(new GetPeerMetaDataAction());
-        assertEquals(28, result.getPhotoCount());
-        assertEquals(5, result.getTagCount());
-    }
+	@Test
+	public void testGetPeerMetaData() throws DispatchException, SQLException {
+		setUpPeer();
 
-    @Test
-    public void testImportGlass() throws Exception {
-        setUpPeer();
-        testImportAllTags();
-        importTag("5");
-        photoDao.find("3");
-    }
+		PeerMetaDataResult result = dispatch
+				.execute(new GetPeerMetaDataAction());
+		assertEquals(28, result.getPhotoCount());
+		assertEquals(5, result.getTagCount());
+	}
 
-    @Test
-    public void testImportFurniture() throws Exception {
-        testImportAllTags();
-        importTag("1");
-        verfiyFurnitureIsLoaded();
-    }
+	@Test
+	public void testImportGlass() throws Exception {
+		setUpPeer();
+		testImportAllTags();
+		importTag("5");
+		photoDao.find("3");
+	}
 
-    @Test
-    public void testImportFurnitureInTwoPhases() throws Exception {
-        testImportAllTags();
-        setPeerTestDatabase("photos_smaller.db");
-        importTag("1");
-        verfiyFurnitureFirstPhaseIsLoaded();
-        setUpPeer();
-        synchronizePeer();
-        verfiyFurnitureIsLoaded();
-    }
+	@Test
+	public void testImportFurniture() throws Exception {
+		testImportAllTags();
+		importTag("1");
+		verfiyFurnitureIsLoaded();
+	}
 
-    @Test
-    public void testUImportFurniture() throws Exception {
-        testImportAllTags();
-        setPeerTestDatabase("photos_smaller.db");
-        importTag("1");
-        verfiyFurnitureFirstPhaseIsLoaded();
-        unImportTag("1");
-        verifiyFurnitureFirstPhaseWasRemoved();
-    }
+	@Test
+	public void testImportFurnitureInTwoPhases() throws Exception {
+		testImportAllTags();
+		setPeerTestDatabase("photos_smaller.db");
+		importTag("1");
+		verfiyFurnitureFirstPhaseIsLoaded();
+		setUpPeer();
+		synchronizePeer();
+		verfiyFurnitureIsLoaded();
+	}
 
-    @Test
-    public void testRemovingOfTags() throws Exception {
-        testImportAllTags();
-        importTag("2");
-        assertComputersIsLoaded();
-        importTag("4");
-        assertPCLoaded();
-        dispatch.execute(new UserDeletesAllAction());
-        assertTrue(photoInfo.isEmpty());
-        tagInfo.assertTagsRemoved("1", "2", "3", "4", "5");
-    }
+	@Test
+	public void testUImportFurniture() throws Exception {
+		testImportAllTags();
+		setPeerTestDatabase("photos_smaller.db");
+		importTag("1");
+		verfiyFurnitureFirstPhaseIsLoaded();
+		unImportTag("1");
+		verifiyFurnitureFirstPhaseWasRemoved();
+	}
 
-    @Test
-    public void testOverlapWithTagRemoval() throws Exception {
-        testImportAllTags();
-        importTag("2");
-        assertComputersIsLoaded();
-        importTag("4");
-        assertPCLoaded();
-        unImportTag("2");
-        assertPCLoaded();
-        unImportTag("4");
-        photoInfo.assertPhotosRemoved("17", "18", "19", "20", "21", "22", "23",
-                "24", "25", "26", "27", "28", "9", "11");
-    }
+	@Test
+	public void testRemovingOfTags() throws Exception {
+		testImportAllTags();
+		importTag("2");
+		assertComputersIsLoaded();
+		importTag("4");
+		assertPCLoaded();
+		dispatch.execute(new UserDeletesAllAction());
+		assertTrue(photoInfo.isEmpty());
+		tagInfo.assertTagsRemoved("1", "2", "3", "4", "5");
+	}
+
+	@Test
+	public void testOverlapWithTagRemoval() throws Exception {
+		testImportAllTags();
+		importTag("2");
+		assertComputersIsLoaded();
+		importTag("4");
+		assertPCLoaded();
+		unImportTag("2");
+		assertPCLoaded();
+		unImportTag("4");
+		photoInfo.assertPhotosRemoved("17", "18", "19", "20", "21", "22", "23",
+				"24", "25", "26", "27", "28", "9", "11");
+	}
 }

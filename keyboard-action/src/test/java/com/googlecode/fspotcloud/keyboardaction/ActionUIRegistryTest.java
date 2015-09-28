@@ -11,12 +11,13 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class ActionUIRegistryTest {
 
-    @Inject
-    private ActionUIRegistry registry;
+	@Inject
+	private ActionUIRegistry registry;
 
-    @Test
-    public void testGetAction() throws Exception {
-        registry.putAction(MainBuilder.LOGIN_DEF);
-        assertEquals(MainBuilder.LOGIN_DEF, registry.getAction(MainBuilder.LOGIN_DEF.getId()));
-    }
+	@Test
+	public void testGetAction() throws Exception {
+		registry.putAction(MainBuilder.LOGIN_DEF);
+		assertEquals(MainBuilder.LOGIN_DEF,
+				registry.getAction(MainBuilder.LOGIN_DEF.getId()));
+	}
 }

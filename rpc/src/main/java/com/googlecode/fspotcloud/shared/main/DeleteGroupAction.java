@@ -29,42 +29,38 @@ import com.google.common.base.Objects;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class DeleteGroupAction implements Action<VoidResult> {
-    private Long id;
+	private Long id;
 
-    public DeleteGroupAction() {
-    }
+	public DeleteGroupAction() {
+	}
 
-    public DeleteGroupAction(Long id) {
-        this.id = id;
-    }
+	public DeleteGroupAction(Long id) {
+		this.id = id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof DeleteGroupAction) {
-            DeleteGroupAction that = (DeleteGroupAction) o;
-            return Objects.equal(id, that.id);
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof DeleteGroupAction) {
+			DeleteGroupAction that = (DeleteGroupAction) o;
+			return Objects.equal(id, that.id);
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(id);
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("groupId", id)
-                .toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("groupId", id).toString();
+	}
 }
-

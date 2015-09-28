@@ -35,28 +35,29 @@ import javax.inject.Inject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class PostGoogleLoginWorker implements PostThirdPartyLoginWorker {
-    @Inject
-    Logger log;
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private ILoginMetaDataUpdater metaDataUpdater;
-    @Inject
-    private UserService googleUserService;
+	@Inject
+	Logger log;
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private ILoginMetaDataUpdater metaDataUpdater;
+	@Inject
+	private UserService googleUserService;
 
-    @Override
-    public void doWork() {
-        User gaeUser = googleUserService.getCurrentUser();
+	@Override
+	public void doWork() {
+		User gaeUser = googleUserService.getCurrentUser();
 
-        if (gaeUser != null) {
-            String email = gaeUser.getEmail();
-            com.googlecode.fspotcloud.server.model.api.User user = userDao.findOrNew(email);
-            metaDataUpdater.doUpdate(user, LoginMetaData.Type.GAE_LOGIN);
-            log.info("User: " + email + " is logged on and after loginMeta update");
-        } else {
-            log.log(Level.INFO, "After a google login, no user was found.");
-        }
-    }
+		if (gaeUser != null) {
+			String email = gaeUser.getEmail();
+			com.googlecode.fspotcloud.server.model.api.User user = userDao
+					.findOrNew(email);
+			metaDataUpdater.doUpdate(user, LoginMetaData.Type.GAE_LOGIN);
+			log.info("User: " + email
+					+ " is logged on and after loginMeta update");
+		} else {
+			log.log(Level.INFO, "After a google login, no user was found.");
+		}
+	}
 }

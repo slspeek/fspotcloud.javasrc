@@ -30,13 +30,12 @@ import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseManager;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public class PeerDatabaseGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        install(new J2eeModelModule(1000, "derby-test"));
-        install(new J2eeSimpleBlobstoreServletModule());
-        bind(SimpleDAONamedId.class).to(PeerDatabaseManager.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		install(new J2eeModelModule(1000, "derby-test"));
+		install(new J2eeSimpleBlobstoreServletModule());
+		bind(SimpleDAONamedId.class).to(PeerDatabaseManager.class);
+	}
 }

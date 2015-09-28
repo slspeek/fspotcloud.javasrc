@@ -6,25 +6,25 @@ import com.googlecode.fspotcloud.client.enduseraction.application.ApplicationAct
 import com.googlecode.fspotcloud.keyboardaction.KeyboardActionFactory;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbar;
 
-public class EmailConfirmationToolbarProvider implements Provider<ActionToolbar> {
+public class EmailConfirmationToolbarProvider
+		implements
+			Provider<ActionToolbar> {
 
+	private final KeyboardActionFactory keyboardActionFactory;
+	private final ApplicationActions actions;
 
-    private final KeyboardActionFactory keyboardActionFactory;
-    private final ApplicationActions actions;
+	@Inject
+	public EmailConfirmationToolbarProvider(
+			KeyboardActionFactory keyboardActionFactory,
+			ApplicationActions actions) {
+		this.keyboardActionFactory = keyboardActionFactory;
+		this.actions = actions;
+	}
 
-
-    @Inject
-    public EmailConfirmationToolbarProvider(KeyboardActionFactory keyboardActionFactory,
-                                            ApplicationActions actions) {
-        this.keyboardActionFactory = keyboardActionFactory;
-        this.actions = actions;
-    }
-
-
-    @Override
-    public ActionToolbar get() {
-        ActionToolbar toolbar = keyboardActionFactory.getToolBar();
-        toolbar.add(actions.login);
-        return toolbar;
-    }
+	@Override
+	public ActionToolbar get() {
+		ActionToolbar toolbar = keyboardActionFactory.getToolBar();
+		toolbar.add(actions.login);
+		return toolbar;
+	}
 }

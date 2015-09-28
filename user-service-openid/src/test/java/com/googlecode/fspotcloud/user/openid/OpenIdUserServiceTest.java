@@ -39,106 +39,108 @@ import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class OpenIdUserServiceTest {
-    public static final String FOO_BAR_COM = "foo@bar.com";
-    public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
-    @Inject
-    OpenIdUserService instance;
-    @Inject
-    ILoginMetaData metaData;
+	public static final String FOO_BAR_COM = "foo@bar.com";
+	public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+	@Inject
+	OpenIdUserService instance;
+	@Inject
+	ILoginMetaData metaData;
 
-    @After
-    public void tearDown() {
-    }
+	@After
+	public void tearDown() {
+	}
 
-    /**
-     * Test of createLoginURL method, of class OpenIdUserService.
-     */
-    @Test
-    public void testCreateLoginURL() {
-        String destinationURL = "#Place:";
-        String expResult = "index.jsp?dest=http://localhost:8080/context/" + destinationURL;
-        String result = instance.getThirdPartyLoginURL(destinationURL);
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Test of createLoginURL method, of class OpenIdUserService.
+	 */
+	@Test
+	public void testCreateLoginURL() {
+		String destinationURL = "#Place:";
+		String expResult = "index.jsp?dest=http://localhost:8080/context/"
+				+ destinationURL;
+		String result = instance.getThirdPartyLoginURL(destinationURL);
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of createLogoutURL method, of class OpenIdUserService.
-     */
-    @Test
-    public void testCreateLogoutURL() {
-        String destinationURL = "#Place:";
-        String expResult = "index.jsp?logout=true&dest=http://localhost:8080/context/" + destinationURL;
-        String result = instance.getThirdPartyLogoutURL(destinationURL);
-        assertEquals(expResult, result);
-    }
+	/**
+	 * Test of createLogoutURL method, of class OpenIdUserService.
+	 */
+	@Test
+	public void testCreateLogoutURL() {
+		String destinationURL = "#Place:";
+		String expResult = "index.jsp?logout=true&dest=http://localhost:8080/context/"
+				+ destinationURL;
+		String result = instance.getThirdPartyLogoutURL(destinationURL);
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of getTagId method, of class OpenIdUserService.
-     *
-     * @param session DOCUMENT ME!
-     */
-    @Test
-    public void testGetEmailNull(ISessionEmail sessionEmail) {
-        when(metaData.getEmail()).thenReturn(null);
+	/**
+	 * Test of getTagId method, of class OpenIdUserService.
+	 *
+	 * @param session DOCUMENT ME!
+	 */
+	@Test
+	public void testGetEmailNull(ISessionEmail sessionEmail) {
+		when(metaData.getEmail()).thenReturn(null);
 
-        String expResult = null;
-        String result = instance.getEmail();
-        assertEquals(expResult, result);
-    }
+		String expResult = null;
+		String result = instance.getEmail();
+		assertEquals(expResult, result);
+	}
 
-    @Test
-    public void testGetEmailFoo() {
-        when(metaData.getEmail()).thenReturn(FOO_BAR_COM);
+	@Test
+	public void testGetEmailFoo() {
+		when(metaData.getEmail()).thenReturn(FOO_BAR_COM);
 
-        String expResult = FOO_BAR_COM;
-        String result = instance.getEmail();
-        assertEquals(expResult, result);
-    }
+		String expResult = FOO_BAR_COM;
+		String result = instance.getEmail();
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of isUserLoggedIn method, of class OpenIdUserService.
-     */
-    @Test
-    public void testIsUserLoggedIn() {
-        when(metaData.getEmail()).thenReturn(FOO_BAR_COM);
+	/**
+	 * Test of isUserLoggedIn method, of class OpenIdUserService.
+	 */
+	@Test
+	public void testIsUserLoggedIn() {
+		when(metaData.getEmail()).thenReturn(FOO_BAR_COM);
 
-        boolean expResult = true;
-        boolean result = instance.isUserLoggedIn();
-        assertEquals(expResult, result);
-    }
+		boolean expResult = true;
+		boolean result = instance.isUserLoggedIn();
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of isUserAdmin method, of class OpenIdUserService.
-     */
-    @Test
-    public void testIsNotUserAdmin() {
-        System.out.println("isUserAdmin");
+	/**
+	 * Test of isUserAdmin method, of class OpenIdUserService.
+	 */
+	@Test
+	public void testIsNotUserAdmin() {
+		System.out.println("isUserAdmin");
 
-        boolean expResult = false;
-        boolean result = instance.isUserAdmin();
-        assertEquals(expResult, result);
-    }
+		boolean expResult = false;
+		boolean result = instance.isUserAdmin();
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of isUserAdmin method, of class OpenIdUserService.
-     *
-     * @param session DOCUMENT ME!
-     */
-    @Test
-    public void testIsUserAdmin() {
-        when(metaData.getEmail()).thenReturn(SLSPEEK_GMAIL_COM);
+	/**
+	 * Test of isUserAdmin method, of class OpenIdUserService.
+	 *
+	 * @param session DOCUMENT ME!
+	 */
+	@Test
+	public void testIsUserAdmin() {
+		when(metaData.getEmail()).thenReturn(SLSPEEK_GMAIL_COM);
 
-        boolean expResult = true;
-        boolean result = instance.isUserAdmin();
-        assertEquals(expResult, result);
-    }
+		boolean expResult = true;
+		boolean result = instance.isUserAdmin();
+		assertEquals(expResult, result);
+	}
 
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
-            bind(String.class).annotatedWith(AdminEmail.class)
-                    .toInstance(SLSPEEK_GMAIL_COM);
-            bind(String.class).annotatedWith(ServerAddress.class)
-                    .toInstance("http://localhost:8080/context");
-        }
-    }
+	public static class Module extends JukitoModule {
+		protected void configureTest() {
+			bind(String.class).annotatedWith(AdminEmail.class).toInstance(
+					SLSPEEK_GMAIL_COM);
+			bind(String.class).annotatedWith(ServerAddress.class).toInstance(
+					"http://localhost:8080/context");
+		}
+	}
 }

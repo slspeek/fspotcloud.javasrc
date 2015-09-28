@@ -30,69 +30,68 @@ import com.googlecode.fspotcloud.client.main.gin.RasterWidth;
 import com.googlecode.fspotcloud.client.place.api.Raster;
 import com.googlecode.fspotcloud.client.place.api.RasterAware;
 
-
 public class RasterState implements Raster, RasterAware {
 
-    public final int rasterWidth;
-    public final int rasterHeight;
-    private int width;
-    private int height;
-    private boolean autoHide;
+	public final int rasterWidth;
+	public final int rasterHeight;
+	private int width;
+	private int height;
+	private boolean autoHide;
 
-    @Inject
-    public RasterState(@RasterWidth int rasterWidth,
-                       @RasterHeight int rasterHeight) {
-        this.rasterWidth = rasterWidth;
-        this.rasterHeight = rasterHeight;
-        this.width = rasterWidth;
-        this.height = rasterHeight;
-    }
+	@Inject
+	public RasterState(@RasterWidth int rasterWidth,
+			@RasterHeight int rasterHeight) {
+		this.rasterWidth = rasterWidth;
+		this.rasterHeight = rasterHeight;
+		this.width = rasterWidth;
+		this.height = rasterHeight;
+	}
 
-    @Override
-    public void setColumnCount(int width) {
-        if (this.height * width > 1) {
-            this.width = width;
-        }
-    }
+	@Override
+	public void setColumnCount(int width) {
+		if (this.height * width > 1) {
+			this.width = width;
+		}
+	}
 
-    @Override
-    public void setRowCount(int height) {
-        if (this.width * height > 1) {
-            this.height = height;
-        }
-    }
+	@Override
+	public void setRowCount(int height) {
+		if (this.width * height > 1) {
+			this.height = height;
+		}
+	}
 
-    @Override
-    public void reset() {
-        setColumnCount(rasterWidth);
-        setRowCount(rasterHeight);
-    }
+	@Override
+	public void reset() {
+		setColumnCount(rasterWidth);
+		setRowCount(rasterHeight);
+	}
 
-    @Override
-    public void increaseColumnCount(int amount) {
-        setColumnCount(getColumnCount() + amount);
-    }
+	@Override
+	public void increaseColumnCount(int amount) {
+		setColumnCount(getColumnCount() + amount);
+	}
 
-    @Override
-    public void increaseRowCount(int amount) {
-        setRowCount(getRowCount() + amount);
-    }
+	@Override
+	public void increaseRowCount(int amount) {
+		setRowCount(getRowCount() + amount);
+	}
 
-    @Override
-    public int getRowCount() {
-        return height;
-    }
+	@Override
+	public int getRowCount() {
+		return height;
+	}
 
-    @Override
-    public int getColumnCount() {
-        return width;
-    }
+	@Override
+	public int getColumnCount() {
+		return width;
+	}
 
-    public void setAutoHide(boolean autoHide) {
-        this.autoHide = autoHide;
-    }
+	public void setAutoHide(boolean autoHide) {
+		this.autoHide = autoHide;
+	}
 
-    public boolean isAutoHide() {
-        return autoHide;
-    }
+	public boolean isAutoHide() {
+		return autoHide;
+	}
 }

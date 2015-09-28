@@ -33,98 +33,91 @@ import com.googlecode.fspotcloud.client.place.api.Raster;
 import static com.google.common.base.Objects.equal;
 
 public class BasePlace extends Place implements HasImage, Raster {
-    private final String tagId;
-    private final String photoId;
-    private final int columnCount;
-    private final int rowCount;
-    private final boolean autoHide;
+	private final String tagId;
+	private final String photoId;
+	private final int columnCount;
+	private final int rowCount;
+	private final boolean autoHide;
 
-    public BasePlace(String tagId, String photoId) {
-        this(tagId, photoId, 1, 1, false);
-    }
+	public BasePlace(String tagId, String photoId) {
+		this(tagId, photoId, 1, 1, false);
+	}
 
-    public BasePlace(String tagId, String photoId, int columnCount, int rowCount, boolean autoHide) {
-        this.tagId = tagId;
-        this.photoId = photoId;
-        this.columnCount = columnCount;
-        this.rowCount = rowCount;
-        this.autoHide = autoHide;
-    }
+	public BasePlace(String tagId, String photoId, int columnCount,
+			int rowCount, boolean autoHide) {
+		this.tagId = tagId;
+		this.photoId = photoId;
+		this.columnCount = columnCount;
+		this.rowCount = rowCount;
+		this.autoHide = autoHide;
+	}
 
-    public BasePlace(String tagId, String photoId, int columnCount, int rowCount) {
-        this(tagId, photoId, columnCount, rowCount, false);
-    }
+	public BasePlace(String tagId, String photoId, int columnCount, int rowCount) {
+		this(tagId, photoId, columnCount, rowCount, false);
+	}
 
-    public boolean isAutoHide() {
-        return autoHide;
-    }
+	public boolean isAutoHide() {
+		return autoHide;
+	}
 
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 
-    public String getPhotoId() {
-        return photoId;
-    }
+	public String getPhotoId() {
+		return photoId;
+	}
 
-    public int getColumnCount() {
-        return columnCount;
-    }
+	public int getColumnCount() {
+		return columnCount;
+	}
 
-    public int getRowCount() {
-        return rowCount;
-    }
+	public int getRowCount() {
+		return rowCount;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(
-                tagId,
-                photoId,
-                rowCount,
-                columnCount,
-                autoHide);
-    }
+	@Override
+	public int hashCode() {
+		return Objects
+				.hashCode(tagId, photoId, rowCount, columnCount, autoHide);
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (other != null && other.getClass().equals(BasePlace.class)) {
-            BasePlace basePlace = (BasePlace) other;
-            return equal(this.tagId, basePlace.getTagId()) &&
-                    equal(this.photoId, basePlace.getPhotoId()) &&
-                    equal(this.rowCount, basePlace.getRowCount()) &&
-                    equal(this.autoHide, basePlace.isAutoHide()) &&
-                    equal(this.columnCount, basePlace.getColumnCount());
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object other) {
+		if (other != null && other.getClass().equals(BasePlace.class)) {
+			BasePlace basePlace = (BasePlace) other;
+			return equal(this.tagId, basePlace.getTagId())
+					&& equal(this.photoId, basePlace.getPhotoId())
+					&& equal(this.rowCount, basePlace.getRowCount())
+					&& equal(this.autoHide, basePlace.isAutoHide())
+					&& equal(this.columnCount, basePlace.getColumnCount());
+		} else {
+			return false;
+		}
+	}
 
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("tagId", tagId)
-                .add("photoId", photoId)
-                .add("rows", rowCount)
-                .add("colums", columnCount)
-                .add("autoHide", autoHide).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("tagId", tagId)
+				.add("photoId", photoId).add("rows", rowCount)
+				.add("colums", columnCount).add("autoHide", autoHide)
+				.toString();
+	}
 
+	public static class Tokenizer implements PlaceTokenizer<BasePlace> {
+		@Override
+		public BasePlace getPlace(String token) {
+			TokenizerUtil util = new TokenizerUtil(token);
 
-    public static class Tokenizer implements PlaceTokenizer<BasePlace> {
-        @Override
-        public BasePlace getPlace(String token) {
-            TokenizerUtil util = new TokenizerUtil(token);
+			return new BasePlace(util.getTagId(), util.getPhotoId(),
+					util.getColumnCount(), util.getRowCount(),
+					util.isAutoHide());
+		}
 
-            return new BasePlace(util.getTagId(), util.getPhotoId(),
-                    util.getColumnCount(), util.getRowCount(), util.isAutoHide());
-        }
-
-        @Override
-        public String getToken(BasePlace place) {
-            return place.getTagId() + ":" +
-                    place.getPhotoId() + ":" +
-                    place.getColumnCount() + ":" +
-                    place.getRowCount() + ":" +
-                    place.isAutoHide();
-        }
-    }
+		@Override
+		public String getToken(BasePlace place) {
+			return place.getTagId() + ":" + place.getPhotoId() + ":"
+					+ place.getColumnCount() + ":" + place.getRowCount() + ":"
+					+ place.isAutoHide();
+		}
+	}
 }

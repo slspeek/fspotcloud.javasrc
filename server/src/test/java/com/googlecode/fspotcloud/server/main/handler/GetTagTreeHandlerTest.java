@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.main.handler;
 
 import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
@@ -55,72 +55,71 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(JukitoRunner.class)
 public class GetTagTreeHandlerTest {
-    @Inject
-    GetTagTreeHandler handler;
-    @Inject
-    IUserGroupHelper helper;
-    private final GetTagTreeAction action = new GetTagTreeAction();
+	@Inject
+	GetTagTreeHandler handler;
+	@Inject
+	IUserGroupHelper helper;
+	private final GetTagTreeAction action = new GetTagTreeAction();
 
-    @Test
-    public void testNormalExecuteNoTags(TagDao tagManager, PeerDatabaseDao peers)
-            throws Exception {
-        when(peers.get()).thenReturn(new PeerDatabaseEntity());
+	@Test
+	public void testNormalExecuteNoTags(TagDao tagManager, PeerDatabaseDao peers)
+			throws Exception {
+		when(peers.get()).thenReturn(new PeerDatabaseEntity());
 
-        TagTreeResult result = handler.execute(action, null);
-        verify(tagManager).getTags();
-        assertTrue(result.getTree().getChildren().isEmpty());
-    }
+		TagTreeResult result = handler.execute(action, null);
+		verify(tagManager).getTags();
+		assertTrue(result.getTree().getChildren().isEmpty());
+	}
 
-    @Test
-    public void testNormalExecuteOneUnimportedTags(TagDao tagManager,
-                                                   PeerDatabaseDao peers) throws Exception {
-        when(peers.get()).thenReturn(new PeerDatabaseEntity());
+	@Test
+	public void testNormalExecuteOneUnimportedTags(TagDao tagManager,
+			PeerDatabaseDao peers) throws Exception {
+		when(peers.get()).thenReturn(new PeerDatabaseEntity());
 
-        List<TagNode> list = newArrayList();
-        list.add(new TagNode("1"));
-        when(tagManager.getTags()).thenReturn(list);
+		List<TagNode> list = newArrayList();
+		list.add(new TagNode("1"));
+		when(tagManager.getTags()).thenReturn(list);
 
-        TagTreeResult result = handler.execute(action, null);
-        verify(tagManager).getTags();
-        //No imported tags
-        assertEquals(0, result.getTree().getChildren().size());
-    }
+		TagTreeResult result = handler.execute(action, null);
+		verify(tagManager).getTags();
+		//No imported tags
+		assertEquals(0, result.getTree().getChildren().size());
+	}
 
-    @Test
-    public void testNormalExecuteOneImportedTags(TagDao tagManager,
-                                                 PeerDatabaseDao peers) throws Exception {
-        when(peers.get()).thenReturn(new PeerDatabaseEntity());
-        when(helper.getVisibleTagIds()).thenReturn(newHashSet("1"));
+	@Test
+	public void testNormalExecuteOneImportedTags(TagDao tagManager,
+			PeerDatabaseDao peers) throws Exception {
+		when(peers.get()).thenReturn(new PeerDatabaseEntity());
+		when(helper.getVisibleTagIds()).thenReturn(newHashSet("1"));
 
-        List<TagNode> list = newArrayList();
-        final TagNode tagNode = new TagNode("1");
-        tagNode.setImportIssued(true);
-        list.add(tagNode);
-        when(tagManager.getTags()).thenReturn(list);
+		List<TagNode> list = newArrayList();
+		final TagNode tagNode = new TagNode("1");
+		tagNode.setImportIssued(true);
+		list.add(tagNode);
+		when(tagManager.getTags()).thenReturn(list);
 
-        TagTreeResult result = handler.execute(action, null);
-        verify(tagManager).getTags();
-        assertEquals(1, result.getTree().getChildren().size());
-    }
+		TagTreeResult result = handler.execute(action, null);
+		verify(tagManager).getTags();
+		assertEquals(1, result.getTree().getChildren().size());
+	}
 
-    @Test
-    public void testNormalExecuteCachehit(TagDao tagManager,
-                                          PeerDatabaseDao peers) throws Exception {
-        when(helper.getVisibleTagIds()).thenReturn(newHashSet("1"));
+	@Test
+	public void testNormalExecuteCachehit(TagDao tagManager,
+			PeerDatabaseDao peers) throws Exception {
+		when(helper.getVisibleTagIds()).thenReturn(newHashSet("1"));
 
-        final PeerDatabaseEntity peerDatabaseEntity = new PeerDatabaseEntity();
+		final PeerDatabaseEntity peerDatabaseEntity = new PeerDatabaseEntity();
 
-        final TagNode root = new TagNode();
-        final TagNode tagNode = new TagNode("1");
-        root.addChild(tagNode);
-        tagNode.setImportIssued(true);
+		final TagNode root = new TagNode();
+		final TagNode tagNode = new TagNode("1");
+		root.addChild(tagNode);
+		tagNode.setImportIssued(true);
 
+		peerDatabaseEntity.setCachedTagTree(root);
+		when(peers.get()).thenReturn(peerDatabaseEntity);
 
-        peerDatabaseEntity.setCachedTagTree(root);
-        when(peers.get()).thenReturn(peerDatabaseEntity);
-
-        TagTreeResult result = handler.execute(action, null);
-        assertEquals(1, result.getTree().getChildren().size());
-        verifyNoMoreInteractions(tagManager);
-    }
+		TagTreeResult result = handler.execute(action, null);
+		assertEquals(1, result.getTree().getChildren().size());
+		verifyNoMoreInteractions(tagManager);
+	}
 }

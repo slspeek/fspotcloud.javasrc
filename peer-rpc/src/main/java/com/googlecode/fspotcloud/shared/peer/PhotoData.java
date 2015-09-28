@@ -49,13 +49,12 @@ public class PhotoData extends BusinessBase implements Serializable {
 	@BusinessKey
 	private String imageBlobKey = "";
 
-	
 	public PhotoData(String photoId, String description, Date date,
 			List<String> tagList, int version) {
 		super();
 		this.photoId = photoId;
-		
-		this.description = description != null ? description:"";
+
+		this.description = description != null ? description : "";
 		this.date = date;
 		this.tagList = tagList;
 		this.version = version;
@@ -88,7 +87,7 @@ public class PhotoData extends BusinessBase implements Serializable {
 	public String getImageBlobKey() {
 		return imageBlobKey;
 	}
-	
+
 	public void setThumbBlobKey(String thumbBlobKey) {
 		this.thumbBlobKey = thumbBlobKey;
 	}
@@ -99,10 +98,9 @@ public class PhotoData extends BusinessBase implements Serializable {
 
 	public String toString() {
 		return new ToStringBuilder(this).append("v", version)
-				.append("id", photoId).append("desc", description).append("date", date)
-				.append("tags", tagList)
+				.append("id", photoId).append("desc", description)
+				.append("date", date).append("tags", tagList)
 				.append("imgKey", imageBlobKey)
-				.append("thumbKey", thumbBlobKey)
-				.toString();
+				.append("thumbKey", thumbBlobKey).toString();
 	}
 }

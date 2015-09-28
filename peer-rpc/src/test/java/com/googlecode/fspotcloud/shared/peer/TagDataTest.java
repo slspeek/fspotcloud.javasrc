@@ -30,34 +30,34 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
 
 public class TagDataTest {
-    private static final int COUNT = 10;
-    private static final String PARENT = "2";
-    private static final String NAME = "Tag";
-    private static final String TAG_ID = "1";
-    final TagData tag = new TagData(TAG_ID, NAME, PARENT, COUNT);
+	private static final int COUNT = 10;
+	private static final String PARENT = "2";
+	private static final String NAME = "Tag";
+	private static final String TAG_ID = "1";
+	final TagData tag = new TagData(TAG_ID, NAME, PARENT, COUNT);
 
-    @Test
-    public void testSerialize() throws Exception {
-        testSerialization(tag);
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		testSerialization(tag);
+	}
 
-    @Test
-    public void testId() {
-        assertEquals(TAG_ID, tag.getTagId());
-    }
+	@Test
+	public void testId() {
+		assertEquals(TAG_ID, tag.getTagId());
+	}
 
-    @Test
-    public void testParent() {
-        assertEquals(PARENT, tag.getParentId());
-    }
+	@Test
+	public void testParent() {
+		assertEquals(PARENT, tag.getParentId());
+	}
 
-    @Test
-    public void testName() {
-        assertEquals(NAME, tag.getName());
-    }
+	@Test
+	public void testName() {
+		assertEquals(NAME, tag.getName());
+	}
 
-    @Test
-    public void testCount() {
-        assertEquals(COUNT, tag.getCount());
-    }
+	@Test
+	public void testCount() {
+		assertEquals(COUNT, tag.getCount());
+	}
 }

@@ -47,135 +47,135 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class PhotoUpdateHandlerTest {
-    private static final int MAX_PHOTO_TICKS = 3;
-    PhotoUpdateHandler handler;
-    PhotoUpdateAction action;
-    @Mock
-    ControllerDispatchAsync controllerAsync;
-    @Mock
-    TaskQueueDispatch recursive;
-    @Captor
-    ArgumentCaptor<GetPhotoDataAction> captorAction;
-    @Captor
-    ArgumentCaptor<SerializableAsyncCallback<PhotoDataResult>> captorCallback;
-    @Captor
-    ArgumentCaptor<PhotoUpdateAction> recursiveActionCaptor;
+	private static final int MAX_PHOTO_TICKS = 3;
+	PhotoUpdateHandler handler;
+	PhotoUpdateAction action;
+	@Mock
+	ControllerDispatchAsync controllerAsync;
+	@Mock
+	TaskQueueDispatch recursive;
+	@Captor
+	ArgumentCaptor<GetPhotoDataAction> captorAction;
+	@Captor
+	ArgumentCaptor<SerializableAsyncCallback<PhotoDataResult>> captorCallback;
+	@Captor
+	ArgumentCaptor<PhotoUpdateAction> recursiveActionCaptor;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        handler = new PhotoUpdateHandler(1, 1, new ImageSpecs(1, 1, 1, 1),
-                controllerAsync, recursive);
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		handler = new PhotoUpdateHandler(1, 1, new ImageSpecs(1, 1, 1, 1),
+				controllerAsync, recursive);
 
-        PhotoUpdate update = new PhotoUpdate("1");
-        List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
-        list.add(update);
-        action = new PhotoUpdateAction(list);
-    }
+		PhotoUpdate update = new PhotoUpdate("1");
+		List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
+		list.add(update);
+		action = new PhotoUpdateAction(list);
+	}
 
-    @Test
-    public void testExecuteRecursive() throws DispatchException {
-        PhotoUpdate update = new PhotoUpdate("1");
-        update = new PhotoUpdate("1");
+	@Test
+	public void testExecuteRecursive() throws DispatchException {
+		PhotoUpdate update = new PhotoUpdate("1");
+		update = new PhotoUpdate("1");
 
-        List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
-        list.add(update);
-        update = new PhotoUpdate("2");
-        list.add(update);
-        action = new PhotoUpdateAction(list);
-        handler.execute(action, null);
-        verify(recursive).execute(recursiveActionCaptor.capture());
-        verify(controllerAsync)
-                .execute(captorAction.capture(), captorCallback.capture());
+		List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
+		list.add(update);
+		update = new PhotoUpdate("2");
+		list.add(update);
+		action = new PhotoUpdateAction(list);
+		handler.execute(action, null);
+		verify(recursive).execute(recursiveActionCaptor.capture());
+		verify(controllerAsync).execute(captorAction.capture(),
+				captorCallback.capture());
 
-        GetPhotoDataAction request = captorAction.getValue();
-        assertEquals(1, request.getImageKeys().size());
-        assertEquals("1", request.getImageKeys().get(0));
+		GetPhotoDataAction request = captorAction.getValue();
+		assertEquals(1, request.getImageKeys().size());
+		assertEquals("1", request.getImageKeys().get(0));
 
-        PhotoUpdateAction nextAction = recursiveActionCaptor.getValue();
-        assertEquals(1, nextAction.getWorkLoad().size());
-        update = nextAction.getWorkLoad().get(0);
-        assertEquals("2", update.getPhotoId());
-    }
+		PhotoUpdateAction nextAction = recursiveActionCaptor.getValue();
+		assertEquals(1, nextAction.getWorkLoad().size());
+		update = nextAction.getWorkLoad().get(0);
+		assertEquals("2", update.getPhotoId());
+	}
 
-    @Test
-    public void testExecute() throws DispatchException {
-        handler = new PhotoUpdateHandler(2, MAX_PHOTO_TICKS,
-                new ImageSpecs(1, 1, 1, 1), controllerAsync, recursive);
+	@Test
+	public void testExecute() throws DispatchException {
+		handler = new PhotoUpdateHandler(2, MAX_PHOTO_TICKS, new ImageSpecs(1,
+				1, 1, 1), controllerAsync, recursive);
 
-        PhotoUpdate update = new PhotoUpdate("1");
-        update = new PhotoUpdate("1");
+		PhotoUpdate update = new PhotoUpdate("1");
+		update = new PhotoUpdate("1");
 
-        List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
-        list.add(update);
-        update = new PhotoUpdate("2");
-        list.add(update);
-        update = new PhotoUpdate("3");
-        list.add(update);
-        update = new PhotoUpdate("4");
-        list.add(update);
-        update = new PhotoUpdate("5");
-        list.add(update);
-        update = new PhotoUpdate("6");
-        list.add(update);
-        update = new PhotoUpdate("7");
-        list.add(update);
-        update = new PhotoUpdate("8");
-        list.add(update);
-        action = new PhotoUpdateAction(list);
-        handler.execute(action, null);
-        verify(recursive).execute(recursiveActionCaptor.capture());
-        verify(controllerAsync, times(2))
-                .execute(captorAction.capture(), captorCallback.capture());
+		List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
+		list.add(update);
+		update = new PhotoUpdate("2");
+		list.add(update);
+		update = new PhotoUpdate("3");
+		list.add(update);
+		update = new PhotoUpdate("4");
+		list.add(update);
+		update = new PhotoUpdate("5");
+		list.add(update);
+		update = new PhotoUpdate("6");
+		list.add(update);
+		update = new PhotoUpdate("7");
+		list.add(update);
+		update = new PhotoUpdate("8");
+		list.add(update);
+		action = new PhotoUpdateAction(list);
+		handler.execute(action, null);
+		verify(recursive).execute(recursiveActionCaptor.capture());
+		verify(controllerAsync, times(2)).execute(captorAction.capture(),
+				captorCallback.capture());
 
-        List<GetPhotoDataAction> actionList = captorAction.getAllValues();
-        assertEquals(2, actionList.size());
-        assertEquals(MAX_PHOTO_TICKS, actionList.get(0).getImageKeys().size());
-        assertEquals("1", actionList.get(0).getImageKeys().get(0));
-        assertEquals("2", actionList.get(0).getImageKeys().get(1));
-        assertEquals("3", actionList.get(0).getImageKeys().get(2));
-        assertEquals("4", actionList.get(1).getImageKeys().get(0));
-        assertEquals("5", actionList.get(1).getImageKeys().get(1));
-        assertEquals("6", actionList.get(1).getImageKeys().get(2));
+		List<GetPhotoDataAction> actionList = captorAction.getAllValues();
+		assertEquals(2, actionList.size());
+		assertEquals(MAX_PHOTO_TICKS, actionList.get(0).getImageKeys().size());
+		assertEquals("1", actionList.get(0).getImageKeys().get(0));
+		assertEquals("2", actionList.get(0).getImageKeys().get(1));
+		assertEquals("3", actionList.get(0).getImageKeys().get(2));
+		assertEquals("4", actionList.get(1).getImageKeys().get(0));
+		assertEquals("5", actionList.get(1).getImageKeys().get(1));
+		assertEquals("6", actionList.get(1).getImageKeys().get(2));
 
-        PhotoUpdateAction nextAction = recursiveActionCaptor.getValue();
-        assertEquals(2, nextAction.getWorkLoad().size());
-        update = nextAction.getWorkLoad().get(0);
-        assertEquals("7", update.getPhotoId());
-        update = nextAction.getWorkLoad().get(1);
-        assertEquals("8", update.getPhotoId());
-    }
+		PhotoUpdateAction nextAction = recursiveActionCaptor.getValue();
+		assertEquals(2, nextAction.getWorkLoad().size());
+		update = nextAction.getWorkLoad().get(0);
+		assertEquals("7", update.getPhotoId());
+		update = nextAction.getWorkLoad().get(1);
+		assertEquals("8", update.getPhotoId());
+	}
 
-    @Test
-    public void testExecute5() throws DispatchException {
-        handler = new PhotoUpdateHandler(2, MAX_PHOTO_TICKS,
-                new ImageSpecs(1, 1, 1, 1), controllerAsync, recursive);
+	@Test
+	public void testExecute5() throws DispatchException {
+		handler = new PhotoUpdateHandler(2, MAX_PHOTO_TICKS, new ImageSpecs(1,
+				1, 1, 1), controllerAsync, recursive);
 
-        PhotoUpdate update = new PhotoUpdate("1");
-        update = new PhotoUpdate("1");
+		PhotoUpdate update = new PhotoUpdate("1");
+		update = new PhotoUpdate("1");
 
-        List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
-        list.add(update);
-        update = new PhotoUpdate("2");
-        list.add(update);
-        update = new PhotoUpdate("3");
-        list.add(update);
-        update = new PhotoUpdate("4");
-        list.add(update);
-        update = new PhotoUpdate("5");
-        list.add(update);
-        action = new PhotoUpdateAction(list);
-        handler.execute(action, null);
-        verifyNoMoreInteractions(recursive);
-        verify(controllerAsync, times(2))
-                .execute(captorAction.capture(), captorCallback.capture());
+		List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
+		list.add(update);
+		update = new PhotoUpdate("2");
+		list.add(update);
+		update = new PhotoUpdate("3");
+		list.add(update);
+		update = new PhotoUpdate("4");
+		list.add(update);
+		update = new PhotoUpdate("5");
+		list.add(update);
+		action = new PhotoUpdateAction(list);
+		handler.execute(action, null);
+		verifyNoMoreInteractions(recursive);
+		verify(controllerAsync, times(2)).execute(captorAction.capture(),
+				captorCallback.capture());
 
-        List<GetPhotoDataAction> request = captorAction.getAllValues();
-        assertEquals(MAX_PHOTO_TICKS, request.get(0).getImageKeys().size());
-        assertEquals("1", request.get(0).getImageKeys().get(0));
-        assertEquals("2", request.get(0).getImageKeys().get(1));
-        assertEquals("3", request.get(0).getImageKeys().get(2));
-        assertEquals("4", request.get(1).getImageKeys().get(0));
-        assertEquals("5", request.get(1).getImageKeys().get(1));
-    }
+		List<GetPhotoDataAction> request = captorAction.getAllValues();
+		assertEquals(MAX_PHOTO_TICKS, request.get(0).getImageKeys().size());
+		assertEquals("1", request.get(0).getImageKeys().get(0));
+		assertEquals("2", request.get(0).getImageKeys().get(1));
+		assertEquals("3", request.get(0).getImageKeys().get(2));
+		assertEquals("4", request.get(1).getImageKeys().get(0));
+		assertEquals("5", request.get(1).getImageKeys().get(1));
+	}
 }

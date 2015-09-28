@@ -31,24 +31,25 @@ import com.googlecode.botdispatch.bot.BotModule;
 import com.googlecode.fspotcloud.peer.inject.PeerActionsModule;
 import com.googlecode.fspotcloud.peer.inject.PeerModule;
 
-
 public class Main {
-    public static void main(String[] args) throws Exception {
-        final String workDir = System.getProperty("user.dir");
-        final String db = System.getProperty("db");
-        final int stopPort = Integer.valueOf(System.getProperty("stop.port",
-                "-1"));
-        final boolean shotwell = Boolean.valueOf(System.getProperty("shotwell", "false"));
+	public static void main(String[] args) throws Exception {
+		final String workDir = System.getProperty("user.dir");
+		final String db = System.getProperty("db");
+		final int stopPort = Integer.valueOf(System.getProperty("stop.port",
+				"-1"));
+		final boolean shotwell = Boolean.valueOf(System.getProperty("shotwell",
+				"false"));
 
-        Injector injector = Guice.createInjector(new PeerModule(db, workDir,
-                stopPort, shotwell), new PeerActionsModule(), new BotModule());
+		Injector injector = Guice.createInjector(new PeerModule(db, workDir,
+				stopPort, shotwell), new PeerActionsModule(), new BotModule());
 
-        if (stopPort != -1) {
-            StopListener stopListener = injector.getInstance(StopListener.class);
-            stopListener.start();
-        }
+		if (stopPort != -1) {
+			StopListener stopListener = injector
+					.getInstance(StopListener.class);
+			stopListener.start();
+		}
 
-        Bot bot = injector.getInstance(Bot.class);
-        bot.runForever();
-    }
+		Bot bot = injector.getInstance(Bot.class);
+		bot.runForever();
+	}
 }

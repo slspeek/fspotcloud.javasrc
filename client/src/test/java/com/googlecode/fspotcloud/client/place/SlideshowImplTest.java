@@ -20,100 +20,96 @@ import static org.mockito.Mockito.*;
 @RunWith(JukitoRunner.class)
 public class SlideshowImplTest {
 
+	public static class Module extends JukitoModule {
 
-    public static class Module extends JukitoModule {
+		@Override
+		protected void configureTest() {
+			bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(5);
+			bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(4);
+			bind(EventBus.class).to(SimpleEventBus.class);
+		}
+	}
 
-        @Override
-        protected void configureTest() {
-            bind(Integer.class).annotatedWith(RasterWidth.class).toInstance(5);
-            bind(Integer.class).annotatedWith(RasterHeight.class).toInstance(4);
-            bind(EventBus.class).to(SimpleEventBus.class);
-        }
-    }
+	@Inject
+	private SlideshowImpl slideshow;
+	@Inject
+	private Navigator navigator;
 
-    @Inject
-    private SlideshowImpl slideshow;
-    @Inject
-    private Navigator navigator;
+	@Inject
+	private EventBus eventBus;
+	@Inject
+	private TimerInterface timer;
+	@Inject
+	private ArgumentCaptor<Runnable> runnableCaptor;
 
-    @Inject
-    private EventBus eventBus;
-    @Inject
-    private TimerInterface timer;
-    @Inject
-    private ArgumentCaptor<Runnable> runnableCaptor;
+	private Runnable getRunnable() {
+		verify(timer).setRunnable(runnableCaptor.capture());
+		return runnableCaptor.getValue();
+	}
 
+	@Test
+	public void testStart() throws Exception {
+		slideshow.start();
+		Runnable runnable = getRunnable();
+		assertTrue(slideshow.isRunning());
+		verify(timer).scheduleRepeating(4000);
+	}
 
-    private Runnable getRunnable() {
-        verify(timer).setRunnable(runnableCaptor.capture());
-        return runnableCaptor.getValue();
-    }
+	@Test
+	public void testStop() throws Exception {
+		slideshow.stop();
+		assertFalse(slideshow.isRunning());
+		verify(timer).cancel();
 
-    @Test
-    public void testStart() throws Exception {
-        slideshow.start();
-        Runnable runnable = getRunnable();
-        assertTrue(slideshow.isRunning());
-        verify(timer).scheduleRepeating(4000);
-    }
+	}
 
-    @Test
-    public void testStop() throws Exception {
-        slideshow.stop();
-        assertFalse(slideshow.isRunning());
-        verify(timer).cancel();
+	@Test
+	public void testPause() throws Exception {
+		slideshow.pause();
+		assertFalse(slideshow.isRunning());
+		verify(timer).cancel();
 
+	}
 
-    }
+	@Test
+	public void testTogglePauseNotRunning() throws Exception {
+		slideshow.togglePause();
+		assertTrue(slideshow.isRunning());
+		verify(timer).cancel();
+		verify(timer).scheduleRepeating(4000);
 
-    @Test
-    public void testPause() throws Exception {
-        slideshow.pause();
-        assertFalse(slideshow.isRunning());
-        verify(timer).cancel();
+	}
 
+	@Test
+	public void testTogglePauseRunning() throws Exception {
+		slideshow.start();
 
-    }
+		reset(timer);
+		slideshow.togglePause();
+		assertFalse(slideshow.isRunning());
 
-    @Test
-    public void testTogglePauseNotRunning() throws Exception {
-        slideshow.togglePause();
-        assertTrue(slideshow.isRunning());
-        verify(timer).cancel();
-        verify(timer).scheduleRepeating(4000);
+		verify(timer).cancel();
+		verifyNoMoreInteractions(timer);
 
-    }
+	}
 
-    @Test
-    public void testTogglePauseRunning() throws Exception {
-        slideshow.start();
+	@Test
+	public void testFaster() throws Exception {
 
-        reset(timer);
-        slideshow.togglePause();
-        assertFalse(slideshow.isRunning());
+	}
 
-        verify(timer).cancel();
-        verifyNoMoreInteractions(timer);
+	@Test
+	public void testSlower() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void testFaster() throws Exception {
+	@Test
+	public void testDelay() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void testSlower() throws Exception {
+	@Test
+	public void testIsRunning() throws Exception {
 
-    }
-
-    @Test
-    public void testDelay() throws Exception {
-
-    }
-
-    @Test
-    public void testIsRunning() throws Exception {
-
-    }
+	}
 }

@@ -33,25 +33,24 @@ import com.googlecode.fspotcloud.user.LenientUserModule;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 public class NoAuthPlaceHolderIntegrationModule extends GuiceBerryModule {
-    public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
+	public static final String SLSPEEK_GMAIL_COM = "slspeek@gmail.com";
 	private final boolean shotwell;
 
-    public NoAuthPlaceHolderIntegrationModule(boolean shotwell) {
+	public NoAuthPlaceHolderIntegrationModule(boolean shotwell) {
 		super();
 		this.shotwell = shotwell;
 	}
 
 	@Override
-    public void configure() {
-        super.configure();
-        install(new CommonIntegrationModule(shotwell));
-        install(new LenientUserModule());
-        bind(HttpSession.class).to(FakeHttpServletSession.class)
-                .in(TestScoped.class);
-        bind(HttpServletRequest.class).to(FakeHttpRequest.class);
-        bindScope(RequestScoped.class, testScope);
-        bindScope(SessionScoped.class, testScope);
-    }
+	public void configure() {
+		super.configure();
+		install(new CommonIntegrationModule(shotwell));
+		install(new LenientUserModule());
+		bind(HttpSession.class).to(FakeHttpServletSession.class).in(
+				TestScoped.class);
+		bind(HttpServletRequest.class).to(FakeHttpRequest.class);
+		bindScope(RequestScoped.class, testScope);
+		bindScope(SessionScoped.class, testScope);
+	}
 }

@@ -14,24 +14,28 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class RelevanceTest {
 
-    Relevance relevance = new Relevance(HomePlace.class).addDefaultKeys(KeyStroke.K);
-    PlaceContext placeContext = new PlaceContext(HomePlace.class, Sets.<String>newHashSet());
+	Relevance relevance = new Relevance(HomePlace.class)
+			.addDefaultKeys(KeyStroke.K);
+	PlaceContext placeContext = new PlaceContext(HomePlace.class,
+			Sets.<String> newHashSet());
 
-    @Test
-    public void testGetKeys() throws Exception {
-        List<KeyStroke> keys = relevance.getKeys(placeContext);
-        assertEquals(1, keys.size());
-    }
+	@Test
+	public void testGetKeys() throws Exception {
+		List<KeyStroke> keys = relevance.getKeys(placeContext);
+		assertEquals(1, keys.size());
+	}
 
-    @Test
-    public void testAddTwoRuleOnSamePlace() throws Exception {
-        relevance.addRule(OutPlace.class, KeyStroke.ESC);
-        relevance.addRule(OutPlace.class, KeyStroke.ESC);
-    }
+	@Test
+	public void testAddTwoRuleOnSamePlace() throws Exception {
+		relevance.addRule(OutPlace.class, KeyStroke.ESC);
+		relevance.addRule(OutPlace.class, KeyStroke.ESC);
+	}
 
-    @Test
-    public void testToString() throws Exception {
-        assertEquals("Relevance{defaultKeys=[], defaultRule=FlagsRule{excludes=[], needed=[]}, defaultPlaces=[], overrides={}}", new Relevance().toString());
+	@Test
+	public void testToString() throws Exception {
+		assertEquals(
+				"Relevance{defaultKeys=[], defaultRule=FlagsRule{excludes=[], needed=[]}, defaultPlaces=[], overrides={}}",
+				new Relevance().toString());
 
-    }
+	}
 }

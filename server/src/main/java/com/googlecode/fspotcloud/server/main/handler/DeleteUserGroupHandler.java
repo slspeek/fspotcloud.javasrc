@@ -35,60 +35,61 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.util.Set;
 
+public class DeleteUserGroupHandler
+		extends
+			SimpleActionHandler<DeleteGroupAction, VoidResult> {
+	@Inject
+	private UserGroupDao userGroupDao;
+	@Inject
+	private UserService userService;
+	@Inject
+	private UserDao userDao;
+	@Inject
+	private TagDao tagDao;
 
-public class DeleteUserGroupHandler extends SimpleActionHandler<DeleteGroupAction, VoidResult> {
-    @Inject
-    private UserGroupDao userGroupDao;
-    @Inject
-    private UserService userService;
-    @Inject
-    private UserDao userDao;
-    @Inject
-    private TagDao tagDao;
+	@Override
+	public VoidResult execute(DeleteGroupAction action, ExecutionContext context)
+			throws DispatchException {
+		if (userService.isUserLoggedIn()) {
+			String userName = userService.getEmail();
+			final Long id = action.getId();
+			UserGroup group = userGroupDao.find(id);
 
-    @Override
-    public VoidResult execute(DeleteGroupAction action,
-                              ExecutionContext context) throws DispatchException {
-        if (userService.isUserLoggedIn()) {
-            String userName = userService.getEmail();
-            final Long id = action.getId();
-            UserGroup group = userGroupDao.find(id);
+			if (userName.equals(group.getOwner())) {
+				doDelete(group, id);
+			}
+		}
 
-            if (userName.equals(group.getOwner())) {
-                doDelete(group, id);
-            }
-        }
+		return new VoidResult();
+	}
 
-        return new VoidResult();
-    }
+	private void doDelete(UserGroup group, Long id) {
+		Set<String> grantedUsers = group.getGrantedUsers();
 
-    private void doDelete(UserGroup group, Long id) {
-        Set<String> grantedUsers = group.getGrantedUsers();
+		for (String userEmail : grantedUsers) {
+			User user = userDao.find(userEmail);
 
-        for (String userEmail : grantedUsers) {
-            User user = userDao.find(userEmail);
+			if (user != null) {
+				Set<Long> grantedGroups = user.getGrantedUserGroups();
+				grantedGroups.remove(id);
+				user.setGrantedUserGroups(grantedGroups);
+				userDao.save(user);
+			}
+		}
 
-            if (user != null) {
-                Set<Long> grantedGroups = user.getGrantedUserGroups();
-                grantedGroups.remove(id);
-                user.setGrantedUserGroups(grantedGroups);
-                userDao.save(user);
-            }
-        }
+		Set<String> tags = group.getApprovedTagIds();
 
-        Set<String> tags = group.getApprovedTagIds();
+		for (String tagId : tags) {
+			Tag tag = tagDao.find(tagId);
 
-        for (String tagId : tags) {
-            Tag tag = tagDao.find(tagId);
+			if (tag != null) {
+				Set<Long> grantedGroups = tag.getApprovedUserGroups();
+				grantedGroups.remove(id);
+				tag.setApprovedUserGroups(grantedGroups);
+				tagDao.save(tag);
+			}
+		}
 
-            if (tag != null) {
-                Set<Long> grantedGroups = tag.getApprovedUserGroups();
-                grantedGroups.remove(id);
-                tag.setApprovedUserGroups(grantedGroups);
-                tagDao.save(tag);
-            }
-        }
-
-        userGroupDao.delete(group);
-    }
+		userGroupDao.delete(group);
+	}
 }

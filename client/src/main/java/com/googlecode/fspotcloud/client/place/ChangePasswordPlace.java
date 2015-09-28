@@ -28,53 +28,53 @@ import com.google.common.base.Objects;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class ChangePasswordPlace extends Place {
 
-    private String secret;
-    private String email;
+	private String secret;
+	private String email;
 
-    public ChangePasswordPlace(String email, String secret) {
-        this.secret = secret;
-        this.email = email;
-    }
+	public ChangePasswordPlace(String email, String secret) {
+		this.secret = secret;
+		this.email = email;
+	}
 
-    public String getSecret() {
-        return secret;
-    }
+	public String getSecret() {
+		return secret;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(
-                this.secret, this.email);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.secret, this.email);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ChangePasswordPlace) {
-            ChangePasswordPlace emailConfirmationPlace = (ChangePasswordPlace) obj;
-            return Objects.equal(emailConfirmationPlace.email, email) &&
-                    Objects.equal(emailConfirmationPlace.secret, secret);
-        } else {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ChangePasswordPlace) {
+			ChangePasswordPlace emailConfirmationPlace = (ChangePasswordPlace) obj;
+			return Objects.equal(emailConfirmationPlace.email, email)
+					&& Objects.equal(emailConfirmationPlace.secret, secret);
+		} else {
+			return false;
+		}
 
-    }
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<ChangePasswordPlace> {
-        @Override
-        public ChangePasswordPlace getPlace(String token) {
-            String[] arguments = token.split(":");
-            return new ChangePasswordPlace(arguments[0], arguments[1]);
-        }
+	public static class Tokenizer
+			implements
+				PlaceTokenizer<ChangePasswordPlace> {
+		@Override
+		public ChangePasswordPlace getPlace(String token) {
+			String[] arguments = token.split(":");
+			return new ChangePasswordPlace(arguments[0], arguments[1]);
+		}
 
-        @Override
-        public String getToken(ChangePasswordPlace place) {
-            return place.getEmail() + ":" + place.getSecret();
-        }
-    }
+		@Override
+		public String getToken(ChangePasswordPlace place) {
+			return place.getEmail() + ":" + place.getSecret();
+		}
+	}
 }

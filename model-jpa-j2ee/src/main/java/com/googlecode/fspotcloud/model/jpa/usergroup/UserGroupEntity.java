@@ -47,83 +47,83 @@ import static com.google.common.collect.Sets.newHashSet;
  */
 @Entity
 public class UserGroupEntity implements UserGroup, Serializable {
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
-    @Basic
-    private String owner;
-    @Basic
-    private HashSet<String> grantedUsers = newHashSet();
-    @Basic
-    private String name;
-    @Basic
-    private String description;
-    @Basic
-    private HashSet<String> approvedTags = newHashSet();
-    @Basic
-    private boolean isPublic = false;
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	private Long id;
+	@Basic
+	private String owner;
+	@Basic
+	private HashSet<String> grantedUsers = newHashSet();
+	@Basic
+	private String name;
+	@Basic
+	private String description;
+	@Basic
+	private HashSet<String> approvedTags = newHashSet();
+	@Basic
+	private boolean isPublic = false;
 
-    public boolean isPublic() {
-        return isPublic;
-    }
+	public boolean isPublic() {
+		return isPublic;
+	}
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
-    }
+	public void setPublic(boolean aPublic) {
+		isPublic = aPublic;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    @Override
-    public Set<String> getGrantedUsers() {
-        return grantedUsers;
-    }
+	@Override
+	public Set<String> getGrantedUsers() {
+		return grantedUsers;
+	}
 
-    @Override
-    public void setGrantedUsers(Set<String> users) {
-        this.grantedUsers = newHashSet(users);
-    }
+	@Override
+	public void setGrantedUsers(Set<String> users) {
+		this.grantedUsers = newHashSet(users);
+	}
 
-    @Override
-    public Set<String> getApprovedTagIds() {
-        return approvedTags;
-    }
+	@Override
+	public Set<String> getApprovedTagIds() {
+		return approvedTags;
+	}
 
-    @Override
-    public void setApprovedTagIds(Set<String> tagIds) {
-        if (tagIds != null) {
-            approvedTags = newHashSet(tagIds);
-        } else {
-            approvedTags = newHashSet();
-        }
-    }
+	@Override
+	public void setApprovedTagIds(Set<String> tagIds) {
+		if (tagIds != null) {
+			approvedTags = newHashSet(tagIds);
+		} else {
+			approvedTags = newHashSet();
+		}
+	}
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
+	@Override
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
 
-    @Override
-    public String getOwner() {
-        return owner;
-    }
+	@Override
+	public String getOwner() {
+		return owner;
+	}
 }

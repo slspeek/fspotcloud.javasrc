@@ -43,38 +43,39 @@ import static org.mockito.Mockito.verify;
 
 public class SendEmailConfirmationITest {
 
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private SendEmailConfirmationPage sendEmailConfirmationPage;
-    @Inject
-    private InjectionController<IMail> mailInjectionController;
-    @Inject
-    private UserDao userDao;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private SendEmailConfirmationPage sendEmailConfirmationPage;
+	@Inject
+	private InjectionController<IMail> mailInjectionController;
+	@Inject
+	private UserDao userDao;
 
+	private ArgumentCaptor<String> recipient = ArgumentCaptor
+			.forClass(String.class);
+	private ArgumentCaptor<String> subject = ArgumentCaptor
+			.forClass(String.class);
+	private ArgumentCaptor<String> body = ArgumentCaptor.forClass(String.class);
 
+	@Test
+	public void testEmailConfirmation() throws Exception {
+		User rms = userDao.findOrNew(ILogin.NEEDS_CONFIRMATION);
+		rms.setCredentials(hash(ILogin.NEEDS_CONFIRMATION, ILogin.NEEDS_CRED));
+		rms.setRegistered(true);
+		rms.setEnabled(false);
+		userDao.save(rms);
 
-    private ArgumentCaptor<String> recipient = ArgumentCaptor.forClass(String.class);
-    private ArgumentCaptor<String> subject = ArgumentCaptor.forClass(String.class);
-    private ArgumentCaptor<String> body = ArgumentCaptor.forClass(String.class);
+		IMail mailerMock = mock(IMail.class);
+		mailInjectionController.setOverride(mailerMock);
 
-    @Test
-    public void testEmailConfirmation() throws Exception {
-        User rms = userDao.findOrNew(ILogin.NEEDS_CONFIRMATION);
-        rms.setCredentials(hash(ILogin.NEEDS_CONFIRMATION, ILogin.NEEDS_CRED));
-        rms.setRegistered(true);
-        rms.setEnabled(false);
-        userDao.save(rms);
+		sendEmailConfirmationPage.open();
+		sendEmailConfirmationPage.submitEmail(ILogin.NEEDS_CONFIRMATION);
 
-
-        IMail mailerMock = mock(IMail.class);
-        mailInjectionController.setOverride(mailerMock);
-
-        sendEmailConfirmationPage.open();
-        sendEmailConfirmationPage.submitEmail(ILogin.NEEDS_CONFIRMATION);
-
-        sleepShort();
-        verify(mailerMock).send(recipient.capture(), subject.capture(), body.capture());
-        Assert.assertEquals(ILogin.NEEDS_CONFIRMATION, recipient.getValue());
-    }
+		sleepShort();
+		verify(mailerMock).send(recipient.capture(), subject.capture(),
+				body.capture());
+		Assert.assertEquals(ILogin.NEEDS_CONFIRMATION, recipient.getValue());
+	}
 }

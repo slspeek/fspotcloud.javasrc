@@ -33,38 +33,39 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class NavigationActionHandler implements IActionHandler {
-    private final Logger log = Logger.getLogger(NavigationActionHandler.class.getName());
-    private final Navigator navigator;
-    private final NavigationActions navigationActions;
+	private final Logger log = Logger.getLogger(NavigationActionHandler.class
+			.getName());
+	private final Navigator navigator;
+	private final NavigationActions navigationActions;
 
-    @Inject
-    public NavigationActionHandler(Navigator navigator,
-                                   NavigationActions navigationActions) {
-        this.navigator = navigator;
-        this.navigationActions = navigationActions;
-    }
+	@Inject
+	public NavigationActionHandler(Navigator navigator,
+			NavigationActions navigationActions) {
+		this.navigator = navigator;
+		this.navigationActions = navigationActions;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        log.log(Level.FINE,"On Navigation event in handler actionId: " + actionId);
-        if (actionId.equals(NavigationActions.BACK_ID)) {
-            navigator.goAsync(Direction.BACKWARD, Unit.SINGLE);
-        } else if (actionId.equals(NavigationActions.NEXT_ID)) {
-            navigator.goAsync(Direction.FORWARD, Unit.SINGLE);
-        } else if (actionId.equals(NavigationActions.HOME_ID)) {
-            navigator.goAsync(Direction.BACKWARD, Unit.BORDER);
-        } else if (actionId.equals(NavigationActions.END_ID)) {
-            navigator.goAsync(Direction.FORWARD, Unit.BORDER);
-        } else if (actionId.equals(NavigationActions.PAGE_DOWN_ID)) {
-            navigator.goAsync(Direction.FORWARD, Unit.PAGE);
-        } else if (actionId.equals(NavigationActions.PAGE_UP_ID)) {
-            navigator.goAsync(Direction.BACKWARD, Unit.PAGE);
-        } else if (actionId.equals(NavigationActions.ROW_DOWN_ID)) {
-            navigator.goAsync(Direction.FORWARD, Unit.ROW);
-        } else if (actionId.equals(NavigationActions.ROW_UP_ID)) {
-            navigator.goAsync(Direction.BACKWARD, Unit.ROW);
-        }
-    }
+	@Override
+	public void performAction(String actionId) {
+		log.log(Level.FINE, "On Navigation event in handler actionId: "
+				+ actionId);
+		if (actionId.equals(NavigationActions.BACK_ID)) {
+			navigator.goAsync(Direction.BACKWARD, Unit.SINGLE);
+		} else if (actionId.equals(NavigationActions.NEXT_ID)) {
+			navigator.goAsync(Direction.FORWARD, Unit.SINGLE);
+		} else if (actionId.equals(NavigationActions.HOME_ID)) {
+			navigator.goAsync(Direction.BACKWARD, Unit.BORDER);
+		} else if (actionId.equals(NavigationActions.END_ID)) {
+			navigator.goAsync(Direction.FORWARD, Unit.BORDER);
+		} else if (actionId.equals(NavigationActions.PAGE_DOWN_ID)) {
+			navigator.goAsync(Direction.FORWARD, Unit.PAGE);
+		} else if (actionId.equals(NavigationActions.PAGE_UP_ID)) {
+			navigator.goAsync(Direction.BACKWARD, Unit.PAGE);
+		} else if (actionId.equals(NavigationActions.ROW_DOWN_ID)) {
+			navigator.goAsync(Direction.FORWARD, Unit.ROW);
+		} else if (actionId.equals(NavigationActions.ROW_UP_ID)) {
+			navigator.goAsync(Direction.BACKWARD, Unit.ROW);
+		}
+	}
 }

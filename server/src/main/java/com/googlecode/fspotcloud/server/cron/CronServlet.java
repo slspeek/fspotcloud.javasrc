@@ -36,24 +36,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @SuppressWarnings("serial")
 @Singleton
 public class CronServlet extends HttpServlet {
-    @Inject
-    @VisibleForTesting
-    Dispatch dispatch;
+	@Inject
+	@VisibleForTesting
+	Dispatch dispatch;
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        try {
-            String action = request.getParameter("action");
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		try {
+			String action = request.getParameter("action");
 
-            if (action.equals("synchronize-peer")) {
-                dispatch.execute(new UserSynchronizesPeerAction());
-            }
-        } catch (DispatchException e) {
-            response.getOutputStream().println(e.getMessage());
-        }
-    }
+			if (action.equals("synchronize-peer")) {
+				dispatch.execute(new UserSynchronizesPeerAction());
+			}
+		} catch (DispatchException e) {
+			response.getOutputStream().println(e.getMessage());
+		}
+	}
 }

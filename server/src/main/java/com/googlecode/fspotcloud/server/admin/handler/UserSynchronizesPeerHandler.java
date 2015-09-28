@@ -45,54 +45,56 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class UserSynchronizesPeerHandler extends SimpleActionHandler<UserSynchronizesPeerAction, VoidResult> {
-    @Inject
-    private Logger log;
-    private final ControllerDispatchAsync dispatch;
-    private final IAdminPermission adminPermission;
-    private final TaskQueueDispatch taskQueueDispatch;
-    private final TagDao tagManager;
+public class UserSynchronizesPeerHandler
+		extends
+			SimpleActionHandler<UserSynchronizesPeerAction, VoidResult> {
+	@Inject
+	private Logger log;
+	private final ControllerDispatchAsync dispatch;
+	private final IAdminPermission adminPermission;
+	private final TaskQueueDispatch taskQueueDispatch;
+	private final TagDao tagManager;
 
-    @Inject
-    public UserSynchronizesPeerHandler(ControllerDispatchAsync dispatch,
-                                       IAdminPermission adminPermission, TaskQueueDispatch taskQueueDispatch,
-                                       TagDao tagManager) {
-        super();
-        this.dispatch = dispatch;
-        this.adminPermission = adminPermission;
-        this.taskQueueDispatch = taskQueueDispatch;
-        this.tagManager = tagManager;
-    }
+	@Inject
+	public UserSynchronizesPeerHandler(ControllerDispatchAsync dispatch,
+			IAdminPermission adminPermission,
+			TaskQueueDispatch taskQueueDispatch, TagDao tagManager) {
+		super();
+		this.dispatch = dispatch;
+		this.adminPermission = adminPermission;
+		this.taskQueueDispatch = taskQueueDispatch;
+		this.tagManager = tagManager;
+	}
 
-    @Override
-    public VoidResult execute(UserSynchronizesPeerAction action,
-                              ExecutionContext context) throws DispatchException {
-        adminPermission.checkAdminPermission();
+	@Override
+	public VoidResult execute(UserSynchronizesPeerAction action,
+			ExecutionContext context) throws DispatchException {
+		adminPermission.checkAdminPermission();
 
-        try {
-            GetPeerMetaDataAction metaAction = new GetPeerMetaDataAction();
-            PeerMetaDataCallback callback = new PeerMetaDataCallback();
-            dispatch.execute(metaAction, callback);
+		try {
+			GetPeerMetaDataAction metaAction = new GetPeerMetaDataAction();
+			PeerMetaDataCallback callback = new PeerMetaDataCallback();
+			dispatch.execute(metaAction, callback);
 
-            final List<String> importTagIds = getImportTagIds();
-            log.info("before import many tags photos " + importTagIds);
-            taskQueueDispatch.execute(new ImportManyTagsPhotosAction(
-                    importTagIds));
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
+			final List<String> importTagIds = getImportTagIds();
+			log.info("before import many tags photos " + importTagIds);
+			taskQueueDispatch.execute(new ImportManyTagsPhotosAction(
+					importTagIds));
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 
-    private List<String> getImportTagIds() {
-        List<Tag> importedTags = tagManager.getImportedTags();
-        List<String> idList = newArrayList();
+	private List<String> getImportTagIds() {
+		List<Tag> importedTags = tagManager.getImportedTags();
+		List<String> idList = newArrayList();
 
-        for (Tag tag : importedTags) {
-            idList.add(tag.getId());
-        }
+		for (Tag tag : importedTags) {
+			idList.add(tag.getId());
+		}
 
-        return idList;
-    }
+		return idList;
+	}
 }

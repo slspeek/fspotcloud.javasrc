@@ -38,118 +38,120 @@ import static com.google.common.collect.Maps.newHashMap;
 
 @GwtCompatible
 public class DataManagerImpl implements DataManager {
-    private final Logger log = Logger.getLogger(DataManagerImpl.class.getName());
-    private final IndexingUtil indexingUtil = new IndexingUtil();
-    private final AllPhotosHelper allPhotosHelper = new AllPhotosHelper();
-    private final Map<String, TagNode> tagNodeIndex = newHashMap();
-    private final DispatchAsync dispatchAsync;
-    private final GetTagTreeMemoProc getTagTreeMemoProc;
+	private final Logger log = Logger
+			.getLogger(DataManagerImpl.class.getName());
+	private final IndexingUtil indexingUtil = new IndexingUtil();
+	private final AllPhotosHelper allPhotosHelper = new AllPhotosHelper();
+	private final Map<String, TagNode> tagNodeIndex = newHashMap();
+	private final DispatchAsync dispatchAsync;
+	private final GetTagTreeMemoProc getTagTreeMemoProc;
 
-    @Inject
-    public DataManagerImpl(DispatchAsync dispatchAsync,
-                           GetTagTreeMemoProc getTagTreeMemoProc) {
-        this.dispatchAsync = dispatchAsync;
-        this.getTagTreeMemoProc = getTagTreeMemoProc;
-    }
+	@Inject
+	public DataManagerImpl(DispatchAsync dispatchAsync,
+			GetTagTreeMemoProc getTagTreeMemoProc) {
+		this.dispatchAsync = dispatchAsync;
+		this.getTagTreeMemoProc = getTagTreeMemoProc;
+	}
 
-    public void getTagTree(final AsyncCallback<TagNode> callback) {
-        log.log(Level.FINEST, "getTagTree ");
-        getTagTreeMemoProc.getAsync(new AsyncCallback<TagTreeResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                callback.onFailure(caught);
-            }
+	public void getTagTree(final AsyncCallback<TagNode> callback) {
+		log.log(Level.FINEST, "getTagTree ");
+		getTagTreeMemoProc.getAsync(new AsyncCallback<TagTreeResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-            @Override
-            public void onSuccess(TagTreeResult result) {
-                callback.onSuccess(result.getTree());
-            }
-        });
-    }
+			@Override
+			public void onSuccess(TagTreeResult result) {
+				callback.onSuccess(result.getTree());
+			}
+		});
+	}
 
-    public void getTagNode(final String id,
-                           final AsyncCallback<TagNode> callback) {
-        log.log(Level.FINEST, "getTagNode: " + id);
-        getTagTree(new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                callback.onFailure(caught);
-            }
+	public void getTagNode(final String id,
+			final AsyncCallback<TagNode> callback) {
+		log.log(Level.FINEST, "getTagNode: " + id);
+		getTagTree(new AsyncCallback<TagNode>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				callback.onFailure(caught);
+			}
 
-            @Override
-            public void onSuccess(TagNode result) {
-                if (id.equals("all")) {
-                    getAllPhotos(new AsyncCallback<PhotoInfoStore>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            callback.onFailure(caught);
-                        }
+			@Override
+			public void onSuccess(TagNode result) {
+				if (id.equals("all")) {
+					getAllPhotos(new AsyncCallback<PhotoInfoStore>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							callback.onFailure(caught);
+						}
 
-                        @Override
-                        public void onSuccess(PhotoInfoStore result) {
-                            TagNode virtualNode = new TagNode("all");
-                            virtualNode.setCachedPhotoList(result);
-                            virtualNode.setCount(result.size());
-                            callback.onSuccess(virtualNode);
-                        }
-                    });
-                } else {
-                    indexingUtil.rebuildTagNodeIndex(tagNodeIndex, result);
-                    callback.onSuccess(tagNodeIndex.get(id));
-                }
-            }
-        });
+						@Override
+						public void onSuccess(PhotoInfoStore result) {
+							TagNode virtualNode = new TagNode("all");
+							virtualNode.setCachedPhotoList(result);
+							virtualNode.setCount(result.size());
+							callback.onSuccess(virtualNode);
+						}
+					});
+				} else {
+					indexingUtil.rebuildTagNodeIndex(tagNodeIndex, result);
+					callback.onSuccess(tagNodeIndex.get(id));
+				}
+			}
+		});
 
-    }
+	}
 
-    public void getAdminTagNode(final String id,
-                                final AsyncCallback<TagNode> callback) {
-        dispatchAsync.execute(new GetTagNodeAction(id), new AsyncCallback<TagNodeResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                callback.onFailure(caught);
-            }
+	public void getAdminTagNode(final String id,
+			final AsyncCallback<TagNode> callback) {
+		dispatchAsync.execute(new GetTagNodeAction(id),
+				new AsyncCallback<TagNodeResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						callback.onFailure(caught);
+					}
 
-            @Override
-            public void onSuccess(TagNodeResult result) {
-                callback.onSuccess(result.getInfo());
-            }
-        });
-    }
+					@Override
+					public void onSuccess(TagNodeResult result) {
+						callback.onSuccess(result.getInfo());
+					}
+				});
+	}
 
-    @Override
-    public void reset() {
-        getTagTreeMemoProc.reset();
-        tagNodeIndex.clear();
-    }
+	@Override
+	public void reset() {
+		getTagTreeMemoProc.reset();
+		tagNodeIndex.clear();
+	}
 
+	public void getAllPhotos(
+			final AsyncCallback<PhotoInfoStore> storeAsyncCallback) {
+		getTagTree(new AsyncCallback<TagNode>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				storeAsyncCallback.onFailure(caught);
+			}
 
-    public void getAllPhotos(final AsyncCallback<PhotoInfoStore> storeAsyncCallback) {
-        getTagTree(new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                storeAsyncCallback.onFailure(caught);
-            }
+			@Override
+			public void onSuccess(TagNode result) {
+				final PhotoInfoStore allPhotos = allPhotosHelper
+						.getAllPhotos(result);
+				storeAsyncCallback.onSuccess(allPhotos);
+			}
+		});
+	}
 
-            @Override
-            public void onSuccess(TagNode result) {
-                final PhotoInfoStore allPhotos = allPhotosHelper.getAllPhotos(result);
-                storeAsyncCallback.onSuccess(allPhotos);
-            }
-        });
-    }
+	public void getAdminTagTree(final AsyncCallback<TagNode> callback) {
+		dispatchAsync.execute(new GetAdminTagTreeAction(),
+				new AsyncCallback<TagTreeResult>() {
+					public void onFailure(Throwable caught) {
+						callback.onFailure(caught);
+					}
 
-
-    public void getAdminTagTree(final AsyncCallback<TagNode> callback) {
-        dispatchAsync.execute(new GetAdminTagTreeAction(),
-                new AsyncCallback<TagTreeResult>() {
-                    public void onFailure(Throwable caught) {
-                        callback.onFailure(caught);
-                    }
-
-                    public void onSuccess(TagTreeResult result) {
-                        callback.onSuccess(result.getTree());
-                    }
-                });
-    }
+					public void onSuccess(TagTreeResult result) {
+						callback.onSuccess(result.getTree());
+					}
+				});
+	}
 }

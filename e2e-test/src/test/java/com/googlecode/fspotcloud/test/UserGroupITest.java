@@ -30,46 +30,46 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-
 public class UserGroupITest {
-    public static final String LINUS_KERNEL_ORG = "linus@example.com";
-    public static final String JEFF_GOOGLE_COM = "jeff@example.com";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    ManageGroupsPage manageGroupsPage;
-    @Inject
-    EditUserGroupPage editUserGroupPage;
-    @Inject
-    ILogin login;
-    @Inject
-    ManageUsersPage manageUsersPage;
+	public static final String LINUS_KERNEL_ORG = "linus@example.com";
+	public static final String JEFF_GOOGLE_COM = "jeff@example.com";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	ManageGroupsPage manageGroupsPage;
+	@Inject
+	EditUserGroupPage editUserGroupPage;
+	@Inject
+	ILogin login;
+	@Inject
+	ManageUsersPage manageUsersPage;
 
-    @Test
-    public void createAndEditUserGroup() throws Exception {
-        login.login();
-        manageGroupsPage.open();
-        manageGroupsPage.newUserGroup();
-        manageGroupsPage.selectFirstRow();
-        manageGroupsPage.editUserGroup();
+	@Test
+	public void createAndEditUserGroup() throws Exception {
+		login.login();
+		manageGroupsPage.open();
+		manageGroupsPage.newUserGroup();
+		manageGroupsPage.selectFirstRow();
+		manageGroupsPage.editUserGroup();
 
-        editUserGroupPage.fill("GNU Friends",
-                "My friends from all over the world");
-        editUserGroupPage.save();
-        manageGroupsPage.open();
-        manageGroupsPage.verifyText("My friends from all over the world");
-        manageGroupsPage.selectFirstRow();
-        manageGroupsPage.manageUserGroup();
-        manageUsersPage.newUser(JEFF_GOOGLE_COM);
-        manageUsersPage.newUser(LINUS_KERNEL_ORG);
-        manageUsersPage.fillEmail("");
-        manageUsersPage.verifyText(LINUS_KERNEL_ORG);
-        manageUsersPage.selectFirstRow();
-        manageUsersPage.deleteUser();
-        manageUsersPage.verifyTextNotPresent(LINUS_KERNEL_ORG);
+		editUserGroupPage.fill("GNU Friends",
+				"My friends from all over the world");
+		editUserGroupPage.save();
+		manageGroupsPage.open();
+		manageGroupsPage.verifyText("My friends from all over the world");
+		manageGroupsPage.selectFirstRow();
+		manageGroupsPage.manageUserGroup();
+		manageUsersPage.newUser(JEFF_GOOGLE_COM);
+		manageUsersPage.newUser(LINUS_KERNEL_ORG);
+		manageUsersPage.fillEmail("");
+		manageUsersPage.verifyText(LINUS_KERNEL_ORG);
+		manageUsersPage.selectFirstRow();
+		manageUsersPage.deleteUser();
+		manageUsersPage.verifyTextNotPresent(LINUS_KERNEL_ORG);
 
-        manageGroupsPage.deleteUserGroup();
-        manageGroupsPage.verifyTextNotPresent(
-                "My friends from all over the world");
-    }
+		manageGroupsPage.deleteUserGroup();
+		manageGroupsPage
+				.verifyTextNotPresent("My friends from all over the world");
+	}
 }

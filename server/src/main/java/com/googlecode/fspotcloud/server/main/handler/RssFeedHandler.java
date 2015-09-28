@@ -38,31 +38,32 @@ import net.customware.gwt.dispatch.shared.general.StringResult;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
+public class RssFeedHandler
+		extends
+			SimpleActionHandler<RssFeedAction, StringResult> {
+	private final Logger log = Logger.getLogger(RssFeedHandler.class.getName());
 
-public class RssFeedHandler extends SimpleActionHandler<RssFeedAction, StringResult> {
-    private final Logger log = Logger.getLogger(RssFeedHandler.class.getName());
+	private final Dispatch dispatch;
+	private final FeedBuilder feedBuilder;
 
-    private final Dispatch dispatch;
-    private final FeedBuilder feedBuilder;
+	@Inject
+	public RssFeedHandler(Dispatch dispatch, FeedBuilder feedBuilder) {
+		this.dispatch = dispatch;
+		this.feedBuilder = feedBuilder;
+	}
 
-    @Inject
-    public RssFeedHandler(Dispatch dispatch, FeedBuilder feedBuilder) {
-        this.dispatch = dispatch;
-        this.feedBuilder = feedBuilder;
-    }
-
-
-    @Override
-    public StringResult execute(RssFeedAction action, ExecutionContext context)
-            throws DispatchException {
-        TagTreeResult tagTreeResult = dispatch.execute(new GetTagTreeAction());
-        TagNode tagNode = TagNode.find(tagTreeResult.getTree(), action.getTagId());
-        if (tagNode != null) {
-            String rss = feedBuilder.getFeed(tagNode);
-            return new StringResult(rss);
-        } else {
-            return new StringResult("Not found");
-        }
-    }
+	@Override
+	public StringResult execute(RssFeedAction action, ExecutionContext context)
+			throws DispatchException {
+		TagTreeResult tagTreeResult = dispatch.execute(new GetTagTreeAction());
+		TagNode tagNode = TagNode.find(tagTreeResult.getTree(),
+				action.getTagId());
+		if (tagNode != null) {
+			String rss = feedBuilder.getFeed(tagNode);
+			return new StringResult(rss);
+		} else {
+			return new StringResult("Not found");
+		}
+	}
 
 }

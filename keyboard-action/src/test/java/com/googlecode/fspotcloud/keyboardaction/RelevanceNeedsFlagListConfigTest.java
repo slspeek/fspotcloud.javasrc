@@ -19,30 +19,33 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JukitoRunner.class)
 public class RelevanceNeedsFlagListConfigTest {
 
-    Relevance relevance = new Relevance(HomePlace.class).addDefaultKeys(KeyStroke.K);
+	Relevance relevance = new Relevance(HomePlace.class)
+			.addDefaultKeys(KeyStroke.K);
 
-    PlaceContext placeContext = new PlaceContext(OutPlace.class, Sets.<String>newHashSet(MainBuilder.FLAG_LOGGED_ON));
+	PlaceContext placeContext = new PlaceContext(OutPlace.class,
+			Sets.<String> newHashSet(MainBuilder.FLAG_LOGGED_ON));
 
-    FlagsRule condition;
-    @Before
-    public void setUp() throws Exception {
-        condition = new FlagsRule();
-        condition.needs(MainBuilder.FLAG_LOGGED_ON);
-        assertTrue(condition.holds(placeContext.getFlags()));
-        final List<Class<? extends Place>> classes = newArrayList();
-        classes.add(OutPlace.class);
-        relevance.addRule(classes, condition, KeyStroke.H);
-    }
+	FlagsRule condition;
+	@Before
+	public void setUp() throws Exception {
+		condition = new FlagsRule();
+		condition.needs(MainBuilder.FLAG_LOGGED_ON);
+		assertTrue(condition.holds(placeContext.getFlags()));
+		final List<Class<? extends Place>> classes = newArrayList();
+		classes.add(OutPlace.class);
+		relevance.addRule(classes, condition, KeyStroke.H);
+	}
 
-    @Test
-    public void testGetKeys() throws Exception {
-        List<KeyStroke> keys = relevance.getKeys(placeContext);
-        assertEquals(1, keys.size());
-    }
+	@Test
+	public void testGetKeys() throws Exception {
+		List<KeyStroke> keys = relevance.getKeys(placeContext);
+		assertEquals(1, keys.size());
+	}
 
-    @Test
-    public void testGetKeysEmpty() throws Exception {
-        List<KeyStroke> keys = relevance.getKeys(new PlaceContext(Place.NOWHERE.getClass()));
-        assertEquals(0, keys.size());
-    }
+	@Test
+	public void testGetKeysEmpty() throws Exception {
+		List<KeyStroke> keys = relevance.getKeys(new PlaceContext(Place.NOWHERE
+				.getClass()));
+		assertEquals(0, keys.size());
+	}
 }

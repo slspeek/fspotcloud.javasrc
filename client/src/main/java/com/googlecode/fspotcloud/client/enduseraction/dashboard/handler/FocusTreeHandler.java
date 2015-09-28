@@ -7,12 +7,12 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class FocusTreeHandler implements IActionHandler {
 
-    @Inject
-    @AdminTreeView
-    TreeView treeView;
+	@Inject
+	@AdminTreeView
+	TreeView treeView;
 
-    @Override
-    public void performAction(String actionId) {
-        treeView.requestFocus();
-    }
+	@Override
+	public void performAction(String actionId) {
+		treeView.requestFocus();
+	}
 }

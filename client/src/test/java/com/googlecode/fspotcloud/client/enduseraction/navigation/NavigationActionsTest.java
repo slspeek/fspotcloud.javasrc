@@ -10,12 +10,12 @@ import static junit.framework.Assert.assertNotNull;
 @RunWith(JukitoRunner.class)
 public class NavigationActionsTest {
 
-    @Inject private NavigationActions navigationActions;
+	@Inject
+	private NavigationActions navigationActions;
 
-    @Test
-    public void testNotNull() throws Exception {
-        assertNotNull(navigationActions.back);
+	@Test
+	public void testNotNull() throws Exception {
+		assertNotNull(navigationActions.back);
 
-
-    }
+	}
 }

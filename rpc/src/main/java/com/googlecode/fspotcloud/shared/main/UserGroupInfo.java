@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.shared.main;
 
 import com.google.common.annotations.GwtCompatible;
@@ -45,69 +45,69 @@ import static com.google.common.collect.Sets.newHashSet;
  */
 @GwtCompatible
 public class UserGroupInfo implements Result, IsSerializable, Serializable {
-    private Long id;
-    private String name;
-    private String description;
-    private HashSet<String> grantedUsers;
-    private boolean isPublic;
+	private Long id;
+	private String name;
+	private String description;
+	private HashSet<String> grantedUsers;
+	private boolean isPublic;
 
-    public UserGroupInfo(Long id, String name, String description,
-                         boolean aPublic) {
-        this.name = name;
-        this.description = description;
-        this.id = id;
-        isPublic = aPublic;
-    }
+	public UserGroupInfo(Long id, String name, String description,
+			boolean aPublic) {
+		this.name = name;
+		this.description = description;
+		this.id = id;
+		isPublic = aPublic;
+	}
 
-    UserGroupInfo() {
-    }
+	UserGroupInfo() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Set<String> getGrantedUsers() {
-        return grantedUsers;
-    }
+	public Set<String> getGrantedUsers() {
+		return grantedUsers;
+	}
 
-    public void setGrantedUsers(Set<String> grantedUsers) {
-        this.grantedUsers = newHashSet(grantedUsers);
-    }
+	public void setGrantedUsers(Set<String> grantedUsers) {
+		this.grantedUsers = newHashSet(grantedUsers);
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("UserGroupInfo");
-        sb.append("{id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", grantedUsers=").append(grantedUsers);
-        sb.append('}');
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("UserGroupInfo");
+		sb.append("{id=").append(id);
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", description='").append(description).append('\'');
+		sb.append(", grantedUsers=").append(grantedUsers);
+		sb.append('}');
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
-    }
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
 
-    public boolean isPublic() {
-        return isPublic;
-    }
+	public boolean isPublic() {
+		return isPublic;
+	}
 }

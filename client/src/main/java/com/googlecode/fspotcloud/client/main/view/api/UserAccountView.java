@@ -31,20 +31,20 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 @GwtCompatible
 public interface UserAccountView extends IsWidget {
-    void setEmail(String email);
+	void setEmail(String email);
 
-    void setLastLoginTime(String date);
+	void setLastLoginTime(String date);
 
-    public String getOldPasswordField();
+	public String getOldPasswordField();
 
-    public String getPasswordField();
+	public String getPasswordField();
 
-    public String getPasswordAgainField();
+	public String getPasswordAgainField();
 
-    void setStatusText(String text);
+	void setStatusText(String text);
 
-    void clearFields();
+	void clearFields();
 
-    interface UserAccountPresenter extends Activity, IActionHandler {
-    }
+	interface UserAccountPresenter extends Activity, IActionHandler {
+	}
 }

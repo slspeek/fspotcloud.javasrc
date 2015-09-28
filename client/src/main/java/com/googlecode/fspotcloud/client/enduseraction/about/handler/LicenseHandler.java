@@ -6,8 +6,8 @@ import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 
 public class LicenseHandler extends LoadNewLocationAction {
 
-    @Inject
-    private LicenseHandler(OpenNewTab loader) {
-        super(loader, "http://www.gnu.org/licenses/gpl.html");
-    }
+	@Inject
+	private LicenseHandler(OpenNewTab loader) {
+		super(loader, "http://www.gnu.org/licenses/gpl.html");
+	}
 }

@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.thoughtworks.selenium.Selenium;
@@ -38,26 +38,26 @@ import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
  * @author steven
  */
 public class EditUserGroupPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public void open(Long id) {
-        selenium.open("#EditUserGroupPlace:" + id);
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open(Long id) {
+		selenium.open("#EditUserGroupPlace:" + id);
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void fill(String name, String description)
-            throws InterruptedException {
-        sleepShort();
-        selenium.type("id=gwt-debug-name", name);
-        selenium.type("id=gwt-debug-description", description);
-    }
+	public void fill(String name, String description)
+			throws InterruptedException {
+		sleepShort();
+		selenium.type("id=gwt-debug-name", name);
+		selenium.type("id=gwt-debug-description", description);
+	}
 
-    public void save() {
-        selenium.click("gwt-debug-save");
-    }
+	public void save() {
+		selenium.click("gwt-debug-save");
+	}
 
-    public void togglePublic() {
-        selenium.click("id=gwt-debug-public-checkbox-input");
-    }
+	public void togglePublic() {
+		selenium.click("id=gwt-debug-public-checkbox-input");
+	}
 }

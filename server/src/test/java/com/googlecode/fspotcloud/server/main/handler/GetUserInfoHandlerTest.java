@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.main.handler;
 
 import com.googlecode.fspotcloud.shared.main.GetUserInfo;
@@ -43,33 +43,33 @@ import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class GetUserInfoHandlerTest {
-    @Inject
-    GetUserInfoHandler handler;
+	@Inject
+	GetUserInfoHandler handler;
 
-    @Test
-    public void executeUserLoggedOn(UserService service)
-            throws DispatchException {
-        when(service.isUserLoggedIn()).thenReturn(Boolean.TRUE);
-        when(service.isUserAdmin()).thenReturn(Boolean.FALSE);
-        when(service.getThirdPartyLoginURL("")).thenReturn("login_url");
-        when(service.getThirdPartyLogoutURL("")).thenReturn("logout_url");
-        when(service.getEmail()).thenReturn("foo@bar.com");
+	@Test
+	public void executeUserLoggedOn(UserService service)
+			throws DispatchException {
+		when(service.isUserLoggedIn()).thenReturn(Boolean.TRUE);
+		when(service.isUserAdmin()).thenReturn(Boolean.FALSE);
+		when(service.getThirdPartyLoginURL("")).thenReturn("login_url");
+		when(service.getThirdPartyLogoutURL("")).thenReturn("logout_url");
+		when(service.getEmail()).thenReturn("foo@bar.com");
 
-        UserInfo info = handler.execute(new GetUserInfo(""), null);
-        Assert.assertEquals("foo@bar.com", info.getEmail());
-        Assert.assertTrue(info.isLoggedIn());
-    }
+		UserInfo info = handler.execute(new GetUserInfo(""), null);
+		Assert.assertEquals("foo@bar.com", info.getEmail());
+		Assert.assertTrue(info.isLoggedIn());
+	}
 
-    @Test
-    public void executeNoUserLoggedOn(UserService service)
-            throws DispatchException {
-        when(service.isUserLoggedIn()).thenReturn(Boolean.FALSE);
-        when(service.isUserAdmin()).thenReturn(Boolean.FALSE);
-        when(service.getThirdPartyLoginURL("")).thenReturn("login_url");
-        when(service.getThirdPartyLogoutURL("")).thenReturn("logout_url");
-        when(service.getEmail()).thenReturn(null);
+	@Test
+	public void executeNoUserLoggedOn(UserService service)
+			throws DispatchException {
+		when(service.isUserLoggedIn()).thenReturn(Boolean.FALSE);
+		when(service.isUserAdmin()).thenReturn(Boolean.FALSE);
+		when(service.getThirdPartyLoginURL("")).thenReturn("login_url");
+		when(service.getThirdPartyLogoutURL("")).thenReturn("logout_url");
+		when(service.getEmail()).thenReturn(null);
 
-        UserInfo info = handler.execute(new GetUserInfo(""), null);
-        Assert.assertFalse(info.isLoggedIn());
-    }
+		UserInfo info = handler.execute(new GetUserInfo(""), null);
+		Assert.assertFalse(info.isLoggedIn());
+	}
 }

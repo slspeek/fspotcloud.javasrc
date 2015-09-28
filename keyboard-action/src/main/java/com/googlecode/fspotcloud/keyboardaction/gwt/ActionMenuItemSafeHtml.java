@@ -18,54 +18,52 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.FINE;
 
 public class ActionMenuItemSafeHtml {
-    private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
-    private final KeyboardPreferences keyboardPreferences;
+	private static final MyTemplates TEMPLATES = GWT.create(MyTemplates.class);
+	private final KeyboardPreferences keyboardPreferences;
 
-    private final Logger log = Logger.getLogger(ActionMenuItemSafeHtml.class.getName());
-    @Inject
-    private ActionMenuItemSafeHtml(KeyboardPreferences keyboardPreferences) {
-        super();
-        this.keyboardPreferences = keyboardPreferences;
-    }
+	private final Logger log = Logger.getLogger(ActionMenuItemSafeHtml.class
+			.getName());
+	@Inject
+	private ActionMenuItemSafeHtml(KeyboardPreferences keyboardPreferences) {
+		super();
+		this.keyboardPreferences = keyboardPreferences;
+	}
 
-    public interface MyTemplates extends SafeHtmlTemplates {
+	public interface MyTemplates extends SafeHtmlTemplates {
 
+		@Template("<span class=\"{2}\"><img src=\"{1}\" class=\"{4}\"></img><span class=\"{3}\">{0}</span><span class=\"{5}\">{6}</span></span>")
+		SafeHtml menuItemIcon(String message, SafeUri uri, String outerStyle,
+				String captionStyle, String iconStyle, String shortcutStyle,
+				String shortcut);
 
-        @Template("<span class=\"{2}\"><img src=\"{1}\" class=\"{4}\"></img><span class=\"{3}\">{0}</span><span class=\"{5}\">{6}</span></span>")
-        SafeHtml menuItemIcon(String message, SafeUri uri, String outerStyle, String captionStyle, String iconStyle, String shortcutStyle, String shortcut);
+		@Template("<span class=\"{1}\"><img  class=\"{3}\"></img><span class=\"{2}\">{0}</span><span class=\"{4}\">{5}</span></span>")
+		SafeHtml menuItem(String message, String outerStyle,
+				String captionStyle, String iconStyle, String shortcutStyle,
+				String shortcut);
+	}
 
-        @Template("<span class=\"{1}\"><img  class=\"{3}\"></img><span class=\"{2}\">{0}</span><span class=\"{4}\">{5}</span></span>")
-        SafeHtml menuItem(String message, String outerStyle, String captionStyle, String iconStyle, String shortcutStyle, String shortcut);
-    }
+	SafeHtml get(ActionUIDef actionUIDef, ActionMenuResources resources) {
+		ActionMenuResources.Style style = resources.style();
+		SafeHtmlBuilder builder = new SafeHtmlBuilder();
 
-    SafeHtml get(ActionUIDef actionUIDef, ActionMenuResources resources) {
-        ActionMenuResources.Style style = resources.style();
-        SafeHtmlBuilder builder = new SafeHtmlBuilder();
+		log.log(FINE, keyboardPreferences + " : " + actionUIDef);
+		List<KeyStroke> keysForAction = keyboardPreferences
+				.getDefaultKeysForAction(actionUIDef.getId());
+		Joiner joiner = Joiner.on(" or ");
+		String keyboardShortcuts = "(" + joiner.join(keysForAction) + ")";
 
-        log.log(FINE, keyboardPreferences + " : " + actionUIDef);
-        List<KeyStroke> keysForAction = keyboardPreferences.getDefaultKeysForAction(actionUIDef.getId());
-        Joiner joiner = Joiner.on(" or ");
-        String keyboardShortcuts = "(" + joiner.join(keysForAction) + ")";
+		final String description = actionUIDef.getName();
+		if (actionUIDef.getIcon() != null) {
 
-        final String description = actionUIDef.getName();
-        if (actionUIDef.getIcon() != null) {
-
-            return TEMPLATES.menuItemIcon(description,
-                    actionUIDef.getIcon().getSafeUri(),
-                    style.menuItem(),
-                    style.menuItemText(),
-                    style.helpActionIcon(),
-                    style.menuItemShortcut(),
-                    keyboardShortcuts);
-        } else {
-            return TEMPLATES.menuItem(description,
-                    style.menuItem(),
-                    style.menuItemText(),
-                    style.helpActionIcon(),
-                    style.menuItemShortcut(),
-                    keyboardShortcuts);
-        }
-    }
-
+			return TEMPLATES.menuItemIcon(description, actionUIDef.getIcon()
+					.getSafeUri(), style.menuItem(), style.menuItemText(),
+					style.helpActionIcon(), style.menuItemShortcut(),
+					keyboardShortcuts);
+		} else {
+			return TEMPLATES.menuItem(description, style.menuItem(),
+					style.menuItemText(), style.helpActionIcon(),
+					style.menuItemShortcut(), keyboardShortcuts);
+		}
+	}
 
 }

@@ -29,19 +29,19 @@ import com.googlecode.fspotcloud.model.jpa.photo.PhotoManagerBase;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 
-
 public class PhotoManager extends PhotoManagerBase<Photo, PhotoEntity>
-        implements PhotoDao {
-    @Inject
-    PhotoManagerBase<Photo, PhotoEntity> delegate;
+		implements
+			PhotoDao {
+	@Inject
+	PhotoManagerBase<Photo, PhotoEntity> delegate;
 
-    @Override
-    protected Photo newPhoto() {
-        return new PhotoEntity();
-    }
+	@Override
+	protected Photo newPhoto() {
+		return new PhotoEntity();
+	}
 
-    @Override
-    public Class<PhotoEntity> getEntityType() {
-        return PhotoEntity.class;
-    }
+	@Override
+	public Class<PhotoEntity> getEntityType() {
+		return PhotoEntity.class;
+	}
 }

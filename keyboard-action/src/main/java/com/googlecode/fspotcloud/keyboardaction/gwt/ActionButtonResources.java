@@ -27,16 +27,14 @@ package com.googlecode.fspotcloud.keyboardaction.gwt;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-
 public interface ActionButtonResources extends ClientBundle {
 
-    @Source("actionbutton.css")
-    Style style();
+	@Source("actionbutton.css")
+	Style style();
 
+	public interface Style extends CssResource {
+		String button();
 
-    public interface Style extends CssResource {
-        String button();
-
-        String demoing();
-    }
+		String demoing();
+	}
 }

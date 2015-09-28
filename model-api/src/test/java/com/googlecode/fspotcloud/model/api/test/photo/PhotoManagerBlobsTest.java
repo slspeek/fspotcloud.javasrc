@@ -44,66 +44,67 @@ import com.googlecode.simpleblobstore.BlobService;
 
 @Ignore
 public class PhotoManagerBlobsTest {
-    public static final String TEST_ID = "1";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private PhotoDao photoManager;
-    @Inject
-    private BlobService blobService;
-    private final Random random = new Random();
+	public static final String TEST_ID = "1";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private PhotoDao photoManager;
+	@Inject
+	private BlobService blobService;
+	private final Random random = new Random();
 
-    @After
-    public void cleanUp() {
-        photoManager.deleteBulk(100);
-    }
+	@After
+	public void cleanUp() {
+		photoManager.deleteBulk(100);
+	}
 
-    private String saveBlob(int size) {
-        byte[] data = new byte[size];
-        random.nextBytes(data);
+	private String saveBlob(int size) {
+		byte[] data = new byte[size];
+		random.nextBytes(data);
 
-        //return blobService.save("application", data).getKeyString();
-        // TODO: Fix this?!
-        
-        return "wrong";
-    }
+		//return blobService.save("application", data).getKeyString();
+		// TODO: Fix this?!
 
-    @Test
-    public void testDeletionOfImageBlob() {
-        String blobKey = saveBlob(100000);
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setId(TEST_ID);
-        photo.setImageBlobKey(blobKey);
-        photoManager.save(photo);
-        photo = null;
-        assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
-        photoManager.deleteByKey(TEST_ID);
-        assertNull(blobService.getInfo(new BlobKey(blobKey)));
-    }
+		return "wrong";
+	}
 
-    @Test
-    public void testDeletionOfThumbBlob() {
-        String blobKey = saveBlob(100000);
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setId(TEST_ID);
-        photo.setThumbBlobKey(blobKey);
-        photoManager.save(photo);
-        photo = null;
-        assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
-        photoManager.deleteByKey(TEST_ID);
-        assertNull(blobService.getInfo(new BlobKey(blobKey)));
-    }
+	@Test
+	public void testDeletionOfImageBlob() {
+		String blobKey = saveBlob(100000);
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setId(TEST_ID);
+		photo.setImageBlobKey(blobKey);
+		photoManager.save(photo);
+		photo = null;
+		assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
+		photoManager.deleteByKey(TEST_ID);
+		assertNull(blobService.getInfo(new BlobKey(blobKey)));
+	}
 
-    @Test
-    public void testDeletionOfFullsizeBlob() {
-        String blobKey = saveBlob(100000);
-        Photo photo = photoManager.findOrNew(TEST_ID);
-        photo.setId(TEST_ID);
-        photo.setFullsizeImageBlobKey(blobKey);
-        photoManager.save(photo);
-        photo = null;
-        assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
-        photoManager.deleteByKey(TEST_ID);
-        assertNull(blobService.getInfo(new BlobKey(blobKey)));
-    }
+	@Test
+	public void testDeletionOfThumbBlob() {
+		String blobKey = saveBlob(100000);
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setId(TEST_ID);
+		photo.setThumbBlobKey(blobKey);
+		photoManager.save(photo);
+		photo = null;
+		assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
+		photoManager.deleteByKey(TEST_ID);
+		assertNull(blobService.getInfo(new BlobKey(blobKey)));
+	}
+
+	@Test
+	public void testDeletionOfFullsizeBlob() {
+		String blobKey = saveBlob(100000);
+		Photo photo = photoManager.findOrNew(TEST_ID);
+		photo.setId(TEST_ID);
+		photo.setFullsizeImageBlobKey(blobKey);
+		photoManager.save(photo);
+		photo = null;
+		assertNotNull(blobService.getInfo(new BlobKey(blobKey)));
+		photoManager.deleteByKey(TEST_ID);
+		assertNull(blobService.getInfo(new BlobKey(blobKey)));
+	}
 }

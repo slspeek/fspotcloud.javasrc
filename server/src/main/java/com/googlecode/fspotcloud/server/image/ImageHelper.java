@@ -26,7 +26,6 @@ package com.googlecode.fspotcloud.server.image;
 
 import com.googlecode.fspotcloud.server.model.api.Photo;
 
-
 /**
  * Created with IntelliJ IDEA.
  * User: steven
@@ -35,9 +34,9 @@ import com.googlecode.fspotcloud.server.model.api.Photo;
  * To change this template use File | Settings | File Templates.
  */
 public interface ImageHelper {
-    byte[] getImage(Photo photo, Type type);
+	byte[] getImage(Photo photo, Type type);
 
-    enum Type {
-        THUMB, NORMAL, FULLSIZE;
-    }
+	enum Type {
+		THUMB, NORMAL, FULLSIZE;
+	}
 }

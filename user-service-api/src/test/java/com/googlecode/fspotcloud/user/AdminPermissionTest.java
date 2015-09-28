@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.user;
 
 import org.jukito.JukitoRunner;
@@ -45,31 +45,31 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(JukitoRunner.class)
 public class AdminPermissionTest {
-    @Inject
-    AdminPermission instance;
+	@Inject
+	AdminPermission instance;
 
-    @Before
-    public void setUp() {
-    }
+	@Before
+	public void setUp() {
+	}
 
-    @After
-    public void tearDown() {
-    }
+	@After
+	public void tearDown() {
+	}
 
-    /**
-     * Test of checkAdminPermission method, of class AdminPermission.
-     *
-     * @param mock DOCUMENT ME!
-     */
-    @Test
-    public void testCheckAdminPermission(UserService mock) {
-        when(mock.isUserAdmin()).thenReturn(Boolean.TRUE);
-        instance.checkAdminPermission();
-    }
+	/**
+	 * Test of checkAdminPermission method, of class AdminPermission.
+	 *
+	 * @param mock DOCUMENT ME!
+	 */
+	@Test
+	public void testCheckAdminPermission(UserService mock) {
+		when(mock.isUserAdmin()).thenReturn(Boolean.TRUE);
+		instance.checkAdminPermission();
+	}
 
-    @Test(expected = SecurityException.class)
-    public void testCheckAdminPermissionNotInRole(UserService mock) {
-        when(mock.isUserAdmin()).thenReturn(Boolean.FALSE);
-        instance.checkAdminPermission();
-    }
+	@Test(expected = SecurityException.class)
+	public void testCheckAdminPermissionNotInRole(UserService mock) {
+		when(mock.isUserAdmin()).thenReturn(Boolean.FALSE);
+		instance.checkAdminPermission();
+	}
 }

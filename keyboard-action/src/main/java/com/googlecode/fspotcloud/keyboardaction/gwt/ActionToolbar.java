@@ -39,56 +39,59 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @GwtCompatible
 public class ActionToolbar extends LayoutPanel {
-    private List<Widget> widgetList = newArrayList();
-    private final WidgetFactory widgetFactory;
-    private ActionButtonResources actionButtonResources;
-    private String buttonStylePrimaryName = "gwt-PushButton";
+	private List<Widget> widgetList = newArrayList();
+	private final WidgetFactory widgetFactory;
+	private ActionButtonResources actionButtonResources;
+	private String buttonStylePrimaryName = "gwt-PushButton";
 
-    @Inject
-    ActionToolbar(@Assisted ActionToolbarResources actionToolbarResources,
-                  ActionButtonResources actionButtonResources,
-                  WidgetFactory widgetFactory) {
-        this.widgetFactory = widgetFactory;
-        this.actionButtonResources = actionButtonResources;
-        addStyleName(actionToolbarResources.style().toolbar());
-    }
+	@Inject
+	ActionToolbar(@Assisted ActionToolbarResources actionToolbarResources,
+			ActionButtonResources actionButtonResources,
+			WidgetFactory widgetFactory) {
+		this.widgetFactory = widgetFactory;
+		this.actionButtonResources = actionButtonResources;
+		addStyleName(actionToolbarResources.style().toolbar());
+	}
 
-    public void setButtonStylePrimaryName(String buttonStylePrimaryName) {
-        this.buttonStylePrimaryName = buttonStylePrimaryName;
-    }
+	public void setButtonStylePrimaryName(String buttonStylePrimaryName) {
+		this.buttonStylePrimaryName = buttonStylePrimaryName;
+	}
 
-    public void setActionButtonResources(ActionButtonResources actionButtonResources) {
-        this.actionButtonResources = actionButtonResources;
-    }
+	public void setActionButtonResources(
+			ActionButtonResources actionButtonResources) {
+		this.actionButtonResources = actionButtonResources;
+	}
 
-    @Override
-    public void add(Widget w) {
-        widgetList.add(w);
-        super.add(w);
-        doLayout();
-    }
+	@Override
+	public void add(Widget w) {
+		widgetList.add(w);
+		super.add(w);
+		doLayout();
+	}
 
-    public void addCategory(ActionCategory actionCategory) {
-        for (ActionUIDef actionUIDef : actionCategory.getActions()) {
-            add(actionUIDef);
-        }
-    }
+	public void addCategory(ActionCategory actionCategory) {
+		for (ActionUIDef actionUIDef : actionCategory.getActions()) {
+			add(actionUIDef);
+		}
+	}
 
-    private void doLayout() {
-        final int widgetCount = widgetList.size();
+	private void doLayout() {
+		final int widgetCount = widgetList.size();
 
-        final float step = 100f / widgetCount;
-        for (int i = 0; i < widgetCount; i++) {
-            Widget widget = widgetList.get(i);
-            setWidgetLeftWidth(widget, i * step, Unit.PCT, step, Unit.PCT);
-        }
-    }
+		final float step = 100f / widgetCount;
+		for (int i = 0; i < widgetCount; i++) {
+			Widget widget = widgetList.get(i);
+			setWidgetLeftWidth(widget, i * step, Unit.PCT, step, Unit.PCT);
+		}
+	}
 
-    public void add(ActionUIDef actionUIDef) {
-        add(widgetFactory.getButton(actionUIDef, actionButtonResources, buttonStylePrimaryName));
-    }
+	public void add(ActionUIDef actionUIDef) {
+		add(widgetFactory.getButton(actionUIDef, actionButtonResources,
+				buttonStylePrimaryName));
+	}
 
-    public void add(String actionId) {
-        add(widgetFactory.getButton(actionId, actionButtonResources, buttonStylePrimaryName));
-    }
+	public void add(String actionId) {
+		add(widgetFactory.getButton(actionId, actionButtonResources,
+				buttonStylePrimaryName));
+	}
 }

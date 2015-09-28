@@ -36,35 +36,36 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
+public class DeleteTagsHandler
+		extends
+			SimpleActionHandler<DeleteAllTagsAction, VoidResult> {
+	private final Logger log = Logger.getLogger(DeleteTagsHandler.class
+			.getName());
+	private final TaskQueueDispatch dispatchAsync;
+	private final TagDao tagManager;
+	private final PeerDatabaseDao peerDatabaseDao;
 
-public class DeleteTagsHandler extends SimpleActionHandler<DeleteAllTagsAction, VoidResult> {
-    private final Logger log = Logger.getLogger(DeleteTagsHandler.class.getName());
-    private final TaskQueueDispatch dispatchAsync;
-    private final TagDao tagManager;
-    private final PeerDatabaseDao peerDatabaseDao;
+	@Inject
+	public DeleteTagsHandler(TaskQueueDispatch dispatchAsync,
+			TagDao tagManager, PeerDatabaseDao peerDatabaseDao) {
+		super();
+		this.dispatchAsync = dispatchAsync;
+		this.tagManager = tagManager;
+		this.peerDatabaseDao = peerDatabaseDao;
+	}
 
-    @Inject
-    public DeleteTagsHandler(TaskQueueDispatch dispatchAsync,
-                             TagDao tagManager,
-                             PeerDatabaseDao peerDatabaseDao) {
-        super();
-        this.dispatchAsync = dispatchAsync;
-        this.tagManager = tagManager;
-        this.peerDatabaseDao = peerDatabaseDao;
-    }
+	@Override
+	public VoidResult execute(DeleteAllTagsAction action,
+			ExecutionContext context) throws DispatchException {
+		log.info("Delete tags entered");
+		tagManager.deleteBulk(30);
 
-    @Override
-    public VoidResult execute(DeleteAllTagsAction action,
-                              ExecutionContext context) throws DispatchException {
-        log.info("Delete tags entered");
-        tagManager.deleteBulk(30);
+		if (!tagManager.isEmpty()) {
+			dispatchAsync.execute(new DeleteAllTagsAction());
+		} else {
+			peerDatabaseDao.resetCachedTagTrees();
+		}
 
-        if (!tagManager.isEmpty()) {
-            dispatchAsync.execute(new DeleteAllTagsAction());
-        } else {
-            peerDatabaseDao.resetCachedTagTrees();
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

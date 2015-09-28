@@ -28,20 +28,21 @@ import com.google.inject.Provider;
 
 import javax.inject.Inject;
 
+public abstract class UserServiceBase
+		implements
+			com.googlecode.fspotcloud.user.UserService {
+	@Inject
+	Provider<ILoginMetaData> loginMetaDataProvider;
+	@Inject
+	protected UrlUtil urlUtil;
 
-public abstract class UserServiceBase implements com.googlecode.fspotcloud.user.UserService {
-    @Inject
-    Provider<ILoginMetaData> loginMetaDataProvider;
-    @Inject
-    protected UrlUtil urlUtil;
+	@Override
+	public String getEmail() {
+		return loginMetaDataProvider.get().getEmail();
+	}
 
-    @Override
-    public String getEmail() {
-        return loginMetaDataProvider.get().getEmail();
-    }
-
-    @Override
-    public boolean isUserLoggedIn() {
-        return getEmail() != null;
-    }
+	@Override
+	public boolean isUserLoggedIn() {
+		return getEmail() != null;
+	}
 }

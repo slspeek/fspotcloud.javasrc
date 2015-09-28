@@ -30,22 +30,23 @@ import static com.googlecode.fspotcloud.test.Serialization.testSerialization;
 import static org.junit.Assert.assertEquals;
 
 public class PeerMetaDataResultTest {
-    final int TAG_COUNT = 10;
-    final int PHOTO_COUNT = 1000;
-    final PeerMetaDataResult result = new PeerMetaDataResult(TAG_COUNT, PHOTO_COUNT);
+	final int TAG_COUNT = 10;
+	final int PHOTO_COUNT = 1000;
+	final PeerMetaDataResult result = new PeerMetaDataResult(TAG_COUNT,
+			PHOTO_COUNT);
 
-    @Test
-    public void testSerialize() throws Exception {
-        testSerialization(result);
-    }
+	@Test
+	public void testSerialize() throws Exception {
+		testSerialization(result);
+	}
 
-    @Test
-    public void testTagCount() {
-        assertEquals(TAG_COUNT, result.getTagCount());
-    }
+	@Test
+	public void testTagCount() {
+		assertEquals(TAG_COUNT, result.getTagCount());
+	}
 
-    @Test
-    public void testPhotoCount() {
-        assertEquals(PHOTO_COUNT, result.getPhotoCount());
-    }
+	@Test
+	public void testPhotoCount() {
+		assertEquals(PHOTO_COUNT, result.getPhotoCount());
+	}
 }

@@ -13,11 +13,12 @@ import java.io.IOException;
 @Singleton
 public class FixtureRunServlet extends HttpServlet {
 
-    @Inject
-    ThreeUsersFixture fixture;
+	@Inject
+	ThreeUsersFixture fixture;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        fixture.run();
-    }
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		fixture.run();
+	}
 }

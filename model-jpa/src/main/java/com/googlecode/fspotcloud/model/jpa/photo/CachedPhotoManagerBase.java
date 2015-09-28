@@ -34,61 +34,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-
 public abstract class CachedPhotoManagerBase<T extends Photo, U extends T>
-        extends CachedSimpleDAONamedIdImpl<Photo, U, String> implements PhotoDao {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(CachedPhotoManagerBase.class.getName());
+		extends
+			CachedSimpleDAONamedIdImpl<Photo, U, String> implements PhotoDao {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(CachedPhotoManagerBase.class
+			.getName());
 
-    private void detach(Photo photo) {
-        List<String> tagList = photo.getTagList();
-        photo.setTagList(new ArrayList<String>(tagList));
-    }
+	private void detach(Photo photo) {
+		List<String> tagList = photo.getTagList();
+		photo.setTagList(new ArrayList<String>(tagList));
+	}
 
-    @Override
-    public Photo find(String key) {
-        EntityManager em = entityManagerProvider.get();
-        em.getTransaction().begin();
+	@Override
+	public Photo find(String key) {
+		EntityManager em = entityManagerProvider.get();
+		em.getTransaction().begin();
 
-        Photo attachted = em.find(getEntityType(), key);
+		Photo attachted = em.find(getEntityType(), key);
 
-        if (attachted != null) {
-            detach(attachted);
-        }
+		if (attachted != null) {
+			detach(attachted);
+		}
 
-        em.getTransaction().commit();
+		em.getTransaction().commit();
 
-        return attachted;
-    }
+		return attachted;
+	}
 
-    @Override
-    public List<Photo> findAll(int max) {
-        EntityManager em = entityManagerProvider.get();
-        em.getTransaction().begin();
+	@Override
+	public List<Photo> findAll(int max) {
+		EntityManager em = entityManagerProvider.get();
+		em.getTransaction().begin();
 
-        try {
-            Query query = em.createQuery("select c from " +
-                    getEntityType().getName() + " AS c");
-            query.setMaxResults(max);
+		try {
+			Query query = em.createQuery("select c from "
+					+ getEntityType().getName() + " AS c");
+			query.setMaxResults(max);
 
-            @SuppressWarnings("unchecked")
-            List<Photo> rs = (List<Photo>) query.getResultList();
-            List<Photo> result = new ArrayList<Photo>();
-            result.addAll(rs);
+			@SuppressWarnings("unchecked")
+			List<Photo> rs = (List<Photo>) query.getResultList();
+			List<Photo> result = new ArrayList<Photo>();
+			result.addAll(rs);
 
-            final List<Photo> all = result;
+			final List<Photo> all = result;
 
-            for (Photo photo : all) {
-                detach(photo);
-            }
+			for (Photo photo : all) {
+				detach(photo);
+			}
 
-            em.getTransaction().commit();
+			em.getTransaction().commit();
 
-            return all;
-        } finally {
-            em.close();
-        }
-    }
+			return all;
+		} finally {
+			em.close();
+		}
+	}
 
-    protected abstract Photo newPhoto();
+	protected abstract Photo newPhoto();
 }

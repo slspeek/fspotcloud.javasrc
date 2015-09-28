@@ -6,15 +6,15 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class FasterHandler implements IActionHandler {
 
-    private final Slideshow slideshow;
+	private final Slideshow slideshow;
 
-    @Inject
-    public FasterHandler(Slideshow slideshow) {
-        this.slideshow = slideshow;
-    }
+	@Inject
+	public FasterHandler(Slideshow slideshow) {
+		this.slideshow = slideshow;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        slideshow.faster();
-    }
+	@Override
+	public void performAction(String actionId) {
+		slideshow.faster();
+	}
 }

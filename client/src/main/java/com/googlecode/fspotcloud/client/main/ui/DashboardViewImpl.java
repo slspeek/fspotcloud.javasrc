@@ -40,72 +40,71 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.WidgetFactory;
 
 import java.util.logging.Logger;
 
-
 public class DashboardViewImpl extends Composite implements DashboardView {
-    private static final DashboardViewImplUiBinder uiBinder = GWT.create(DashboardViewImplUiBinder.class);
-    private static final Logger log = Logger.getLogger(DashboardViewImpl.class.getName());
+	private static final DashboardViewImplUiBinder uiBinder = GWT
+			.create(DashboardViewImplUiBinder.class);
+	private static final Logger log = Logger.getLogger(DashboardViewImpl.class
+			.getName());
 
-    private final TagDetailsViewImpl tagDetailsView;
-    private final PeerActionsView peerActionsView;
-    private final TreeView treeView;
-    private DashboardPresenter presenter;
-    @UiField(provided = true)
-    ActionButton toPhotos;
-    @UiField(provided = true)
-    ActionButton manageGroups;
-    @UiField(provided = true)
-    ActionButton reloadTree;
-    @UiField(provided = true)
-    StatusViewImpl statusView;
+	private final TagDetailsViewImpl tagDetailsView;
+	private final PeerActionsView peerActionsView;
+	private final TreeView treeView;
+	private DashboardPresenter presenter;
+	@UiField(provided = true)
+	ActionButton toPhotos;
+	@UiField(provided = true)
+	ActionButton manageGroups;
+	@UiField(provided = true)
+	ActionButton reloadTree;
+	@UiField(provided = true)
+	StatusViewImpl statusView;
 
-    public static int counter;
+	public static int counter;
 
-    @Inject
-    public DashboardViewImpl(@AdminTreeView TreeView treeView,
-                             PeerActionsView peerActionsView,
-                             TagDetailsView tagDetailsView,
-                             @Dashboard StatusView statusView,
-                             WidgetFactory widgetFactory,
-                             AdminActionButtonResources resources,
-                             DashboardActions actions
-    ) {
-        counter++;
-        this.statusView = (StatusViewImpl) statusView;
-        widgetFactory.setButtonResources(resources);
-        toPhotos = widgetFactory.getButton(actions.toPhotos);
-        manageGroups = widgetFactory.getButton(actions.manageGroups);
-        reloadTree = widgetFactory.getButton(actions.reloadTree);
-        this.treeView = treeView;
-        this.peerActionsView = peerActionsView;
-        this.tagDetailsView = (TagDetailsViewImpl) tagDetailsView;
-        initWidget(uiBinder.createAndBindUi(this));
-        toPhotos.ensureDebugId("to-photos-button");
-        manageGroups.ensureDebugId("manage-groups-button");
-        log.info("Dashboard created: " + counter);
-    }
+	@Inject
+	public DashboardViewImpl(@AdminTreeView TreeView treeView,
+			PeerActionsView peerActionsView, TagDetailsView tagDetailsView,
+			@Dashboard StatusView statusView, WidgetFactory widgetFactory,
+			AdminActionButtonResources resources, DashboardActions actions) {
+		counter++;
+		this.statusView = (StatusViewImpl) statusView;
+		widgetFactory.setButtonResources(resources);
+		toPhotos = widgetFactory.getButton(actions.toPhotos);
+		manageGroups = widgetFactory.getButton(actions.manageGroups);
+		reloadTree = widgetFactory.getButton(actions.reloadTree);
+		this.treeView = treeView;
+		this.peerActionsView = peerActionsView;
+		this.tagDetailsView = (TagDetailsViewImpl) tagDetailsView;
+		initWidget(uiBinder.createAndBindUi(this));
+		toPhotos.ensureDebugId("to-photos-button");
+		manageGroups.ensureDebugId("manage-groups-button");
+		log.info("Dashboard created: " + counter);
+	}
 
-    @UiFactory
-    public PeerActionsViewImpl getPeerActionsView() {
-        return (PeerActionsViewImpl) peerActionsView;
-    }
+	@UiFactory
+	public PeerActionsViewImpl getPeerActionsView() {
+		return (PeerActionsViewImpl) peerActionsView;
+	}
 
-    @UiFactory
-    @Override
-    public TagDetailsViewImpl getTagDetailsView() {
-        log.info("Dashboard getTagDetail..: " + counter);
-        return tagDetailsView;
-    }
+	@UiFactory
+	@Override
+	public TagDetailsViewImpl getTagDetailsView() {
+		log.info("Dashboard getTagDetail..: " + counter);
+		return tagDetailsView;
+	}
 
-    @Override
-    public void setPresenter(DashboardPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setPresenter(DashboardPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @UiFactory
-    public TreeViewImpl getTreeView() {
-        return (TreeViewImpl) treeView;
-    }
+	@UiFactory
+	public TreeViewImpl getTreeView() {
+		return (TreeViewImpl) treeView;
+	}
 
-    interface DashboardViewImplUiBinder extends UiBinder<Widget, DashboardViewImpl> {
-    }
+	interface DashboardViewImplUiBinder
+			extends
+				UiBinder<Widget, DashboardViewImpl> {
+	}
 }

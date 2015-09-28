@@ -30,43 +30,42 @@ import com.googlecode.simpleblobstore.BlobService;
 
 import javax.inject.Inject;
 
-
 public class ImageHelperImpl implements ImageHelper {
-    @Inject
-    BlobService blobService;
+	@Inject
+	BlobService blobService;
 
-    @Override
-    public byte[] getImage(Photo photo, Type type) {
-        if (photo == null) {
-            return null;
-        }
-        String key = keyForType(type, photo);
-        byte[] image = null;
-        if (key != null) {
-            image = blobService.fetchData(new BlobKey(key));
-        }
-        return image;
-    }
+	@Override
+	public byte[] getImage(Photo photo, Type type) {
+		if (photo == null) {
+			return null;
+		}
+		String key = keyForType(type, photo);
+		byte[] image = null;
+		if (key != null) {
+			image = blobService.fetchData(new BlobKey(key));
+		}
+		return image;
+	}
 
-    private String keyForType(Type type, Photo photo) {
-        String result;
+	private String keyForType(Type type, Photo photo) {
+		String result;
 
-        switch (type) {
-            case FULLSIZE:
-                result = photo.getFullsizeImageBlobKey();
-                break;
+		switch (type) {
+			case FULLSIZE :
+				result = photo.getFullsizeImageBlobKey();
+				break;
 
-            case NORMAL:
-                result = photo.getImageBlobKey();
-                break;
+			case NORMAL :
+				result = photo.getImageBlobKey();
+				break;
 
-            case THUMB:
-                result = photo.getThumbBlobKey();
-                break;
+			case THUMB :
+				result = photo.getThumbBlobKey();
+				break;
 
-            default:
-                throw new IllegalStateException("Unknown image size");
-        }
-        return result;
-    }
+			default :
+				throw new IllegalStateException("Unknown image size");
+		}
+		return result;
+	}
 }

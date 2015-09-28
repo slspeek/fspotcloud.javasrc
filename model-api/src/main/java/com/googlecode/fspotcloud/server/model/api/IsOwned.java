@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.server.model.api;
 
-
 /**
  * Created with IntelliJ IDEA.
  * User: steven
@@ -33,7 +32,7 @@ package com.googlecode.fspotcloud.server.model.api;
  * To change this template use File | Settings | File Templates.
  */
 public interface IsOwned {
-    void setOwner(String owner);
+	void setOwner(String owner);
 
-    String getOwner();
+	String getOwner();
 }

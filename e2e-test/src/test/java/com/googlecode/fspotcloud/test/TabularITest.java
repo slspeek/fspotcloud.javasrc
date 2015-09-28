@@ -31,29 +31,29 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-
 public class TabularITest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    Selenium selenium;
-    @Inject
-    PhotoPage photoPage;
-    @Inject
-    ILogin login;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	Selenium selenium;
+	@Inject
+	PhotoPage photoPage;
+	@Inject
+	ILogin login;
 
-    @Test
-    public void testTabular() throws Exception {
-        login.login();
-        photoPage.open();
-        photoPage.clickImage(3, 0);
-        photoPage.clickImage(0, 0);
+	@Test
+	public void testTabular() throws Exception {
+		login.login();
+		photoPage.open();
+		photoPage.clickImage(3, 0);
+		photoPage.clickImage(0, 0);
 
-        selenium.open("#BasePlace:1:12:2:2:false");
-        selenium.waitForPageToLoad("30000");
-        photoPage.back();
-        photoPage.assertImageHasId(0, 1, "6");
-        photoPage.assertImageIsLoaded(0, 0);
-        photoPage.assertImageIsLoaded(0, 1);
-    }
+		selenium.open("#BasePlace:1:12:2:2:false");
+		selenium.waitForPageToLoad("30000");
+		photoPage.back();
+		photoPage.assertImageHasId(0, 1, "6");
+		photoPage.assertImageIsLoaded(0, 0);
+		photoPage.assertImageIsLoaded(0, 1);
+	}
 }

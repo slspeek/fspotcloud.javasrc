@@ -41,49 +41,52 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class PeerMetaDataCallback implements SerializableAsyncCallback<PeerMetaDataResult> {
-    private static final long serialVersionUID = 1851403859917750767L;
-    @Inject
-    private transient Logger log;
-    @Inject
-    private transient PeerDatabaseDao defaultPeer;
-    @Inject
-    private transient TagDao tagManager;
-    @Inject
-    private transient ControllerDispatchAsync dispatchAsync;
+public class PeerMetaDataCallback
+		implements
+			SerializableAsyncCallback<PeerMetaDataResult> {
+	private static final long serialVersionUID = 1851403859917750767L;
+	@Inject
+	private transient Logger log;
+	@Inject
+	private transient PeerDatabaseDao defaultPeer;
+	@Inject
+	private transient TagDao tagManager;
+	@Inject
+	private transient ControllerDispatchAsync dispatchAsync;
 
-    public PeerMetaDataCallback() {
-        super();
-    }
+	public PeerMetaDataCallback() {
+		super();
+	}
 
-    @Override
-    public void onSuccess(PeerMetaDataResult result) {
-        log.log(Level.INFO, "On success: {0}", result);
+	@Override
+	public void onSuccess(PeerMetaDataResult result) {
+		log.log(Level.INFO, "On success: {0}", result);
 
-        int count = result.getPhotoCount();
-        int tagCount = result.getTagCount();
-        PeerDatabase p = defaultPeer.get();
-        p.setPeerPhotoCount(count);
-        p.setTagCount(tagCount);
-        defaultPeer.save(p);
-        dispatchAsync.execute(new GetPeerUpdateInstructionsAction(getTagData()),
-                new PeerUpdateInstructionsCallback());
-    }
+		int count = result.getPhotoCount();
+		int tagCount = result.getTagCount();
+		PeerDatabase p = defaultPeer.get();
+		p.setPeerPhotoCount(count);
+		p.setTagCount(tagCount);
+		defaultPeer.save(p);
+		dispatchAsync.execute(
+				new GetPeerUpdateInstructionsAction(getTagData()),
+				new PeerUpdateInstructionsCallback());
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-        log.log(Level.SEVERE, "Error on peer-component: ", caught);
-    }
+	@Override
+	public void onFailure(Throwable caught) {
+		log.log(Level.SEVERE, "Error on peer-component: ", caught);
+	}
 
-    private List<TagData> getTagData() {
-        List<TagData> result = newArrayList();
+	private List<TagData> getTagData() {
+		List<TagData> result = newArrayList();
 
-        for (Tag tag : tagManager.findAll(1000)) {
-            TagData data = new TagData(tag.getId(), tag.getTagName(),
-                    tag.getParentId(), tag.getCount());
-            result.add(data);
-        }
+		for (Tag tag : tagManager.findAll(1000)) {
+			TagData data = new TagData(tag.getId(), tag.getTagName(),
+					tag.getParentId(), tag.getCount());
+			result.add(data);
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

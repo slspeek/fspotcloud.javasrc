@@ -27,25 +27,24 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class UpdateUserAction implements Action<UpdateUserResult> {
-    private String newPassword;
-    private String oldPassword;
+	private String newPassword;
+	private String oldPassword;
 
-    public UpdateUserAction() {
-    }
+	public UpdateUserAction() {
+	}
 
-    public UpdateUserAction(String newPassword, String oldPassword) {
-        this.newPassword = newPassword;
-        this.oldPassword = oldPassword;
-    }
+	public UpdateUserAction(String newPassword, String oldPassword) {
+		this.newPassword = newPassword;
+		this.oldPassword = oldPassword;
+	}
 
-    public String getNewPassword() {
-        return newPassword;
-    }
+	public String getNewPassword() {
+		return newPassword;
+	}
 
-    public String getOldPassword() {
-        return oldPassword;
-    }
+	public String getOldPassword() {
+		return oldPassword;
+	}
 }

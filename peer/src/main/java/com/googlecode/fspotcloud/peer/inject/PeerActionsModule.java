@@ -28,17 +28,16 @@ import com.googlecode.fspotcloud.peer.handlers.*;
 import com.googlecode.fspotcloud.shared.peer.*;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
-
 public class PeerActionsModule extends ActionHandlerModule {
-    @Override
-    protected void configureHandlers() {
-        bindHandler(GetPeerMetaDataAction.class, GetPeerMetaDataHandler.class);
-        bindHandler(GetTagDataAction.class, GetTagDataHandler.class);
-        bindHandler(GetPhotoDataAction.class, GetPhotoDataHandler.class);
-        bindHandler(GetTagUpdateInstructionsAction.class,
-                GetTagUpdateInstructionsHandler.class);
-        bindHandler(GetPeerUpdateInstructionsAction.class,
-                GetPeerUpdateInstructionsHandler.class);
-        bindHandler(GetFullsizePhotoAction.class, GetFullsizePhotoHandler.class);
-    }
+	@Override
+	protected void configureHandlers() {
+		bindHandler(GetPeerMetaDataAction.class, GetPeerMetaDataHandler.class);
+		bindHandler(GetTagDataAction.class, GetTagDataHandler.class);
+		bindHandler(GetPhotoDataAction.class, GetPhotoDataHandler.class);
+		bindHandler(GetTagUpdateInstructionsAction.class,
+				GetTagUpdateInstructionsHandler.class);
+		bindHandler(GetPeerUpdateInstructionsAction.class,
+				GetPeerUpdateInstructionsHandler.class);
+		bindHandler(GetFullsizePhotoAction.class, GetFullsizePhotoHandler.class);
+	}
 }

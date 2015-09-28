@@ -9,15 +9,14 @@ import com.googlecode.simpleblobstore.BlobKey;
 import com.googlecode.simpleblobstore.client.BlobstoreClient;
 import com.googlecode.simpleblobstore.client.BlobstoreClientException;
 
-
 public class BlobstoreFakeClient implements BlobstoreClient {
 
 	private static int counter = 0;
 	@Override
 	public Map<String, List<BlobKey>> upload(Map<String, byte[]> arg0)
 			throws BlobstoreClientException {
-		Map<String, List<BlobKey>>  result = Maps.newHashMap();
-		for (Map.Entry<String, byte[]> entry: arg0.entrySet()) {
+		Map<String, List<BlobKey>> result = Maps.newHashMap();
+		for (Map.Entry<String, byte[]> entry : arg0.entrySet()) {
 			List<BlobKey> keyList = Lists.newArrayList();
 			keyList.add(new BlobKey(String.valueOf(counter++)));
 			result.put(entry.getKey(), keyList);

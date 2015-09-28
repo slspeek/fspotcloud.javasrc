@@ -30,22 +30,22 @@ import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.botdispatch.model.jpa.gae.command.CommandManager;
 import com.googlecode.fspotcloud.model.jpa.GaeCachedModelModule;
 
-
 public class GaeNoAuthIntegrationModule
-        extends NoAuthPlaceHolderIntegrationModule {
+		extends
+			NoAuthPlaceHolderIntegrationModule {
 
 	public GaeNoAuthIntegrationModule(boolean shotwell) {
 		super(shotwell);
 	}
 
 	@Override
-    public void configure() {
-        super.configure();
-        System.setProperty("appengine.orm.disable.duplicate.emf.exception",
-                "true");
-        install(new GaeCachedModelModule(3, "gae"));
-        bind(Commands.class).to(CommandManager.class).in(Singleton.class);
+	public void configure() {
+		super.configure();
+		System.setProperty("appengine.orm.disable.duplicate.emf.exception",
+				"true");
+		install(new GaeCachedModelModule(3, "gae"));
+		bind(Commands.class).to(CommandManager.class).in(Singleton.class);
 
-        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-    }
+		bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
+	}
 }

@@ -37,70 +37,70 @@ import com.googlecode.fspotcloud.client.main.view.api.PeerActionsView;
 import com.googlecode.fspotcloud.keyboardaction.gwt.ActionButton;
 import com.googlecode.fspotcloud.keyboardaction.gwt.WidgetFactory;
 
+public class PeerActionsViewImpl extends Composite implements PeerActionsView {
+	private static final GlobalActionsViewImplUiBinder uiBinder = GWT
+			.create(GlobalActionsViewImplUiBinder.class);
+	private PeerActionsPresenter presenter;
+	@UiField
+	Label peerPhotoCountValueLabel;
+	@UiField
+	Label lastSeenPeerValueLabel;
+	@UiField
+	Label tagCountOnPeerValueLabel;
+	@UiField
+	Label pendingCommandCountValueLabel;
+	@UiField(provided = true)
+	ActionButton updateButton;
+	@UiField(provided = true)
+	ActionButton deleteAllTagsButton;
+	@UiField(provided = true)
+	ActionButton deleteAllCommandsButton;
 
-public class PeerActionsViewImpl extends Composite
-        implements PeerActionsView {
-    private static final GlobalActionsViewImplUiBinder uiBinder = GWT.create(GlobalActionsViewImplUiBinder.class);
-    private PeerActionsPresenter presenter;
-    @UiField
-    Label peerPhotoCountValueLabel;
-    @UiField
-    Label lastSeenPeerValueLabel;
-    @UiField
-    Label tagCountOnPeerValueLabel;
-    @UiField
-    Label pendingCommandCountValueLabel;
-    @UiField(provided = true)
-    ActionButton updateButton;
-    @UiField(provided = true)
-    ActionButton deleteAllTagsButton;
-    @UiField(provided = true)
-    ActionButton deleteAllCommandsButton;
+	@Inject
+	public PeerActionsViewImpl(DashboardActions actions,
+			WidgetFactory widgetFactory, AdminActionButtonResources resources) {
+		widgetFactory.setButtonResources(resources);
+		updateButton = widgetFactory.getButton(actions.synchronize);
+		deleteAllTagsButton = widgetFactory.getButton(actions.deleteAll);
+		deleteAllCommandsButton = widgetFactory
+				.getButton(actions.deleteCommands);
+		initWidget(uiBinder.createAndBindUi(this));
+		deleteAllTagsButton.ensureDebugId("delete-all-tags-button");
+		tagCountOnPeerValueLabel.ensureDebugId("peer-tag-count-label");
+		peerPhotoCountValueLabel.ensureDebugId("peer-photo-count-label");
+		updateButton.ensureDebugId("update-button");
+		deleteAllCommandsButton.ensureDebugId("delete-all-photos-button");
+		pendingCommandCountValueLabel
+				.ensureDebugId("pending-command-count-label");
+	}
 
-    @Inject
-    public PeerActionsViewImpl(DashboardActions actions,
-                               WidgetFactory widgetFactory,
-                               AdminActionButtonResources resources) {
-        widgetFactory.setButtonResources(resources);
-        updateButton = widgetFactory.getButton(actions.synchronize);
-        deleteAllTagsButton = widgetFactory.getButton(actions.deleteAll);
-        deleteAllCommandsButton = widgetFactory.getButton(actions.deleteCommands);
-        initWidget(uiBinder.createAndBindUi(this));
-        deleteAllTagsButton.ensureDebugId("delete-all-tags-button");
-        tagCountOnPeerValueLabel.ensureDebugId("peer-tag-count-label");
-        peerPhotoCountValueLabel.ensureDebugId("peer-photo-count-label");
-        updateButton.ensureDebugId("update-button");
-        deleteAllCommandsButton.ensureDebugId("delete-all-photos-button");
-        pendingCommandCountValueLabel.ensureDebugId(
-                "pending-command-count-label");
-    }
+	@Override
+	public HasText getPhotoCountOnPeerValue() {
+		return peerPhotoCountValueLabel;
+	}
 
+	@Override
+	public HasText getLastSeenPeerValue() {
+		return lastSeenPeerValueLabel;
+	}
 
-    @Override
-    public HasText getPhotoCountOnPeerValue() {
-        return peerPhotoCountValueLabel;
-    }
+	@Override
+	public void setPresenter(PeerActionsPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public HasText getLastSeenPeerValue() {
-        return lastSeenPeerValueLabel;
-    }
+	@Override
+	public HasText getTagCountValue() {
+		return tagCountOnPeerValueLabel;
+	}
 
-    @Override
-    public void setPresenter(PeerActionsPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public HasText getPendingCommandCountValue() {
+		return pendingCommandCountValueLabel;
+	}
 
-    @Override
-    public HasText getTagCountValue() {
-        return tagCountOnPeerValueLabel;
-    }
-
-    @Override
-    public HasText getPendingCommandCountValue() {
-        return pendingCommandCountValueLabel;
-    }
-
-    interface GlobalActionsViewImplUiBinder extends UiBinder<Widget, PeerActionsViewImpl> {
-    }
+	interface GlobalActionsViewImplUiBinder
+			extends
+				UiBinder<Widget, PeerActionsViewImpl> {
+	}
 }

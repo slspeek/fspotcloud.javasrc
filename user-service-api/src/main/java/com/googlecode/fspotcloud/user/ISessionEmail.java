@@ -25,5 +25,5 @@
 package com.googlecode.fspotcloud.user;
 
 public interface ISessionEmail {
-    String getEmail();
+	String getEmail();
 }

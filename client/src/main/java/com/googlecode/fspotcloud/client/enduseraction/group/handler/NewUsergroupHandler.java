@@ -14,33 +14,34 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 @GwtCompatible
 public class NewUsergroupHandler implements IActionHandler {
 
-    private final DispatchAsync dispatch;
-    private final ManageGroupsView.ManageGroupsPresenter presenter;
-    private final StatusView statusView;
+	private final DispatchAsync dispatch;
+	private final ManageGroupsView.ManageGroupsPresenter presenter;
+	private final StatusView statusView;
 
-    @Inject
-    public NewUsergroupHandler(DispatchAsync dispatch,
-                               ManageGroupsView.ManageGroupsPresenter presenter,
-                               @ManageGroups StatusView statusView) {
-        this.dispatch = dispatch;
-        this.presenter = presenter;
-        this.statusView = statusView;
-    }
+	@Inject
+	public NewUsergroupHandler(DispatchAsync dispatch,
+			ManageGroupsView.ManageGroupsPresenter presenter,
+			@ManageGroups StatusView statusView) {
+		this.dispatch = dispatch;
+		this.presenter = presenter;
+		this.statusView = statusView;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        statusView.setStatusText("Sending a request to create a new group");
-        dispatch.execute(new NewUserGroupAction(),
-                new AsyncCallback<GetUserGroupResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        statusView.setStatusText("Could not create a new group due to a server error");
-                    }
+	@Override
+	public void performAction(String actionId) {
+		statusView.setStatusText("Sending a request to create a new group");
+		dispatch.execute(new NewUserGroupAction(),
+				new AsyncCallback<GetUserGroupResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						statusView
+								.setStatusText("Could not create a new group due to a server error");
+					}
 
-                    @Override
-                    public void onSuccess(GetUserGroupResult result) {
-                        presenter.refreshData();
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(GetUserGroupResult result) {
+						presenter.refreshData();
+					}
+				});
+	}
 }

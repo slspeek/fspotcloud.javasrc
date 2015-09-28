@@ -43,62 +43,65 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class GetTagTreeHandler
+		extends
+			SimpleActionHandler<GetTagTreeAction, TagTreeResult> {
+	private final Logger log = Logger.getLogger(GetTagTreeHandler.class
+			.getName());
+	private final PeerDatabaseDao peerDatabaseDao;
+	private final TagDao tagManager;
+	private final IUserGroupHelper userGroupHelper;
+	private final UserService userService;
 
-public class GetTagTreeHandler extends SimpleActionHandler<GetTagTreeAction, TagTreeResult> {
-    private final Logger log = Logger.getLogger(GetTagTreeHandler.class.getName());
-    private final PeerDatabaseDao peerDatabaseDao;
-    private final TagDao tagManager;
-    private final IUserGroupHelper userGroupHelper;
-    private final UserService userService;
+	@Inject
+	public GetTagTreeHandler(PeerDatabaseDao peerDatabaseDao,
+			TagDao tagManager, IUserGroupHelper userGroupHelper,
+			UserService userService) {
+		this.peerDatabaseDao = peerDatabaseDao;
+		this.tagManager = tagManager;
+		this.userGroupHelper = userGroupHelper;
+		this.userService = userService;
+	}
 
-    @Inject
-    public GetTagTreeHandler(PeerDatabaseDao peerDatabaseDao,
-                             TagDao tagManager, IUserGroupHelper userGroupHelper,
-                             UserService userService) {
-        this.peerDatabaseDao = peerDatabaseDao;
-        this.tagManager = tagManager;
-        this.userGroupHelper = userGroupHelper;
-        this.userService = userService;
-    }
+	@Override
+	public TagTreeResult execute(GetTagTreeAction action,
+			ExecutionContext context) throws DispatchException {
+		TagNode subTree;
+		TagNode fullTree = getImportIssuedTree();
 
-    @Override
-    public TagTreeResult execute(GetTagTreeAction action,
-                                 ExecutionContext context) throws DispatchException {
-        TagNode subTree;
-        TagNode fullTree = getImportIssuedTree();
+		if (userService.isUserAdmin()) {
+			subTree = fullTree;
+		} else {
+			Set<String> visibleTags = userGroupHelper.getVisibleTagIds();
+			TagTreeHelper helper = new TagTreeHelper(fullTree, visibleTags);
+			subTree = helper.getSubTree();
+		}
+		return new TagTreeResult(subTree);
+	}
 
-        if (userService.isUserAdmin()) {
-            subTree = fullTree;
-        } else {
-            Set<String> visibleTags = userGroupHelper.getVisibleTagIds();
-            TagTreeHelper helper = new TagTreeHelper(fullTree, visibleTags);
-            subTree = helper.getSubTree();
-        }
-        return new TagTreeResult(subTree);
-    }
+	private TagNode getImportIssuedTree() {
+		PeerDatabase p = peerDatabaseDao.get();
 
-    private TagNode getImportIssuedTree() {
-        PeerDatabase p = peerDatabaseDao.get();
+		if (p.getCachedTagTree() != null) {
+			log.info("Got the tree from cache HIT");
 
-        if (p.getCachedTagTree() != null) {
-            log.info("Got the tree from cache HIT");
+			return p.getCachedTagTree();
+		} else {
+			log.info("Missed the cache; building");
 
-            return p.getCachedTagTree();
-        } else {
-            log.info("Missed the cache; building");
+			List<TagNode> tags = tagManager.getTags();
+			TreeBuilder builder = new TreeBuilder(tags);
+			TagNode tree = builder.getPublicTree();
+			p.setCachedTagTree(tree);
+			try {
+				log.info("Builded, about to save");
+				peerDatabaseDao.save(p);
+			} catch (Exception e) {
+				log.log(Level.INFO,
+						"Saving peerDatabase with basic-tree failed: ", e);
+			}
 
-            List<TagNode> tags = tagManager.getTags();
-            TreeBuilder builder = new TreeBuilder(tags);
-            TagNode tree = builder.getPublicTree();
-            p.setCachedTagTree(tree);
-            try {
-                log.info("Builded, about to save");
-                peerDatabaseDao.save(p);
-            } catch (Exception e) {
-                log.log(Level.INFO, "Saving peerDatabase with basic-tree failed: ", e);
-            }
-
-            return tree;
-        }
-    }
+			return tree;
+		}
+	}
 }

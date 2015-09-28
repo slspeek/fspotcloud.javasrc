@@ -27,50 +27,52 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-
 public class LoginPlace extends Place {
 
-    public String getNextUrl() {
-        return nextUrl;
-    }
+	public String getNextUrl() {
+		return nextUrl;
+	}
 
-    final private String nextUrl;
+	final private String nextUrl;
 
-    public LoginPlace() {
-        this("");
-    }
+	public LoginPlace() {
+		this("");
+	}
 
-    public LoginPlace(String nextUrl) {
-        this.nextUrl = nextUrl;
-    }
+	public LoginPlace(String nextUrl) {
+		this.nextUrl = nextUrl;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LoginPlace)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof LoginPlace))
+			return false;
 
-        LoginPlace that = (LoginPlace) o;
+		LoginPlace that = (LoginPlace) o;
 
-        if (!nextUrl.equals(that.nextUrl)) return false;
+		if (!nextUrl.equals(that.nextUrl))
+			return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return nextUrl.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return nextUrl.hashCode();
+	}
 
-    public static class Tokenizer implements PlaceTokenizer<LoginPlace> {
-        @Override
-        public LoginPlace getPlace(String token) {
+	public static class Tokenizer implements PlaceTokenizer<LoginPlace> {
+		@Override
+		public LoginPlace getPlace(String token) {
 
-            return new LoginPlace(token);
-        }
+			return new LoginPlace(token);
+		}
 
-        @Override
-        public String getToken(LoginPlace place) {
-            return place.getNextUrl();
-        }
-    }
+		@Override
+		public String getToken(LoginPlace place) {
+			return place.getNextUrl();
+		}
+	}
 }

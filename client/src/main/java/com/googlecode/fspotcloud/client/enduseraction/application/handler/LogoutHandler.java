@@ -18,57 +18,52 @@ import java.util.logging.Logger;
 public class LogoutHandler implements IActionHandler
 
 {
-    private final Logger log = Logger.getLogger(LogoutHandler.class.getName());
-    private final IClientLoginManager IClientLoginManager;
-    private final TreeView.TreePresenter treePresenter;
-    private final IModeController modeController;
+	private final Logger log = Logger.getLogger(LogoutHandler.class.getName());
+	private final IClientLoginManager IClientLoginManager;
+	private final TreeView.TreePresenter treePresenter;
+	private final IModeController modeController;
 
+	@Inject
+	public LogoutHandler(IClientLoginManager IClientLoginManager,
+			@BasicTreeView TreeView.TreePresenter treePresenter,
+			IModeController modeController) {
+		this.IClientLoginManager = IClientLoginManager;
+		this.treePresenter = treePresenter;
+		this.modeController = modeController;
+	}
 
-    @Inject
-    public LogoutHandler(IClientLoginManager IClientLoginManager,
-                         @BasicTreeView TreeView.TreePresenter treePresenter,
-                         IModeController modeController) {
-        this.IClientLoginManager = IClientLoginManager;
-        this.treePresenter = treePresenter;
-        this.modeController = modeController;
-    }
+	@Override
+	public void performAction(String actionId) {
+		IClientLoginManager.getUserInfoAsync(new AsyncCallback<UserInfo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.SEVERE, "No user info ", caught);
+			}
 
-    @Override
-    public void performAction(String actionId) {
-        IClientLoginManager.getUserInfoAsync(
-                new AsyncCallback<UserInfo>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        log.log(Level.SEVERE, "No user info ", caught);
-                    }
+			@Override
+			public void onSuccess(final UserInfo result) {
+				IClientLoginManager.logout(new AsyncCallback<VoidResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						log.log(Level.SEVERE,
+								"An error prevented the server from logging of the user",
+								caught);
+					}
 
-                    @Override
-                    public void onSuccess(final UserInfo result) {
-                        IClientLoginManager.logout(new AsyncCallback<VoidResult>() {
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                log.log(Level.SEVERE,
-                                        "An error prevented the server from logging of the user",
-                                        caught);
-                            }
+					@Override
+					public void onSuccess(VoidResult result2) {
+						if ("GAE_LOGIN".equals(result.getLoginType())) {
+							Window.Location.replace(result.getLogoutUrl());
+						}
+						modeController.unsetFlag(Flags.ADMIN.name());
+						modeController.unsetFlag(Flags.LOGGED_ON.name());
+					}
+				});
+				IClientLoginManager.resetApplicationData();
+				treePresenter.reloadTree();
+			}
+		});
 
-                            @Override
-                            public void onSuccess(VoidResult result2) {
-                                if ("GAE_LOGIN".equals(
-                                        result.getLoginType())) {
-                                    Window.Location.replace(result.getLogoutUrl());
-                                }
-                                modeController.unsetFlag(Flags.ADMIN.name());
-                                modeController.unsetFlag(Flags.LOGGED_ON.name());
-                            }
-                        });
-                        IClientLoginManager.resetApplicationData();
-                        treePresenter.reloadTree();
-                    }
-                });
-
-
-    }
-
+	}
 
 }

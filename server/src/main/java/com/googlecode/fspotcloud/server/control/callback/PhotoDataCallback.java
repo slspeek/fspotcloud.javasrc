@@ -40,18 +40,18 @@ import com.googlecode.fspotcloud.shared.main.PhotoInfo;
 import com.googlecode.fspotcloud.shared.peer.PhotoData;
 import com.googlecode.fspotcloud.shared.peer.PhotoDataResult;
 
+public class PhotoDataCallback
+		implements
+			SerializableAsyncCallback<PhotoDataResult> {
+	private static final long serialVersionUID = 246810426240427570L;
+	@Inject
+	private transient PhotoDao photoManager;
+	@Inject
+	private transient TagDao tagManager;
+	@Inject
+	private transient PeerDatabaseDao peerDatabaseDao;
 
-public class PhotoDataCallback implements SerializableAsyncCallback<PhotoDataResult> {
-    private static final long serialVersionUID = 246810426240427570L;
-    @Inject
-    private transient PhotoDao photoManager;
-    @Inject
-    private transient TagDao tagManager;
-    @Inject
-    private transient PeerDatabaseDao peerDatabaseDao;
-
-    
-    public PhotoDataCallback(PhotoDao photoManager, TagDao tagManager,
+	public PhotoDataCallback(PhotoDao photoManager, TagDao tagManager,
 			PeerDatabaseDao peerDatabaseDao) {
 		super();
 		this.photoManager = photoManager;
@@ -60,54 +60,54 @@ public class PhotoDataCallback implements SerializableAsyncCallback<PhotoDataRes
 	}
 
 	public PhotoDataCallback() {
-        super();
-    }
+		super();
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-    }
+	@Override
+	public void onFailure(Throwable caught) {
+	}
 
-    @Override
-    public void onSuccess(PhotoDataResult result) {
-        List<Photo> photoList = new ArrayList<Photo>();
+	@Override
+	public void onSuccess(PhotoDataResult result) {
+		List<Photo> photoList = new ArrayList<Photo>();
 
-        for (PhotoData photoData : result.getPhotoDataList()) {
-            Photo p = recievePhoto(photoData);
-            photoList.add(p);
-        }
+		for (PhotoData photoData : result.getPhotoDataList()) {
+			Photo p = recievePhoto(photoData);
+			photoList.add(p);
+		}
 
-        photoManager.saveAll(photoList);
-        clearTreeCache();
-    }
+		photoManager.saveAll(photoList);
+		clearTreeCache();
+	}
 
-    private void clearTreeCache() {
-        peerDatabaseDao.resetCachedTagTrees();
-    }
+	private void clearTreeCache() {
+		peerDatabaseDao.resetCachedTagTrees();
+	}
 
-    private Photo recievePhoto(PhotoData photoData) {
-        String keyName = photoData.getPhotoId();
-        String desc = photoData.getDescription();
-        Date date = photoData.getDate();
-        List<String> tags = photoData.getTagList();
-        Photo photo = photoManager.findOrNew(keyName);
-        photo.setDescription(desc);
-        photo.setDate(date);
-        photo.setTagList(tags);
-        photo.setThumbBlobKey(photoData.getThumbBlobKey());
-        photo.setImageBlobKey(photoData.getImageBlobKey());
+	private Photo recievePhoto(PhotoData photoData) {
+		String keyName = photoData.getPhotoId();
+		String desc = photoData.getDescription();
+		Date date = photoData.getDate();
+		List<String> tags = photoData.getTagList();
+		Photo photo = photoManager.findOrNew(keyName);
+		photo.setDescription(desc);
+		photo.setDate(date);
+		photo.setTagList(tags);
+		photo.setThumbBlobKey(photoData.getThumbBlobKey());
+		photo.setImageBlobKey(photoData.getImageBlobKey());
 
-        for (String tagId : tags) {
-            Tag tag = tagManager.find(tagId);
-            PhotoInfo updatedInfo = new PhotoInfo(photo.getId(),
-                    photo.getDescription(), photo.getDate(),
-                    photoData.getVersion());
-            TreeSet<PhotoInfo> cachedPhotoList = tag.getCachedPhotoList();
-            cachedPhotoList.remove(updatedInfo);
-            cachedPhotoList.add(updatedInfo);
-            tag.setCachedPhotoList(cachedPhotoList);
-            tagManager.save(tag);
-        }
+		for (String tagId : tags) {
+			Tag tag = tagManager.find(tagId);
+			PhotoInfo updatedInfo = new PhotoInfo(photo.getId(),
+					photo.getDescription(), photo.getDate(),
+					photoData.getVersion());
+			TreeSet<PhotoInfo> cachedPhotoList = tag.getCachedPhotoList();
+			cachedPhotoList.remove(updatedInfo);
+			cachedPhotoList.add(updatedInfo);
+			tag.setCachedPhotoList(cachedPhotoList);
+			tagManager.save(tag);
+		}
 
-        return photo;
-    }
+		return photo;
+	}
 }

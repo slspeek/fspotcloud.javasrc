@@ -41,51 +41,51 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import java.util.logging.Logger;
 
+public class UserImportsTagHandler
+		extends
+			SimpleActionHandler<UserImportsTagAction, VoidResult> {
+	@Inject
+	Logger log;
+	private final TagDao tagManager;
+	private final ControllerDispatchAsync dispatchAsync;
+	private final IAdminPermission adminPermission;
+	private final PeerDatabaseDao peerDatabaseDao;
 
-public class UserImportsTagHandler extends SimpleActionHandler<UserImportsTagAction, VoidResult> {
-    @Inject
-    Logger log;
-    private final TagDao tagManager;
-    private final ControllerDispatchAsync dispatchAsync;
-    private final IAdminPermission adminPermission;
-    private final PeerDatabaseDao peerDatabaseDao;
+	@Inject
+	public UserImportsTagHandler(TagDao tagManager,
+			ControllerDispatchAsync dispatchAsync,
+			IAdminPermission adminPermission, PeerDatabaseDao peerDatabaseDao) {
+		this.tagManager = tagManager;
+		this.dispatchAsync = dispatchAsync;
+		this.adminPermission = adminPermission;
+		this.peerDatabaseDao = peerDatabaseDao;
+	}
 
-    @Inject
-    public UserImportsTagHandler(TagDao tagManager,
-                                 ControllerDispatchAsync dispatchAsync,
-                                 IAdminPermission adminPermission,
-                                 PeerDatabaseDao peerDatabaseDao) {
-        this.tagManager = tagManager;
-        this.dispatchAsync = dispatchAsync;
-        this.adminPermission = adminPermission;
-        this.peerDatabaseDao = peerDatabaseDao;
-    }
+	@Override
+	public VoidResult execute(UserImportsTagAction action,
+			ExecutionContext context) throws DispatchException {
+		//The permission cannot be checked for this handle is also used internally
+		//adminPermission.chechAdminPermission();
+		try {
+			String tagId = action.getTagId();
+			Tag tag = tagManager.find(tagId);
 
-    @Override
-    public VoidResult execute(UserImportsTagAction action,
-                              ExecutionContext context) throws DispatchException {
-        //The permission cannot be checked for this handle is also used internally
-        //adminPermission.chechAdminPermission();
-        try {
-            String tagId = action.getTagId();
-            Tag tag = tagManager.find(tagId);
+			if (!tag.isImportIssued()) {
+				tag.setImportIssued(true);
+				tagManager.save(tag);
+				peerDatabaseDao.resetCachedTagTrees();
+			}
 
-            if (!tag.isImportIssued()) {
-                tag.setImportIssued(true);
-                tagManager.save(tag);
-                peerDatabaseDao.resetCachedTagTrees();
-            }
+			GetTagUpdateInstructionsAction peerAction = new GetTagUpdateInstructionsAction(
+					tagId, tag.getCachedPhotoList());
+			TagUpdateInstructionsCallback callback = new TagUpdateInstructionsCallback(
+					tagId, null);
+			log.info("before execute for tag: " + action.getTagId());
+			dispatchAsync.execute(peerAction, callback);
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-            GetTagUpdateInstructionsAction peerAction = new GetTagUpdateInstructionsAction(tagId,
-                    tag.getCachedPhotoList());
-            TagUpdateInstructionsCallback callback = new TagUpdateInstructionsCallback(tagId,
-                    null);
-            log.info("before execute for tag: " + action.getTagId());
-            dispatchAsync.execute(peerAction, callback);
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

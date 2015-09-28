@@ -10,17 +10,17 @@ import static com.google.common.collect.Maps.newHashMap;
 @GwtCompatible
 public class ActionUIRegistry {
 
-    private final Map<String, ActionUIDef> registry = newHashMap();
+	private final Map<String, ActionUIDef> registry = newHashMap();
 
-    @Inject
-    private ActionUIRegistry() {
-    }
+	@Inject
+	private ActionUIRegistry() {
+	}
 
-    void putAction(ActionUIDef actionUIDef) {
-        registry.put(actionUIDef.getId(), actionUIDef);
-    }
+	void putAction(ActionUIDef actionUIDef) {
+		registry.put(actionUIDef.getId(), actionUIDef);
+	}
 
-    public ActionUIDef getAction(String actionKey) {
-        return registry.get(actionKey);
-    }
+	public ActionUIDef getAction(String actionKey) {
+		return registry.get(actionKey);
+	}
 }

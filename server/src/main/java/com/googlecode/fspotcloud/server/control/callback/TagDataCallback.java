@@ -35,71 +35,73 @@ import com.googlecode.fspotcloud.shared.peer.TagDataResult;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class TagDataCallback
+		implements
+			SerializableAsyncCallback<TagDataResult> {
+	protected static final Logger log = Logger.getLogger(TagDataCallback.class
+			.getName());
+	private static final long serialVersionUID = 5342287706825285919L;
+	@Inject
+	private transient TagDao tagManager;
+	@Inject
+	private transient PeerDatabaseDao peerDatabaseDao;
 
-public class TagDataCallback implements SerializableAsyncCallback<TagDataResult> {
-    protected static final Logger log = Logger.getLogger(TagDataCallback.class.getName());
-    private static final long serialVersionUID = 5342287706825285919L;
-    @Inject
-    private transient TagDao tagManager;
-    @Inject
-    private transient PeerDatabaseDao peerDatabaseDao;
+	public TagDataCallback(TagDao tagManager,
+			PeerDatabaseDao peerDatabaseManager) {
+		super();
+		this.tagManager = tagManager;
+		this.peerDatabaseDao = peerDatabaseManager;
+	}
 
-    public TagDataCallback(TagDao tagManager,
-                           PeerDatabaseDao peerDatabaseManager) {
-        super();
-        this.tagManager = tagManager;
-        this.peerDatabaseDao = peerDatabaseManager;
-    }
+	@Override
+	public void onFailure(Throwable caught) {
+		log.log(Level.SEVERE, "TagDataCallbask", caught);
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-        log.log(Level.SEVERE, "TagDataCallbask", caught);
-    }
+	@Override
+	public void onSuccess(TagDataResult result) {
+		for (TagData data : result.getTagDataList()) {
+			String keyName = data.getTagId();
+			Tag tag = tagManager.findOrNew(keyName);
+			recieveTag(data, tag);
+			tagManager.save(tag);
+		}
 
-    @Override
-    public void onSuccess(TagDataResult result) {
-        for (TagData data : result.getTagDataList()) {
-            String keyName = data.getTagId();
-            Tag tag = tagManager.findOrNew(keyName);
-            recieveTag(data, tag);
-            tagManager.save(tag);
-        }
+		clearTreeCache();
+	}
 
-        clearTreeCache();
-    }
+	private void clearTreeCache() {
+		peerDatabaseDao.resetCachedTagTrees();
+	}
 
-    private void clearTreeCache() {
-        peerDatabaseDao.resetCachedTagTrees();
-    }
+	private void recieveTag(TagData data, Tag tag) {
+		String tagName = data.getName();
+		String parentId = data.getParentId();
+		int count = data.getCount();
+		tag.setTagName(tagName);
+		tag.setParentId(parentId);
+		tag.setCount(count);
+	}
 
-    private void recieveTag(TagData data, Tag tag) {
-        String tagName = data.getName();
-        String parentId = data.getParentId();
-        int count = data.getCount();
-        tag.setTagName(tagName);
-        tag.setParentId(parentId);
-        tag.setCount(count);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+		final TagDataCallback other = (TagDataCallback) obj;
 
-        final TagDataCallback other = (TagDataCallback) obj;
+		return true;
+	}
 
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 7;
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-
-        return hash;
-    }
+		return hash;
+	}
 }

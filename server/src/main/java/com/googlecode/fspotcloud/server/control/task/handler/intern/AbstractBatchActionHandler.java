@@ -36,47 +36,47 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Iterator;
 
-
 public abstract class AbstractBatchActionHandler<V extends AbstractBatchAction<T>, T>
-        implements ActionHandler<V, VoidResult> {
-    private final TaskQueueDispatch dispatchAsync;
-    protected final int MAX_DATA_TICKS;
+		implements
+			ActionHandler<V, VoidResult> {
+	private final TaskQueueDispatch dispatchAsync;
+	protected final int MAX_DATA_TICKS;
 
-    @Inject
-    public AbstractBatchActionHandler(TaskQueueDispatch dispatchAsync,
-                                      @Named("maxTicks")
-                                      int MAX_DATA_TICKS) {
-        super();
-        this.dispatchAsync = dispatchAsync;
-        this.MAX_DATA_TICKS = MAX_DATA_TICKS;
-    }
+	@Inject
+	public AbstractBatchActionHandler(TaskQueueDispatch dispatchAsync,
+			@Named("maxTicks") int MAX_DATA_TICKS) {
+		super();
+		this.dispatchAsync = dispatchAsync;
+		this.MAX_DATA_TICKS = MAX_DATA_TICKS;
+	}
 
-    public abstract void doWork(AbstractBatchAction<T> action,
-                                Iterator<T> workLoad);
+	public abstract void doWork(AbstractBatchAction<T> action,
+			Iterator<T> workLoad);
 
-    @Override
-    public VoidResult execute(V action, ExecutionContext ec)
-            throws DispatchException {
-        Iterator<T> it = action.iterator();
+	@Override
+	public VoidResult execute(V action, ExecutionContext ec)
+			throws DispatchException {
+		Iterator<T> it = action.iterator();
 
-        for (int i = 0; i < MAX_DATA_TICKS && it.hasNext(); i++) {
-            doWork(action, it);
-        }
+		for (int i = 0; i < MAX_DATA_TICKS && it.hasNext(); i++) {
+			doWork(action, it);
+		}
 
-        if (it.hasNext()) {
-            dispatchAsync.execute(action);
-        }
+		if (it.hasNext()) {
+			dispatchAsync.execute(action);
+		}
 
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 
-    @Override
-    public Class<V> getActionType() {
-        return (Class<V>) GenericUtils.getFirstTypeParameterDeclaredOnSuperclass(this.getClass());
-    }
+	@Override
+	public Class<V> getActionType() {
+		return (Class<V>) GenericUtils
+				.getFirstTypeParameterDeclaredOnSuperclass(this.getClass());
+	}
 
-    @Override
-    public void rollback(V a, VoidResult r, ExecutionContext ec)
-            throws DispatchException {
-    }
+	@Override
+	public void rollback(V a, VoidResult r, ExecutionContext ec)
+			throws DispatchException {
+	}
 }

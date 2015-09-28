@@ -6,15 +6,15 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class AddRowHandler implements IActionHandler {
 
-    private final IRasterer rasterer;
+	private final IRasterer rasterer;
 
-    @Inject
-    public AddRowHandler(IRasterer rasterer) {
-        this.rasterer = rasterer;
-    }
+	@Inject
+	public AddRowHandler(IRasterer rasterer) {
+		this.rasterer = rasterer;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        rasterer.increaseRasterHeight(1);
-    }
+	@Override
+	public void performAction(String actionId) {
+		rasterer.increaseRasterHeight(1);
+	}
 }

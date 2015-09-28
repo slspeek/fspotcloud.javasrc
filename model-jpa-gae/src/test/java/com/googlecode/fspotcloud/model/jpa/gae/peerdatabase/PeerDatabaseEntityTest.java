@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.model.jpa.gae.peerdatabase;
 
 import com.googlecode.fspotcloud.shared.main.TagNode;
@@ -41,23 +41,23 @@ import static org.junit.Assert.assertNull;
  * @author steven
  */
 public class PeerDatabaseEntityTest {
-    public PeerDatabaseEntityTest() {
-    }
+	public PeerDatabaseEntityTest() {
+	}
 
-    @Before
-    public void setUp() {
-    }
+	@Before
+	public void setUp() {
+	}
 
-    @After
-    public void tearDown() {
-    }
+	@After
+	public void tearDown() {
+	}
 
-    @Test
-    public void testResetCachedTagTree() {
-        TagNode cachedTagTree = new TagNode();
-        PeerDatabaseEntity instance = new PeerDatabaseEntity();
-        instance.setCachedTagTree(cachedTagTree);
-        instance.setCachedTagTree(null);
-        assertNull(instance.getCachedTagTree());
-    }
+	@Test
+	public void testResetCachedTagTree() {
+		TagNode cachedTagTree = new TagNode();
+		PeerDatabaseEntity instance = new PeerDatabaseEntity();
+		instance.setCachedTagTree(cachedTagTree);
+		instance.setCachedTagTree(null);
+		assertNull(instance.getCachedTagTree());
+	}
 }

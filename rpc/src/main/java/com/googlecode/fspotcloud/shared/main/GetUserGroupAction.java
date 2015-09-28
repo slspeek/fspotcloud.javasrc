@@ -27,19 +27,18 @@ package com.googlecode.fspotcloud.shared.main;
 import com.google.common.annotations.GwtCompatible;
 import net.customware.gwt.dispatch.shared.Action;
 
-
 @GwtCompatible
 public class GetUserGroupAction implements Action<GetUserGroupResult> {
-    private Long id;
+	private Long id;
 
-    public GetUserGroupAction(Long id) {
-        this.id = id;
-    }
+	public GetUserGroupAction(Long id) {
+		this.id = id;
+	}
 
-    public GetUserGroupAction() {
-    }
+	public GetUserGroupAction() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 }

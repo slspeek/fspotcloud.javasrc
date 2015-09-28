@@ -27,8 +27,7 @@ package com.googlecode.fspotcloud.testharness;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-
 @GinModules(value = {TestharnessModule.class})
 public interface TestharnessGInjector extends Ginjector {
-    MVPSetup getSetup();
+	MVPSetup getSetup();
 }

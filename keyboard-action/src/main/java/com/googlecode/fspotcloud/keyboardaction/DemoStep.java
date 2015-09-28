@@ -28,11 +28,11 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 
 public interface DemoStep {
 
-    String getActionId();
+	String getActionId();
 
-    Runnable getAction();
+	Runnable getAction();
 
-    int pauseTime();
+	int pauseTime();
 
-    SafeHtml getContent();
+	SafeHtml getContent();
 }

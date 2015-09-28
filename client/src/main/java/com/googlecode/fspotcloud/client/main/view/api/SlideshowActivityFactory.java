@@ -29,5 +29,5 @@ import com.googlecode.fspotcloud.client.place.SlideshowPlace;
 
 @GwtCompatible
 public interface SlideshowActivityFactory {
-    SlideshowView.SlideshowPresenter get(SlideshowPlace place);
+	SlideshowView.SlideshowPresenter get(SlideshowPlace place);
 }

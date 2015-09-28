@@ -29,27 +29,26 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlecode.fspotcloud.client.main.view.api.OpenNewTab;
 import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
-
 public class LoadNewLocationAction implements Runnable, IActionHandler {
 
-    private final OpenNewTab loader;
-    private final String newLocation;
+	private final OpenNewTab loader;
+	private final String newLocation;
 
-    @Inject
-    protected LoadNewLocationAction(OpenNewTab loader,
-                                    @Assisted String newLocation) {
-        super();
-        this.loader = loader;
-        this.newLocation = newLocation;
-    }
+	@Inject
+	protected LoadNewLocationAction(OpenNewTab loader,
+			@Assisted String newLocation) {
+		super();
+		this.loader = loader;
+		this.newLocation = newLocation;
+	}
 
-    @Override
-    public void run() {
-        loader.setLocation(newLocation);
-    }
+	@Override
+	public void run() {
+		loader.setLocation(newLocation);
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        run();
-    }
+	@Override
+	public void performAction(String actionId) {
+		run();
+	}
 }

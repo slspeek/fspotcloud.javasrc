@@ -34,39 +34,36 @@ import com.googlecode.fspotcloud.user.openid.OpenIdUserModule;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.taskqueuedispatch.inject.TaskQueueDispatchDirectModule;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author steven
  */
 public class J2eeTotalModule extends AbstractModule {
-    public static final Integer MAX_COMMAND_DELETE = new Integer(300);
-    private final int maxTicks;
-    private final String botSecret;
-    private final String adminEmail;
-    private final String smtpServer;
+	public static final Integer MAX_COMMAND_DELETE = new Integer(300);
+	private final int maxTicks;
+	private final String botSecret;
+	private final String adminEmail;
+	private final String smtpServer;
 
-    public J2eeTotalModule(int maxTicks,
-                           String botSecret,
-                           String adminEmail,
-                           String smtpServer) {
-        this.maxTicks = maxTicks;
-        this.botSecret = botSecret;
-        this.adminEmail = adminEmail;
-        this.smtpServer = smtpServer;
-    }
+	public J2eeTotalModule(int maxTicks, String botSecret, String adminEmail,
+			String smtpServer) {
+		this.maxTicks = maxTicks;
+		this.botSecret = botSecret;
+		this.adminEmail = adminEmail;
+		this.smtpServer = smtpServer;
+	}
 
-    @Override
-    protected void configure() {
-        install(new ServerTotalModule(maxTicks, botSecret, adminEmail,
-                smtpServer));
-        install(new J2eeModelModule(maxTicks, "derby"));
-        install(new J2eeSimpleBlobstoreServletModule());
-        install(new TaskQueueDispatchDirectModule());
-        install(new OpenIdUserModule(adminEmail));
-        bind(Commands.class).to(CommandManager.class).in(Singleton.class);
-        bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
-                .toInstance(MAX_COMMAND_DELETE);
-    }
+	@Override
+	protected void configure() {
+		install(new ServerTotalModule(maxTicks, botSecret, adminEmail,
+				smtpServer));
+		install(new J2eeModelModule(maxTicks, "derby"));
+		install(new J2eeSimpleBlobstoreServletModule());
+		install(new TaskQueueDispatchDirectModule());
+		install(new OpenIdUserModule(adminEmail));
+		bind(Commands.class).to(CommandManager.class).in(Singleton.class);
+		bind(Integer.class).annotatedWith(Names.named("maxCommandDelete"))
+				.toInstance(MAX_COMMAND_DELETE);
+	}
 }

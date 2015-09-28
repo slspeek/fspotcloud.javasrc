@@ -44,34 +44,37 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class UpdateUserHandlerTest {
-    public static final String RMS_FSF_ORG = "rms@example.com";
-    public static final String NEW_PASSWORD = "new password";
-    public static final String OLD_PASSWORD = "old password";
-    @Inject
-    UpdateUserHandler handler;
-    User user;
+	public static final String RMS_FSF_ORG = "rms@example.com";
+	public static final String NEW_PASSWORD = "new password";
+	public static final String OLD_PASSWORD = "old password";
+	@Inject
+	UpdateUserHandler handler;
+	User user;
 
-    @Before
-    public void setUp(UserDao userDao, UserService userService) throws Exception {
-        user = new UserEntity(RMS_FSF_ORG);
-        user.setCredentials(hash(RMS_FSF_ORG, OLD_PASSWORD));
-        user.setRegistered(true);
-        user.setEnabled(true);
-        when(userDao.find(RMS_FSF_ORG)).thenReturn(user);
-        when(userService.isUserLoggedIn()).thenReturn(true);
-        when(userService.getEmail()).thenReturn(RMS_FSF_ORG);
-    }
+	@Before
+	public void setUp(UserDao userDao, UserService userService)
+			throws Exception {
+		user = new UserEntity(RMS_FSF_ORG);
+		user.setCredentials(hash(RMS_FSF_ORG, OLD_PASSWORD));
+		user.setRegistered(true);
+		user.setEnabled(true);
+		when(userDao.find(RMS_FSF_ORG)).thenReturn(user);
+		when(userService.isUserLoggedIn()).thenReturn(true);
+		when(userService.getEmail()).thenReturn(RMS_FSF_ORG);
+	}
 
-    @Test
-    public void testExecute(UserDao userDao, UserService userService) throws Exception {
-        UpdateUserAction action = new UpdateUserAction(NEW_PASSWORD, OLD_PASSWORD);
-        UpdateUserResult result = handler.execute(action, null);
-        assertTrue(result.getSuccess());
-        assertEquals(user.getCredentials(), hash(RMS_FSF_ORG, NEW_PASSWORD));
-        verify(userDao).save(user);
-        verify(userDao).find(RMS_FSF_ORG);
-        verify(userService).isUserLoggedIn();
-        verify(userService).getEmail();
-        verifyNoMoreInteractions(userDao, userService);
-    }
+	@Test
+	public void testExecute(UserDao userDao, UserService userService)
+			throws Exception {
+		UpdateUserAction action = new UpdateUserAction(NEW_PASSWORD,
+				OLD_PASSWORD);
+		UpdateUserResult result = handler.execute(action, null);
+		assertTrue(result.getSuccess());
+		assertEquals(user.getCredentials(), hash(RMS_FSF_ORG, NEW_PASSWORD));
+		verify(userDao).save(user);
+		verify(userDao).find(RMS_FSF_ORG);
+		verify(userService).isUserLoggedIn();
+		verify(userService).getEmail();
+		verifyNoMoreInteractions(userDao, userService);
+	}
 }

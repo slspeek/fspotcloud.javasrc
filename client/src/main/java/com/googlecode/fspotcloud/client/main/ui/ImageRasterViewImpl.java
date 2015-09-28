@@ -47,103 +47,104 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class ImageRasterViewImpl extends ResizeComposite
-        implements ImageRasterView,
-        MouseWheelHandler {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(ImageRasterViewImpl.class.getName());
-    private static final ImageRasterViewImplUiBinder uiBinder = GWT.create(ImageRasterViewImplUiBinder.class);
-    int storedColumnCount = 0;
-    int storedRowCount = 0;
-    List<ImageView> storedViews;
-    @UiField
-    LayoutPanel layoutPanel;
-    private final ImageViewFactory imageViewFactory;
-    private ImageRasterView.ImageRasterPresenter presenter;
-    private final Label pagingLabel = new Label();
-    private final Resources resources;
+		implements
+			ImageRasterView,
+			MouseWheelHandler {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(ImageRasterViewImpl.class
+			.getName());
+	private static final ImageRasterViewImplUiBinder uiBinder = GWT
+			.create(ImageRasterViewImplUiBinder.class);
+	int storedColumnCount = 0;
+	int storedRowCount = 0;
+	List<ImageView> storedViews;
+	@UiField
+	LayoutPanel layoutPanel;
+	private final ImageViewFactory imageViewFactory;
+	private ImageRasterView.ImageRasterPresenter presenter;
+	private final Label pagingLabel = new Label();
+	private final Resources resources;
 
-    @Inject
-    public ImageRasterViewImpl(ImageViewFactoryImpl imageViewFactory,
-                               Resources resources) {
-        this.imageViewFactory = imageViewFactory;
-        this.resources = resources;
-        initWidget(uiBinder.createAndBindUi(this));
-        layoutPanel.ensureDebugId("image-raster-view");
-        layoutPanel.addDomHandler(this, MouseWheelEvent.getType());
-        pagingLabel.ensureDebugId("paging-label");
-        pagingLabel.setStyleName(resources.style().pagerLabel());
-    }
+	@Inject
+	public ImageRasterViewImpl(ImageViewFactoryImpl imageViewFactory,
+			Resources resources) {
+		this.imageViewFactory = imageViewFactory;
+		this.resources = resources;
+		initWidget(uiBinder.createAndBindUi(this));
+		layoutPanel.ensureDebugId("image-raster-view");
+		layoutPanel.addDomHandler(this, MouseWheelEvent.getType());
+		pagingLabel.ensureDebugId("paging-label");
+		pagingLabel.setStyleName(resources.style().pagerLabel());
+	}
 
-    public ImageRasterPresenter getPresenter() {
-        return presenter;
-    }
+	public ImageRasterPresenter getPresenter() {
+		return presenter;
+	}
 
-    @Override
-    public List<ImageView> buildRaster(int rowCount, int columnCount) {
-        if ((rowCount == storedRowCount) && (columnCount == storedColumnCount)) {
-            return storedViews;
-        } else {
-            layoutPanel.clear();
+	@Override
+	public List<ImageView> buildRaster(int rowCount, int columnCount) {
+		if ((rowCount == storedRowCount) && (columnCount == storedColumnCount)) {
+			return storedViews;
+		} else {
+			layoutPanel.clear();
 
-            List<ImageView> result = new ArrayList<ImageView>();
+			List<ImageView> result = new ArrayList<ImageView>();
 
-            for (int row = 0; row < rowCount; row++) {
-                for (int column = 0; column < columnCount; column++) {
-                    ImageView view = imageViewFactory.get(column + "x" + row);
-                    Widget asWidget = view.asWidget();
-                    layoutPanel.add(asWidget);
-                    final float height = (100.0f / rowCount);
-                    final float width = (100.0f / columnCount);
-                    final float top = row * height;
-                    final float left = column * width;
+			for (int row = 0; row < rowCount; row++) {
+				for (int column = 0; column < columnCount; column++) {
+					ImageView view = imageViewFactory.get(column + "x" + row);
+					Widget asWidget = view.asWidget();
+					layoutPanel.add(asWidget);
+					final float height = (100.0f / rowCount);
+					final float width = (100.0f / columnCount);
+					final float top = row * height;
+					final float left = column * width;
 
-                    layoutPanel.setWidgetTopHeight(asWidget,
-                            top, Unit.PCT,
-                            height, Unit.PCT);
-                    layoutPanel.setWidgetLeftWidth(asWidget,
-                            left, Unit.PCT,
-                            width, Unit.PCT);
-                    result.add(view);
-                }
-            }
+					layoutPanel.setWidgetTopHeight(asWidget, top, Unit.PCT,
+							height, Unit.PCT);
+					layoutPanel.setWidgetLeftWidth(asWidget, left, Unit.PCT,
+							width, Unit.PCT);
+					result.add(view);
+				}
+			}
 
-            addPagingLabel();
+			addPagingLabel();
 
-            storedRowCount = rowCount;
-            storedColumnCount = columnCount;
-            storedViews = result;
+			storedRowCount = rowCount;
+			storedColumnCount = columnCount;
+			storedViews = result;
 
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 
-    private void addPagingLabel() {
-        layoutPanel.add(pagingLabel);
-        layoutPanel.setWidgetBottomHeight(pagingLabel, 0, Unit.PT, 16,
-                Unit.PT);
-        layoutPanel.setWidgetRightWidth(pagingLabel, 0, Unit.PT, 10,
-                Unit.PCT);
-    }
+	private void addPagingLabel() {
+		layoutPanel.add(pagingLabel);
+		layoutPanel.setWidgetBottomHeight(pagingLabel, 0, Unit.PT, 16, Unit.PT);
+		layoutPanel.setWidgetRightWidth(pagingLabel, 0, Unit.PT, 10, Unit.PCT);
+	}
 
-    @Override
-    public void setPresenter(ImageRasterPresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setPresenter(ImageRasterPresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void onMouseWheel(MouseWheelEvent event) {
-        if (event.isNorth()) {
-            presenter.onMouseWheelNorth();
-        } else {
-            presenter.onMouseWheelSouth();
-        }
-    }
+	@Override
+	public void onMouseWheel(MouseWheelEvent event) {
+		if (event.isNorth()) {
+			presenter.onMouseWheelNorth();
+		} else {
+			presenter.onMouseWheelSouth();
+		}
+	}
 
-    @Override
-    public void setPagingText(String text) {
-        pagingLabel.setText(text);
-    }
+	@Override
+	public void setPagingText(String text) {
+		pagingLabel.setText(text);
+	}
 
-    interface ImageRasterViewImplUiBinder extends UiBinder<Widget, ImageRasterViewImpl> {
-    }
+	interface ImageRasterViewImplUiBinder
+			extends
+				UiBinder<Widget, ImageRasterViewImpl> {
+	}
 }

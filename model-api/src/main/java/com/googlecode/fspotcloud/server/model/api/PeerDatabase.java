@@ -30,43 +30,42 @@ import com.googlecode.simplejpadao.HasSetKey;
 import java.io.Serializable;
 import java.util.Date;
 
-
 public interface PeerDatabase extends HasSetKey<String>, Serializable {
-    void setPhotoCount(long photoCount);
+	void setPhotoCount(long photoCount);
 
-    long getPhotoCount();
+	long getPhotoCount();
 
-    int getPeerPhotoCount();
+	int getPeerPhotoCount();
 
-    void setPeerPhotoCount(int count);
+	void setPeerPhotoCount(int count);
 
-    void setPeerName(String peerName);
+	void setPeerName(String peerName);
 
-    String getPeerName();
+	String getPeerName();
 
-    void setCachedTagTree(TagNode cachedTagTree);
+	void setCachedTagTree(TagNode cachedTagTree);
 
-    TagNode getCachedAdminTagTree();
+	TagNode getCachedAdminTagTree();
 
-    void setCachedAdminTagTree(TagNode cachedTagTree);
+	void setCachedAdminTagTree(TagNode cachedTagTree);
 
-    TagNode getCachedTagTree();
+	TagNode getCachedTagTree();
 
-    void setTagCount(int tagCount);
+	void setTagCount(int tagCount);
 
-    int getTagCount();
+	int getTagCount();
 
-    Date getPeerLastContact();
+	Date getPeerLastContact();
 
-    void setPeerLastContact(Date date);
+	void setPeerLastContact(Date date);
 
-    void touchPeerContact();
+	void touchPeerContact();
 
-    String getThumbDimension();
+	String getThumbDimension();
 
-    void setThumbDimension(String dim);
+	void setThumbDimension(String dim);
 
-    String getImageDimension();
+	String getImageDimension();
 
-    void setImageDimension(String dim);
+	void setImageDimension(String dim);
 }

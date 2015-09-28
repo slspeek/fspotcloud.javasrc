@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.control.callback;
 
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RemoveTagsDeletedFromPeerAction;
@@ -55,28 +55,29 @@ import static org.mockito.Mockito.verify;
  */
 @RunWith(JukitoRunner.class)
 public class PeerUpdateInstructionsCallbackTest {
-    public static final String TAG_REMOVED_ID = "1";
-    public static final String TAG_ID = "2";
-    @Inject
-    PeerUpdateInstructionsCallback callback;
+	public static final String TAG_REMOVED_ID = "1";
+	public static final String TAG_ID = "2";
+	@Inject
+	PeerUpdateInstructionsCallback callback;
 
-    @Test
-    public void testNormalExecute(TaskQueueDispatch dispatchAsync,
-                                  ArgumentCaptor<Action> updateCaptor) throws Exception {
-        List<TagRemovedFromPeer> removedTags = newArrayList(new TagRemovedFromPeer(
-                TAG_REMOVED_ID));
-        List<TagUpdate> tagUpdates = newArrayList(new TagUpdate(TAG_ID));
-        PeerUpdateInstructionsResult result = new PeerUpdateInstructionsResult(tagUpdates,
-                removedTags);
+	@Test
+	public void testNormalExecute(TaskQueueDispatch dispatchAsync,
+			ArgumentCaptor<Action> updateCaptor) throws Exception {
+		List<TagRemovedFromPeer> removedTags = newArrayList(new TagRemovedFromPeer(
+				TAG_REMOVED_ID));
+		List<TagUpdate> tagUpdates = newArrayList(new TagUpdate(TAG_ID));
+		PeerUpdateInstructionsResult result = new PeerUpdateInstructionsResult(
+				tagUpdates, removedTags);
 
-        callback.onSuccess(result);
+		callback.onSuccess(result);
 
-        verify(dispatchAsync, times(2)).execute(updateCaptor.capture());
+		verify(dispatchAsync, times(2)).execute(updateCaptor.capture());
 
-        List<Action> actions = updateCaptor.getAllValues();
-        TagUpdateAction update = (TagUpdateAction) actions.get(1);
-        RemoveTagsDeletedFromPeerAction remove = (RemoveTagsDeletedFromPeerAction) actions.get(0);
-        assertEquals(TAG_REMOVED_ID, remove.getWorkLoad().get(0).getTagId());
-        assertEquals(TAG_ID, update.getWorkLoad().get(0).getTagId());
-    }
+		List<Action> actions = updateCaptor.getAllValues();
+		TagUpdateAction update = (TagUpdateAction) actions.get(1);
+		RemoveTagsDeletedFromPeerAction remove = (RemoveTagsDeletedFromPeerAction) actions
+				.get(0);
+		assertEquals(TAG_REMOVED_ID, remove.getWorkLoad().get(0).getTagId());
+		assertEquals(TAG_ID, update.getWorkLoad().get(0).getTagId());
+	}
 }

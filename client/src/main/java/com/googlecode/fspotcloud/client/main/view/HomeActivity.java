@@ -36,33 +36,35 @@ import com.googlecode.fspotcloud.client.place.api.Navigator;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class HomeActivity extends AbstractActivity implements HomeView.HomePresenter {
-    public static final String SERVER_ERROR = "Could not navigate from this page due to a server error: ";
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(HomeActivity.class.getName());
-    private final HomeView homeView;
-    private final Navigator navigator;
+public class HomeActivity extends AbstractActivity
+		implements
+			HomeView.HomePresenter {
+	public static final String SERVER_ERROR = "Could not navigate from this page due to a server error: ";
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(HomeActivity.class.getName());
+	private final HomeView homeView;
+	private final Navigator navigator;
 
-    @Inject
-    public HomeActivity(HomeView homeView,
-                        Navigator navigator) {
-        this.homeView = homeView;
-        this.navigator = navigator;
-    }
+	@Inject
+	public HomeActivity(HomeView homeView, Navigator navigator) {
+		this.homeView = homeView;
+		this.navigator = navigator;
+	}
 
-    @Override
-    public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        containerWidget.setWidget(homeView);
-        navigator.goToLatestTag(new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                homeView.setStatusText(SERVER_ERROR + caught.getLocalizedMessage());
-            }
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		containerWidget.setWidget(homeView);
+		navigator.goToLatestTag(new AsyncCallback<String>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				homeView.setStatusText(SERVER_ERROR
+						+ caught.getLocalizedMessage());
+			}
 
-            @Override
-            public void onSuccess(String result) {
-                homeView.setStatusText(result);
-            }
-        });
-    }
+			@Override
+			public void onSuccess(String result) {
+				homeView.setStatusText(result);
+			}
+		});
+	}
 }

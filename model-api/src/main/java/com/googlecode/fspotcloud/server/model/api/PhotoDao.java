@@ -26,6 +26,5 @@ package com.googlecode.fspotcloud.server.model.api;
 
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public interface PhotoDao extends SimpleDAONamedId<Photo, String> {
 }

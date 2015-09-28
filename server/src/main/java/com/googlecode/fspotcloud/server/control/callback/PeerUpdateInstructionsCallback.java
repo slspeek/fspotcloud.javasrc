@@ -34,28 +34,31 @@ import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class PeerUpdateInstructionsCallback
+		implements
+			SerializableAsyncCallback<PeerUpdateInstructionsResult> {
+	private static final long serialVersionUID = -6213572441944313878L;
+	@Inject
+	private transient Logger log;
+	@Inject
+	private transient TaskQueueDispatch dispatchAsync;
 
-public class PeerUpdateInstructionsCallback implements SerializableAsyncCallback<PeerUpdateInstructionsResult> {
-    private static final long serialVersionUID = -6213572441944313878L;
-    @Inject
-    private transient Logger log;
-    @Inject
-    private transient TaskQueueDispatch dispatchAsync;
+	public PeerUpdateInstructionsCallback() {
+		super();
+	}
 
-    public PeerUpdateInstructionsCallback() {
-        super();
-    }
+	@Override
+	public void onFailure(Throwable caught) {
+		log.log(Level.SEVERE, "Caught: ", caught);
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-        log.log(Level.SEVERE, "Caught: ", caught);
-    }
-
-    @Override
-    public void onSuccess(PeerUpdateInstructionsResult result) {
-        TagUpdateAction tagDataAction = new TagUpdateAction(result.getToBoUpdated());
-        RemoveTagsDeletedFromPeerAction tagRemove = new RemoveTagsDeletedFromPeerAction(result.getToBoRemovedFromPeer());
-        dispatchAsync.execute(tagRemove);
-        dispatchAsync.execute(tagDataAction);
-    }
+	@Override
+	public void onSuccess(PeerUpdateInstructionsResult result) {
+		TagUpdateAction tagDataAction = new TagUpdateAction(
+				result.getToBoUpdated());
+		RemoveTagsDeletedFromPeerAction tagRemove = new RemoveTagsDeletedFromPeerAction(
+				result.getToBoRemovedFromPeer());
+		dispatchAsync.execute(tagRemove);
+		dispatchAsync.execute(tagDataAction);
+	}
 }

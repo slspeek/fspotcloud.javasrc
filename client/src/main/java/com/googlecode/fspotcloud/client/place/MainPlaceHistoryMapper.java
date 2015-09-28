@@ -27,22 +27,16 @@ package com.googlecode.fspotcloud.client.place;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
 
-
 @WithTokenizers({HomePlace.Tokenizer.class,
-        EmailConfirmationPlace.Tokenizer.class,
-        ManageUsersPlace.Tokenizer.class,
-        EditUserGroupPlace.Tokenizer.class,
-        ManageGroupsPlace.Tokenizer.class,
-        SlideshowPlace.Tokenizer.class,
-        BasePlace.Tokenizer.class,
-        LoginPlace.Tokenizer.class,
-        SignUpPlace.Tokenizer.class,
-        UserAccountPlace.Tokenizer.class,
-        MailFullsizePlace.Tokenizer.class,
-        SendConfirmationPlace.Tokenizer.class,
-        SendPasswordResetPlace.Tokenizer.class,
-        ChangePasswordPlace.Tokenizer.class,
-        TagApprovalPlace.Tokenizer.class,
-        DashboardPlace.Tokenizer.class})
+		EmailConfirmationPlace.Tokenizer.class,
+		ManageUsersPlace.Tokenizer.class, EditUserGroupPlace.Tokenizer.class,
+		ManageGroupsPlace.Tokenizer.class, SlideshowPlace.Tokenizer.class,
+		BasePlace.Tokenizer.class, LoginPlace.Tokenizer.class,
+		SignUpPlace.Tokenizer.class, UserAccountPlace.Tokenizer.class,
+		MailFullsizePlace.Tokenizer.class,
+		SendConfirmationPlace.Tokenizer.class,
+		SendPasswordResetPlace.Tokenizer.class,
+		ChangePasswordPlace.Tokenizer.class, TagApprovalPlace.Tokenizer.class,
+		DashboardPlace.Tokenizer.class})
 public interface MainPlaceHistoryMapper extends PlaceHistoryMapper {
 }

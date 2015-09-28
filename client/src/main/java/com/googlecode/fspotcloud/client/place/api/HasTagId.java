@@ -25,5 +25,5 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 public interface HasTagId {
-    String getTagId();
+	String getTagId();
 }

@@ -23,51 +23,50 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.thoughtworks.selenium.Selenium;
 
 import javax.inject.Inject;
 
-
 /**
  * @author steven
  */
 public class TagApprovalPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public void open(String tagId) {
-        selenium.open("#TagApprovalPlace:" + tagId);
-        selenium.waitForPageToLoad("30000");
-    }
+	public void open(String tagId) {
+		selenium.open("#TagApprovalPlace:" + tagId);
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void selectTopDeniedGroup() {
-        selenium.click("//div[5]/div/div[3]/table/tbody/tr/td/div");
-    }
+	public void selectTopDeniedGroup() {
+		selenium.click("//div[5]/div/div[3]/table/tbody/tr/td/div");
+	}
 
-    public void selectSecondDeniedGroup() {
-        selenium.click("//tr[2]/td/div");
-    }
+	public void selectSecondDeniedGroup() {
+		selenium.click("//tr[2]/td/div");
+	}
 
-    public void selectThirdGroupOnTheRight() {
-        selenium.click("//tr[3]/td/div");
-    }
+	public void selectThirdGroupOnTheRight() {
+		selenium.click("//tr[3]/td/div");
+	}
 
-    public void approveUserGroup() {
-        selenium.click("gwt-debug-approve-button");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void approveUserGroup() {
+		selenium.click("gwt-debug-approve-button");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void removeUserGroup() {
-        selenium.click("gwt-debug-remove-button");
-        selenium.waitForPageToLoad("30000");
-    }
+	public void removeUserGroup() {
+		selenium.click("gwt-debug-remove-button");
+		selenium.waitForPageToLoad("30000");
+	}
 
-    public void selectTopGroupOnTheLeft() {
-        selenium.click("//td[2]/div");
-    }
+	public void selectTopGroupOnTheLeft() {
+		selenium.click("//td[2]/div");
+	}
 }

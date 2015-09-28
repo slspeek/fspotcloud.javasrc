@@ -6,11 +6,11 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class GoToLatestHandler implements IActionHandler {
 
-    @Inject
-    Navigator navigator;
+	@Inject
+	Navigator navigator;
 
-    @Override
-    public void performAction(String actionId) {
-        navigator.goToLatestTag();
-    }
+	@Override
+	public void performAction(String actionId) {
+		navigator.goToLatestTag();
+	}
 }

@@ -24,7 +24,6 @@
 
 package com.googlecode.fspotcloud.client.main.gin;
 
-
 /*
  * Copyright 2010-2012 Steven L. Speek.
  * This program is free software; you can redistribute it and/or

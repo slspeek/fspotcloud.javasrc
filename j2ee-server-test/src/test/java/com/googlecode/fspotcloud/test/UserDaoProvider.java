@@ -7,14 +7,14 @@ import com.googlecode.fspotcloud.server.model.api.UserDao;
 
 public class UserDaoProvider implements Provider<UserDao> {
 
-    private Injector injector;
+	private Injector injector;
 
-    @Inject
-    private FscServer serverMain;
+	@Inject
+	private FscServer serverMain;
 
-    @Override
-    public UserDao get() {
-        Injector injector = serverMain.getInjector();
-        return  injector.getInstance(UserDao.class);
-    }
+	@Override
+	public UserDao get() {
+		Injector injector = serverMain.getInjector();
+		return injector.getInstance(UserDao.class);
+	}
 }

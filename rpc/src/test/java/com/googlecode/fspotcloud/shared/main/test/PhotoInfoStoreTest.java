@@ -35,77 +35,77 @@ import static com.google.common.collect.Sets.newTreeSet;
 import static org.junit.Assert.*;
 
 public class PhotoInfoStoreTest {
-    private SortedSet<PhotoInfo> set;
+	private SortedSet<PhotoInfo> set;
 
-    @Test
-    public void testPhotoInfoStore() {
-        set = newTreeSet();
-        set.add(new PhotoInfo("5", "Me", new Date(0)));
-        set.add(new PhotoInfo("4", "John", new Date(1)));
-        set.add(new PhotoInfo("3", "Mary", new Date(2)));
-        set.add(new PhotoInfo("2", "Pete", new Date(4)));
+	@Test
+	public void testPhotoInfoStore() {
+		set = newTreeSet();
+		set.add(new PhotoInfo("5", "Me", new Date(0)));
+		set.add(new PhotoInfo("4", "John", new Date(1)));
+		set.add(new PhotoInfo("3", "Mary", new Date(2)));
+		set.add(new PhotoInfo("2", "Pete", new Date(4)));
 
-        @SuppressWarnings("unused")
-        PhotoInfoStore store = new PhotoInfoStore(set);
-        assertFalse(store.isEmpty());
-        assertEquals(4, store.size());
-    }
+		@SuppressWarnings("unused")
+		PhotoInfoStore store = new PhotoInfoStore(set);
+		assertFalse(store.isEmpty());
+		assertEquals(4, store.size());
+	}
 
-    @Test
-    public void testGetInfo() {
-        set = newTreeSet();
-        set.add(new PhotoInfo("5", "Me", new Date(0)));
+	@Test
+	public void testGetInfo() {
+		set = newTreeSet();
+		set.add(new PhotoInfo("5", "Me", new Date(0)));
 
-        PhotoInfoStore store = new PhotoInfoStore(set);
-        assertNull(store.getInfo("1"));
+		PhotoInfoStore store = new PhotoInfoStore(set);
+		assertNull(store.getInfo("1"));
 
-        PhotoInfo me = store.getInfo("5");
-        assertEquals("Me", me.getDescription());
-    }
+		PhotoInfo me = store.getInfo("5");
+		assertEquals("Me", me.getDescription());
+	}
 
-    @Test
-    public void testGet() {
-        set = newTreeSet();
-        set.add(new PhotoInfo("5", "Me", new Date(0)));
+	@Test
+	public void testGet() {
+		set = newTreeSet();
+		set.add(new PhotoInfo("5", "Me", new Date(0)));
 
-        PhotoInfoStore store = new PhotoInfoStore(set);
-        assertNotNull(store.get(0));
-    }
+		PhotoInfoStore store = new PhotoInfoStore(set);
+		assertNotNull(store.get(0));
+	}
 
-    @Test
-    public void testIndexOf() {
-        set = newTreeSet();
-        set.add(new PhotoInfo("5", "Me", new Date(0)));
-        set.add(new PhotoInfo("4", "John", new Date(1)));
-        set.add(new PhotoInfo("3", "Mary", new Date(2)));
-        set.add(new PhotoInfo("2", "Pete", new Date(4)));
+	@Test
+	public void testIndexOf() {
+		set = newTreeSet();
+		set.add(new PhotoInfo("5", "Me", new Date(0)));
+		set.add(new PhotoInfo("4", "John", new Date(1)));
+		set.add(new PhotoInfo("3", "Mary", new Date(2)));
+		set.add(new PhotoInfo("2", "Pete", new Date(4)));
 
-        PhotoInfoStore store = new PhotoInfoStore(set);
-        assertEquals(-1, store.indexOf("Not found"));
-        assertEquals(0, store.indexOf("5"));
-        assertEquals(1, store.indexOf("4"));
-        assertEquals(2, store.indexOf("3"));
-        assertEquals(3, store.indexOf("2"));
-    }
+		PhotoInfoStore store = new PhotoInfoStore(set);
+		assertEquals(-1, store.indexOf("Not found"));
+		assertEquals(0, store.indexOf("5"));
+		assertEquals(1, store.indexOf("4"));
+		assertEquals(2, store.indexOf("3"));
+		assertEquals(3, store.indexOf("2"));
+	}
 
-    @Test
-    public void testLast() {
-        set = newTreeSet();
-        set.add(new PhotoInfo("5", "Me", new Date(0)));
-        set.add(new PhotoInfo("4", "John", new Date(1)));
-        set.add(new PhotoInfo("3", "Mary", new Date(2)));
-        set.add(new PhotoInfo("2", "Pete", new Date(4)));
+	@Test
+	public void testLast() {
+		set = newTreeSet();
+		set.add(new PhotoInfo("5", "Me", new Date(0)));
+		set.add(new PhotoInfo("4", "John", new Date(1)));
+		set.add(new PhotoInfo("3", "Mary", new Date(2)));
+		set.add(new PhotoInfo("2", "Pete", new Date(4)));
 
-        PhotoInfoStore store = new PhotoInfoStore(set);
-        PhotoInfo last = store.last();
-        assertEquals("2", last.getId()); // Pete
-    }
+		PhotoInfoStore store = new PhotoInfoStore(set);
+		PhotoInfo last = store.last();
+		assertEquals("2", last.getId()); // Pete
+	}
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void testLastOnEmptyStore() {
-        set = newTreeSet();
+	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	public void testLastOnEmptyStore() {
+		set = newTreeSet();
 
-        PhotoInfoStore store = new PhotoInfoStore(set);
-        store.last();
-    }
+		PhotoInfoStore store = new PhotoInfoStore(set);
+		store.last();
+	}
 }

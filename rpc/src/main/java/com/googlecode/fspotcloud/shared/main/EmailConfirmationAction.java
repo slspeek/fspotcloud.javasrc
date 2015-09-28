@@ -31,45 +31,44 @@ import net.customware.gwt.dispatch.shared.Action;
 
 @GwtCompatible
 public class EmailConfirmationAction implements Action<VoidResult> {
-    private String email;
-    private String secret;
+	private String email;
+	private String secret;
 
-    public EmailConfirmationAction() {
-    }
+	public EmailConfirmationAction() {
+	}
 
-    public EmailConfirmationAction(String email, String secret) {
-        this.email = email;
-        this.secret = secret;
-    }
+	public EmailConfirmationAction(String email, String secret) {
+		this.email = email;
+		this.secret = secret;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getSecret() {
-        return secret;
-    }
+	public String getSecret() {
+		return secret;
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("email", email)
-                .add("secret", secret)
-                .toString();
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("email", email)
+				.add("secret", secret).toString();
 
-    }
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(email, secret);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(email, secret);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof EmailConfirmationAction) {
-            EmailConfirmationAction other = (EmailConfirmationAction) obj;
-            return Objects.equal(email, other.getEmail()) && Objects.equal(secret, other.getSecret());
-        }
-        return false;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof EmailConfirmationAction) {
+			EmailConfirmationAction other = (EmailConfirmationAction) obj;
+			return Objects.equal(email, other.getEmail())
+					&& Objects.equal(secret, other.getSecret());
+		}
+		return false;
+	}
 }

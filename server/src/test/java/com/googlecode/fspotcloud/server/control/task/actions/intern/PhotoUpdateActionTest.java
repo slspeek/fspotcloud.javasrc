@@ -37,38 +37,38 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class PhotoUpdateActionTest extends EqualsTest<PhotoUpdateAction> {
-    PhotoUpdateAction action;
+	PhotoUpdateAction action;
 
-    @Before
-    public void setUp() throws Exception {
-        PhotoUpdate update = new PhotoUpdate("1");
-        List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
-        list.add(update);
-        action = new PhotoUpdateAction(list);
-    }
+	@Before
+	public void setUp() throws Exception {
+		PhotoUpdate update = new PhotoUpdate("1");
+		List<PhotoUpdate> list = new ArrayList<PhotoUpdate>();
+		list.add(update);
+		action = new PhotoUpdateAction(list);
+	}
 
-    @Test
-    public void testGetUpdates() {
-        assertEquals(1, action.getWorkLoad().size());
-    }
+	@Test
+	public void testGetUpdates() {
+		assertEquals(1, action.getWorkLoad().size());
+	}
 
-    @Test
-    public void testSerialize() {
-        SerializationUtils.serialize(action);
-    }
+	@Test
+	public void testSerialize() {
+		SerializationUtils.serialize(action);
+	}
 
-    @Override
-    protected PhotoUpdateAction getOne() {
-        return new PhotoUpdateAction(newArrayList(new PhotoUpdate("1")));
-    }
+	@Override
+	protected PhotoUpdateAction getOne() {
+		return new PhotoUpdateAction(newArrayList(new PhotoUpdate("1")));
+	}
 
-    @Override
-    protected PhotoUpdateAction getTheOther() {
-        return new PhotoUpdateAction(newArrayList(new PhotoUpdate("1")));
-    }
+	@Override
+	protected PhotoUpdateAction getTheOther() {
+		return new PhotoUpdateAction(newArrayList(new PhotoUpdate("1")));
+	}
 
-    @Override
-    protected PhotoUpdateAction getDifferentOne() {
-        return new PhotoUpdateAction(newArrayList(new PhotoUpdate("2")));
-    }
+	@Override
+	protected PhotoUpdateAction getDifferentOne() {
+		return new PhotoUpdateAction(newArrayList(new PhotoUpdate("2")));
+	}
 }

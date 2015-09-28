@@ -35,57 +35,58 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ThreeFaseITest {
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    Selenium selenium;
-    @Inject
-    PeerRunner peerRunner;
-    @Inject
-    DashboardPage dashboardPage;
-    @Inject
-    PhotoPage photoPage;
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	Selenium selenium;
+	@Inject
+	PeerRunner peerRunner;
+	@Inject
+	DashboardPage dashboardPage;
+	@Inject
+	PhotoPage photoPage;
 
-    @Test
-    public void test3Fase() throws Exception {
-        peerRunner.startPeer("../peer/src/test/resources/photos_smaller.db");
-        dashboardPage.loginAndOpen();
-        dashboardPage.synchronize();
-        dashboardPage.toggleImportForTagId("1"); //Furniture
-        dashboardPage.toggleImportForTagId("3"); //Mac
+	@Test
+	public void test3Fase() throws Exception {
+		peerRunner.startPeer("../peer/src/test/resources/photos_smaller.db");
+		dashboardPage.loginAndOpen();
+		dashboardPage.synchronize();
+		dashboardPage.toggleImportForTagId("1"); //Furniture
+		dashboardPage.toggleImportForTagId("3"); //Mac
 
-        photoPage.open();
-        //Assert something
-        assertTrue(selenium.isTextPresent("Macintosh"));
-        assertTrue(selenium.isTextPresent("Furniture"));
+		photoPage.open();
+		//Assert something
+		assertTrue(selenium.isTextPresent("Macintosh"));
+		assertTrue(selenium.isTextPresent("Furniture"));
 
-        photoPage.clickImage(0, 0);
-        photoPage.assertPagingLabelSays(1, 5);
+		photoPage.clickImage(0, 0);
+		photoPage.assertPagingLabelSays(1, 5);
 
-        peerRunner.stopPeer();
-        peerRunner.startPeer("../peer/src/test/resources/photos.db");
-        //Most pictures
-        dashboardPage.open();
-        dashboardPage.synchronize();
-        photoPage.open();
-        assertTrue(selenium.isTextPresent("Mac"));
-        assertFalse(selenium.isTextPresent("Macintosh"));
-        assertTrue(selenium.isTextPresent("Furniture"));
-        //Assert something
-        photoPage.clickImage(0, 0);
-        photoPage.assertPagingLabelSays(1, 9);
+		peerRunner.stopPeer();
+		peerRunner.startPeer("../peer/src/test/resources/photos.db");
+		//Most pictures
+		dashboardPage.open();
+		dashboardPage.synchronize();
+		photoPage.open();
+		assertTrue(selenium.isTextPresent("Mac"));
+		assertFalse(selenium.isTextPresent("Macintosh"));
+		assertTrue(selenium.isTextPresent("Furniture"));
+		//Assert something
+		photoPage.clickImage(0, 0);
+		photoPage.assertPagingLabelSays(1, 9);
 
-        peerRunner.stopPeer();
-        peerRunner.startPeer("../peer/src/test/resources/photos_smaller.db");
-        dashboardPage.open();
-        dashboardPage.synchronize();
-        photoPage.open();
-        //Assert something
-        assertTrue(selenium.isTextPresent("Macintosh"));
-        assertTrue(selenium.isTextPresent("Furniture"));
-        photoPage.clickImage(0, 0);
-        photoPage.assertPagingLabelSays(1, 5);
-        //Less again
-        peerRunner.stopPeer();
-    }
+		peerRunner.stopPeer();
+		peerRunner.startPeer("../peer/src/test/resources/photos_smaller.db");
+		dashboardPage.open();
+		dashboardPage.synchronize();
+		photoPage.open();
+		//Assert something
+		assertTrue(selenium.isTextPresent("Macintosh"));
+		assertTrue(selenium.isTextPresent("Furniture"));
+		photoPage.clickImage(0, 0);
+		photoPage.assertPagingLabelSays(1, 5);
+		//Less again
+		peerRunner.stopPeer();
+	}
 }

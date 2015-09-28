@@ -25,7 +25,7 @@
 package com.googlecode.fspotcloud.client.place.api;
 
 public interface Raster {
-    int getRowCount();
+	int getRowCount();
 
-    int getColumnCount();
+	int getColumnCount();
 }

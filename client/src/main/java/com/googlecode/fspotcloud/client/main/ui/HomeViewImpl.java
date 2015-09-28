@@ -33,30 +33,30 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.client.main.view.api.HomeView;
 
-
 public class HomeViewImpl extends Composite implements HomeView {
 
-    private HomePresenter presenter;
-    private static final HomeViewImplUiBinder uiBinder = GWT.create(HomeViewImplUiBinder.class);
+	private HomePresenter presenter;
+	private static final HomeViewImplUiBinder uiBinder = GWT
+			.create(HomeViewImplUiBinder.class);
 
-    @UiField
-    Label statusLabel;
+	@UiField
+	Label statusLabel;
 
-    @Inject
-    public HomeViewImpl() {
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+	@Inject
+	public HomeViewImpl() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 
-    @Override
-    public void setPresenter(HomePresenter presenter) {
-        this.presenter = presenter;
-    }
+	@Override
+	public void setPresenter(HomePresenter presenter) {
+		this.presenter = presenter;
+	}
 
-    @Override
-    public void setStatusText(String result) {
-        statusLabel.setText(result);
-    }
+	@Override
+	public void setStatusText(String result) {
+		statusLabel.setText(result);
+	}
 
-    interface HomeViewImplUiBinder extends UiBinder<Widget, HomeViewImpl> {
-    }
+	interface HomeViewImplUiBinder extends UiBinder<Widget, HomeViewImpl> {
+	}
 }

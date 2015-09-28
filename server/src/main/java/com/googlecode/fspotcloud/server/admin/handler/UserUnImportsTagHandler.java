@@ -43,55 +43,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+public class UserUnImportsTagHandler
+		extends
+			SimpleActionHandler<UserUnImportsTagAction, VoidResult> {
+	private final Logger log = Logger.getLogger(UserUnImportsTagHandler.class
+			.getName());
+	private final TagDao tagManager;
+	private final TaskQueueDispatch dispatchAsync;
+	private final IAdminPermission adminPermission;
+	private final PeerDatabaseDao peerDatabaseDao;
 
-public class UserUnImportsTagHandler extends SimpleActionHandler<UserUnImportsTagAction, VoidResult> {
-    private final Logger log = Logger.getLogger(UserUnImportsTagHandler.class.getName());
-    private final TagDao tagManager;
-    private final TaskQueueDispatch dispatchAsync;
-    private final IAdminPermission adminPermission;
-    private final PeerDatabaseDao peerDatabaseDao;
+	@Inject
+	public UserUnImportsTagHandler(TagDao tagManager,
+			TaskQueueDispatch dispatchAsync, IAdminPermission adminPermission,
+			PeerDatabaseDao peerDatabaseDao) {
+		super();
+		this.tagManager = tagManager;
+		this.dispatchAsync = dispatchAsync;
+		this.adminPermission = adminPermission;
+		this.peerDatabaseDao = peerDatabaseDao;
+	}
 
+	@Override
+	public VoidResult execute(UserUnImportsTagAction action,
+			ExecutionContext context) throws DispatchException {
+		log.info("Executing: " + action.getTagId());
+		adminPermission.checkAdminPermission();
 
-    @Inject
-    public UserUnImportsTagHandler(TagDao tagManager,
-                                   TaskQueueDispatch dispatchAsync,
-                                   IAdminPermission adminPermission,
-                                   PeerDatabaseDao peerDatabaseDao) {
-        super();
-        this.tagManager = tagManager;
-        this.dispatchAsync = dispatchAsync;
-        this.adminPermission = adminPermission;
-        this.peerDatabaseDao = peerDatabaseDao;
-    }
+		try {
+			String tagId = action.getTagId();
+			Tag tag = tagManager.find(tagId);
 
-    @Override
-    public VoidResult execute(UserUnImportsTagAction action,
-                              ExecutionContext context) throws DispatchException {
-        log.info("Executing: " + action.getTagId());
-        adminPermission.checkAdminPermission();
+			if (tag.isImportIssued()) {
+				tag.setImportIssued(false);
+				tagManager.save(tag);
+				peerDatabaseDao.resetCachedTagTrees();
+			}
 
-        try {
-            String tagId = action.getTagId();
-            Tag tag = tagManager.find(tagId);
+			List<String> idList = new ArrayList<String>();
 
-            if (tag.isImportIssued()) {
-                tag.setImportIssued(false);
-                tagManager.save(tag);
-                peerDatabaseDao.resetCachedTagTrees();
-            }
+			for (PhotoInfo info : tag.getCachedPhotoList()) {
+				idList.add(info.getId());
+			}
 
-            List<String> idList = new ArrayList<String>();
+			dispatchAsync.execute(new RemovePhotosFromTagAction(tag.getId(),
+					idList));
+		} catch (Exception e) {
+			throw new ActionException(e);
+		}
 
-            for (PhotoInfo info : tag.getCachedPhotoList()) {
-                idList.add(info.getId());
-            }
-
-            dispatchAsync.execute(new RemovePhotosFromTagAction(tag.getId(),
-                    idList));
-        } catch (Exception e) {
-            throw new ActionException(e);
-        }
-
-        return new VoidResult();
-    }
+		return new VoidResult();
+	}
 }

@@ -37,67 +37,67 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import java.util.logging.Logger;
 
+public class SendPasswordResetActivity extends AbstractActivity
+		implements
+			SendPasswordResetView.SendPasswordResetPresenter {
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(SendPasswordResetActivity.class
+			.getName());
+	private final SendPasswordResetView view;
+	private final DispatchAsync dispatchAsync;
+	private final UserActions userActions;
 
-public class SendPasswordResetActivity extends AbstractActivity implements SendPasswordResetView.SendPasswordResetPresenter {
-    @SuppressWarnings("unused")
-    private final Logger log = Logger.getLogger(SendPasswordResetActivity.class.getName());
-    private final SendPasswordResetView view;
-    private final DispatchAsync dispatchAsync;
-    private final UserActions userActions;
+	@Inject
+	public SendPasswordResetActivity(SendPasswordResetView view,
+			DispatchAsync dispatchAsync, UserActions userActions) {
+		this.view = view;
+		this.dispatchAsync = dispatchAsync;
+		this.userActions = userActions;
+	}
 
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		containerWidget.setWidget(view);
+	}
 
-    @Inject
-    public SendPasswordResetActivity(SendPasswordResetView view,
-                                     DispatchAsync dispatchAsync,
-                                     UserActions userActions) {
-        this.view = view;
-        this.dispatchAsync = dispatchAsync;
-        this.userActions = userActions;
-    }
+	private void resetPassword() {
+		String email = view.getEmailField();
+		SendPasswordResetAction action = new SendPasswordResetAction(email);
+		dispatchAsync.execute(action,
+				new AsyncCallback<SendPasswordResetResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setStatusText("Failed. Maybe you should sign-up first.");
+					}
 
-    @Override
-    public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        containerWidget.setWidget(view);
-    }
+					@Override
+					public void onSuccess(SendPasswordResetResult result) {
+						switch (result.getCode()) {
+							case SUCCESS :
+								view.setStatusText("Success. Check your email.");
+								break;
+							case NOT_VERIFIED :
+								view.setStatusText("Failed. Please verify your account first.");
+								break;
+							case NOT_REGISTERED :
+								view.setStatusText("Failed. Please register first.");
+								break;
 
-    private void resetPassword() {
-        String email = view.getEmailField();
-        SendPasswordResetAction action = new SendPasswordResetAction(email);
-        dispatchAsync.execute(action, new AsyncCallback<SendPasswordResetResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                view.setStatusText("Failed. Maybe you should sign-up first.");
-            }
+						}
+					}
+				});
+	}
 
-            @Override
-            public void onSuccess(SendPasswordResetResult result) {
-                switch (result.getCode()) {
-                    case SUCCESS:
-                        view.setStatusText("Success. Check your email.");
-                        break;
-                    case NOT_VERIFIED:
-                        view.setStatusText("Failed. Please verify your account first.");
-                        break;
-                    case NOT_REGISTERED:
-                        view.setStatusText("Failed. Please register first.");
-                        break;
+	@Override
+	public void onStop() {
+		super.onStop();
+		view.clearEmailField();
+	}
 
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        view.clearEmailField();
-    }
-
-
-    @Override
-    public void performAction(String actionId) {
-        if (userActions.doRequestPasswordReset.getId().equals(actionId)) {
-            resetPassword();
-        }
-    }
+	@Override
+	public void performAction(String actionId) {
+		if (userActions.doRequestPasswordReset.getId().equals(actionId)) {
+			resetPassword();
+		}
+	}
 }

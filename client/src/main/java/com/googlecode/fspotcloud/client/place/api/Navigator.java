@@ -32,53 +32,43 @@ import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
 import java.util.List;
 import java.util.Map;
 
-
 public interface Navigator {
-    void goAsync(Direction direction, Unit step);
+	void goAsync(Direction direction, Unit step);
 
-    void canGoAsync(Direction direction,
-                    Unit step,
-                    AsyncCallback<Boolean> callback);
+	void canGoAsync(Direction direction, Unit step,
+			AsyncCallback<Boolean> callback);
 
-    void getPossibleMoves(AsyncCallback<Map<Move, Boolean>> movesCallback);
+	void getPossibleMoves(AsyncCallback<Map<Move, Boolean>> movesCallback);
 
-    void getPageCountAsync(String tagId,
-                           int pageSize,
-                           AsyncCallback<Integer> callback);
+	void getPageCountAsync(String tagId, int pageSize,
+			AsyncCallback<Integer> callback);
 
-    void getPageAsync(String tagId,
-                      int pageSize,
-                      int pageNumber,
-                      AsyncCallback<List<PhotoInfo>> callback);
+	void getPageAsync(String tagId, int pageSize, int pageNumber,
+			AsyncCallback<List<PhotoInfo>> callback);
 
-    void getPageAsync(String tagId,
-                      String photoId,
-                      int pageSize,
-                      AsyncCallback<List<PhotoInfo>> callback);
+	void getPageAsync(String tagId, String photoId, int pageSize,
+			AsyncCallback<List<PhotoInfo>> callback);
 
-    void getPageRelativePositionAsync(String tagId,
-                                      String photoId,
-                                      int pageSize,
-                                      AsyncCallback<Integer[]> callback);
+	void getPageRelativePositionAsync(String tagId, String photoId,
+			int pageSize, AsyncCallback<Integer[]> callback);
 
-    void goToTag(String otherTagId, PhotoInfoStore store);
+	void goToTag(String otherTagId, PhotoInfoStore store);
 
-    void goToLatestTag();
+	void goToLatestTag();
 
-    void goToLatestTag(AsyncCallback<String> report);
+	void goToLatestTag(AsyncCallback<String> report);
 
-    void goToTag(String otherTagId, PhotoInfoStore store, Direction direction);
+	void goToTag(String otherTagId, PhotoInfoStore store, Direction direction);
 
+	enum Direction {
+		BACKWARD, FORWARD;
+	}
 
-    enum Direction {
-        BACKWARD, FORWARD;
-    }
+	enum Unit {
+		BORDER, PAGE, ROW, SINGLE;
+	}
 
-    enum Unit {
-        BORDER, PAGE, ROW, SINGLE;
-    }
-
-    enum Zoom {
-        IN, OUT;
-    }
+	enum Zoom {
+		IN, OUT;
+	}
 }

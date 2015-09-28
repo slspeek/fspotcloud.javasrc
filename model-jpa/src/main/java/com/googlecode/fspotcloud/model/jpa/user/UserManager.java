@@ -26,15 +26,14 @@ package com.googlecode.fspotcloud.model.jpa.user;
 
 import com.googlecode.fspotcloud.server.model.api.User;
 
-
 public class UserManager extends UserManagerBase<User, UserEntity> {
-    @Override
-    protected User newUser(String email) {
-        return new UserEntity(email);
-    }
+	@Override
+	protected User newUser(String email) {
+		return new UserEntity(email);
+	}
 
-    @Override
-    public Class<UserEntity> getEntityType() {
-        return UserEntity.class;
-    }
+	@Override
+	public Class<UserEntity> getEntityType() {
+		return UserEntity.class;
+	}
 }

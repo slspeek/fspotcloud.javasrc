@@ -2,19 +2,19 @@ package com.googlecode.fspotcloud.client.place.api;
 
 public interface IRasterer {
 
-    void increaseRasterWidth(int amount);
+	void increaseRasterWidth(int amount);
 
-    void increaseRasterHeight(int amount);
+	void increaseRasterHeight(int amount);
 
-    void setRasterDimension(int i, int j);
+	void setRasterDimension(int i, int j);
 
-    void resetRasterSize();
+	void resetRasterSize();
 
-    void zoom(Navigator.Zoom direction);
+	void zoom(Navigator.Zoom direction);
 
-    void goOneByOne();
+	void goOneByOne();
 
-    void toggleRasterView();
+	void toggleRasterView();
 
-    void toggleZoomView(String tagId, String photoId);
+	void toggleZoomView(String tagId, String photoId);
 }

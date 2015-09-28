@@ -42,53 +42,57 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class AdminTreePresenterImpl extends TreePresenterBase implements TreeView.TreePresenter {
+public class AdminTreePresenterImpl extends TreePresenterBase
+		implements
+			TreeView.TreePresenter {
 
-    private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class.getName());
-    private final StatusView statusView;
+	private final Logger log = Logger.getLogger(AdminTreePresenterImpl.class
+			.getName());
+	private final StatusView statusView;
 
-    @Inject
-    public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
-                                  DataManager dataManager,
-                                  SingleSelectionModelExt selectionModel,
-                                  @AdminTreeView ITreeSelectionHandler treeSelectionHandler,
-                                  @Dashboard StatusView statusView) {
-        super(treeView, dataManager, selectionModel, treeSelectionHandler);
-        this.statusView = statusView;
-    }
+	@Inject
+	public AdminTreePresenterImpl(@AdminTreeView TreeView treeView,
+			DataManager dataManager, SingleSelectionModelExt selectionModel,
+			@AdminTreeView ITreeSelectionHandler treeSelectionHandler,
+			@Dashboard StatusView statusView) {
+		super(treeView, dataManager, selectionModel, treeSelectionHandler);
+		this.statusView = statusView;
+	}
 
+	public void setPlace(DashboardPlace place) {
+		log.log(Level.FINE, "Set place with place " + place);
+		this.place = place;
+		updatePlace();
+	}
 
-    public void setPlace(DashboardPlace place) {
-        log.log(Level.FINE, "Set place with place " + place);
-        this.place = place;
-        updatePlace();
-    }
+	protected void requestTagTreeData() {
+		statusView
+				.setStatusText("Requesting new category tree from the server");
+		dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.WARNING, "getAdminTagTree", caught);
+				statusView
+						.setStatusText("The tree could not be retrieved due to a server error");
+			}
 
-    protected void requestTagTreeData() {
-        statusView.setStatusText("Requesting new category tree from the server");
-        dataManager.getAdminTagTree(new AsyncCallback<TagNode>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                log.log(Level.WARNING, "getAdminTagTree", caught);
-                statusView.setStatusText("The tree could not be retrieved due to a server error");
-            }
+			@Override
+			public void onSuccess(TagNode result) {
+				statusView
+						.setStatusText("Received new category tree from the server");
+				setModel(result);
+				statusView.setStatusText("Reloaded tree UI");
+			}
+		});
+	}
 
-            @Override
-            public void onSuccess(TagNode result) {
-                statusView.setStatusText("Received new category tree from the server");
-                setModel(result);
-                statusView.setStatusText("Reloaded tree UI");
-            }
-        });
-    }
+	@Override
+	public Cell<TagNode> get() {
+		return new AdminTagCell();
+	}
 
-    @Override
-    public Cell<TagNode> get() {
-        return new AdminTagCell();
-    }
-
-    @Override
-    public void setPlace(BasePlace place) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public void setPlace(BasePlace place) {
+		//To change body of implemented methods use File | Settings | File Templates.
+	}
 }

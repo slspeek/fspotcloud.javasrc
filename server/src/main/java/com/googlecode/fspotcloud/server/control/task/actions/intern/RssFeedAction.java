@@ -29,32 +29,30 @@ import net.customware.gwt.dispatch.shared.general.StringResult;
 
 import java.io.Serializable;
 
+public class RssFeedAction implements Action<StringResult>, Serializable {
+	private static final long serialVersionUID = 8429390701736230375L;
+	private final String tagId;
 
-public class RssFeedAction implements Action<StringResult>,
-        Serializable {
-    private static final long serialVersionUID = 8429390701736230375L;
-    private final String tagId;
+	public RssFeedAction(String tagId) {
+		super();
+		this.tagId = tagId;
+	}
 
-    public RssFeedAction(String tagId) {
-        super();
-        this.tagId = tagId;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof RssFeedAction) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof RssFeedAction) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
-
-    public String getTagId() {
-        return tagId;
-    }
+	public String getTagId() {
+		return tagId;
+	}
 }

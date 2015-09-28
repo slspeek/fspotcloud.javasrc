@@ -45,85 +45,88 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @GwtCompatible
-public class EditUserGroupActivity extends AbstractActivity implements EditUserGroupView.EditUserGroupPresenter {
-    private final Logger log = Logger.getLogger(EditUserGroupActivity.class.getName());
-    private final EditUserGroupView view;
-    private final DispatchAsync dispatch;
-    private final EventBus eventBus;
-    private final DashboardActions dashboardActions;
-    private final IScheduler scheduler;
-    private UserGroupInfo userGroupInfo;
+public class EditUserGroupActivity extends AbstractActivity
+		implements
+			EditUserGroupView.EditUserGroupPresenter {
+	private final Logger log = Logger.getLogger(EditUserGroupActivity.class
+			.getName());
+	private final EditUserGroupView view;
+	private final DispatchAsync dispatch;
+	private final EventBus eventBus;
+	private final DashboardActions dashboardActions;
+	private final IScheduler scheduler;
+	private UserGroupInfo userGroupInfo;
 
-    @Inject
-    public EditUserGroupActivity(EditUserGroupView view,
-                                 DispatchAsync dispatch,
-                                 DashboardActions dashboardActions,
-                                 EventBus eventBus,
-                                 IScheduler scheduler) {
-        this.view = view;
-        this.dispatch = dispatch;
-        this.eventBus = eventBus;
-        this.dashboardActions = dashboardActions;
-        this.scheduler = scheduler;
-    }
-    @Override
-    public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBus) {
-        panel.setWidget(view);
-        scheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                view.focusNameField();
-            }
-        });
-    }
+	@Inject
+	public EditUserGroupActivity(EditUserGroupView view,
+			DispatchAsync dispatch, DashboardActions dashboardActions,
+			EventBus eventBus, IScheduler scheduler) {
+		this.view = view;
+		this.dispatch = dispatch;
+		this.eventBus = eventBus;
+		this.dashboardActions = dashboardActions;
+		this.scheduler = scheduler;
+	}
+	@Override
+	public void start(AcceptsOneWidget panel,
+			com.google.gwt.event.shared.EventBus eventBus) {
+		panel.setWidget(view);
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				view.focusNameField();
+			}
+		});
+	}
 
-    private void save() {
-        log.log(Level.FINE, "Saved called.");
-        userGroupInfo.setName(view.getName());
-        userGroupInfo.setDescription(view.getDescription());
-        userGroupInfo.setPublic(view.getIsPublic());
-        view.setStatusText("Sending data to the server in order to save");
-        dispatch.execute(new SaveUserGroupAction(userGroupInfo),
-                new AsyncCallback<VoidResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.setStatusText("Group could not be saved due to a server error");
-                    }
+	private void save() {
+		log.log(Level.FINE, "Saved called.");
+		userGroupInfo.setName(view.getName());
+		userGroupInfo.setDescription(view.getDescription());
+		userGroupInfo.setPublic(view.getIsPublic());
+		view.setStatusText("Sending data to the server in order to save");
+		dispatch.execute(new SaveUserGroupAction(userGroupInfo),
+				new AsyncCallback<VoidResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setStatusText("Group could not be saved due to a server error");
+					}
 
-                    @Override
-                    public void onSuccess(VoidResult result) {
-                        view.setStatusText("A save was successfully performed on the server, redirecting");
-                        log.info(
-                                "Successfully returned from save user group server call");
-                        eventBus.fireEvent(new KeyboardActionEvent(dashboardActions.manageGroups.getId()));
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(VoidResult result) {
+						view.setStatusText("A save was successfully performed on the server, redirecting");
+						log.info("Successfully returned from save user group server call");
+						eventBus.fireEvent(new KeyboardActionEvent(
+								dashboardActions.manageGroups.getId()));
+					}
+				});
+	}
 
-    @Override
-    public void setId(final Long id) {
-        log.log(Level.FINE, "Set id: " + id);
-        view.setStatusText("Requesting data for group with id=" + id);
-        dispatch.execute(new GetUserGroupAction(id),
-                new AsyncCallback<GetUserGroupResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.setStatusText("Requesting data for group with id=" + id + " failed due to a server error.");
-                    }
+	@Override
+	public void setId(final Long id) {
+		log.log(Level.FINE, "Set id: " + id);
+		view.setStatusText("Requesting data for group with id=" + id);
+		dispatch.execute(new GetUserGroupAction(id),
+				new AsyncCallback<GetUserGroupResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setStatusText("Requesting data for group with id="
+								+ id + " failed due to a server error.");
+					}
 
-                    @Override
-                    public void onSuccess(GetUserGroupResult result) {
-                        view.setStatusText("Loaded group information");
-                        userGroupInfo = result.getInfo();
-                        view.setName(result.getInfo().getName());
-                        view.setDescription(result.getInfo().getDescription());
-                        view.setIsPublic(result.getInfo().isPublic());
-                    }
-                });
-    }
+					@Override
+					public void onSuccess(GetUserGroupResult result) {
+						view.setStatusText("Loaded group information");
+						userGroupInfo = result.getInfo();
+						view.setName(result.getInfo().getName());
+						view.setDescription(result.getInfo().getDescription());
+						view.setIsPublic(result.getInfo().isPublic());
+					}
+				});
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        save();
-    }
+	@Override
+	public void performAction(String actionId) {
+		save();
+	}
 }

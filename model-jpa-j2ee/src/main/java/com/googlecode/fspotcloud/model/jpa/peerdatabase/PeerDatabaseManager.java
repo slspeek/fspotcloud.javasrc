@@ -26,15 +26,16 @@ package com.googlecode.fspotcloud.model.jpa.peerdatabase;
 
 import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
 
+public class PeerDatabaseManager
+		extends
+			PeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity> {
+	@Override
+	protected PeerDatabase newInstance() {
+		return new PeerDatabaseEntity();
+	}
 
-public class PeerDatabaseManager extends PeerDatabaseManagerBase<PeerDatabase, PeerDatabaseEntity> {
-    @Override
-    protected PeerDatabase newInstance() {
-        return new PeerDatabaseEntity();
-    }
-
-    @Override
-    public Class<PeerDatabaseEntity> getEntityType() {
-        return PeerDatabaseEntity.class;
-    }
+	@Override
+	public Class<PeerDatabaseEntity> getEntityType() {
+		return PeerDatabaseEntity.class;
+	}
 }

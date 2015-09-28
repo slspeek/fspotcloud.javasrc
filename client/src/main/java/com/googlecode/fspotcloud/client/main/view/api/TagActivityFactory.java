@@ -30,5 +30,5 @@ import com.googlecode.fspotcloud.client.place.BasePlace;
 
 @GwtCompatible
 public interface TagActivityFactory {
-    TagPresenter get(BasePlace place);
+	TagPresenter get(BasePlace place);
 }

@@ -35,25 +35,28 @@ import com.googlecode.fspotcloud.client.main.view.api.SlideshowDelayView.Slidesh
 import com.googlecode.fspotcloud.client.place.api.Slideshow;
 
 @GwtCompatible
-public class SlideshowDelayPresenterFactoryImpl implements Provider<SlideshowPresenter> {
-    private final SlideshowDelayView delayView;
-    private final Slideshow slideshow;
-    private final EventBus eventBus;
+public class SlideshowDelayPresenterFactoryImpl
+		implements
+			Provider<SlideshowPresenter> {
+	private final SlideshowDelayView delayView;
+	private final Slideshow slideshow;
+	private final EventBus eventBus;
 
-    @Inject
-    public SlideshowDelayPresenterFactoryImpl(SlideshowDelayView delayView,
-                                              Slideshow slideshow, EventBus eventBus) {
-        super();
-        this.delayView = delayView;
-        this.slideshow = slideshow;
-        this.eventBus = eventBus;
-    }
+	@Inject
+	public SlideshowDelayPresenterFactoryImpl(SlideshowDelayView delayView,
+			Slideshow slideshow, EventBus eventBus) {
+		super();
+		this.delayView = delayView;
+		this.slideshow = slideshow;
+		this.eventBus = eventBus;
+	}
 
-    @Override
-    public SlideshowPresenter get() {
-        SlideshowDelayPresenterImpl delayPresenter = new SlideshowDelayPresenterImpl(delayView);
-        eventBus.addHandler(SlideshowStatusEvent.TYPE, delayPresenter);
-        delayPresenter.redraw(slideshow.delay(), slideshow.isRunning());
-        return delayPresenter;
-    }
+	@Override
+	public SlideshowPresenter get() {
+		SlideshowDelayPresenterImpl delayPresenter = new SlideshowDelayPresenterImpl(
+				delayView);
+		eventBus.addHandler(SlideshowStatusEvent.TYPE, delayPresenter);
+		delayPresenter.redraw(slideshow.delay(), slideshow.isRunning());
+		return delayPresenter;
+	}
 }

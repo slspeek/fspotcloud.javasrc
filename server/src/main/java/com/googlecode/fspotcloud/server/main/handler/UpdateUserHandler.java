@@ -37,39 +37,43 @@ import javax.inject.Inject;
 
 import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
 
+public class UpdateUserHandler
+		extends
+			SimpleActionHandler<UpdateUserAction, UpdateUserResult> {
 
-public class UpdateUserHandler extends SimpleActionHandler<UpdateUserAction, UpdateUserResult> {
+	@Inject
+	private UserDao userDao;
 
-    @Inject
-    private UserDao userDao;
+	@Inject
+	private UserService userService;
 
-    @Inject
-    private UserService userService;
-
-    @Override
-    public UpdateUserResult execute(UpdateUserAction action, ExecutionContext context) throws DispatchException {
-        if (userService.isUserLoggedIn()) {
-            String userName = userService.getEmail();
-            User user = userDao.find(userName);
-            if (user.hasRegistered()) {
-                if (user.getEnabled()) {
-                    String oldHashedPassword = hash(userName, action.getOldPassword());
-                    if (oldHashedPassword.equals(user.getCredentials())) {
-                        String newHashedPassword = hash(userName, action.getNewPassword());
-                        user.setCredentials(newHashedPassword);
-                        userDao.save(user);
-                        return new UpdateUserResult(true);
-                    } else {
-                        return new UpdateUserResult(false);
-                    }
-                } else {
-                    throw new EmailNotVerifiedException();
-                }
-            } else {
-                throw new UserNotRegisteredException();
-            }
-        } else {
-            throw new UserIsNotLoggedOnException();
-        }
-    }
+	@Override
+	public UpdateUserResult execute(UpdateUserAction action,
+			ExecutionContext context) throws DispatchException {
+		if (userService.isUserLoggedIn()) {
+			String userName = userService.getEmail();
+			User user = userDao.find(userName);
+			if (user.hasRegistered()) {
+				if (user.getEnabled()) {
+					String oldHashedPassword = hash(userName,
+							action.getOldPassword());
+					if (oldHashedPassword.equals(user.getCredentials())) {
+						String newHashedPassword = hash(userName,
+								action.getNewPassword());
+						user.setCredentials(newHashedPassword);
+						userDao.save(user);
+						return new UpdateUserResult(true);
+					} else {
+						return new UpdateUserResult(false);
+					}
+				} else {
+					throw new EmailNotVerifiedException();
+				}
+			} else {
+				throw new UserNotRegisteredException();
+			}
+		} else {
+			throw new UserIsNotLoggedOnException();
+		}
+	}
 }

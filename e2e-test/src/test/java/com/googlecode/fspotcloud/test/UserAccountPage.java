@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -40,36 +40,37 @@ import static org.junit.Assert.assertEquals;
  * @author steven
  */
 public class UserAccountPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public UserAccountPage open() {
-        selenium.open("#UserAccountPlace:");
-        selenium.waitForPageToLoad("30000");
-        return this;
-    }
+	public UserAccountPage open() {
+		selenium.open("#UserAccountPlace:");
+		selenium.waitForPageToLoad("30000");
+		return this;
+	}
 
-    public void verifyEmail(String email) {
-        assertEquals(email, selenium.getText("gwt-debug-email"));
-    }
+	public void verifyEmail(String email) {
+		assertEquals(email, selenium.getText("gwt-debug-email"));
+	}
 
-    public Date getLastLogin() {
-        return DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_LONG)
-                .parse(selenium.getText("gwt-debug-last-login"));
-    }
+	public Date getLastLogin() {
+		return DateTimeFormat.getFormat(
+				DateTimeFormat.PredefinedFormat.DATE_TIME_LONG).parse(
+				selenium.getText("gwt-debug-last-login"));
+	}
 
-    public void fillForm(String oldPassword, String newPassword) {
-        selenium.type("id=gwt-debug-old-password", oldPassword);
-        selenium.type("id=gwt-debug-new-password", newPassword);
-        selenium.type("id=gwt-debug-new-password-again", newPassword);
-    }
+	public void fillForm(String oldPassword, String newPassword) {
+		selenium.type("id=gwt-debug-old-password", oldPassword);
+		selenium.type("id=gwt-debug-new-password", newPassword);
+		selenium.type("id=gwt-debug-new-password-again", newPassword);
+	}
 
-    public void save() {
-        selenium.click("gwt-debug-do-change-password");
-    }
+	public void save() {
+		selenium.click("gwt-debug-do-change-password");
+	}
 
-    public void logout() {
-        selenium.click("gwt-debug-logout");
-    }
+	public void logout() {
+		selenium.click("gwt-debug-logout");
+	}
 
 }

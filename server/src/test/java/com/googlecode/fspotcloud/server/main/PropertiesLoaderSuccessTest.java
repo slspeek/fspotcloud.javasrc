@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.main;
 
 import com.googlecode.fspotcloud.server.inject.PropertiesFile;
@@ -40,7 +40,6 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
-
 /**
  * PropertiesLoader success unit test
  *
@@ -48,25 +47,26 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(JukitoRunner.class)
 public class PropertiesLoaderSuccessTest {
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
+	public static class Module extends JukitoModule {
+		protected void configureTest() {
 
-            bind(String.class).annotatedWith(PropertiesFile.class).toInstance("properties.properties");
+			bind(String.class).annotatedWith(PropertiesFile.class).toInstance(
+					"properties.properties");
 
-        }
-    }
+		}
+	}
 
-    @Inject
-    private PropertiesLoader loader;
+	@Inject
+	private PropertiesLoader loader;
 
-    /**
-     * Verifies that pl preserves system properties
-     */
-    @Test
-    public void testLoadProperties() {
-        Properties properties = loader.loadProperties();
-        Assert.assertNotNull(System.getProperty("user.home"));
-        assertEquals("testable", properties.get("test.property"));
-    }
+	/**
+	 * Verifies that pl preserves system properties
+	 */
+	@Test
+	public void testLoadProperties() {
+		Properties properties = loader.loadProperties();
+		Assert.assertNotNull(System.getProperty("user.home"));
+		assertEquals("testable", properties.get("test.property"));
+	}
 
 }

@@ -4,6 +4,6 @@ import com.googlecode.fspotcloud.keyboardaction.gwt.ActionToolbarResources;
 
 public interface SlideshowToolbarResources extends ActionToolbarResources {
 
-    @Source("slideshowtoolbar.css")
-    ActionToolbarResources.Style style();
+	@Source("slideshowtoolbar.css")
+	ActionToolbarResources.Style style();
 }

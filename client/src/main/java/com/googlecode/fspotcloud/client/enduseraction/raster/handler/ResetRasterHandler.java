@@ -6,15 +6,15 @@ import com.googlecode.fspotcloud.keyboardaction.IActionHandler;
 
 public class ResetRasterHandler implements IActionHandler {
 
-    private final IRasterer rasterer;
+	private final IRasterer rasterer;
 
-    @Inject
-    public ResetRasterHandler(IRasterer rasterer) {
-        this.rasterer = rasterer;
-    }
+	@Inject
+	public ResetRasterHandler(IRasterer rasterer) {
+		this.rasterer = rasterer;
+	}
 
-    @Override
-    public void performAction(String actionId) {
-        rasterer.resetRasterSize();
-    }
+	@Override
+	public void performAction(String actionId) {
+		rasterer.resetRasterSize();
+	}
 }

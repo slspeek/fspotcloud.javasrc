@@ -30,13 +30,12 @@ import com.googlecode.fspotcloud.model.jpa.usergroup.UserGroupManager;
 import com.googlecode.simpleblobstore.j2ee.J2eeSimpleBlobstoreServletModule;
 import com.googlecode.simplejpadao.SimpleDAOGenId;
 
-
 public class UserGroupGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        install(new J2eeModelModule(1000, "derby-test"));
-        install(new J2eeSimpleBlobstoreServletModule());
-        bind(SimpleDAOGenId.class).to(UserGroupManager.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		install(new J2eeModelModule(1000, "derby-test"));
+		install(new J2eeSimpleBlobstoreServletModule());
+		bind(SimpleDAOGenId.class).to(UserGroupManager.class);
+	}
 }

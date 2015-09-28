@@ -31,24 +31,24 @@ import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
 import com.googlecode.simplejpadao.AbstractDAO;
 
+public class CachedPhotoManager
+		extends
+			CachedPhotoManagerBase<Photo, PhotoEntity> implements PhotoDao {
+	@Inject
+	PhotoManagerBase<Photo, PhotoEntity> delegate;
 
-public class CachedPhotoManager extends CachedPhotoManagerBase<Photo, PhotoEntity>
-        implements PhotoDao {
-    @Inject
-    PhotoManagerBase<Photo, PhotoEntity> delegate;
+	@Override
+	protected Photo newPhoto() {
+		return new PhotoEntity();
+	}
 
-    @Override
-    protected Photo newPhoto() {
-        return new PhotoEntity();
-    }
+	@Override
+	public Class<PhotoEntity> getEntityType() {
+		return PhotoEntity.class;
+	}
 
-    @Override
-    public Class<PhotoEntity> getEntityType() {
-        return PhotoEntity.class;
-    }
-
-    @Override
-    public AbstractDAO<Photo, String> getDelegate() {
-        return delegate;
-    }
+	@Override
+	public AbstractDAO<Photo, String> getDelegate() {
+		return delegate;
+	}
 }

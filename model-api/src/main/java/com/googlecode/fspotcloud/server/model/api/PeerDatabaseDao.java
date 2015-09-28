@@ -26,11 +26,10 @@ package com.googlecode.fspotcloud.server.model.api;
 
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public interface PeerDatabaseDao extends SimpleDAONamedId<PeerDatabase, String> {
-    PeerDatabase get();
+	PeerDatabase get();
 
-    void touchPeerContact();
+	void touchPeerContact();
 
-    void resetCachedTagTrees();
+	void resetCachedTagTrees();
 }

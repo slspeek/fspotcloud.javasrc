@@ -37,25 +37,26 @@ import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
 
 public class EmailConfirmationITest {
 
-    public static final String SECRET = "ControlledInject";
-    @Rule
-    public GuiceBerryRule guiceBerry = new GuiceBerryRule(EmptyGuiceBerryEnv.class);
-    @Inject
-    private EmailConfirmationPage emailConfirmationPage;
-    @Inject
-    private UserDao userDao;
+	public static final String SECRET = "ControlledInject";
+	@Rule
+	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
+			EmptyGuiceBerryEnv.class);
+	@Inject
+	private EmailConfirmationPage emailConfirmationPage;
+	@Inject
+	private UserDao userDao;
 
-    @Test
-    public void testEmailConfirmation() throws Exception {
-        User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
-        rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
-        rms.setRegistered(true);
-        rms.setEmailVerificationSecret(SECRET);
-        rms.setEnabled(false);
-        userDao.save(rms);
-        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
-        emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
-				sleepShort();
-				emailConfirmationPage.success();
-    }
+	@Test
+	public void testEmailConfirmation() throws Exception {
+		User rms = userDao.findOrNew(ILogin.RMS_FSF_ORG);
+		rms.setCredentials(hash(ILogin.RMS_FSF_ORG, ILogin.RMS_CRED));
+		rms.setRegistered(true);
+		rms.setEmailVerificationSecret(SECRET);
+		rms.setEnabled(false);
+		userDao.save(rms);
+		emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
+		emailConfirmationPage.open(ILogin.RMS_FSF_ORG, SECRET);
+		sleepShort();
+		emailConfirmationPage.success();
+	}
 }

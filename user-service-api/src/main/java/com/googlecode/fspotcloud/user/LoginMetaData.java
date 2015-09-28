@@ -32,72 +32,73 @@ import java.util.HashSet;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class LoginMetaData implements ILoginMetaData {
-    public static final String GRANTED_GROUPS = "granted-groups";
-    public static final String EMAIL_FIELD = "email-field";
-    public static final String LOGIN_TYPE = "login-type";
-    public static final String LAST_SEEN = "last-seen";
-    @Inject
-    private HttpSession session;
+	public static final String GRANTED_GROUPS = "granted-groups";
+	public static final String EMAIL_FIELD = "email-field";
+	public static final String LOGIN_TYPE = "login-type";
+	public static final String LAST_SEEN = "last-seen";
+	@Inject
+	private HttpSession session;
 
-    @Override
-    public HashSet<Long> getGrantedUserGroups() {
-        HashSet<Long> result = (HashSet<Long>) session.getAttribute(GRANTED_GROUPS);
+	@Override
+	public HashSet<Long> getGrantedUserGroups() {
+		HashSet<Long> result = (HashSet<Long>) session
+				.getAttribute(GRANTED_GROUPS);
 
-        if (result == null) {
-            result = newHashSet();
-        }
+		if (result == null) {
+			result = newHashSet();
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public void setGrantedUserGroups(HashSet<Long> grantedUserGroups) {
-        session.setAttribute(GRANTED_GROUPS, grantedUserGroups);
-    }
+	@Override
+	public void setGrantedUserGroups(HashSet<Long> grantedUserGroups) {
+		session.setAttribute(GRANTED_GROUPS, grantedUserGroups);
+	}
 
-    @Override
-    public String getEmail() {
-        String email = (String) session.getAttribute(EMAIL_FIELD);
+	@Override
+	public String getEmail() {
+		String email = (String) session.getAttribute(EMAIL_FIELD);
 
-        return email;
-    }
+		return email;
+	}
 
-    @Override
-    public void setEmail(String email) {
-        session.setAttribute(EMAIL_FIELD, email);
-    }
+	@Override
+	public void setEmail(String email) {
+		session.setAttribute(EMAIL_FIELD, email);
+	}
 
-    @Override
-    public Type getLoginType() {
-        return (Type) session.getAttribute(LOGIN_TYPE);
-    }
+	@Override
+	public Type getLoginType() {
+		return (Type) session.getAttribute(LOGIN_TYPE);
+	}
 
-    @Override
-    public void setLoginType(Type loginType) {
-        session.setAttribute(LOGIN_TYPE, loginType);
-    }
+	@Override
+	public void setLoginType(Type loginType) {
+		session.setAttribute(LOGIN_TYPE, loginType);
+	}
 
-    @Override
-    public Date getLastTime() {
-        return (Date) session.getAttribute(LAST_SEEN);
-    }
+	@Override
+	public Date getLastTime() {
+		return (Date) session.getAttribute(LAST_SEEN);
+	}
 
-    @Override
-    public void setLastTime(Date lastTime) {
-        session.setAttribute(LAST_SEEN, lastTime);
-    }
+	@Override
+	public void setLastTime(Date lastTime) {
+		session.setAttribute(LAST_SEEN, lastTime);
+	}
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append("LoginMetaData");
-        sb.append("{loginType=").append(getLoginType());
-        sb.append(", lastTime=").append(getLastTime());
-        sb.append(", email='").append(getEmail()).append('\'');
-        sb.append(", grantedUserGroups=").append(getGrantedUserGroups());
-        sb.append("}@");
-        sb.append(super.toString());
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("LoginMetaData");
+		sb.append("{loginType=").append(getLoginType());
+		sb.append(", lastTime=").append(getLastTime());
+		sb.append(", email='").append(getEmail()).append('\'');
+		sb.append(", grantedUserGroups=").append(getGrantedUserGroups());
+		sb.append("}@");
+		sb.append(super.toString());
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 }

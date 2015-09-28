@@ -16,27 +16,27 @@ import static org.mockito.Mockito.when;
 @RunWith(JukitoRunner.class)
 public class Go3rdPartyLoginActionBasePlaceTest {
 
-    public static final String WHERE_TOKEN = "fsf.org";
-    @Inject
-    private Go3rdPartyLoginHandler handler;
-    @Inject
-    private IClientLoginManager clientLoginManager;
-    @Inject
-    private IPlaceController placeController;
-    @Inject
-    private UserActions userActions;
+	public static final String WHERE_TOKEN = "fsf.org";
+	@Inject
+	private Go3rdPartyLoginHandler handler;
+	@Inject
+	private IClientLoginManager clientLoginManager;
+	@Inject
+	private IPlaceController placeController;
+	@Inject
+	private UserActions userActions;
 
-    private BasePlace basePlace = new BasePlace("1", "1");
+	private BasePlace basePlace = new BasePlace("1", "1");
 
-    @Before
-    public void setUp() throws Exception {
-        when(placeController.getRawWhere()).thenReturn(basePlace);
-        when(placeController.whereToken()).thenReturn(WHERE_TOKEN);
-    }
+	@Before
+	public void setUp() throws Exception {
+		when(placeController.getRawWhere()).thenReturn(basePlace);
+		when(placeController.whereToken()).thenReturn(WHERE_TOKEN);
+	}
 
-    @Test
-    public void testLogin() throws Exception {
-        handler.performAction(userActions.otherLogin.getId());
-        verify(clientLoginManager).goTo3rdPartyLogin(WHERE_TOKEN);
-    }
+	@Test
+	public void testLogin() throws Exception {
+		handler.performAction(userActions.otherLogin.getId());
+		verify(clientLoginManager).goTo3rdPartyLogin(WHERE_TOKEN);
+	}
 }

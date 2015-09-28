@@ -29,15 +29,14 @@ import com.googlecode.fspotcloud.user.inject.ServerAddress;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-
 public class UrlUtil {
-    @Inject
-    @ServerAddress
-    Provider<String> serverAddressProvider;
+	@Inject
+	@ServerAddress
+	Provider<String> serverAddressProvider;
 
-    public String toAbsoluteURL(String url) {
-        String result = serverAddressProvider.get() + "/" + url;
+	public String toAbsoluteURL(String url) {
+		String result = serverAddressProvider.get() + "/" + url;
 
-        return result;
-    }
+		return result;
+	}
 }

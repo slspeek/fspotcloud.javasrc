@@ -8,15 +8,15 @@ import com.google.inject.Inject;
 @GwtCompatible
 public class AdminCellTreeFactory implements CellTreeFactory {
 
-    private final AdminTreeResources resources;
+	private final AdminTreeResources resources;
 
-    @Inject
-    public AdminCellTreeFactory(AdminTreeResources resources) {
-        this.resources = resources;
-    }
+	@Inject
+	public AdminCellTreeFactory(AdminTreeResources resources) {
+		this.resources = resources;
+	}
 
-    @Override
-    public CellTree get(TreeViewModel model) {
-        return new CellTree(model, null, resources);
-    }
+	@Override
+	public CellTree get(TreeViewModel model) {
+		return new CellTree(model, null, resources);
+	}
 }

@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.test;
 
 import com.thoughtworks.selenium.Selenium;
@@ -38,17 +38,17 @@ import static junit.framework.Assert.assertTrue;
  * @author steven
  */
 public class EmailConfirmationPage {
-    @Inject
-    Selenium selenium;
+	@Inject
+	Selenium selenium;
 
-    public EmailConfirmationPage open(String email, String secret) {
-        selenium.open("#EmailConfirmationPlace:" + email + ":" + secret);
-        selenium.waitForPageToLoad("30000");
-        return this;
-    }
+	public EmailConfirmationPage open(String email, String secret) {
+		selenium.open("#EmailConfirmationPlace:" + email + ":" + secret);
+		selenium.waitForPageToLoad("30000");
+		return this;
+	}
 
-    public void success() {
-        String body = selenium.getBodyText();
-        assertTrue(body.contains("Success"));
-    }
+	public void success() {
+		String body = selenium.getBodyText();
+		assertTrue(body.contains("Success"));
+	}
 }

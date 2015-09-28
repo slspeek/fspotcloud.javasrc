@@ -31,13 +31,12 @@ import com.googlecode.fspotcloud.model.jpa.gae.tag.CachedTagManager;
 import com.googlecode.fspotcloud.server.model.test.GaeLocalDatastoreTestWrapper;
 import com.googlecode.simplejpadao.SimpleDAONamedId;
 
-
 public class TagGuiceBerryEnv extends GuiceBerryModule {
-    @Override
-    protected void configure() {
-        super.configure();
-        bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
-        install(new GaeCachedModelModule(100, "gae-test"));
-        bind(SimpleDAONamedId.class).to(CachedTagManager.class);
-    }
+	@Override
+	protected void configure() {
+		super.configure();
+		bind(TestWrapper.class).to(GaeLocalDatastoreTestWrapper.class);
+		install(new GaeCachedModelModule(100, "gae-test"));
+		bind(SimpleDAONamedId.class).to(CachedTagManager.class);
+	}
 }

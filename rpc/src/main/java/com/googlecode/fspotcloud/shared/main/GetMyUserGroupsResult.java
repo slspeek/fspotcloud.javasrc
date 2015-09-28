@@ -29,19 +29,18 @@ import net.customware.gwt.dispatch.shared.Result;
 
 import java.util.ArrayList;
 
-
 @GwtCompatible
 public class GetMyUserGroupsResult implements Result {
-    private ArrayList<UserGroupInfo> data;
+	private ArrayList<UserGroupInfo> data;
 
-    public GetMyUserGroupsResult() {
-    }
+	public GetMyUserGroupsResult() {
+	}
 
-    public GetMyUserGroupsResult(ArrayList<UserGroupInfo> data) {
-        this.data = data;
-    }
+	public GetMyUserGroupsResult(ArrayList<UserGroupInfo> data) {
+		this.data = data;
+	}
 
-    public ArrayList<UserGroupInfo> getData() {
-        return data;
-    }
+	public ArrayList<UserGroupInfo> getData() {
+		return data;
+	}
 }

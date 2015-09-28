@@ -23,9 +23,9 @@
  */
 
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.googlecode.fspotcloud.server.admin.handler;
 
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
@@ -53,42 +53,44 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class UserSynchronizesPeerHandlerTest {
-    @Inject
-    private UserSynchronizesPeerHandler handler;
-    private final UserSynchronizesPeerAction action = new UserSynchronizesPeerAction();
-    private final String TAG_ID = "1";
+	@Inject
+	private UserSynchronizesPeerHandler handler;
+	private final UserSynchronizesPeerAction action = new UserSynchronizesPeerAction();
+	private final String TAG_ID = "1";
 
-    @Test
-    public void testNormalExecute(ControllerDispatchAsync dispatch,
-                                  IAdminPermission adminPermission, TaskQueueDispatch taskQueueDispatch,
-                                  TagDao tagManager, ArgumentCaptor<GetPeerMetaDataAction> actionCaptor,
-                                  ArgumentCaptor<PeerMetaDataCallback> callbackCaptor,
-                                  ArgumentCaptor<ImportManyTagsPhotosAction> taskActionCaptor)
-            throws Exception {
-        List<Tag> importedTags = newArrayList();
-        TagEntity tag = new TagEntity();
-        tag.setId(TAG_ID);
-        importedTags.add(tag);
-        when(tagManager.getImportedTags()).thenReturn(importedTags);
+	@Test
+	public void testNormalExecute(ControllerDispatchAsync dispatch,
+			IAdminPermission adminPermission,
+			TaskQueueDispatch taskQueueDispatch, TagDao tagManager,
+			ArgumentCaptor<GetPeerMetaDataAction> actionCaptor,
+			ArgumentCaptor<PeerMetaDataCallback> callbackCaptor,
+			ArgumentCaptor<ImportManyTagsPhotosAction> taskActionCaptor)
+			throws Exception {
+		List<Tag> importedTags = newArrayList();
+		TagEntity tag = new TagEntity();
+		tag.setId(TAG_ID);
+		importedTags.add(tag);
+		when(tagManager.getImportedTags()).thenReturn(importedTags);
 
-        VoidResult result = handler.execute(action, null);
+		VoidResult result = handler.execute(action, null);
 
-        verify(dispatch)
-                .execute(actionCaptor.capture(), callbackCaptor.capture());
+		verify(dispatch).execute(actionCaptor.capture(),
+				callbackCaptor.capture());
 
-        verify(taskQueueDispatch).execute(taskActionCaptor.capture());
+		verify(taskQueueDispatch).execute(taskActionCaptor.capture());
 
-        ImportManyTagsPhotosAction importAction = taskActionCaptor.getValue();
-        assertEquals(TAG_ID, importAction.getWorkLoad().get(0));
-    }
+		ImportManyTagsPhotosAction importAction = taskActionCaptor.getValue();
+		assertEquals(TAG_ID, importAction.getWorkLoad().get(0));
+	}
 
-    @Test(expected = SecurityException.class)
-    public void testUnAuthorizedExecute(ControllerDispatchAsync dispatch,
-                                        IAdminPermission adminPermission, TaskQueueDispatch taskQueueDispatch,
-                                        TagDao tagManager) throws Exception {
-        doThrow(new SecurityException()).when(adminPermission)
-                .checkAdminPermission();
+	@Test(expected = SecurityException.class)
+	public void testUnAuthorizedExecute(ControllerDispatchAsync dispatch,
+			IAdminPermission adminPermission,
+			TaskQueueDispatch taskQueueDispatch, TagDao tagManager)
+			throws Exception {
+		doThrow(new SecurityException()).when(adminPermission)
+				.checkAdminPermission();
 
-        VoidResult result = handler.execute(action, null);
-    }
+		VoidResult result = handler.execute(action, null);
+	}
 }

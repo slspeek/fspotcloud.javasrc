@@ -39,46 +39,48 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class AdminTreeSelectionHandler implements ITreeSelectionHandler {
-    private final Logger log = Logger.getLogger(AdminTreeSelectionHandler.class.getName());
-    private SingleSelectionModelExt selectionModel;
-    private final IPlaceController placeController;
-    private boolean ignoreNext = false;
-    private final StatusView statusView;
+	private final Logger log = Logger.getLogger(AdminTreeSelectionHandler.class
+			.getName());
+	private SingleSelectionModelExt selectionModel;
+	private final IPlaceController placeController;
+	private boolean ignoreNext = false;
+	private final StatusView statusView;
 
-    @Inject
-    public AdminTreeSelectionHandler(IPlaceController placeController,
-                                     @Dashboard StatusView statusView) {
-        this.placeController = placeController;
-        this.statusView = statusView;
-    }
+	@Inject
+	public AdminTreeSelectionHandler(IPlaceController placeController,
+			@Dashboard StatusView statusView) {
+		this.placeController = placeController;
+		this.statusView = statusView;
+	}
 
-    @Override
-    public boolean isIgnoreNext() {
-        return ignoreNext;
-    }
+	@Override
+	public boolean isIgnoreNext() {
+		return ignoreNext;
+	}
 
-    @Override
-    public void setIgnoreNext(boolean ignoreNext) {
-        this.ignoreNext = ignoreNext;
-    }
+	@Override
+	public void setIgnoreNext(boolean ignoreNext) {
+		this.ignoreNext = ignoreNext;
+	}
 
-    public void setSelectionModel(SingleSelectionModelExt selectionModel) {
-        this.selectionModel = selectionModel;
-        selectionModel.addSelectionChangeHandler(this);
-    }
+	public void setSelectionModel(SingleSelectionModelExt selectionModel) {
+		this.selectionModel = selectionModel;
+		selectionModel.addSelectionChangeHandler(this);
+	}
 
-    @Override
-    public void onSelectionChange(SelectionChangeEvent event) {
-        log.log(Level.FINE, "Selection event from tree" + selectionModel);
+	@Override
+	public void onSelectionChange(SelectionChangeEvent event) {
+		log.log(Level.FINE, "Selection event from tree" + selectionModel);
 
-        TagNode node = selectionModel.getSelectedObject();
+		TagNode node = selectionModel.getSelectedObject();
 
-        if (node != null) {
-            String tagId = node.getId();
-            statusView.setStatusText("Category: " + node.getTagName() + " selected");
-            placeController.goTo(new DashboardPlace(tagId));
-        } else {
-            statusView.setStatusText("Nothing selected");
-        }
-    }
+		if (node != null) {
+			String tagId = node.getId();
+			statusView.setStatusText("Category: " + node.getTagName()
+					+ " selected");
+			placeController.goTo(new DashboardPlace(tagId));
+		} else {
+			statusView.setStatusText("Nothing selected");
+		}
+	}
 }

@@ -33,44 +33,45 @@ import java.util.logging.Logger;
 
 @GwtCompatible
 public class KeyboardActionEvent extends Event<IActionManager> {
-    private final Logger log = Logger.getLogger(KeyboardActionEvent.class.getName());
-    public static final Type<IActionManager> TYPE = new Type<IActionManager>();
-    private final String actionId;
+	private final Logger log = Logger.getLogger(KeyboardActionEvent.class
+			.getName());
+	public static final Type<IActionManager> TYPE = new Type<IActionManager>();
+	private final String actionId;
 
-    public KeyboardActionEvent(String actionId) {
-        this.actionId = actionId;
-    }
+	public KeyboardActionEvent(String actionId) {
+		this.actionId = actionId;
+	}
 
-    public String getActionId() {
-        return actionId;
-    }
+	public String getActionId() {
+		return actionId;
+	}
 
-    @Override
-    public Type<IActionManager> getAssociatedType() {
-        return TYPE;
-    }
+	@Override
+	public Type<IActionManager> getAssociatedType() {
+		return TYPE;
+	}
 
-    @Override
-    protected void dispatch(IActionManager handlerI) {
-        log.log(Level.FINEST, "in dispatch for " + this);
-        handlerI.onEvent(this);
-    }
+	@Override
+	protected void dispatch(IActionManager handlerI) {
+		log.log(Level.FINEST, "in dispatch for " + this);
+		handlerI.onEvent(this);
+	}
 
-    public boolean equals(Object o) {
-        if (o instanceof KeyboardActionEvent) {
-            KeyboardActionEvent other = (KeyboardActionEvent) o;
-            return Objects.equal(other.actionId, actionId);
-        } else {
-            return false;
-        }
-    }
+	public boolean equals(Object o) {
+		if (o instanceof KeyboardActionEvent) {
+			KeyboardActionEvent other = (KeyboardActionEvent) o;
+			return Objects.equal(other.actionId, actionId);
+		} else {
+			return false;
+		}
+	}
 
-    public int hashCode() {
-        return Objects.hashCode(actionId);
-    }
+	public int hashCode() {
+		return Objects.hashCode(actionId);
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this).add("action", actionId).toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("action", actionId).toString();
+	}
 }

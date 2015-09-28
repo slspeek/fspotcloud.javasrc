@@ -43,61 +43,66 @@ import net.customware.gwt.dispatch.shared.DispatchException;
 
 import static com.google.common.collect.Sets.newHashSet;
 
+public class RequestFullsizeImageHandler
+		extends
+			SimpleActionHandler<RequestFullsizeImageAction, FullsizeImageResult> {
+	public static final String SUCCESSFULLY_MAILED = "Successfully mailed the image, you can check your mail";
+	public static final String SUCCESSFULLY_SCHEDULED = "Successfully scheduled your request, it may take a couple of days";
+	public static final String NOT_ALLOWED = "You are not allowed to view this image";
+	public static final String IMAGE_NOT_FOUND = "Image was not found";
+	public static final String LOGON_FIRST = "Failed, you have to logon first";
+	@Inject
+	private ControllerDispatchAsync controllerAsyc;
+	@Inject
+	private PhotoDao photoDao;
+	@Inject
+	private ImageHelper imageHelper;
+	@Inject
+	private UserService userService;
+	@Inject
+	private Provider<IMail> mailerProvider;
+	@Inject
+	private IUserGroupHelper userGroupHelper;
 
-public class RequestFullsizeImageHandler extends SimpleActionHandler<RequestFullsizeImageAction, FullsizeImageResult> {
-    public static final String SUCCESSFULLY_MAILED = "Successfully mailed the image, you can check your mail";
-    public static final String SUCCESSFULLY_SCHEDULED = "Successfully scheduled your request, it may take a couple of days";
-    public static final String NOT_ALLOWED = "You are not allowed to view this image";
-    public static final String IMAGE_NOT_FOUND = "Image was not found";
-    public static final String LOGON_FIRST = "Failed, you have to logon first";
-    @Inject
-    private ControllerDispatchAsync controllerAsyc;
-    @Inject
-    private PhotoDao photoDao;
-    @Inject
-    private ImageHelper imageHelper;
-    @Inject
-    private UserService userService;
-    @Inject
-    private Provider<IMail> mailerProvider;
-    @Inject
-    private IUserGroupHelper userGroupHelper;
+	@Override
+	public FullsizeImageResult execute(RequestFullsizeImageAction action,
+			ExecutionContext context) throws DispatchException {
+		String message = "";
+		if (userService.isUserLoggedIn()) {
+			final String caller = userService.getEmail();
+			final String imageId = action.getImageId();
+			final Photo photo = photoDao.find(imageId);
 
-    @Override
-    public FullsizeImageResult execute(RequestFullsizeImageAction action,
-                                       ExecutionContext context) throws DispatchException {
-        String message = "";
-        if (userService.isUserLoggedIn()) {
-            final String caller = userService.getEmail();
-            final String imageId = action.getImageId();
-            final Photo photo = photoDao.find(imageId);
+			if (photo != null) {
+				if (userService.isUserAdmin()
+						|| userGroupHelper.containsOneOf(newHashSet(photo
+								.getTagList()))) {
+					byte[] fsImage = imageHelper.getImage(photo,
+							ImageHelper.Type.FULLSIZE);
 
-            if (photo != null) {
-                if (userService.isUserAdmin() ||
-                        userGroupHelper.containsOneOf(newHashSet(photo.getTagList()))) {
-                    byte[] fsImage = imageHelper.getImage(photo,
-                            ImageHelper.Type.FULLSIZE);
+					if (fsImage != null) {
+						mailerProvider.get().send(
+								caller,
+								"Your requested image: " + imageId,
+								"Dear " + caller + ",\nYour requested image: "
+										+ imageId + " is in the attachment",
+								fsImage);
+						message = SUCCESSFULLY_MAILED;
+					} else {
+						controllerAsyc.execute(new GetFullsizePhotoAction(
+								imageId), new FullsizePhotoCallback(caller));
+						message = SUCCESSFULLY_SCHEDULED;
+					}
+				} else {
+					message = NOT_ALLOWED;
+				}
+			} else {
+				message = IMAGE_NOT_FOUND;
+			}
+		} else {
+			message = LOGON_FIRST;
+		}
 
-                    if (fsImage != null) {
-                        mailerProvider.get().send(caller, "Your requested image: " + imageId,
-                                "Dear " + caller + ",\nYour requested image: " +
-                                        imageId + " is in the attachment", fsImage);
-                        message = SUCCESSFULLY_MAILED;
-                    } else {
-                        controllerAsyc.execute(new GetFullsizePhotoAction(imageId),
-                                new FullsizePhotoCallback(caller));
-                        message = SUCCESSFULLY_SCHEDULED;
-                    }
-                } else {
-                    message = NOT_ALLOWED;
-                }
-            } else {
-                message = IMAGE_NOT_FOUND;
-            }
-        } else {
-            message = LOGON_FIRST;
-        }
-
-        return new FullsizeImageResult(message);
-    }
+		return new FullsizeImageResult(message);
+	}
 }

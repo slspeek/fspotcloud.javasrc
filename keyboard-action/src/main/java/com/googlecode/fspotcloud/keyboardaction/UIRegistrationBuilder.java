@@ -1,5 +1,5 @@
 package com.googlecode.fspotcloud.keyboardaction;
 
 public interface UIRegistrationBuilder {
-    void build();
+	void build();
 }

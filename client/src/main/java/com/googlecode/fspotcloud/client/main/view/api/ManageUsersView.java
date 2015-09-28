@@ -33,25 +33,25 @@ import java.util.Set;
 
 @GwtCompatible
 public interface ManageUsersView extends IsWidget {
-    void setPresenter(ManageUsersPresenter presenter);
+	void setPresenter(ManageUsersPresenter presenter);
 
-    void setData(Set<String> data);
+	void setData(Set<String> data);
 
-    String getSelected();
+	String getSelected();
 
-    String getNewEmail();
+	String getNewEmail();
 
-    void setGroupName(String name);
+	void setGroupName(String name);
 
-    void clearEmail();
+	void clearEmail();
 
-    void focusEmail();
+	void focusEmail();
 
-    void focusUsers();
+	void focusUsers();
 
-    void setSelected(String item, boolean state);
+	void setSelected(String item, boolean state);
 
-    interface ManageUsersPresenter extends Activity, IActionHandler {
-        void setId(Long id);
-    }
+	interface ManageUsersPresenter extends Activity, IActionHandler {
+		void setId(Long id);
+	}
 }

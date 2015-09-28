@@ -17,33 +17,33 @@ import static org.mockito.Mockito.when;
 @RunWith(JukitoRunner.class)
 public class RssFeedHandlerTest {
 
-    public static final String TAG_ID = "1";
-    @Inject
-    private Dispatch dispatch;
+	public static final String TAG_ID = "1";
+	@Inject
+	private Dispatch dispatch;
 
-    @Inject
-    private RssFeedHandler handler;
+	@Inject
+	private RssFeedHandler handler;
 
-    private RssFeedAction action = new RssFeedAction(TAG_ID);
-    private GetTagTreeAction tagTreeAction = new GetTagTreeAction();
+	private RssFeedAction action = new RssFeedAction(TAG_ID);
+	private GetTagTreeAction tagTreeAction = new GetTagTreeAction();
 
-    private TagNodeTestFactory factory = new TagNodeTestFactory();
-    private TagNode node = factory.getSingleNodeWithOnePicture();
+	private TagNodeTestFactory factory = new TagNodeTestFactory();
+	private TagNode node = factory.getSingleNodeWithOnePicture();
 
-    @Test
-    public void testExistingCategory() throws Exception {
-        TagTreeResult tagTreeResult = new TagTreeResult(node);
-        when(dispatch.execute(tagTreeAction)).thenReturn(tagTreeResult);
-        String rss = handler.execute(action, null).get();
-        assertTrue(rss.contains("/#BasePlace:1:42:1:1:false"));
-    }
+	@Test
+	public void testExistingCategory() throws Exception {
+		TagTreeResult tagTreeResult = new TagTreeResult(node);
+		when(dispatch.execute(tagTreeAction)).thenReturn(tagTreeResult);
+		String rss = handler.execute(action, null).get();
+		assertTrue(rss.contains("/#BasePlace:1:42:1:1:false"));
+	}
 
-    @Test
-    public void testNonExistingCategory() throws Exception {
-        TagTreeResult tagTreeResult = new TagTreeResult(node);
-        action = new RssFeedAction("2");
-        when(dispatch.execute(tagTreeAction)).thenReturn(tagTreeResult);
-        String rss = handler.execute(action, null).get();
-        assertTrue(rss.contains("Not found"));
-    }
+	@Test
+	public void testNonExistingCategory() throws Exception {
+		TagTreeResult tagTreeResult = new TagTreeResult(node);
+		action = new RssFeedAction("2");
+		when(dispatch.execute(tagTreeAction)).thenReturn(tagTreeResult);
+		String rss = handler.execute(action, null).get();
+		assertTrue(rss.contains("Not found"));
+	}
 }

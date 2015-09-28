@@ -28,41 +28,38 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import net.customware.gwt.dispatch.shared.Result;
 
-
 @GwtCompatible
 public class FullsizeImageResult implements Result {
-    private String message;
+	private String message;
 
-    public FullsizeImageResult() {
-    }
+	public FullsizeImageResult() {
+	}
 
-    public FullsizeImageResult(String message) {
-        this.message = message;
-    }
+	public FullsizeImageResult(String message) {
+		this.message = message;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof FullsizeImageResult) {
-            FullsizeImageResult fullsizeImageResult = (FullsizeImageResult) obj;
-            return Objects.equal(this.message, fullsizeImageResult.message);
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof FullsizeImageResult) {
+			FullsizeImageResult fullsizeImageResult = (FullsizeImageResult) obj;
+			return Objects.equal(this.message, fullsizeImageResult.message);
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(message);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(message);
+	}
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("message", message)
-                .toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("message", message).toString();
+	}
 }

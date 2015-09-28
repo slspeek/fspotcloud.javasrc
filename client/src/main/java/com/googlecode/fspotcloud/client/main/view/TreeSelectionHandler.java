@@ -37,60 +37,59 @@ import com.googlecode.fspotcloud.shared.main.TagNode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class TreeSelectionHandler implements ITreeSelectionHandler {
-    private final Logger log = Logger.getLogger(TreeSelectionHandler.class.getName());
-    private SingleSelectionModelExt selectionModel;
-    private final Navigator navigator;
-    private final EventBus eventBus;
-    private final NavigationActions navigationActions;
-    private boolean ignoreNext = false;
+	private final Logger log = Logger.getLogger(TreeSelectionHandler.class
+			.getName());
+	private SingleSelectionModelExt selectionModel;
+	private final Navigator navigator;
+	private final EventBus eventBus;
+	private final NavigationActions navigationActions;
+	private boolean ignoreNext = false;
 
-    @Inject
-    public TreeSelectionHandler(Navigator navigator,
-                                EventBus eventBus,
-                                NavigationActions navigationActions) {
-        this.navigator = navigator;
-        this.eventBus = eventBus;
-        this.navigationActions = navigationActions;
-    }
+	@Inject
+	public TreeSelectionHandler(Navigator navigator, EventBus eventBus,
+			NavigationActions navigationActions) {
+		this.navigator = navigator;
+		this.eventBus = eventBus;
+		this.navigationActions = navigationActions;
+	}
 
-    @Override
-    public boolean isIgnoreNext() {
-        return ignoreNext;
-    }
+	@Override
+	public boolean isIgnoreNext() {
+		return ignoreNext;
+	}
 
-    @Override
-    public void setIgnoreNext(boolean ignoreNext) {
-        log.log(Level.FINE, "setting ignoreNext: " + ignoreNext);
-        this.ignoreNext = ignoreNext;
-    }
+	@Override
+	public void setIgnoreNext(boolean ignoreNext) {
+		log.log(Level.FINE, "setting ignoreNext: " + ignoreNext);
+		this.ignoreNext = ignoreNext;
+	}
 
+	public void setSelectionModel(SingleSelectionModelExt selectionModel) {
+		this.selectionModel = selectionModel;
+		selectionModel.addSelectionChangeHandler(this);
+	}
 
-    public void setSelectionModel(SingleSelectionModelExt selectionModel) {
-        this.selectionModel = selectionModel;
-        selectionModel.addSelectionChangeHandler(this);
-    }
+	@Override
+	public void onSelectionChange(SelectionChangeEvent event) {
+		log.log(Level.FINEST, "Selection event from tree" + selectionModel);
+		if (ignoreNext) {
+			log.log(Level.FINE, "Ignoring: " + event);
+			ignoreNext = false;
+			return;
+		} else {
+			TagNode node = selectionModel.getSelectedObject();
+			if (node != null) {
+				String tagId = node.getId();
+				goToPhoto(tagId, node.getCachedPhotoList());
+			} else {
+				eventBus.fireEvent(new KeyboardActionEvent(
+						navigationActions.all_photos.getId()));
+			}
+		}
+	}
 
-    @Override
-    public void onSelectionChange(SelectionChangeEvent event) {
-        log.log(Level.FINEST, "Selection event from tree" + selectionModel);
-        if (ignoreNext) {
-            log.log(Level.FINE, "Ignoring: " + event);
-            ignoreNext = false;
-            return;
-        } else {
-            TagNode node = selectionModel.getSelectedObject();
-            if (node != null) {
-                String tagId = node.getId();
-                goToPhoto(tagId, node.getCachedPhotoList());
-            } else {
-                eventBus.fireEvent(new KeyboardActionEvent(navigationActions.all_photos.getId()));
-            }
-        }
-    }
-
-    private void goToPhoto(String otherTagId, PhotoInfoStore store) {
-        navigator.goToTag(otherTagId, store);
-    }
+	private void goToPhoto(String otherTagId, PhotoInfoStore store) {
+		navigator.goToTag(otherTagId, store);
+	}
 }

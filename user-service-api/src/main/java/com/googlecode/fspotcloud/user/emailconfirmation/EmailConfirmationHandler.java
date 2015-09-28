@@ -33,28 +33,30 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+public class EmailConfirmationHandler
+		extends
+			SimpleActionHandler<EmailConfirmationAction, VoidResult> {
+	private final UserDao userDao;
 
-public class EmailConfirmationHandler extends SimpleActionHandler<EmailConfirmationAction, VoidResult> {
-    private final UserDao userDao;
+	@Inject
+	public EmailConfirmationHandler(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
-    @Inject
-    public EmailConfirmationHandler(UserDao userDao) {
-        this.userDao = userDao;
-    }
+	@Override
+	public VoidResult execute(EmailConfirmationAction action,
+			ExecutionContext context) throws DispatchException {
+		String secret = action.getSecret();
+		String email = action.getEmail();
+		User user = userDao.find(email);
+		final String storedSecret = user.emailVerificationSecret();
+		if (secret.equals(storedSecret)) {
+			user.setEnabled(true);
+			userDao.save(user);
 
-    @Override
-    public VoidResult execute(EmailConfirmationAction action, ExecutionContext context) throws DispatchException {
-        String secret = action.getSecret();
-        String email = action.getEmail();
-        User user = userDao.find(email);
-        final String storedSecret = user.emailVerificationSecret();
-        if (secret.equals(storedSecret)) {
-            user.setEnabled(true);
-            userDao.save(user);
-
-        } else {
-            throw new RuntimeException("Verifaction failed");
-        }
-        return new VoidResult();
-    }
+		} else {
+			throw new RuntimeException("Verifaction failed");
+		}
+		return new VoidResult();
+	}
 }

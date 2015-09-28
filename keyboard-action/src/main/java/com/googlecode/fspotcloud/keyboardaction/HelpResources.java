@@ -28,64 +28,61 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
-
 public interface HelpResources extends ClientBundle {
 
-    @Source("help.css")
-    Style style();
+	@Source("help.css")
+	Style style();
 
-    @Source("images/Help.png")
-    ImageResource helpIcon();
+	@Source("images/Help.png")
+	ImageResource helpIcon();
 
-    public interface Style extends CssResource {
-        String demoPopup();
+	public interface Style extends CssResource {
+		String demoPopup();
 
+		String helpTitleRow();
 
-        String helpTitleRow();
+		String helpKey();
 
-        String helpKey();
+		String helpKeys();
 
-        String helpKeys();
+		String helpBody();
 
-        String helpBody();
+		String helpLeftBody();
 
-        String helpLeftBody();
+		String helpRightBody();
 
-        String helpRightBody();
+		String helpBigBody();
 
-        String helpBigBody();
+		String helpClose();
 
-        String helpClose();
+		String helpPopup();
 
-        String helpPopup();
+		String helpOptionalContent();
 
-        String helpOptionalContent();
+		String helpSeparator();
 
-        String helpSeparator();
+		String helpTitle();
 
-        String helpTitle();
+		String helpRow();
 
-        String helpRow();
+		String helpDescription();
 
-        String helpDescription();
+		String helpCategory();
 
-        String helpCategory();
+		String helpCategoryTitle();
 
-        String helpCategoryTitle();
+		String helpName();
 
-        String helpName();
+		String helpActionIcon();
 
+		String shortcutsPopup();
 
-        String helpActionIcon();
+		String shortcutsBody();
 
-        String shortcutsPopup();
+		String keyPressPopup();
 
-        String shortcutsBody();
+		String keyPressBody();
 
-        String keyPressPopup();
-
-        String keyPressBody();
-
-        String notFoundBody();
-    }
+		String notFoundBody();
+	}
 }

@@ -36,37 +36,37 @@ import com.googlecode.fspotcloud.client.place.NavigationFlagsHelper;
 
 import java.util.logging.Logger;
 
-
 public class TagActivityFactoryImpl implements TagActivityFactory {
-    private final Logger log = Logger.getLogger(TagActivityFactoryImpl.class.getName());
-    private final TagViewImpl tagView;
-    private final TreePresenter treePresenter;
-    private final ImageRasterPresenterFactory rasterFactory;
-    private final IScheduler scheduler;
-    private final NavigationFlagsHelper navigationFlagsHelper;
+	private final Logger log = Logger.getLogger(TagActivityFactoryImpl.class
+			.getName());
+	private final TagViewImpl tagView;
+	private final TreePresenter treePresenter;
+	private final ImageRasterPresenterFactory rasterFactory;
+	private final IScheduler scheduler;
+	private final NavigationFlagsHelper navigationFlagsHelper;
 
-    @Inject
-    public TagActivityFactoryImpl(TagView tagView,
-                                  @BasicTreeView TreePresenter treePresenter,
-                                  ImageRasterPresenterFactory rasterFactory,
-                                  IScheduler scheduler,
-                                  NavigationFlagsHelper navigationFlagsHelper) {
-        super();
-        this.scheduler = scheduler;
-        this.navigationFlagsHelper = navigationFlagsHelper;
-        this.tagView = (TagViewImpl) tagView;
-        this.treePresenter = treePresenter;
-        this.rasterFactory = rasterFactory;
-        this.treePresenter.init();
-    }
+	@Inject
+	public TagActivityFactoryImpl(TagView tagView,
+			@BasicTreeView TreePresenter treePresenter,
+			ImageRasterPresenterFactory rasterFactory, IScheduler scheduler,
+			NavigationFlagsHelper navigationFlagsHelper) {
+		super();
+		this.scheduler = scheduler;
+		this.navigationFlagsHelper = navigationFlagsHelper;
+		this.tagView = (TagViewImpl) tagView;
+		this.treePresenter = treePresenter;
+		this.rasterFactory = rasterFactory;
+		this.treePresenter.init();
+	}
 
-    @Override
-    public TagPresenter get(BasePlace place) {
-        final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory.get(place,
-                tagView.getImageRasterView());
-        TagPresenter presenter = new TagActivity(tagView, rasterPresenter, scheduler, place, navigationFlagsHelper);
-        treePresenter.setPlace(place);
-        return presenter;
-    }
+	@Override
+	public TagPresenter get(BasePlace place) {
+		final ImageRasterView.ImageRasterPresenter rasterPresenter = rasterFactory
+				.get(place, tagView.getImageRasterView());
+		TagPresenter presenter = new TagActivity(tagView, rasterPresenter,
+				scheduler, place, navigationFlagsHelper);
+		treePresenter.setPlace(place);
+		return presenter;
+	}
 
 }

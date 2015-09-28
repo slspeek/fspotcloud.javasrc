@@ -27,22 +27,21 @@ package com.googlecode.fspotcloud.client.main.ui;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-
 public interface UserPagesResources extends ClientBundle {
-    @Source("user-pages.css")
-    Style style();
+	@Source("user-pages.css")
+	Style style();
 
-    public interface Style extends CssResource {
-        String textBox();
+	public interface Style extends CssResource {
+		String textBox();
 
-        String anchor();
+		String anchor();
 
-        String label();
+		String label();
 
-        String statusLabel();
+		String statusLabel();
 
-        String titleLabel();
+		String titleLabel();
 
-        String userPage();
-    }
+		String userPage();
+	}
 }

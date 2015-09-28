@@ -32,72 +32,71 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.SortedSet;
 
-
 @GwtCompatible
 public class PhotoInfoStore implements Serializable {
-    private static final long serialVersionUID = 4509115035183737104L;
-    private List<PhotoInfo> store;
+	private static final long serialVersionUID = 4509115035183737104L;
+	private List<PhotoInfo> store;
 
-    public PhotoInfoStore(List<PhotoInfo> data) {
-        this.store = data;
-    }
+	public PhotoInfoStore(List<PhotoInfo> data) {
+		this.store = data;
+	}
 
-    public PhotoInfoStore(SortedSet<PhotoInfo> set) {
-        this(new ArrayList<PhotoInfo>(set));
-    }
+	public PhotoInfoStore(SortedSet<PhotoInfo> set) {
+		this(new ArrayList<PhotoInfo>(set));
+	}
 
-    @SuppressWarnings("unused")
-    private PhotoInfoStore() {
-    }
+	@SuppressWarnings("unused")
+	private PhotoInfoStore() {
+	}
 
-    public PhotoInfo getInfo(String id) {
-        for (PhotoInfo pi : store) {
-            if (id.equals(pi.getId())) {
-                return pi;
-            }
-        }
+	public PhotoInfo getInfo(String id) {
+		for (PhotoInfo pi : store) {
+			if (id.equals(pi.getId())) {
+				return pi;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public PhotoInfo get(int index) {
-        return store.get(index);
-    }
+	public PhotoInfo get(int index) {
+		return store.get(index);
+	}
 
-    public int size() {
-        return store.size();
-    }
+	public int size() {
+		return store.size();
+	}
 
-    public int indexOf(String id) {
-        int index = -1;
-        ListIterator<PhotoInfo> it = store.listIterator();
+	public int indexOf(String id) {
+		int index = -1;
+		ListIterator<PhotoInfo> it = store.listIterator();
 
-        while (it.hasNext()) {
-            PhotoInfo pi = it.next();
+		while (it.hasNext()) {
+			PhotoInfo pi = it.next();
 
-            if (id.equals(pi.getId())) {
-                index = it.previousIndex();
+			if (id.equals(pi.getId())) {
+				index = it.previousIndex();
 
-                break;
-            }
-        }
+				break;
+			}
+		}
 
-        return index;
-    }
+		return index;
+	}
 
-    public boolean isEmpty() {
-        return store.isEmpty();
-    }
+	public boolean isEmpty() {
+		return store.isEmpty();
+	}
 
-    public PhotoInfo last() {
-        return store.get(lastIndex());
-    }
+	public PhotoInfo last() {
+		return store.get(lastIndex());
+	}
 
-    public int lastIndex() {
-        return store.size() - 1;
-    }
+	public int lastIndex() {
+		return store.size() - 1;
+	}
 
-    public String toString() {
-        return store.toString();
-    }
+	public String toString() {
+		return store.toString();
+	}
 }

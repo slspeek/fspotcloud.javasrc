@@ -31,32 +31,33 @@ import net.customware.gwt.dispatch.shared.Result;
 import java.io.Serializable;
 import java.util.List;
 
+public class TagUpdateInstructionsResult extends BusinessBase
+		implements
+			Result,
+			Serializable {
+	private static final long serialVersionUID = -4987610701630937829L;
+	@BusinessKey
+	private final List<PhotoUpdate> toBoUpdated;
+	@BusinessKey
+	private final List<PhotoRemovedFromTag> toBoRemovedFromTag;
 
-public class TagUpdateInstructionsResult extends BusinessBase implements Result,
-        Serializable {
-    private static final long serialVersionUID = -4987610701630937829L;
-    @BusinessKey
-    private final List<PhotoUpdate> toBoUpdated;
-    @BusinessKey
-    private final List<PhotoRemovedFromTag> toBoRemovedFromTag;
+	public TagUpdateInstructionsResult(List<PhotoUpdate> toBoUpdated,
+			List<PhotoRemovedFromTag> toBoRemovedFromTag) {
+		super();
+		this.toBoUpdated = toBoUpdated;
+		this.toBoRemovedFromTag = toBoRemovedFromTag;
+	}
 
-    public TagUpdateInstructionsResult(List<PhotoUpdate> toBoUpdated,
-                                       List<PhotoRemovedFromTag> toBoRemovedFromTag) {
-        super();
-        this.toBoUpdated = toBoUpdated;
-        this.toBoRemovedFromTag = toBoRemovedFromTag;
-    }
+	public List<PhotoRemovedFromTag> getToBoRemovedFromTag() {
+		return toBoRemovedFromTag;
+	}
 
-    public List<PhotoRemovedFromTag> getToBoRemovedFromTag() {
-        return toBoRemovedFromTag;
-    }
+	public List<PhotoUpdate> getToBoUpdated() {
+		return toBoUpdated;
+	}
 
-    public List<PhotoUpdate> getToBoUpdated() {
-        return toBoUpdated;
-    }
-
-    public String toString() {
-        return Objects.toStringHelper(this).add("deletes", toBoRemovedFromTag)
-                .add("updates", toBoUpdated).toString();
-    }
+	public String toString() {
+		return Objects.toStringHelper(this).add("deletes", toBoRemovedFromTag)
+				.add("updates", toBoUpdated).toString();
+	}
 }

@@ -8,9 +8,9 @@ import static org.junit.Assert.assertNotNull;
 
 public class TaskModuleTest {
 
-    @Test
-    public void testInjector() throws Exception {
-        Injector injector = Guice.createInjector(new TaskModule());
-        assertNotNull(injector);
-    }
+	@Test
+	public void testInjector() throws Exception {
+		Injector injector = Guice.createInjector(new TaskModule());
+		assertNotNull(injector);
+	}
 }

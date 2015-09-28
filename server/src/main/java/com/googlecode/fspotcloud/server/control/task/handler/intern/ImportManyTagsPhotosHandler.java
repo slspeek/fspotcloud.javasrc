@@ -34,22 +34,23 @@ import javax.inject.Named;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+public class ImportManyTagsPhotosHandler
+		extends
+			AbstractBatchActionHandler<ImportManyTagsPhotosAction, String> {
+	private final Logger log = Logger
+			.getLogger(ImportManyTagsPhotosHandler.class.getName());
+	private final TaskQueueDispatch dispatchAsync;
 
-public class ImportManyTagsPhotosHandler extends AbstractBatchActionHandler<ImportManyTagsPhotosAction, String> {
-    private final Logger log = Logger.getLogger(ImportManyTagsPhotosHandler.class.getName());
-    private final TaskQueueDispatch dispatchAsync;
+	@Inject
+	public ImportManyTagsPhotosHandler(TaskQueueDispatch dispatchAsync,
+			@Named("maxTicks") int MAX_DATA_TICKS) {
+		super(dispatchAsync, MAX_DATA_TICKS);
+		this.dispatchAsync = dispatchAsync;
+	}
 
-    @Inject
-    public ImportManyTagsPhotosHandler(TaskQueueDispatch dispatchAsync,
-                                       @Named("maxTicks")
-                                       int MAX_DATA_TICKS) {
-        super(dispatchAsync, MAX_DATA_TICKS);
-        this.dispatchAsync = dispatchAsync;
-    }
-
-    @Override
-    public void doWork(AbstractBatchAction<String> action,
-                       Iterator<String> workLoad) {
-        dispatchAsync.execute(new UserImportsTagAction(workLoad.next()));
-    }
+	@Override
+	public void doWork(AbstractBatchAction<String> action,
+			Iterator<String> workLoad) {
+		dispatchAsync.execute(new UserImportsTagAction(workLoad.next()));
+	}
 }

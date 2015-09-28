@@ -40,32 +40,33 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class RemoveTagsFromPeerHandler extends AbstractBatchActionHandler<RemoveTagsDeletedFromPeerAction, TagRemovedFromPeer> {
-    private final TaskQueueDispatch dispatchAsync;
-    private TagDao tagManager;
+public class RemoveTagsFromPeerHandler
+		extends
+			AbstractBatchActionHandler<RemoveTagsDeletedFromPeerAction, TagRemovedFromPeer> {
+	private final TaskQueueDispatch dispatchAsync;
+	private TagDao tagManager;
 
-    @Inject
-    public RemoveTagsFromPeerHandler(@Named("maxDelete")
-                                     int maxDeleteTicks, TaskQueueDispatch dispatchAsync, TagDao tagManager) {
-        super(dispatchAsync, maxDeleteTicks);
-        this.dispatchAsync = dispatchAsync;
-        this.tagManager = tagManager;
-    }
+	@Inject
+	public RemoveTagsFromPeerHandler(@Named("maxDelete") int maxDeleteTicks,
+			TaskQueueDispatch dispatchAsync, TagDao tagManager) {
+		super(dispatchAsync, maxDeleteTicks);
+		this.dispatchAsync = dispatchAsync;
+		this.tagManager = tagManager;
+	}
 
-    @Override
-    public void doWork(AbstractBatchAction<TagRemovedFromPeer> action,
-                       Iterator<TagRemovedFromPeer> workLoad) {
-        TagRemovedFromPeer tagInfo = workLoad.next();
-        Tag tag = tagManager.find(tagInfo.getTagId());
-        List<String> idList = newArrayList();
+	@Override
+	public void doWork(AbstractBatchAction<TagRemovedFromPeer> action,
+			Iterator<TagRemovedFromPeer> workLoad) {
+		TagRemovedFromPeer tagInfo = workLoad.next();
+		Tag tag = tagManager.find(tagInfo.getTagId());
+		List<String> idList = newArrayList();
 
-        for (PhotoInfo info : tag.getCachedPhotoList()) {
-            idList.add(info.getId());
-        }
+		for (PhotoInfo info : tag.getCachedPhotoList()) {
+			idList.add(info.getId());
+		}
 
-        dispatchAsync.execute(new RemovePhotosFromTagAction(
-                tagInfo.getTagId(),
-                idList));
-        tagManager.deleteByKey(tagInfo.getTagId());
-    }
+		dispatchAsync.execute(new RemovePhotosFromTagAction(tagInfo.getTagId(),
+				idList));
+		tagManager.deleteByKey(tagInfo.getTagId());
+	}
 }

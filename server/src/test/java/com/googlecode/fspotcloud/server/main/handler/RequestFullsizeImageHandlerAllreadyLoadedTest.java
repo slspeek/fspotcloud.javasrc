@@ -25,41 +25,43 @@ import static org.mockito.Mockito.when;
 @RunWith(JukitoRunner.class)
 public class RequestFullsizeImageHandlerAllreadyLoadedTest {
 
+	public static final String ID = "1";
+	@Inject
+	private RequestFullsizeImageHandler handler;
 
-    public static final String ID = "1";
-    @Inject
-    private RequestFullsizeImageHandler handler;
+	@Inject
+	private ControllerDispatchAsync controllerAsyc;
+	@Inject
+	private PhotoDao photoDao;
+	@Inject
+	private ImageHelper imageHelper;
+	@Inject
+	private UserService userService;
+	@Inject
+	private IMail mailer;
+	@Inject
+	private IUserGroupHelper userGroupHelper;
 
-    @Inject
-    private ControllerDispatchAsync controllerAsyc;
-    @Inject
-    private PhotoDao photoDao;
-    @Inject
-    private ImageHelper imageHelper;
-    @Inject
-    private UserService userService;
-    @Inject
-    private IMail mailer;
-    @Inject
-    private IUserGroupHelper userGroupHelper;
+	private byte[] imageBlob = new byte[0];
+	private Photo photo = new PhotoEntity();
+	private RequestFullsizeImageAction action = new RequestFullsizeImageAction(
+			ID);
 
-    private byte[] imageBlob = new byte[0];
-    private Photo photo = new PhotoEntity();
-    private RequestFullsizeImageAction action = new RequestFullsizeImageAction(ID);
+	@Before
+	public void setUp() throws Exception {
+		photo.setId(ID);
+		when(photoDao.find(ID)).thenReturn(photo);
+		when(userService.isUserLoggedIn()).thenReturn(true);
+		when(imageHelper.getImage(photo, ImageHelper.Type.FULLSIZE))
+				.thenReturn(imageBlob);
+		Set<String> empty = newHashSet();
+		when(userGroupHelper.containsOneOf(empty)).thenReturn(true);
+	}
 
-    @Before
-    public void setUp() throws Exception {
-        photo.setId(ID);
-        when(photoDao.find(ID)).thenReturn(photo);
-        when(userService.isUserLoggedIn()).thenReturn(true);
-        when(imageHelper.getImage(photo, ImageHelper.Type.FULLSIZE)).thenReturn(imageBlob);
-        Set<String> empty = newHashSet();
-        when(userGroupHelper.containsOneOf(empty)).thenReturn(true);
-    }
-
-    @Test
-    public void testExecute() throws Exception {
-        FullsizeImageResult result = handler.execute(action, null);
-        assertEquals(RequestFullsizeImageHandler.SUCCESSFULLY_MAILED, result.getMessage());
-    }
+	@Test
+	public void testExecute() throws Exception {
+		FullsizeImageResult result = handler.execute(action, null);
+		assertEquals(RequestFullsizeImageHandler.SUCCESSFULLY_MAILED,
+				result.getMessage());
+	}
 }

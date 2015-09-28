@@ -40,40 +40,42 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class GetMyUserGroupsHandler extends SimpleActionHandler<GetMyUserGroupsAction, GetMyUserGroupsResult> {
-    private final UserGroupDao userGroupDao;
-    private final UserService userService;
+public class GetMyUserGroupsHandler
+		extends
+			SimpleActionHandler<GetMyUserGroupsAction, GetMyUserGroupsResult> {
+	private final UserGroupDao userGroupDao;
+	private final UserService userService;
 
-    @Inject
-    public GetMyUserGroupsHandler(UserGroupDao userGroupDao,
-                                  UserService userService) {
-        this.userGroupDao = userGroupDao;
-        this.userService = userService;
-    }
+	@Inject
+	public GetMyUserGroupsHandler(UserGroupDao userGroupDao,
+			UserService userService) {
+		this.userGroupDao = userGroupDao;
+		this.userService = userService;
+	}
 
-    @Override
-    public GetMyUserGroupsResult execute(GetMyUserGroupsAction action,
-                                         ExecutionContext context) throws DispatchException {
-        if (userService.isUserLoggedIn()) {
-            String userName = userService.getEmail();
-            List<UserGroup> result = userGroupDao.findAllWhere(1000,
-                    "owner='" + userName + "'");
-            ArrayList<UserGroupInfo> data = newArrayList();
+	@Override
+	public GetMyUserGroupsResult execute(GetMyUserGroupsAction action,
+			ExecutionContext context) throws DispatchException {
+		if (userService.isUserLoggedIn()) {
+			String userName = userService.getEmail();
+			List<UserGroup> result = userGroupDao.findAllWhere(1000, "owner='"
+					+ userName + "'");
+			ArrayList<UserGroupInfo> data = newArrayList();
 
-            for (UserGroup group : result) {
-                data.add(get(group));
-            }
+			for (UserGroup group : result) {
+				data.add(get(group));
+			}
 
-            return new GetMyUserGroupsResult(data);
-        } else {
-            return new GetMyUserGroupsResult();
-        }
-    }
+			return new GetMyUserGroupsResult(data);
+		} else {
+			return new GetMyUserGroupsResult();
+		}
+	}
 
-    private UserGroupInfo get(UserGroup group) {
-        UserGroupInfo info = new UserGroupInfo(group.getId(), group.getName(),
-                group.getDescription(), group.isPublic());
+	private UserGroupInfo get(UserGroup group) {
+		UserGroupInfo info = new UserGroupInfo(group.getId(), group.getName(),
+				group.getDescription(), group.isPublic());
 
-        return info;
-    }
+		return info;
+	}
 }

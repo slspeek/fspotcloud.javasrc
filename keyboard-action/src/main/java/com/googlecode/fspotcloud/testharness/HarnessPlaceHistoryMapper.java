@@ -27,8 +27,6 @@ package com.googlecode.fspotcloud.testharness;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
 
-
-@WithTokenizers({HomePlace.Tokenizer.class,
-        OutPlace.Tokenizer.class})
+@WithTokenizers({HomePlace.Tokenizer.class, OutPlace.Tokenizer.class})
 public interface HarnessPlaceHistoryMapper extends PlaceHistoryMapper {
 }
