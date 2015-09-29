@@ -23,4 +23,7 @@ dependencies {
     testCompile libs.junit
     testCompile libs.jukito
     testCompile libs.guava
+    
+    //For cobertura runtime only
+    testRuntime libs.slf4j_log4j12
 }

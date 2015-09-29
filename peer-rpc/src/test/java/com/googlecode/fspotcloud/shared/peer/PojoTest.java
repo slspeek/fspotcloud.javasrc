@@ -74,9 +74,6 @@ public class PojoTest {
 
 		pojoValidator = new PojoValidator();
 		// Create Rules to validate structure for POJO_PACKAGE
-		pojoValidator.addRule(new NoPublicFieldsRule());
-		//pojoValidator.addRule(new NoPrimitivesRule());
-		//pojoValidator.addRule(new NoStaticExceptFinalRule());
 		pojoValidator.addRule(new GetterMustExistRule());
 		//pojoValidator.addRule(new SetterMustExistRule());
 		pojoValidator.addRule(new NoNestedClassRule());

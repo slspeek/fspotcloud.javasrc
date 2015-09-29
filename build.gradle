@@ -142,6 +142,8 @@ subprojects {
  		  rootProject.subprojects.each {
      	  		coverageDirs << file("${it.name}/build/classes/main")
    			}
+   			
+   			//coberturaVersion = '2.0.3'
 		}
     //}
 
@@ -175,47 +177,46 @@ task unittests(dependsOn: [
 ]) << {
     println "Done unit testing."
 }
-if ("${cobertura}" == "true") {
-    task unittestcoverage(dependsOn: [
-            ':server:cobertura',
-            ':peer:cobertura',
-            ':rpc:cobertura',
-            ':client:cobertura',
-            ':peer-rpc:cobertura',
-            ':model-api:cobertura',
-            ':model-jpa:cobertura',
-            //':model-jpa-gae:cobertura',
-            ':user-service-api:cobertura',
-            //':user-service-gae:cobertura',
-            ':user-service-openid:cobertura',
-            ':keyboard-action:cobertura'
+task unittestcoverage(dependsOn: [
+   ':server:cobertura',
+   ':peer:cobertura',
+   ':rpc:cobertura',
+   ':client:cobertura',
+   ':peer-rpc:cobertura',
+   ':model-api:cobertura',
+   ':model-jpa:cobertura',
+   //':model-jpa-gae:cobertura',
+   ':user-service-api:cobertura',
+   //':user-service-gae:cobertura',
+   ':user-service-openid:cobertura',
+   ':keyboard-action:cobertura'
     ]) << {
         println "Done unit test coverage."
-    }
-
-    task clientUnittestCoverage(dependsOn: [
-            ':client:cobertura'
-    ]) << {
-        println "Done client unit test coverage."
-    }
-
-    task serverUnittestCoverage(dependsOn: [
-            ':server:cobertura'
-    ]) << {
-        println "Done server unit test coverage."
-    }
-
-    task keyboardactionUnittestCoverage(dependsOn: [
-            ':keyboard-action:cobertura'
-    ]) << {
-        println "Done keyboard-action unit test coverage."
-    }
-
-    task rpcsUnittestCoverage(dependsOn: [
-            ':rpc:cobertura',
-            ':peer-rpc:cobertura'
-    ]) << {
-        println "Done rpc structs unit test coverage."
-    }
 }
+
+task clientUnittestCoverage(dependsOn: [
+        ':client:cobertura'
+]) << {
+    println "Done client unit test coverage."
+}
+
+task serverUnittestCoverage(dependsOn: [
+        ':server:cobertura'
+]) << {
+    println "Done server unit test coverage."
+}
+
+task keyboardactionUnittestCoverage(dependsOn: [
+        ':keyboard-action:cobertura'
+]) << {
+    println "Done keyboard-action unit test coverage."
+}
+
+task rpcsUnittestCoverage(dependsOn: [
+        ':rpc:cobertura',
+        ':peer-rpc:cobertura'
+]) << {
+    println "Done rpc structs unit test coverage."
+}
+
 

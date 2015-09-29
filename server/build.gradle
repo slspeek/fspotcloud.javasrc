@@ -38,8 +38,11 @@ dependencies {
     testCompile libs.guava
     testCompile libs.jukito
     testCompile libs.http_unit
-    cobTuRA group: 'net.sourceforge.cobertura', name: 'cobertura', version: '1.9.4.1'
-    testRuntime group: 'net.sourceforge.cobertura', name: 'cobertura', version: '1.9.4.1'
+    cobTuRA group: 'net.sourceforge.cobertura', name: 'cobertura', version: '2.1.1'
+    testRuntime group: 'net.sourceforge.cobertura', name: 'cobertura', version: '2.1.1'
+    
+    //For cobertura runtime only
+    testRuntime libs.slf4j_log4j12
 
 }
 
