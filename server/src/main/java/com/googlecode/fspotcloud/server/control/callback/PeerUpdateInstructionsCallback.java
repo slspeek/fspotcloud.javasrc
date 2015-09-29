@@ -24,15 +24,15 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RemoveTagsDeletedFromPeerAction;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.TagUpdateAction;
 import com.googlecode.fspotcloud.shared.peer.PeerUpdateInstructionsResult;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PeerUpdateInstructionsCallback
 		implements

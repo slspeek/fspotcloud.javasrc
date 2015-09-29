@@ -1,5 +1,16 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static junit.framework.Assert.assertNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import javax.inject.Inject;
+
+import org.jukito.JukitoRunner;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import com.google.inject.Provider;
 import com.googlecode.fspotcloud.model.jpa.user.UserEntity;
 import com.googlecode.fspotcloud.server.mail.IMail;
@@ -9,16 +20,6 @@ import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
 import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailResult;
 import com.googlecode.fspotcloud.user.emailconfirmation.MailGenerator;
 import com.googlecode.fspotcloud.user.emailconfirmation.SecretGenerator;
-import org.jukito.JukitoRunner;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
-
-import static junit.framework.Assert.assertNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class SendConfirmationEmailHandlerTest {

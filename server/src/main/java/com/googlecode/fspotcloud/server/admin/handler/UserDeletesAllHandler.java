@@ -24,6 +24,13 @@
 
 package com.googlecode.fspotcloud.server.admin.handler;
 
+import javax.inject.Inject;
+
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.ActionException;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllPhotosAction;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllTagsAction;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
@@ -31,34 +38,28 @@ import com.googlecode.fspotcloud.shared.dashboard.UserDeletesAllAction;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.user.IAdminPermission;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
-import javax.inject.Inject;
 
 public class UserDeletesAllHandler
 		extends
 			SimpleActionHandler<UserDeletesAllAction, VoidResult> {
 	private final TaskQueueDispatch dispatchAsync;
-	private final IAdminPermission IAdminPermission;
+	private final IAdminPermission adminPermission;
 	private final PeerDatabaseDao peerDatabaseManager;
 
 	@Inject
 	public UserDeletesAllHandler(TaskQueueDispatch dispatchAsync,
-			IAdminPermission IAdminPermission,
+			IAdminPermission adminPermission,
 			PeerDatabaseDao peerDatabaseManager) {
 		super();
 		this.dispatchAsync = dispatchAsync;
-		this.IAdminPermission = IAdminPermission;
+		this.adminPermission = adminPermission;
 		this.peerDatabaseManager = peerDatabaseManager;
 	}
 
 	@Override
 	public VoidResult execute(UserDeletesAllAction action,
 			ExecutionContext context) throws DispatchException {
-		IAdminPermission.checkAdminPermission();
+		adminPermission.checkAdminPermission();
 
 		try {
 			dispatchAsync.execute(new DeleteAllTagsAction());

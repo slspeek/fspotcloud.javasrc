@@ -28,15 +28,16 @@
  */
 package com.googlecode.fspotcloud.server.main;
 
-import com.googlecode.fspotcloud.server.inject.PropertiesFile;
+import static org.junit.Assert.assertNull;
+
+import javax.inject.Inject;
+
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-
-import static org.junit.Assert.assertNull;
+import com.googlecode.fspotcloud.server.inject.PropertiesFile;
 
 /**
  * PropertiesLoader failure unit test

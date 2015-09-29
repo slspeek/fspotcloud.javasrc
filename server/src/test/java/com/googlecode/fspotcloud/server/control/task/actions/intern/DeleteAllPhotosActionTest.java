@@ -1,8 +1,8 @@
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class DeleteAllPhotosActionTest {
 	DeleteAllPhotosAction action1 = new DeleteAllPhotosAction();

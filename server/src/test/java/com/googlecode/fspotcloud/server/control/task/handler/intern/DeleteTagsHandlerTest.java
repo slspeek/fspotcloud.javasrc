@@ -24,12 +24,12 @@
 
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
-import com.google.inject.Inject;
-import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllTagsAction;
-import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
-import com.googlecode.fspotcloud.server.model.api.TagDao;
-import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import net.customware.gwt.dispatch.shared.DispatchException;
+
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +37,11 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllTagsAction;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
+import com.googlecode.fspotcloud.server.model.api.TagDao;
+import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
 
 @RunWith(JukitoRunner.class)
 public class DeleteTagsHandlerTest {

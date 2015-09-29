@@ -24,9 +24,9 @@
 
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
-import com.googlecode.fspotcloud.shared.peer.TagRemovedFromPeer;
-
 import java.util.List;
+
+import com.googlecode.fspotcloud.shared.peer.TagRemovedFromPeer;
 
 public class RemoveTagsDeletedFromPeerAction
 		extends

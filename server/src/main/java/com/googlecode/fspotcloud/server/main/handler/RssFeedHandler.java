@@ -24,19 +24,21 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
-import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
-import com.googlecode.fspotcloud.server.model.tag.FeedBuilder;
-import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.TagTreeResult;
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
+
 import net.customware.gwt.dispatch.server.Dispatch;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 import net.customware.gwt.dispatch.shared.general.StringResult;
 
-import javax.inject.Inject;
-import java.util.logging.Logger;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
+import com.googlecode.fspotcloud.server.model.tag.FeedBuilder;
+import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.TagTreeResult;
 
 public class RssFeedHandler
 		extends

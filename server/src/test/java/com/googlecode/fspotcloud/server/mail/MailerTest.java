@@ -24,13 +24,14 @@
 
 package com.googlecode.fspotcloud.server.mail;
 
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
+
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
-import java.util.logging.Logger;
 
 @RunWith(JukitoRunner.class)
 public class MailerTest {

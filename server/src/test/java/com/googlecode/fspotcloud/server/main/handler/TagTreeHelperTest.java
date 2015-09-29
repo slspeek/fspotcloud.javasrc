@@ -1,11 +1,12 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import org.junit.Test;
-
 import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.googlecode.fspotcloud.shared.main.TagNode;
 
 public class TagTreeHelperTest {
 

@@ -13,6 +13,8 @@ dependencies {
     testCompile libs.junit
     testCompile libs.commons_lang
     testCompile libs.openpojo
+    
+    testRuntime libs.slf4j_log4j12
 }
 
 task sourceCodeJar(type: Jar, dependsOn: classes) {

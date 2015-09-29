@@ -24,6 +24,12 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
+import java.util.Set;
+
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.model.api.User;
 import com.googlecode.fspotcloud.server.model.api.UserDao;
@@ -32,11 +38,6 @@ import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.main.GrantUserAction;
 import com.googlecode.fspotcloud.user.IAdminPermission;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
-import java.util.Set;
 
 public class GrantUserHandler
 		extends

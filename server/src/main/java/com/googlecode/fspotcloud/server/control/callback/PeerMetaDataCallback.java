@@ -24,6 +24,12 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
@@ -34,12 +40,6 @@ import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.peer.GetPeerUpdateInstructionsAction;
 import com.googlecode.fspotcloud.shared.peer.PeerMetaDataResult;
 import com.googlecode.fspotcloud.shared.peer.TagData;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 public class PeerMetaDataCallback
 		implements

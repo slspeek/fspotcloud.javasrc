@@ -24,6 +24,11 @@
 
 package com.googlecode.fspotcloud.server.admin.handler;
 
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.ActionException;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.model.api.Commands;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
@@ -32,10 +37,6 @@ import com.googlecode.fspotcloud.server.util.DigestTool;
 import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataAction;
 import com.googlecode.fspotcloud.shared.dashboard.GetMetaDataResult;
 import com.googlecode.fspotcloud.user.IAdminPermission;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
 
 public class GetMetaDataHandler
 		extends

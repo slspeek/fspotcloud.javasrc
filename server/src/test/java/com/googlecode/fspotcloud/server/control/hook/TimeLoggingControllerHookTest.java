@@ -28,19 +28,21 @@
  */
 package com.googlecode.fspotcloud.server.control.hook;
 
-import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
-import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
-import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Date;
+
+import javax.inject.Inject;
+
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-import java.util.Date;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.googlecode.fspotcloud.model.jpa.peerdatabase.PeerDatabaseEntity;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabase;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 
 /**
  * @author steven

@@ -24,9 +24,9 @@
 
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
-import com.googlecode.fspotcloud.shared.peer.TagUpdate;
-
 import java.util.List;
+
+import com.googlecode.fspotcloud.shared.peer.TagUpdate;
 
 public class TagUpdateAction extends AbstractBatchAction<TagUpdate> {
 	private static final long serialVersionUID = -5470374310534233053L;

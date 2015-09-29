@@ -24,6 +24,12 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
@@ -32,12 +38,6 @@ import com.googlecode.fspotcloud.server.control.task.actions.intern.RemovePhotos
 import com.googlecode.fspotcloud.shared.peer.PhotoRemovedFromTag;
 import com.googlecode.fspotcloud.shared.peer.TagUpdateInstructionsResult;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 public class TagUpdateInstructionsCallback
 		implements

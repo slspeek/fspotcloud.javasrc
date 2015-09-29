@@ -24,17 +24,18 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
-import com.googlecode.fspotcloud.server.model.api.User;
-import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
-import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
+import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+
+import javax.inject.Inject;
+
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
-import javax.inject.Inject;
-
-import static com.googlecode.fspotcloud.server.util.DigestTool.hash;
+import com.googlecode.fspotcloud.server.model.api.User;
+import com.googlecode.fspotcloud.server.model.api.UserDao;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 
 public class ResetPasswordHandler
 		extends

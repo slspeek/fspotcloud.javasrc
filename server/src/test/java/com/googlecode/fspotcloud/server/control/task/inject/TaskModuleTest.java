@@ -1,10 +1,11 @@
 package com.googlecode.fspotcloud.server.control.task.inject;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class TaskModuleTest {
 

@@ -1,19 +1,21 @@
 package com.googlecode.fspotcloud.server.model.tag;
 
-import com.google.inject.Inject;
-import com.googlecode.fspotcloud.shared.main.PhotoInfo;
-import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.user.inject.ServerAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.inject.Provider;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Text;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import javax.inject.Provider;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.shared.main.PhotoInfo;
+import com.googlecode.fspotcloud.shared.main.PhotoInfoStore;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.user.inject.ServerAddress;
 
 public class FeedBuilder {
 

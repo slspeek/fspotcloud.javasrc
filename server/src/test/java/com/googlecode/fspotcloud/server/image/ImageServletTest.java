@@ -24,9 +24,10 @@
 
 package com.googlecode.fspotcloud.server.image;
 
+import org.junit.Before;
+
 import com.meterware.servletunit.ServletRunner;
 import com.meterware.servletunit.ServletTestCase;
-import org.junit.Before;
 
 public class ImageServletTest extends ServletTestCase {
 	private byte[] THUMB = new byte[]{1, 2, 3};

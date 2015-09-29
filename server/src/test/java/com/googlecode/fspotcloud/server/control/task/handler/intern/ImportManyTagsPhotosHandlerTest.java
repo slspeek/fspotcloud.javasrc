@@ -28,23 +28,23 @@
  */
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
-import com.google.inject.name.Names;
-import com.googlecode.fspotcloud.server.control.task.actions.intern.ImportManyTagsPhotosAction;
-import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
-import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import javax.inject.Inject;
+
 import net.customware.gwt.dispatch.server.ExecutionContext;
+
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import com.google.inject.name.Names;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.ImportManyTagsPhotosAction;
+import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
+import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
 
 /**
  * @author steven
@@ -66,9 +66,7 @@ public class ImportManyTagsPhotosHandlerTest {
 		System.out.println("execute");
 
 		ExecutionContext context = null;
-		VoidResult expResult = new VoidResult();
-		VoidResult result = instance.execute(action, context);
-		assertEquals(expResult, result);
+		instance.execute(action, context);
 
 		verify(dispatchAsync).execute(new UserImportsTagAction("1"));
 		verify(dispatchAsync).execute(new UserImportsTagAction("2"));
@@ -79,7 +77,7 @@ public class ImportManyTagsPhotosHandlerTest {
 	public static class Module extends JukitoModule {
 		protected void configureTest() {
 			bind(Integer.class).annotatedWith(Names.named("maxTicks"))
-					.toInstance(new Integer(2));
+					.toInstance(Integer.valueOf(2));
 		}
 	}
 }

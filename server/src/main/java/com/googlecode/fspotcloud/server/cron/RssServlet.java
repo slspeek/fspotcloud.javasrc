@@ -24,18 +24,20 @@
 
 package com.googlecode.fspotcloud.server.cron;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
-import net.customware.gwt.dispatch.server.Dispatch;
-import net.customware.gwt.dispatch.shared.DispatchException;
-import net.customware.gwt.dispatch.shared.general.StringResult;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import net.customware.gwt.dispatch.server.Dispatch;
+import net.customware.gwt.dispatch.shared.DispatchException;
+import net.customware.gwt.dispatch.shared.general.StringResult;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
 
 @SuppressWarnings("serial")
 @Singleton

@@ -28,6 +28,22 @@
  */
 package com.googlecode.fspotcloud.server.control.callback;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+import net.customware.gwt.dispatch.shared.Action;
+
+import org.jukito.JukitoRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+
 import com.googlecode.fspotcloud.server.control.task.actions.intern.PhotoUpdateAction;
 import com.googlecode.fspotcloud.server.control.task.actions.intern.RemovePhotosFromTagAction;
 import com.googlecode.fspotcloud.shared.peer.GetPeerUpdateInstructionsAction;
@@ -35,20 +51,6 @@ import com.googlecode.fspotcloud.shared.peer.PhotoRemovedFromTag;
 import com.googlecode.fspotcloud.shared.peer.PhotoUpdate;
 import com.googlecode.fspotcloud.shared.peer.TagUpdateInstructionsResult;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
-import net.customware.gwt.dispatch.shared.Action;
-import org.jukito.JukitoRunner;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-
-import java.util.List;
-import java.util.logging.Logger;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * DOCUMENT ME!

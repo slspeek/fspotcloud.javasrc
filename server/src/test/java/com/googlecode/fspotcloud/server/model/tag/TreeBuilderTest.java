@@ -24,15 +24,15 @@
 
 package com.googlecode.fspotcloud.server.model.tag;
 
-import com.google.common.collect.ImmutableList;
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.common.collect.ImmutableList;
+import com.googlecode.fspotcloud.shared.main.TagNode;
 
 public class TreeBuilderTest {
 	List<TagNode> nodes;

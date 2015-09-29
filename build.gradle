@@ -52,7 +52,7 @@ project.ext {
                 hibernate_all: ["org.hibernate:hibernate-core:${hibernate_version}",
                         "javassist:javassist:3.12.0.GA",
                         "org.hibernate:hibernate-validator-annotation-processor:5.2.1.Final",
-                        "org.slf4j:slf4j-log4j12:1.7.2",
+                        "org.slf4j:slf4j-log4j12:1.7.12",
                         "org.hibernate:hibernate-entitymanager:${hibernate_version}"],
                 servlet_spec: dependencies.create("org.apache.geronimo.specs:geronimo-servlet_2.5_spec:1.2") {
                     transitive = false
@@ -72,6 +72,7 @@ project.ext {
                 simple_jpa_dao_namedid_test: "com.googlecode.simple-jpa-dao:dao-namedid-test:${simple_jpa_dao_version}",
                 simple_jpa_dao_genid_test: "com.googlecode.simple-jpa-dao:dao-genid-test:${simple_jpa_dao_version}",
                 simple_jpa_dao_base_test: "com.googlecode.simple-jpa-dao:dao-base-test:${simple_jpa_dao_version}",
+                slf4j_log4j12: "org.slf4j:slf4j-log4j12:1.7.12",
                 task_dispatch_dispatch_api: "com.googlecode.taskqueue-dispatch:dispatch-api:${taskqueue_dispatch_version}",
                 jukito: "org.jukito:jukito:1.1",
                 test_ng: "org.testng:testng:6.1.1",
@@ -109,31 +110,6 @@ subprojects {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
 
-//    dependencies {
-//        jalopy 'jalopy:jalopy-ant:0.1-1.5b5', 'jalopy:jalopy:1.5rc3'
-//    }
-
-//    task jalopy(dependsOn: classes) << {
-//
-//        ant.taskdef(name: 'jalopy',
-//                classname: 'de.hunsicker.jalopy.plugin.ant.AntPlugin',
-//                classpath: configurations.jalopy.asPath)
-//        if (file("src/main/java").isDirectory()) {
-//            ant.jalopy(convention: "${rootDir}/config/jalopy/jalopy-convention.xml") {
-//                fileset(dir: "src/main/java") {
-//                    include(name: '**/*.java')
-//                }
-//            }
-//        }
-//        if (file("src/test/java").isDirectory()) {
-//            ant.jalopy(convention: "${rootDir}/config/jalopy/jalopy-convention.xml") {
-//                fileset(dir: "src/test/java") {
-//                    include(name: '**/*.java')
-//                }
-//
-//            }
-//        }
-//    }
     apply plugin: 'pmd'
     //[pmdTest]*.ignoreFailures = false
 
@@ -160,21 +136,14 @@ subprojects {
 
     }
 
-    if ("${cobertura}" == "true") {
+    //if ("${cobertura}" == "true") {
     	apply plugin: 'net.saliman.cobertura'
     	cobertura {
  		  rootProject.subprojects.each {
      	  		coverageDirs << file("${it.name}/build/classes/main")
    			}
 		}
-    }
-//    if ("${run_jalopy}" == "true") {
-//        check.dependsOn jalopy
-//    }
-
-    test {
-        jvmArgs "-XX:MaxPermSize=256m"
-    }
+    //}
 
     repositories {
         maven {

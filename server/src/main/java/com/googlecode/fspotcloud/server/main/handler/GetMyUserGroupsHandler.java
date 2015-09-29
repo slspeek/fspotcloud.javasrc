@@ -24,6 +24,15 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.google.inject.Inject;
 import com.googlecode.fspotcloud.server.model.api.UserGroup;
 import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
@@ -31,14 +40,6 @@ import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsAction;
 import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsResult;
 import com.googlecode.fspotcloud.shared.main.UserGroupInfo;
 import com.googlecode.fspotcloud.user.UserService;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 public class GetMyUserGroupsHandler
 		extends

@@ -24,6 +24,11 @@
 
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static com.google.common.collect.Sets.newHashSet;
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
@@ -37,11 +42,6 @@ import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import com.googlecode.fspotcloud.shared.peer.GetFullsizePhotoAction;
 import com.googlecode.fspotcloud.user.UserService;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
-import static com.google.common.collect.Sets.newHashSet;
 
 public class RequestFullsizeImageHandler
 		extends

@@ -24,10 +24,24 @@
 
 package com.googlecode.fspotcloud.server.control.task.inject;
 
-import com.googlecode.fspotcloud.server.control.task.actions.intern.*;
-import com.googlecode.fspotcloud.server.control.task.handler.intern.*;
-import com.googlecode.fspotcloud.server.main.handler.RssFeedHandler;
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
+
+import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllPhotosAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.DeleteAllTagsAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.ImportManyTagsPhotosAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.PhotoUpdateAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RemovePhotosFromTagAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RemoveTagsDeletedFromPeerAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.TagUpdateAction;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.DeleteAllPhotosHandler;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.DeleteTagsHandler;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.ImportManyTagsPhotosHandler;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.PhotoUpdateHandler;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.RemovePhotosFromTagHandler;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.RemoveTagsFromPeerHandler;
+import com.googlecode.fspotcloud.server.control.task.handler.intern.TagUpdateHandler;
+import com.googlecode.fspotcloud.server.main.handler.RssFeedHandler;
 
 public class TaskActionsModule extends ActionHandlerModule {
 	@Override

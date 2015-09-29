@@ -1,19 +1,20 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import javax.inject.Inject;
+
+import org.jukito.JukitoRunner;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import com.googlecode.fspotcloud.model.jpa.usergroup.UserGroupEntity;
 import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupResult;
 import com.googlecode.fspotcloud.shared.main.NewUserGroupAction;
 import com.googlecode.fspotcloud.user.UserService;
-import org.jukito.JukitoRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class NewUserGroupHandlerTest {

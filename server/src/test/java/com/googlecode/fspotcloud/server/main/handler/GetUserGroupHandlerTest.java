@@ -1,18 +1,22 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import javax.inject.Inject;
+
+import net.customware.gwt.dispatch.shared.DispatchException;
+
+import org.jukito.JukitoRunner;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import com.googlecode.fspotcloud.model.jpa.usergroup.UserGroupEntity;
 import com.googlecode.fspotcloud.server.model.api.UserGroup;
 import com.googlecode.fspotcloud.server.model.api.UserGroupDao;
 import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
 import com.googlecode.fspotcloud.user.UserService;
-import net.customware.gwt.dispatch.shared.DispatchException;
-import org.jukito.JukitoRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
-
-import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class GetUserGroupHandlerTest {

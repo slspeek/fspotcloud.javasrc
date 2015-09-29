@@ -24,6 +24,16 @@
 
 package com.googlecode.fspotcloud.server.admin.handler;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+import net.customware.gwt.dispatch.server.ExecutionContext;
+import net.customware.gwt.dispatch.server.SimpleActionHandler;
+import net.customware.gwt.dispatch.shared.ActionException;
+import net.customware.gwt.dispatch.shared.DispatchException;
+
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.server.control.callback.PeerMetaDataCallback;
@@ -35,15 +45,6 @@ import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.peer.GetPeerMetaDataAction;
 import com.googlecode.fspotcloud.user.IAdminPermission;
 import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
-import net.customware.gwt.dispatch.server.ExecutionContext;
-import net.customware.gwt.dispatch.server.SimpleActionHandler;
-import net.customware.gwt.dispatch.shared.ActionException;
-import net.customware.gwt.dispatch.shared.DispatchException;
-
-import java.util.List;
-import java.util.logging.Logger;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 public class UserSynchronizesPeerHandler
 		extends

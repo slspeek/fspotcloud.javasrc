@@ -28,14 +28,15 @@
  */
 package com.googlecode.fspotcloud.server.main;
 
-import com.googlecode.fspotcloud.server.inject.PropertiesFile;
-
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.inject.Inject;
+
+import com.googlecode.fspotcloud.server.inject.PropertiesFile;
 
 /**
  * DOCUMENT ME!

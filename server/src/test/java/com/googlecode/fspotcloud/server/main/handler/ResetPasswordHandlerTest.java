@@ -1,20 +1,23 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
-import com.googlecode.fspotcloud.model.jpa.user.UserEntity;
-import com.googlecode.fspotcloud.server.model.api.User;
-import com.googlecode.fspotcloud.server.model.api.UserDao;
-import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
-import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import javax.inject.Inject;
+
 import org.jukito.JukitoRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static org.mockito.Mockito.*;
+import com.googlecode.fspotcloud.model.jpa.user.UserEntity;
+import com.googlecode.fspotcloud.server.model.api.User;
+import com.googlecode.fspotcloud.server.model.api.UserDao;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordResult;
 
 @RunWith(JukitoRunner.class)
 public class ResetPasswordHandlerTest {

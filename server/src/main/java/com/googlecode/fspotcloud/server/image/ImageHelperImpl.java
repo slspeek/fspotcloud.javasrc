@@ -24,11 +24,11 @@
 
 package com.googlecode.fspotcloud.server.image;
 
+import javax.inject.Inject;
+
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.simpleblobstore.BlobKey;
 import com.googlecode.simpleblobstore.BlobService;
-
-import javax.inject.Inject;
 
 public class ImageHelperImpl implements ImageHelper {
 	@Inject

@@ -28,6 +28,21 @@
  */
 package com.googlecode.fspotcloud.server.admin.handler;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import javax.inject.Inject;
+
+import org.jukito.JukitoRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.model.jpa.tag.TagEntity;
 import com.googlecode.fspotcloud.server.control.callback.TagUpdateInstructionsCallback;
@@ -38,16 +53,6 @@ import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
 import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.peer.GetTagUpdateInstructionsAction;
 import com.googlecode.fspotcloud.user.IAdminPermission;
-import org.jukito.JukitoRunner;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-
-import javax.inject.Inject;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 @RunWith(JukitoRunner.class)
 public class UserImportsTagHandlerTest {
@@ -73,7 +78,7 @@ public class UserImportsTagHandlerTest {
 			throws Exception {
 		when(tagManager.find(TAG_ID)).thenReturn(tagOne);
 
-		VoidResult result = handler.execute(action, null);
+		handler.execute(action, null);
 		verify(peerDatabaseDao).resetCachedTagTrees();
 		verify(dispatchAsync).execute(actionCaptor.capture(),
 				callbackCaptor.capture());
@@ -81,7 +86,6 @@ public class UserImportsTagHandlerTest {
 		GetTagUpdateInstructionsAction action = actionCaptor.getValue();
 		assertTrue(action.getPhotosOnServer().isEmpty());
 
-		TagUpdateInstructionsCallback callback = callbackCaptor.getValue();
 		assertEquals(TAG_ID, action.getTagId());
 	}
 

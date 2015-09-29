@@ -1,18 +1,19 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
-import com.google.inject.Inject;
-import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
-import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
-import com.googlecode.fspotcloud.shared.main.TagTreeResult;
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 import net.customware.gwt.dispatch.server.Dispatch;
+
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RssFeedAction;
+import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.TagTreeResult;
+import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
 
 @RunWith(JukitoRunner.class)
 public class RssFeedHandlerTest {

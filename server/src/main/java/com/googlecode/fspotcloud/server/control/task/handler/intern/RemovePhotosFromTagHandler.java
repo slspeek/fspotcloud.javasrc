@@ -24,17 +24,22 @@
 
 package com.googlecode.fspotcloud.server.control.task.handler.intern;
 
-import com.googlecode.fspotcloud.server.control.task.actions.intern.AbstractBatchAction;
-import com.googlecode.fspotcloud.server.control.task.actions.intern.RemovePhotosFromTagAction;
-import com.googlecode.fspotcloud.server.model.api.*;
-import com.googlecode.fspotcloud.shared.main.PhotoInfo;
-import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import com.googlecode.fspotcloud.server.control.task.actions.intern.AbstractBatchAction;
+import com.googlecode.fspotcloud.server.control.task.actions.intern.RemovePhotosFromTagAction;
+import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
+import com.googlecode.fspotcloud.server.model.api.Photo;
+import com.googlecode.fspotcloud.server.model.api.PhotoDao;
+import com.googlecode.fspotcloud.server.model.api.Tag;
+import com.googlecode.fspotcloud.server.model.api.TagDao;
+import com.googlecode.fspotcloud.shared.main.PhotoInfo;
+import com.googlecode.taskqueuedispatch.TaskQueueDispatch;
 
 public class RemovePhotosFromTagHandler
 		extends

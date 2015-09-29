@@ -24,14 +24,23 @@
 
 package com.googlecode.fspotcloud.server.mail;
 
+import java.util.Properties;
+import java.util.logging.Logger;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.inject.Inject;
-import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import java.util.Properties;
-import java.util.logging.Logger;
 
 public class Mailer implements IMail {
 	private String fromAddress;

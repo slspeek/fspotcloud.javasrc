@@ -24,10 +24,10 @@
 
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
+import java.io.Serializable;
+
 import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.general.StringResult;
-
-import java.io.Serializable;
 
 public class RssFeedAction implements Action<StringResult>, Serializable {
 	private static final long serialVersionUID = 8429390701736230375L;

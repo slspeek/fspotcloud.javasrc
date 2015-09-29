@@ -24,6 +24,9 @@
 
 package com.googlecode.fspotcloud.server.control.callback;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
 import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
@@ -31,9 +34,6 @@ import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.peer.TagData;
 import com.googlecode.fspotcloud.shared.peer.TagDataResult;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TagDataCallback
 		implements

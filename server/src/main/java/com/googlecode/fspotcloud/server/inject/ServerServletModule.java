@@ -24,14 +24,14 @@
 
 package com.googlecode.fspotcloud.server.inject;
 
+import net.customware.gwt.dispatch.server.guice.GuiceStandardDispatchServlet;
+
 import com.google.inject.servlet.ServletModule;
 import com.googlecode.fspotcloud.server.cron.CronServlet;
 import com.googlecode.fspotcloud.server.cron.RssServlet;
 import com.googlecode.fspotcloud.server.image.ImageServlet;
 import com.googlecode.simpleblobstore.DefaultAfterUploadServlet;
 import com.googlecode.simpleblobstore.DefaultCreateUrlServlet;
-
-import net.customware.gwt.dispatch.server.guice.GuiceStandardDispatchServlet;
 
 public class ServerServletModule extends ServletModule {
 

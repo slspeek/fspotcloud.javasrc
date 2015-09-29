@@ -1,5 +1,13 @@
 package com.googlecode.fspotcloud.server.main.handler;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
+import org.jukito.JukitoRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.controller.dispatch.ControllerDispatchAsync;
 import com.googlecode.fspotcloud.model.jpa.photo.PhotoEntity;
@@ -11,13 +19,6 @@ import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
 import com.googlecode.fspotcloud.shared.main.FullsizeImageResult;
 import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
 import com.googlecode.fspotcloud.user.UserService;
-import org.jukito.JukitoRunner;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class RequestFullsizeImageHandlerNotLogginInTest {

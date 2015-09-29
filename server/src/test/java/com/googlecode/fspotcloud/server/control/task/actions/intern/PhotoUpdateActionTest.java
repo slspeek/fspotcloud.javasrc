@@ -24,17 +24,18 @@
 
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
-import com.googlecode.fspotcloud.shared.peer.PhotoUpdate;
-import com.googlecode.fspotcloud.test.EqualsTest;
-import org.apache.commons.lang.SerializationUtils;
-import org.junit.Before;
-import org.junit.Test;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
+import org.apache.commons.lang.SerializationUtils;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.googlecode.fspotcloud.shared.peer.PhotoUpdate;
+import com.googlecode.fspotcloud.test.EqualsTest;
 
 public class PhotoUpdateActionTest extends EqualsTest<PhotoUpdateAction> {
 	PhotoUpdateAction action;

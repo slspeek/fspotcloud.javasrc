@@ -24,12 +24,52 @@
 
 package com.googlecode.fspotcloud.server.inject;
 
-import com.googlecode.fspotcloud.server.main.handler.*;
+import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
+
+import com.googlecode.fspotcloud.server.main.handler.ApproveTagHandler;
+import com.googlecode.fspotcloud.server.main.handler.AuthenticationHandler;
+import com.googlecode.fspotcloud.server.main.handler.DeleteUserGroupHandler;
+import com.googlecode.fspotcloud.server.main.handler.GetMyUserGroupsHandler;
+import com.googlecode.fspotcloud.server.main.handler.GetTagNodeHandler;
+import com.googlecode.fspotcloud.server.main.handler.GetTagTreeHandler;
+import com.googlecode.fspotcloud.server.main.handler.GetUserGroupHandler;
+import com.googlecode.fspotcloud.server.main.handler.GetUserInfoHandler;
+import com.googlecode.fspotcloud.server.main.handler.GrantUserHandler;
+import com.googlecode.fspotcloud.server.main.handler.LogoutHandler;
+import com.googlecode.fspotcloud.server.main.handler.NewUserGroupHandler;
+import com.googlecode.fspotcloud.server.main.handler.RequestFullsizeImageHandler;
+import com.googlecode.fspotcloud.server.main.handler.ResetPasswordHandler;
+import com.googlecode.fspotcloud.server.main.handler.RevokeTagHandler;
+import com.googlecode.fspotcloud.server.main.handler.RevokeUserHandler;
+import com.googlecode.fspotcloud.server.main.handler.SaveUserGroupHandler;
+import com.googlecode.fspotcloud.server.main.handler.SendConfirmationEmailHandler;
+import com.googlecode.fspotcloud.server.main.handler.SendPasswordResetHandler;
+import com.googlecode.fspotcloud.server.main.handler.SignUpHandler;
+import com.googlecode.fspotcloud.server.main.handler.UpdateUserHandler;
 import com.googlecode.fspotcloud.server.model.tag.IUserGroupHelper;
 import com.googlecode.fspotcloud.server.model.tag.UserGroupHelper;
-import com.googlecode.fspotcloud.shared.main.*;
+import com.googlecode.fspotcloud.shared.main.ApproveTagAction;
+import com.googlecode.fspotcloud.shared.main.AuthenticationAction;
+import com.googlecode.fspotcloud.shared.main.DeleteGroupAction;
+import com.googlecode.fspotcloud.shared.main.EmailConfirmationAction;
+import com.googlecode.fspotcloud.shared.main.GetMyUserGroupsAction;
+import com.googlecode.fspotcloud.shared.main.GetTagNodeAction;
+import com.googlecode.fspotcloud.shared.main.GetTagTreeAction;
+import com.googlecode.fspotcloud.shared.main.GetUserGroupAction;
+import com.googlecode.fspotcloud.shared.main.GetUserInfo;
+import com.googlecode.fspotcloud.shared.main.GrantUserAction;
+import com.googlecode.fspotcloud.shared.main.LogoutAction;
+import com.googlecode.fspotcloud.shared.main.NewUserGroupAction;
+import com.googlecode.fspotcloud.shared.main.RequestFullsizeImageAction;
+import com.googlecode.fspotcloud.shared.main.ResetPasswordAction;
+import com.googlecode.fspotcloud.shared.main.RevokeTagAction;
+import com.googlecode.fspotcloud.shared.main.RevokeUserAction;
+import com.googlecode.fspotcloud.shared.main.SaveUserGroupAction;
+import com.googlecode.fspotcloud.shared.main.SendConfirmationEmailAction;
+import com.googlecode.fspotcloud.shared.main.SendPasswordResetAction;
+import com.googlecode.fspotcloud.shared.main.SignUpAction;
+import com.googlecode.fspotcloud.shared.main.UpdateUserAction;
 import com.googlecode.fspotcloud.user.emailconfirmation.EmailConfirmationHandler;
-import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
 public class MainActionModule extends ActionHandlerModule {
 	@Override

@@ -24,12 +24,12 @@
 
 package com.googlecode.fspotcloud.server.model.tag;
 
-import com.googlecode.fspotcloud.shared.main.TagNode;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.googlecode.fspotcloud.shared.main.TagNode;
 
 public class TreeBuilder {
 	private List<TagNode> flatNodes;

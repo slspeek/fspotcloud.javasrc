@@ -24,12 +24,13 @@
 
 package com.googlecode.fspotcloud.server.control.task.actions.intern;
 
-import com.googlecode.fspotcloud.test.EqualsTest;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertNotNull;
+
 import org.apache.commons.lang.SerializationUtils;
 import org.junit.Test;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertNotNull;
+import com.googlecode.fspotcloud.test.EqualsTest;
 
 public class RemovePhotosFromTagActionTest
 		extends

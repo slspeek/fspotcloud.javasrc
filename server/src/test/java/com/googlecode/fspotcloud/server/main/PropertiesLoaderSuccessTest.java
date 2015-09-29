@@ -28,17 +28,20 @@
  */
 package com.googlecode.fspotcloud.server.main;
 
-import com.googlecode.fspotcloud.server.inject.PropertiesFile;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Properties;
+
+import javax.inject.Inject;
+
 import junit.framework.Assert;
+
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-import java.util.Properties;
-
-import static org.junit.Assert.assertEquals;
+import com.googlecode.fspotcloud.server.inject.PropertiesFile;
 
 /**
  * PropertiesLoader success unit test
