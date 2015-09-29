@@ -2,11 +2,7 @@ buildscript {
     repositories {
         maven {
             	url maven_repo
-            	artifactUrls "http://fspotcloud-maven.googlecode.com/svn/maven/repository"
         }
-		maven {
-				url 'http://dl.bintray.com/steffenschaefer/maven'
-		}
 		maven {
 			    url "https://plugins.gradle.org/m2/"
     	}
@@ -136,16 +132,15 @@ subprojects {
 
     }
 
-    //if ("${cobertura}" == "true") {
-    	apply plugin: 'net.saliman.cobertura'
-    	cobertura {
- 		  rootProject.subprojects.each {
-     	  		coverageDirs << file("${it.name}/build/classes/main")
-   			}
-   			
-   			//coberturaVersion = '2.0.3'
+  
+	apply plugin: 'net.saliman.cobertura'
+	cobertura {
+	  rootProject.subprojects.each {
+	  		coverageDirs << file("${it.name}/build/classes/main")
 		}
-    //}
+		
+		//coberturaVersion = '2.0.3'
+	}
 
     repositories {
         maven {
