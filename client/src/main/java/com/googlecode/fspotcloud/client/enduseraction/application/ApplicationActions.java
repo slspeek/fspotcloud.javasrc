@@ -30,8 +30,8 @@ public class ApplicationActions {
 				"Zoom into the current image", RESOURCES.zoomInIcon());
 		zoom_out = new ActionUIDef("zoom-out", "Zoom out",
 				"Zoom out of the current image", RESOURCES.zoomOutIcon());
-		tree_focus = new ActionUIDef("tree", "Focus tree",
-				"Puts keyboard focus on the category tree",
+		tree_focus = new ActionUIDef("tree", "Focus categories",
+				"Puts keyboard focus on the categories",
 				RESOURCES.treeFocusIcon());
 		dashboard = new ActionUIDef("dashboard", "Dashboard",
 				"Go to the dashboard (admin only)", RESOURCES.dashboardIcon());
@@ -52,8 +52,8 @@ public class ApplicationActions {
 				"Hide the help popup.");
 		demo = new ActionUIDef("demo", "Demo", "Play a demo.",
 				RESOURCES.demoIcon());
-		reloadTree = new ActionUIDef("reload-tree", "Reload tree",
-				"Reload the category tree", RESOURCES.reloadTreeIcon());
+		reloadTree = new ActionUIDef("reload-tree", "Reload categories",
+				"Reload categories", RESOURCES.reloadTreeIcon());
 		goToLatest = new ActionUIDef("goto-latest", "Latest",
 				"Go to category with latest image");
 		toggleAutoHide = new ActionUIDef("auto-hide", "Auto hide",
