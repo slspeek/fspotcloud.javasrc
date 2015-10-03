@@ -39,16 +39,25 @@ public class FullsizePhotoResult extends BusinessBase
 	private static final long serialVersionUID = -4172714943981557358L;
 	@BusinessKey
 	private final String photoId;
+	@BusinessKey
+	private final String fsBlobKey;
 
-	public FullsizePhotoResult(String photoId) {
+	public FullsizePhotoResult(String photoId, String fsBlobKey) {
+		super();
 		this.photoId = photoId;
+		this.fsBlobKey = fsBlobKey;
 	}
 
 	public String getPhotoId() {
 		return photoId;
 	}
 
+	public String getFsBlobKey() {
+		return fsBlobKey;
+	}
+
 	public String toString() {
-		return new ToStringBuilder(this).append("id", photoId).toString();
+		return new ToStringBuilder(this).append("id", photoId)
+				.append("fsBlobKey", fsBlobKey).toString();
 	}
 }

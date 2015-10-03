@@ -24,25 +24,33 @@
 
 package com.googlecode.fspotcloud.peer.handlers;
 
-import com.google.inject.Inject;
-import com.googlecode.fspotcloud.peer.db.Backend;
-import com.googlecode.fspotcloud.shared.peer.FullsizePhotoResult;
-import com.googlecode.fspotcloud.shared.peer.GetFullsizePhotoAction;
+import java.util.List;
+import java.util.Map;
 
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.server.SimpleActionHandler;
 import net.customware.gwt.dispatch.shared.ActionException;
 import net.customware.gwt.dispatch.shared.DispatchException;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.peer.db.Backend;
+import com.googlecode.fspotcloud.shared.peer.FullsizePhotoResult;
+import com.googlecode.fspotcloud.shared.peer.GetFullsizePhotoAction;
+import com.googlecode.simpleblobstore.BlobKey;
+import com.googlecode.simpleblobstore.client.BlobstoreClient;
+
 public class GetFullsizePhotoHandler
 		extends
 			SimpleActionHandler<GetFullsizePhotoAction, FullsizePhotoResult> {
 	private final Backend data;
+	private final BlobstoreClient blobClient;
 
 	@Inject
-	public GetFullsizePhotoHandler(Backend data) {
+	public GetFullsizePhotoHandler(Backend data, BlobstoreClient blobClient) {
 		super();
 		this.data = data;
+		this.blobClient = blobClient;
 	}
 
 	@Override
@@ -51,8 +59,13 @@ public class GetFullsizePhotoHandler
 		FullsizePhotoResult result;
 
 		try {
-			// TODO: Upload fullsize to new API 
-			result = new FullsizePhotoResult(action.getImageKey());
+			byte[] fsImage = data.getFullsizePhotoData(action.getImageKey());
+			Map<String, byte[]> upload = Maps.newHashMap();
+			upload.put("fullsize", fsImage);
+			Map<String, List<BlobKey>> uploadedKeys = blobClient.upload(upload);
+			BlobKey key = uploadedKeys.get("fullsize").get(0);
+			result = new FullsizePhotoResult(action.getImageKey(),
+					key.getKeyString());
 		} catch (Exception e) {
 			throw new ActionException(e);
 		}

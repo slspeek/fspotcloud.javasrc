@@ -27,6 +27,7 @@ package com.googlecode.fspotcloud.server.control.callback;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
+import com.googlecode.fspotcloud.server.image.ImageHelper;
 import com.googlecode.fspotcloud.server.mail.IMail;
 import com.googlecode.fspotcloud.server.model.api.Photo;
 import com.googlecode.fspotcloud.server.model.api.PhotoDao;
@@ -38,6 +39,8 @@ public class FullsizePhotoCallback
 	private static final long serialVersionUID = 246810426240427570L;
 	@Inject
 	private transient PhotoDao photoManager;
+	@Inject
+	private transient ImageHelper imageHelper;
 	@Inject
 	private transient Provider<IMail> mailerProvider;
 	private String caller;
@@ -53,12 +56,16 @@ public class FullsizePhotoCallback
 	@Override
 	public void onSuccess(FullsizePhotoResult fullsizePhotoResult) {
 		final String imageId = fullsizePhotoResult.getPhotoId();
+		final String key = fullsizePhotoResult.getFsBlobKey();
 		Photo photo = photoManager.find(imageId);
-		String key = photo.getFullsizeImageBlobKey();
+		photo.setFullsizeImageBlobKey(key);
 		photoManager.save(photo);
-		//        mailerProvider.get().send(caller, "Your requested image: " + imageId,
-		//                "Dear " + caller + ",\nYour requested image: " + imageId +
-		//                        " is in the attachment", key);
-		throw new IllegalStateException();
+		byte[] fsImageData = imageHelper.getImage(photo,
+				ImageHelper.Type.FULLSIZE);
+		mailerProvider.get().send(
+				caller,
+				"Your requested image: " + imageId,
+				"Dear " + caller + ",\nYour requested image: " + imageId
+						+ " is in the attachment", fsImageData);
 	}
 }
