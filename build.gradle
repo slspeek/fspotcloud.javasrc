@@ -135,6 +135,7 @@ subprojects {
 	  		coverageDirs << file("${it.name}/build/classes/main")
 		}
 		//coberturaVersion = '2.0.3'
+		coverageFormats = ['xml', 'html']
 	}
 
     repositories {
