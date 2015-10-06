@@ -29,7 +29,7 @@ public class ShotwellBackend extends GenericBackend {
 
 	@Override
 	public Object[] getMetaData() throws SQLException {
-		return new Object[]{getCount("PhotoTable"), getCount("TagTable")};
+		return new Object[] { getCount("PhotoTable"), getCount("TagTable") };
 	}
 
 	@Override
@@ -68,12 +68,13 @@ public class ShotwellBackend extends GenericBackend {
 	}
 
 	private int getPhotoCountFromIds(String ids) {
-		String[] splitted = ids.split(",");
-		if (splitted == null) {
-			return 0;
-		} else {
-			return splitted.length;
+		if (ids != null) {
+			String[] splitted = ids.split(",");
+			if (splitted != null) {
+				return splitted.length;
+			}
 		}
+		return 0;
 	}
 
 	private String getParent(String tagName) throws SQLException {
@@ -152,7 +153,7 @@ public class ShotwellBackend extends GenericBackend {
 				for (int i = 0; i < ids.length; i++) {
 					String id = ids[i];
 					id = fromHex(id);
-					LOGGER.info("Got from TagTable: " + id);
+					//LOGGER.info("Got from TagTable: " + id);
 					result.add(id);
 				}
 			}

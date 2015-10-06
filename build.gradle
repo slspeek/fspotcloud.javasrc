@@ -93,7 +93,7 @@ allprojects {
 	apply plugin: 'com.github.youribonnaffe.gradle.format'
 	
     group = 'com.googlecode.fspotcloud'
-    version = "0.91-${build_number}"
+    version = "0.92-beta1-${build_number}"
 }
 
 subprojects {
