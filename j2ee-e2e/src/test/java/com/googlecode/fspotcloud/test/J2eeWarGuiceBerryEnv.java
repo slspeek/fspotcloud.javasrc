@@ -32,6 +32,6 @@ public class J2eeWarGuiceBerryEnv extends SeleniumGuiceBerryEnv {
 		super.configure();
 		bind(ILogin.class).to(RegularLoginBot.class);
 		bind(String.class).annotatedWith(Names.named("baseUrl")).toInstance(
-				"http://localhost:9050/j2ee-e2e/");
+				"http://localhost:5090/j2ee-e2e/");
 	}
 }

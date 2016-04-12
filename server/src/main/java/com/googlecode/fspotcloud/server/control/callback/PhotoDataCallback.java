@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import com.google.inject.Inject;
 import com.googlecode.botdispatch.SerializableAsyncCallback;
@@ -44,6 +45,7 @@ public class PhotoDataCallback
 		implements
 			SerializableAsyncCallback<PhotoDataResult> {
 	private static final long serialVersionUID = 246810426240427570L;
+	
 	@Inject
 	private transient PhotoDao photoManager;
 	@Inject
@@ -59,6 +61,7 @@ public class PhotoDataCallback
 		this.peerDatabaseDao = peerDatabaseDao;
 	}
 
+	
 	public PhotoDataCallback() {
 		super();
 	}
@@ -96,16 +99,26 @@ public class PhotoDataCallback
 		photo.setThumbBlobKey(photoData.getThumbBlobKey());
 		photo.setImageBlobKey(photoData.getImageBlobKey());
 
+		PhotoInfo updatedInfo = new PhotoInfo(photo.getId(),
+				photo.getDescription(), photo.getDate(),
+				photoData.getVersion());
+		
 		for (String tagId : tags) {
 			Tag tag = tagManager.find(tagId);
-			PhotoInfo updatedInfo = new PhotoInfo(photo.getId(),
-					photo.getDescription(), photo.getDate(),
-					photoData.getVersion());
+			if (tag != null) {
 			TreeSet<PhotoInfo> cachedPhotoList = tag.getCachedPhotoList();
 			cachedPhotoList.remove(updatedInfo);
 			cachedPhotoList.add(updatedInfo);
 			tag.setCachedPhotoList(cachedPhotoList);
 			tagManager.save(tag);
+			} else {
+				Logger.getLogger(PhotoDataCallback.class.getName())
+				.warning("Tag with tagId:" 
+						+ tagId
+						+ " not found. PhotoData: "
+						+ photoData
+						+ " mentions it.");
+			}
 		}
 
 		return photo;

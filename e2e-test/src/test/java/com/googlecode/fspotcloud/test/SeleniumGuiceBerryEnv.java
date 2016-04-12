@@ -32,8 +32,6 @@ import com.googlecode.fspotcloud.client.main.ui.Resources;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
 import javax.inject.Named;
 
 import static org.mockito.Mockito.mock;
@@ -43,15 +41,9 @@ public class SeleniumGuiceBerryEnv extends GuiceBerryModule {
 	@TestScoped
 	Selenium getSelenium(@Named("baseUrl") String baseUrl) {
 		WebDriver driver;
-		String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
+		//String userChoice = "fire"; //System.getProperty("fspotcloud.test.webdriver");
 		//System.setProperty("webdriver.chrome.driver", "/home/steven/tools/bin/chromedriver");
-		if (userChoice != null) {
-			driver = new FirefoxDriver();
-		} else {
-			driver = new HtmlUnitDriver();
-			((HtmlUnitDriver) driver).setJavascriptEnabled(true);
-		}
-
+		driver = new FirefoxDriver();
 		return new WebDriverBackedSeleniumExt(driver, baseUrl);
 	}
 

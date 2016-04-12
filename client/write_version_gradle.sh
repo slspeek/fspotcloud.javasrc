@@ -3,4 +3,4 @@ pkgver() {
 }
 BUILD=$(pkgver)
 mkdir -p target/classes
-(echo -e "Version: $1 \nBuild tag: $BUILD\n") > build/classes/main/version.txt
+(echo "\nVersion: $1 \nBuild tag: $BUILD\n"; git log -1) > build/classes/main/version.txt

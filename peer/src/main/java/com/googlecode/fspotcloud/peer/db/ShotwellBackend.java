@@ -29,7 +29,7 @@ public class ShotwellBackend extends GenericBackend {
 
 	@Override
 	public Object[] getMetaData() throws SQLException {
-		return new Object[] { getCount("PhotoTable"), getCount("TagTable") };
+		return new Object[]{getCount("PhotoTable"), getCount("TagTable")};
 	}
 
 	@Override

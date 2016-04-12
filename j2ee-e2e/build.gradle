@@ -74,7 +74,7 @@ war.dependsOn copyWar
 [tomcatRunWar, tomcatStop]*.stopPort = 8060
 [tomcatRunWar, tomcatStop]*.stopKey = 'STOP'
 tomcatRunWar.daemon = Boolean.parseBoolean(server_daemon)
-tomcatRunWar.httpPort = 9050
+tomcatRunWar.httpPort = 5090
 
 test {
 	exclude "*"
@@ -84,7 +84,7 @@ task testShotwell(type:Test, dependsOn: [tomcatRunWar, unpackTest, ":peer:assemb
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
     systemProperty 'bot.secret', bot_secret
-    systemProperty 'endpoint', "localhost:9050/j2ee-e2e"
+    systemProperty 'endpoint', "localhost:5090/j2ee-e2e"
     systemProperty 'stop.port', "5555"
     systemProperty 'pause.time', "${test_pause_time}"
     systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
@@ -113,7 +113,7 @@ task testFSpot(type:Test, dependsOn: [tomcatRunWar, unpackTest, ":peer:assemble"
     systemProperty 'GuiceBerryEnvSelectorOverride_com.googlecode.fspotcloud.test.EmptyGuiceBerryEnv',
         'com.googlecode.fspotcloud.test.J2eeWarGuiceBerryEnv'
     systemProperty 'bot.secret', bot_secret
-    systemProperty 'endpoint', "localhost:9050/j2ee-e2e"
+    systemProperty 'endpoint', "localhost:5090/j2ee-e2e"
     systemProperty 'stop.port', "5555"
     systemProperty 'pause.time', "${test_pause_time}"
     systemProperty 'peer.jar', "../peer/build/libs/peer-${version}.jar"
