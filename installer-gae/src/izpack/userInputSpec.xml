@@ -6,7 +6,7 @@
         <field type="divider" align="top"/>
         <field type="staticText" align="left" txt="AppEngine application id"/>
         <field type="text" align="left" variable="application.id">
-            <spec txt="" size="25" set="jfspotcloud"/>
+            <spec txt="" size="25" set="fspotmagic"/>
         </field>
         <field type="space"/>
         <field type="staticText" align="left" txt="Your Google loginname"/>
