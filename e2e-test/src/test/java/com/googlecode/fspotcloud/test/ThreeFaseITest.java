@@ -34,6 +34,8 @@ import javax.inject.Inject;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import static com.googlecode.fspotcloud.test.Sleep.sleepShort;
+
 public class ThreeFaseITest {
 	@Rule
 	public GuiceBerryRule guiceBerry = new GuiceBerryRule(
@@ -56,10 +58,9 @@ public class ThreeFaseITest {
 		dashboardPage.toggleImportForTagId("3"); //Mac
 
 		photoPage.open();
-		//Assert something
+		
 		assertTrue(selenium.isTextPresent("Macintosh"));
 		assertTrue(selenium.isTextPresent("Furniture"));
-
 		photoPage.clickImage(0, 0);
 		photoPage.assertPagingLabelSays(1, 5);
 
@@ -68,11 +69,11 @@ public class ThreeFaseITest {
 		//Most pictures
 		dashboardPage.open();
 		dashboardPage.synchronize();
+		
 		photoPage.open();
 		assertTrue(selenium.isTextPresent("Mac"));
 		assertFalse(selenium.isTextPresent("Macintosh"));
 		assertTrue(selenium.isTextPresent("Furniture"));
-		//Assert something
 		photoPage.clickImage(0, 0);
 		photoPage.assertPagingLabelSays(1, 9);
 
@@ -80,13 +81,14 @@ public class ThreeFaseITest {
 		peerRunner.startPeer("../peer/src/test/resources/photos_smaller.db");
 		dashboardPage.open();
 		dashboardPage.synchronize();
+		sleepShort(4);
 		photoPage.open();
-		//Assert something
+		
 		assertTrue(selenium.isTextPresent("Macintosh"));
 		assertTrue(selenium.isTextPresent("Furniture"));
 		photoPage.clickImage(0, 0);
 		photoPage.assertPagingLabelSays(1, 5);
-		//Less again
+		
 		peerRunner.stopPeer();
 	}
 }

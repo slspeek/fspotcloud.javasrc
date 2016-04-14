@@ -71,7 +71,7 @@ public class UserDeletesAllHandlerTest {
 				.checkAdminPermission();
 
 		UserDeletesAllAction action = new UserDeletesAllAction();
-		VoidResult result = handler.execute(action, null);
+		handler.execute(action, null);
 		fail();
 	}
 }

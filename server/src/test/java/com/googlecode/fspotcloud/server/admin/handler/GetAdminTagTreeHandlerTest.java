@@ -99,7 +99,7 @@ public class GetAdminTagTreeHandlerTest {
 		doThrow(new SecurityException()).when(adminPermission)
 				.checkAdminPermission();
 
-		TagTreeResult result = handler.execute(action, null);
+		handler.execute(action, null);
 		fail();
 	}
 }

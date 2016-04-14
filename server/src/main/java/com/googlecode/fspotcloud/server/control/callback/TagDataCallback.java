@@ -92,9 +92,6 @@ public class TagDataCallback
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-
-		final TagDataCallback other = (TagDataCallback) obj;
-
 		return true;
 	}
 

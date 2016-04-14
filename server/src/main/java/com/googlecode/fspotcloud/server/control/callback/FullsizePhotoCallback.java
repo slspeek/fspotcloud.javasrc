@@ -54,7 +54,7 @@ public class FullsizePhotoCallback
 	}
 
 	@Override
-	public void onSuccess(FullsizePhotoResult fullsizePhotoResult) {
+	public void onSuccess(final FullsizePhotoResult fullsizePhotoResult) {
 		final String imageId = fullsizePhotoResult.getPhotoId();
 		final String key = fullsizePhotoResult.getFsBlobKey();
 		Photo photo = photoManager.find(imageId);

@@ -2,8 +2,6 @@ package com.googlecode.fspotcloud.client.data;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import java.util.logging.Logger;
-
 public class SampleMemoProcAsync extends MemoProcAsync<String> {
 
 	private int callCount = 0;
@@ -12,7 +10,6 @@ public class SampleMemoProcAsync extends MemoProcAsync<String> {
 	@Override
 	public void getAsyncImpl(AsyncCallback<String> callback) {
 		callCount++;
-		Logger.getAnonymousLogger().info("In getAsyncImpl");
 		this.callback = callback;
 
 	}

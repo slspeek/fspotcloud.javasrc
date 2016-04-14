@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-				classpath 'com.google.appengine:gradle-appengine-plugin:1.9.24'
+				classpath 'com.google.appengine:gradle-appengine-plugin:1.9.34'
 				classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
 				classpath "gradle.plugin.com.github.youribonnaffe.gradle.format:gradle-format-plugin:1.2"
 				classpath "net.saliman:gradle-cobertura-plugin:2.2.7"
@@ -93,7 +93,7 @@ allprojects {
 	apply plugin: 'com.github.youribonnaffe.gradle.format'
 	
     group = 'com.googlecode.fspotcloud'
-    version = "0.92-beta1-${build_number}"
+    version = "0.93-${build_number}"
 }
 
 subprojects {

@@ -1,20 +1,19 @@
 package com.googlecode.fspotcloud.client.place;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.inject.Inject;
-import com.googlecode.fspotcloud.client.data.DataManager;
-import com.googlecode.fspotcloud.shared.main.TagNode;
-import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.inject.Inject;
+import com.googlecode.fspotcloud.client.data.DataManager;
+import com.googlecode.fspotcloud.shared.main.TagNode;
+import com.googlecode.fspotcloud.shared.main.test.TagNodeTestFactory;
 
 @RunWith(JukitoRunner.class)
 public class NavigatorImplGetPageRelativePositionTest {
@@ -71,7 +70,6 @@ public class NavigatorImplGetPageRelativePositionTest {
 
 		verify(answerCallback).onSuccess(answerCaptor.capture());
 		Integer[] answer = answerCaptor.getValue();
-		System.out.println(Arrays.asList(answer));
 		assertEquals(0, answer[0].intValue());
 		assertEquals(2, answer[1].intValue());
 	}

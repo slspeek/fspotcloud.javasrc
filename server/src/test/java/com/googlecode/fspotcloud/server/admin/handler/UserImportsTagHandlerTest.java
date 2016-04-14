@@ -50,7 +50,6 @@ import com.googlecode.fspotcloud.server.model.api.PeerDatabaseDao;
 import com.googlecode.fspotcloud.server.model.api.Tag;
 import com.googlecode.fspotcloud.server.model.api.TagDao;
 import com.googlecode.fspotcloud.shared.dashboard.UserImportsTagAction;
-import com.googlecode.fspotcloud.shared.dashboard.VoidResult;
 import com.googlecode.fspotcloud.shared.peer.GetTagUpdateInstructionsAction;
 import com.googlecode.fspotcloud.user.IAdminPermission;
 
@@ -59,7 +58,7 @@ public class UserImportsTagHandlerTest {
 	private final String TAG_ID = "1";
 	@Inject
 	UserImportsTagHandler handler;
-	UserImportsTagAction action = new UserImportsTagAction("1");
+	UserImportsTagAction action = new UserImportsTagAction(TAG_ID);
 	Tag tagOne;
 	@Inject
 	private PeerDatabaseDao peerDatabaseDao;
@@ -89,14 +88,13 @@ public class UserImportsTagHandlerTest {
 		assertEquals(TAG_ID, action.getTagId());
 	}
 
-	//FIXME: Must be open as it is called from within
 	//@Test(expected = SecurityException.class)
 	public void testUnAuthorizedExecute(IAdminPermission adminPermission)
 			throws Exception {
 		doThrow(new SecurityException()).when(adminPermission)
 				.checkAdminPermission();
 
-		VoidResult result = handler.execute(action, null);
+		handler.execute(action, null);
 		fail();
 	}
 }

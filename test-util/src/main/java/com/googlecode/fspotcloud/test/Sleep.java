@@ -40,7 +40,7 @@ public class Sleep {
 
 	public static void sleepShort(final int times) throws InterruptedException {
 		final int millis = PAUSE_TIME * times;
-		LOGGER.log(Level.FINE, "Sleeping for " + millis);
+		LOGGER.log(Level.INFO, "Sleeping for " + millis);
 		Thread.sleep(millis);
 	}
 }
